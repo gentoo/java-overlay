@@ -9,7 +9,12 @@ DESCRIPTION="NetBeans ${PV} IDE for Java"
 IUSE="debug doc"
 HOMEPAGE="http://www.netbeans.org"
 
-SRC_URI="netbeans-4_0-src-ide_sources.tar.bz2"
+BASELOCATION=" \
+http://www.netbeans.org/download/4_0/fcs/200412081800/d5a0f13566068cb86e33a46ea130b207"
+
+SRC_URI="${BASELOCATION}/netbeans-4_0-src-ide_sources.tar.bz2 \
+	 doc? ( ${BASELOCATION}/netbeans-4_0-docs-javadoc.tar.bz2 )
+	"
 
 SLOT="4.0"
 
@@ -23,13 +28,15 @@ DEPEND=">=virtual/jdk-1.4.2
 		=dev-java/commons-logging-1.0*
 		dev-java/regexp
 		=dev-java/xalan-2*
-		=dev-java/junit-3.8*"
+		=dev-java/junit-3.8*
+		=dev-java/mdr"
 
 RDEPEND="
 		>=virtual/jre-1.4.2
 		 dev-java/commons-el
 		 =dev-java/servletapi-2.4*
 		 dev-java/sac
+		 dev-java/mdr
 		"
 
 S=${WORKDIR}/netbeans-src
@@ -53,8 +60,8 @@ src_compile()
 	local antflags=""
 	! use debug && antflags="${antflags} -Dno-deprecation"
 
-    antflags="${antflags} -Dnetbeans.no.pre.unscramble=true"
-    antflags="${antflags} -Dmoduleconfig=stable-without-webapps"
+	antflags="${antflags} -Dnetbeans.no.pre.unscramble=true"
+	antflags="${antflags} -Dmoduleconfig=stable-without-webapps"
 
 	# The build will attempt to display graphical
 	# dialogs for the licence agreements if this is set.

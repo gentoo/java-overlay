@@ -25,6 +25,21 @@ DEPEND="app-arch/unzip
 
 RDEPEND="virtual/jre"
 
+java-pkg_dosrc() {
+        [ $# -lt 1 ] && die "${FUNCNAME[0]}: at least one argument needed" 
+
+        local target="/usr/share/doc/${PF}/source/"
+
+        local files
+        for x in $@; do
+                files="$files $x"
+        done
+
+        zip -r ${T}/${PN}-src.zip $files
+        dodir $target
+        install ${INSOPTIONS} "${T}/${PN}-src.zip" "${D}${target}"
+}
+
 src_unpack() {
 	unpack $A
 	cp ${FILESDIR}/build.xml $S
@@ -38,21 +53,16 @@ src_compile() {
 	local antflags
 	use jikes && antflags="${antflags} -Dbuild.compiler=jikes"
 	ant || die "Compiling failed"
-	if use sources; then 
-		ant sourcezip || die "Failed to zip sources"
-	fi
 }
 
 src_install() {
 	use doc || java-pkg_dohtml -r ./doc/*
 	dohtml COPYRIGHT.html
+
+	if use sources; then
+		java-pkg_dosrc src/org/w3c || die "Failed to package sources"
+	fi
+
 	cd dist
 	dojar sac.jar
-	if use sources; then
-		insinto /usr/share/doc/${PF}/source/
-		doins sac-src.zip
-	fi
 }
-
-
-
