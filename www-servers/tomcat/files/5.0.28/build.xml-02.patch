@@ -1,0 +1,29 @@
+--- jakarta-tomcat-5/build.xml	2004-10-05 23:21:44.091181840 +1000
++++ jakarta-tomcat-5/build.xml	2004-10-05 23:22:26.574723360 +1000
+@@ -1545,8 +1545,7 @@
+     <!-- That is ugly XXX needs a review -->
+     <copy file="LICENSE" tofile="../LICENSE"/>
+     <copy file="LICENSE" tofile="${base.path}/LICENSE"/>
+-
+-    <!-- Downdown any sub package or tools needed. -->
++<!-- 
+     <antcall target="downloadgz">
+       <param name="sourcefile" value="${commons-beanutils.loc}"/>
+       <param name="destfile" value="${commons-beanutils.jar}"/>
+@@ -1593,7 +1592,6 @@
+     </antcall>
+ 
+     <antcall target="downloadgz">
+-      <!-- xerces2 brings 2 files, test for one of them -->
+       <param name="sourcefile" value="${xerces.loc}"/>
+       <param name="destfile" value="${xml-apis.jar}"/>
+     </antcall>
+@@ -1655,7 +1653,7 @@
+       <param name="sourcefile" value="${saxpath.loc}"/>
+       <param name="destfile" value="${saxpath.jar}"/>
+     </antcall>
+-
++-->
+     <!-- Build the dependencies that are not yet released -->
+     <antcall target="build-depends"/>
+ 

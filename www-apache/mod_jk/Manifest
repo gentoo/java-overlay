@@ -1,0 +1,5 @@
+MD5 25f7baed704b65d7e9077241e55a0b70 mod_jk-1.2.6.ebuild 1961
+MD5 da381e317b75b0c537ab0147afeb911e files/workers.properties 330
+MD5 54731799c1630ea45e12dec028a18088 files/mod_jk.conf 848
+MD5 592473e86e4769093127ea823a16747f files/digest-mod_jk-1.2.6 90
+MD5 dadeaaa6bac4f2f829d11f447a4c088a files/88_mod_jk.conf 855
