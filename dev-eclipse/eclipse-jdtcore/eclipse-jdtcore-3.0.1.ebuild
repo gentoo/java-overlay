@@ -10,14 +10,13 @@ HOMEPAGE="http://www.eclipse.org/"
 SRC_URI="http://scott.progbits.com/${MY_A}.tar.bz2"
 LICENSE="CPL-1.0"
 SLOT="0"
-KEYWORDS="~x86"
-IUSE="jikes doc"
+KEYWORDS="~x86 ~amd64"
+IUSE="doc"
 DEPEND=">=virtual/jdk-1.4
 	>=app-arch/unzip-5.50
 	>=dev-java/ant-core-1.4
 	=dev-eclipse/eclipse-osgi-${PV}
-	=dev-eclipse/eclipse-runtime-${PV}
-	jikes? ( >=dev-java/jikes-1.21 )"
+	=dev-eclipse/eclipse-runtime-${PV}"
 RDEPEND=">=virtual/jre-1.4"
 
 src_unpack() {
@@ -36,7 +35,6 @@ src_compile() {
 
 	antflags="${antflags} -lib ./"
 	antflags="${antflags} -DjavacFailOnError=true"
-	use jikes && antflags="${antflags} -Dbuild.compiler=jikes"
 
 	ant ${antflags} || die "Compilation failed"
 }
