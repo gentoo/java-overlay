@@ -167,13 +167,13 @@ src_install() {
 			if [ ! -L ${jar} ]; then
 				java-pkg_dojar ${jar}
 				rm -f ${jar}
-				java-pkg_jar-from tomcat-5 ${jar}
+				ln -s ${DESTTREE}/share/${PN}-${SLOT}/lib/${jar} ${jar}
 			fi
 		done
 
 		cd ${base}
 	done
-		
+
 	# copy over the directories 
 	cp -ra conf/* ${D}/etc/${TOMCAT_NAME}/default || die "failed to copy conf"
 	cp -ra bin common server shared ${D}/usr/share/${TOMCAT_NAME} || die "failed to copy"
