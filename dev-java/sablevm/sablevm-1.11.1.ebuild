@@ -29,6 +29,20 @@ DEPEND=">=dev-libs/libffi-1.20
 
 S=${WORKDIR}
 
+src_unpack() {
+	unpack ${A}
+
+	cd ${S}/sablevm-classpath-${PV}
+	epatch ${FILESDIR}/sablevm-classpath-svn-bug-patch.diff
+	cp ${FILESDIR}/autogen-sablevm-classpath.sh autogen.sh
+	./autogen.sh
+
+	cd ${S}/sablevm-${PV}
+	epatch ${FILESDIR}/sablevm-svn-bug-patch.diff
+	cp ${FILESDIR}/autogen-sablevm.sh autogen.sh
+	./autogen.sh
+}
+
 src_compile() {
 	export LDFLAGS="$LDFLAGS -L/usr/lib/libffi" CPPFLAGS="$CPPFLAGS	-I/usr/include/libffi"
 
@@ -52,6 +66,9 @@ src_install() {
 	# Install the VM
 	cd ${S}/sablevm-${PV}
 	einstall || die
+
+	dodir /usr/lib/sablevm/man/man1
+	dosym ${ROOT}usr/share/man/man1/java-sablevm.1.gz /usr/lib/sablevm/man/man1/java.1.gz
 
 	set_java_env ${FILESDIR}/${VMHANDLE}
 }

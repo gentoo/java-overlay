@@ -1,0 +1,33 @@
+--- sablevm-1.11.1.orig/configure.ac	2005-03-22 20:42:39.290142624 -0500
++++ sablevm-1.11.1/configure.ac	2005-03-22 20:44:22.114510944 -0500
+@@ -19,18 +19,18 @@
+ dnl copy.
+ dnl If one of the svn, grep or cut command is missing, the script assumes
+ dnl that the version is OK.
+-SVN_URL=`svn info | grep ^URL\: | cut -c6- | grep -v '/sablevm/trunk$' | grep -v '/tags/'`
+-if test "x$SVN_URL" != "x" ; then
+-  case $PACKAGE_VERSION in
+-    trunk+*) echo "$PACKAGE_VERSION is not an appropriate branch version"
+-             echo "Please uncomment appropatiate AC INIT macro in configure.ac"
+-             exit 1 ;;
+-    *+*)     ;;
+-    *)       echo "$PACKAGE_VERSION is not an appropriate branch version"
+-             echo "Please uncomment appropatiate AC INIT macro in configure.ac"
+-             exit 1 ;;
+-  esac
+-fi
++dnl SVN_URL=`svn info | grep ^URL\: | cut -c6- | grep -v '/sablevm/trunk$' | grep -v '/tags/'`
++dnl if test "x$SVN_URL" != "x" ; then
++dnl   case $PACKAGE_VERSION in
++dnl     trunk+*) echo "$PACKAGE_VERSION is not an appropriate branch version"
++dnl              echo "Please uncomment appropatiate AC INIT macro in configure.ac"
++dnl              exit 1 ;;
++dnl     *+*)     ;;
++dnl     *)       echo "$PACKAGE_VERSION is not an appropriate branch version"
++dnl              echo "Please uncomment appropatiate AC INIT macro in configure.ac"
++dnl              exit 1 ;;
++dnl   esac
++dnl fi
+ 
+ AM_INIT_AUTOMAKE
+ 
