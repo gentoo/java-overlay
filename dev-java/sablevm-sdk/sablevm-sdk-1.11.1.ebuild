@@ -11,16 +11,23 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~x86 ~ppc ~amd64"
 IUSE=""
-DEPEND="~dev-java/sablevm-${PV}"
+DEPEND="~dev-java/sablevm-${PV}
+	dev-java/fastjar"
 
 #RDEPEND=""
 
 S=${WORKDIR}
 
 src_install() {
+	# jar symlinks
+	dodir /usr/lib/sablevm/bin
+	dosym /usr/bin/jar /usr/lib/sablevm/bin
+
+	# manpages symlinks
 	dodir /usr/lib/sablevm/man/man1
-	dosym ${ROOT}usr/share/man/man1/java-sablevm.1.gz /usr/lib/sablevm/man/man1/java.1.gz
-	dosym ${ROOT}usr/share/man/man1/jikes.1.gz /usr/lib/sablevm/man/man1/javac.1.gz
+	dosym /usr/share/man/man1/java-sablevm.1.gz /usr/lib/sablevm/man/man1/java.1.gz
+	dosym /usr/share/man/man1/jikes.1.gz /usr/lib/sablevm/man/man1/javac.1.gz
+	dosym /usr/share/man/man1/jar.1.gz /usr/lib/sablevm/man/man1/jar.1.gz
 
 	set_java_env ${FILESDIR}/${VMHANDLE}
 }
