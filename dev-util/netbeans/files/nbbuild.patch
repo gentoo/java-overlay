@@ -1,0 +1,40 @@
+diff -Naur nbbuildold/build.properties nbbuild/build.properties
+--- nbbuildold/build.properties	2005-02-10 23:37:01.248593180 +0200
++++ nbbuild/build.properties	2005-02-10 23:37:59.946697450 +0200
+@@ -56,7 +56,7 @@
+ # a config.modules.XXX property, where XXX is the config name.
+ # Each is a list of module names, as subdirectories beneath the
+ # root of the source tree, separated by commas.
+-moduleconfig=stable
++moduleconfig=stable-without-webapps
+ 
+ # Dist directory for L10N kits
+ l10n.dist.dir=l10ndist
+@@ -165,8 +165,6 @@
+     web/core, \
+     web/jspdebug, \
+     web/examples, \
+-    tomcatint/tomcat5, \
+-    tomcatint/tomcat5/bundled, \
+     monitor
+ 
+ config.fixedmodules.platform=core, \
+diff -Naur nbbuildold/cluster.properties nbbuild/cluster.properties
+--- nbbuildold/cluster.properties	2005-02-10 23:38:22.249317476 +0200
++++ nbbuild/cluster.properties	2005-02-10 23:39:19.373660250 +0200
+@@ -150,7 +150,6 @@
+         j2eeserver/j2eeapis, \
+         j2eeserver/ant, \
+         schema2beans/rt, \
+-        tomcatint/tomcat5, \
+         monitor, \
+         httpserver, \
+         httpserver/servletapi, \
+@@ -177,7 +176,6 @@
+         ide/welcome, \
+         ide/launcher/upgrade, \
+         ide/applemenu, \
+-        tomcatint/tomcat5/bundled, \
+         web/examples
+ 
+ nb.pkg.testtools.dir=testtools
