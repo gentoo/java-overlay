@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# pick one of the logkit installed
+LOGKIT=`echo /usr/share/avalon-logkit-* | awk '{ print $1 }' | xargs basename`
+
+`java-config --java` -classpath "`java-config --classpath=jfor,xerces-2,$LOGKIT`:$CLASSPATH" ch.codeconsult.jfor.main.CmdLineConverter ${1+"$@"}
