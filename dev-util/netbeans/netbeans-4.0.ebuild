@@ -1,4 +1,4 @@
-# Copyright 1999-2004 Gentoo Foundation
+# Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -46,6 +46,8 @@ DEPEND=">=virtual/jdk-1.4.2
 		dev-java/javamake-bin
 		dev-java/mof
 		dev-java/jmi
+		dev-java/jsr088
+		dev-java/xml-commons
 		>=dev-java/javahelp-bin-2.0.02-r1"
 
 
@@ -96,6 +98,7 @@ src_unpack ()
 	java-pkg_jar-from commons-logging commons-logging.jar commons-logging-1.0.4.jar
 	java-pkg_jar-from regexp regexp.jar	regexp-1.2.jar
 	java-pkg_jar-from xalan xalan-jar xalan-2.5.2.jar
+	java-pkg_jar-form xml-commons xml-apis.jar xml-commons-dom-ranges-1.0.b2.jar
 
 	cd ${S}/mdr/external/
 	java-pkg_jar-from jmi
@@ -108,7 +111,10 @@ src_unpack ()
 
 	cd ${S}/httpserver/external/
 	java-pkg_jar-from servletapi-2.2 servletapi-2.2.jar servlet-2.2.jar	
-	
+
+	cd ${S}/j2eeserver/external
+	java-pkg_jar-from jsr088 jsr088 jsr088.jar jsr88javax.jar
+		
 	cd ${S}/java/external/
 	java-pkg_jar-from javamake-bin javamake.jar javamake-1.2.12.jar
 	
