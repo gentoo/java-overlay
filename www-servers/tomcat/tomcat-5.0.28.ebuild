@@ -41,8 +41,8 @@ IUSE="doc jikes"
 
 S=${WORKDIR}/jakarta-${P}-src
 
-TOMCAT_HOME="/usr/share/${PN}${SLOT}"
-TOMCAT_NAME="${PN}${SLOT}"
+TOMCAT_HOME="/usr/share/${PN}-${SLOT}"
+TOMCAT_NAME="${PN}-${SLOT}"
 
 src_unpack() {
 	unpack ${A}
@@ -154,7 +154,27 @@ src_install() {
 	cp ${S}/jakarta-tomcat-catalina/webapps/manager/manager.xml \
 		conf/Catalina/localhost	
 	
-	# copy over needed files
+	# make the jars available via java-config -p and jar-from, etc
+	base=`pwd`
+	libdirs="common/lib server/lib"
+	for dir in ${libdirs}
+	do
+		cd ${dir}
+		
+		for jar in $(ls *.jar);
+		do
+			# replace the file with a symlink
+			if [ ! -L ${jar} ]; then
+				java-pkg_dojar ${jar}
+				rm -f ${jar}
+				java-pkg_jar-from tomcat-5 ${jar}
+			fi
+		done
+
+		cd ${base}
+	done
+		
+	# copy over the directories 
 	cp -ra conf/* ${D}/etc/${TOMCAT_NAME}/default || die "failed to copy conf"
 	cp -ra bin common server shared ${D}/usr/share/${TOMCAT_NAME} || die "failed to copy"
 

@@ -6,7 +6,7 @@
  
 +# source the appropriate files right away
 +source /etc/profile
-+source /etc/conf.d/tomcat5
++source /etc/conf.d/tomcat-5
 +
  # OS specific support.  $var _must_ be set to either true or false.
  cygwin=false
