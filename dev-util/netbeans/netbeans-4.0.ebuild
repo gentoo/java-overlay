@@ -21,10 +21,15 @@ DEPEND=">=virtual/jdk-1.4.2
 		>=dev-java/ant-1.6.1
 		=dev-java/xerces-2.6.2*
 		=dev-java/commons-logging-1.0*
-		=dev-java/regexp-1.2*
-		=dev-java/xalan-2.5*"
+		dev-java/regexp
+		=dev-java/xalan-2*
+		=dev-java/junit-3.8*"
 
-RDEPEND=">=virtual/jre-1.4.2"
+RDEPEND="
+		>=virtual/jre-1.4.2
+		 dev-java/commons-el
+		 =dev-java/servletapi-2.4*
+		 "
 
 S=${WORKDIR}/netbeans-src
 		
@@ -69,7 +74,7 @@ src_install()
 {	
 	local DESTINATION="/usr/share/netbeans-${SLOT}"
 	insinto $DESTINATION
-	local D_DESTINATION="${D}/${DESTINATION}"
+#	local D_DESTINATION="${D}/${DESTINATION}"
 
 	BUILDDESTINATION="${S}/nbbuild/netbeans"
 	cd $BUILDDESTINATION
@@ -80,44 +85,42 @@ src_install()
 	fperms 655 \
 		   ${DESTINATION}/bin/netbeans \
 		   ${DESTINATION}/platform4/lib/nbexec
-
-#NOTICE THIS. We first installed everything here 
-#and now we will start to remove stuff from here.
- 
-	cd ${D}/${DESTINATION}
-
-#removing tomcat
-	rm -fr ./nb4.0/jakarta-tomcat-*
+	
+	#The symlink to the binary
+	dodir /usr/bin
+	dosym ${DESTINATION}/bin/netbeans /usr/bin/netbeans-${SLOT}
 
 #ant stuff
-	
-	insinto /usr/share/ant-tasks
-	doins -r ide4/ant/nblib
-	
-	rm -fr ./ide4/ant/
+	local ANTDIR="${DESTINATION}/ide4/ant"
+	cd ${D}/${ANTDIR}
 
-	cd $BUILDDESTINATION
-	insinto ${DESTINATION}/ide4/ant/
-	doins -r ide4/ant/extra
+	rm -fr ./lib
+	dodir /usr/share/ant-core/lib
+	dosym /usr/share/ant-core/lib ${ANTDIR}/lib
+
+	rm -fr ./bin
+	dodir /usr/share/ant-core/bin
+	dosym /usr/share/ant-core/bin  ${ANTDIR}/bin
+
+#NOTICE THIS. We first installed everything here 
+#and now we will remove some stuff from here and
+#install it somewhere else instead.
+ 
+	cd ${D}/${DESTINATION}
 		
 #Documentation
 
 	#The next directory seems to be empty	
-	if ! rmdir doc; then	
+	if ! rmdir doc 2> /dev/null; then	
 		use doc || rm -fr ./doc
 	fi
 	
 	use doc || rm -fr ./nb4.0/docs
 
-
 	dodoc build_info
 	dohtml CREDITS.html README.html netbeans.css
 	
-	rm -f nbuild_info CREDITS.html README.html netbeans.css
-
-#The symlink to the binary
-	dodir /usr/bin
-	dosym ${DESTINATION}/bin/netbeans /usr/bin/netbeans-${SLOT}
+	rm -f build_info CREDITS.html README.html netbeans.css
 
 #Icons and shortcuts
 	echo "Symlinking icons...."
