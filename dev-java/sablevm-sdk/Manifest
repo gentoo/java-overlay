@@ -1,3 +1,6 @@
-MD5 9ad34e0b0bb9dc9480c4713cc8feea3f sablevm-sdk-1.11.1.ebuild 612
+MD5 d75d36f7c3a6732b08881238b02831b9 sablevm-sdk-1.11.1.ebuild 796
+MD5 d75d36f7c3a6732b08881238b02831b9 sablevm-sdk-1.11.2.ebuild 796
 MD5 8d20f6e17713798ae85274fd4733c0d7 files/sablevm-sdk-1.11.1 361
 MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-sablevm-sdk-1.11.1 0
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-sablevm-sdk-1.11.2 0
+MD5 8d20f6e17713798ae85274fd4733c0d7 files/sablevm-sdk-1.11.2 361
