@@ -8,7 +8,10 @@ DESCRIPTION="The Netbeans Metadata Repository project"
 
 HOMEPAGE="http://mdr.netbeans.org"
 
-SRC_URI="netbeans-4_0-src-ide_sources.tar.bz2"
+BASELOCATION=" \
+http://www.netbeans.org/download/4_0/fcs/200412081800/d5a0f13566068cb86e33a46ea130b207"
+
+SRC_URI="${BASELOCATION}/netbeans-4_0-src-ide_sources.tar.bz2"
 
 #We need to add many licenses here
 LICENSE=""
@@ -28,18 +31,17 @@ RDEPEND="virtual/jre"
 S=${WORKDIR}/netbeans-src
 
 src_compile() {
-	local antflags
-	use jikes && antflags="${antflags} -Dbuild.compiler=jikes"
+	local antflags="-Dnetbeans.no.pre.unscramble=true"
 	cd nbbuild
 
 	# The build will attempt to display graphical
 	# dialogs for the licence agreements if this is set.
 	unset DISPLAY
 
-	yes yes 2>/dev/null | ant all-mdr || die "Compiling failed"
-	cd $S/mdr
+	yes yes 2>/dev/null | ant $antflags all-mdr || die "Compiling failed"
 
 	#make the zip to easily collect the files
+	cd $S/mdr
 	ant download || die "Failed to package the files to a temporary zip"
 }
 
@@ -48,5 +50,5 @@ src_install() {
 	unzip mdr-standalone.zip -d $T
 	cd $T
 	java-pkg_dojar *.jar
-	dodoc licenses.txt versioninfo.txt
+	dodoc licenses.txt
 }
