@@ -20,8 +20,8 @@ SRC_URI="${BASELOCATION}/${MAINTARBALL} \
 
 SLOT="4.0"
 
-#We need to add many licenses in here. 
-LICENSE="GPL-2 Apache-1.1 sun-bcla-j2ee JPython SPL"
+#When we have java-pkg_jar-from to everything only SPL should be needed here. 
+LICENSE="SPL"
 KEYWORDS="~x86"
 
 DEPEND=">=virtual/jdk-1.4.2
@@ -31,14 +31,28 @@ DEPEND=">=virtual/jdk-1.4.2
 		dev-java/regexp
 		=dev-java/xalan-2*
 		=dev-java/junit-3.8*
-		=dev-java/mdr"
+		dev-java/mdr
+		dev-java/sac
+		=dev-java/servletapi-2.2*
+		=dev-java/servletapi-2.3*
+		=dev-java/servletapi-2.4*
+		dev-java/commons-el
+		dev-java/jtidy
+		=dev-java/jaxen-1.1_beta2
+		dev-java/saxpath
+		=www-servers/tomcat-5.0.28*
+		=dev-java/javahelp-bin-2.0.0.2-r*
+		dev-java/javamake"
+
 
 RDEPEND="
 		>=virtual/jre-1.4.2
 		 dev-java/commons-el
 		 =dev-java/servletapi-2.4*
 		 dev-java/sac
+		 dev-java/flute
 		 dev-java/mdr
+		 =www-servers/tomcat-5.0.28*
 		"
 
 S=${WORKDIR}/netbeans-src
@@ -56,12 +70,47 @@ src_unpack ()
 
 	cd ${S}
 	epatch ${FILESDIR}/nbbuild.patch
+
+	cd ${S}/core/external
+	java-pkg_jar-from javahelp-bin jh.jar jh-2.0_01.jar
 	
+	cd ${S}/nbbuild/external
+	java-pkg_jar-from javahelp-bin jhall.jar jhall-2.0_01.jar
+
 	cd ${S}/libs/external/
 	java-pkg_jar-from xerces-2 xercesImpl.jar xerces-2.6.2.jar	
 	java-pkg_jar-from commons-logging commons-logging.jar commons-logging-1.0.4.jar
 	java-pkg_jar-from regexp regexp.jar	regexp-1.2.jar
 	java-pkg_jar-from xalan xalan-jar xalan-2.5.2.jar
+
+	cd ${S}/xml/external/
+	java-pkg_jar-from sac 
+	java-pkg_jar-from xerces-2 xercesImpl.jar xerces2.jar
+	java-pkg_jar-from flute
+
+	cd ${S}/httpserver/external/
+	java-pkg_jar-from servletapi-2.2 servletapi-2.2.jar servlet-2.2.jar	
+	
+	cd ${S}/java/external/
+	java-pkg_jar-from javamake javamake.jar javamake-1.2.12.jar
+	
+	cd ${S}/junit/external/
+	java-pkg_jar-from junit junit.jar junit-3.8.1.jar
+
+
+	cd ${S}/tasklist/external/
+	java-pkg_jar-from jtidy Tidy.jar Tidy-r7.jar
+	
+
+	cd ${S}/web/external
+	java-pkg_jar-from servletapi-2.3 servletapi-2.3.jar servlet-2.3.jar
+	java-pkg_jar-from servletapi-2.4 servlet-api.jar servlet-api-2.4.jar	
+	java-pkg_jar-from commons-el
+	java-pkg_jar-from jaxen-1.1 jaxen-1.1_beta2.jar jaxen-full.jar
+	java-pkg_jar-from saxpath
+	java-pkg_jar-from tomcat-5	jasper-compiler.jar jasper-compiler-5.0.28.jar
+	java-pkg_jar-from tomcat-5	jasper-runtime.jar jasper-runtime-5.0.28.jar
+
 	#removing tomcat
 #	rm -fr tomcatint translatedfiles/src/tomcatint
 }
@@ -72,6 +121,7 @@ src_compile()
 
 	antflags="${antflags} -Dnetbeans.no.pre.unscramble=true"
 	antflags="${antflags} -Dmoduleconfig=stable-without-webapps"
+	antflags="${antflags} -Dstop.when.broken.modules=true"
 
 	# The build will attempt to display graphical
 	# dialogs for the licence agreements if this is set.
@@ -85,22 +135,23 @@ src_compile()
 	yes yes 2>/dev/null | 	ant $antflags build-nozip || die "Compiling failed!"
 
 	#Remove non-x86 Linux binaries
-	find $S -name "*.exe" -o -name "*.cmd" -o -name "*.dll" | xargs rm -f 	
+	find $S -type f -name "*.exe" -o -name "*.cmd" -o \
+			        -name "*.bat" -o -name "*.dll"	  \
+			| xargs rm -f
 }
 
 src_install()
 {	
 	local DESTINATION="/usr/share/netbeans-${SLOT}"
 	insinto $DESTINATION
-#	local D_DESTINATION="${D}/${DESTINATION}"
 
-	BUILDDESTINATION="${S}/nbbuild/netbeans"
+	local BUILDDESTINATION="${S}/nbbuild/netbeans"
 	cd $BUILDDESTINATION
 
 #The program itself
 	doins -r * 
 
-	fperms 655 \
+	fperms 755 \
 		   ${DESTINATION}/bin/netbeans \
 		   ${DESTINATION}/platform4/lib/nbexec
 	
