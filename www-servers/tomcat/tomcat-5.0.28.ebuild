@@ -32,6 +32,7 @@ RDEPEND=">=virtual/jdk-1.4
 	   dev-java/jmx
 	   >=dev-java/log4j-1.2.8
 	   >=dev-java/regexp-1.3
+	   ~dev-java/servletapi-2.4
 	   =dev-java/struts-1.1-r2
 	   >=dev-java/saxpath-1.0
 	   >=dev-java/xerces-2.6.2-r1
@@ -52,6 +53,34 @@ src_unpack() {
 	epatch ${FILESDIR}/${PV}/gentoo.diff
 	epatch ${FILESDIR}/${PV}/scripts.patch
 	use jikes && epatch ${FILESDIR}/${PV}/jikes.diff
+
+	# avoid packed jars :-)
+	mkdir -p ${S}/jakarta-tomcat-5/build/common
+	cd ${S}/jakarta-tomcat-5/build
+
+	mkdir ./bin && cd ./bin
+	java-pkg_jar-from commons-logging commons-logging-api.jar
+	java-pkg_jar-from jmx jmxri.jar jmx.jar
+	java-pkg_jar-from commons-daemon
+
+	mkdir ../common/endorsed && cd ../common/endorsed
+	java-pkg_jar-from xerces-2 xml-apis.jar
+	java-pkg_jar-from xerces-2 xercesImpl.jar
+
+	mkdir ../lib && cd ../lib
+	java-pkg_jar-from ant-core
+	java-pkg_jar-from commons-collections
+	java-pkg_jar-from commons-dbcp
+	java-pkg_jar-from commons-el
+	java-pkg_jar-from commons-pool
+	java-pkg_jar-from servletapi-2.4
+
+	mkdir -p ../../server/lib && cd ../../server/lib
+	java-pkg_jar-from commons-beanutils commons-beanutils.jar
+	java-pkg_jar-from commons-digester
+	java-pkg_jar-from commons-fileupload
+	java-pkg_jar-from commons-modeler
+	java-pkg_jar-from regexp
 }
 
 src_compile(){
