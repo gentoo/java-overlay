@@ -20,6 +20,8 @@ IUSE=""
 
 DEPEND=""
 
+RDEPEND="virtual/jre"
+
 src_unpack() {
 	mkdir ${S}
 	cp ${DISTDIR}/mof.jar ${S}
