@@ -32,9 +32,9 @@ java-pkg_dosrc() {
 
 	local files
 	local startdir=`pwd`
-		for x in $@; do
-			cd `dirname $x`
-			zip -r ${T}/${PN}-src.zip `basename $x`	
+	for x in $@; do
+		cd `dirname $x`
+		zip -r ${T}/${PN}-src.zip `basename $x`	
 		cd $startdir
 	done
 
