@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+inherit java-pkg
+
 DESCRIPTION="A javadoc compatible Java source documentation generator."
 
 HOMEPAGE="http://www.gnu.org/software/cp-tools/"
@@ -31,18 +33,13 @@ DEPEND=">=dev-java/antlr-2.7.1
 
 #RDEPEND=""
 
-src_unpack() {
-	unpack ${A}
-	sed -i -e 's:${datadir}/java/:${datadir}/gjdoc/:g' ${S}/gjdoc.sh.in
-}
-
 src_compile() {
-	econf --with-antlr-jar=/usr/share/antlr/lib/antlr.jar \
-	  || die "econf failed"
+	local myc="--with-antlr-jar=`java-config --classpath=antlr`"
+	econf ${myc} || die "econf failed"
 	emake || die "emake failed"
 }
 
 src_install() {
-	# TODO: explore java-pkg eclass, could be of some use
-	make DESTDIR=${D} jardir=/usr/share/${PN} install || die
+	java-pkg_dojar *.jar
+	dobin ${FILESDIR}/gjdoc
 }
