@@ -20,14 +20,13 @@ KEYWORDS="~x86"
 DEPEND=">=virtual/jdk-1.4.2
 		>=dev-java/ant-1.6.1
 		=dev-java/xerces-2.6.2*
-		dev-java/commons-logging
-		dev-java/regexp
-		dev-java/xalan"
+		=dev-java/commons-logging-1.0*
+		=dev-java/regexp-1.2*
+		=dev-java/xalan-2.5*"
 
 RDEPEND=">=virtual/jre-1.4.2"
 
 S=${WORKDIR}/netbeans-src
-BUILDDESTINATION="${S}/nbbuild/netbeans"		
 		
 src_unpack () 
 {
@@ -61,32 +60,45 @@ src_compile()
 	# Specify the build-nozip target otherwise it will build
 	# a zip file of the netbeans folder, which will copy directly.
 	yes yes 2>/dev/null | 	ant $antflags build-nozip || die "Compiling failed!"
+
+	#Remove non-x86 Linux binaries
+	find $S -name "*.exe" -o -name "*.cmd" -o -name "*.dll" | xargs rm -f 	
 }
 
 src_install()
 {	
 	local DESTINATION="/usr/share/netbeans-${SLOT}"
 	insinto $DESTINATION
+	local D_DESTINATION="${D}/${DESTINATION}"
 
+	BUILDDESTINATION="${S}/nbbuild/netbeans"
 	cd $BUILDDESTINATION
 
 #The program itself
-	dodir $DESTINATION
-	cp -a * ${D}/$DESTINATION
+	doins -r * 
 
+	fperms 655 \
+		   ${DESTINATION}/bin/netbeans \
+		   ${DESTINATION}/platform4/lib/nbexec
 
-#Remove non-x86 Linux binaries
-	find $S -name "*.exe" -o -name "*.cmd" -o -name "*.dll" | xargs rm -f 
-	
+#NOTICE THIS. We first installed everything here 
+#and now we will start to remove stuff from here.
+ 
+	cd ${D}/${DESTINATION}
+
 #removing tomcat
-	rm -fr ${INSDESTREE}/nb4.0/jakarta-tomcat-*
+	rm -fr ./nb4.0/jakarta-tomcat-*
 
-#ant tasks
-	insinto /usr/share/ant-tasks
-	doins ide4/ant/nblib
+#ant stuff
 	
-	insinto $DESTINATION
-	rm -fr ${INSDESTREE}/ide4/ant/
+	insinto /usr/share/ant-tasks
+	doins -r ide4/ant/nblib
+	
+	rm -fr ./ide4/ant/
+
+	cd $BUILDDESTINATION
+	insinto ${DESTINATION}/ide4/ant/
+	doins -r ide4/ant/extra
 		
 #Documentation
 
@@ -100,7 +112,7 @@ src_install()
 
 	dodoc build_info
 	dohtml CREDITS.html README.html netbeans.css
-	cd ${INSDESTREE}
+	
 	rm -f nbuild_info CREDITS.html README.html netbeans.css
 
 #The symlink to the binary
