@@ -4,11 +4,11 @@
 
 inherit java-pkg
 
-DESCRIPTION="SAC is a standard interface for CSS parser"
+DESCRIPTION="Flute is an implementation for SAC"
 
 HOMEPAGE="http://www.w3.org/Style/CSS/SAC/"
 
-SRC_URI="http://www.w3.org/2002/06/sacjava-${PV}.zip"
+SRC_URI="http://www.w3.org/2002/06/flutejava-${PV}.zip"
 
 LICENSE="w3c"
 
@@ -21,34 +21,21 @@ IUSE="doc jikes sources"
 DEPEND="app-arch/unzip
 		virtual/jdk
 		jikes? (dev-java/jikes)
+		dev-java/sac
 		"
 
-RDEPEND="virtual/jre"
-
-java-pkg_dosrc() {
-	[ $# -lt 1 ] && die "${FUNCNAME[0]}: at least one argument needed" 
-
-	local target="/usr/share/doc/${PF}/source/"
-
-	local files
-	local startdir=`pwd`
-		for x in $@; do
-			cd `dirname $x`
-			zip -r ${T}/${PN}-src.zip `basename $x`	
-		cd $startdir
-	done
-
-	dodir $target
-	install ${INSOPTIONS} "${T}/${PN}-src.zip" "${D}${target}"
-}
+RDEPEND="
+		dev-java/sac
+		virtual/jre"
 
 src_unpack() {
 	unpack $A
 	cp ${FILESDIR}/build.xml $S
 	cd $S
-	rm -fr sac.jar META-INF
+	rm -fr flute.jar
 	mkdir src
 	mv org src
+	java-pkg_jar-from sac
 }
  
 src_compile() {
@@ -66,5 +53,5 @@ src_install() {
 	fi
 
 	cd dist
-	dojar sac.jar
+	dojar flute.jar
 }

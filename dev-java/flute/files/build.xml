@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="sac" default="jar">
+<project name="flute" default="jar">
 	<!-- some properties -->
 	<property name="src.dir" value="src" />
 	<property name="build.dir" value="build" />
@@ -15,7 +15,9 @@
 
 	<!-- compile everything -->
 	<target name="compile" depends="init">
-		<javac srcdir="${src.dir}" destdir="${build.dir}" />
+		<javac srcdir="${src.dir}" destdir="${build.dir}">
+		 		<classpath location="sac.jar" />
+		</javac>
 	</target>
 
 	<!-- build the jar file -->
