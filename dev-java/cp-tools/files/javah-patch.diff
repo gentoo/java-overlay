@@ -1,0 +1,90 @@
+diff -ur cp-tools-20050331.orig/src/gnu/classpath/tools/javah/GnuByteCodeJavah.java cp-tools-20050331/src/gnu/classpath/tools/javah/GnuByteCodeJavah.java
+--- cp-tools-20050331.orig/src/gnu/classpath/tools/javah/GnuByteCodeJavah.java	2005-01-29 23:19:27.000000000 -0500
++++ cp-tools-20050331/src/gnu/classpath/tools/javah/GnuByteCodeJavah.java	2005-04-01 00:01:02.547274120 -0500
+@@ -113,34 +113,8 @@
+         out.println("Error: Class " + className + " could not be found.");
+         return;
+       }
+-    if (getOutputDirectory() != null)
+-      {
+-        String filename = className.replace('.', '_');
+-        filename = filename.replace('$', '_');
+-        filename = filename + ".h";
+-        File dir = new File(getOutputDirectory());
+-        // fatal error
+-        if (!dir.exists())
+-          return;
+-        File f = new File(dir, className);
+-        if (f.exists())
+-          if (!f.delete())
+-            {
+-              System.err.println("Error: The file " + f.getPath()
+-                                 + " could not be deleted.");
+-              return;
+-            }
+-        if (isOutputVerbose())
+-          {
+-            buf = new StringBuffer();
+-            buf.append("[Creating ");
+-            buf.append(f.getPath());
+-            buf.append("]");
+-            out.println(buf.toString());
+-          }
+-        writeHeader(classType, f);
+-      }
+-    else if (getOutputFile() != null)
++
++    if (getOutputFile() != null)
+       {
+         File f = new File(getOutputFile());
+         if (isOutputVerbose())
+@@ -153,6 +127,41 @@
+           }
+         writeHeader(classType, f);
+       }
++    else {
++      File dir;
++      if (getOutputDirectory() != null) {
++        dir = new File(getOutputDirectory());
++        // fatal error
++        if (!dir.exists())
++          return;
++      } else {
++	dir = new File(".");
++      }
++
++      String filename = className.replace('.', '_');
++      filename = filename.replace('$', '_');
++      filename = filename + ".h";
++      
++      File f = new File(dir, filename);
++      if (f.exists())
++	if (!f.delete())
++	  {
++	    System.err.println("Error: The file " + f.getPath()
++			       + " could not be deleted.");
++	    return;
++	  }
++      if (isOutputVerbose())
++	{
++	  buf = new StringBuffer();
++	  buf.append("[Creating ");
++	  buf.append(f.getPath());
++	  buf.append("]");
++	  out.println(buf.toString());
++	}
++      writeHeader(classType, f);
++    }
++
++
+   }
+ 
+   private void writeHeader(ClassType classType, File f)
+@@ -365,4 +374,4 @@
+         return;
+       }
+   }
+-}
+\ No newline at end of file
++}
+Only in cp-tools-20050331/src/gnu/classpath/tools/javah: GnuByteCodeJavah.java~

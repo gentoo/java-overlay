@@ -23,7 +23,8 @@ IUSE=""
  
 DEPEND="~dev-java/sablevm-${PV}
 	dev-java/fastjar
-	dev-java/gjdoc"
+	dev-java/gjdoc
+	dev-java/cp-tools"
 
 #RDEPEND=""
 
@@ -34,6 +35,12 @@ src_install() {
 	dodir /usr/lib/sablevm/bin
 	dosym /usr/bin/jar /usr/lib/sablevm/bin
 	dosym /usr/bin/gjdoc /usr/lib/sablevm/bin/javadoc
+	# cp-tools
+	CPTOOLS="currencygen javah javap localegen native2ascii \
+	  rmic rmiregistry serialver"
+	for f in ${CPTOOLS} ; do
+	  dosym /usr/bin/$f /usr/lib/sablevm/bin/$f
+	done
 
 	# man symlinks
 	dodir /usr/lib/sablevm/man/man1
