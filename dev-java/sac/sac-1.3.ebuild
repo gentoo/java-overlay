@@ -32,8 +32,7 @@ src_compile() {
 }
 
 src_install() {
-	cd doc
-	use doc || dohtml -r *
-	cd ../dist/
+	use doc || java-pkg_dohtml -r ./doc/*
+	cd dist
 	dojar sac.jar
 }
