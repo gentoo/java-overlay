@@ -1,0 +1,26 @@
+# Copyright 1999-2005 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+inherit java
+
+DESCRIPTION="A free java sdk around SableVM virtual machine."
+HOMEPAGE="http://sablevm.org/"
+
+LICENSE="LGPL-2.1"
+SLOT="0"
+KEYWORDS="~x86 ~ppc ~amd64"
+IUSE=""
+DEPEND="~dev-java/sablevm-${PV}"
+
+#RDEPEND=""
+
+S=${WORKDIR}
+
+src_install() {
+	dodir /usr/lib/sablevm/man/man1
+	dosym ${ROOT}usr/share/man/man1/java-sablevm.1.gz /usr/lib/sablevm/man/man1/java.1.gz
+	dosym ${ROOT}usr/share/man/man1/jikes.1.gz /usr/lib/sablevm/man/man1/javac.1.gz
+
+	set_java_env ${FILESDIR}/${VMHANDLE}
+}

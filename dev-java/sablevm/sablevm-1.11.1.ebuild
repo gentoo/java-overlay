@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java
+inherit eutils
 
 DESCRIPTION="A robust, clean, extremely portable, efficient, and specification-compliant Java virtual machine."
 HOMEPAGE="http://sablevm.org/"
@@ -66,9 +66,4 @@ src_install() {
 	# Install the VM
 	cd ${S}/sablevm-${PV}
 	einstall || die
-
-	dodir /usr/lib/sablevm/man/man1
-	dosym ${ROOT}usr/share/man/man1/java-sablevm.1.gz /usr/lib/sablevm/man/man1/java.1.gz
-
-	set_java_env ${FILESDIR}/${VMHANDLE}
 }
