@@ -10,7 +10,17 @@ HOMEPAGE="http://sablevm.org/"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~x86 ~ppc ~amd64"
+
+#
+# Note: gjdoc depends on virtual/jdk so there is some minor bootstrap issue
+#       to get around.
+#
+
 IUSE=""
+
+#PROVIDE="virtual/jdk-1.4
+#	virtual/jre-1.4"
+ 
 DEPEND="~dev-java/sablevm-${PV}
 	dev-java/fastjar
 	dev-java/gjdoc"
