@@ -8,7 +8,7 @@ DESCRIPTION="Meta Object Facility"
 
 HOMEPAGE="http://www.omg.org/"
 
-SRC_URI="mof.jar"
+SRC_URI="http://gentooexperimental.org/svn/java/gentoo-java-experimental/distfiles/mof.jar"
 
 LICENSE="as-is"
 

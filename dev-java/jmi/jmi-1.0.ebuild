@@ -8,7 +8,7 @@ DESCRIPTION="Java Metadata Interface"
 
 HOMEPAGE="http://java.sun.com/products/jmi/"
 
-SRC_URI="jmi.jar"
+SRC_URI="http://gentooexperimental.org/svn/java/gentoo-java-experimental/distfiles/jmi.jar"
 
 LICENSE="as-is"
 
