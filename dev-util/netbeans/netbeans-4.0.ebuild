@@ -24,6 +24,8 @@ SLOT="4.0"
 LICENSE="SPL"
 KEYWORDS="~x86"
 
+#Bad tomcat versions <r2
+
 DEPEND=">=virtual/jdk-1.4.2
 		>=dev-java/ant-1.6.1
 		=dev-java/xerces-2.6.2*
@@ -38,11 +40,13 @@ DEPEND=">=virtual/jdk-1.4.2
 		=dev-java/servletapi-2.4*
 		dev-java/commons-el
 		dev-java/jtidy
-		=dev-java/jaxen-1.1_beta2
+		=dev-java/jaxen-1.1*
 		dev-java/saxpath
-		=www-servers/tomcat-5.0.28*
-		=dev-java/javahelp-bin-2.0.0.2-r*
-		dev-java/javamake"
+		~www-servers/tomcat-5.0.28
+		dev-java/javamake-bin
+		dev-java/mof
+		dev-java/jmi
+		>=dev-java/javahelp-bin-2.0.02-r1"
 
 
 RDEPEND="
@@ -52,7 +56,7 @@ RDEPEND="
 		 dev-java/sac
 		 dev-java/flute
 		 dev-java/mdr
-		 =www-servers/tomcat-5.0.28*
+		 ~www-servers/tomcat-5.0.28
 		"
 
 S=${WORKDIR}/netbeans-src
@@ -71,6 +75,16 @@ src_unpack ()
 	cd ${S}
 	epatch ${FILESDIR}/nbbuild.patch
 
+	#removing tomcat
+	rm -fr tomcatint 
+
+	#we have ant libs here so using the system libs	
+	cd ${S}/ant/external/
+	epatch ${FILESDIR}/antbuild.xml.patch
+	mkdir lib; cd lib
+	java-pkg_jar-from ant-tasks
+	java-pkg_jar-from ant-core
+
 	cd ${S}/core/external
 	java-pkg_jar-from javahelp-bin jh.jar jh-2.0_01.jar
 	
@@ -83,6 +97,10 @@ src_unpack ()
 	java-pkg_jar-from regexp regexp.jar	regexp-1.2.jar
 	java-pkg_jar-from xalan xalan-jar xalan-2.5.2.jar
 
+	cd ${S}/mdr/external/
+	java-pkg_jar-from jmi
+	java-pkg_jar-from mof
+
 	cd ${S}/xml/external/
 	java-pkg_jar-from sac 
 	java-pkg_jar-from xerces-2 xercesImpl.jar xerces2.jar
@@ -92,7 +110,7 @@ src_unpack ()
 	java-pkg_jar-from servletapi-2.2 servletapi-2.2.jar servlet-2.2.jar	
 	
 	cd ${S}/java/external/
-	java-pkg_jar-from javamake javamake.jar javamake-1.2.12.jar
+	java-pkg_jar-from javamake-bin javamake.jar javamake-1.2.12.jar
 	
 	cd ${S}/junit/external/
 	java-pkg_jar-from junit junit.jar junit-3.8.1.jar
@@ -111,8 +129,6 @@ src_unpack ()
 	java-pkg_jar-from tomcat-5	jasper-compiler.jar jasper-compiler-5.0.28.jar
 	java-pkg_jar-from tomcat-5	jasper-runtime.jar jasper-runtime-5.0.28.jar
 
-	#removing tomcat
-#	rm -fr tomcatint translatedfiles/src/tomcatint
 }
 src_compile()
 {
@@ -206,4 +222,11 @@ src_install()
 	done
 
 	make_desktop_entry netbeans-${SLOT} Netbeans netbeans Development
+}
+
+pkg_postinst ()
+{
+	einfo "Your tomcat directory might not have the right permissions."
+	einfo "Please make sure that normal users can read the directory:"
+	einfo "/usr/share/tomcat-5"
 }
