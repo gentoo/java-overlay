@@ -1,0 +1,63 @@
+--- ../jakarta-tomcat-5.0.28-src.orig/jakarta-tomcat-5/build.xml	2004-08-29 02:14:04.000000000 +0200
++++ jakarta-tomcat-5/build.xml	2005-02-09 21:45:59.716901040 +0100
+@@ -267,6 +267,7 @@
+           depends="init" description="Precompile webapps" >
+ 
+     <!-- JSPC -->
++    <!--
+     <property name="admin.base" location="${tomcat.build}/server/webapps/admin" />
+     <property name="ROOT.base" location="${tomcat.build}/webapps/ROOT" />
+     <property name="jsp-examples.base" location="${tomcat.build}/webapps/jsp-examples" />
+@@ -393,6 +394,8 @@
+       </classpath>
+       <include name="admin/**" />
+     </javac>
++
++    -->
+   </target>
+ 
+   <target name="build-catalina" depends="init"
+@@ -563,9 +566,10 @@
+     </ant>
+ 
+     <!-- Precompiling and fixing webapps -->
++    <!--
+     <antcall target="build-webapps-precompile" /> 
+     <antcall target="fix-webapps" />
+-
++	-->
+   </target>
+ 
+   <target name="fix-webapps" depends="init" >
+@@ -1547,6 +1551,7 @@
+     <copy file="LICENSE" tofile="${base.path}/LICENSE"/>
+ 
+     <!-- Downdown any sub package or tools needed. -->
++    <!--
+     <antcall target="downloadgz">
+       <param name="sourcefile" value="${commons-beanutils.loc}"/>
+       <param name="destfile" value="${commons-beanutils.jar}"/>
+@@ -1593,7 +1598,6 @@
+     </antcall>
+ 
+     <antcall target="downloadgz">
+-      <!-- xerces2 brings 2 files, test for one of them -->
+       <param name="sourcefile" value="${xerces.loc}"/>
+       <param name="destfile" value="${xml-apis.jar}"/>
+     </antcall>
+@@ -1655,14 +1659,12 @@
+       <param name="sourcefile" value="${saxpath.loc}"/>
+       <param name="destfile" value="${saxpath.jar}"/>
+     </antcall>
+-
+-    <!-- Build the dependencies that are not yet released -->
++	-->
+     <antcall target="build-depends"/>
+ 
+   </target>
+ 
+   <target name="proxyflags">
+-    <!-- check proxy parameters. -->
+     <condition property="useproxy">
+       <equals arg1="${proxy.use}" arg2="on" />
+     </condition>
