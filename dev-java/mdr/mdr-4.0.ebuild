@@ -14,7 +14,7 @@ http://www.netbeans.org/download/4_0/fcs/200412081800/d5a0f13566068cb86e33a46ea1
 SRC_URI="${BASELOCATION}/netbeans-4_0-src-ide_sources.tar.bz2"
 
 #We need to add many licenses here
-LICENSE=""
+LICENSE="spl javahelp jmi mof"
 
 SLOT="0"
 
@@ -23,10 +23,10 @@ KEYWORDS="~x86"
 IUSE=""
 
 DEPEND="app-arch/unzip
-		virtual/jdk
+		virtual/jdk-1.4.2
 		"
 
-RDEPEND="virtual/jre"
+RDEPEND="virtual/jre-1.4.2"
 
 S=${WORKDIR}/netbeans-src
 
