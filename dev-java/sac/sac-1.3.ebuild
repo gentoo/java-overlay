@@ -16,7 +16,7 @@ SLOT="0"
 
 KEYWORDS="~x86"
 
-IUSE="doc jikes sources"
+IUSE="doc jikes source"
 
 DEPEND="app-arch/unzip
 		virtual/jdk
@@ -44,7 +44,7 @@ src_install() {
 	use doc && java-pkg_dohtml -r ./doc/*
 	dohtml COPYRIGHT.html
 
-	if use sources; then
+	if use source; then
 		java-pkg_dosrc src/* || die "Failed to package sources"
 	fi
 
