@@ -9,12 +9,14 @@ DESCRIPTION="NetBeans ${PV} IDE for Java"
 IUSE="debug doc"
 HOMEPAGE="http://www.netbeans.org"
 
+MAINTARBALL="netbeans-4_0-src-ide_sources.tar.bz2"
+JAVADOCTARBALL="netbeans-4_0-docs-javadoc.tar.bz2"
 BASELOCATION=" \
 http://www.netbeans.org/download/4_0/fcs/200412081800/d5a0f13566068cb86e33a46ea130b207"
 
-SRC_URI="${BASELOCATION}/netbeans-4_0-src-ide_sources.tar.bz2 \
-	 doc? ( ${BASELOCATION}/netbeans-4_0-docs-javadoc.tar.bz2 )
-	"
+SRC_URI="${BASELOCATION}/${MAINTARBALL} \
+		 doc? ( ${BASELOCATION}/${JAVADOCTARBALL} )
+		 "
 
 SLOT="4.0"
 
@@ -43,7 +45,15 @@ S=${WORKDIR}/netbeans-src
 		
 src_unpack () 
 {
-	unpack $A
+	unpack $MAINTARBALL
+
+	if use doc; then
+		mkdir javadoc
+		cd javadoc
+		unpack $JAVADOCTARBALL
+		rm *.zip
+	fi
+
 	cd ${S}
 	epatch ${FILESDIR}/nbbuild.patch
 	
@@ -98,7 +108,7 @@ src_install()
 	dodir /usr/bin
 	dosym ${DESTINATION}/bin/netbeans /usr/bin/netbeans-${SLOT}
 
-#ant stuff
+#Ant stuff. We use the system ant.
 	local ANTDIR="${DESTINATION}/ide4/ant"
 	cd ${D}/${ANTDIR}
 
@@ -122,8 +132,9 @@ src_install()
 	if ! rmdir doc 2> /dev/null; then	
 		use doc || rm -fr ./doc
 	fi
-	
+
 	use doc || rm -fr ./nb4.0/docs
+	use doc && java-pkg_dohtml -r ${WORKDIR}/javadoc/*
 
 	dodoc build_info
 	dohtml CREDITS.html README.html netbeans.css
