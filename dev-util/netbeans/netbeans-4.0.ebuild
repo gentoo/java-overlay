@@ -29,7 +29,8 @@ RDEPEND="
 		>=virtual/jre-1.4.2
 		 dev-java/commons-el
 		 =dev-java/servletapi-2.4*
-		 "
+		 dev-java/sac
+		"
 
 S=${WORKDIR}/netbeans-src
 		

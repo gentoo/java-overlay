@@ -24,7 +24,7 @@ RDEPEND="virtual/jre"
 
 src_unpack() {
 	unpack $A
-	cp ${FILESDIR}/${PV}/build.xml $S
+	cp ${FILESDIR}/build.xml $S
 }
  
 src_compile() {
