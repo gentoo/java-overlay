@@ -2,7 +2,7 @@
 
 <project name="sac" default="jar">
 	<!-- some properties -->
-	<property name="src.dir" value="." />
+	<property name="src.dir" value="src" />
 	<property name="build.dir" value="build" />
 	<property name="dist.dir" value="dist" />
 	<property name="jarfile" value="${dist.dir}/${ant.project.name}.jar" />
@@ -31,8 +31,9 @@
 
         <!-- zip the sources -->
 	<target name="sourcezip">
-		<zip destfile="${dist.dir}/${ant.project.name}-src.zip">
-			<zipfileset dir="${src.dir}" />
-		</zip>
+		<zip 
+			destfile="${dist.dir}/${ant.project.name}-src.zip"
+			basedir="${src.dir}" 
+		/>
 	</target>
 </project>
