@@ -31,11 +31,13 @@ java-pkg_dosrc() {
         local target="/usr/share/doc/${PF}/source/"
 
         local files
+ 		local startdir=`pwd`
         for x in $@; do
-                files="$files $x"
+        		cd `dirname $x`
+        		zip -r ${T}/${PN}-src.zip `basename $x`	
+                cd $startdir
         done
 
-        zip -r ${T}/${PN}-src.zip $files
         dodir $target
         install ${INSOPTIONS} "${T}/${PN}-src.zip" "${D}${target}"
 }
@@ -60,7 +62,7 @@ src_install() {
 	dohtml COPYRIGHT.html
 
 	if use sources; then
-		java-pkg_dosrc src/org/w3c || die "Failed to package sources"
+		java-pkg_dosrc src/* || die "Failed to package sources"
 	fi
 
 	cd dist
