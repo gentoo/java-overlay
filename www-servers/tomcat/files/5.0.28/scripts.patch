@@ -1,0 +1,12 @@
+diff -uprN ../jakarta-tomcat-5.0.28-src.orig/jakarta-tomcat-catalina/catalina/src/bin/catalina.sh jakarta-tomcat-catalina/catalina/src/bin/catalina.sh
+--- ../jakarta-tomcat-5.0.28-src.orig/jakarta-tomcat-catalina/catalina/src/bin/catalina.sh	2005-02-12 13:54:09.755358496 +0100
++++ jakarta-tomcat-catalina/catalina/src/bin/catalina.sh	2005-02-12 18:47:07.925070512 +0100
+@@ -104,7 +104,7 @@ fi
+ if [ -n "$JSSE_HOME" ]; then
+   CLASSPATH="$CLASSPATH":"$JSSE_HOME"/lib/jcert.jar:"$JSSE_HOME"/lib/jnet.jar:"$JSSE_HOME"/lib/jsse.jar
+ fi
+-CLASSPATH="$CLASSPATH":"$CATALINA_HOME"/bin/bootstrap.jar:"$CATALINA_HOME"/bin/commons-logging-api.jar
++CLASSPATH="$CLASSPATH":"$CATALINA_HOME"/bin/bootstrap.jar:`java-config -p commons-logging`
+ 
+ if [ -z "$CATALINA_BASE" ] ; then
+   CATALINA_BASE="$CATALINA_HOME"
