@@ -25,23 +25,6 @@ DEPEND="app-arch/unzip
 
 RDEPEND="virtual/jre"
 
-java-pkg_dosrc() {
-	[ $# -lt 1 ] && die "${FUNCNAME[0]}: at least one argument needed" 
-
-	local target="/usr/share/doc/${PF}/source/"
-
-	local files
-	local startdir=`pwd`
-	for x in $@; do
-		cd `dirname $x`
-		zip -r ${T}/${PN}-src.zip `basename $x`	
-		cd $startdir
-	done
-
-	dodir $target
-	install ${INSOPTIONS} "${T}/${PN}-src.zip" "${D}${target}"
-}
-
 src_unpack() {
 	unpack $A
 	cp ${FILESDIR}/build.xml $S
