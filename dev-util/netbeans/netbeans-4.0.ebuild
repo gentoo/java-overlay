@@ -28,12 +28,14 @@ KEYWORDS="~x86"
 
 DEPEND=">=virtual/jdk-1.4.2
 		>=dev-java/ant-1.6.1
+		>=dev-java/javahelp-bin-2.0.02-r1
+		dev-java/jmi
+		dev-java/mof
 		=dev-java/xerces-2.6.2*
 		=dev-java/commons-logging-1.0*
-		dev-java/regexp
+		=dev-java/jakarta-regexp-1.3*
 		=dev-java/xalan-2*
 		=dev-java/junit-3.8*
-		dev-java/mdr
 		dev-java/sac
 		=dev-java/servletapi-2.2*
 		=dev-java/servletapi-2.3*
@@ -44,25 +46,34 @@ DEPEND=">=virtual/jdk-1.4.2
 		dev-java/saxpath
 		~www-servers/tomcat-5.0.28
 		dev-java/javamake-bin
-		dev-java/mof
-		dev-java/jmi
 		dev-java/jsr088
 		dev-java/xml-commons
-		>=dev-java/javahelp-bin-2.0.02-r1"
+		dev-java/xml-commons-resolver
+		"
 
 
 RDEPEND="
 		>=virtual/jre-1.4.2
-		 dev-java/commons-el
-		 =dev-java/servletapi-2.4*
-		 dev-java/sac
-		 dev-java/flute
-		 dev-java/mdr
-		 ~www-servers/tomcat-5.0.28
+		dev-java/commons-el
+		=dev-java/servletapi-2.4*
+		dev-java/sac
+		dev-java/flute
+		~www-servers/tomcat-5.0.28
 		"
 
 S=${WORKDIR}/netbeans-src
-		
+
+BUILDDESTINATION="${S}/nbbuild/netbeans"
+	
+TOMCATSLOT="5"
+
+RM="rm"
+
+pkg_setup ()
+{
+	use debug && ${RM}="rm -v"
+}
+	
 src_unpack () 
 {
 	unpack $MAINTARBALL
@@ -71,14 +82,17 @@ src_unpack ()
 		mkdir javadoc
 		cd javadoc
 		unpack $JAVADOCTARBALL
-		rm *.zip
+		${RM} *.zip
 	fi
 
 	cd ${S}
-	epatch ${FILESDIR}/nbbuild.patch
+#	epatch ${FILESDIR}/nbbuild.patch
 
 	#removing tomcat
-	rm -fr tomcatint 
+#	${RM} -fr tomcatint 
+
+#	cd ${S}/nbbuild
+#	cp ${FILESDIR}/user.build.properties . 
 
 	#we have ant libs here so using the system libs	
 	cd ${S}/ant/external/
@@ -90,19 +104,19 @@ src_unpack ()
 	cd ${S}/core/external
 	java-pkg_jar-from javahelp-bin jh.jar jh-2.0_01.jar
 	
+	cd ${S}/mdr/external/
+	java-pkg_jar-from jmi
+	java-pkg_jar-from mof
+
 	cd ${S}/nbbuild/external
 	java-pkg_jar-from javahelp-bin jhall.jar jhall-2.0_01.jar
 
 	cd ${S}/libs/external/
 	java-pkg_jar-from xerces-2 xercesImpl.jar xerces-2.6.2.jar	
 	java-pkg_jar-from commons-logging commons-logging.jar commons-logging-1.0.4.jar
-	java-pkg_jar-from regexp regexp.jar	regexp-1.2.jar
+	java-pkg_jar-from jakarta-regexp-1.3 regexp.jar	regexp-1.2.jar
 	java-pkg_jar-from xalan xalan-jar xalan-2.5.2.jar
-	java-pkg_jar-form xml-commons xml-apis.jar xml-commons-dom-ranges-1.0.b2.jar
-
-	cd ${S}/mdr/external/
-	java-pkg_jar-from jmi
-	java-pkg_jar-from mof
+	java-pkg_jar-from xml-commons xml-apis.jar xml-commons-dom-ranges-1.0.b2.jar
 
 	cd ${S}/xml/external/
 	java-pkg_jar-from sac 
@@ -111,6 +125,9 @@ src_unpack ()
 
 	cd ${S}/httpserver/external/
 	java-pkg_jar-from servletapi-2.2 servletapi-2.2.jar servlet-2.2.jar	
+#	touch webserver.txt
+#	jar -cf webserver.jar webserver.txt
+#	java-pkg_jar-from tomcat-5
 
 	cd ${S}/j2eeserver/external
 	java-pkg_jar-from jsr088 jsr088 jsr088.jar jsr88javax.jar
@@ -121,10 +138,8 @@ src_unpack ()
 	cd ${S}/junit/external/
 	java-pkg_jar-from junit junit.jar junit-3.8.1.jar
 
-
 	cd ${S}/tasklist/external/
-	java-pkg_jar-from jtidy Tidy.jar Tidy-r7.jar
-	
+	java-pkg_jar-from jtidy Tidy.jar Tidy-r7.jar	
 
 	cd ${S}/web/external
 	java-pkg_jar-from servletapi-2.3 servletapi-2.3.jar servlet-2.3.jar
@@ -132,17 +147,22 @@ src_unpack ()
 	java-pkg_jar-from commons-el
 	java-pkg_jar-from jaxen-1.1 jaxen-1.1_beta2.jar jaxen-full.jar
 	java-pkg_jar-from saxpath
-	java-pkg_jar-from tomcat-5	jasper-compiler.jar jasper-compiler-5.0.28.jar
-	java-pkg_jar-from tomcat-5	jasper-runtime.jar jasper-runtime-5.0.28.jar
+	java-pkg_jar-from tomcat-${TOMCATSLOT}	jasper-compiler.jar jasper-compiler-5.0.28.jar
+	java-pkg_jar-from tomcat-${TOMCATSLOT}	jasper-runtime.jar jasper-runtime-5.0.28.jar
 
 }
 src_compile()
 {
 	local antflags=""
-	! use debug && antflags="${antflags} -Dno-deprecation"
-
+	
+	if use debug; then
+		antflags="${antflags} -Dbuild.compiler.debug=true"
+		antflags="${antflags} -Dbuild.compiler.deprecation=true"
+	else
+		antflags="${antflags} -Dbuild.compiler.deprecation=false"
+	fi
+	
 	antflags="${antflags} -Dnetbeans.no.pre.unscramble=true"
-	antflags="${antflags} -Dmoduleconfig=stable-without-webapps"
 	antflags="${antflags} -Dstop.when.broken.modules=true"
 
 	# The build will attempt to display graphical
@@ -154,42 +174,63 @@ src_compile()
 	
 	# Specify the build-nozip target otherwise it will build
 	# a zip file of the netbeans folder, which will copy directly.
-	yes yes 2>/dev/null | 	ant $antflags build-nozip || die "Compiling failed!"
+	yes yes 2>/dev/null | 	ant ${antflags} build-nozip || die "Compiling failed!"
 
 	#Remove non-x86 Linux binaries
-	find $S -type f -name "*.exe" -o -name "*.cmd" -o \
-			        -name "*.bat" -o -name "*.dll"	  \
-			| xargs rm -f
+	find ${BUILDDESTINATION} -type f -name "*.exe" -o -name "*.cmd" -o \
+			                 -name "*.bat" -o -name "*.dll"	  \
+			| xargs ${RM} -f	
+}
+
+remove_extjars()
+{
+	cd ${1}/ide4/modules/ext
+	${RM} commons* flute.jar jmi.jar junit* mof* sac*
+
+	cd ${1}/ide4/modules/autoload/ext
+	${RM} commons* jasper* jsp* jsr* servlet* xerces* xml-*
+
+	cd ${1}/platform4/modules/ext
+	${RM} *.jar
 }
 
 src_install()
 {	
+	local TOMCATDIR="nb4.0/jakarta-tomcat-5.0.28"
+	
 	local DESTINATION="/usr/share/netbeans-${SLOT}"
 	insinto $DESTINATION
 
-	local BUILDDESTINATION="${S}/nbbuild/netbeans"
-	cd $BUILDDESTINATION
+#Tomcat removal
+	${RM} -fr ${BUILDDESTINATION}/${TOMCATDIR}
+
+	cd ${BUILDDESTINATION}
 
 #The program itself
 	doins -r * 
+
+#	remove_extjars ${D}/${DESTINATION}	
 
 	fperms 755 \
 		   ${DESTINATION}/bin/netbeans \
 		   ${DESTINATION}/platform4/lib/nbexec
 	
-	#The symlink to the binary
-	dodir /usr/bin
-	dosym ${DESTINATION}/bin/netbeans /usr/bin/netbeans-${SLOT}
+#The wrapper wrapper :)
+	newbin ${FILESDIR}/startscript.sh netbeans-${SLOT}
+
+#Linking to the system tomcat
+	dodir /usr/share/tomcat-${TOMCATSLOT}
+	dosym /usr/share/tomcat-${TOMCATSLOT} ${DESTINATION}/${TOMCATDIR}
 
 #Ant stuff. We use the system ant.
 	local ANTDIR="${DESTINATION}/ide4/ant"
 	cd ${D}/${ANTDIR}
 
-	rm -fr ./lib
+	${RM} -fr ./lib
 	dodir /usr/share/ant-core/lib
 	dosym /usr/share/ant-core/lib ${ANTDIR}/lib
 
-	rm -fr ./bin
+	${RM} -fr ./bin
 	dodir /usr/share/ant-core/bin
 	dosym /usr/share/ant-core/bin  ${ANTDIR}/bin
 
@@ -203,16 +244,16 @@ src_install()
 
 	#The next directory seems to be empty	
 	if ! rmdir doc 2> /dev/null; then	
-		use doc || rm -fr ./doc
+		use doc || ${RM} -fr ./doc
 	fi
 
-	use doc || rm -fr ./nb4.0/docs
+	use doc || ${RM} -fr ./nb4.0/docs
 	use doc && java-pkg_dohtml -r ${WORKDIR}/javadoc/*
 
 	dodoc build_info
 	dohtml CREDITS.html README.html netbeans.css
 	
-	rm -f build_info CREDITS.html README.html netbeans.css
+	${RM} -f build_info CREDITS.html README.html netbeans.css
 
 #Icons and shortcuts
 	echo "Symlinking icons...."
@@ -234,5 +275,5 @@ pkg_postinst ()
 {
 	einfo "Your tomcat directory might not have the right permissions."
 	einfo "Please make sure that normal users can read the directory:"
-	einfo "/usr/share/tomcat-5"
+	einfo "/usr/share/tomcat-${TOMCATSLOT}"
 }
