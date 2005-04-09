@@ -58,22 +58,41 @@ RDEPEND="
 		=dev-java/servletapi-2.4*
 		dev-java/sac
 		dev-java/flute
+		>=dev-java/javahelp-bin-2.0.02-r1
 		~www-servers/tomcat-5.0.28
 		"
 
 S=${WORKDIR}/netbeans-src
 
 BUILDDESTINATION="${S}/nbbuild/netbeans"
-	
+
 TOMCATSLOT="5"
 
 RM="rm"
+
+#jar replacements for Netbeans
+COMMONS_LOGGING="commons-logging commons-logging.jar commons-logging-1.0.4.jar"
+JH="javahelp-bin jh.jar jh-2.0_01.jar"
+JSPAPI="servletapi-2.4 jsp-api.jar jsp-api-2.0.jar"
+JSR="jsr088 jsr088.jar jsr88javax.jar"
+JUNIT="junit junit.jar junit-3.8.1.jar"
+SERVLET22="servletapi-2.2 servletapi-2.2.jar servlet-2.2.jar"
+SERVLET23="servletapi-2.3 servletapi-2.3.jar servlet-2.3.jar"
+SERVLET24="servletapi-2.4 servlet-api.jar servlet-api-2.4.jar"
+XERCES="xerces-2 xercesImpl.jar xerces-2.6.2.jar"
+JASPERCOMPILER="tomcat-${TOMCATSLOT}  jasper-compiler.jar jasper-compiler-5.0.28.jar"
+JASPERRUNTIME="tomcat-${TOMCATSLOT}  jasper-runtime.jar jasper-runtime-5.0.28.jar"
+XMLCOMMONS="xml-commons xml-apis.jar xml-commons-dom-ranges-1.0.b2.jar"
 
 pkg_setup ()
 {
 	use debug && ${RM}="rm -v"
 }
-	
+
+fix_manifest()
+{
+	sed "s%ext/${1}%$(java-pkg_getjar ${2} ${3})%" -i ${4}
+}	
 src_unpack () 
 {
 	unpack $MAINTARBALL
@@ -102,7 +121,8 @@ src_unpack ()
 	java-pkg_jar-from ant-core
 
 	cd ${S}/core/external
-	java-pkg_jar-from javahelp-bin jh.jar jh-2.0_01.jar
+	java-pkg_jar-from ${JH}
+#	fix_manifest ${JH} javahelp-bin jh.jar ${S}/core/javahelp/manifest.mf
 	
 	cd ${S}/mdr/external/
 	java-pkg_jar-from jmi
@@ -112,11 +132,11 @@ src_unpack ()
 	java-pkg_jar-from javahelp-bin jhall.jar jhall-2.0_01.jar
 
 	cd ${S}/libs/external/
-	java-pkg_jar-from xerces-2 xercesImpl.jar xerces-2.6.2.jar	
-	java-pkg_jar-from commons-logging commons-logging.jar commons-logging-1.0.4.jar
+	java-pkg_jar-from ${XERCES}	
+	java-pkg_jar-from ${COMMONS_LOGGING}
 	java-pkg_jar-from jakarta-regexp-1.3 regexp.jar	regexp-1.2.jar
 	java-pkg_jar-from xalan xalan-jar xalan-2.5.2.jar
-	java-pkg_jar-from xml-commons xml-apis.jar xml-commons-dom-ranges-1.0.b2.jar
+	java-pkg_jar-from ${XMLCOMMONS}
 
 	cd ${S}/xml/external/
 	java-pkg_jar-from sac 
@@ -124,7 +144,7 @@ src_unpack ()
 	java-pkg_jar-from flute
 
 	cd ${S}/httpserver/external/
-	java-pkg_jar-from servletapi-2.2 servletapi-2.2.jar servlet-2.2.jar	
+	java-pkg_jar-from ${SERVLET22}
 #	touch webserver.txt
 #	jar -cf webserver.jar webserver.txt
 #	java-pkg_jar-from tomcat-5
@@ -136,20 +156,21 @@ src_unpack ()
 	java-pkg_jar-from javamake-bin javamake.jar javamake-1.2.12.jar
 	
 	cd ${S}/junit/external/
-	java-pkg_jar-from junit junit.jar junit-3.8.1.jar
+	java-pkg_jar-from ${JUNIT}
 
 	cd ${S}/tasklist/external/
 	java-pkg_jar-from jtidy Tidy.jar Tidy-r7.jar	
 
 	cd ${S}/web/external
-	java-pkg_jar-from servletapi-2.3 servletapi-2.3.jar servlet-2.3.jar
-	java-pkg_jar-from servletapi-2.4 servlet-api.jar servlet-api-2.4.jar	
+	java-pkg_jar-from ${SERVLET23}
+	java-pkg_jar-from ${SERVLET24}	
 	java-pkg_jar-from commons-el
 	java-pkg_jar-from jaxen-1.1 jaxen-1.1_beta2.jar jaxen-full.jar
 	java-pkg_jar-from saxpath
-	java-pkg_jar-from tomcat-${TOMCATSLOT}	jasper-compiler.jar jasper-compiler-5.0.28.jar
-	java-pkg_jar-from tomcat-${TOMCATSLOT}	jasper-runtime.jar jasper-runtime-5.0.28.jar
-
+	java-pkg_jar-from ${JASPERCOMPILER}
+	java-pkg_jar-from ${JASPERRUNTIME}
+	java-pkg_jar-from ${JSPAPI}
+	
 }
 src_compile()
 {
@@ -182,23 +203,39 @@ src_compile()
 			| xargs ${RM} -f	
 }
 
-remove_extjars()
+symlink_extjars()
 {
 	cd ${1}/ide4/modules/ext
-	${RM} commons* flute.jar jmi.jar junit* mof* sac*
+	java-pkg_jar-from commons-logging commons-logging.jar commons-logging-1.0.4.jar
+	java-pkg_jar-from ${COMMONS_LOGGING}
+	java-pkg_jar-from flute
+	java-pkg_jar-from jmi
+	java-pkg_jar-from ${JUNIT}
+	java-pkg_jar-from mof
+	java-pkg_jar-from sac
 
 	cd ${1}/ide4/modules/autoload/ext
-	${RM} commons* jasper* jsp* jsr* servlet* xerces* xml-*
+	java-pkg_jar-from commons-el
+	java-pkg_jar-from ${SERVLET22}
+	java-pkg_jar-from ${SERVLET23}
+	java-pkg_jar-from ${SERVLET24}
+	java-pkg_jar-from ${XERCES}
+	java-pkg_jar-from ${JSR}
+	java-pkg_jar-from ${JASPERCOMPILER}
+	java-pkg_jar-from ${JASPERRUNTIME}
+	java-pkg_jar-from ${XMLCOMMONS} 
+	java-pkg_jar-from ${JSPAPI}
 
 	cd ${1}/platform4/modules/ext
-	${RM} *.jar
+	java-pkg_jar-from ${JH}
 }
 
 src_install()
 {	
 	local TOMCATDIR="nb4.0/jakarta-tomcat-5.0.28"
+
+	local DESTINATION="/usr/share/netbeans-${SLOT}"	
 	
-	local DESTINATION="/usr/share/netbeans-${SLOT}"
 	insinto $DESTINATION
 
 #Tomcat removal
@@ -209,7 +246,7 @@ src_install()
 #The program itself
 	doins -r * 
 
-#	remove_extjars ${D}/${DESTINATION}	
+	symlink_extjars ${D}/${DESTINATION}	
 
 	fperms 755 \
 		   ${DESTINATION}/bin/netbeans \
