@@ -28,8 +28,7 @@ KEYWORDS="~x86 ~ppc"
 IUSE=""
 
 DEPEND=">=dev-java/antlr-2.7.1
-	virtual/jdk
-	"
+	virtual/jdk"
 
 #RDEPEND=""
 

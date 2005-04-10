@@ -22,7 +22,7 @@ KEYWORDS="~x86 ~ppc"
 IUSE=""
 
 DEPEND="dev-java/sablevm
-dev-java/fastjar"
+	dev-java/fastjar"
 
 #RDEPEND=""
 
