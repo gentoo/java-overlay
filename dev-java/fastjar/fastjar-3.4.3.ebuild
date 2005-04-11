@@ -53,4 +53,6 @@ src_compile() {
 src_install() {
 	cd ${WORKDIR}/build/fastjar
 	make DESTDIR=${D} install || die
+	(cd ${D}/usr/bin && mv jar fastjar)
+	(cd ${D}/usr/share/man/man1 && mv jar.1 fastjar.1)
 }

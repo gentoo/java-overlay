@@ -39,7 +39,7 @@ S=${WORKDIR}
 src_install() {
 	# bin symlinks
 	dodir /usr/lib/sablevm/bin
-	dosym /usr/bin/jar /usr/lib/sablevm/bin
+	dosym /usr/bin/fastjar /usr/lib/sablevm/bin/jar
 	use nogjdoc || dosym /usr/bin/gjdoc /usr/lib/sablevm/bin/javadoc
 
 	# cp-tools
@@ -50,11 +50,21 @@ src_install() {
 	done
 
 	# man symlinks
+
 	dodir /usr/lib/sablevm/man/man1
-	dosym /usr/share/man/man1/java-sablevm.1.gz /usr/lib/sablevm/man/man1/java.1.gz
-	dosym /usr/share/man/man1/jikes.1.gz /usr/lib/sablevm/man/man1/javac.1.gz
-	dosym /usr/share/man/man1/jar.1.gz /usr/lib/sablevm/man/man1/jar.1.gz
-	use nogjdoc || dosym /usr/share/man/man1/gjdoc.1.gz /usr/lib/sablevm/man/man1/javadoc.1.gz
+
+	dosym /usr/share/man/man1/java-sablevm.1.gz \
+	  /usr/lib/sablevm/man/man1/java.1.gz
+
+	dosym /usr/share/man/man1/jikes.1.gz \
+	  /usr/lib/sablevm/man/man1/javac.1.gz
+
+	dosym /usr/share/man/man1/fastjar.1.gz \
+	  /usr/lib/sablevm/man/man1/jar.1.gz
+
+	use nogjdoc ||
+	  dosym /usr/share/man/man1/gjdoc.1.gz \
+	    /usr/lib/sablevm/man/man1/javadoc.1.gz
 
 	set_java_env ${FILESDIR}/${VMHANDLE}
 }
