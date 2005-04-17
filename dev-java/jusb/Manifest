@@ -1,0 +1,4 @@
+MD5 5e9202b4fe1e519e98d24454d67621f0 jusb-0.4.4.ebuild 1119
+MD5 ae2db2e259420167a40862f2a55c7da4 files/Makefile.patch 347
+MD5 087570d64d04b53a1f416bb0e58117de files/native.patch 668
+MD5 7dfe45c66b2b735c99459e7123f37ab3 files/digest-jusb-0.4.4 62
