@@ -16,7 +16,7 @@ SLOT="0"
 
 KEYWORDS="~x86"
 
-IUSE="doc"
+IUSE="doc source"
 
 DEPEND="virtual/jdk"
 
@@ -63,4 +63,6 @@ src_install() {
 		java-pkg_dohtml doc/*.html
 		java-pkg_dohtml -r apidoc/*
 	fi
+	
+	use source && java-pkg_dosrc src/*
 }
