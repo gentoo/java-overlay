@@ -38,7 +38,11 @@ src_unpack() {
 	tar -xzf src.tgz -C src || die \
 	"failed to unpack sources"
 	
-	epatch ${FILESDIR}/native.patch
+	# The struct usbdevfs_ctrltransfer is different 
+	# in latest 2.4 and 2.6 kernels. This patch is 
+	# to make jusb compile on 2.6 kernels 
+	! kernel_is 2 4 && epatch ${FILESDIR}/native.patch
+
 	epatch ${FILESDIR}/Makefile.patch
 }
 
