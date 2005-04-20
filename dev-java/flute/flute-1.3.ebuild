@@ -20,8 +20,9 @@ IUSE="doc jikes source"
 
 DEPEND="app-arch/unzip
 		virtual/jdk
-		jikes? (dev-java/jikes)
 		dev-java/sac
+		jikes? (dev-java/jikes)
+		source?(app-arch/zip)
 		"
 
 RDEPEND="
