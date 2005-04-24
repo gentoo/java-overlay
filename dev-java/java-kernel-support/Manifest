@@ -1,0 +1,7 @@
+MD5 aee0f417cf325459e3afdcd401564082 files.tar.bz2 3572
+MD5 d1c678300d7c195458f511b6ee1fe2b1 java-kernel-support-1.01.ebuild 832
+MD5 1344cb920633dc7a4d334dbe60ae7550 files/jarwrapper-1.01 93
+MD5 5c56d124ef9748405e9e94fa1a96efb3 files/javawrapper-1.01 2618
+MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-java-kernel-support-1.01 0
+MD5 8ed7ca770eb23b700c1db551c6ceb1a4 files/java-kernel-support-1.01-fixes.patch 2870
+MD5 2c2674efc63eccf303cc5640f4343df4 files/javaclassname-1.01.c 5746

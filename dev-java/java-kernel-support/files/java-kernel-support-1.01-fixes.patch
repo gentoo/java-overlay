@@ -1,0 +1,85 @@
+--- jarwrapper.orig	2005-02-02 17:26:31.270874664 +0100
++++ jarwrapper	2005-02-02 17:26:56.194085760 +0100
+@@ -1,4 +1,6 @@
+ #!/bin/bash
+ # /usr/local/java/bin/jarwrapper - the wrapper for binfmt_misc/jar
+ 
+-java -jar $1
++pushd "`dirname "$1"`" >/dev/null
++java "`basename "$1" .jar`" "$@"
++popd >/dev/null
+
+--- javawrapper.orig	2005-02-02 16:43:39.015916856 +0100
++++ javawrapper	2005-02-04 16:21:00.744751056 +0100
+@@ -1,5 +1,5 @@
+ #!/bin/bash
+-# /usr/local/bin/javawrapper - the wrapper for binfmt_misc/java
++# /usr/bin/javawrapper - the wrapper for binfmt_misc/java
+ 
+ if [ -z "$1" ]; then
+         exec 1>&2
+@@ -8,7 +8,7 @@
+ fi
+ 
+ CLASS=$1
+-FQCLASS=`/usr/local/bin/javaclassname $1`
++FQCLASS=`/usr/bin/javaclassname "$1"`
+ FQCLASSN=`echo $FQCLASS | sed -e 's/^.*\.\([^.]*\)$/\1/'`
+ FQCLASSP=`echo $FQCLASS | sed -e 's-\.-/-g' -e 's-^[^/]*$--' -e 's-/[^/]*$--'`
+ 
+@@ -23,25 +23,25 @@
+ declare -i LINKLEVEL=0
+ 
+ while :; do
+-        if [ "`basename $CLASS .class`" == "$FQCLASSN" ]; then
++        if [ "`basename "$CLASS" .class`" == "$FQCLASSN" ]; then
+                 # See if this directory works straight off
+-                cd -L `dirname $CLASS`
++                cd -L "`dirname "$CLASS"`" >/dev/null
+                 CLASSDIR=$PWD
+-                cd $OLDPWD
++                cd "$OLDPWD"
+                 if echo $CLASSDIR | grep -q "$FQCLASSP$"; then
+                         CLASSBASE=`echo $CLASSDIR | sed -e "s.$FQCLASSP$.."`
+                         break;
+                 fi
+                 # Try dereferencing the directory name
+-                cd -P `dirname $CLASS`
++                cd -P "`dirname "$CLASS"`" >/dev/null
+                 CLASSDIR=$PWD
+-                cd $OLDPWD
++                cd "$OLDPWD"
+                 if echo $CLASSDIR | grep -q "$FQCLASSP$"; then
+                         CLASSBASE=`echo $CLASSDIR | sed -e "s.$FQCLASSP$.."`
+                         break;
+                 fi
+                 # If no other possible filename exists
+-                if [ ! -L $CLASS ]; then
++                if [ ! -L "$CLASS" ]; then
+                         exec 1>&2
+                         echo $0:
+                         echo "  $CLASS should be in a" \
+@@ -49,7 +49,7 @@
+                         exit 1
+                 fi
+         fi
+-        if [ ! -L $CLASS ]; then break; fi
++        if [ ! -L "$CLASS" ]; then break; fi
+         # Go down one more level of symbolic links
+         let LINKLEVEL+=1
+         if [ $LINKLEVEL -gt 5 ]; then
+@@ -58,7 +58,7 @@
+                 echo "  Too many symbolic links encountered"
+                 exit 1
+         fi
+-        CLASS=`ls --color=no -l $CLASS | sed -e 's/^.* \([^ ]*\)$/\1/'`
++        CLASS="`ls --color=no -l "$CLASS" | sed -e 's/^.* \([^ ]*\)$/\1/'`"
+ done
+ 
+ if [ -z "$CLASSBASE" ]; then
+@@ -83,4 +83,4 @@
+ fi
+ 
+ shift
+-/usr/bin/java $FQCLASS "$@"
++java $FQCLASS "$@"
