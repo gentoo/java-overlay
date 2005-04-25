@@ -188,7 +188,7 @@ src_compile()
 
 	# The build will attempt to display graphical
 	# dialogs for the licence agreements if this is set.
-	unset DISPLAY
+#	unset DISPLAY
 	
 	# Move into the folder where the build.xml file lives.
 	cd ${S}/nbbuild
@@ -206,7 +206,6 @@ src_compile()
 symlink_extjars()
 {
 	cd ${1}/ide4/modules/ext
-	java-pkg_jar-from commons-logging commons-logging.jar commons-logging-1.0.4.jar
 	java-pkg_jar-from ${COMMONS_LOGGING}
 	java-pkg_jar-from flute
 	java-pkg_jar-from jmi
