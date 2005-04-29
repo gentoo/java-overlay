@@ -11,7 +11,7 @@ HOMEPAGE="http://java.sun.com/j2ee/tools/deployment/"
 MY_PV=${PV/./_}
 
 SRC_URI="mirror://gentoo/j2ee_deployment-${MY_PV}-fr-class.zip
-		doc? ( mirror://gentoo/j2ee_deployment-${MY_PV}-fr-spec.pdf )"
+		doc? ( mirror://gentoo/j2ee_deployment-${MY_PV}-fr-doc.zip )"
 
 LICENSE="sun-bin"
 
@@ -33,7 +33,7 @@ src_compile() {
 
 src_install() {
 
-	use doc &&java-pkg_dohtml -r doc/*
+	use doc && java-pkg_dohtml -r doc/*
 	
 	dojar ${PN}.jar
 }
