@@ -13,7 +13,7 @@ MY_PV=${PV/./_}
 SRC_URI="mirror://gentoo/j2ee_deployment-${MY_PV}-fr-class.zip
 		doc? ( mirror://gentoo/j2ee_deployment-${MY_PV}-fr-doc.zip )"
 
-LICENSE="sun-bin"
+LICENSE="sun-bcla-jsr088"
 
 SLOT="0"
 
