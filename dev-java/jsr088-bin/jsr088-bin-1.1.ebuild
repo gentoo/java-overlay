@@ -8,9 +8,10 @@ DESCRIPTION="J2EE Application Deployment Specification"
 
 HOMEPAGE="http://java.sun.com/j2ee/tools/deployment/"
 
-SRC_URI="j2ee_deployment-1_1-fr-class.zip
-		doc? ( j2ee_deployment-1_1-fr-doc.zip 
-			   j2ee_deployment-1_1-fr-spec.pdf )"
+MY_PV=${PV/./_}
+
+SRC_URI="mirror://gentoo/j2ee_deployment-${MY_PV}-fr-class.zip
+		doc? ( mirror://gentoo/j2ee_deployment-${MY_PV}-fr-spec.pdf )"
 
 LICENSE="sun-bin"
 
@@ -31,9 +32,8 @@ src_compile() {
 }
 
 src_install() {
-	if use doc; then
-		dodoc ${DISTDIR}/j2ee_deployment-1_1-fr-spec.pdf
-		java-pkg_dohtml -r doc/*
-	fi
+
+	use doc &&java-pkg_dohtml -r doc/*
+	
 	dojar ${PN}.jar
 }
