@@ -4,7 +4,7 @@
 
 inherit java-pkg
 
-DESCRIPTION="Java Metadata Interface"
+DESCRIPTION="Java Metadata Interface Sample Class Interface"
 
 HOMEPAGE="http://java.sun.com/products/jmi/"
 
