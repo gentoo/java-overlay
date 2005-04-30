@@ -1,3 +1,5 @@
-MD5 2bba7d0af20f421903baba2cf1e73a3b jmi-1.0.ebuild 497
+MD5 1c4a360e68407e75fec896444a1b9a0d jmi-interface-1.0.ebuild 762
+MD5 94539be35f38efe3d7197e886ac53a1a files/build.xml 1288
 MD5 4bf12a3c13b9e55880d5a076f6a51d40 files/jmi-license.txt 9796
 MD5 214ca012130654d654a8b8121a0fd561 files/digest-jmi-1.0 69
+MD5 214ca012130654d654a8b8121a0fd561 files/digest-jmi-interface-1.0 69
