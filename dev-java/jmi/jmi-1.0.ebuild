@@ -8,30 +8,36 @@ DESCRIPTION="Java Metadata Interface"
 
 HOMEPAGE="http://java.sun.com/products/jmi/"
 
-SRC_URI="http://gentooexperimental.org/svn/java/gentoo-java-experimental/distfiles/jmi.jar"
+SRC_URI="mirror://gentoo/jmi-${PV/./_}-fr-interfaces.zip"
 
-LICENSE="as-is"
+LICENSE="sun-bcla+supplemental"
 
 SLOT="0"
 
 KEYWORDS="~x86"
 
-IUSE=""
+IUSE="doc source"
 
-DEPEND=""
+DEPEND="virtual/jdk"
 
 RDEPEND="virtual/jre"
 
+S=${WORKDIR}
+
 src_unpack() {
-	mkdir ${S}
-	cp ${DISTDIR}/jmi.jar ${S}
+	cp ${FILESDIR}/build.xml .
+	mkdir src
+	cd src 
+	unpack ${A}
 }
- 
+
 src_compile() {
-	einfo "Binary ebuild"
+	ant || die "Failed to compile"
+	use doc && ( ant javadoc || die "Failed to make javadoc" )
 }
 
 src_install() {
-	dodoc ${FILESDIR}/jmi-license.txt
-	dojar jmi.jar
+	use doc && java-pkg_dohtml -r doc/*
+	use source && java-pkg_dosrc src/*
+	dojar dist/jmi.jar
 }
