@@ -22,7 +22,13 @@
 
 	<!-- build the jar file -->
    <target name="jar" depends="compile">
-      <jar jarfile="${dist.dir}/${jarfile}" basedir="${build.dir}"/>
+
+      <jar jarfile="${dist.dir}/jmi.jar" basedir="${build.dir}"
+      	   excludes="javax/jmi/primitivetypes/** javax/jmi/model/** javax/jmi/corbaidltypes/**" />
+
+      <jar jarfile="${dist.dir}/mof.jar" basedir="${build.dir}"
+      	   excludes="javax/jmi/reflect/** javax/jmi/xmi/**" />
+
    </target>
 
    <!-- generate javadocs -->

@@ -16,10 +16,12 @@ SLOT="0"
 
 KEYWORDS="~x86"
 
-IUSE="doc source"
+IUSE="doc source jikes"
 
 DEPEND="app-arch/unzip
-		virtual/jdk"
+		virtual/jdk
+		jikes? (dev-java/jikes)
+		source? (app-arch/zip)"
 
 RDEPEND="virtual/jre"
 
@@ -33,12 +35,19 @@ src_unpack() {
 }
 
 src_compile() {
-	ant || die "Failed to compile"
-	use doc && ( ant javadoc || die "Failed to make javadoc" )
+
+	local antflags=""
+	use jikes && antflags="${antflags} -Dbuild.compiler=jikes"
+
+	ant ${antflags} || die "Failed to compile"
+	
+	if use doc; then
+		ant javadoc || die "Failed to make javadoc"
+	fi
 }
 
 src_install() {
 	use doc && java-pkg_dohtml -r doc/*
 	use source && java-pkg_dosrc src/*
-	dojar dist/jmi.jar
+	dojar dist/*.jar
 }
