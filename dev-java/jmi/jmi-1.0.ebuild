@@ -18,7 +18,8 @@ KEYWORDS="~x86"
 
 IUSE="doc source"
 
-DEPEND="virtual/jdk"
+DEPEND="app-arch/unzip
+		virtual/jdk"
 
 RDEPEND="virtual/jre"
 
