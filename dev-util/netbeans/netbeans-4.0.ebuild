@@ -46,9 +46,11 @@ DEPEND=">=virtual/jdk-1.4.2
 		dev-java/saxpath
 		~www-servers/tomcat-5.0.28
 		dev-java/javamake-bin
-		dev-java/jsr088
+		dev-java/jsr088-bin
 		dev-java/xml-commons
 		dev-java/xml-commons-resolver
+		dev-util/pmd
+		dev-java/jakarta-jstl		
 		"
 
 
@@ -60,6 +62,7 @@ RDEPEND="
 		dev-java/flute
 		>=dev-java/javahelp-bin-2.0.02-r1
 		~www-servers/tomcat-5.0.28
+		dev-java/jsr088-bin
 		"
 
 S=${WORKDIR}/netbeans-src
@@ -72,16 +75,20 @@ RM="rm"
 
 #jar replacements for Netbeans
 COMMONS_LOGGING="commons-logging commons-logging.jar commons-logging-1.0.4.jar"
+JASPERCOMPILER="tomcat-${TOMCATSLOT}  jasper-compiler.jar jasper-compiler-5.0.28.jar"
+JASPERRUNTIME="tomcat-${TOMCATSLOT}  jasper-runtime.jar jasper-runtime-5.0.28.jar"
 JH="javahelp-bin jh.jar jh-2.0_01.jar"
 JSPAPI="servletapi-2.4 jsp-api.jar jsp-api-2.0.jar"
 JSR="jsr088 jsr088.jar jsr88javax.jar"
+JSTL="jakarta-jstl jstl.jar	jstl-1.1.2.jar"
 JUNIT="junit junit.jar junit-3.8.1.jar"
+PMD="pmd pmd.jar pmd-1.3.jar"
+REGEXP="jakarta-regexp-1.3 jakarta-regexp.jar regexp-1.2.jar"
 SERVLET22="servletapi-2.2 servletapi-2.2.jar servlet-2.2.jar"
 SERVLET23="servletapi-2.3 servletapi-2.3.jar servlet-2.3.jar"
 SERVLET24="servletapi-2.4 servlet-api.jar servlet-api-2.4.jar"
+STANDARD="jakarta-jstl standard.jar standard-1.1.2.jar"
 XERCES="xerces-2 xercesImpl.jar xerces-2.6.2.jar"
-JASPERCOMPILER="tomcat-${TOMCATSLOT}  jasper-compiler.jar jasper-compiler-5.0.28.jar"
-JASPERRUNTIME="tomcat-${TOMCATSLOT}  jasper-runtime.jar jasper-runtime-5.0.28.jar"
 XMLCOMMONS="xml-commons xml-apis.jar xml-commons-dom-ranges-1.0.b2.jar"
 
 pkg_setup ()
@@ -134,14 +141,19 @@ src_unpack ()
 	cd ${S}/libs/external/
 	java-pkg_jar-from ${XERCES}	
 	java-pkg_jar-from ${COMMONS_LOGGING}
-	java-pkg_jar-from jakarta-regexp-1.3 regexp.jar	regexp-1.2.jar
-	java-pkg_jar-from xalan xalan-jar xalan-2.5.2.jar
+	java-pkg_jar-from xalan xalan.jar xalan-2.5.2.jar
 	java-pkg_jar-from ${XMLCOMMONS}
+	java-pkg_jar-from ${PMD}
+	java-pkg_jar-from ${REGEXP}
 
 	cd ${S}/xml/external/
 	java-pkg_jar-from sac 
 	java-pkg_jar-from xerces-2 xercesImpl.jar xerces2.jar
 	java-pkg_jar-from flute
+	#There's also resolver-1_1_nb.jar in this directory.
+	#The implementation is from Sun and I haven't found it.
+	#In later Netbeans versions xml-commons is used so we will use it
+	#then.
 
 	cd ${S}/httpserver/external/
 	java-pkg_jar-from ${SERVLET22}
@@ -150,7 +162,7 @@ src_unpack ()
 #	java-pkg_jar-from tomcat-5
 
 	cd ${S}/j2eeserver/external
-	java-pkg_jar-from jsr088 jsr088 jsr088.jar jsr88javax.jar
+	java-pkg_jar-from ${JSR}
 		
 	cd ${S}/java/external/
 	java-pkg_jar-from javamake-bin javamake.jar javamake-1.2.12.jar
@@ -170,6 +182,8 @@ src_unpack ()
 	java-pkg_jar-from ${JASPERCOMPILER}
 	java-pkg_jar-from ${JASPERRUNTIME}
 	java-pkg_jar-from ${JSPAPI}
+	java-pkg_jar-from ${JSTL}
+	java-pkg_jar-from ${STANDARD}
 	
 }
 src_compile()
@@ -188,9 +202,9 @@ src_compile()
 
 	# The build will attempt to display graphical
 	# dialogs for the licence agreements if this is set.
-#	unset DISPLAY
+	unset DISPLAY
 	
-	# Move into the folder where the build.xml file lives.
+	#The location of the main build.xml file
 	cd ${S}/nbbuild
 	
 	# Specify the build-nozip target otherwise it will build
@@ -224,6 +238,10 @@ symlink_extjars()
 	java-pkg_jar-from ${JASPERRUNTIME}
 	java-pkg_jar-from ${XMLCOMMONS} 
 	java-pkg_jar-from ${JSPAPI}
+
+	cd ${1}/ide4/config/TagLibraries/JSTL11
+	java-pkg_jar-from ${JSTL}
+	java-pkg_jar-from ${STANDARD}
 
 	cd ${1}/platform4/modules/ext
 	java-pkg_jar-from ${JH}
