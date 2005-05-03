@@ -5,17 +5,11 @@
 inherit java-pkg
 
 DESCRIPTION="Java Metadata Interface Sample Class Interface"
-
 HOMEPAGE="http://java.sun.com/products/jmi/"
-
 SRC_URI="mirror://gentoo/jmi-${PV/./_}-fr-interfaces.zip"
-
 LICENSE="sun-bcla+supplemental"
-
 SLOT="0"
-
 KEYWORDS="~x86"
-
 IUSE="doc source jikes"
 
 DEPEND="app-arch/unzip
@@ -51,3 +45,4 @@ src_install() {
 	use source && java-pkg_dosrc src/*
 	dojar dist/*.jar
 }
+
