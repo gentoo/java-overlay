@@ -222,7 +222,7 @@ src_compile()
 
 	# The build will attempt to display graphical
 	# dialogs for the licence agreements if this is set.
-#	unset DISPLAY
+	unset DISPLAY
 	
 	#The location of the main build.xml file
 	cd ${S}/nbbuild
