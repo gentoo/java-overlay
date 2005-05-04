@@ -24,13 +24,30 @@ SLOT="4.0"
 LICENSE="SPL"
 KEYWORDS="~x86"
 
+# Welcome. Here is some help for the poor soul who has to maintain this ebuild.
+#
+# Use this command to find which packed stuff from other projects is actually used during compile:
+#   alias nbjarcheck="ebuild netbeans-4.0.ebuild unpack compile | grep Unscrambling | grep "\.jar""
+#
+# Remember that there are also many other scrambled files in Netbeans but the
+# default module configuration doesn't use all of them. 
+#
+# If you want to find out useless java-pkg_jar-from calls and all scrambled files, which don't have
+# symlinks to the installed files, you can use a ruby script I wrote. It is in the experimental tree:
+# https://gentooexperimental.org/svn/java/gentoo-java-experimental/dev-util/netbeans/files
+# 
+# This command should be run after ebuild <pkg> install in the image root
+#   alias findnormaljars='find . -name "*.jar" -type f | less'
+# Check the list to see that no packed jars get copied to the image
+#
+
+
 #Bad tomcat versions <r2
 
 DEPEND=">=virtual/jdk-1.4.2
 		>=dev-java/ant-1.6.1
 		>=dev-java/javahelp-bin-2.0.02-r1
-		dev-java/jmi
-		dev-java/mof
+		dev-java/jmi-interface
 		=dev-java/xerces-2.6.2*
 		=dev-java/commons-logging-1.0*
 		=dev-java/jakarta-regexp-1.3*
@@ -46,7 +63,7 @@ DEPEND=">=virtual/jdk-1.4.2
 		dev-java/saxpath
 		~www-servers/tomcat-5.0.28
 		dev-java/javamake-bin
-		dev-java/jsr088-bin
+		dev-java/sun-j2ee-deployment-bin
 		dev-java/xml-commons
 		dev-java/xml-commons-resolver
 		dev-util/pmd
@@ -60,9 +77,10 @@ RDEPEND="
 		=dev-java/servletapi-2.4*
 		dev-java/sac
 		dev-java/flute
+		dev-java/jmi-interface
 		>=dev-java/javahelp-bin-2.0.02-r1
 		~www-servers/tomcat-5.0.28
-		dev-java/jsr088-bin
+		dev-java/sun-j2ee-deployment-bin
 		"
 
 S=${WORKDIR}/netbeans-src
@@ -78,10 +96,12 @@ COMMONS_LOGGING="commons-logging commons-logging.jar commons-logging-1.0.4.jar"
 JASPERCOMPILER="tomcat-${TOMCATSLOT}  jasper-compiler.jar jasper-compiler-5.0.28.jar"
 JASPERRUNTIME="tomcat-${TOMCATSLOT}  jasper-runtime.jar jasper-runtime-5.0.28.jar"
 JH="javahelp-bin jh.jar jh-2.0_01.jar"
+JMI="jmi-interface jmi.jar jmi.jar"
 JSPAPI="servletapi-2.4 jsp-api.jar jsp-api-2.0.jar"
-JSR="jsr088 jsr088.jar jsr88javax.jar"
+JSR="sun-j2ee-deployment-bin sun-j2ee-deployment-bin.jar jsr88javax.jar"
 JSTL="jakarta-jstl jstl.jar	jstl-1.1.2.jar"
 JUNIT="junit junit.jar junit-3.8.1.jar"
+MOF="jmi-interface mof.jar mof.jar"
 PMD="pmd pmd.jar pmd-1.3.jar"
 REGEXP="jakarta-regexp-1.3 jakarta-regexp.jar regexp-1.2.jar"
 SERVLET22="servletapi-2.2 servletapi-2.2.jar servlet-2.2.jar"
@@ -132,8 +152,8 @@ src_unpack ()
 #	fix_manifest ${JH} javahelp-bin jh.jar ${S}/core/javahelp/manifest.mf
 	
 	cd ${S}/mdr/external/
-	java-pkg_jar-from jmi
-	java-pkg_jar-from mof
+	java-pkg_jar-from ${JMI}
+	java-pkg_jar-from ${MOF}
 
 	cd ${S}/nbbuild/external
 	java-pkg_jar-from javahelp-bin jhall.jar jhall-2.0_01.jar
@@ -202,7 +222,7 @@ src_compile()
 
 	# The build will attempt to display graphical
 	# dialogs for the licence agreements if this is set.
-	unset DISPLAY
+#	unset DISPLAY
 	
 	#The location of the main build.xml file
 	cd ${S}/nbbuild
@@ -222,9 +242,9 @@ symlink_extjars()
 	cd ${1}/ide4/modules/ext
 	java-pkg_jar-from ${COMMONS_LOGGING}
 	java-pkg_jar-from flute
-	java-pkg_jar-from jmi
+	java-pkg_jar-from ${JMI}
 	java-pkg_jar-from ${JUNIT}
-	java-pkg_jar-from mof
+	java-pkg_jar-from ${MOF}
 	java-pkg_jar-from sac
 
 	cd ${1}/ide4/modules/autoload/ext
@@ -240,8 +260,8 @@ symlink_extjars()
 	java-pkg_jar-from ${JSPAPI}
 
 	cd ${1}/ide4/config/TagLibraries/JSTL11
-	java-pkg_jar-from ${JSTL}
-	java-pkg_jar-from ${STANDARD}
+	java-pkg_jar-from jakarta-jstl jstl.jar 
+	java-pkg_jar-from jakarta-jstl standard.jar 
 
 	cd ${1}/platform4/modules/ext
 	java-pkg_jar-from ${JH}
