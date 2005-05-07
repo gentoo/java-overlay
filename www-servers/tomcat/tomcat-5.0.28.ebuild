@@ -31,7 +31,7 @@ RDEPEND=">=virtual/jdk-1.4
 	   >=dev-java/junit-3.8.1
 	   dev-java/jmx
 	   >=dev-java/log4j-1.2.8
-	   >=dev-java/regexp-1.3
+	   >=dev-java/jakarta-regexp-1.3
 	   >=dev-java/saxpath-1.0
 	   ~dev-java/servletapi-2.4
 	   =dev-java/struts-1.1*
