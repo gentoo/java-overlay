@@ -1,9 +1,0 @@
-# ChangeLog for dev-java/jsr088-bin
-# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-*jsr088-bin-1.1 (30 Apr 2005)
-
-  30 Apr 2005; karltk <karltk@gentoo.org> +jsr088-bin-1.3.ebuild:
-  Initial import. Ebuild by Betelgeuse <petteri.raty@welho.com>.
-
