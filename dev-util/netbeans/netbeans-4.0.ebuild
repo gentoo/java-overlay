@@ -9,18 +9,22 @@ DESCRIPTION="NetBeans ${PV} IDE for Java"
 IUSE="debug doc"
 HOMEPAGE="http://www.netbeans.org"
 
-MAINTARBALL="netbeans-4_0-src-ide_sources.tar.bz2"
-JAVADOCTARBALL="netbeans-4_0-docs-javadoc.tar.bz2"
-BASELOCATION=" \
-http://www.netbeans.org/download/4_0/fcs/200412081800/d5a0f13566068cb86e33a46ea130b207"
+MY_PV=${PV/./_}
 
+MAINTARBALL="netbeans-${MY_PV}-src-ide_sources.tar.bz2"
+JAVADOCTARBALL="netbeans-${MY_PV}-docs-javadoc.tar.bz2"
+BASELOCATION=" \
+http://www.netbeans.org/download/${MY_PV}/fcs/200412081800/d5a0f13566068cb86e33a46ea130b207"
+
+#4.0 200412081800/d5a0f13566068cb86e33a46ea130b207
+#4.1 200505031930/66083d474e5fdfc80a1443fb851bd9d5
 SRC_URI="${BASELOCATION}/${MAINTARBALL} \
 		 doc? ( ${BASELOCATION}/${JAVADOCTARBALL} )
 		 "
 
-SLOT="4.0"
+SLOT="${PV}"
 
-#When we have java-pkg_jar-from to everything only SPL should be needed here. 
+#When we have java-pkg_jar-from to everything only SPL should be needed here.
 LICENSE="SPL"
 KEYWORDS="~x86"
 
@@ -30,12 +34,12 @@ KEYWORDS="~x86"
 #   alias nbjarcheck="ebuild netbeans-4.0.ebuild unpack compile | grep Unscrambling | grep "\.jar""
 #
 # Remember that there are also many other scrambled files in Netbeans but the
-# default module configuration doesn't use all of them. 
+# default module configuration doesn't use all of them.
 #
 # If you want to find out useless java-pkg_jar-from calls and all scrambled files, which don't have
 # symlinks to the installed files, you can use a ruby script I wrote. It is in the experimental tree:
 # https://gentooexperimental.org/svn/java/gentoo-java-experimental/dev-util/netbeans/files
-# 
+#
 # This command should be run after ebuild <pkg> install in the image root
 #   alias findnormaljars='find . -name "*.jar" -type f | less'
 # Check the list to see that no packed jars get copied to the image
@@ -65,22 +69,28 @@ DEPEND=">=virtual/jdk-1.4.2
 		dev-java/javamake-bin
 		dev-java/sun-j2ee-deployment-bin
 		dev-java/xml-commons
-		dev-java/xml-commons-resolver
 		dev-util/pmd
-		dev-java/jakarta-jstl		
+		dev-java/jakarta-jstl
 		"
-
+#dev-java/xml-commons-resolver for future versions
 
 RDEPEND="
 		>=virtual/jre-1.4.2
+		=dev-java/commons-logging-1.0*
 		dev-java/commons-el
+		=dev-java/junit-3.8*
+		=dev-java/servletapi-2.2*
+		=dev-java/servletapi-2.3*
 		=dev-java/servletapi-2.4*
+		=dev-java/xerces-2.6.2*
 		dev-java/sac
 		dev-java/flute
 		dev-java/jmi-interface
 		>=dev-java/javahelp-bin-2.0.02-r1
 		~www-servers/tomcat-5.0.28
 		dev-java/sun-j2ee-deployment-bin
+		dev-java/xml-commons
+		dev-java/jakarta-jstl
 		"
 
 S=${WORKDIR}/netbeans-src
@@ -111,17 +121,15 @@ STANDARD="jakarta-jstl standard.jar standard-1.1.2.jar"
 XERCES="xerces-2 xercesImpl.jar xerces-2.6.2.jar"
 XMLCOMMONS="xml-commons xml-apis.jar xml-commons-dom-ranges-1.0.b2.jar"
 
-pkg_setup ()
-{
+pkg_setup () {
 	use debug && ${RM}="rm -v"
 }
 
-fix_manifest()
-{
+fix_manifest(){
 	sed "s%ext/${1}%$(java-pkg_getjar ${2} ${3})%" -i ${4}
-}	
-src_unpack () 
-{
+}
+src_unpack () {
+
 	unpack $MAINTARBALL
 
 	if use doc; then
@@ -132,15 +140,14 @@ src_unpack ()
 	fi
 
 	cd ${S}
-#	epatch ${FILESDIR}/nbbuild.patch
 
 	#removing tomcat
-#	${RM} -fr tomcatint 
+#	${RM} -fr tomcatint
 
 #	cd ${S}/nbbuild
-#	cp ${FILESDIR}/user.build.properties . 
+#	cp ${FILESDIR}/user.build.properties .
 
-	#we have ant libs here so using the system libs	
+	#we have ant libs here so using the system libs
 	cd ${S}/ant/external/
 	epatch ${FILESDIR}/antbuild.xml.patch
 	mkdir lib; cd lib
@@ -150,7 +157,7 @@ src_unpack ()
 	cd ${S}/core/external
 	java-pkg_jar-from ${JH}
 #	fix_manifest ${JH} javahelp-bin jh.jar ${S}/core/javahelp/manifest.mf
-	
+
 	cd ${S}/mdr/external/
 	java-pkg_jar-from ${JMI}
 	java-pkg_jar-from ${MOF}
@@ -159,7 +166,7 @@ src_unpack ()
 	java-pkg_jar-from javahelp-bin jhall.jar jhall-2.0_01.jar
 
 	cd ${S}/libs/external/
-	java-pkg_jar-from ${XERCES}	
+	java-pkg_jar-from ${XERCES}
 	java-pkg_jar-from ${COMMONS_LOGGING}
 	java-pkg_jar-from xalan xalan.jar xalan-2.5.2.jar
 	java-pkg_jar-from ${XMLCOMMONS}
@@ -167,7 +174,7 @@ src_unpack ()
 	java-pkg_jar-from ${REGEXP}
 
 	cd ${S}/xml/external/
-	java-pkg_jar-from sac 
+	java-pkg_jar-from sac
 	java-pkg_jar-from xerces-2 xercesImpl.jar xerces2.jar
 	java-pkg_jar-from flute
 	#There's also resolver-1_1_nb.jar in this directory.
@@ -177,25 +184,26 @@ src_unpack ()
 
 	cd ${S}/httpserver/external/
 	java-pkg_jar-from ${SERVLET22}
-#	touch webserver.txt
-#	jar -cf webserver.jar webserver.txt
-#	java-pkg_jar-from tomcat-5
+	# The webserver.jar in here is a stripped down version of Tomcat 3.3.
+	# We will use the included jar because we don't want to have Tomcat 3.X
+	# in the tree and because maintaining it would probably be a pain in 
+	# the ass.
 
 	cd ${S}/j2eeserver/external
 	java-pkg_jar-from ${JSR}
-		
+
 	cd ${S}/java/external/
 	java-pkg_jar-from javamake-bin javamake.jar javamake-1.2.12.jar
-	
+
 	cd ${S}/junit/external/
 	java-pkg_jar-from ${JUNIT}
 
 	cd ${S}/tasklist/external/
-	java-pkg_jar-from jtidy Tidy.jar Tidy-r7.jar	
+	java-pkg_jar-from jtidy Tidy.jar Tidy-r7.jar
 
 	cd ${S}/web/external
 	java-pkg_jar-from ${SERVLET23}
-	java-pkg_jar-from ${SERVLET24}	
+	java-pkg_jar-from ${SERVLET24}
 	java-pkg_jar-from commons-el
 	java-pkg_jar-from jaxen-1.1 jaxen-1.1_beta2.jar jaxen-full.jar
 	java-pkg_jar-from saxpath
@@ -204,41 +212,41 @@ src_unpack ()
 	java-pkg_jar-from ${JSPAPI}
 	java-pkg_jar-from ${JSTL}
 	java-pkg_jar-from ${STANDARD}
-	
+
 }
-src_compile()
-{
+
+src_compile() {
 	local antflags=""
-	
+
 	if use debug; then
 		antflags="${antflags} -Dbuild.compiler.debug=true"
 		antflags="${antflags} -Dbuild.compiler.deprecation=true"
 	else
 		antflags="${antflags} -Dbuild.compiler.deprecation=false"
 	fi
-	
+
 	antflags="${antflags} -Dnetbeans.no.pre.unscramble=true"
 	antflags="${antflags} -Dstop.when.broken.modules=true"
 
 	# The build will attempt to display graphical
 	# dialogs for the licence agreements if this is set.
 	unset DISPLAY
-	
+
 	#The location of the main build.xml file
 	cd ${S}/nbbuild
-	
+
 	# Specify the build-nozip target otherwise it will build
 	# a zip file of the netbeans folder, which will copy directly.
-	yes yes 2>/dev/null | 	ant ${antflags} build-nozip || die "Compiling failed!"
+	yes yes 2>/dev/null | ant ${antflags} build-nozip || die "Compiling failed!"
 
 	#Remove non-x86 Linux binaries
 	find ${BUILDDESTINATION} -type f -name "*.exe" -o -name "*.cmd" -o \
 			                 -name "*.bat" -o -name "*.dll"	  \
-			| xargs ${RM} -f	
+			| xargs ${RM} -f
 }
 
-symlink_extjars()
-{
+symlink_extjars() {
+
 	cd ${1}/ide4/modules/ext
 	java-pkg_jar-from ${COMMONS_LOGGING}
 	java-pkg_jar-from flute
@@ -256,45 +264,50 @@ symlink_extjars()
 	java-pkg_jar-from ${JSR}
 	java-pkg_jar-from ${JASPERCOMPILER}
 	java-pkg_jar-from ${JASPERRUNTIME}
-	java-pkg_jar-from ${XMLCOMMONS} 
+	java-pkg_jar-from ${XMLCOMMONS}
 	java-pkg_jar-from ${JSPAPI}
 
 	cd ${1}/ide4/config/TagLibraries/JSTL11
-	java-pkg_jar-from jakarta-jstl jstl.jar 
-	java-pkg_jar-from jakarta-jstl standard.jar 
+	java-pkg_jar-from jakarta-jstl jstl.jar
+	java-pkg_jar-from jakarta-jstl standard.jar
 
 	cd ${1}/platform4/modules/ext
 	java-pkg_jar-from ${JH}
 }
 
-src_install()
-{	
+src_install() {
+
 	local TOMCATDIR="nb4.0/jakarta-tomcat-5.0.28"
 
-	local DESTINATION="/usr/share/netbeans-${SLOT}"	
-	
+	local DESTINATION="/usr/share/netbeans-${SLOT}"
+
 	insinto $DESTINATION
 
 #Tomcat removal
-	${RM} -fr ${BUILDDESTINATION}/${TOMCATDIR}
+#	${RM} -fr ${BUILDDESTINATION}/${TOMCATDIR}
 
 	cd ${BUILDDESTINATION}
 
 #The program itself
-	doins -r * 
+	doins -r *
 
-	symlink_extjars ${D}/${DESTINATION}	
+	symlink_extjars ${D}/${DESTINATION}
 
 	fperms 755 \
 		   ${DESTINATION}/bin/netbeans \
 		   ${DESTINATION}/platform4/lib/nbexec
-	
+
 #The wrapper wrapper :)
-	newbin ${FILESDIR}/startscript.sh netbeans-${SLOT}
+#	newbin ${FILESDIR}/startscript.sh netbeans-${SLOT}
+
+	dodir /usr/bin
+	dosym ${DESTINATION}/bin/netbeans /usr/bin/netbeans-${SLOT}
 
 #Linking to the system tomcat
-	dodir /usr/share/tomcat-${TOMCATSLOT}
-	dosym /usr/share/tomcat-${TOMCATSLOT} ${DESTINATION}/${TOMCATDIR}
+#	dodir /usr/share/tomcat-${TOMCATSLOT}
+#	dosym /usr/share/tomcat-${TOMCATSLOT} ${DESTINATION}/${TOMCATDIR}
+#	dodir /etc/tomcat-${TOMCATSLOT}/default
+#	dosym /etc/tomcat-${TOMCATSLOT}/default ${DESTINATION}/${TOMCATDIR}/conf
 
 #Ant stuff. We use the system ant.
 	local ANTDIR="${DESTINATION}/ide4/ant"
@@ -308,16 +321,16 @@ src_install()
 	dodir /usr/share/ant-core/bin
 	dosym /usr/share/ant-core/bin  ${ANTDIR}/bin
 
-#NOTICE THIS. We first installed everything here 
+#NOTICE THIS. We first installed everything here
 #and now we will remove some stuff from here and
 #install it somewhere else instead.
- 
+
 	cd ${D}/${DESTINATION}
-		
+
 #Documentation
 
-	#The next directory seems to be empty	
-	if ! rmdir doc 2> /dev/null; then	
+	#The next directory seems to be empty
+	if ! rmdir doc 2> /dev/null; then
 		use doc || ${RM} -fr ./doc
 	fi
 
@@ -326,7 +339,7 @@ src_install()
 
 	dodoc build_info
 	dohtml CREDITS.html README.html netbeans.css
-	
+
 	${RM} -f build_info CREDITS.html README.html netbeans.css
 
 #Icons and shortcuts
@@ -335,7 +348,7 @@ src_install()
 	dodir ${DESTINATION}/icons
 	insinto ${DESTINATION}/icons
 	doins ${S}/core/ide/release/bin/icons/*png
-	
+
 	for res in "16x16" "24x24" "32x32" "48x48" "128x128"
 	do
 		dodir /usr/share/icons/hicolor/${res}/apps
@@ -345,9 +358,10 @@ src_install()
 	make_desktop_entry netbeans-${SLOT} Netbeans netbeans Development
 }
 
-pkg_postinst ()
-{
+pkg_postinst () {
+
 	einfo "Your tomcat directory might not have the right permissions."
 	einfo "Please make sure that normal users can read the directory:"
 	einfo "/usr/share/tomcat-${TOMCATSLOT}"
+
 }

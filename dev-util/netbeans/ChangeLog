@@ -1,0 +1,114 @@
+# ChangeLog for dev-util/netbeans
+# Copyright 2002-2005 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-util/netbeans/ChangeLog,v 1.25 2005/04/21 19:10:41 hansmi Exp $
+
+  21 Apr 2005; Michael Hanselmann <hansmi@gentoo.org> netbeans-3.5.1.ebuild:
+  Stable on ppc.
+
+  20 Feb 2005; Aron Griffis <agriffis@gentoo.org> netbeans-3.6-r1.ebuild:
+  add ~ia64 66762
+
+  31 Dec 2004; Ciaran McCreesh <ciaranm@gentoo.org> :
+  Change encoding to UTF-8 for GLEP 31 compliance
+
+  09 Jun 2004; Aron Griffis <agriffis@gentoo.org> netbeans-3.4.1.ebuild,
+  netbeans-3.5.1.ebuild, netbeans-3.6-r1.ebuild:
+  Fix use invocation
+
+  08 Jun 2004; Michael Sterrett <mr_bones_@gentoo.org> netbeans-3.3.2.ebuild,
+  netbeans-3.4.ebuild, netbeans-3.5.ebuild, netbeans-3.6.ebuild:
+  clean older ebuilds
+
+  04 Jun 2004; Bryan Østergaard <kloeri@gentoo.org> netbeans-3.5.1.ebuild:
+  Stable on alpha.
+
+*netbeans-3.6-r1 (26 Apr 2004)
+
+  26 Apr 2004; Brandon Low <lostlogic@gentoo.org> +netbeans-3.6-r1.ebuild:
+  Fix major bugs in ebuild wherein it was not installing important components of
+  netbeans
+
+*netbeans-3.6 (22 Apr 2004)
+
+  22 Apr 2004; Martin Holzer <mholzer@gentoo.org> netbeans-3.6.ebuild:
+  Verison bumped. Closes 48202
+
+  15 Apr 2004; Danny van Dyk <kugelfang@gentoo.org> netbeans-3.5.1.ebuild:
+  marked ~amd64
+
+  23 Feb 2004; Sven Blumenstein <bazik@gentoo.org> netbeans-3.5.1.ebuild:
+  Stable on sparc.
+
+  07 Jan 2004; Brandon Low <lostlogic@gentoo.org> netbeans-3.5.1.ebuild:
+  Mark stable on x86
+
+*netbeans-3.5.1 (04 Aug 2003)
+
+  04 Aug 2003; Brandon Low <lostlogic@gentoo.org> netbeans-3.5.1.ebuild:
+  Bump
+
+*netbeans-3.5 (14 Jun 2003)
+
+  14 Jun 2003; Brandon Low <lostlogic@gentoo.org> netbeans-3.5.ebuild:
+  Bump, adjust ebuild for slightly higher goodness level.
+
+  26 May 2003; Dylan Carlson <absinthe@gentoo.org> netbeans-3.3.2.ebuild,
+  netbeans-3.4.1.ebuild, netbeans-3.4.ebuild, files/netbeans:
+  Fixed license for J2EE, and in 3.4.1 added a /usr/bin run script to close
+  #18928. Doing a symlink was not a good solution as many people symlink /opt to
+  other places, and dosym would fail under that circumstance.
+
+*netbeans-3.4.1 (23 Jan 2003)
+
+  15 Feb 2003; Mark Guertin <gerk@gentoo.org> netbeans-3.4.1.ebuild :
+  set ppc in keywords
+
+  23 Jan 2003; Matthew Kennedy <mkennedy@gentoo.org>
+  netbeans-3.4.1.ebuild, file/digest-netbeans-3.4.1, ChangeLog:
+
+  Minor version bump (thanks to Douglas Pollock <pollockd@magma.ca>,
+  bug #14395). Ebuild and ChangeLog clean up.
+
+  06 Dec 2002; Rodney Rees <manson@gentoo.org> : changed sparc ~sparc
+  keywords
+ 
+*netbeans-3.4 (14 Sep 2002)
+
+  14 Sep 2002; Matthew Kennedy <mkennedy@gentoo.org>
+  netbeans-3.4.ebuild, files/digest-netbeans-3.4 :
+
+  New major release. Resolves bug 7199 and 7017. Updated ebuild
+  contributed by Douglas Pollock <desudation@yahoo.ca>. Added support
+  for KDE menus. Updated desktop icon to new dark blue logo.
+
+*netbeans-3.3.2 ( 28 Jun 2002 )
+
+  28 Jun 2002; George Shapovalov <george@gentoo.org>
+  netbeans-3.3.2.ebuild, files/digest-3.3.2 :
+
+  new version released, updated ebuild to comply with present requirements;
+  (updated versions were submitted by Tejaswi Kasturi <tej@kasturi.org>
+  and Heiko Helmle <helman@gmx.net>).
+  Added few licenses under which parts of the package are released, still 
+  need to add few more.
+  I could not fetch sources from a few locations, however Tejaswi claims 
+  he never had difficulty fetching them. Therefore I am committing and masking 
+  new version. Will unmask when licenses are all added and SRC_URI checked.
+
+*netbeans-3.3.1 ( 6 Feb 2002 )
+
+  6 Feb 2002; Karl Trygve Kalleberg <karltk@gentoo.org>
+  files/netbeans.desktop files/netbeans.png :
+ 
+  Minor fix in netbeans.desktop so that NetBeans integrates properly with 
+  GNOME now.
+
+*netbeans-3.3.1 ( 5 Feb 2002 )
+
+  5 Feb 2002; Karl Trygve Kalleberg <karltk@gentoo.org>
+  netbeans-3.3.1.ebuild, files/digest-3.3.1 files/netbeans.desktop
+  files/netbeans.png : 
+ 
+  NetBeans is an Open Source Java IDE. 
+
+  Ebuild contributed by Matthew Kennedy
