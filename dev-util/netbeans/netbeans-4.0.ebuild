@@ -144,7 +144,11 @@ src_unpack () {
 	#removing tomcat
 #	${RM} -fr tomcatint
 
-#	cd ${S}/nbbuild
+	cd ${S}/nbbuild
+	#disabling the bundled tomcat
+	#The users can integrate to the system tomcat if they want
+	sed -i -e "s%tomcatint/tomcat5/bundled,%%g" *.properties
+		
 #	cp ${FILESDIR}/user.build.properties .
 
 	#we have ant libs here so using the system libs
@@ -361,7 +365,11 @@ src_install() {
 pkg_postinst () {
 
 	einfo "Your tomcat directory might not have the right permissions."
-	einfo "Please make sure that normal users can read the directory:"
-	einfo "/usr/share/tomcat-${TOMCATSLOT}"
-
+	einfo "Please make sure that normal users can read the directory: "
+	einfo "/usr/share/tomcat-${TOMCATSLOT}                            "
+	einfo "                                                           "
+	einfo "The integrated Tomcat is not installed, but you can easily "
+	einfo "use the system Tomcat. See Netbeans documentation if you   "
+	einfo "don't know how to do that. The relevant settings are in the"
+	einfo "runtime window.                                            "
 }
