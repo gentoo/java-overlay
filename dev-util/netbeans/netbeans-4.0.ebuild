@@ -24,14 +24,13 @@ SRC_URI="${BASELOCATION}/${MAINTARBALL} \
 
 SLOT="${PV}"
 
-#When we have java-pkg_jar-from to everything only SPL should be needed here.
-LICENSE="SPL"
+LICENSE="SPL W3C sun-bcla+supplemental"
 KEYWORDS="~x86"
 
 # Welcome. Here is some help for the poor soul who has to maintain this ebuild.
 #
 # Use this command to find which packed stuff from other projects is actually used during compile:
-#   alias nbjarcheck="ebuild netbeans-4.0.ebuild unpack compile | grep Unscrambling | grep "\.jar""
+#   "ebuild netbeans-4.0.ebuild unpack compile | grep Unscrambling | grep "\.jar""
 #
 # Remember that there are also many other scrambled files in Netbeans but the
 # default module configuration doesn't use all of them.
@@ -122,7 +121,7 @@ XERCES="xerces-2 xercesImpl.jar xerces-2.6.2.jar"
 XMLCOMMONS="xml-commons xml-apis.jar xml-commons-dom-ranges-1.0.b2.jar"
 
 pkg_setup () {
-	use debug && ${RM}="rm -v"
+	use debug && RM="rm -v"
 }
 
 fix_manifest(){
@@ -157,6 +156,8 @@ src_unpack () {
 	mkdir lib; cd lib
 	java-pkg_jar-from ant-tasks
 	java-pkg_jar-from ant-core
+	touch ant-api-1.6.2.zip
+	touch ant-docs-1.6.2.zip
 
 	cd ${S}/core/external
 	java-pkg_jar-from ${JH}
@@ -176,6 +177,8 @@ src_unpack () {
 	java-pkg_jar-from ${XMLCOMMONS}
 	java-pkg_jar-from ${PMD}
 	java-pkg_jar-from ${REGEXP}
+	#j2eeeditor-1.0.jar is only used in Netbeans but licensed under
+	#Sun's bcla + supplemental terms
 
 	cd ${S}/xml/external/
 	java-pkg_jar-from sac
@@ -198,9 +201,12 @@ src_unpack () {
 
 	cd ${S}/java/external/
 	java-pkg_jar-from javamake-bin javamake.jar javamake-1.2.12.jar
+	# gjast.jar is a mix of Netbeans stuff with sun javac stuff
+	# It is not available elsewhere.
 
 	cd ${S}/junit/external/
 	java-pkg_jar-from ${JUNIT}
+	touch junit-3.8.1-api.zip
 
 	cd ${S}/tasklist/external/
 	java-pkg_jar-from jtidy Tidy.jar Tidy-r7.jar
@@ -216,7 +222,9 @@ src_unpack () {
 	java-pkg_jar-from ${JSPAPI}
 	java-pkg_jar-from ${JSTL}
 	java-pkg_jar-from ${STANDARD}
-
+	touch jsp20-docs.zip
+	touch jstl-1.1.2-javadoc.zip
+	touch servlet24-docs.zip
 }
 
 src_compile() {
@@ -247,6 +255,11 @@ src_compile() {
 	find ${BUILDDESTINATION} -type f -name "*.exe" -o -name "*.cmd" -o \
 			                 -name "*.bat" -o -name "*.dll"	  \
 			| xargs ${RM} -f
+
+	#Removing external stuff. They are api docs from external libs. 
+	cd ${BUILDDESTINATION}/ide4/docs
+	${RM} *.zip	
+		
 }
 
 symlink_extjars() {
@@ -302,10 +315,11 @@ src_install() {
 		   ${DESTINATION}/platform4/lib/nbexec
 
 #The wrapper wrapper :)
-#	newbin ${FILESDIR}/startscript.sh netbeans-${SLOT}
+	newbin ${FILESDIR}/startscript.sh netbeans-${SLOT}
 
-	dodir /usr/bin
-	dosym ${DESTINATION}/bin/netbeans /usr/bin/netbeans-${SLOT}
+#	The symlink for starting Netbeans
+#	dodir /usr/bin
+#	dosym ${DESTINATION}/bin/netbeans /usr/bin/netbeans-${SLOT}
 
 #Linking to the system tomcat
 #	dodir /usr/share/tomcat-${TOMCATSLOT}
@@ -338,7 +352,6 @@ src_install() {
 		use doc || ${RM} -fr ./doc
 	fi
 
-	use doc || ${RM} -fr ./nb4.0/docs
 	use doc && java-pkg_dohtml -r ${WORKDIR}/javadoc/*
 
 	dodoc build_info

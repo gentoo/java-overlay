@@ -1,5 +1,21 @@
 #!/bin/bash
-PKGS="flute,commons-logging,junit,sac,xerces-2,tomcat-5,jmi,mof,"
-PKGS="${PKGS}commons-el,xml-commons,javahelp-bin,"
-PKGS="${PKGS}servletapi-2.2,servletapi-2.3,servletapi-2.4"
-CLASSPATH=${CLASSPATH}:$(java-config --classpath=${PKGS}) /usr/share/netbeans-4.0/bin/netbeans
+
+check_symlinks() {
+	for file in `find ${1} -type l` ; do
+
+		if ! test -e ${file} ; then
+			echo "Broken symlink:"
+			echo "${file}"
+		fi
+
+	done
+}
+
+NBDIR="/usr/share/netbeans-4.0"
+
+check_symlinks ${NBDIR}/ide4/modules/ext
+check_symlinks ${NBDIR}/ide4/modules/autoload/ext
+check_symlinks ${NBDIR}/ide4/config/TagLibraries/JSTL11
+check_symlinks ${NBDIR}/platform4/modules/ext
+
+${NBDIR}/bin/netbeans
