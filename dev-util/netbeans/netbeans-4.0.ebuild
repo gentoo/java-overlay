@@ -24,6 +24,7 @@ SRC_URI="${BASELOCATION}/${MAINTARBALL} \
 
 SLOT="${PV}"
 
+# The list of files in here is not complete but just some I listed.
 # Apache-1.1: webserver.jar
 # ant-mis is stuff we never use put instead of pactching we let the build process use this file
 # so adding the license just to be sure
@@ -48,7 +49,8 @@ KEYWORDS="~x86"
 #   alias findnormaljars='find . -name "*.jar" -type f | less'
 # Check the list to see that no packed jars get copied to the image
 #
-
+# Remove the unset DISPLAY line from src_compile to get graphical license dialogs and pause before
+# unscramble
 
 #Bad tomcat versions <r2
 
@@ -153,8 +155,6 @@ src_unpack () {
 	#The users can integrate to the system tomcat if they want
 	sed -i -e "s%tomcatint/tomcat5/bundled,%%g" *.properties
 		
-#	cp ${FILESDIR}/user.build.properties .
-
 	cd ${S}/ant/external/
 	touch ant-api-1.6.2.zip
 	touch ant-docs-1.6.2.zip
@@ -167,7 +167,6 @@ src_unpack () {
 
 	cd ${S}/core/external
 	java-pkg_jar-from ${JH}
-#	fix_manifest ${JH} javahelp-bin jh.jar ${S}/core/javahelp/manifest.mf
 
 	cd ${S}/mdr/external/
 	java-pkg_jar-from ${JMI}
