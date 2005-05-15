@@ -154,7 +154,7 @@ src_unpack () {
 	#disabling the bundled tomcat
 	#The users can integrate to the system tomcat if they want
 	sed -i -e "s%tomcatint/tomcat5/bundled,%%g" *.properties
-		
+
 	cd ${S}/ant/external/
 	touch ant-api-1.6.2.zip
 	touch ant-docs-1.6.2.zip
@@ -198,7 +198,7 @@ src_unpack () {
 	java-pkg_jar-from ${SERVLET22}
 	# The webserver.jar in here is a stripped down version of Tomcat 3.3.
 	# We will use the included jar because we don't want to have Tomcat 3.X
-	# in the tree and because maintaining it would probably be a pain in 
+	# in the tree and because maintaining it would probably be a pain in
 	# the ass.
 
 	cd ${S}/j2eeserver/external
@@ -261,10 +261,10 @@ src_compile() {
 			                 -name "*.bat" -o -name "*.dll"	  \
 			| xargs ${RM} -f
 
-	#Removing external stuff. They are api docs from external libs. 
+	#Removing external stuff. They are api docs from external libs.
 	cd ${BUILDDESTINATION}/ide4/docs
-	${RM} *.zip	
-		
+	${RM} *.zip
+
 }
 
 symlink_extjars() {
