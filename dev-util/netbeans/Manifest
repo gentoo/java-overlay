@@ -1,6 +1,6 @@
 MD5 b3bb04e1628fdb40018e40e0fbb482cc ChangeLog 4054
 MD5 e7fcbf7f5131562425fda47afe3b39b9 metadata.xml 1128
-MD5 542383f966ca6a4cbb85a06c8aa9dbb4 netbeans-4.0.ebuild 11068
+MD5 ad6bfa80302469877fd5a5ea1c9b35d9 netbeans-4.0.ebuild 11380
 MD5 95ab6db4dc5ed189e21f0e6ae1aa657e files/antbuild.xml.patch 957
 MD5 0ba0478234bfd0d0ced052794b374695 files/extfilecheck.rb 494
 MD5 ecd55fafda2dc6bcb5d2747dd61b328d files/javahelpmanifest.patch 416

@@ -4,7 +4,7 @@
 
 inherit eutils java-pkg
 
-DESCRIPTION="NetBeans ${PV} IDE for Java"
+DESCRIPTION="NetBeans IDE for Java"
 
 IUSE="debug doc"
 HOMEPAGE="http://www.netbeans.org"
@@ -24,7 +24,12 @@ SRC_URI="${BASELOCATION}/${MAINTARBALL} \
 
 SLOT="${PV}"
 
-LICENSE="SPL W3C sun-bcla+supplemental"
+# Apache-1.1: webserver.jar
+# ant-mis is stuff we never use put instead of pactching we let the build process use this file
+# so adding the license just to be sure
+# Apache-2.0: ant-misc-1.6.2.zip
+# as-is: docbook-xsl-1.65.1.zip, pmd-netbeans35-bin-0.91.zip
+LICENSE="Apache-1.1 Apache-2.0 SPL W3C sun-bcla+supplemental sun-javac as-is docbook sun-resolver"
 KEYWORDS="~x86"
 
 # Welcome. Here is some help for the poor soul who has to maintain this ebuild.
@@ -150,14 +155,15 @@ src_unpack () {
 		
 #	cp ${FILESDIR}/user.build.properties .
 
-	#we have ant libs here so using the system libs
 	cd ${S}/ant/external/
+	touch ant-api-1.6.2.zip
+	touch ant-docs-1.6.2.zip
+
+	#we have ant libs here so using the system libs
 	epatch ${FILESDIR}/antbuild.xml.patch
 	mkdir lib; cd lib
 	java-pkg_jar-from ant-tasks
 	java-pkg_jar-from ant-core
-	touch ant-api-1.6.2.zip
-	touch ant-docs-1.6.2.zip
 
 	cd ${S}/core/external
 	java-pkg_jar-from ${JH}
