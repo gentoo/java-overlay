@@ -45,7 +45,7 @@ JAVADOCTARBALL="netbeans-${MY_PV}-docs-javadoc.tar.bz2"
 SRC_URI="${BASELOCATION}/${MAINTARBALL}
 		 doc? ( ${BASELOCATION}/${JAVADOCTARBALL} )"
 
-LICENSE="Apache-1.1 Apache-2.0 SPL W3C sun-bcla+supplemental sun-javac as-is docbook sun-resolver"
+LICENSE="Apache-1.1 Apache-2.0 SPL W3C sun-bcla-javac sun-bcla-j2eeditor sun-javac as-is docbook sun-resolver"
 SLOT="${PV}"
 KEYWORDS="~x86"
 IUSE="debug doc"
