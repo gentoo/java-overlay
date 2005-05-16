@@ -52,6 +52,7 @@ IUSE="debug doc"
 
 # Do not use tomcat less than r2 as it is bad.
 
+# dev-java/xml-commons-resolver for future versions
 RDEPEND=">=virtual/jre-1.4.2
 		  =dev-java/commons-logging-1.0*
 		   dev-java/commons-el
@@ -79,7 +80,8 @@ DEPEND="${RDEPEND}
 		  dev-java/saxpath
 		  dev-java/javamake-bin
 		  dev-util/pmd"
-# dev-java/xml-commons-resolver for future versions
+
+TOMCATSLOT="5"
 
 # Replacement JARs for Netbeans
 COMMONS_LOGGING="commons-logging commons-logging.jar commons-logging-1.0.4.jar"
@@ -104,7 +106,6 @@ XMLCOMMONS="xml-commons xml-apis.jar xml-commons-dom-ranges-1.0.b2.jar"
 S=${WORKDIR}/netbeans-src
 
 BUILDDESTINATION="${S}/nbbuild/netbeans"
-TOMCATSLOT="5"
 
 
 src_unpack () {
