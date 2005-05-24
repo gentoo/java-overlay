@@ -1,8 +1,11 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/dev-util/netbeans/netbeans-4.0.ebuild,v 1.3 2005/05/24 05:43:39 compnerd Exp $
 
 inherit eutils java-pkg
+
+DESCRIPTION="NetBeans IDE for Java"
+HOMEPAGE="http://www.netbeans.org"
 
 # Server Tarball layout structure
 # 4.0 200412081800/d5a0f13566068cb86e33a46ea130b207
@@ -22,19 +25,16 @@ inherit eutils java-pkg
 # symlinks to the installed files, you can use a ruby script I wrote. It is in the experimental tree:
 # https://gentooexperimental.org/svn/java/gentoo-java-experimental/dev-util/netbeans/files
 #
-# Use this command to find which packed stuff from other projects is actually used during compile:
-#   "ebuild netbeans-4.0.ebuild unpack compile | grep Unscrambling | grep "\.jar""
+# This command should be run after ebuild <pkg> unpack in the source root
+# 'ebuild netbeans-4.0.ebuild compile | grep Unscrambling | grep "\.jar"'
+# Check which jars are actually being used to compile Netbeans
 #
 # This command should be run after ebuild <pkg> install in the image root
-#   'find . -name "*.jar" -type f | less'
+# 'find . -name "*.jar" -type f | less'
 # Check the list to see that no packed jars get copied to the image
 #
 # Remove the unset DISPLAY line from src_compile to get graphical license dialogs and pause before
 # unscramble
-#
-
-DESCRIPTION="NetBeans IDE for Java"
-HOMEPAGE="http://www.netbeans.org"
 
 MY_PV=${PV/./_}
 
@@ -45,12 +45,10 @@ JAVADOCTARBALL="netbeans-${MY_PV}-docs-javadoc.tar.bz2"
 SRC_URI="${BASELOCATION}/${MAINTARBALL}
 		 doc? ( ${BASELOCATION}/${JAVADOCTARBALL} )"
 
-LICENSE="Apache-1.1 Apache-2.0 SPL W3C sun-bcla-javac sun-bcla-j2eeditor sun-javac as-is docbook sun-resolver"
-SLOT="${PV}"
-KEYWORDS="~x86"
+LICENSE="Apache-1.1 Apache-2.0 SPL W3C sun-bcla-j2eeeditor sun-bcla-javac sun-javac as-is docbook sun-resolver"
+SLOT="4.0"
+KEYWORDS="~x86 ~amd64"
 IUSE="debug doc"
-
-# Do not use tomcat less than r2 as it is bad.
 
 # dev-java/xml-commons-resolver for future versions
 RDEPEND=">=virtual/jre-1.4.2
@@ -69,7 +67,6 @@ RDEPEND=">=virtual/jre-1.4.2
 		   dev-java/sun-j2ee-deployment-bin
 		   dev-java/xml-commons
 		   dev-java/jakarta-jstl"
-
 DEPEND="${RDEPEND}
 		>=virtual/jdk-1.4.2
 		>=dev-java/ant-1.6.1
@@ -104,9 +101,7 @@ XERCES="xerces-2 xercesImpl.jar xerces-2.6.2.jar"
 XMLCOMMONS="xml-commons xml-apis.jar xml-commons-dom-ranges-1.0.b2.jar"
 
 S=${WORKDIR}/netbeans-src
-
 BUILDDESTINATION="${S}/nbbuild/netbeans"
-
 
 src_unpack () {
 	unpack ${MAINTARBALL}
@@ -214,6 +209,9 @@ src_compile() {
 	# dialogs for the licence agreements if this is set.
 	unset DISPLAY
 
+	# Sun JDK doesn't like that very much, so let's pleasure them too ;-)
+	export ANT_OPTS="${ANT_OPTS} -Djava.awt.headless=true"
+
 	# The location of the main build.xml file
 	cd ${S}/nbbuild
 
@@ -249,8 +247,7 @@ src_install() {
 	local DESTINATION="${ROOT}/usr/share/netbeans-${SLOT}"
 	insinto $DESTINATION
 
-	einfo "Installing the program"
-
+	einfo "Installing the program..."
 	cd ${BUILDDESTINATION}
 	doins -r *
 
@@ -303,7 +300,7 @@ src_install() {
 pkg_postinst () {
 	einfo "Your tomcat directory might not have the right permissions."
 	einfo "Please make sure that normal users can read the directory: "
-	einfo "${ROOT}/usr/share/tomcat-${TOMCATSLOT}                     "
+	einfo "${ROOT}usr/share/tomcat-${TOMCATSLOT}                      "
 	einfo "                                                           "
 	einfo "The integrated Tomcat is not installed, but you can easily "
 	einfo "use the system Tomcat. See Netbeans documentation if you   "
