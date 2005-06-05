@@ -7,7 +7,8 @@ inherit eutils java-pkg
 DESCRIPTION="Apache Servlet-2.4/JSP-2.0 Container"
 
 SLOT="5.5"
-SRC_URI="mirror://apache/jakarta/tomcat-${SLOT/.*}/v${PV}/src/jakarta-${P}-src.tar.gz"
+#Some mirrors don't have 5.5.7
+SRC_URI="http://apache.kgt.org/jakarta/tomcat-${SLOT/.*}/v${PV}/src/jakarta-${P}-src.tar.gz"
 HOMEPAGE="http://jakarta.apache.org/tomcat"
 KEYWORDS="~x86 ~amd64"
 LICENSE="Apache-2.0"
@@ -16,7 +17,7 @@ DEPEND="sys-apps/sed
 	   ${RDEPEND}"
 RDEPEND=">=virtual/jdk-1.4
 	   dev-eclipse/eclipse-jdtcore
-	   >=dev-java/commons-beanutils-1.7.0
+	   =dev-java/commons-beanutils-1.7*
 	   >=dev-java/commons-collections-3.1
 	   >=dev-java/commons-daemon-1.0
 	   >=dev-java/commons-dbcp-1.2.1
@@ -79,7 +80,7 @@ src_unpack() {
 	java-pkg_jar-from servletapi-2.4
 
 	mkdir -p ../../server/lib && cd ../../server/lib
-	java-pkg_jar-from commons-beanutils commons-beanutils.jar
+	java-pkg_jar-from commons-beanutils-1.7 commons-beanutils.jar
 	java-pkg_jar-from commons-digester
 	java-pkg_jar-from commons-fileupload
 	java-pkg_jar-from commons-modeler
@@ -105,7 +106,7 @@ src_compile(){
 	antflags="${antflags} -Dlog4j.jar=$(java-config -p log4j)"
 	antflags="${antflags} -Dregexp.jar=$(java-config -p regexp)"
 	antflags="${antflags} -Dstruts.jar=$(java-pkg_getjar struts struts.jar)"
-	antflags="${antflags} -Dcommons-beanutils.jar=$(java-pkg_getjar	commons-beanutils commons-beanutils.jar)"
+	antflags="${antflags} -Dcommons-beanutils.jar=$(java-pkg_getjar	commons-beanutils-1.7 commons-beanutils.jar)"
 	antflags="${antflags} -Dcommons-logging.jar=$(java-pkg_getjar commons-logging commons-logging.jar)"
 	antflags="${antflags} -Dcommons-logging-api.jar=$(java-pkg_getjar commons-logging commons-logging-api.jar)"
 	antflags="${antflags} -Djaxen.jar=$(java-pkg_getjar jaxen jaxen-full.jar)"
