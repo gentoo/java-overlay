@@ -1,0 +1,17 @@
+--- build.xml.old	2005-05-26 23:28:23.000000000 +0200
++++ build.xml	2005-05-26 23:29:35.000000000 +0200
+@@ -19,14 +19,11 @@
+             <!-- LFI #2106 for all: -->
+             <binary clear="ant-api-1.6.2.zip" scrambled="ant-api-1.6.2.zip.scrambled" license="${extnl}/apache-license-2.0.txt"/>
+             <binary clear="ant-docs-1.6.2.zip" scrambled="ant-docs-1.6.2.zip.scrambled" license="${extnl}/apache-license-2.0.txt"/>
+-            <binary clear="ant-libs-1.6.2.zip" scrambled="ant-libs-1.6.2.zip.scrambled" license="${extnl}/apache-license-2.0.txt"/>
+             <binary clear="ant-misc-1.6.2.zip" scrambled="ant-misc-1.6.2.zip.scrambled" license="${extnl}/apache-license-2.0.txt"/>
+             <!-- No LFIs; simple patches against Apache Ant sources; cf. http://issues.apache.org/bugzilla/show_bug.cgi?id=<number> -->
+             <binary clear="24918.jar" scrambled="24918.jar.scrambled" license="${extnl}/apache-license-2.0.txt"/>
+             <binary clear="31928.jar" scrambled="31928.jar.scrambled" license="${extnl}/apache-license-2.0.txt"/>
+         </unscramble>
+-        <mkdir dir="lib"/>
+-        <unzip src="ant-libs-1.6.2.zip" dest="lib"/>
+     </target>
+     <target name="scramble">
+         <taskdef name="scramble" classname="org.netbeans.nbbuild.Scramble" classpath="${extnl}/scrambler.jar"/>
