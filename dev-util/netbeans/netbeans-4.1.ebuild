@@ -245,7 +245,11 @@ src_install() {
 	make_desktop_entry netbeans-${SLOT} Netbeans netbeans Development
 }
 
-pkg_postinst () {
+pkg_postinst () {    
+	einfo "Your tomcat directory might not have the right permissions."
+	einfo "Please make sure that normal users can read the directory: "
+	einfo "${ROOT}usr/share/tomcat-${TOMCATSLOT}                      "
+	einfo "                                                           "
 	einfo "The integrated Tomcat is not installed, but you can easily "
 	einfo "use the system Tomcat. See Netbeans documentation if you   "
 	einfo "don't know how to do that. The relevant settings are in the"
@@ -263,9 +267,11 @@ function fool_scrambler() {
 	touch ant-api-1.6.2.zip
 	touch ant-docs-1.6.2.zip
 
+	unscramble_and_empty
+
 	# We have ant libs here so using the system libs
-	epatch ${MY_FDIR}/ant_build.xml.patch
-	mkdir lib && cd lib
+	cd lib
+	rm -fr *
 	java-pkg_jar-from ant-tasks
 	java-pkg_jar-from ant-core
 

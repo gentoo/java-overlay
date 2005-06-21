@@ -21,12 +21,11 @@ HOMEPAGE="http://www.netbeans.org"
 # There are many other scrambled files in Netbeans but the
 # default module configuration doesn't use all of them.
 #
-# If you want to find out useless java-pkg_jar-from calls and all scrambled files, which don't have
-# symlinks to the installed files, you can use a ruby script I wrote. It is in the experimental tree:
+# Check the experimental tree for useful stuff.
 # https://gentooexperimental.org/svn/java/gentoo-java-experimental/dev-util/netbeans/files
 #
 # This command should be run after ebuild <pkg> unpack in the source root
-# 'ebuild netbeans-4.0.ebuild compile | grep Unscrambling | grep "\.jar"'
+# 'ebuild netbeans-${PVR}.ebuild compile | grep Unscrambling | grep "\.jar"'
 # Check which jars are actually being used to compile Netbeans
 #
 # This command should be run after ebuild <pkg> install in the image root
@@ -102,99 +101,15 @@ XMLCOMMONS="xml-commons xml-apis.jar xml-commons-dom-ranges-1.0.b2.jar"
 
 S=${WORKDIR}/netbeans-src
 BUILDDESTINATION="${S}/nbbuild/netbeans"
+IDE_VERSION="4"
+MY_FDIR="${FILESDIR}/4.0"
 
-src_unpack () {
-	unpack ${MAINTARBALL}
+antflags=""
 
-	if use doc; then
-		mkdir javadoc && cd javadoc
-		unpack ${JAVADOCTARBALL} || die "Unable to extract javadoc"
-		rm -f *.zip
-	fi
+set_env () {
 
-	cd ${S}/nbbuild
-	# Disable the bundled Tomcat in favor of Portage installed version
-	sed -i -e "s%tomcatint/tomcat5/bundled,%%g" *.properties
-
-	cd ${S}/ant/external/
-	touch ant-api-1.6.2.zip
-	touch ant-docs-1.6.2.zip
-
-	# We have ant libs here so using the system libs
-	epatch ${FILESDIR}/antbuild.xml.patch
-	mkdir lib && cd lib
-	java-pkg_jar-from ant-tasks
-	java-pkg_jar-from ant-core
-
-	cd ${S}/core/external
-	java-pkg_jar-from ${JH}
-
-	cd ${S}/mdr/external/
-	java-pkg_jar-from ${JMI}
-	java-pkg_jar-from ${MOF}
-
-	cd ${S}/nbbuild/external
-	java-pkg_jar-from javahelp-bin jhall.jar jhall-2.0_01.jar
-
-	cd ${S}/libs/external/
-	java-pkg_jar-from ${XERCES}
-	java-pkg_jar-from ${COMMONS_LOGGING}
-	java-pkg_jar-from xalan xalan.jar xalan-2.5.2.jar
-	java-pkg_jar-from ${XMLCOMMONS}
-	java-pkg_jar-from ${PMD}
-	java-pkg_jar-from ${REGEXP}
-	# j2eeeditor-1.0.jar is only used in Netbeans but licensed under
-	# Sun's bcla + supplemental terms
-
-	cd ${S}/xml/external/
-	java-pkg_jar-from sac
-	java-pkg_jar-from xerces-2 xercesImpl.jar xerces2.jar
-	java-pkg_jar-from flute
-	# There's also resolver-1_1_nb.jar in this directory.
-	# The implementation is from Sun and I haven't found it.
-	# In later Netbeans versions xml-commons is used so we will use it
-	# then.
-
-	cd ${S}/httpserver/external/
-	java-pkg_jar-from ${SERVLET22}
-	# The webserver.jar in here is a stripped down version of Tomcat 3.3.
-	# We will use the included jar because we don't want to have Tomcat 3.X
-	# in the tree and because maintaining it would probably be a pain.
-
-	cd ${S}/j2eeserver/external
-	java-pkg_jar-from ${JSR}
-
-	cd ${S}/java/external/
-	java-pkg_jar-from javamake-bin javamake.jar javamake-1.2.12.jar
-	# gjast.jar is a mix of Netbeans stuff with sun javac stuff
-	# It is not available elsewhere.
-
-	cd ${S}/junit/external/
-	java-pkg_jar-from ${JUNIT}
-	touch junit-3.8.1-api.zip
-
-	cd ${S}/tasklist/external/
-	java-pkg_jar-from jtidy Tidy.jar Tidy-r7.jar
-
-	cd ${S}/web/external
-	java-pkg_jar-from ${SERVLET23}
-	java-pkg_jar-from ${SERVLET24}
-	java-pkg_jar-from commons-el
-	java-pkg_jar-from jaxen-1.1 jaxen-1.1_beta2.jar jaxen-full.jar
-	java-pkg_jar-from saxpath
-	java-pkg_jar-from ${JASPERCOMPILER}
-	java-pkg_jar-from ${JASPERRUNTIME}
-	java-pkg_jar-from ${JSPAPI}
-	java-pkg_jar-from ${JSTL}
-	java-pkg_jar-from ${STANDARD}
-	touch jsp20-docs.zip
-	touch jstl-1.1.2-javadoc.zip
-	touch servlet24-docs.zip
-}
-
-src_compile() {
-	local antflags=""
-
+	antflags=""
+	
 	if use debug; then
 		antflags="${antflags} -Dbuild.compiler.debug=true"
 		antflags="${antflags} -Dbuild.compiler.deprecation=true"
@@ -209,9 +124,126 @@ src_compile() {
 	# dialogs for the licence agreements if this is set.
 	unset DISPLAY
 
-	# Sun JDK doesn't like that very much, so let's pleasure them too ;-)
-	export ANT_OPTS="${ANT_OPTS} -Djava.awt.headless=true"
+	# -Xmx1g: Increase Java maximum heap size, otherwise ant will die with
+	#         an OutOfMemoryError while building.
+	# -Djava.awt.headless=true: Sun JDK doesnt like that very much, so
+	#                           lets pleasure them too ;-)
+	#
+	# We use the ANT_OPTS environment variable because other ways seem to
+	# fail.
+	#
+	export ANT_OPTS="${ANT_OPTS} -Xmx1g -Djava.awt.headless=true"
 
+}
+
+src_unpack () {
+	unpack ${MAINTARBALL}
+
+	if use doc; then
+		mkdir javadoc && cd javadoc
+		unpack ${JAVADOCTARBALL} || die "Unable to extract javadoc"
+		rm -f *.zip
+	fi
+
+	cd ${S}/nbbuild
+	# Disable the bundled Tomcat in favor of Portage installed version
+	sed -i -e "s%tomcatint/tomcat5/bundled,%%g" *.properties
+
+	set_env
+
+	cd ${S}/ant/external/
+	touch ant-api-1.6.2.zip
+	touch ant-docs-1.6.2.zip
+	unscramble_and_empty	
+
+	# We have ant libs here so using the system libs
+	cd lib
+	rm -fr *.jar
+	java-pkg_jar-from ant-tasks
+	java-pkg_jar-from ant-core
+
+	cd ${S}/core/external
+	unscramble_and_empty
+	java-pkg_jar-from ${JH}
+
+	cd ${S}/mdr/external/
+	unscramble_and_empty
+	java-pkg_jar-from ${JMI}
+	java-pkg_jar-from ${MOF}
+
+	cd ${S}/nbbuild/external
+	unscramble_and_empty
+	java-pkg_jar-from javahelp-bin jhall.jar jhall-2.0_01.jar
+
+	cd ${S}/libs/external/
+	unscramble_and_empty
+	java-pkg_jar-from ${XERCES}
+	java-pkg_jar-from ${COMMONS_LOGGING}
+	java-pkg_jar-from xalan xalan.jar xalan-2.5.2.jar
+	java-pkg_jar-from ${XMLCOMMONS}
+	java-pkg_jar-from ${PMD}
+	java-pkg_jar-from ${REGEXP}
+	# j2eeeditor-1.0.jar is only used in Netbeans but licensed under
+	# Sun's bcla + supplemental terms
+
+	cd ${S}/xml/external/
+	unscramble_and_empty
+	java-pkg_jar-from sac
+	java-pkg_jar-from xerces-2 xercesImpl.jar xerces2.jar
+	java-pkg_jar-from flute
+	# There's also resolver-1_1_nb.jar in this directory.
+	# The implementation is from Sun and I haven't found it.
+	# In later Netbeans versions xml-commons is used so we will use it
+	# then.
+
+	cd ${S}/httpserver/external/
+	unscramble_and_empty
+	java-pkg_jar-from ${SERVLET22}
+	# The webserver.jar in here is a stripped down version of Tomcat 3.3.
+	# We will use the included jar because we don't want to have Tomcat 3.X
+	# in the tree and because maintaining it would probably be a pain.
+
+	cd ${S}/j2eeserver/external
+	unscramble_and_empty
+	java-pkg_jar-from ${JSR}
+
+	cd ${S}/java/external/
+	unscramble_and_empty
+	java-pkg_jar-from javamake-bin javamake.jar javamake-1.2.12.jar
+	# gjast.jar is a mix of Netbeans stuff with sun javac stuff
+	# It is not available elsewhere.
+
+	cd ${S}/junit/external/
+	touch junit-3.8.1-api.zip
+	java-pkg_jar-from ${JUNIT}
+	unscramble_and_empty
+
+	cd ${S}/tasklist/external/
+	unscramble_and_empty
+	java-pkg_jar-from jtidy Tidy.jar Tidy-r7.jar
+
+	cd ${S}/web/external
+	touch jsp20-docs.zip
+	touch jstl-1.1.2-javadoc.zip
+	touch servlet24-docs.zip
+	unscramble_and_empty
+	java-pkg_jar-from ${SERVLET23}
+	java-pkg_jar-from ${SERVLET24}
+	java-pkg_jar-from commons-el
+	java-pkg_jar-from jaxen-1.1 jaxen-1.1_beta2.jar jaxen-full.jar
+	java-pkg_jar-from saxpath
+	java-pkg_jar-from ${JASPERCOMPILER}
+	java-pkg_jar-from ${JASPERRUNTIME}
+	java-pkg_jar-from ${JSPAPI}
+	java-pkg_jar-from ${JSTL}
+	java-pkg_jar-from ${STANDARD}
+
+}
+
+src_compile() {
+
+	set_env
+	
 	# The location of the main build.xml file
 	cd ${S}/nbbuild
 
@@ -228,7 +260,7 @@ src_compile() {
 												| xargs rm -f
 
 	# Removing external stuff. They are api docs from external libs.
-	cd ${BUILDDESTINATION}/ide4/docs
+	cd ${BUILDDESTINATION}/ide${IDE_VERSION}/docs
 	rm -f *.zip
 
 	# The next directory seems to be empty
@@ -237,7 +269,7 @@ src_compile() {
 	fi
 
 	# Use the system ant
-	cd ${BUILDDESTINATION}/ide4/ant
+	cd ${BUILDDESTINATION}/ide${IDE_VERSION}/ant
 
 	rm -fr ./lib
 	rm -fr ./bin
@@ -255,13 +287,13 @@ src_install() {
 
 	fperms 755 \
 		   ${DESTINATION}/bin/netbeans \
-		   ${DESTINATION}/platform4/lib/nbexec
+		   ${DESTINATION}/platform${IDE_VERSION}/lib/nbexec
 
 	# The wrapper wrapper :)
-	newbin ${FILESDIR}/startscript.sh netbeans-${SLOT}
+	newbin ${MY_FDIR}/startscript.sh netbeans-${SLOT}
 
 	# Ant installation
-	local ANTDIR="${DESTINATION}/ide4/ant"
+	local ANTDIR="${DESTINATION}/ide${IDE_VERSION}/ant"
 	cd ${D}/${ANTDIR}
 
 	dodir /usr/share/ant-core/lib
@@ -315,7 +347,7 @@ function fix_manifest() {
 }
 
 function symlink_extjars() {
-	cd ${1}/ide4/modules/ext
+	cd ${1}/ide${IDE_VERSION}/modules/ext
 	java-pkg_jar-from ${COMMONS_LOGGING}
 	java-pkg_jar-from flute
 	java-pkg_jar-from ${JMI}
@@ -323,7 +355,7 @@ function symlink_extjars() {
 	java-pkg_jar-from ${MOF}
 	java-pkg_jar-from sac
 
-	cd ${1}/ide4/modules/autoload/ext
+	cd ${1}/ide${IDE_VERSION}/modules/autoload/ext
 	java-pkg_jar-from commons-el
 	java-pkg_jar-from ${SERVLET22}
 	java-pkg_jar-from ${SERVLET23}
@@ -339,6 +371,22 @@ function symlink_extjars() {
 	java-pkg_jar-from jakarta-jstl jstl.jar
 	java-pkg_jar-from jakarta-jstl standard.jar
 
-	cd ${1}/platform4/modules/ext
+	cd ${1}/platform${IDE_VERSION}/modules/ext
 	java-pkg_jar-from ${JH}
+}
+
+function unscramble_and_empty() {
+	yes yes 2> /dev/null | ant ${antflags} unscramble || die "Failed to unscramble"
+	
+	remove_unscrambling
+}
+
+function remove_unscrambling() {
+	local file=${1}
+
+	[ -z ${file} ] && file="build.xml"
+	
+	xsltproc -o ${T}/out.xml ${FILESDIR}/emptyunscramble.xsl ${file} \
+		|| die "Failed to remove unscrambling from one of the build.xml files"
+	mv ${T}/out.xml ${file}
 }
