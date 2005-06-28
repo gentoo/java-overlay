@@ -75,7 +75,8 @@ DEPEND="${RDEPEND}
 		 =dev-java/jaxen-1.1*
 		  dev-java/saxpath
 		  dev-java/javamake-bin
-		  dev-util/pmd"
+		  dev-util/pmd
+		  dev-libs/libxslt"
 
 TOMCATSLOT="5"
 
