@@ -13,8 +13,8 @@ ECLASS=java-utils
 INHERITED="$INHERITED $ECLASS"
 DESCRIPTION="Based on the $ECLASS eclass"
 
-DEPEND=">=dev-java/java-config-1.2.7
-		>=dev-java/javatoolkit-0.2.0"
+DEPEND=">=dev-java/java-config-1.2.7"
+#		>=dev-java/javatoolkit-0.2.0"
 
 EXPORT_FUNCTIONS pkg_setup
 
