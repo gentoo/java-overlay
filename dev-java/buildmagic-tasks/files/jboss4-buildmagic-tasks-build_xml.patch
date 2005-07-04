@@ -1,0 +1,24 @@
+*** tasks/build.xml.orig	2004-06-07 09:46:29.000000000 -0400
+--- tasks/build.xml	2004-06-07 09:45:44.000000000 -0400
+***************
+*** 143,161 ****
+          <include name="**"/>
+        </fileset>
+  
+-       <!-- Include required classes from common -->
+-       <fileset dir="${jboss.common.root}/classes">
+-         <include name="org/jboss/net/protocol/**"/>
+-         <include name="org/jboss/logging/*.class"/>
+-         <include name="org/jboss/util/DirectoryBuilder*.class"/>
+-         <include name="org/jboss/util/Strings*.class"/>
+-         <include name="org/jboss/util/Objects*.class"/>
+-         <include name="org/jboss/util/*Exception*.class"/>
+-         <include name="org/jboss/util/*Error*.class"/>
+-         <include name="org/jboss/util/*Throwable*.class"/>
+-         <include name="org/jboss/util/platform/Constants.class"/>
+-         <include name="org/jboss/util/property/**"/>
+-       </fileset>
+      </jar>
+      
+    </target>
+--- 143,148 ----

@@ -1,0 +1,560 @@
+diff -ru jboss-4.0.2-src/tools/etc/buildmagic/libraries.ent jboss-4.0.2-src-patched/tools/etc/buildmagic/libraries.ent
+--- jboss-4.0.2-src/tools/etc/buildmagic/libraries.ent	2005-04-29 16:57:54.000000000 -0400
++++ jboss-4.0.2-src-patched/tools/etc/buildmagic/libraries.ent	2005-07-02 23:14:35.000000000 -0400
+@@ -4,66 +4,82 @@
+   <property name="dom4j.dom4j.root" value="${project.thirdparty}/dom4j-dom4j"/>
+   <property name="dom4j.dom4j.lib" value="${dom4j.dom4j.root}/lib"/>
+   <path id="dom4j.dom4j.classpath">
+-    <pathelement path="${dom4j.dom4j.lib}/dom4j.jar"/>
++  	<fileset dir="${dom4j.dom4j.lib}">
++		<include name="*.jar"/>
++	</fileset>
+   </path>
+ 
+   <!-- Javassist -->
+   <property name="javassist.root" value="${project.thirdparty}/javassist"/>
+   <property name="javassist.lib" value="${javassist.root}/lib"/>
+   <path id="javassist.classpath">
+-    <pathelement path="${javassist.lib}/javassist.jar"/>
++  	<fileset dir="${javassist.lib}">
++		<include name="*.jar"/>
++	</fileset>
+   </path>
+ 
+   <!-- qdox -->
+   <property name="qdox.root" value="${project.thirdparty}/qdox"/>
+   <property name="qdox.lib" value="${qdox.root}/lib"/>
+   <path id="qdox.classpath">
+-    <pathelement path="${qdox.lib}/qdox.jar"/>
++  	<fileset dir="${lib.lib}">
++		<include name="*.jar"/>
++	</fileset>
+   </path>
+ 
+   <!-- hibernate3 -->
+   <property name="hibernate.root" value="${project.thirdparty}/hibernate"/>
+   <property name="hibernate.lib" value="${hibernate.root}/lib"/>
+   <path id="hibernate3.classpath">
+-    <pathelement path="${hibernate.lib}/hibernate3.jar"/>
+-    <pathelement path="${hibernate.lib}/hibernate-annotations.jar"/>
+-    <pathelement path="${hibernate.lib}/asm.jar"/>
+-    <pathelement path="${hibernate.lib}/asm-attrs.jar"/>
++  	<fileset dir="${hibernate.lib}">
++		<include name="*.jar"/>
++	</fileset>
+   </path>
+ 
+   <!-- ODMG (needed for Hibernate) -->
+   <property name="odmg.root" value="${project.thirdparty}/odmg"/>
+   <property name="odmg.lib" value="${odmg.root}/lib"/>
+   <path id="odmg.classpath">
+-    <pathelement path="${odmg.lib}/odmg-3.0.jar"/>
++  	<fileset dir="${odmg.lib}">
++		<include name="*.jar"/>
++	</fileset>
+   </path>
+ 
+   <!-- CGLIB (needed for Hibernate) -->
+   <property name="cglib.root" value="${project.thirdparty}/cglib"/>
+   <property name="cglib.lib" value="${cglib.root}/lib"/>
+   <path id="cglib.classpath">
+-    <pathelement path="${cglib.lib}/cglib-2.1.jar"/>
++  	<fileset dir="${cglib.lib}">
++		<include name="*.jar"/>
++	</fileset>
+   </path>
+ 
+   <!-- Trove -->
+   <property name="trove.root" value="${project.thirdparty}/trove"/>
+   <property name="trove.lib" value="${trove.root}/lib"/>
+   <path id="trove.classpath">
+-    <pathelement path="${trove.lib}/trove.jar"/>
++  	<fileset dir="${trove.lib}">
++		<include name="*.jar"/>
++	</fileset>
+   </path>
+ 
+   <!-- Ant -->
+   <property name="apache.ant.root" value="${project.tools}"/>
+   <property name="apache.ant.lib" value="${apache.ant.root}/lib"/>
+   <path id="apache.ant.classpath">
+-    <pathelement path="${apache.ant.lib}/ant.jar"/>
++  	<fileset dir="${apache.ant.lib}">
++		<include name="*.jar"/>
++	</fileset>
+   </path>
+ 
++  <!-- we need a package for this!! -->
+   <!-- Apache Addressing -->
+   <property name="apache.addressing.root" value="${project.thirdparty}/apache-addressing"/>
+   <property name="apache.addressing.lib" value="${apache.addressing.root}/lib"/>
+   <path id="apache.addressing.classpath">
+-    <pathelement path="${apache.addressing.lib}/addressing-1.0.jar"/>
++  	<fileset dir="${apache.addressing.lib}">
++		<include name="*.jar"/>
++	</fileset>
+   </path>
+ 
+   <!-- Apache Avalon -->
+@@ -80,27 +96,27 @@
+   <property name="apache.bcel.root" value="${project.thirdparty}/apache-bcel"/>
+   <property name="apache.bcel.lib" value="${apache.bcel.root}/lib"/>
+   <path id="apache.bcel.classpath">
+-    <pathelement path="${apache.bcel.lib}/bcel.jar"/>
++  	<fileset dir="${apache.bcel.lib}">
++		<include name="*.jar"/>
++	</fileset>
+   </path>
+ 
+   <!-- Apache Commons -->
+   <property name="apache.commons.root" value="${project.thirdparty}/apache-commons"/>
+   <property name="apache.commons.lib" value="${apache.commons.root}/lib"/>
+   <path id="apache.commons.classpath">
+-    <pathelement path="${apache.commons.lib}/commons-collections.jar"/>
+-    <pathelement path="${apache.commons.lib}/commons-logging.jar"/>
+-    <pathelement path="${apache.commons.lib}/commons-httpclient.jar"/>
+-    <pathelement path="${apache.commons.lib}/commons-pool.jar"/>
+-    <pathelement path="${apache.commons.lib}/commons-discovery.jar"/>
+-    <pathelement path="${apache.commons.lib}/commons-fileupload-1.0-beta-1.jar"/>
+-    <pathelement path="${apache.commons.lib}/commons-lang-1.0.jar"/>
++  	<fileset dir="${apache.commons.lib}">
++		<include name="*.jar"/>
++	</fileset>
+   </path>
+ 
+   <!-- Apache Log4j -->
+   <property name="apache.log4j.root" value="${project.thirdparty}/apache-log4j"/>
+   <property name="apache.log4j.lib" value="${apache.log4j.root}/lib"/>
+   <path id="apache.log4j.classpath">
+-    <pathelement path="${apache.log4j.lib}/log4j.jar"/>
++  	<fileset dir="${apache.log4j.lib}">
++		<include name="*.jar"/>
++	</fileset>
+   </path>
+ 
+   <!-- Apache Lucene -->
+@@ -108,7 +124,9 @@
+     value="${project.thirdparty}/apache-lucene"/>
+   <property name="apache.lucene.lib" value="${apache.lucene.root}/lib"/>
+   <path id="apache.lucene.classpath">
+-    <pathelement path="${apache.lucene.lib}/lucene.jar"/>
++  	<fileset dir="${apache.lucene.lib}">
++		<include name="*.jar"/>
++	</fileset>
+   </path>
+ 
+    <!-- Apache Myfaces -->
+@@ -136,160 +154,200 @@
+   <property name="apache.velocity.root" value="${project.thirdparty}/apache-velocity"/>
+   <property name="apache.velocity.lib" value="${apache.velocity.root}/lib"/>  
+   <path id="apache.velocity.classpath">
+-    <pathelement path="${apache.velocity.lib}/velocity.jar"/>
++    <fileset dir="${apache.velocity.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+   
++  <!-- this doesn't seem to exist...-->
+   <!-- Apache Crimson (XML/DOM) -->
+   <property name="apache.crimson.root" value="${project.thirdparty}/apache/crimson"/>
+   <property name="apache.crimson.lib" value="${apache.crimson.root}/lib"/>
+   <path id="apache.crimson.classpath">
+-    <pathelement path="${apache.crimson.lib}/crimson.jar"/>
++    <!--pathelement path="${apache.crimson.lib}/crimson.jar"/-->
+   </path>
+ 
+   <!-- Apache Xerces -->
+   <property name="apache.xerces.root" value="${project.thirdparty}/apache-xerces"/>
+   <property name="apache.xerces.lib" value="${apache.xerces.root}/lib"/>
+   <path id="apache.xerces.classpath">
+-    <pathelement path="${apache.xerces.lib}/xml-apis.jar"/>
+-    <pathelement path="${apache.xerces.lib}/xercesImpl.jar"/>
+-    <pathelement path="${apache.xerces.lib}/resolver.jar"/>
++    <fileset dir="${apache.xerces.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- Apache Xalan -->
+   <property name="apache.xalan.root" value="${project.thirdparty}/apache-xalan"/>
+   <property name="apache.xalan.lib" value="${apache.xalan.root}/lib"/>
+   <path id="apache.xalan.classpath">
+-    <pathelement path="${apache.xalan.lib}/xalan.jar"/>
++    <fileset dir="${apache.xalan.lib}">
++      <include name="*.jar" />
++    </fileset>
+     <path refid="apache.xerces.classpath"/>
+   </path>
+ 
++<!-- need a package! -->
+ <!-- Apache Scout -->
+   <property name="apache.scout.root" value="${project.thirdparty}/apache-scout"/>
+   <property name="apache.scout.lib" value="${apache.scout.root}/lib"/>
+   <path id="apache.scout.classpath">
+-    <pathelement path="${apache.scout.lib}/scout.jar"/>
++    <fileset dir="${apache.scout.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- Apache Slide -->
+   <property name="apache.slide.root" value="${project.thirdparty}/apache-slide"/>
+   <property name="apache.slide.lib" value="${apache.slide.root}/client/lib"/>
+   <path id="apache.slide.classpath">
+-    <pathelement path="${apache.slide.lib}/webdavlib.jar"/>
+-    <pathelement path="${apache.slide.lib}/commons-httpclient.jar"/>
++    <fileset dir="${apache.slide.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- Apache JaxMe2 -->
+   <property name="apache.jaxme.root" value="${project.thirdparty}/apache-jaxme"/>
+   <property name="apache.jaxme.lib" value="${apache.jaxme.root}/lib"/>
+   <path id="apache.jaxme.classpath">
+-    <pathelement path="${apache.jaxme.lib}/jaxmexs.jar"/>
++    <fileset dir="${apache.jaxme.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- Apache WSS4J -->
+   <property name="apache.wss4j.root" value="${project.thirdparty}/apache-wss4j"/>
+   <property name="apache.wss4j.lib" value="${apache.wss4j.root}/lib"/>
+   <path id="apache.wss4j.classpath">
+-    <pathelement path="${apache.wss4j.lib}/wss4j.jar"/>
++    <fileset dir="${apache.wss4j.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- Apache XMLSec -->
+   <property name="apache.xmlsec.root" value="${project.thirdparty}/apache-xmlsec"/>
+   <property name="apache.xmlsec.lib" value="${apache.xmlsec.root}/lib"/>
+   <path id="apache.xmlsec.classpath">
+-    <pathelement path="${apache.xmlsec.lib}/xmlsec.jar"/>
++    <fileset dir="${apache.xmlsec.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- Bouncy Castle JCE Provider -->
+   <property name="bouncycastle.root" value="${project.thirdparty}/bouncycastle"/>
+   <property name="bouncycastle.lib" value="${bouncycastle.root}/lib"/>
+   <path id="bouncycastle.classpath">
+-    <pathelement path="${bouncycastle.lib}/bcprov-jdk14-122.jar"/>
++    <fileset dir="${bouncycastle.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- OpenSAML -->
+   <property name="opensaml.root" value="${project.thirdparty}/opensaml"/>
+   <property name="opensaml.lib" value="${opensaml.root}/lib"/>
+   <path id="opensaml.classpath">
+-    <pathelement path="${opensaml.lib}/opensaml.jar"/>
++    <fileset dir="${opensaml.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- GNU Regex -->
+   <property name="gnu.regexp.root" value="${project.thirdparty}/gnu-regexp"/>
+   <property name="gnu.regexp.lib" value="${gnu.regexp.root}/lib"/>
+   <path id="gnu.regexp.classpath">
+-    <pathelement path="${gnu.regexp.lib}/gnu-regexp.jar"/>
++    <fileset dir="${gnu.regexp.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- GNU Getopt -->
+   <property name="gnu.getopt.root" value="${project.thirdparty}/gnu-getopt"/>
+   <property name="gnu.getopt.lib" value="${gnu.getopt.root}/lib"/>
+   <path id="gnu.getopt.classpath">
+-    <pathelement path="${gnu.getopt.lib}/getopt.jar"/>
++    <fileset dir="${gnu.getopt.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- org.jdom -->
+   <property name="jdom.root" value="${project.thirdparty}/jdom-beta-7"/>
+   <property name="jdom.lib" value="${jdom.root}/lib"/>
+   <path id="jdom.classpath">
+-    <pathelement path="${jdom.lib}/jdom.jar"/>
++    <fileset dir="${jdom.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- JUnit -->
+   <property name="junit.junit.root" value="${project.thirdparty}/junit-junit"/>
+   <property name="junit.junit.lib" value="${junit.junit.root}/lib"/>
+   <path id="junit.junit.classpath">
+-    <pathelement path="${junit.junit.lib}/junit.jar"/>
++    <fileset dir="${junit.junit.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- EDU.oswego.cs.dl.util.concurrent -->
+   <property name="oswego.concurrent.root" value="${project.thirdparty}/oswego-concurrent"/>
+   <property name="oswego.concurrent.lib" value="${oswego.concurrent.root}/lib"/>
+   <path id="oswego.concurrent.classpath">
+-    <pathelement path="${oswego.concurrent.lib}/concurrent.jar"/>
++    <fileset dir="${oswego.concurrent.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- org.xml.sax (SAX2 & SAX2 Extensions) -->
+   <property name="sax.root" value="${project.thirdparty}/xml-sax"/>
+   <property name="sax.lib" value="${sax.root}/lib"/>
+   <path id="sax.classpath">
+-    <pathelement path="${sax.lib}/sax2.jar"/>
+-    <pathelement path="${sax.lib}/sax2-ext.jar"/>
++    <fileset dir="${sax.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- IBM BSF -->
+   <property name="ibm.bsf.root" value="${project.thirdparty}/ibm/bsf"/>
+   <property name="ibm.bsf.lib" value="${ibm.bsf.root}/lib"/>
+   <path id="ibm.bsf.classpath">
+-    <pathelement path="${ibm.bsf.lib}/bsf.jar"/>
++    <fileset dir="${ibm.bsf.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- IBM UDDI4j -->
+   <property name="ibm.uddi4j.root" value="${project.thirdparty}/ibm-uddi4j"/>
+   <property name="ibm.uddi4j.lib" value="${ibm.uddi4j.root}/lib"/>
+   <path id="ibm.uddi4j.classpath">
+-    <pathelement path="${ibm.uddi4j.lib}/uddi4j.jar"/>
++    <fileset dir="${ibm.uddi4j.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- IBM WSDL4j -->
+   <property name="ibm.wsdl4j.root" value="${project.thirdparty}/ibm-wsdl4j"/>
+   <property name="ibm.wsdl4j.lib" value="${ibm.wsdl4j.root}/lib"/>
+   <path id="ibm.wsdl4j.classpath">
+-    <pathelement path="${ibm.wsdl4j.lib}/wsdl4j.jar"/>
++    <fileset dir="${ibm.wsdl4j.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
++  <!-- need package -->
+   <!-- GJT JPL-Util -->
+   <property name="gjt.jpl-util.root" value="${project.thirdparty}/gjt-jpl-util"/>
+   <property name="gjt.jpl-util.lib" value="${gjt.jpl-util.root}/lib"/>
+   <path id="gjt.jpl-util.classpath">
+-    <pathelement path="${gjt.jpl-util.lib}/jpl-util.jar"/>
+-    <pathelement path="${gjt.jpl-util.lib}/jpl-pattern.jar"/>
++    <fileset dir="${gjt.jpl-util.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- Hypersonic SQL -->
+   <property name="hsqldb.hsqldb.root" value="${project.thirdparty}/hsqldb-hsqldb"/>
+   <property name="hsqldb.hsqldb.lib" value="${hsqldb.hsqldb.root}/lib"/>
+   <path id="hsqldb.hsqldb.classpath">
+-    <pathelement path="${hsqldb.hsqldb.lib}/hsqldb.jar"/>
++    <fileset dir="${hsqldb.hsqldb.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- JacORB -->
+@@ -308,14 +366,18 @@
+   <property name="jgroups.jgroups.root" value="${project.thirdparty}/javagroups-javagroups"/>
+   <property name="jgroups.jgroups.lib" value="${jgroups.jgroups.root}/lib"/>
+   <path id="jgroups.jgroups.classpath">
+-    <pathelement path="${jgroups.jgroups.lib}/jgroups.jar"/>
++    <fileset dir="${jgroups.jgroups.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- Sleepycat -->
+   <property name="sleepycat.root" value="${project.thirdparty}/sleepycat"/>
+   <property name="sleepycat.lib" value="${sleepycat.root}/lib"/>
+   <path id="sleepycat.classpath">
+-     <pathelement path="${sleepycat.lib}/je.jar"/>
++    <fileset dir="${sleepycat.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+ 
+@@ -323,60 +385,72 @@
+   <property name="juddi.juddi.root" value="${project.thirdparty}/juddi-juddi"/>
+   <property name="juddi.juddi.lib" value="${juddi.juddi.root}/lib"/>
+   <path id="juddi.juddi.classpath">
+-    <pathelement path="${juddi.juddi.lib}/juddi.jar"/>
++    <fileset dir="${juddi.juddi.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- JUnitEJB -->
+   <property name="junitejb.junitejb.root" value="${project.thirdparty}/junitejb/junitejb"/>
+   <property name="junitejb.junitejb.lib" value="${junitejb.junitejb.root}/lib"/>
+   <path id="junitejb.junitejb.classpath">
+-    <pathelement path="${junitejb.junitejb.lib}/junitejb.jar"/>
++    <fileset dir="${junitejb.junitejb.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- Sun JavaBeans Activation Framework (JAF) -->
+   <property name="sun.jaf.root" value="${project.thirdparty}/sun-jaf"/>
+   <property name="sun.jaf.lib" value="${sun.jaf.root}/lib"/>
+   <path id="sun.jaf.classpath">
+-    <pathelement path="${sun.jaf.lib}/activation.jar"/>
++    <fileset dir="${sun.jaf.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+    <!-- Sun JavaMail -->
+    <property name="sun.javamail.root" value="${project.thirdparty}/sun-javamail"/>
+    <property name="sun.javamail.lib" value="${sun.javamail.root}/lib"/>
+    <path id="sun.javamail.classpath">
+-     <pathelement path="${sun.javamail.lib}/mail.jar"/>
++    <fileset dir="${sun.javamail.lib}">
++      <include name="*.jar" />
++    </fileset>
+    </path>
+ 
+   <!-- Sun Java XML Parser (JAXP) -->
+   <property name="sun.jaxp.root" value="${project.thirdparty}/sun-jaxp"/>
+   <property name="sun.jaxp.lib" value="${sun.jaxp.root}/lib"/>
+   <path id="sun.jaxp.classpath">
+-    <pathelement path="${sun.jaxp.lib}/jaxp.jar"/>
+-    <pathelement path="${sun.jaxp.lib}/crimson.jar"/>
+-    <pathelement path="${sun.jaxp.lib}/xalan.jar"/>
++    <fileset dir="${sun.jaxp.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- Sun Java Media Framework (JMF) -->
+   <property name="sun.jmf.root" value="${project.thirdparty}/sun-jmf"/>
+   <property name="sun.jmf.lib" value="${sun.jmf.root}/lib"/>
+   <path id="sun.jmf.classpath">
+-    <pathelement path="${sun.jmf.lib}/jmf.jar"/>
++    <fileset dir="${sun.jmf.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- Sun Java Management Extensions (JMX) -->
+   <property name="sun.jmx.root" value="${project.thirdparty}/sun-jmx"/>
+   <property name="sun.jmx.lib" value="${sun.jmx.root}/lib"/>
+   <path id="sun.jmx.classpath">
+-    <pathelement path="${sun.jmx.lib}/jmxri.jar"/>
+-    <pathelement path="${sun.jmx.lib}/jmxtools.jar"/>
++    <fileset dir="${sun.jmx.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- Sun Java Servlet Technology  -->
+   <property name="sun.servlet.root" value="${project.thirdparty}/sun-servlet"/>
+   <property name="sun.servlet.lib" value="${sun.servlet.root}/lib"/>
+   <path id="sun.servlet.classpath">
+-    <pathelement path="${sun.servlet.lib}/servlet-api.jar"/>
+-    <pathelement path="${sun.servlet.lib}/jsp-api.jar"/>
++    <fileset dir="${sun.servlet.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- JavaCC -->
+@@ -396,7 +470,9 @@
+   <property name="opennms.joesnmp.root" value="${project.thirdparty}/opennms/joesnmp"/>
+   <property name="opennms.joesnmp.lib" value="${opennms.joesnmp.root}/lib"/>
+   <path id="opennms.joesnmp.classpath">
+-    <pathelement path="${opennms.joesnmp.lib}/joesnmp.jar"/>
++    <fileset dir="${opennms.joesnmp.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- XDoclet -->
+@@ -420,16 +496,9 @@
+   
+   <property name="xdoclet.xdoclet.lib" value="${xdoclet.xdoclet.root}/lib"/>
+   <path id="xdoclet.xdoclet.classpath">
+-    <pathelement path="${xdoclet.xdoclet.lib}/xdoclet-${xdoclet.version}.jar"/>
+-    <pathelement path="${xdoclet.xdoclet.lib}/xdoclet-xjavadoc-${xdoclet.version}.jar"/>
+-    <pathelement path="${xdoclet.xdoclet.lib}/xdoclet-bea-module-${xdoclet.version}.jar"/>
+-    <pathelement path="${xdoclet.xdoclet.lib}/xdoclet-ejb-module-${xdoclet.version}.jar"/>
+-    <pathelement path="${xdoclet.xdoclet.lib}/xdoclet-java-module-${xdoclet.version}.jar"/>
+-    <pathelement path="${xdoclet.xdoclet.lib}/xdoclet-jboss-module-${xdoclet.version}.jar"/>
+-    <pathelement path="${xdoclet.xdoclet.lib}/xdoclet-jdo-module-${xdoclet.version}.jar"/>
+-    <pathelement path="${xdoclet.xdoclet.lib}/xdoclet-jmx-module-${xdoclet.version}.jar"/>
+-    <pathelement path="${xdoclet.xdoclet.lib}/xdoclet-web-module-${xdoclet.version}.jar"/>
+-    <pathelement path="${xdoclet.xdoclet.lib}/xdoclet-xdoclet-module-${xdoclet.version}.jar"/>
++    <fileset dir="${xdoclet.xdoclet.lib}">
++      <include name="*.jar" />
++    </fileset>
+     <path refid="apache.commons.classpath"/>
+     <path refid="sun.servlet.classpath"/>
+   </path>
+@@ -437,32 +506,13 @@
+     <path refid="xdoclet.xdoclet.classpath"/>
+   </path>
+ 
+-  <!-- Informa RSS -->
+-  <property name="informa.rss.root" value="${project.thirdparty}/informa-rss"/>
+-  <property name="informa.rss.lib" value="${informa.rss.root}/lib"/>
+-  <path id="informa.rss.classpath">
+-    <pathelement path="${informa.rss.lib}/informa.jar"/>
+-  </path>
+-
+-  <!-- JRegex -->
+-  <property name="jregex.jregex.root" value="${project.thirdparty}/jregex-jregex"/>
+-  <property name="jregex.jregex.lib" value="${jregex.jregex.root}/lib"/>
+-  <path id="jregex.jregex.classpath">
+-    <pathelement path="${jregex.jregex.lib}/jregex.jar"/>
+-  </path>
+-
+-  <!-- DNSJava -->
+-  <property name="sourceforge.dnsjava.root" value="${project.thirdparty}/sourceforge-dnsjava"/>
+-  <property name="sourceforge.dnsjava.lib" value="${sourceforge.dnsjava.root}/lib"/>
+-  <path id="sourceforge.dnsjava.classpath">
+-    <pathelement path="${sourceforge.dnsjava.lib}/dnsjava-1.4.3.jar"/>
+-  </path>
+-  
+   <!-- M.Wutka's DTD parser -->
+   <property name="wutka.dtdparser.root" value="${project.thirdparty}/wutka-dtdparser"/>
+   <property name="wutka.dtdparser.lib" value="${wutka.dtdparser.root}/lib"/>
+   <path id="wutka.dtdparser.classpath">
+-    <pathelement path="${wutka.dtdparser.lib}/dtdparser121.jar"/>
++    <fileset dir="${wutka.dtdparser.lib}">
++      <include name="*.jar" />
++    </fileset>
+   </path>
+ 
+   <!-- JFreeChart -->
+@@ -473,12 +523,3 @@
+       <include name="*.jar" />
+     </fileset>
+   </path>
+-
+- <!-- ebxmlrr -->
+-  <property name="ebxmlrr.ebxmlrr.root" value="${project.thirdparty}/sun-ebxmlrr"/>
+-  <property name="ebxmlrr.ebxmlrr.lib" value="${ebxmlrr.ebxmlrr.root}/lib"/>
+-  <path id="ebxmlrr.ebxmlrr.classpath">
+-    <pathelement path="${ebxmlrr.ebxmlrr.lib}/ebxmlrr.jar"/>
+-    <pathelement path="${ebxmlrr.ebxmlrr.lib}/jaxr-client.jar"/>
+-  </path>
+-
