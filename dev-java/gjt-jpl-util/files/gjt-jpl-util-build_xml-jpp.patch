@@ -1,0 +1,41 @@
+--- util/build/build.xml.orig	2004-07-26 08:25:33.517673000 +0200
++++ util/build/build.xml	2004-07-26 08:38:51.617778000 +0200
+@@ -18,7 +18,7 @@
+         <property name="optimize.mode"      value="off"/>
+         
+         <property name  = "compiler.target.dir" 
+-                  value = "\classes"
++                  value = "classes"
+         />
+         
+         <property name  = "compiler.classes"
+@@ -45,7 +45,7 @@
+   <target name="lib" depends="compile">        
+         
+         <jar jarfile  = "build\jpl-util-0_6.jar"
+-             basedir  = "\classes"
++             basedir  = "classes"
+              includes = "org\gjt\lindfors\util\**"
+         />
+         
+@@ -70,7 +70,19 @@
+         
+      ===================================================================== -->
+   <target name="javadoc" depends="compile">
+-  
++    <mkdir dir="javadoc"/>
++    <javadoc packagenames="org.*"
++             sourcefiles="${compiler.classes}"
++             destdir="build/api"
++             author="true"
++             version="true"
++             use="false"
++             noindex="false"
++             windowtitle="GJT JPL Util API"
++             doctitle="jpl-util API"
++             classpath="classes"
++    />
++ 
+   </target>
+   
+ <!-- =====================================================================
