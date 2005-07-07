@@ -32,7 +32,7 @@ src_unpack() {
 }
 
 src_compile() {
-	local antflags="jar-joesnmp"
+	local antflags="build"
 	use jikes && antflags="-Dbuild.compiler=jikes ${antflags}"
 	use doc && antflags="${antflags} javadoc"
 
