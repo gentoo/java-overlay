@@ -11,28 +11,32 @@ inherit java-pkg
 
 ECLASS="jboss-4"
 INHERITED="$INHERITED $ECLASS"
-DEPEND="dev-java/ant-core
+DEPEND="${DEPEND}
+	dev-java/ant-core
 	dev-java/ant-tasks
 	=dev-java/bsf-2.3*
 	dev-java/buildmagic-tasks
 	dev-java/xml-commons-resolver
 	dev-java/xalan
-	=dev-java/xerces-2*"
+	=dev-java/xerces-2*
+	dev-java/xdoclet"
 
 SLOT="4"
 
 MODULE="${PN/jboss-/}"
 
-JBOSS_ROOT="${WORKDIR}/${MY_P}"
+JBOSS_ROOT="${WORKDIR}/${PN%%-*}-${PV}-src"
 JBOSS_THIRDPARTY="${JBOSS_ROOT}/thirdparty"
-S="${JBOSS_ROOT}/${MODULE}}"
+S="${JBOSS_ROOT}/${MODULE}"
 
 THIRDPARTY_P="jboss-thirdparty-${PV}-gentoo"
 TOOLS_P="jboss-tools-${PV}-gentoo"
-BASE_URL="http://sigmachi.yi.org/~nichoj/projects/java"
-#BASE_URL="mirror://gentoo"
-ECLASS_URI="${BASE_URL}/${TOOLS_P}.tar.bz2 ${BASE_URL}/${THIRDPARTY_P}.tar.bz2 mirror://gentoo/jboss-${PV}-gentoo.conf"
-MY_A="${TOOLS_P}.tar.bz2 ${THIRDPARTY_P}.tar.bz2"
+GENTOO_CONF="jboss-${PVR}-gentoo.data"
+BASE_URL="http://www.scorec.rpi.edu/~nichoj/projects/java"
+#BASE_URL="mirror://gentoo"#
+ECLASS_URI="${BASE_URL}/${TOOLS_P}.tar.bz2 ${BASE_URL}/${THIRDPARTY_P}.tar.bz2
+mirror://gentoo/${GENTOO_CONF}"
+MY_A="${P}-gentoo.tar.bz2 ${TOOLS_P}.tar.bz2 ${THIRDPARTY_P}.tar.bz2"
 
 EXPORT_FUNCTIONS src_unpack src_compile src_install
 
@@ -48,6 +52,7 @@ quiet_popd() {
 
 # TODO: add error checking
 jboss-4_fix-dir() {
+	#echo "entering jboss-4_fix-dir"
 	local relative_dir=${1}
 	#echo "relative_dir=${relative_dir}"
 
@@ -64,6 +69,7 @@ jboss-4_fix-dir() {
 
 	
 	local full_dir=${JBOSS_ROOT}/${relative_dir}
+	#echo "full_dir=${full_dir}"
 
 	
 	einfo "Fixing jars in ${full_dir}"
@@ -76,9 +82,11 @@ jboss-4_fix-dir() {
 
 # fix all the thirdparty libraries for this module
 jboss-4_fix-thirdparty() {
+	#echo "entering jboss-4_fix-thirdparty"
 	for dir in $(jboss-4_get-dirs-to-fix); do
 		jboss-4_fix-dir thirdparty/${dir}
 	done
+	jboss-4_fix-dir thirdparty/xdoclet-xdoclet/lib
 }
 
 # lookup which directories need to be fixed for this module, and its
@@ -86,17 +94,18 @@ jboss-4_fix-thirdparty() {
 jboss-4_get-dirs-to-fix() {
 	local dirs_to_fix=$(jboss-4_get-dirs-to-fix-for-module ${MODULE})
 	for module in $(jboss-4_get-modules-to-fix); do
-		dirs_to_fix="$(jboss-4_get-dirs-to-fix-for-module ${module}),${dirs_to_fix}"
+		dirs_to_fix="$(jboss-4_get-dirs-to-fix-for-module ${module}) ${dirs_to_fix}"
 	done
 
 	# get unique dirs... behold bash voodoo magic!
-	dirs_to_fix=$(echo ${dirs_to_fix} | sed -e 's/,/\n/'|sort | uniq | sed -e 's/\n/,/')
+	dirs_to_fix=$(echo ${dirs_to_fix} | \
+		sed -e 's/ /\n/g'|sort | uniq | sed -e 's/\n/ /g')
 
 	echo ${dirs_to_fix}
 }
 
 jboss-4_get-dirs-to-fix-for-module() {
-	local varname=${1}_library_dirs
+	local varname=${1//-/_}_library_dirs
 	#echo "jboss-4_get-dirs-to-fix:varname=${varname}" 1>&2
 	local dirs_to_fix=$(eval echo \$$varname)
 	#echo "jboss-4_get-dirs-to-fix:dirs_to_fix=${dirs_to_fix}" 1>&2
@@ -106,7 +115,7 @@ jboss-4_get-dirs-to-fix-for-module() {
 
 # lookup which modules should be fixed for the current module
 jboss-4_get-modules-to-fix() {
-	local varname="${MODULE}_module_depends"
+	local varname="${MODULE//-/_}_module_depends"
 	local modules_to_fix=$(eval echo \$$varname)
 	echo ${modules_to_fix}
 }
@@ -122,6 +131,7 @@ jboss-4_fix-module() {
 	local module=${1}
 	local pkg=jboss-${module}-${SLOT}
 	local dir=${JBOSS_ROOT}/${module}/output/lib
+	local marker="${dir}/../build-marker"
 	einfo "Populating ${dir}"
 	mkdir -p ${dir}
 	quiet_pushd ${dir}
@@ -131,7 +141,7 @@ jboss-4_fix-module() {
 
 # unpack source, then fix the shared build jars
 jboss-4_src_unpack() {
-	source ${DISTDIR}/jboss-${PVR}-gentoo.conf
+	source ${DISTDIR}/${GENTOO_CONF}
 
 	unpack ${MY_A}
 
@@ -141,6 +151,7 @@ jboss-4_src_unpack() {
 }
 
 jboss-4_src_compile() {
+	cd ${S}
 	local antflags
 	use jikes && antflags="-Dbuild.compiler=jikes"
 

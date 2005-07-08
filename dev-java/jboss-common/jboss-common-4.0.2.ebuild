@@ -1,16 +1,12 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/www-servers/jboss/jboss-3.2.5.ebuild,v 1.7 2005/04/06 18:12:44 corsair Exp $
+# $Header:  $
 
-#inherit eutils java-pkg jboss-4
 inherit jboss-4
 
-MY_P="${P/-common/}-src"
-#MODULE="${PN/jboss-/}"
-DESCRIPTION="An open source, standards-compliant, J2EE-based application server implemented in 100% Pure Java."
-BASE_URL="http://sigmachi.yi.org/~nichoj/projects/java"
-#BASE_URL="mirror://gentoo"
-SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${ECLASS_URI}"
+DESCRIPTION="Common module of JBoss Application Server"
+GENTOO_CONF="jboss-${PVR}-gentoo.data"
+SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${BASE_URL}/${GENTOO_CONF} ${ECLASS_URI}"
 MY_A="${P}-gentoo.tar.bz2 ${MY_A}"
 LICENSE="LGPL-2"
 
@@ -18,7 +14,7 @@ HOMEPAGE="http://www.jboss.org"
 IUSE="jikes"
 KEYWORDS="~x86"
 
-COMMON_DEPEND=" =dev-java/bsf-2.3*
+COMMON_DEPEND="=dev-java/bsf-2.3*
 	dev-java/xml-commons-resolver
 	dev-java/xalan
 	=dev-java/xerces-2*
@@ -44,8 +40,3 @@ DEPEND=">=virtual/jdk-1.3
 "
 RDEPEND=">=virtual/jre-1.3
 	${COMMON_DEPEND}"
-
-#INSTALL_DIR=/usr/share/${PN}-${SLOT}
-
-#JBOSS_ROOT="${WORKDIR}/${MY_P}"
-S="${JBOSS_ROOT}/${MODULE}"
