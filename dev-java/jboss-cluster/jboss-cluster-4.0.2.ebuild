@@ -25,7 +25,7 @@ COMMON_DEPEND="dev-java/commons-codec
 	dev-java/log4j
 	dev-java/xalan
 	dev-java/junit
-	dev-java/gnu-regexp-1
+	=dev-java/gnu-regexp-1*
 	dev-java/concurrent-util
 	=dev-java/jboss-j2ee-${PV}*
 	=dev-java/jboss-common-${PV}*

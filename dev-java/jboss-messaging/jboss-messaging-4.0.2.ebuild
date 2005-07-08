@@ -34,10 +34,3 @@ COMMON_DEPEND="dev-java/commons-codec
 	=dev-java/jboss-transaction-${PV}*"
 DEPEND=">=virtual/jdk-1.3 ${COMMON_DEPEND}"
 RDEPEND=">=virtual/jre-1.3 ${COMMON_DEPEND}"
-
-src_install() {
-	# TODO: investigate
-	# output/lib/{jbossha-httpsession.sar,ClusteredHttpSessionEB}
-	# because these seem to be directories
-	java-pkg_dojar output/lib/{jbossha,jbossha-client}.jar
-}
