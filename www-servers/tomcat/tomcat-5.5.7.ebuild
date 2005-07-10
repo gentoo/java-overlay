@@ -84,12 +84,13 @@ src_unpack() {
 	java-pkg_jar-from commons-digester
 	java-pkg_jar-from commons-fileupload
 	java-pkg_jar-from commons-modeler
-	java-pkg_jar-from regexp
+	java-pkg_jar-from jakarta-regexp-1.3
 }
 
 src_compile(){
 	local antflags="-Dbase.path=${T}"
 	use jikes && antflags="${antflags} -Dbuild.compiler=jikes"
+
 	antflags="${antflags} -Dactivation.jar=$(java-config -p sun-jaf-bin)"
 	antflags="${antflags} -Dcommons-collections.jar=$(java-config -p commons-collections)"
 	antflags="${antflags} -Dcommons-daemon.jar=$(java-config -p commons-daemon)"
@@ -104,9 +105,9 @@ src_compile(){
 	antflags="${antflags} -Djunit.jar=$(java-config -p junit)"
 	antflags="${antflags} -Djdt.jar=$(java-pkg_getjar eclipse-jdtcore jdtcore.jar)"
 	antflags="${antflags} -Dlog4j.jar=$(java-config -p log4j)"
-	antflags="${antflags} -Dregexp.jar=$(java-config -p regexp)"
+	antflags="${antflags} -Dregexp.jar=$(java-config -p jakarta-regexp-1.3)"
 	antflags="${antflags} -Dstruts.jar=$(java-pkg_getjar struts struts.jar)"
-	antflags="${antflags} -Dcommons-beanutils.jar=$(java-pkg_getjar	commons-beanutils-1.7 commons-beanutils.jar)"
+	antflags="${antflags} -Dcommons-beanutils.jar=$(java-pkg_getjar commons-beanutils-1.7 commons-beanutils.jar)"
 	antflags="${antflags} -Dcommons-logging.jar=$(java-pkg_getjar commons-logging commons-logging.jar)"
 	antflags="${antflags} -Dcommons-logging-api.jar=$(java-pkg_getjar commons-logging commons-logging-api.jar)"
 	antflags="${antflags} -Djaxen.jar=$(java-pkg_getjar jaxen jaxen-full.jar)"
@@ -115,13 +116,16 @@ src_compile(){
 	antflags="${antflags} -Dsaxpath.jar=$(java-pkg_getjar saxpath saxpath.jar)"
 	antflags="${antflags} -DxercesImpl.jar=$(java-pkg_getjar xerces-2 xercesImpl.jar)"
 	antflags="${antflags} -Dxml-apis.jar=$(java-pkg_getjar xerces-2 xml-apis.jar)"
-
 	antflags="${antflags} -Dstruts.home=/usr/share/struts"
 
 	ant ${antflags} || die "compile failed"
 
 }
 src_install() {
+	# new user for tomcat
+	enewgroup tomcat
+	enewuser tomcat -1 -1 /dev/null tomcat
+
 	cd ${S}/jakarta-tomcat-5/build
 
 	# init.d, env.d, conf.d
@@ -135,14 +139,19 @@ src_install() {
 	fi
 
 	# create dir structure
-	diropts -m750
+	diropts -m755
 	dodir /usr/share/${TOMCAT_NAME}
 
 	dodir /var/log/${TOMCAT_NAME}/default
+	chown -R tomcat:tomcat ${D}/var/log/${TOMCAT_NAME}
 	dodir /etc/${TOMCAT_NAME}/default/
+	chown -R tomcat:tomcat ${D}/etc/${TOMCAT_NAME}
 	dodir /var/tmp/${TOMCAT_NAME}/default
+	chown -R tomcat:tomcat ${D}/var/tmp/${TOMCAT_NAME}
 	dodir /var/run/${TOMCAT_NAME}/default
+	chown -R tomcat:tomcat ${D}/var/run/${TOMCAT_NAME}
 	dodir /var/lib/${TOMCAT_NAME}/default
+	chown -R tomcat:tomcat ${D}/var/lib/${TOMCAT_NAME}
 
 	keepdir /var/log/${TOMCAT_NAME}/default
 	keepdir /etc/${TOMCAT_NAME}/default/
@@ -160,34 +169,47 @@ src_install() {
 		conf/Catalina/localhost
 
 	# make the jars available via java-config -p and jar-from, etc
-	base=`pwd`
+	base=$(pwd)
 	libdirs="common/lib server/lib"
 	for dir in ${libdirs}
 	do
 		cd ${dir}
 
-		for jar in *.jar;
+		for jar in $(ls *.jar);
 		do
 			# replace the file with a symlink
 			if [ ! -L ${jar} ]; then
 				java-pkg_dojar ${jar}
 				rm -f ${jar}
-				ln -s ${DESTTREE}/share/${PN}-${SLOT}/lib/${jar} ${jar}
+				ln -s ${DESTTREE}/share/${TOMCAT_NAME}/lib/${jar} ${jar}
 			fi
 		done
 
 		cd ${base}
 	done
 
-	# copy over the directories 
-	cp -ra conf/* ${D}/etc/${TOMCAT_NAME}/default || die "failed to copy conf"
-	cp -ra bin common server shared ${D}/usr/share/${TOMCAT_NAME} || die "failed to copy"
+	# replace a packed struts.jar
+	cd server/webapps/admin/WEB-INF/lib
+	rm -f struts.jar
+	java-pkg_jar-from struts struts.jar
+	cd ${base}
+
+	# replace the default pw with a random one, see #92281 
+	local randpw=$(echo ${RANDOM}|md5sum|cut -c 1-15)
+	sed -e s:SHUTDOWN:${randpw}: -i conf/{server,server-minimal}.xml
+
+	# copy over the directories	
+	chmod -R 750 conf/*
+	chown -R tomcat:tomcat webapps/* conf/*
+	cp -pR conf/* ${D}/etc/${TOMCAT_NAME}/default || die "failed to copy conf"
+	cp -R bin common server shared ${D}/usr/share/${TOMCAT_NAME} || die "failed to copy"
 
 	# if the useflag is set, copy over the examples
+	dodir /var/lib/${TOMCAT_NAME}/default/webapps
+	keepdir /var/lib/${TOMCAT_NAME}/default/webapps
 	if use examples; then
-		dodir /var/lib/${TOMCAT_NAME}/default/webapps
-		cp ../RELEASE-NOTES webapps/ROOT/RELEASE-NOTES.txt
-		cp -r webapps/{tomcat-docs,jsp-examples,servlets-examples,ROOT,webdav} \
+		cp -p ../RELEASE-NOTES webapps/ROOT/RELEASE-NOTES.txt
+		cp -pr webapps/{tomcat-docs,jsp-examples,servlets-examples,ROOT,webdav} \
 			${D}/var/lib/${TOMCAT_NAME}/default/webapps
 	fi
 
@@ -197,21 +219,8 @@ src_install() {
 	dosym /var/tmp/${TOMCAT_NAME}/default /var/lib/${TOMCAT_NAME}/default/temp
 	dosym /var/run/${TOMCAT_NAME}/default /var/lib/${TOMCAT_NAME}/default/work
 
-	dodoc ${S}/jakarta-tomcat-5/{LICENSE,RELEASE-NOTES,RUNNING.txt}
+	use doc && dodoc ${S}/jakarta-tomcat-5/{LICENSE,RELEASE-NOTES,RUNNING.txt}
 	fperms 640 /etc/${TOMCAT_NAME}/default/tomcat-users.xml
-}
-
-
-pkg_preinst() {
-	enewgroup tomcat
-	enewuser tomcat -1 -1 /dev/null tomcat
-
-	chown -R root:tomcat ${D}/usr/share/${TOMCAT_NAME}
-	chown -R tomcat:tomcat ${D}/etc/${TOMCAT_NAME}
-	chown -R tomcat:tomcat ${D}/var/log/${TOMCAT_NAME}
-	chown -R tomcat:tomcat ${D}/var/tmp/${TOMCAT_NAME}
-	chown -R tomcat:tomcat ${D}/var/run/${TOMCAT_NAME}
-	chown -R tomcat:tomcat ${D}/var/lib/${TOMCAT_NAME}
 }
 
 pkg_postinst() {
@@ -219,18 +228,9 @@ pkg_postinst() {
 	chown root:root /etc/init.d/${TOMCAT_NAME}
 	chown root:root /etc/conf.d/${TOMCAT_NAME}
 
-	# These directories contain the runtime files and
-	# are therefor owned by tomcat
-	chown -R tomcat:tomcat /etc/${TOMCAT_NAME}
-	chown -R tomcat:tomcat /var/log/${TOMCAT_NAME}
-	chown -R tomcat:tomcat /var/tmp/${TOMCAT_NAME}
-	chown -R tomcat:tomcat /var/run/${TOMCAT_NAME}
-	chown -R tomcat:tomcat /var/lib/${TOMCAT_NAME}
+	chmod -R 750 /etc/${TOMCAT_NAME}
 
-
-	chmod 750 /etc/${TOMCAT_NAME}
-
-	einfo " "
+	einfo
 	einfo " NOTICE!"
 	einfo " FILE LOCATIONS:"
 	einfo " 1.  Tomcat home directory: ${TOMCAT_HOME}"
@@ -239,38 +239,36 @@ pkg_postinst() {
 	einfo "     Contains CLASSPATH and JAVA_HOME settings."
 	einfo " 3.  Configuration:  /etc/${TOMCAT_NAME}/default"
 	einfo " 4.  Logs:  /var/log/${TOMCAT_NAME}/default"
-	einfo " "
-	einfo " "
+	einfo
+	einfo
 	einfo " STARTING AND STOPPING TOMCAT:"
 	einfo "   /etc/init.d/${TOMCAT_NAME} start"
 	einfo "   /etc/init.d/${TOMCAT_NAME} stop"
 	einfo "   /etc/init.d/${TOMCAT_NAME} restart"
-	einfo " "
-	einfo " "
+	einfo
+	einfo
 	ewarn " If you are upgrading from older ebuild do NOT use"
 	ewarn " /etc/init.d/tomcat and /etc/conf.d/tomcat you probably"
-	ewarn " want to remove these. "
-	ewarn " A version number has been appended so that tomcat 3, 4 and 5"
-	ewarn " can be installed side by side"
-	einfo " "
+	ewarn " want to remove these."
+	einfo
 	ewarn " This ebuild implements a new filesystem layout for tomcat"
 	ewarn " please read http://gentoo-wiki.com/Tomcat_Gentoo_ebuild for"
 	ewarn " more information!."
-	einfo " "
+	einfo
 	einfo " NETWORK CONFIGURATION:"
 	einfo " By default, Tomcat runs on port 8080.  You can change this"
 	einfo " value by editing /etc/${TOMCAT_NAME}/default/server.xml."
-	einfo " "
+	einfo
 	einfo " To test Tomcat while it's running, point your web browser to:"
 	einfo " http://localhost:8080/"
 	if ! use examples; then
-		ewarn ""
+		ewarn
 		ewarn "You do not have the examples USE flag set, examples have NOT been installed."
-		ewarn " "
+		ewarn
 	fi
-	einfo " "
+	einfo
 	einfo " BUGS:"
 	einfo " Please file any bugs at http://bugs.gentoo.org/ or else it"
 	einfo " may not get seen.  Thank you."
-	einfo " "
+	einfo
 }
