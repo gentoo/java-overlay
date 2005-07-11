@@ -3,12 +3,11 @@ MD5 c11ce937193406815ff7a2b306784fd8 metadata.xml 555
 MD5 257ce52cfc15f63798cb7b13ee761cb4 tomcat-3.3.2-r2.ebuild 3217
 MD5 b8bdcdd27b76556b90401621fc29996c tomcat-4.1.30-r5.ebuild 3614
 MD5 b1b082a9d71411ae91913bd9afe99c9f tomcat-5.0.27-r4.ebuild 3716
-MD5 25e8f3f4d9d1d62ab19479052ccf3b2a tomcat-5.5.7.ebuild 9853
-MD5 2ad75ff7a838339952626175babf5eef tomcat-5.0.28-r4.ebuild 9587
+MD5 c8edc92da6e6359cfe00d9a5450478fa tomcat-5.5.7.ebuild 9748
+MD5 bd83fcedaedc2fbc6bcc8493bfc3f4f6 tomcat-5.0.28-r4.ebuild 9481
 MD5 6940eb780efc66ecb6ecf11b6b7adb05 files/digest-tomcat-3.3.2-r2 73
 MD5 71d59fd713a960e63c1b894ca5893a1b files/digest-tomcat-4.1.30-r5 74
 MD5 d5a48abc8db5543a73abbbf151d0630e files/digest-tomcat-5.0.27-r4 75
-MD5 af26ca4772989a2090085a6e24b71628 files/digest-tomcat-5.0.28 78
 MD5 9ba7e3a6bb7c8ecb9fce2824b4c1d59d files/digest-tomcat-5.5.7 77
 MD5 af26ca4772989a2090085a6e24b71628 files/digest-tomcat-5.0.28-r4 78
 MD5 69ec5e00d8708345bd24af96c9c3fab4 files/4.1.30/gentoo.diff 463
