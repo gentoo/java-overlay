@@ -1,0 +1,56 @@
+# Copyright 1999-2005 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+inherit java-pkg
+
+MY_PN="${PN//-/}"
+DESCRIPTION="Jonathan is a Distributed Object Platform (DOP) written entirely in Java."
+HOMEPAGE="http://jonathan.objectweb.org/index.html"
+SRC_URI="mirror://gentoo/${P}.tar.bz2"
+
+LICENSE="LGPL-2.1"
+SLOT="0"
+KEYWORDS="~x86"
+IUSE="doc jikes"
+
+DEPEND="virtual/jdk
+	dev-java/ant
+	jikes? (dev-java/jikes)"
+RDEPEND="virtual/jre
+	dev-java/nanoxml
+	=dev-java/kilim-1*
+	dev-java/monolog"
+S=${WORKDIR}/${MY_PN}
+
+src_unpack() {
+	unpack ${A}
+	cd ${S}
+
+	cd config
+	#rm *.jar
+	java-pkg_jar-from kilim-1 kilim-tools.jar
+	java-pkg_jar-from nanoxml nanoxml-lite.jar nanoxml-lite-2.2.1.jar
+	# when we use the jar from this package, jar and jdoc targets break...
+	#java-pkg_jar-from ow-util-ant-tasks
+
+	cd ../externals
+	rm *.jar
+	java-pkg_jar-from kilim-1 kilim.jar
+	java-pkg_jar-from monolog ow_monolog.jar
+	java-pkg_jar-from ant-core ant.jar
+}
+
+src_compile() {
+	local antflags="jar"
+	use jikes && antflags="${antflags} -Dbuild.compiler=jikes"
+	use doc && antflags="${antflags} jdoc -Djdoc.dir=output/dist/api"
+
+	ant jar ${antflags} || die "Ant failed"
+}
+
+src_install() {
+	java-pkg_dojar output/dist/lib/*.jar
+
+	use doc && java-pkg_dohtml -r output/dist/api
+}

@@ -1,0 +1,122 @@
+diff -ru Kilim2/build.number Kilim2-patched/build.number
+--- Kilim2/build.number	2003-07-23 15:48:21.000000000 -0400
++++ Kilim2-patched/build.number	2005-07-08 20:46:37.000000000 -0400
+@@ -1,3 +1,3 @@
+-#Build Number for ANT. Do not edit!
+-#Fri Jul 18 18:11:49 CEST 2003
+-build.number=32
++#Build Number for ANT. Do not edit!
++#Fri Jul 08 20:46:37 EDT 2005
++build.number=52
+diff -ru Kilim2/build.xml Kilim2-patched/build.xml
+--- Kilim2/build.xml	2003-03-26 11:24:03.000000000 -0500
++++ Kilim2-patched/build.xml	2005-07-08 20:45:56.000000000 -0400
+@@ -23,9 +23,12 @@
+    <property name="version" value="2.0"/>
+    <property resource="build.number"/>
+ 
++	<path id="compile.classpath">
++		<fileset dir="lib" includes="*.jar"/>
++	</path>
+    <target name="init">
+       <property file="conf/java.properties"/>
+-      <path id="Kilim2.classpath">
++      <!--path id="Kilim2.classpath">
+          <pathelement path="classes"/>
+ 	 <pathelement path="lib/junit-3.7.jar"/>
+ 	 <pathelement path="lib/junitperf.jar"/>
+@@ -40,7 +43,7 @@
+ 	 <pathelement path="lib/sfa.jar"/>
+ 	 <pathelement path="lib/website.jar"/>
+ 	 <pathelement path="lib/writers.jar"/>
+-      </path>
++      </path-->
+    </target>
+ 
+    <target name="clean">
+@@ -53,7 +56,7 @@
+       <buildnumber/>
+       <mkdir dir="classes"/>
+       <javac srcdir="src" destdir="classes" debug="true" deprecation="true">
+-         <classpath refid="Kilim2.classpath"/>
++         <classpath refid="compile.classpath"/>
+ 	 <src path="src"/>
+ 	 <include name="**/*.java"/>
+ 	 <exclude name="**/CVS/**/*.java"/>
+@@ -82,7 +85,7 @@
+    <target name="junit.compile" depends="javac, copy">
+ 
+       <javac  destdir="classes" debug="true" deprecation="true">
+-         <classpath refid="JUnit.classpath"/>
++         <classpath refid="compile.classpath"/>
+ 	 <src path="junit"/>
+ 	 <include name="**/*.java"/>
+       </javac>
+@@ -103,7 +106,7 @@
+       </path>
+ 
+       <junit fork="yes" printsummary="withOutAndErr" dir="junit">
+-         <classpath refid="JUnit.classpath"/>
++         <classpath refid="compile.classpath"/>
+          <formatter type="xml"/>
+          <test name="org.objectweb.kilim.AllTests" haltonfailure="no" outfile="junit/TEST" >
+ 	    <formatter type="xml" />
+@@ -126,7 +129,7 @@
+       </path>
+ -->
+       <junit fork="yes" printsummary="withOutAndErr" dir="junit">
+-         <classpath refid="JUnit.classpath"/>
++         <classpath refid="compile.classpath"/>
+          <formatter type="xml"/>
+          <test name="org.objectweb.kilim.model.PerformanceTests" haltonfailure="no" outfile="junit/PERF" >
+ 	    <formatter type="xml" />
+@@ -144,13 +147,13 @@
+ 
+    <target name="javadoc" depends="init">
+       <javadoc access="private" author="true"
+-               destdir="doc"
++               destdir="doc/api"
+                doctitle="Kilim2 2 Documentation" nodeprecated="false"
+                nodeprecatedlist="false" noindex="false" nonavbar="false"
+                notree="false" packagenames="org.objectweb.kilim.*"
+                sourcepath="src;junit"
+                splitindex="false" use="true" version="true">
+-         <classpath refid="Kilim2.classpath"/>
++         <classpath refid="compile.classpath"/>
+       </javadoc>
+     </target>
+ 
+Only in Kilim2-patched/: classes
+Only in Kilim2-patched/junit: PERF.xml
+Only in Kilim2-patched/junit: TESTS-TestSuites.xml
+Only in Kilim2-patched/junit: junit-noframes.html
+Files Kilim2/lib/crimson.jar and Kilim2-patched/lib/crimson.jar differ
+Files Kilim2/lib/jmxri.jar and Kilim2-patched/lib/jmxri.jar differ
+Only in Kilim2/lib: junit-3.7.jar
+Only in Kilim2/lib: junitperf.jar
+Only in Kilim2-patched/lib: kilim2-src.jar
+Only in Kilim2-patched/lib: kilim2.jar
+Only in Kilim2/lib: log4j-1.2.6.jar
+Only in Kilim2-patched/lib: log4j.jar
+Files Kilim2/lib/ow_util_log_api.jar and Kilim2-patched/lib/ow_util_log_api.jar differ
+Files Kilim2/lib/ow_util_log_wrp_log4j.jar and Kilim2-patched/lib/ow_util_log_wrp_log4j.jar differ
+Only in Kilim2/lib: quoteswire.jar
+Only in Kilim2/lib: sfa.jar
+Only in Kilim2/lib: website.jar
+Only in Kilim2/lib: writers.jar
+diff -ru Kilim2/src/org/objectweb/kilim/NullLoggerFactory.java Kilim2-patched/src/org/objectweb/kilim/NullLoggerFactory.java
+--- Kilim2/src/org/objectweb/kilim/NullLoggerFactory.java	2003-03-05 06:48:46.000000000 -0500
++++ Kilim2-patched/src/org/objectweb/kilim/NullLoggerFactory.java	2005-07-08 20:38:42.000000000 -0400
+@@ -194,8 +194,8 @@
+ 	/**
+ 	 * @see org.objectweb.util.monolog.api.Handler#getType()
+ 	 */
+-	public byte getType() {
+-		return 0;
++	public String getType() {
++		return null;
+ 	}
+ 
+ 	/**
+Only in Kilim2-patched/: tools
+Only in Kilim2-patched/: uneeded

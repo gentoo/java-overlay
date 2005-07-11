@@ -1,0 +1,13 @@
+Files carol-2.0.5-src/externals/velocity-dep-1.4.jar and carol-2.0.5-src-patched/externals/velocity-dep-1.4.jar differ
+diff -ru carol-2.0.5-src/src/org/objectweb/carol/cmi/WeakCache.java carol-2.0.5-src-patched/src/org/objectweb/carol/cmi/WeakCache.java
+--- carol-2.0.5-src/src/org/objectweb/carol/cmi/WeakCache.java	2005-05-25 07:19:47.000000000 -0400
++++ carol-2.0.5-src-patched/src/org/objectweb/carol/cmi/WeakCache.java	2005-07-10 13:38:15.000000000 -0400
+@@ -78,7 +78,7 @@
+         public void run() {
+             while (true) {
+                 try {
+-                    WeakRef wr = (WeakRef) rQueue.remove();
++                    WeakCache.WeakRef wr = (WeakCache.WeakRef) rQueue.remove();
+                     wr.remove();
+                 } catch (InterruptedException e) {
+                     // Ignored

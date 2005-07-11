@@ -1,0 +1,203 @@
+Only in jotm-2.0.10-patched/: KKernelBoot.kcf
+Only in jotm-2.0.10-patched/: META-INF
+diff -ru jotm-2.0.10/build.xml jotm-2.0.10-patched/build.xml
+--- jotm-2.0.10/build.xml	2005-05-17 12:29:11.000000000 -0400
++++ jotm-2.0.10-patched/build.xml	2005-07-10 16:27:26.000000000 -0400
+@@ -56,7 +56,7 @@
+  +-------------------------------+
+   </description>
+ 
+-  <target name="-init"/>
++  <target name="init"/>
+ 
+   <property name="project" 			value="jotm"/>
+ 
+@@ -113,12 +113,12 @@
+   <!-- compile all compile.** targets -->
+   <target name="compile"
+     description="--> compile JOTM">
+-    <antcall target="-compile.main"/>
+-    <antcall target="-compile.stubs"/>
++    <antcall target="compile.main"/>
++    <antcall target="compile.stubs"/>
+   </target>
+ 
+   <!-- compile all java classes -->
+-  <target name="-compile.main">
++  <target name="compile.main">
+     <mkdir dir="${build.classes}"/>
+     <javac
+       srcdir="${src.main}"
+@@ -133,27 +133,27 @@
+   </target>
+ 
+   <!-- generate and compile all stubs for jotm -->
+-  <target name="-compile.stubs">
++  <target name="compile.stubs">
+ 	  <ant antfile="archive/stubs/rmic_sun.xml" dir="." target="-compile.sun"/>
+   </target>
+ 
+   <!-- create JOTM distribution -->
+-  <target name="dist" depends="-init, compile"
++  <target name="dist" depends="init, compile"
+     description="--> create a distribution of JOTM">
+     <mkdir dir="${dist}"/>
+     <copy file="${basedir}/README.txt" todir="${dist}"/>
+     <copy file="${basedir}/LICENSE.txt" todir="${dist}"/>
+-    <antcall target="-conf"/>
+-    <antcall target="-pdf"/>
+-    <antcall target="-doc"/>
+-    <antcall target="-pdf"/>
+-    <antcall target="-examples"/>
+-    <antcall target="-jar"/>
++    <antcall target="conf"/>
++    <antcall target="pdf"/>
++    <antcall target="doc"/>
++    <antcall target="pdf"/>
++    <antcall target="examples"/>
++    <antcall target="jar"/>
+     <antcall target="jdoc"/>
+   </target>
+ 
+   <!-- populate distribution conf directory with required archives -->
+-    <target name="-conf" depends="-init">
++    <target name="conf" depends="init">
+     <mkdir dir="${dist.conf}"/>
+     <copy todir="${dist.conf}">
+       <fileset dir="${ext}"/>
+@@ -162,23 +162,23 @@
+ 
+   <!-- this target compiles LaTeX documentation to PDF and HTMLfiles and put
+        them in the distribution doc directory . -->
+-  <target name="-doc" depends="-init">
++  <target name="doc" depends="init">
+   	<copy todir="${dist.doc}">
+   		<fileset dir="${doc}">
+   			<include name="*.html" />
+   			<include name="*.css" />
+   		</fileset>
+   	</copy>
+-    <antcall target="-doc2pdf">
++    <antcall target="doc2pdf">
+       <param name="LaTeX.doc.name" value="install" />
+     </antcall>
+-    <antcall target="-doc2html">
++    <antcall target="doc2html">
+       <param name="LaTeX.doc.name" value="install" />
+     </antcall>
+-    <antcall target="-doc2pdf">
++    <antcall target="doc2pdf">
+       <param name="LaTeX.doc.name" value="examples" />
+     </antcall>
+-    <antcall target="-doc2html">
++    <antcall target="doc2html">
+       <param name="LaTeX.doc.name" value="examples" />
+     </antcall>
+   </target>
+@@ -186,7 +186,7 @@
+   <!-- This target copies .pdf files to the distribution 
+   -->
+   
+-  <target name="-pdf" depends="-init">
++  <target name="pdf" depends="init">
+   	<copy todir="${dist.doc}">
+   		<fileset dir="${doc}">
+   			<include name="*.pdf" />
+@@ -199,7 +199,7 @@
+   That means it's up to the user to have required tools for
+   this target (pdflatex command)
+   -->
+-  <target name="-doc2pdf" depends="-init"  if="pdflatex">
++  <target name="doc2pdf" depends="init"  if="pdflatex">
+     <mkdir dir="${tmp.doc}" />
+     <copy file="${doc}/${LaTeX.doc.name}.tex" todir="${tmp.doc}" />
+     <!-- the command pdflatex is executed 3 times
+@@ -225,36 +225,28 @@
+   Note also that doc2html is a shell script and will work only
+   on Linux systems
+   -->
+-  <target name="-doc2html" depends="-init" if="latex2html">
++  <target name="doc2html" depends="init" if="latex2html">
+     <exec dir="${doc}" os="Linux" executable="${doc}/doc2html">
+       <arg line="${LaTeX.doc.name}.tex"/>
+     </exec>
+   </target>
+ 
+   <!-- populate distribution example directory with required archives -->
+-  <target name="-examples" depends="-init">
++  <target name="examples" depends="init">
+     <copy todir="${dist.examples}">
+ 	<fileset dir="${examples}"/>
+     </copy>
+   </target>
+ 
+   <!-- populate distribution lib directory with required archives -->
+-  <target name="-jar" depends="-init, compile">
++  <target name="jar" depends="init, compile">
+     <mkdir dir="${dist.lib}"/>
+-    <copy todir="${dist.lib}" >
+-      <fileset dir="${externals.dir}" >
+-	<include name="*.jar"/>
+-      <exclude name="jeremie.jar"/>
+-      <exclude name="jonathan-core.jar"/>
+-      <exclude name="kilim.jar"/>
+-      </fileset>
+-    </copy>
+     <ant antfile="${archive}/jotm_jar.xml" dir="${basedir}"/>
+   </target>
+ 
+ 
+   <!-- create javadoc  documentation -->
+-  <target name="jdoc" depends="-init"
++  <target name="jdoc" depends="init"
+     description="--> generate Javadoc">
+     <mkdir dir="${dist.jdoc}"/>
+     <javadoc
+@@ -283,7 +275,7 @@
+   </target>
+ 
+   <!-- clean all directory and files created by various targets -->
+-  <target name="clean" depends="-init"
++  <target name="clean" depends="init"
+     description="--> delete generated files">
+     <delete dir="${output}" />
+   </target>
+@@ -295,7 +287,7 @@
+     <antcall target="-package.jar"/>
+   </target>
+ 
+-  <target name="-package.jar" depends="dist" if="version">
++  <target name="package.jar" depends="dist" if="version">
+     <delete dir="${tmp}/${project}-${version}" />
+     <mkdir dir="${tmp}" />
+     <copy todir="${tmp}/${project}-${version}" includeEmptyDirs="no">
+@@ -310,7 +302,7 @@
+     <delete dir="${tmp}/${project}-${version}" />
+   </target>
+ 
+-  <target name="-package.src" depends="clean" if="version">
++  <target name="package.src" depends="clean" if="version">
+     <delete dir="${tmp}/${project}-${version}" />
+     <mkdir dir="${tmp}" />
+     <copy todir="${tmp}/${project}-${version}" includeEmptyDirs="no">
+Only in jotm-2.0.10/externals: commons-cli-1.0.jar
+Only in jotm-2.0.10-patched/externals: commons-cli.jar
+Files jotm-2.0.10/externals/commons-logging.jar and jotm-2.0.10-patched/externals/commons-logging.jar differ
+Only in jotm-2.0.10/externals: connector-1_5.jar
+Only in jotm-2.0.10-patched/externals: connector-api.jar
+Files jotm-2.0.10/externals/howl.jar and jotm-2.0.10-patched/externals/howl.jar differ
+Files jotm-2.0.10/externals/jeremie.jar and jotm-2.0.10-patched/externals/jeremie.jar differ
+Files jotm-2.0.10/externals/jonathan-core.jar and jotm-2.0.10-patched/externals/jonathan-core.jar differ
+Files jotm-2.0.10/externals/jta-spec1_0_1.jar and jotm-2.0.10-patched/externals/jta-spec1_0_1.jar differ
+Only in jotm-2.0.10-patched/externals: jta.jar
+Only in jotm-2.0.10/externals: jts1_0.jar
+Files jotm-2.0.10/externals/kilim.jar and jotm-2.0.10-patched/externals/kilim.jar differ
+Files jotm-2.0.10/externals/log4j.jar and jotm-2.0.10-patched/externals/log4j.jar differ
+Only in jotm-2.0.10/externals: objectweb-datasource.jar
+Files jotm-2.0.10/externals/ow_carol.jar and jotm-2.0.10-patched/externals/ow_carol.jar differ
+Only in jotm-2.0.10-patched/externals: unpack
+Only in jotm-2.0.10/externals: xapool.jar
+Only in jotm-2.0.10-patched/: org
+Only in jotm-2.0.10-patched/: output
+Only in jotm-2.0.10-patched/: uneeded
+Only in jotm-2.0.10-patched/: unpack

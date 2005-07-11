@@ -1,0 +1,36 @@
+diff -ru p6spy/build.xml p6spy-patched/build.xml
+--- p6spy/build.xml	2003-11-30 18:38:32.000000000 -0500
++++ p6spy-patched/build.xml	2005-07-08 20:12:17.000000000 -0400
+@@ -126,7 +126,7 @@
+ 	<target name="docs" depends="jar">
+ 		<echo message="--------- Creating Javadocs ---------"/>
+ 		<echo message=""/>
+-		<javadoc packagenames="com.p6spy.engine.spy.*,com.p6spy.engine.common.*,com.p6spy.engine.logging.*,com.p6spy.engine.outage.*" sourcepath="${src}" destdir="${javadocs}" />
++		<javadoc packagenames="com.p6spy.engine.spy.*,com.p6spy.engine.common.*,com.p6spy.engine.logging.*,com.p6spy.engine.outage.*" sourcepath="${src}" destdir="${javadocs}" classpathref="classpath"/>
+ 	</target>
+ 
+ 
+diff -ru p6spy/com/p6spy/management/jboss/P6SpyManager.java p6spy-patched/com/p6spy/management/jboss/P6SpyManager.java
+--- p6spy/com/p6spy/management/jboss/P6SpyManager.java	2003-04-09 11:44:02.000000000 -0400
++++ p6spy-patched/com/p6spy/management/jboss/P6SpyManager.java	2005-07-08 20:06:09.000000000 -0400
+@@ -65,7 +65,7 @@
+ import com.p6spy.engine.common.OptionReloader;
+ import com.p6spy.engine.outage.P6OutageOptions;
+ 
+-public class P6SpyManager extends org.jboss.util.ServiceMBeanSupport implements P6SpyManagerMBean {
++public class P6SpyManager extends org.jboss.system.ServiceMBeanSupport implements P6SpyManagerMBean {
+     
+     //
+     // Administrative methods
+diff -ru p6spy/com/p6spy/management/jboss/P6SpyManagerMBean.java p6spy-patched/com/p6spy/management/jboss/P6SpyManagerMBean.java
+--- p6spy/com/p6spy/management/jboss/P6SpyManagerMBean.java	2003-04-09 11:44:02.000000000 -0400
++++ p6spy-patched/com/p6spy/management/jboss/P6SpyManagerMBean.java	2005-07-08 20:07:38.000000000 -0400
+@@ -61,7 +61,7 @@
+ 
+ package com.p6spy.management.jboss;
+ 
+-public interface P6SpyManagerMBean extends org.jboss.util.ServiceMBean {
++public interface P6SpyManagerMBean extends org.jboss.system.ServiceMBean {
+     //
+     // Administrative methods
+     //
