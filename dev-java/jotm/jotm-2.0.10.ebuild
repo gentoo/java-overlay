@@ -26,7 +26,7 @@ RDEPEND="virtual/jre
 	dev-java/jta
 	=dev-java/kilim-1*
 	dev-java/log4j
-	dev-java/carol
+	=dev-java/carol-2*
 	dev-java/sun-j2ee-connector-bin"
 
 src_unpack() {
@@ -48,7 +48,7 @@ src_unpack() {
 	java-pkg_jar-from jta
 	java-pkg_jar-from kilim-1 kilim.jar
 	java-pkg_jar-from log4j
-	java-pkg_jar-from carol ow_carol.jar
+	java-pkg_jar-from carol-2 ow_carol.jar
 	java-pkg_jar-from sun-j2ee-connector-bin
 }
 

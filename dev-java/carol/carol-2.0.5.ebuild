@@ -21,7 +21,8 @@ RDEPEND="virtual/jre
 	dev-java/irmi
 	dev-java/jacorb
 	=dev-java/mx4j-2.1*
-	dev-java/velocity"
+	dev-java/velocity
+	dev-java/jgroups"
 
 S=${WORKDIR}/${MY_P}
 

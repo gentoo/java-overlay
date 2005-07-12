@@ -16,7 +16,7 @@ KEYWORDS="~x86"
 IUSE="doc jikes"
 
 COMMON_DEPEND="=dev-java/struts-1.1*
-	=dev-java/servletapi-2.3*
+	=dev-java/servletapi-2.4*
 	dev-java/commons-digester"
 DEPEND="virtual/jdk
 	dev-java/ant
@@ -34,7 +34,7 @@ src_unpack() {
 
 	cp ${FILESDIR}/build-${PVR}.xml build.xml
 	local classpath;
-	for dependency in struts servletapi-2.3 commons-digester; do
+	for dependency in struts servletapi-2.4 commons-digester; do
 		local dependency_classpath=$(java-pkg_getjars ${dependency})
 		if [ -z "${classpath}" ] ; then
 			classpath=${dependency_classpath}

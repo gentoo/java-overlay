@@ -26,7 +26,7 @@ RDEPEND="virtual/jre
 	dev-java/wsdl4j
 	dev-java/c3p0
 	dev-java/burlap
-	dev-java/hessian
+	=dev-java/hessian-2*
 	=dev-java/cglib-2*
 	dev-java/cos
 	=dev-java/dom4j-1*
@@ -57,6 +57,8 @@ RDEPEND="virtual/jre
 	dev-java/jamon
 	dev-java/jmx
 	=dev-java/mx4j-2.1*
+	=dev-java/jotm-2*
+	dev-java/xapool
 	dev-java/junit
 	dev-java/log4j
 	=dev-java/jakarta-oro-2.0*

@@ -1,0 +1,4 @@
+MD5 dd5ab68f81e9a6a1aa85f4a73e78e395 hibernate-extensions-2.1.3.ebuild 1928
+MD5 6b855d7e18f19b2003f9308f91b57e41 files/hibernate-extensions-2.1.3-hbm2java_timestamp.patch 4306
+MD5 cfb44d2efdfbea1a8e8a5c84aec6abb1 files/hibernate-extensions-2.1.3-console_build.patch 1469
+MD5 2d4be7c3d7fda88bb94ab0cbd17f9b0b files/digest-hibernate-extensions-2.1.3 148

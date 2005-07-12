@@ -33,6 +33,7 @@ COMMON_DEPEND="dev-java/commons-codec
 	=dev-java/jboss-naming-${PV}*
 	=dev-java/jboss-server-${PV}*
 	=dev-java/jboss-jmx-${PV}*
+	=dev-java/jboss-messaging-${PV}*
 	=dev-java/jboss-security-${PV}*
 	=dev-java/jboss-transaction-${PV}*"
 DEPEND=">=virtual/jdk-1.3

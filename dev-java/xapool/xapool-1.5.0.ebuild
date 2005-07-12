@@ -18,7 +18,7 @@ DEPEND="virtual/jdk
 	dev-java/ant
 	jikes? (dev-java/jikes)"
 RDEPEND="virtual/jre
-	dev-java/carol
+	=dev-java/carol-2*
 	dev-java/commons-logging
 	dev-java/sun-j2ee-connector-bin
 	dev-java/howl-logger
@@ -37,7 +37,7 @@ src_unpack() {
 
 	cd externals
 	rm *.jar
-	java-pkg_jar-from carol ow_carol.jar
+	java-pkg_jar-from carol-2 ow_carol.jar
 	java-pkg_jar-from commons-logging commons-loggin.jar
 	java-pkg_jar-from sun-j2ee-connector-bin
 	java-pkg_jar-from howl-logger howl.jar

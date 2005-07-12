@@ -20,7 +20,7 @@ COMMON_DEPEND="
 	dev-java/jgroups
 	dev-java/junit
 	dev-java/concurrent-util
-	dev-java/je
+	dev-db/db-je
 	=dev-java/crimson-1*
 	dev-java/gnu-jaxp
 	dev-java/jmx

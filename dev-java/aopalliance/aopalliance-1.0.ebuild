@@ -6,7 +6,7 @@ inherit java-pkg
 
 DESCRIPTION="Aspect-Oriented Programming (AOP) Alliance classes"
 #SRC_URI="mirror://gentoo/${P}.tar.bz2"
-SRC_URI="http://sigmachi.yi.org/~nichoj/projects/java/${P}.tar.bz2"
+SRC_URI="http://www.scorec.rpi.edu/~nichoj/projects/java/${P}.tar.bz2"
 HOMEPAGE="http://aopalliance.sourceforge.net/"
 LICENSE="public-domain"
 SLOT="0"
@@ -26,6 +26,6 @@ src_compile() {
 }
 
 src_install() {
-	java-pkg_dojar build/aopalliance.jar || die "dojar failed"
-	use doc && java-pkg_dohtml -r build/api || die "dohtml failed"
+	java-pkg_dojar build/aopalliance.jar
+	use doc && java-pkg_dohtml -r build/api 
 }
