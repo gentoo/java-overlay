@@ -1,6 +1,6 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/netbeans/netbeans-4.0.ebuild,v 1.3 2005/05/24 05:43:39 compnerd Exp $
+# $Header: $
 
 inherit eutils java-pkg
 
@@ -63,7 +63,7 @@ RDEPEND=">=virtual/jre-1.4.2
 		  =dev-java/servletapi-2.4*
 		   dev-java/sac
 		   dev-java/flute
-		   dev-java/jmi-interface
+		 >=dev-java/jmi-interface-1.0-r1
 		 >=dev-java/javahelp-bin-2.0.02-r1
 		  =www-servers/tomcat-5.5.7*
 		   dev-java/sun-j2ee-deployment-bin
@@ -76,7 +76,7 @@ DEPEND="${RDEPEND}
 		>=dev-java/ant-1.6.2
 		  dev-util/pmd
 		  dev-libs/libxslt
-  		 =dev-java/xalan-2*
+		 =dev-java/xalan-2*
 "
 
 TOMCATSLOT="5.5"
@@ -96,7 +96,7 @@ MOF="jmi-interface mof.jar mof.jar"
 PMD="pmd pmd.jar pmd-1.3.jar"
 REGEXP="jakarta-regexp-1.3 jakarta-regexp.jar regexp-1.2.jar"
 SERVLET22="servletapi-2.2 servletapi-2.2.jar servlet-2.2.jar"
-SERVLET23="servletapi-2.3 servletapi-2.3.jar servlet-2.3.jar"
+SERVLET23="servletapi-2.3 servlet.jar servlet-2.3.jar"
 SERVLET24="servletapi-2.4 servlet-api.jar servlet-api-2.4.jar"
 STANDARD="jakarta-jstl standard.jar standard-1.1.2.jar"
 XERCES="xerces-2 xercesImpl.jar xerces-2.6.2.jar"
@@ -106,13 +106,14 @@ S=${WORKDIR}/netbeans-src
 BUILDDESTINATION="${S}/nbbuild/netbeans"
 IDE_VERSION="5"
 MY_FDIR="${FILESDIR}/4.1"
+DESTINATION="${ROOT}usr/share/netbeans-${SLOT}"
 
 antflags=""
 
-set_env () {
+set_env() {
 
 	antflags=""
-	
+
 	if use debug; then
 		antflags="${antflags} -Dbuild.compiler.debug=true"
 		antflags="${antflags} -Dbuild.compiler.deprecation=true"
@@ -159,7 +160,7 @@ src_unpack () {
 src_compile() {
 
 	set_env
-	
+
 	# The location of the main build.xml file
 	cd ${S}/nbbuild
 
@@ -192,7 +193,6 @@ src_compile() {
 }
 
 src_install() {
-	local DESTINATION="${ROOT}/usr/share/netbeans-${SLOT}"
 	insinto $DESTINATION
 
 	einfo "Installing the program..."
@@ -242,10 +242,10 @@ src_install() {
 		dosym ${DESTINATION}/icons/nb${res}.png /usr/share/icons/hicolor/${res}/apps/netbeans.png
 	done
 
-	make_desktop_entry netbeans-${SLOT} Netbeans netbeans Development
+	make_desktop_entry netbeans-${SLOT} "Netbeans ${SLOT}" netbeans Development
 }
 
-pkg_postinst () {    
+pkg_postinst () {
 	einfo "Your tomcat directory might not have the right permissions."
 	einfo "Please make sure that normal users can read the directory: "
 	einfo "${ROOT}usr/share/tomcat-${TOMCATSLOT}                      "
@@ -256,6 +256,18 @@ pkg_postinst () {
 	einfo "runtime window.                                            "
 }
 
+pkg_postrm() {
+#	einfo "Removing symlinks to jars from"
+#	einfo "${DESTINATION}"
+#	find ${DESTINATION} -type l | xargs rm -fr
+
+	einfo "Because of the way Portage works at the moment"
+	einfo "symlinks to the system jars are left to:"
+	einfo "${DESTINATION}"
+	einfo "If you are uninstalling Netbeans you can safely"
+	einfo "remove everything in this directory"
+}
+
 # Supporting functions for this ebuild
 
 function fix_manifest() {
@@ -263,6 +275,8 @@ function fix_manifest() {
 }
 
 function fool_scrambler() {
+	einfo "Symlinking scrambled jars to system jars"
+
 	cd ${S}/ant/external/
 	touch ant-api-1.6.2.zip
 	touch ant-docs-1.6.2.zip
@@ -276,20 +290,20 @@ function fool_scrambler() {
 	java-pkg_jar-from ant-core
 
 	cd ${S}/core/external
-	unscramble_and_empty 
+	unscramble_and_empty
 	java-pkg_jar-from ${JH}
 
 	cd ${S}/mdr/external/
-	unscramble_and_empty 
+	unscramble_and_empty
 	java-pkg_jar-from ${JMI}
 	java-pkg_jar-from ${MOF}
 
 	cd ${S}/nbbuild/external
-	unscramble_and_empty 
+	unscramble_and_empty
 	java-pkg_jar-from ${JHALL}
 
 	cd ${S}/libs/external/
-	unscramble_and_empty 
+	unscramble_and_empty
 	java-pkg_jar-from ${XERCES}
 	java-pkg_jar-from ${COMMONS_LOGGING}
 	java-pkg_jar-from ${XMLCOMMONS}
@@ -298,22 +312,19 @@ function fool_scrambler() {
 	# Sun's bcla + supplemental terms
 
 	cd ${S}/httpserver/external/
-	unscramble_and_empty 
+	unscramble_and_empty
 	java-pkg_jar-from ${SERVLET22}
 	# The webserver.jar in here is a stripped down version of Tomcat 3.3.
 	# We will use the included jar because we don't want to have Tomcat 3.X
 	# in the tree and because maintaining it would probably be a pain.
 
-	cd ${S}/external/j2ee/
-#	touch dummy; zip jwsdp_jars.zip dummy; rm dummy
-#	unscramble_and_empty
-#	java-pkg_jar-from ${XERCES}
-#	java-pkg_jar-from ${XALAN}
-#	rm dom.jar
-#	rm sax.jar
+	cd ${S}/j2ee/external
+	unscramble_and_empty
+#	rm *.jar
+	java-pkg_jar-from ${XERCES}
 
 	cd ${S}/j2eeserver/external
-	unscramble_and_empty 
+	unscramble_and_empty
 	java-pkg_jar-from ${JSR}
 
 	cd ${S}/java/external/
@@ -322,7 +333,7 @@ function fool_scrambler() {
 
 	cd ${S}/junit/external/
 	touch junit-3.8.1-api.zip
-	unscramble_and_empty 
+	unscramble_and_empty
 	java-pkg_jar-from ${JUNIT}
 
 
@@ -344,10 +355,10 @@ function fool_scrambler() {
 	java-pkg_jar-from commons-el
 
 	cd ${S}/xml/external/
-	unscramble_and_empty 
-	java-pkg_jar-from sac 
+	unscramble_and_empty
+	java-pkg_jar-from sac
 	java-pkg_jar-from flute
-	
+
 	# There's also resolver-1_1_nb.jar in this directory.
 	# The implementation is from Sun and I haven't found it.
 	# In later Netbeans versions xml-commons is used so we will use it
@@ -356,25 +367,31 @@ function fool_scrambler() {
 }
 
 function symlink_extjars() {
+	einfo "Added symlinks to system jars inside"
+	einfo "${DESTINATION}"
+
 	cd ${1}/ide${IDE_VERSION}/modules/ext
 	java-pkg_jar-from ${COMMONS_LOGGING}
 	java-pkg_jar-from flute
-	java-pkg_jar-from ${JMI}
-	java-pkg_jar-from ${JUNIT}
-	java-pkg_jar-from ${MOF}
 	java-pkg_jar-from sac
+	java-pkg_jar-from ${JMI}
+	java-pkg_jar-from ${MOF}
+	java-pkg_jar-from ${JUNIT}
 
 	cd ${1}/ide${IDE_VERSION}/modules/autoload/ext
-	java-pkg_jar-from commons-el
 	java-pkg_jar-from ${SERVLET22}
+	java-pkg_jar-from ${XERCES}
+	java-pkg_jar-from ${XMLCOMMONS}
+
+	cd ${1}/enterprise1/modules/autoload/ext
+	java-pkg_jar-from commons-el
 	java-pkg_jar-from ${SERVLET23}
 	java-pkg_jar-from ${SERVLET24}
-	java-pkg_jar-from ${XERCES}
 	java-pkg_jar-from ${JSR}
 	java-pkg_jar-from ${JASPERCOMPILER}
 	java-pkg_jar-from ${JASPERRUNTIME}
-	java-pkg_jar-from ${XMLCOMMONS}
 	java-pkg_jar-from ${JSPAPI}
+
 
 	cd ${1}/enterprise1/config/TagLibraries/JSTL11
 	java-pkg_jar-from jakarta-jstl jstl.jar
@@ -385,8 +402,8 @@ function symlink_extjars() {
 }
 
 function unscramble_and_empty() {
-	yes yes 2> /dev/null | ant ${antflags} unscramble || die "Failed to unscramble"
-	
+	echo $(pwd)
+	yes yes 2> /dev/null | ant ${antflags} unscramble > /dev/null || die "Failed to unscramble"
 	remove_unscrambling
 }
 
@@ -394,7 +411,7 @@ function remove_unscrambling() {
 	local file=${1}
 
 	[ -z ${file} ] && file="build.xml"
-	
+
 	xsltproc -o ${T}/out.xml ${FILESDIR}/emptyunscramble.xsl ${file} \
 		|| die "Failed to remove unscrambling from one of the build.xml files"
 	mv ${T}/out.xml ${file}

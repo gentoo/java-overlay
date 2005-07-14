@@ -17,11 +17,14 @@ Find.find(path) { |file|
 	end
 	
 	if(file.match /scrambled$/)
+		
 		toMatch = file.gsub(/\.scrambled$/, '')
+
 		if(! FileTest.exist? toMatch )
 			puts 'No symlink: ' + file
 		elsif(  ! FileTest.symlink? toMatch)
 			puts 'Unscrambled: ' + file
+		end
 	end
 }
 

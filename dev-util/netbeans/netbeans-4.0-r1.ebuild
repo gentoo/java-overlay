@@ -1,15 +1,11 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/netbeans/netbeans-4.0.ebuild,v 1.3 2005/05/24 05:43:39 compnerd Exp $
+# $Header: $
 
 inherit eutils java-pkg
 
 DESCRIPTION="NetBeans IDE for Java"
 HOMEPAGE="http://www.netbeans.org"
-
-# Server Tarball layout structure
-# 4.0 200412081800/d5a0f13566068cb86e33a46ea130b207
-# 4.1 200505031930/66083d474e5fdfc80a1443fb851bd9d5
 
 # ant-mis is stuff we never use put instead of pactching we let the build process use this file
 # so adding the license just to be sure
@@ -60,7 +56,7 @@ RDEPEND=">=virtual/jre-1.4.2
 		  =dev-java/xerces-2.6.2*
 		   dev-java/sac
 		   dev-java/flute
-		   dev-java/jmi-interface
+		 >=dev-java/jmi-interface-1.0-r1
 		 >=dev-java/javahelp-bin-2.0.02-r1
 		  ~www-servers/tomcat-5.0.28
 		   dev-java/sun-j2ee-deployment-bin
@@ -104,13 +100,14 @@ S=${WORKDIR}/netbeans-src
 BUILDDESTINATION="${S}/nbbuild/netbeans"
 IDE_VERSION="4"
 MY_FDIR="${FILESDIR}/4.0"
+DESTINATION="${ROOT}usr/share/netbeans-${SLOT}"
 
 antflags=""
 
-set_env () {
+set_env() {
 
 	antflags=""
-	
+
 	if use debug; then
 		antflags="${antflags} -Dbuild.compiler.debug=true"
 		antflags="${antflags} -Dbuild.compiler.deprecation=true"
@@ -150,12 +147,14 @@ src_unpack () {
 	# Disable the bundled Tomcat in favor of Portage installed version
 	sed -i -e "s%tomcatint/tomcat5/bundled,%%g" *.properties
 
+	einfo "Symlinking packed jars to system jars"
+
 	set_env
 
 	cd ${S}/ant/external/
 	touch ant-api-1.6.2.zip
 	touch ant-docs-1.6.2.zip
-	unscramble_and_empty	
+	unscramble_and_empty
 
 	# We have ant libs here so using the system libs
 	cd lib
@@ -244,7 +243,7 @@ src_unpack () {
 src_compile() {
 
 	set_env
-	
+
 	# The location of the main build.xml file
 	cd ${S}/nbbuild
 
@@ -277,7 +276,6 @@ src_compile() {
 }
 
 src_install() {
-	local DESTINATION="${ROOT}/usr/share/netbeans-${SLOT}"
 	insinto $DESTINATION
 
 	einfo "Installing the program..."
@@ -327,7 +325,7 @@ src_install() {
 		dosym ${DESTINATION}/icons/nb${res}.png /usr/share/icons/hicolor/${res}/apps/netbeans.png
 	done
 
-	make_desktop_entry netbeans-${SLOT} Netbeans netbeans Development
+	make_desktop_entry netbeans-${SLOT} "Netbeans ${SLOT}" netbeans Development
 }
 
 pkg_postinst () {
@@ -341,6 +339,18 @@ pkg_postinst () {
 	einfo "runtime window.                                            "
 }
 
+pkg_postrm() {
+#	einfo "Removing symlinks to jars from"
+#	einfo "${DESTINATION}"
+#	find ${DESTINATION} -type l | xargs rm -fr
+
+	einfo "Because of the way Portage works at the moment"
+	einfo "symlinks to the system jars are left to:"
+	einfo "${DESTINATION}"
+	einfo "If you are uninstalling Netbeans you can safely"
+	einfo "remove everything in this directory"
+}
+
 # Supporting functions for this ebuild
 
 function fix_manifest() {
@@ -348,13 +358,16 @@ function fix_manifest() {
 }
 
 function symlink_extjars() {
+	einfo "Added symlinks to system jars inside"
+	einfo "${DESTINATION}"
+
 	cd ${1}/ide${IDE_VERSION}/modules/ext
 	java-pkg_jar-from ${COMMONS_LOGGING}
 	java-pkg_jar-from flute
-	java-pkg_jar-from ${JMI}
-	java-pkg_jar-from ${JUNIT}
-	java-pkg_jar-from ${MOF}
 	java-pkg_jar-from sac
+	java-pkg_jar-from ${JMI}
+	java-pkg_jar-from ${MOF}
+	java-pkg_jar-from ${JUNIT}
 
 	cd ${1}/ide${IDE_VERSION}/modules/autoload/ext
 	java-pkg_jar-from commons-el
@@ -377,8 +390,8 @@ function symlink_extjars() {
 }
 
 function unscramble_and_empty() {
-	yes yes 2> /dev/null | ant ${antflags} unscramble || die "Failed to unscramble"
-	
+	echo $(pwd)
+	yes yes 2> /dev/null | ant ${antflags} unscramble > /dev/null || die "Failed to unscramble"
 	remove_unscrambling
 }
 
@@ -386,7 +399,7 @@ function remove_unscrambling() {
 	local file=${1}
 
 	[ -z ${file} ] && file="build.xml"
-	
+
 	xsltproc -o ${T}/out.xml ${FILESDIR}/emptyunscramble.xsl ${file} \
 		|| die "Failed to remove unscrambling from one of the build.xml files"
 	mv ${T}/out.xml ${file}
