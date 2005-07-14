@@ -1,0 +1,16 @@
+# ChangeLog for dev-java/jmi-interface
+# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-java/jmi-interface/ChangeLog,v 1.2 2005/05/27 15:46:04 luckyduck Exp $
+
+  27 May 2005; Jan Brinkmann <luckyduck@gentoo.org>
+  jmi-interface-1.0.ebuild:
+  build the jar again when use=doc, fixes #94189
+
+*jmi-interface-1.0 (03 May 2005)
+
+  03 May 2005; Jan Brinkmann <luckyduck@gentoo.org>
+  +files/jmi-interface-1.0-build.xml, +metadata.xml,
+  +jmi-interface-1.0.ebuild:
+  Inital import, ebuild submitted by Petteri Räty <petteri.raty@welho.com> in
+  bug #90978.
+

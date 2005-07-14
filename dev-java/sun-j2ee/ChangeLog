@@ -1,0 +1,63 @@
+# ChangeLog for dev-java/sun-j2ee
+# Copyright 2002-2004 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-java/sun-j2ee/ChangeLog,v 1.17 2004/11/30 21:41:31 swegener Exp $
+
+  30 Nov 2004; Sven Wegener <swegener@gentoo.org> sun-j2ee-1.3.1-r2.ebuild:
+  Fixed invalid atoms in *DEPEND.
+
+  16 Oct 2004; Thomas Matthijs <axxo@gentoo.org> sun-j2ee-1.3.1-r2.ebuild:
+  use java-pkg_dohtml instead of dohtml to also install the package-list in
+  case of api docs: #50740
+
+  01 Jul 2004; Jeremy Huddleston <eradicator@gentoo.org>
+  sun-j2ee-1.3.1-r2.ebuild:
+  virtual/glibc -> virtual/libc
+
+  20 Jun 2004; Karl Trygve Kalleberg <karltk@gentoo.org>
+  sun-j2ee-1.3.1-r2.ebuild, sun-j2ee-1.3.1-r1.ebuild: Removed -r1, and updated
+  digest for -r2, fixes #54181.
+
+*sun-j2ee-1.3.1-r2 (12 Jun 2004)
+
+  12 Jun 2004; Karl Trygve Kalleberg <karltk@gentoo.org>
+  sun-j2ee-1.3.1-r2.ebuild: Added xsl to the directories to install. Fixes
+  #47098. Solution by Todd de Gruyl <todd@tdegruyl.com>.
+
+  02 Jun 2004; Aron Griffis <agriffis@gentoo.org> sun-j2ee-1.3.1-r1.ebuild:
+  Fix use invocation
+
+  18 Mar 2004; Chris Aniszczyk <zx@gentoo.org> sun-j2ee-1.3.1-r1.ebuild:
+  Fixing empty digest issue...
+
+  17 Mar 2004; Chris Aniszczyk <zx@gentoo.org> sun-j2ee-1.3.1-r1.ebuild:
+  Properly set up env vars. Closes #10855. Thanks Michael Smith
+  <masst181@pitt.edu>
+
+  24 May 2003; Dylan Carlson <absinthe@gentoo.org> sun-j2ee-1.3.1-r1.ebuild,
+  sun-j2ee-1.3.1.ebuild:
+  License adjustments.
+
+*sun-j2ee-1.3.1-r1 (16 Mar 2003)
+
+  16 Mar 2003; Dylan Carlson <absinthe@gentoo.org> sun-j2ee-1.3.1-r1.ebuild:
+  Added lib-compat dep to close bug # 14710.  Set 'doc' use flag for API docs.
+
+*sun-j2ee-1.3.1 (19 August 2002)
+
+  19 August 2002; Sascha Schwabbauer <cybersystem@gentoo.org> ChangeLog,
+  sun-j2ee-1.3.1.ebuild :
+  Added -ppc to the keywords.
+
+*sun-j2ee-1.3.1 (16 Jun 2002)
+
+  16 Jun 2002; Doug Goldstein (Cardoe) <dougg@ufl.edu> sun-j2ee-1.3.1.ebuild:
+  Corrected ebuild with lintool and a quick version bump
+
+*sun-j2ee-1.3 (1 Feb 2002)
+
+  01 Aug 2002; Karl Trygve Kalleberg <karltk@gentoo.org> sun-j2ee-1.3.ebuild
+  files/digest-sun-j2ee-1.3 :
+  Removed.
+
+  1 Feb 2002; G.Bevin <gbevin@gentoo.org> ChangeLog :
+  Added initial ChangeLog.
