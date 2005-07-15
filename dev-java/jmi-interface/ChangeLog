@@ -1,6 +1,13 @@
 # ChangeLog for dev-java/jmi-interface
 # Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/jmi-interface/ChangeLog,v 1.2 2005/05/27 15:46:04 luckyduck Exp $
+# $Header: $
+
+*jmi-interface-1.0-r1 (06 May 2005)
+
+  17 Jul 2005; Karltk <karltk@gentoo.org> +jmi-interface-1.0-r1.ebuild:
+  Version bump because of bug 98603. Thanks to Thomas Berlinghoff 
+  <schwupp-diwupp@gmx.de> for helping in finding the cause. Mof.jar now
+  includes mof.xml needed by Netbeans.
 
   27 May 2005; Jan Brinkmann <luckyduck@gentoo.org>
   jmi-interface-1.0.ebuild:
