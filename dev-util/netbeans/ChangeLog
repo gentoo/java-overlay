@@ -1,6 +1,48 @@
 # ChangeLog for dev-util/netbeans
 # Copyright 2002-2005 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/netbeans/ChangeLog,v 1.25 2005/04/21 19:10:41 hansmi Exp $
+# $Header: $
+
+*netbeans-4.0-r2 (17 Jul 2005)
+
+  17 Jul 2005; Karl Trygve Kalleberg <karltk@gentoo.org>:
+  Version bump because of Bug #98603 and Bug #96646. This version now depends
+  on the corrected version of jmi-interface and doesn't fail with access 
+  violations if the system jars are dated older then the files in the Netbeans
+  tarball. Also more information messages about the progress of the ebuild.
+  
+  19 Jun 2005; Saleem Abdulrasool <compnerd@gentoo.org>
+  -netbeans-4.0.ebuild:
+  Removing 4.0 in favor of 4.0-r1, it is a broken ebuild now
+
+  19 Jun 2005; Saleem Abdulrasool <compnerd@gentoo.org>
+  netbeans-3.4.1.ebuild, netbeans-3.5.1.ebuild, netbeans-3.6-r1.ebuild:
+  Removing ${PV} from the descriptions to prevent web descriptions from breaking
+  Resolves bug #54457
+
+*netbeans-4.0-r1 (04 Jun 2005)
+
+  04 Jun 2005; Jan Brinkmann <luckyduck@gentoo.org> netbeans-4.0.ebuild,
+  +netbeans-4.0-r1.ebuild:
+  Updated reference to servletapi-2.3, we dont install a versioned servletapi
+  jar any longer.
+
+  24 May 2005; Saleem Abdulrasool <compnerd@gentoo.org> netbeans-4.0.ebuild:
+  Adding patch to please the SUN JDKs.  Resolves Bug #93617.  Patch from
+  Betelgeuse.
+
+  23 May 2005; Jan Brinkmann <luckyduck@gentoo.org> netbeans-4.0.ebuild:
+  added ~amd64 to KEYWORDS
+
+  17 May 2005; Saleem Abdulrasool <compnerd@gentoo.org>
+  +files/antbuild.xml.patch, +files/nbbuild.patch, +files/startscript.sh:
+  Adding missing files.  Also closes bug #80877.
+
+*netbeans-4.0 (17 May 2005)
+
+  17 May 2005; Saleem Abdulrasool <compnerd@gentoo.org>
+  +netbeans-4.0.ebuild:
+  Adding Netbeans 4.0 to tree.  Resolves Bug #68734.  Modified ebuild from
+  Betelgeuse.
 
   21 Apr 2005; Michael Hanselmann <hansmi@gentoo.org> netbeans-3.5.1.ebuild:
   Stable on ppc.

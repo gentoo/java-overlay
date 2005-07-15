@@ -261,11 +261,13 @@ pkg_postrm() {
 #	einfo "${DESTINATION}"
 #	find ${DESTINATION} -type l | xargs rm -fr
 
-	einfo "Because of the way Portage works at the moment"
-	einfo "symlinks to the system jars are left to:"
-	einfo "${DESTINATION}"
-	einfo "If you are uninstalling Netbeans you can safely"
-	einfo "remove everything in this directory"
+	if ! test -e /usr/bin/netbeans-${SLOT}; then
+		einfo "Because of the way Portage works at the moment"
+		einfo "symlinks to the system jars are left to:"
+		einfo "${DESTINATION}"
+		einfo "If you are uninstalling Netbeans you can safely"
+		einfo "remove everything in this directory"
+	fi
 }
 
 # Supporting functions for this ebuild
