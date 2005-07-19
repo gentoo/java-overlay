@@ -5,10 +5,11 @@
 *netbeans-4.0-r2 (17 Jul 2005)
 
   17 Jul 2005; Karl Trygve Kalleberg <karltk@gentoo.org>:
-  Version bump because of Bug #98603 and Bug #96646. This version now depends
-  on the corrected version of jmi-interface and doesn't fail with access 
-  violations if the system jars are dated older then the files in the Netbeans
-  tarball. Also more information messages about the progress of the ebuild.
+  Version bump because of Bug #98603, Bug #96646 and Bug 99545. This version 
+  now depends on the corrected version of jmi-interface and doesn't fail with 
+  access violations if the system jars are dated older then the files in the   
+  Netbeans tarball. Also more information messages about the progress of the 
+  ebuild.
   
   19 Jun 2005; Saleem Abdulrasool <compnerd@gentoo.org>
   -netbeans-4.0.ebuild:
