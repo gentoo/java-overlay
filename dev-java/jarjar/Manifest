@@ -1,2 +1,3 @@
-MD5 7fd5b99cd5ccef8e76c84b13f4487039 jarjar-0.6.ebuild 534
-MD5 381594a13fbce837ef9a91e02b5186bb files/digest-jarjar-0.6 59
+MD5 8eb80778aebeb9875e99f69a408fafcb jarjar-0.6.ebuild 1036
+MD5 32e25e8c0b1eebdf6e1ab7f328e558cf files/digest-jarjar-0.6 63
+MD5 42693e47c1e9772fa96128d0a646b4fd files/jarjar-0.6-properties.patch 6981
