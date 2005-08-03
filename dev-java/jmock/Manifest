@@ -1,0 +1,5 @@
+MD5 c7e432f48a9d747886a721183bcccb06 ChangeLog 637
+MD5 a6ec7d7724fbd068ffb39b5be56134ed metadata.xml 157
+MD5 ba480a0689c8abe1dd520377cfd8d519 jmock-1.0.1.ebuild 1277
+MD5 0fd831ae4b7efbc9184522cf832aeb2f files/digest-jmock-1.0.1 64
+MD5 b69ef29942edee112378f7c04e0a0df1 files/jmock-1.0.1-buildxml.patch 1816

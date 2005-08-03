@@ -1,0 +1,36 @@
+--- build.xml.orig	2005-01-04 21:58:02.972060664 +0100
++++ build.xml	2005-01-04 22:01:24.227465192 +0100
+@@ -22,13 +22,13 @@
+     <property name="core.src.dir" value="${core.dir}/src"/>
+     <property name="core.atest.dir" value="${core.dir}/acceptance-tests"/>
+     <property name="core.build.dir" value="build/core"/>
+-    <property name="core.jar" value="${build.dist.bin.dir}/jmock-${version.archive}.jar"/>
++    <property name="core.jar" value="${build.dist.bin.dir}/jmock.jar"/>
+ 
+     <property name="cglib.dir" value="${extensions.dir}/cglib"/>
+     <property name="cglib.src.dir" value="${cglib.dir}/src"/>
+     <property name="cglib.atest.dir" value="${cglib.dir}/acceptance-tests"/>
+     <property name="cglib.build.dir" value="build/cglib"/>
+-    <property name="cglib.jar" value="${build.dist.bin.dir}/jmock-cglib-${version.archive}.jar"/>
++    <property name="cglib.jar" value="${build.dist.bin.dir}/jmock-cglib.jar"/>
+ 
+     <property name="src.jar" value="${build.dist.src.dir}/jmock-${version.archive}-src.jar"/>
+     <property name="javadoc.jar" value="${build.dist.src.dir}/jmock-${version.archive}-javadoc.jar"/>
+@@ -107,7 +107,7 @@
+         </junit>
+     </target>
+ 
+-    <target name="core.jar" depends="core.test.unit">
++    <target name="core.jar" depends="core.compile">
+         <mkdir dir="${build.dist.bin.dir}"/>
+         <jar basedir="${core.build.dir}" destfile="${core.jar}" excludes="test/**" index="true"/>
+     </target>
+@@ -168,7 +168,7 @@
+         </junit>
+     </target>
+ 
+-    <target name="cglib.jar" depends="cglib.test.unit">
++    <target name="cglib.jar" depends="cglib.compile">
+         <mkdir dir="${build.dist.bin.dir}"/>
+         <jar basedir="${cglib.build.dir}" destfile="${cglib.jar}" excludes="test/**" index="true"/>
+     </target>
