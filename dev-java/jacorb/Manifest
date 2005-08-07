@@ -1,2 +1,3 @@
-MD5 ded1c2efd23f482ea1e507d246ec6220 jacorb-2.2.1.ebuild 2118
+MD5 5ca81a0b1387e69b0cba9d3877f4ca37 jacorb-2.2.1.ebuild 2046
 MD5 d0a4963a08696964954d9642bc9f54a9 files/digest-jacorb-2.2.1 70
+MD5 7d02f7e78d35d4e6412c767a800f136c files/jacorb-2.2.1-dist.patch 5097

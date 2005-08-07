@@ -1,0 +1,107 @@
+Only in JacORB_2_2_1-patched/bin: idl
+Only in JacORB_2_2_1-patched/bin: idl.bat
+Only in JacORB_2_2_1-patched/bin: jaco
+Only in JacORB_2_2_1-patched/bin: jaco.bat
+Only in JacORB_2_2_1-patched/bin: ns-wrapper
+Only in JacORB_2_2_1-patched/bin: ntfy-wrapper
+diff -ru JacORB_2_2_1/build.xml JacORB_2_2_1-patched/build.xml
+--- JacORB_2_2_1/build.xml	2004-10-01 06:12:38.000000000 -0400
++++ JacORB_2_2_1-patched/build.xml	2005-08-07 16:19:10.000000000 -0400
+@@ -32,7 +32,7 @@
+ 
+    <!-- package idl.jar -->
+    <target name="idllib" depends="idlsrc" >
+-        <jar jarfile="${lib}/idl.jar"
++        <jar jarfile="${dist}/idl.jar"
+              basedir="${classdir}"
+              includes="org/jacorb/idl/**"
+        />
+@@ -79,8 +79,8 @@
+    <target name="libs" depends="init,jar,jaco"/>
+ 
+    <target name="jar" depends="init">
+-      <delete file="${lib}/jacorb.jar" failonerror="false"/>
+-       <jar jarfile="${lib}/jacorb.jar"
++      <delete file="${dist}/jacorb.jar" failonerror="false"/>
++       <jar jarfile="${dist}/jacorb.jar"
+       basedir="${classdir}"
+       includes="org/jacorb/**,org/omg/**, HTTPClient/**"
+       excludes="org/jacorb/idl/**,org/jacorb/demo/**,org/jacorb/test/**"
+@@ -149,8 +149,8 @@
+    <!-- core ORB components and (genrated) OMG classes + -->
+    <!-- the Naming Service -->
+    <target name="core_jacorb_jar" depends="init">
+-      <delete file="${lib}/core_jacorb.jar"/>
+-       <jar jarfile="${lib}/core_jacorb.jar"
++      <delete file="${dist}/core_jacorb.jar"/>
++       <jar jarfile="${dist}/core_jacorb.jar"
+       basedir="${classdir}"
+       includes="org/jacorb/orb/**,org/jacorb/naming/*,org/jacorb/poa/**,org/jacorb/util/**,org/omg/CONV_FRAME/**,org/omg/CORBA/**,org/omg/CORBA_2_3/**,org/omg/CosNaming/**,org/omg/Dynamic/**,org/omg/DynamicAny/**,org/omg/GIOP/**,org/omg/IIOP/**,org/omg/IOP/**,org/omg/Portable*/**,org/omg/BiDirPolicy/**"
+             excludes="org/jacorb/poa/gui/*,org/jacorb/util/CAD*,org/jacorb/util/tracing/*,org/jacorb/orb/connection/http/*"
+@@ -161,8 +161,8 @@
+    <!-- following JacORB services and utilities: -->
+    <!-- ImR + GUI, IR + GUI, POA GUI, Tracing, Proxy -->
+    <target name="jacorb_services_jar" depends="init">
+-      <delete file="${lib}/jacorb_services.jar"/>
+-       <jar jarfile="${lib}/jacorb_services.jar"
++      <delete file="${dist}/jacorb_services.jar"/>
++       <jar jarfile="${dist}/jacorb_services.jar"
+       basedir="${classdir}"
+       includes="org/jacorb/imr/**,org/jacorb/ir/**,org/jacorb/poa/gui/*,org/jacorb/util/CAD*,org/jacorb/util/tracing/*,org/jacorb/proxy/*"
+       />
+@@ -172,8 +172,8 @@
+    <!-- following OMG services: -->
+    <!-- Concurrency, Events, Trading, Transaction, but not Naming -->
+    <target name="omg_services_jar" depends="init">
+-      <delete file="${lib}/omg_services.jar"/>
+-       <jar jarfile="${lib}/omg_services.jar"
++      <delete file="${dist}/omg_services.jar"/>
++       <jar jarfile="${dist}/omg_services.jar"
+       basedir="${classdir}"
+       includes="org/jacorb/concurrency/**,org/jacorb/events/**,org/jacorb/trading/**,org/jacorb/transaction/**,org/omg/Cos*/**"
+             excludes="org/omg/CosNaming/**"
+@@ -183,8 +183,8 @@
+    <!-- This target creates a jar file that contains the -->
+    <!-- HTTP tunneling classes -->
+    <target name="http_tunneling_jar" depends="init">
+-      <delete file="${lib}/http_tunneling.jar"/>
+-       <jar jarfile="${lib}/http_tunneling.jar"
++      <delete file="${dist}/http_tunneling.jar"/>
++       <jar jarfile="${dist}/http_tunneling.jar"
+       basedir="${classdir}"
+       includes="HTTPClient/**,org/jacorb/orb/connection/http/*"
+       />
+@@ -193,8 +193,8 @@
+    <!-- This target creates a jar file that contains the -->
+    <!-- (genrated) OMG and JacORB security classes -->
+    <target name="security_jar" depends="init">
+-      <delete file="${lib}/security.jar"/>
+-       <jar jarfile="${lib}/security.jar"
++      <delete file="${dist}/security.jar"/>
++       <jar jarfile="${dist}/security.jar"
+       basedir="${classdir}"
+       includes="org/jacorb/security/**,org/omg/Security*/**,org/omg/SSLIOP/**,org/omg/TimeBase/**"
+       />
+Only in JacORB_2_2_1-patched/classes: org
+Only in JacORB_2_2_1-patched/: dist
+diff -ru JacORB_2_2_1/etc/common.xml JacORB_2_2_1-patched/etc/common.xml
+--- JacORB_2_2_1/etc/common.xml	2004-08-03 11:45:10.000000000 -0400
++++ JacORB_2_2_1-patched/etc/common.xml	2005-08-07 16:20:04.000000000 -0400
+@@ -8,6 +8,7 @@
+     <property name="dirs.base" value="${basedir}"/>
+     <property name="src" value="${dirs.base}/src"/>
+     <property name="lib" value="${dirs.base}/lib"/>
++    <property name="dist" value="${dirs.base}/dist"/>
+     <property name="idl" value="${dirs.base}/idl"/>
+ </target>
+ 
+@@ -58,6 +59,7 @@
+     </pathconvert>
+ 
+     <mkdir dir="${classdir}"/>
++	<mkdir dir="${dist}"/>
+     <mkdir dir="${src}/generated"/>
+     <filter token="path" value="basedir"/>
+ </target>
+Only in JacORB_2_2_1-patched/src: generated
+Only in JacORB_2_2_1-patched/src/org/jacorb/orb: Reference.java

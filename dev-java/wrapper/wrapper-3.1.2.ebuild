@@ -10,7 +10,7 @@ HOMEPAGE="http://wrapper.tanukisoftware.org/doc/english/introduction.html"
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 
 LICENSE="java-service-wrapper"
-SLOT="0"
+SLOT="3.1"
 KEYWORDS="~x86"
 IUSE="jikes doc"
 
