@@ -42,7 +42,7 @@ SRC_URI="${BASELOCATION}/${MAINTARBALL}
 
 LICENSE="Apache-1.1 Apache-2.0 SPL W3C sun-bcla-j2eeeditor sun-bcla-javac sun-javac as-is docbook sun-resolver"
 SLOT="4.0"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="-x86 ~amd64"
 IUSE="debug doc"
 
 # dev-java/xml-commons-resolver for future versions
@@ -89,7 +89,7 @@ JUNIT="junit junit.jar junit-3.8.1.jar"
 MOF="jmi-interface mof.jar mof.jar"
 PMD="pmd pmd.jar pmd-1.3.jar"
 REGEXP="jakarta-regexp-1.3 jakarta-regexp.jar regexp-1.2.jar"
-SERVLET22="servletapi-2.2 servletapi-2.2.jar servlet-2.2.jar"
+SERVLET22="servletapi-2.2 servlet.jar servlet-2.2.jar"
 SERVLET23="servletapi-2.3 servlet.jar servlet-2.3.jar"
 SERVLET24="servletapi-2.4 servlet-api.jar servlet-api-2.4.jar"
 STANDARD="jakarta-jstl standard.jar standard-1.1.2.jar"
@@ -230,7 +230,7 @@ src_unpack () {
 	java-pkg_jar-from ${SERVLET23}
 	java-pkg_jar-from ${SERVLET24}
 	java-pkg_jar-from commons-el
-	java-pkg_jar-from jaxen-1.1 jaxen-1.1_beta2.jar jaxen-full.jar
+	java-pkg_jar-from jaxen-1.1 jaxen.jar jaxen-full.jar
 	java-pkg_jar-from saxpath
 	java-pkg_jar-from ${JASPERCOMPILER}
 	java-pkg_jar-from ${JASPERRUNTIME}
