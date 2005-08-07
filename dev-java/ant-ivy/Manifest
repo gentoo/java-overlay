@@ -1,4 +1,4 @@
-MD5 110e7645920ee576660213e1f3066720 ant-ivy-1.1.ebuild 1379
+MD5 5c45875979fb175cfdb36f96b5faf3cc ant-ivy-1.1.ebuild 1623
 MD5 996454b479f2fbb15f2067a15aec6a01 files/ivy-1.1-tasks.patch 938
 MD5 a4792750a34edc5d5387aa1de0bc6cf1 files/ivy-1.1-noresolve.patch 712
 MD5 b7fd9f9cd08ec84aa98975bbb92d6693 files/digest-ant-ivy-1.1 60

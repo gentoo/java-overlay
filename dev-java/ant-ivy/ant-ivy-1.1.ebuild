@@ -55,5 +55,7 @@ src_compile() {
 
 src_install() {
 	java-pkg_dojar build/artifact/${MY_PN}.jar
+	dodir /usr/share/ant-core/lib
+	dosym /usr/share/${PN}/lib/${MY_PN}.jar /usr/share/ant-core/lib/${PN}.jar
 	use doc && java-pkg_dohtml -r build/doc/api
 }
