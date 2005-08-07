@@ -1,0 +1,29 @@
+diff -ru ivy-1.1/build.properties ivy-1.1-patched/build.properties
+--- ivy-1.1/build.properties	2004-12-29 22:50:38.000000000 -0500
++++ ivy-1.1-patched/build.properties	2005-08-07 11:37:43.000000000 -0400
+@@ -6,4 +6,4 @@
+ test.build.dir=build/test
+ artifacts.build.dir=build/artifact
+ test.report.dir=build/report
+-
++javadoc.build.dir=build/doc/api
+diff -ru ivy-1.1/build.xml ivy-1.1-patched/build.xml
+--- ivy-1.1/build.xml	2004-12-30 00:10:42.000000000 -0500
++++ ivy-1.1-patched/build.xml	2005-08-07 11:47:46.000000000 -0400
+@@ -33,6 +29,16 @@
+   		<jar 	destfile="${artifacts.build.dir}/ivy.jar"
+ 				basedir="${classes.build.dir}"/>
+ 	</target>
++
++	<target name="javadoc">
++		<javadoc destdir="${javadoc.build.dir}">
++			<fileset dir="${src.dir}"/>
++		</javadoc>
++	</target>
++
++	<target name="clean">
++		<delete dir="${build.dir}"/>
++	</target>
+ 	
+ 	<target name="test" depends="jar">
+ 		<path id="run.classpath">
