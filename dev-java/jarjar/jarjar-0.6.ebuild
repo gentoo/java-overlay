@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~x86"
 IUSE="doc jikes"
 
-LIB_DEPEND=">=dev-java/asm-2.0
+LIB_DEPEND="=dev-java/asm-2*
 	=dev-java/gnu-regexp-1*"
 DEPEND="virtual/jdk
 	app-arch/unzip

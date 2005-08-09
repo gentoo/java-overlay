@@ -8,11 +8,13 @@ DESCRIPTION=" FreeMarker is a template engine; a generic tool to generate text o
 HOMEPAGE="http://freemarker.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 
+# TODO figure out license
 LICENSE=""
-SLOT="0"
+SLOT="2.3"
 KEYWORDS="~x86"
 IUSE="doc jikes"
 
+# TODO determine vm requirement
 DEPEND="virtual/jdk
 	dev-java/ant"
 RDEPEND="virtual/jre
@@ -40,6 +42,6 @@ src_install() {
 	java-pkg_dojar lib/${PN}.jar
 	dodoc README.txt
 
-	# TODO: there's more docs that could be installed
+	# TODO there's more docs that could be installed
 	use doc && java-pkg_dohtml -r build/api
 }

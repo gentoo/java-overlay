@@ -6,14 +6,17 @@ inherit java-pkg
 
 DESCRIPTION="The Hessian binary web service protocol makes web services usable without requiring a large framework, and without learning yet another alphabet soup of protocols."
 HOMEPAGE="http://www.caucho.com/hessian/"
-SRC_URI="http://www.caucho.com/hessian/download/hessian-2.1.12-src.jar"
+SRC_URI="http://www.caucho.com/hessian/download/${P}-src.jar"
 
+# Supposedly something Apache
 LICENSE=""
-SLOT="3"
-KEYWORDS="~x86"
+SLOT="3.0"
+KEYWORDS="~x86 -*"
 IUSE="jikes doc"
 
 DEPEND="virtual/jdk
+	app-arch/unzip
+	jikes? (dev-java/jikes)
 	dev-java/ant"	
 RDEPEND="virtual/jre
 	=dev-java/servletapi-2.3*"
@@ -21,11 +24,12 @@ RDEPEND="virtual/jre
 SERVLET="servletapi-2.3 servlet.jar"
 
 src_unpack() {
-	jar xvf ${DISTDIR}/${A}
+	mkdir -p ${P}/src
+	unzip -qq -d ${S}/src ${DISTDIR}/${A}
 
 	# We need to move things around a bit
-	mkdir -p ${S}/src
-	mv com ${S}/src
+#	mkdir -p ${S}/src
+#	mv com ${S}/src
 
 	cd ${S}
 	# No included ant script! Bad Java developer, bad!
@@ -33,7 +37,7 @@ src_unpack() {
 
 	# Populate classpath
 	cat > build.properties <<-EOF 
-		classpath=$(java-pkg_getjar ${SERVLET})
+		classpath=$(java-pkg_getjars servletapi-2.3)
 	EOF
 }
 

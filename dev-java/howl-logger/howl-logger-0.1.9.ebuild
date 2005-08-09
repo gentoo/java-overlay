@@ -12,7 +12,7 @@ SRC_URI="mirror://gentoo/${P}.tar.bz2"
 # tar cjvf howl-0.1.9.tar.bz2 howl
 
 LICENSE="howl-logger"
-SLOT="0"
+SLOT="0.1"
 KEYWORDS="~x86"
 IUSE="doc jikes"
 

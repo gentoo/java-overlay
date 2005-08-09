@@ -9,14 +9,15 @@ HOMEPAGE="http://www.caucho.com/burlap/"
 SRC_URI="http://www.caucho.com/burlap/download/burlap-2.1.12-src.jar"
 
 LICENSE="Apache-2.0"
-SLOT="0"
+SLOT="2.1"
 KEYWORDS="~x86"
 
 # TODO: some minor patching is needed for jikes
-IUSE="doc"
-#IUSE="doc jikes"
+#IUSE="doc"
+IUSE="doc jikes"
 
 DEPEND="virtual/jdk
+	app-arch/unzip
 	dev-java/ant"	
 RDEPEND="virtual/jre
 	=dev-java/servletapi-2.3*"
@@ -24,11 +25,8 @@ RDEPEND="virtual/jre
 SERVLET="servletapi-2.3 servlet.jar"
 
 src_unpack() {
-	jar xvf ${DISTDIR}/${A}
-
-	# We need to move things around a bit
 	mkdir -p ${P}/src
-	mv com ${S}/src
+	unzip -qq -d ${S}/src ${DISTDIR}/${A}
 
 	cd ${S}
 	# No ant script! Bad upstream... bad!
@@ -42,7 +40,7 @@ src_unpack() {
 
 src_compile() {
 	local antflags="-Dproject.name=${PN} jar"
-#	use jikes && antflags="-Dbuild.compiler=jikes ${antflags}"
+	use jikes && antflags="-Dbuild.compiler=jikes ${antflags}"
 	use doc && antflags="${antflags} javadoc"
 
 	ant ${antflags} || die "Compilation failed"

@@ -4,7 +4,7 @@
 
 inherit java-pkg eutils
 
-DESCRIPTION="VelocityTools is a collection of Velocity subprojects with a common goal of creating tools and infrastructure for building both web and non-web applications using the Velocity template engine."
+DESCRIPTION="A collection of Velocity subprojects with a common goal of creating tools and infrastructure for building both web and non-web applications using the Velocity template engine."
 HOMEPAGE="http://jakarta.apache.org/velocity/tools/"
 SRC_URI="mirror://apache/jakarta/velocity-tools/source/${P}-src.tar.gz"
 
@@ -24,9 +24,8 @@ COMMON_DEPEND="
 	=dev-java/servletapi-2.3*
 	=dev-java/struts-1.1*
 	=dev-java/struts-sslext-1.1*
-	dev-java/velocity
-	dev-java/dvsl
-"
+	=dev-java/velocity-1*
+	dev-java/dvsl"
 DEPEND="virtual/jdk
 	dev-java/ant
 	jikes? (dev-java/jikes)
@@ -45,7 +44,7 @@ src_unpack() {
 
 	local packages="commons-beanutils-1.6 commons-collections commons-digester
 		commons-logging commons-validator dom4j-1 jaxen-1.1 
-		servletapi-2.3 struts struts-sslext-1.1 velocity dvsl"
+		servletapi-2.3 struts struts-sslext-1.1 velocity-1 dvsl"
 	local classpath
 	for dependency in ${packages}; do
 		local dependency_classpath=$(java-pkg_getjars ${dependency})

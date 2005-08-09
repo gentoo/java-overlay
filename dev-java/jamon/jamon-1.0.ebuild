@@ -10,7 +10,7 @@ HOMEPAGE="http://www.javaperformancetuning.com/tools/jamon/index.shtml"
 SRC_URI="mirror://sourceforge/jamonapi/${MY_PN}All_${MY_PV}.zip"
 
 LICENSE="BSD"
-SLOT="0"
+SLOT="1"
 KEYWORDS="~x86"
 IUSE="doc jikes"
 

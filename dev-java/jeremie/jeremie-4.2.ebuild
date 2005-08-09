@@ -12,19 +12,19 @@ SRC_URI="mirror://gentoo/${P}.tar.bz2"
 # tar cjvf jeremie-4.2.tar.bz jeremie
 
 LICENSE="LGPL-2.1"
-SLOT="0"
+SLOT="4"
 KEYWORDS="~x86"
 IUSE="doc jikes"
 
 DEPEND="virtual/jdk
 	app-arch/unzip
 	jikes? (dev-java/jikes)
-	dev-java/ow-util-ant-tasks"
+	dev-java/ant-owanttask"
 RDEPEND="virtual/jre
-	dev-java/jonathan-core
+	=dev-java/jonathan-core-4*
 	=dev-java/kilim-2*
 	dev-java/monolog
-	dev-java/nanoxml"
+	=dev-java/nanoxml-2.2*"
 
 S=${WORKDIR}/${PN}
 
@@ -34,28 +34,30 @@ src_unpack() {
 
 	cd externals
 	rm *.jar
-	java-pkg_jar-from jonathan-core
+	java-pkg_jar-from jonathan-core-4
 	java-pkg_jar-from kilim-1 kilim.jar
 	java-pkg_jar-from monolog ow_monolog.jar
-	java-pkg_jar-from nanoxml nanoxml-lite.jar nanoxml-lite-2.2.1.jar
+	java-pkg_jar-from nanoxml-2.2 nanoxml-lite.jar nanoxml-lite-2.2.1.jar
 	
 	# the jar from my ow-util-ant-tasks seems to slightly not work
-#	cd ../config
-#	rm *.jar
-#	java-pkg_jar-from ow-util-ant-tasks
+	cd ../config
+	rm *.jar
+	java-pkg_jar-from ant-owanttask
 }
 
 src_compile() {
-	local antflags="-Dproject.name=${PN} jar"
+	local antflags="compile"
 	use jikes && antflags="-Dbuild.compiler=jikes ${antflags}"
 	use doc && antflags="${antflags} jdoc -Doutput.dist.jdoc=output/dist/doc/api"
 
+	# for some reason, we need to run ant twice to get the jar build
 	ant ${antflags} || die "Compilation failed"
+	ant jar || die "Compilation failed"
 }
 
-# TODO fix docs not being installed
 src_install() {
 	java-pkg_dojar output/dist/lib/*.jar
 	
+	# TODO fix docs not being installed
 	use doc & mv output/dist/doc/javadoc/user output/dist/doc/api && java-pkg_dohtml -r output/dist/doc/api
 }

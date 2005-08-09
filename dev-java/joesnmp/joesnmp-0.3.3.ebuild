@@ -9,7 +9,7 @@ HOMEPAGE="http://sourceforge.net/projects/joesnmp/"
 SRC_URI="mirror://sourceforge/${PN}/${P}.zip"
 
 LICENSE="LGPL-2.1"
-SLOT="0"
+SLOT="0.3"
 KEYWORDS="~x86"
 IUSE="doc jikes"
 

@@ -11,7 +11,7 @@ HOMEPAGE="http://www.gjt.org/pkgdoc/org/gjt/lindfors/pattern/"
 # swipped form source rpm at jpackage: http://jpackage.org/rpm.php?id=987
 SRC_URI="mirror://gentoo/${PN}-source.zip"
 
-# license unspecified according to website
+# license 'unspecified' according to website
 LICENSE=""
 SLOT="0"
 KEYWORDS="~x86"

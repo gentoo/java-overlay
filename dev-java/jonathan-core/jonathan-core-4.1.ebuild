@@ -8,9 +8,12 @@ MY_PN="${PN//-/}"
 DESCRIPTION="Jonathan is a Distributed Object Platform (DOP) written entirely in Java."
 HOMEPAGE="http://jonathan.objectweb.org/index.html"
 SRC_URI="mirror://gentoo/${P}.tar.bz2"
+# cvs -d:pserver:anonymous@cvs.forge.objectweb.org:/cvsroot/jonathan login
+# cvs -z3 -d:pserver:anonymous@cvs.forge.objectweb.org:/cvsroot/jonathan export -r JONATHAN_CORE_4_1 jonathancore
+# tar cjvf jonathan-core-4.1.tar.bz2 jonathancore
 
 LICENSE="LGPL-2.1"
-SLOT="0"
+SLOT="4"
 KEYWORDS="~x86"
 IUSE="doc jikes"
 
@@ -18,7 +21,7 @@ DEPEND="virtual/jdk
 	dev-java/ant
 	jikes? (dev-java/jikes)"
 RDEPEND="virtual/jre
-	dev-java/nanoxml
+	=dev-java/nanoxml-2.2*
 	=dev-java/kilim-1*
 	dev-java/monolog"
 S=${WORKDIR}/${MY_PN}
@@ -30,7 +33,7 @@ src_unpack() {
 	cd config
 	#rm *.jar
 	java-pkg_jar-from kilim-1 kilim-tools.jar
-	java-pkg_jar-from nanoxml nanoxml-lite.jar nanoxml-lite-2.2.1.jar
+	java-pkg_jar-from nanoxml-2.2 nanoxml-lite.jar nanoxml-lite-2.2.1.jar
 	# when we use the jar from this package, jar and jdoc targets break...
 	#java-pkg_jar-from ow-util-ant-tasks
 

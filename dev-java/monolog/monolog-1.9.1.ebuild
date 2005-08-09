@@ -22,7 +22,7 @@ DEPEND="virtual/jdk
 RDEPEND="virtual/jre
 	dev-java/log4j
 	dev-java/p6spy
-	dev-java/velocity"
+	=dev-java/velocity-1*"
 
 src_unpack() {
 	mkdir -p ${S}
@@ -32,7 +32,7 @@ src_unpack() {
 
 	cd externals
 	rm *.jar
-	java-pkg_jar-from log4j,p6spy,velocity
+	java-pkg_jar-from log4j,p6spy,velocity-1
 }
 
 src_compile() {

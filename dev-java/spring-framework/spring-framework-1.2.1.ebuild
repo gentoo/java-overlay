@@ -22,16 +22,17 @@ DEPEND="virtual/jdk
 #	jikes? (dev-java/jikes)
 RDEPEND="virtual/jre
 	=www-servers/axis-1*
-	dev-java/aopalliance
+	=dev-java/aopalliance-1*
 	dev-java/wsdl4j
 	dev-java/c3p0
-	dev-java/burlap
-	=dev-java/hessian-2*
-	=dev-java/cglib-2*
+	=dev-java/burlap-2.1*
+	=dev-java/hessian-2.1*
+	=dev-java/cglib-2.1*
 	dev-java/cos
 	=dev-java/dom4j-1*
+	=dev-java/easymock-1*
 	dev-java/ehcache
-	dev-java/freemarker
+	=dev-java/freemarker-2.3*
 	=dev-java/hibernate-2*
 	=dev-java/hibernate-3*
 	dev-java/itext
@@ -43,9 +44,9 @@ RDEPEND="virtual/jre
 	=dev-java/servletapi-2.4*
 	dev-java/jakarta-jstl
 	dev-java/jta
-	dev-java/jdbc-rowset-bin
+	dev-java/sun-jdbc-rowset-bin
 	=dev-java/xerces-2*
-	dev-java/commons-attributes
+	=dev-java/commons-attributes-2*
 	dev-java/commons-dbcp
 	dev-java/commons-digester
 	dev-java/commons-fileupload
@@ -54,34 +55,35 @@ RDEPEND="virtual/jre
 	dev-java/commons-logging
 	dev-java/commons-pool
 	>=app-text/jasperreports-0.6.8
-	dev-java/jamon
+	=dev-java/jamon-1*
 	dev-java/jmx
 	=dev-java/mx4j-2.1*
-	=dev-java/jotm-2*
-	dev-java/xapool
+	=dev-java/jotm-2.0*
+	=dev-java/xapool-1.5*
 	dev-java/junit
 	dev-java/log4j
 	=dev-java/jakarta-oro-2.0*
 	dev-java/poi
 	dev-java/quartz
 	=dev-java/struts-1.2*
-	dev-java/velocity
+	=dev-java/velocity-1*
 	dev-java/velocity-tools
 	dev-java/xjavadoc"
 
 ANTLR="antlr antlr.jar antlr-2.7.5H3.jar"
-AOPALLIANCE="aopalliance aopalliance.jar"
+AOPALLIANCE="aopalliance-1 aopalliance.jar"
 AXIS="axis-1 axis.jar"
 SAAJ="axis-1 saaj.jar"
 WSDL4J="wsdl4j wsdl4j.jar"
 C3P0="c3p0 c3p0.jar c3p0-0.8.5.2.jar"
-BURLAP="burlap burlap.jar"
-HESSIAN="hessian hessian.jar"
+BURLAP="burlap-2.1 burlap.jar"
+HESSIAN="hessian-2.1 hessian.jar"
 CGLIB="cglib-2.1 cglib.jar cglib-nodep-2.1.jar"
 COS="cos cos.jar"
 DOM4J="dom4j-1"
+EASYMOCK="easymock-1"
 EHCACHE="ehcache ehcache.jar"
-FREEMARKER="freemarker freemarker.jar"
+FREEMARKER="freemarker-2.3 freemarker.jar"
 HIBERNATE2="hibernate-2 hibernate2.jar"
 HIBERNATE3="hibernate-3 hibernate3.jar"
 HSQLDB="hsqldb hsqldb.jar"
@@ -96,12 +98,12 @@ JSP_API="servletapi-2.4 jsp-api.jar"
 JSTL="jakarta-jstl jstl.jar"
 JTA="jta jta.jar"
 MAIL="sun-javamail-bin mail.jar"
-ROWSET="jdbc-rowset-bin rowset.jar"
+ROWSET="sun-jdbc-rowset-bin rowset.jar"
 SERVLET_API="servletapi-2.4 servlet-api.jar"
 XML_APIS="xerces-2 xml-apis.jar"
 COMMON_COLLECTIONS="commons-collections commons-collections.jar"
-COMMONS_ATTRIBUTES_API="commons-attributes commons-attributes-api.jar"
-COMMONS_ATTRIBUTES_COMPILER="commons-attributes commons-attributes-compiler.jar"
+COMMONS_ATTRIBUTES_API="commons-attributes-2 commons-attributes-api.jar"
+COMMONS_ATTRIBUTES_COMPILER="commons-attributes-2 commons-attributes-compiler.jar"
 COMMONS_DBCP="commons-dbcp commons-dbcp.jar"
 COMMONS_DIGESTER="commons-digester commons-digester.jar"
 COMMONS_FILEUPLOAD="commons-fileupload commons-fileupload.jar"
@@ -110,20 +112,20 @@ COMMONS_LANG="commons-lang commons-lang.jar"
 COMMONS_LOGGING="commons-logging commons-logging.jar"
 COMMONS_POOL="commons-pool commons-pool.jar"
 STANDARD="jakarta-jstl standard.jar"
-JAMON="jamon jamon.jar JAMon.jar"
+JAMON="jamon-1 jamon.jar JAMon.jar"
 JASPERREPORTS="jasperreports jasperreports.jar jaspereports-0.6.6.jar"
 JMXRI="jmx jmxri.jar"
 JMXREMOTE="jmx jmxremote.jar"
 MX4J_REMOTE="mx4j-2.1 mx4j-remote.jar"
-JOTM="jotm-2 jotm.jar"
-XAPOOL="xapool xapool.jar"
+JOTM="jotm-2.0 jotm.jar"
+XAPOOL="xapool-1.5 xapool.jar"
 JUNIT="junit junit.jar"
 LOG4J="log4j log4j.jar log4j-1.2.9.jar"
 JAKARTA_ORO="jakarta-oro-2.0 jakarta-oro.jar jakarta-oro-2.0.8.jar"
 POI="poi poi.jar poi-2.5.1.jar"
 QUARTZ="quartz quartz.jar"
 STRUTS="struts-1.2 struts.jar"
-VELOCITY="velocity velocity.jar velocity-1.4.jar"
+VELOCITY="velocity-1 velocity.jar velocity-1.4.jar"
 VELOCITY_TOOLS_GENERIC="velocity-tools velocity-tools-generic.jar velocity-tools-generic-1.1.jar"
 VELOCITY_TOOLS_VIEW="velocity-tools velocity-tools-view.jar velocity-tools-view.1.jar"
 XJAVADOC="xjavadoc xjavadoc.jar xjavadoc-1.1.jar"
@@ -140,75 +142,44 @@ src_unpack() {
 	mkdir -p lib/jakarta-commons
 	
 	cd lib
-#	rm -r ${S}/lib/ant
-
-#	einfo "Fixing jars in ${S}/lib/antlr"
-#	cd ${S}/lib/antlr
 	java-pkg_jar-from ${ANTLR}
 
-#	cd ${S}/lib/aopalliance
 	mkdir aopalliance
 	cd aopalliance
 	java-pkg_jar-from ${AOPALLIANCE}
 	cd ..
 
-#	einfo "Fixing jars in ${S}/lib/axis"
-#	cd ${S}/lib/axis
 	java-pkg_jar-from ${AXIS}
 	java-pkg_jar-from ${SAAJ}
 	java-pkg_jar-from ${WSDL4J}
 
 	#96751
-#	einfo "Fixing jars in ${S}/lib/c3p0"
-#	cd ${S}/lib/c3p0
 	java-pkg_jar-from ${C3P0}
 
-#	einfo "Fixing jars in ${S}/lib/caucho"
-#	cd ${S}/lib/caucho
 	java-pkg_jar-from ${BURLAP} #97005
 	java-pkg_jar-from ${HESSIAN} #97007
 
-#	einfo "Fixing jars in ${S}/lib/cglib"
-#	cd ${S}/lib/cglib
 	java-pkg_jar-from ${CGLIB}
 
 	#97011
-#	einfo "Fixing jars in ${S}/lib/cos"
-#	cd ${S}/lib/cos
 	java-pkg_jar-from ${COS}
 
-#	cd ${S}/lib/dom4j
-#	einfo "Fixing jars in ${S}/lib/dom4j"
 	java-pkg_jar-from ${DOM4J}
 
-	# ${S}/lib/easymock only needed for testing
-#	rm -r ${S}/lib/easymock
+	java-pkg_jar-from ${EASYMOCK}
 
-#	einfo "Fixing jars in ${S}/lib/ehcache"
-#	cd ${S}/lib/ehcache
 	java-pkg_jar-from ${EHCACHE}
 
-#	einfo "Fixing jars in ${S}/lib/freemarker"
-#	cd ${S}/lib/freemarker
 	java-pkg_jar-from ${FREEMARKER}
 
-#	einfo "Fixing jars in ${S}/lib/hibernate"
-#	cd ${S}/lib/hibernate
 	java-pkg_jar-from ${HIBERNATE2}
 	java-pkg_jar-from ${HIBERNATE3}
 
 	# ${S}/lib/hsqldb needed for example only
-#	rm -r ${S}/lib/hsqldb
-
 	# TODO: ${S}/lib/ibatis
 
-#	einfo "Fixing jars in ${S}/lib/itext"
-#	cd ${S}/lib/itext
 	java-pkg_jar-from ${ITEXT}
 
-#	einfo "Fixing jars in ${S}/lib/j2ee"
-#	cd ${S}/lib/j2ee
-#	rm *.jar
 	java-pkg_jar-from ${ACTIVATION}
 	java-pkg_jar-from ${J2EE}
 	java-pkg_jar-from ${JAXRPC}
@@ -223,10 +194,9 @@ src_unpack() {
 	java-pkg_jar-from ${SERVLET_API}
 	java-pkg_jar-from ${XML_APIS}
 
-#	einfo "Fixing jars in ${S}/lib/jakarta-commons"
 	cd ${S}/lib/jakarta-commons
 	# the following are only used for the example
-#	rm commons-{beanutils,discovery,validator}.jar
+	#rm commons-{beanutils,discovery,validator}.jar
 	java-pkg_jar-from ${COMMONS_ATTRIBUTES_API} #97008
 	java-pkg_jar-from ${COMMONS_ATTRIBUTES_COMPILER} #97008
 
@@ -239,70 +209,45 @@ src_unpack() {
 	java-pkg_jar-from ${COMMONS_LOGGING}
 	java-pkg_jar-from ${COMMONS_POOL}
 
-#	einfo "Fixing jars in ${S}/lib/jakarta-taglibs"
-#	cd ${S}/lib/jakarta-taglibs
 	java-pkg_jar-from ${STANDARD}
 
 	#97009
-#	einfo "Fixing jars in ${S}/lib/jamon"
-#	cd ${S}/lib/jamon
 	java-pkg_jar-from ${JAMON}
 	
 	#96906
-#	einfo "Fixing jars in ${S}/lib/jasperreports"
-#	cd ${S}/lib/jasperreports
 	java-pkg_jar-from ${JASPERREPORTS}
 
 	# TODO ${S}/lib/jdo
 	
-#	einfo "Fixing jars in ${S}/lib/jmx"
-#	cd ${S}/lib/jmx
 	java-pkg_jar-from ${JMXRI}
 	java-pkg_jar-from ${MX4J_REMOTE}
 #	rm jmxremote_optional.jar # only needed for testing
 
-#	einfo "Fixing jars in ${S}/lib/jotm"
-#	cd ${S}/lib/jotm
 	java-pkg_jar-from ${JOTM}
 	java-pkg_jar-from ${XAPOOL}
 
 	# TODO ${S}/lib/jsf
 	
-#	einfo "Fixing jars in ${S}/lib/junit"
-#	cd ${S}/lib/junit
 	java-pkg_jar-from ${JUNIT}
 
-#	einfo "Fixing jars in ${S}/lib/log4j"
-#	cd ${S}/lib/log4j
 	java-pkg_jar-from ${LOG4J}
 
 	# TODO ${S}/lib/ojb
 
-#	einfo "Fixing jars in ${S}/lib/oro"
-#	cd ${S}/lib/oro
 	java-pkg_jar-from ${JAKARTA_ORO}
 
-#	einfo "Fixing jars in ${S}/lib/poi"
-#	cd ${S}/lib/poi
 	java-pkg_jar-from ${POI}
 
-#	einfo "Fixing jars in ${S}/lib/quartz"
-#	cd ${S}/lib/quartz
 	java-pkg_jar-from ${QUARTZ}
 
-#	einfo "Fixing jars in ${S}/lib/struts"
-#	cd ${S}/lib/struts
 	java-pkg_jar-from ${STRUTS}
 
 	# TODO toplink
 
-#	einfo "Fixing jars in ${S}/lib/velocity"
-#	cd ${S}/lib/velocity
 	java-pkg_jar-from ${VELOCITY}
 	java-pkg_jar-from ${VELOCITY_TOOLS_GENERIC}
 	java-pkg_jar-from ${VELOCITY_TOOLS_VIEW}
 
-#	einfo "Fixing jars in ${S}/lib/xdoclet"
 	mkdir xdoclet
 	cd xdoclet
 	java-pkg_jar-from ${XJAVADOC}

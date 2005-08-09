@@ -22,7 +22,7 @@ DEPEND=">=virtual/jdk-1.4
 	dev-java/ant
 	jikes? (dev-java/jikes)"
 RDEPEND=">=virtual/jre-1.4
-	dev-java/velocity
+	=dev-java/velocity-1*
 	=dev-java/jdom-1.0_beta9*
 	=dev-java/hibernate-2*"
 
@@ -31,7 +31,7 @@ CONSOLE="${S}/console"
 
 HIBERNATE_HOME="${WORKDIR}/hibernate-2.1"
 
-VELOCITY="velocity velocity.jar"
+VELOCITY="velocity-1 velocity.jar"
 JDOM="jdom-1.0_beta9 jdom.jar"
 HIBERNATE_CORE="hibernate-2 hibernate2.jar"
 FORMS="jgoodies-forms"

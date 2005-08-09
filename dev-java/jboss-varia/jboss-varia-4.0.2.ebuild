@@ -25,7 +25,7 @@ COMMON_DEPEND="=dev-java/commons-beanutils-1.6*
 	dev-java/commons-lang
 	dev-java/commons-logging
 	dev-java/log4j
-	dev-java/velocity
+	=dev-java/velocity-1*
 	dev-java/xalan
 	dev-java/bsh
 	dev-db/hsqldb

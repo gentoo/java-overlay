@@ -9,10 +9,11 @@ HOMEPAGE="http://jakarta.apache.org/commons/attributes/"
 SRC_URI="http://www.wmwweb.com/apache/jakarta/commons/attributes/source/${P}-src.tgz"
 
 LICENSE="Apache-2"
-SLOT="0"
+SLOT="2"
 KEYWORDS="~x86"
 IUSE="doc jikes"
 
+# TODO determine jvm version requirements
 DEPEND="virtual/jdk
 	dev-java/ant
 	jikes? (dev-java/jikes)
@@ -41,7 +42,6 @@ src_unpack() {
 	java-pkg_jar-from ${ANT}
 	java-pkg_jar-from ${XJAVADOC}
 	java-pkg_jar-from ${COMMONS_COLLECTIONS}
-	
 }
 
 src_compile() {

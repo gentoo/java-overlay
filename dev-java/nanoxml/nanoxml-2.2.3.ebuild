@@ -6,12 +6,12 @@ inherit java-pkg eutils
 
 MY_PN="NanoXML"
 MY_P="${MY_PN}-${PV}"
-DESCRIPTION="NanoXML is a small XML parser for Java."
+DESCRIPTION="A small XML parser for Java."
 HOMEPAGE="http://nanoxml.cyberelf.be/"
 SRC_URI="http://nanoxml.cyberelf.be/downloads/${MY_P}.tar.gz"
 
 LICENSE="ZLIB"
-SLOT="0"
+SLOT="2.2"
 KEYWORDS="~x86"
 IUSE="doc"
 

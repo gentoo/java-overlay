@@ -17,7 +17,7 @@ COMMON_DEPEND="dev-java/jgroups
 	dev-java/jboss-aop
 	dev-java/junit
 	dev-java/concurrent-util
-	=dev-java/javassist-20050706
+	=dev-java/javassist-3.1*
 	=dev-java/jboss-common-${PV}*
 	=dev-java/jboss-j2ee-${PV}*
 	=dev-java/jboss-remoting-${PV}*

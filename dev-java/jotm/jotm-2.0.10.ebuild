@@ -9,7 +9,7 @@ HOMEPAGE="http://jotm.objectweb.org/index.html"
 SRC_URI="http://download.fr2.forge.objectweb.org/${PN}/${P}-src.tgz"
 
 LICENSE="BSD"
-SLOT="2"
+SLOT="2.0"
 KEYWORDS="~x86"
 IUSE="doc jikes"
 
@@ -19,14 +19,14 @@ DEPEND="virtual/jdk
 RDEPEND="virtual/jre
 	=dev-java/commons-cli-1*
 	dev-java/commons-logging
-	dev-java/howl-logger
-	dev-java/jeremie
-	dev-java/jonathan-core
+	=dev-java/howl-logger-0.1*
+	=dev-java/jeremie-4*
+	=dev-java/jonathan-core-4*
 	dev-java/sun-jts
 	dev-java/jta
 	=dev-java/kilim-1*
 	dev-java/log4j
-	=dev-java/carol-2*
+	=dev-java/carol-2.0*
 	dev-java/sun-j2ee-connector-bin"
 
 src_unpack() {
@@ -41,14 +41,14 @@ src_unpack() {
 	rm *.jar
 	java-pkg_jar-from commons-cli-1
 	java-pkg_jar-from commons-logging
-	java-pkg_jar-from howl-logger
-	java-pkg_jar-from jeremie
-	java-pkg_jar-from jonathan-core
+	java-pkg_jar-from howl-logger-0.1
+	java-pkg_jar-from jeremie-4
+	java-pkg_jar-from jonathan-core-4
 	java-pkg_jar-from sun-jts
 	java-pkg_jar-from jta
 	java-pkg_jar-from kilim-1 kilim.jar
 	java-pkg_jar-from log4j
-	java-pkg_jar-from carol-2 ow_carol.jar
+	java-pkg_jar-from carol-2.0 ow_carol.jar
 	java-pkg_jar-from sun-j2ee-connector-bin
 }
 

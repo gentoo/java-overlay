@@ -6,8 +6,10 @@ inherit java-pkg
 
 MY_PV=0.45
 MY_P=${PN}-${MY_PV}
-DESCRIPTION="DVSL (Declarative Velocity Style Language) is a tool modeled after XSLT and is intended for general XML transformations using the Velocity Template Language as the templating language for the transformations. The key differences are that it incorporates easy access to Java objects and allows you to use the Velocity template language and it's features for expressing the transformation templates."
+DESCRIPTION="Declarative Velocity Style Language."
 HOMEPAGE="http://jakarta.apache.org/velocity/dvsl/index.html"
+# TODO figure out how i checked this out...
+# TODO find out if there's a tagged branch or something
 SRC_URI="http://sigmachi.yi.org/~nichoj/projects/java/${P}.tar.bz2"
 
 # I'm guessing some sort of apache-ness
@@ -19,7 +21,7 @@ IUSE="doc jikes"
 COMMON_DEPEND="=dev-java/crimson-1*
 	=dev-java/dom4j-1*
 	dev-java/gnu-jaxp
-	dev-java/velocity
+	=dev-java/velocity-1*
 	dev-java/xalan
 	=dev-java/xerces-1.3*
 	dev-java/jdbc2-stdext"
@@ -38,7 +40,7 @@ src_unpack() {
 	rm -r lib/*.jar
 
 	local classpath;
-	for jars in crimson-1 dom4j-1 gnu-jaxp velocity xalan ant-core; do
+	for jars in crimson-1 dom4j-1 gnu-jaxp velocity-1 xalan ant-core; do
 		classpath="${classpath}:`java-pkg_getjars ${jars}`"
 	done
 

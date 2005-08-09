@@ -12,7 +12,8 @@ LICENSE="LGPL-2"
 IUSE="doc"
 SLOT="3"
 KEYWORDS="~x86 ~amd64"
-RDEPEND=">=virtual/jre-1.4
+
+COMMON_DEPEND="
 	=dev-java/asm-2*
 	dev-java/c3p0
 	=dev-java/cglib-2.1*
@@ -21,22 +22,25 @@ RDEPEND=">=virtual/jre-1.4
 	=dev-java/dom4j-1*
 	dev-java/ehcache
 	=dev-java/jaxen-1.1*
-	=dev-java/jboss-cache-4.0*
-	=dev-java/jboss-common-4.0*
-	=dev-java/jboss-j2ee-4.0*
-	=dev-java/jboss-jmx-4.0*
-	=dev-java/jboss-system-4.0*
 	dev-java/jdbc2-stdext
 	dev-java/jta
 	dev-java/log4j
 	dev-java/oscache
 	dev-java/proxool
 	=dev-java/swarmcache-1*
-	=dev-java/xerces-2*
+	=dev-java/jboss-cache-4.0*
+	=dev-java/jboss-common-4.0*
+	=dev-java/jboss-j2ee-4.0*
+	=dev-java/jboss-jmx-4.0*
+	=dev-java/jboss-system-4.0*
+	=dev-java/xerces-2*"
+RDEPEND=">=virtual/jre-1.4
+	${COMMON_DEPEND}
 "
 DEPEND="${RDEPEND}
 		>=virtual/jdk-1.4
-		>=dev-java/ant-core-1.5 "
+		>=dev-java/ant-core-1.5
+		${COMMON_DEPEND}"
 
 S=${WORKDIR}/${PN}-${MY_PV}
 
@@ -48,7 +52,7 @@ src_unpack() {
 	epatch ${FILESDIR}/${P}-nosplash.patch
 	
 	cd lib
-	rm *
+	rm *.jar
 
 	local JAR_PACKAGES="asm-2 c3p0 commons-collections 
 		commons-logging dom4j-1 ehcache jaxen-1.1 jdbc2-stdext jta 
@@ -57,11 +61,13 @@ src_unpack() {
 		java-pkg_jar-from ${PACKAGE}
 	done
 	java-pkg_jar-from cglib-2.1 cglib.jar
+
 	java-pkg_jar-from jboss-cache-4 jboss-cache.jar
 	java-pkg_jar-from jboss-common-4 jboss-common.jar
 	java-pkg_jar-from jboss-j2ee-4 jboss-j2ee.jar
 	java-pkg_jar-from jboss-jmx-4 jboss-jmx.jar
 	java-pkg_jar-from jboss-system-4 jboss-system.jar
+
 }
 src_compile() {
 	local antflags="jar -Ddist.dir=dist"
@@ -73,6 +79,4 @@ src_install() {
 	java-pkg_dojar dist/hibernate3.jar
 	dodoc changelog.txt readme.txt
 	use doc && java-pkg_dohtml -r dist/doc/api doc/other doc/reference
-	#insinto /usr/share/doc/${P}/sample
-	#doins etc/*.xml etc/*.properties etc/*.ccf src/META-INF/ra.xml
 }

@@ -15,22 +15,20 @@ LICENSE="Apache-1.1"
 SLOT="2.1"
 KEYWORDS="~x86 ~amd64 ~ppc"
 RDEPEND=">=virtual/jre-1.4
-	jikes? ( >=dev-java/jikes-1.21 )
-	source? ( app-arch/zip )
 	>=dev-java/asm-1.5.2-r1
 	=dev-java/asm-1.5*
 	=dev-java/aspectwerkz-2*"
 DEPEND=">=virtual/jdk-1.4
+	jikes? ( >=dev-java/jikes-1.21 )
+	source? ( app-arch/zip )
 	>=dev-java/ant-core-1.5
-	dev-java/jarjar"
+	=dev-java/jarjar-0*"
 IUSE="doc jikes source"
 
 S=${WORKDIR}
 
 src_unpack() {
 	jar xf ${DISTDIR}/${A} || die "failed to unpack"
-
-	#epatch ${FILESDIR}/${P}-asm-1.4.3.patch
 
 	cd ${S}/lib
 	rm -f *.jar

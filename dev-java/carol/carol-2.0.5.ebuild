@@ -10,7 +10,7 @@ HOMEPAGE="http://carol.objectweb.org/"
 SRC_URI="http://download.fr2.forge.objectweb.org/${PN}/${MY_P}.tgz"
 
 LICENSE="LGPL-2.1"
-SLOT="2"
+SLOT="2.0"
 KEYWORDS="~x86"
 IUSE="doc jikes"
 
@@ -18,10 +18,10 @@ DEPEND="virtual/jdk"
 RDEPEND="virtual/jre
 	dev-java/commons-collections
 	dev-java/commons-logging
-	dev-java/irmi
-	dev-java/jacorb
+	=dev-java/irmi-1.0*
+	=dev-java/jacorb-2.2*
 	=dev-java/mx4j-2.1*
-	dev-java/velocity
+	=dev-java/velocity-1*
 	dev-java/jgroups"
 
 S=${WORKDIR}/${MY_P}
@@ -35,10 +35,10 @@ src_unpack() {
 	rm *.jar
 	java-pkg_jar-from commons-collections
 	java-pkg_jar-from commons-logging commons-logging-api.jar
-	java-pkg_jar-from irmi
-	java-pkg_jar-from jacorb jacorb.jar
+	java-pkg_jar-from irmi-1.0
+	java-pkg_jar-from jacorb-2.2 jacorb.jar
 	java-pkg_jar-from mx4j-2.1 mx4j.jar
-	java-pkg_jar-from velocity
+	java-pkg_jar-from velocity-1
 	java-pkg_jar-from jgroups jgroups-core.jar
 }
 

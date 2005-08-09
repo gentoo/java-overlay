@@ -4,23 +4,26 @@
 
 inherit java-pkg
 
+MY_PV=05Nov2002
+MY_P=${PN}-${MY_PV}
 DESCRIPTION=" The com.oreilly.servlet package is the \"must have\" class library for servlet developers."
 HOMEPAGE="http://servlets.com/cos/"
-SRC_URI="http://servlets.com/${PN}/${PN}-05Nov2002.zip"
+SRC_URI="http://servlets.com/${PN}/${MY_P}.zip"
 
+# TODO determine license
 LICENSE=""
 SLOT="0"
 KEYWORDS="~x86"
 IUSE="jikes doc"
 
+# TODO determine vm version requirements
 DEPEND="virtual/jdk
 	app-arch/unzip
-	dev-java/ant"
+	dev-java/ant
+	jikes? (dev-java/jikes)"
 RDEPEND="virtual/jre
 	=dev-java/servletapi-2.3*"
-S="${WORKDIR}/${PN}"
-
-SERVLET="servletapi-2.3 servlet.jar"
+S=${WORKDIR}/${PN}
 
 src_unpack() {
 	mkdir ${S}
@@ -28,13 +31,13 @@ src_unpack() {
 	unpack ${A}
 
 	rm -r lib classes *.war
-	# I'm not sure how to fix the compilation error for this class
+	# TODO I'm not sure how to fix the compilation error for this class
 	# so i'll just delete it for now..
 	rm src/com/oreilly/servlet/CacheHttpServlet.java
 
 	cp ${FILESDIR}/build-${PVR}.xml build.xml
 	cat > build.properties <<-EOF 
-		classpath=$(java-pkg_getjar ${SERVLET})
+		classpath=$(java-pkg_getjars servletapi-2.3)
 	EOF
 }
 

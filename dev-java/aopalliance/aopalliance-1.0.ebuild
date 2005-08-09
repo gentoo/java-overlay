@@ -9,17 +9,18 @@ SRC_URI="http://www.scorec.rpi.edu/~nichoj/projects/java/${P}.tar.bz2"
 #SRC_URI="mirror://gentoo/${P}.tar.bz2"
 #cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/aopalliance login 
 # cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/aopalliance export -r interception_1_0 aopalliance
-# mv aopalliance aopalliance-1.0
-# tar cjvf aopalliance-1.0.tar.bz2 aopalliance-1.0
+# tar cjvf aopalliance-1.0.tar.bz2 aopalliance
 HOMEPAGE="http://aopalliance.sourceforge.net/"
 LICENSE="public-domain"
-SLOT="1.0"
+SLOT="1"
 KEYWORDS="~x86"
 IUSE="doc jikes"
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	jikes? (dev-java/jikes)"
 RDEPEND=">=virtual/jre-1.4"
+
+S="${WORKDIR}/${PN}"
 
 src_compile() {
 	local antflags="-Dproject.name=${PN} jar"

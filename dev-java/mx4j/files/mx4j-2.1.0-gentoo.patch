@@ -1,0 +1,79 @@
+diff -uprN mx4j-2.1.0.orig/build/build.xml mx4j-2.1.0/build/build.xml
+--- mx4j-2.1.0.orig/build/build.xml	2004-12-23 17:56:18.000000000 +0100
++++ mx4j-2.1.0/build/build.xml	2004-12-23 23:34:15.153231952 +0100
+@@ -225,7 +225,7 @@
+       <mkdir dir="${core.classes.dir}"/>
+       <mkdir dir="${dist.lib.dir}"/>
+ 
+-      <javac srcdir="${core.src.dir}" destdir="${core.classes.dir}" debug="on" deprecation="on" encoding="US-ASCII">
++      <javac srcdir="${core.src.dir}" destdir="${core.classes.dir}" debug="off" deprecation="off" encoding="US-ASCII" source="1.4" target="1.4">
+          <patternset refid="mx4j.classes"/>
+          <classpath refid="lib.classpath"/>
+       </javac>
+@@ -264,7 +264,7 @@
+    </target>
+ 
+    <target name="compile.rjmx" description="Compiles the Remote JMX (JSR 160) classes" depends="compile.jmx" if="jaas.present">
+-      <javac srcdir="${core.src.dir}" destdir="${core.classes.dir}" debug="on" deprecation="on" encoding="US-ASCII">
++      <javac srcdir="${core.src.dir}" destdir="${core.classes.dir}" debug="off" deprecation="off" encoding="US-ASCII" source="1.4" target="1.4">
+          <patternset refid="rmx4j.classes"/>
+          <classpath refid="lib.classpath"/>
+       </javac>
+@@ -295,7 +295,7 @@
+    <target name="compile.tools" description="Compiles the MX4J tools classes" depends="compile.rjmx">
+       <mkdir dir="${tools.classes.dir}"/>
+ 
+-      <javac srcdir="${tools.src.dir}" destdir="${tools.classes.dir}" debug="on" deprecation="on" encoding="US-ASCII">
++      <javac srcdir="${tools.src.dir}" destdir="${tools.classes.dir}" debug="off" deprecation="off" encoding="US-ASCII" source="1.4" target="1.4">
+          <patternset refid="tools.classes"/>
+          <exclude name="mx4j/tools/mail/**" unless="javamail.present"/>
+          <exclude name="mx4j/tools/jython/**" unless="jython.present"/>
+@@ -369,7 +369,7 @@
+       <mkdir dir="${test.classes.dir}"/>
+       <mkdir dir="${dist.test.dir}"/>
+ 
+-      <javac srcdir="${test.src.dir}" destdir="${test.classes.dir}" debug="on" deprecation="on" encoding="US-ASCII">
++      <javac srcdir="${test.src.dir}" destdir="${test.classes.dir}" debug="off" deprecation="off" encoding="US-ASCII" source="1.4" target="1.4">
+          <patternset refid="tests.classes"/>
+          <exclude name="test/javax/management/remote/**" unless="jaas.present"/>
+          <exclude name="test/mx4j/remote/**" unless="jaas.present"/>
+@@ -398,7 +398,7 @@
+    <target name="compile.examples" description="Compiles and jars the MX4J examples" depends="compile.tools">
+       <mkdir dir="${examples.classes.dir}"/>
+ 
+-      <javac srcdir="${examples.src.dir}" destdir="${examples.classes.dir}" debug="on" deprecation="on" encoding="US-ASCII">
++      <javac srcdir="${examples.src.dir}" destdir="${examples.classes.dir}" debug="off" deprecation="off" source="1.4" target="1.4" encoding="US-ASCII">
+          <classpath refid="classpath"/>
+          <exclude name="mx4j/examples/tools/xdoclet/**"/>
+          <exclude name="mx4j/examples/remote/rmi/ssl/**" unless="jdk14.present"/>
+@@ -685,4 +685,9 @@
+       <delete dir="${dist.dir}" quiet="true"/>
+    </target>
+ 
++   <target name="sourcezip">
++	   <zip destfile="${dist.dir}/${name}-src.zip">
++		   <zipfileset dir="${core.src.dir}" />
++      	   </zip>
++   </target>
+ </project>
+diff -uprN mx4j-2.1.0.orig/src/core/mx4j/remote/MX4JRemoteUtils.java mx4j-2.1.0/src/core/mx4j/remote/MX4JRemoteUtils.java
+--- mx4j-2.1.0.orig/src/core/mx4j/remote/MX4JRemoteUtils.java	2004-12-23 17:56:18.000000000 +0100
++++ mx4j-2.1.0/src/core/mx4j/remote/MX4JRemoteUtils.java	2004-12-23 18:08:50.000000000 +0100
+@@ -336,7 +336,7 @@ public class MX4JRemoteUtils
+             Principal[] principals = (Principal[])subject.getPrincipals().toArray(new Principal[0]);
+             try
+             {
+-               domain = (ProtectionDomain)domainConstructor.newInstance(new Object[]{new CodeSource(null, null), null, null, principals});
++               domain = (ProtectionDomain)domainConstructor.newInstance(new Object[]{new java.security.CodeSource(null, null), null, null, principals});
+             }
+             catch (Exception x)
+             {
+@@ -346,7 +346,7 @@ public class MX4JRemoteUtils
+          if (domain == null)
+          {
+             // This is done for JDK 1.3 compatibility.
+-            domain = new SubjectProtectionDomain(new CodeSource(null, null), subject);
++            domain = new SubjectProtectionDomain(new java.security.CodeSource(null, null), subject);
+          }
+       }
+ 

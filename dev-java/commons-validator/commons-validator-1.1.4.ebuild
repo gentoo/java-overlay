@@ -29,6 +29,7 @@ RDEPEND=">=virtual/jre-1.3
 	=dev-java/commons-beanutils-1.6*
 	>=dev-java/xerces-2.6.2-r1"
 LICENSE="Apache-1.1"
+# TODO slot me?
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ppc64 ~sparc ~x86"
 IUSE="doc examples jikes source"
