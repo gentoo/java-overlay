@@ -12,7 +12,7 @@ LICENSE="DB"
 SLOT="3"
 # This ebuild is to be the compatibility ebuild for when db4 is put
 # in the tree.
-KEYWORDS="x86 ppc ~sparc mips alpha arm hppa ia64 ppc64 s390 amd64"
+KEYWORDS="~x86"
 IUSE="doc java"
 
 RDEPEND="virtual/libc"
@@ -152,8 +152,8 @@ src_install () {
 	db_src_install_usrlibcleanup || die "db_src_install_usrlibcleanup failed!"
 
 	if use java; then
-		java-pkg_dojar ${D}/usr/lib/*.jar
-		rm ${D}/usr/lib/*.jar
+		java-pkg_dojar ${D}/usr/lib*/*.jar
+		rm ${D}/usr/lib*/*.jar
 	fi
 }
 

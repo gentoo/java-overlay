@@ -26,7 +26,7 @@ done
 
 LICENSE="DB"
 SLOT="4.1"
-KEYWORDS="alpha amd64 arm hppa ia64 mips ~ppc ppc64 s390 sh sparc x86"
+KEYWORDS="~x86"
 IUSE="tcltk java doc nocxx bootstrap"
 
 DEPEND="tcltk? ( dev-lang/tcl )
@@ -109,8 +109,8 @@ src_install() {
 	use uclibc && rm -f ${D}/usr/include/db*/*cxx*
 
 	if use java; then
-		java-pkg_dojar ${D}/usr/lib/*.jar
-		rm ${D}/usr/lib/*.jar
+		java-pkg_dojar ${D}/usr/lib*/*.jar
+		rm ${D}/usr/lib*/*.jar
 	fi
 }
 

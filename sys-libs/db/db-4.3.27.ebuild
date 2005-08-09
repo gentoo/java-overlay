@@ -26,7 +26,7 @@ done
 
 LICENSE="DB"
 SLOT="4.3"
-KEYWORDS="~amd64 ~ia64 ~ppc ~sparc ~x86"
+KEYWORDS="~x86"
 IUSE="tcltk java doc nocxx bootstrap"
 
 DEPEND="tcltk? ( >=dev-lang/tcl-8.4 )
@@ -105,12 +105,16 @@ src_install() {
 	mv ${D}/usr/bin/berkeley_db_svc ${D}/usr/sbin/berkeley_db42_svc
 
 	if use java; then
-		mkdir -p ${D}/usr/share/db
-		cat <<EOF >${D}/usr/share/db/package.env
-DESCRIPTION=The java bindings for berkeley db version ${MY_PV}
-CLASSPATH=:/usr/lib/db-${SLOT}.jar
-EOF
+		java-pkg_dojar ${D}/usr/lib*/*.jar
+		rm -f ${D}/usr/lib*/*.jar
 	fi
+#	if use java; then
+#		mkdir -p ${D}/usr/share/db
+#		cat <<EOF >${D}/usr/share/db/package.env
+#DESCRIPTION=The java bindings for berkeley db version ${MY_PV}
+#CLASSPATH=:/usr/lib/db-${SLOT}.jar
+#EOF
+#	fi
 }
 
 pkg_postinst () {
