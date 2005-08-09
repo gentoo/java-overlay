@@ -1,0 +1,265 @@
+Only in Jetty-4.2.19: classes
+Only in Jetty-4.2.19/demo/webapps/jetty/WEB-INF: classes
+Only in Jetty-4.2.19/etc: dtd
+Only in Jetty-4.2.19/etc: webdefault.xml
+Only in Jetty-4.2.19: javadoc
+Only in Jetty-4.2.19: logs
+diff -ru Jetty-4.2.19/src/org/mortbay/html/Applet.java Jetty-4.2.19-patched/src/org/mortbay/html/Applet.java
+--- Jetty-4.2.19/src/org/mortbay/html/Applet.java	2002-02-12 22:12:26.000000000 -0500
++++ Jetty-4.2.19-patched/src/org/mortbay/html/Applet.java	2005-05-11 19:36:14.000000000 -0400
+@@ -120,9 +120,9 @@
+         if (debug)
+             paramHolder.add("<param name=\"debug\" value=\"yes\">");
+         if (params != null)
+-            for (Enumeration enum = params.keys(); enum.hasMoreElements();)
++            for (Enumeration key_enum = params.keys(); key_enum.hasMoreElements();)
+             {
+-                String key = enum.nextElement().toString();
++                String key = key_enum.nextElement().toString();
+                 paramHolder.add("<param name=\"" + key + "\" value=\"" +
+                                 params.get(key).toString() + "\">");
+             }
+diff -ru Jetty-4.2.19/src/org/mortbay/http/HttpConnection.java Jetty-4.2.19-patched/src/org/mortbay/http/HttpConnection.java
+--- Jetty-4.2.19/src/org/mortbay/http/HttpConnection.java	2004-02-08 17:56:12.000000000 -0500
++++ Jetty-4.2.19-patched/src/org/mortbay/http/HttpConnection.java	2005-05-11 19:36:14.000000000 -0400
+@@ -618,12 +618,12 @@
+             {
+                 // Check against any TE field
+                 List te = _request.getAcceptableTransferCodings();
+-                Enumeration enum =
++                Enumeration coding_enum =
+                     _response.getFieldValues(HttpFields.__TransferEncoding,
+                                              HttpFields.__separators);
+-                while (enum.hasMoreElements())
++                while (coding_enum.hasMoreElements())
+                 {
+-                    String coding=(String)enum.nextElement();
++                    String coding=(String)coding_enum.nextElement();
+                     if (HttpFields.__Identity.equalsIgnoreCase(coding) ||
+                         HttpFields.__Chunked.equalsIgnoreCase(coding))
+                         continue;
+diff -ru Jetty-4.2.19/src/org/mortbay/http/HttpFields.java Jetty-4.2.19-patched/src/org/mortbay/http/HttpFields.java
+--- Jetty-4.2.19/src/org/mortbay/http/HttpFields.java	2004-02-17 01:59:55.000000000 -0500
++++ Jetty-4.2.19-patched/src/org/mortbay/http/HttpFields.java	2005-05-11 19:36:14.000000000 -0400
+@@ -1374,18 +1374,18 @@
+      * @param enum Enumeration of values with quality parameters
+      * @return values in quality order.
+      */
+-    public static List qualityList(Enumeration enum)
++    public static List qualityList(Enumeration quality_enum)
+     {
+-        if(enum==null || !enum.hasMoreElements())
++        if(quality_enum==null || !quality_enum.hasMoreElements())
+             return Collections.EMPTY_LIST;
+ 
+         Object list=null;
+         Object qual=null;
+ 
+         // Assume list will be well ordered and just add nonzero
+-        while(enum.hasMoreElements())
++        while(quality_enum.hasMoreElements())
+         {
+-            String v=enum.nextElement().toString();
++            String v=quality_enum.nextElement().toString();
+             Float q=getQuality(v);
+ 
+             if (q.floatValue()>=0.001)
+@@ -1521,10 +1521,10 @@
+         if (fields==null)
+             return;
+ 
+-        Enumeration enum = fields.getFieldNames();
+-        while( enum.hasMoreElements() )
++        Enumeration name_enum = fields.getFieldNames();
++        while( name_enum.hasMoreElements() )
+         {
+-            String name = (String)enum.nextElement();
++            String name = (String)name_enum.nextElement();
+             Enumeration values = fields.getValues(name);
+             while(values.hasMoreElements())
+                 add(name,(String)values.nextElement());
+diff -ru Jetty-4.2.19/src/org/mortbay/http/HttpMessage.java Jetty-4.2.19-patched/src/org/mortbay/http/HttpMessage.java
+--- Jetty-4.2.19/src/org/mortbay/http/HttpMessage.java	2004-01-30 01:27:16.000000000 -0500
++++ Jetty-4.2.19-patched/src/org/mortbay/http/HttpMessage.java	2005-05-11 19:36:14.000000000 -0400
+@@ -265,10 +265,10 @@
+      */
+     public Enumeration getFieldValues(String name)
+     {
+-        Enumeration enum = _header.getValues(name);
+-        if (enum==null && _trailer!=null)
+-            enum=_trailer.getValues(name);
+-        return enum;
++        Enumeration values_enum = _header.getValues(name);
++        if (values_enum==null && _trailer!=null)
++            values_enum=_trailer.getValues(name);
++        return values_enum;
+     }
+     
+     /* ------------------------------------------------------------ */
+@@ -281,10 +281,10 @@
+      */
+     public Enumeration getFieldValues(String name,String separators)
+     {
+-        Enumeration enum = _header.getValues(name,separators);
+-        if (enum==null && _trailer!=null)
+-            enum=_trailer.getValues(name,separators);
+-        return enum;
++        Enumeration values_enum = _header.getValues(name,separators);
++        if (values_enum==null && _trailer!=null)
++            values_enum=_trailer.getValues(name,separators);
++        return values_enum;
+     }
+ 
+     /* ------------------------------------------------------------ */
+diff -ru Jetty-4.2.19/src/org/mortbay/http/HttpRequest.java Jetty-4.2.19-patched/src/org/mortbay/http/HttpRequest.java
+--- Jetty-4.2.19/src/org/mortbay/http/HttpRequest.java	2004-03-19 04:06:00.000000000 -0500
++++ Jetty-4.2.19-patched/src/org/mortbay/http/HttpRequest.java	2005-05-11 19:36:14.000000000 -0400
+@@ -960,10 +960,10 @@
+             if (_lastCookies!=null)
+             {                
+                 int last=0;
+-                Enumeration enum =_header.getValues(HttpFields.__Cookie);
+-                while (enum.hasMoreElements())
++                Enumeration c_enum =_header.getValues(HttpFields.__Cookie);
++                while (c_enum.hasMoreElements())
+                 {
+-                    String c = (String)enum.nextElement();
++                    String c = (String)c_enum.nextElement();
+                     if (last>=_lastCookies.length ||
+                         !c.equals(_lastCookies[last]))
+                     {
+@@ -987,11 +987,11 @@
+             Cookie cookie=null;
+ 
+             // For each cookie header
+-            Enumeration enum =_header.getValues(HttpFields.__Cookie);            
+-            while (enum.hasMoreElements())
++            Enumeration hdr_enum =_header.getValues(HttpFields.__Cookie);            
++            while (hdr_enum.hasMoreElements())
+             {
+                 // Save a copy of the unparsed header as cache.
+-                String hdr = enum.nextElement().toString();
++                String hdr = hdr_enum.nextElement().toString();
+                 lastCookies=LazyList.add(lastCookies,hdr);
+ 
+                 // Parse the header
+diff -ru Jetty-4.2.19/src/org/mortbay/http/HttpServer.java Jetty-4.2.19-patched/src/org/mortbay/http/HttpServer.java
+--- Jetty-4.2.19/src/org/mortbay/http/HttpServer.java	2003-10-16 02:58:06.000000000 -0400
++++ Jetty-4.2.19-patched/src/org/mortbay/http/HttpServer.java	2005-05-11 19:36:14.000000000 -0400
+@@ -1460,7 +1460,7 @@
+     /* ------------------------------------------------------------ */
+     public interface ComponentEventListener extends EventListener
+     {
+-        public void addComponent(ComponentEvent event);
+-        public void removeComponent(ComponentEvent event);
++        public void addComponent(HttpServer.ComponentEvent event);
++        public void removeComponent(HttpServer.ComponentEvent event);
+     }
+ }
+diff -ru Jetty-4.2.19/src/org/mortbay/http/handler/ProxyHandler.java Jetty-4.2.19-patched/src/org/mortbay/http/handler/ProxyHandler.java
+--- Jetty-4.2.19/src/org/mortbay/http/handler/ProxyHandler.java	2003-09-06 04:15:34.000000000 -0400
++++ Jetty-4.2.19-patched/src/org/mortbay/http/handler/ProxyHandler.java	2005-05-11 19:36:14.000000000 -0400
+@@ -227,11 +227,11 @@
+             // copy headers
+             boolean xForwardedFor=false;
+             boolean hasContent=false;
+-            Enumeration enum = request.getFieldNames();
+-            while (enum.hasMoreElements())
++            Enumeration hdr_enum = request.getFieldNames();
++            while (hdr_enum.hasMoreElements())
+             {
+                 // XXX could be better than this!
+-                String hdr=(String)enum.nextElement();
++                String hdr=(String)hdr_enum.nextElement();
+ 
+                 if (_DontProxyHeaders.containsKey(hdr))
+                     continue;
+diff -ru Jetty-4.2.19/src/org/mortbay/jetty/servlet/ServletHttpRequest.java Jetty-4.2.19-patched/src/org/mortbay/jetty/servlet/ServletHttpRequest.java
+--- Jetty-4.2.19/src/org/mortbay/jetty/servlet/ServletHttpRequest.java	2003-10-16 19:24:26.000000000 -0400
++++ Jetty-4.2.19-patched/src/org/mortbay/jetty/servlet/ServletHttpRequest.java	2005-05-11 19:36:14.000000000 -0400
+@@ -179,15 +179,15 @@
+     /* ------------------------------------------------------------ */
+     public Locale getLocale()
+     {
+-        Enumeration enum = _httpRequest.getFieldValues(HttpFields.__AcceptLanguage,
++        Enumeration value_enum = _httpRequest.getFieldValues(HttpFields.__AcceptLanguage,
+                                                        HttpFields.__separators);
+ 
+         // handle no locale
+-        if (enum == null || !enum.hasMoreElements())
++        if (value_enum == null || !value_enum.hasMoreElements())
+             return Locale.getDefault();
+         
+         // sort the list in quality order
+-        List acceptLanguage = HttpFields.qualityList(enum);
++        List acceptLanguage = HttpFields.qualityList(value_enum);
+         if (acceptLanguage.size()==0)
+             return  Locale.getDefault();
+ 
+@@ -214,15 +214,15 @@
+     /* ------------------------------------------------------------ */
+     public Enumeration getLocales()
+     {
+-        Enumeration enum = _httpRequest.getFieldValues(HttpFields.__AcceptLanguage,
++        Enumeration value_enum = _httpRequest.getFieldValues(HttpFields.__AcceptLanguage,
+                                                        HttpFields.__separators);
+ 
+         // handle no locale
+-        if (enum == null || !enum.hasMoreElements())
++        if (value_enum == null || !value_enum.hasMoreElements())
+             return Collections.enumeration(__defaultLocale);
+         
+         // sort the list in quality order
+-        List acceptLanguage = HttpFields.qualityList(enum);
++        List acceptLanguage = HttpFields.qualityList(value_enum);
+         
+         if (acceptLanguage.size()==0)
+             return
+@@ -289,10 +289,10 @@
+     /* ------------------------------------------------------------ */
+     public Enumeration getHeaders(String s)
+     {
+-        Enumeration enum=_httpRequest.getFieldValues(s,",");
+-        if (enum==null)
++        Enumeration header_enum=_httpRequest.getFieldValues(s,",");
++        if (header_enum==null)
+             return __emptyEnum;
+-        return enum;
++        return header_enum;
+     }
+     
+     /* ------------------------------------------------------------ */
+diff -ru Jetty-4.2.19/src/org/mortbay/servlet/CGI.java Jetty-4.2.19-patched/src/org/mortbay/servlet/CGI.java
+--- Jetty-4.2.19/src/org/mortbay/servlet/CGI.java	2003-12-18 03:22:15.000000000 -0500
++++ Jetty-4.2.19-patched/src/org/mortbay/servlet/CGI.java	2005-05-11 19:36:14.000000000 -0400
+@@ -193,10 +193,10 @@
+         env.set("SERVER_PORT", Integer.toString(req.getServerPort()));
+         env.set("SERVER_PROTOCOL", req.getProtocol());
+         env.set("SERVER_SOFTWARE", getServletContext().getServerInfo());
+-        Enumeration enum= req.getHeaderNames();
+-        while (enum.hasMoreElements())
++        Enumeration name_enum= req.getHeaderNames();
++        while (name_enum.hasMoreElements())
+         {
+-            String name= (String)enum.nextElement();
++            String name= (String)name_enum.nextElement();
+             String value= req.getHeader(name);
+             env.set("HTTP_" + name.toUpperCase().replace('-', '_'), value);
+         }
+diff -ru Jetty-4.2.19/src/org/mortbay/servlet/Forward.java Jetty-4.2.19-patched/src/org/mortbay/servlet/Forward.java
+--- Jetty-4.2.19/src/org/mortbay/servlet/Forward.java	2002-12-14 08:03:04.000000000 -0500
++++ Jetty-4.2.19-patched/src/org/mortbay/servlet/Forward.java	2005-05-11 19:36:14.000000000 -0400
+@@ -40,10 +40,10 @@
+     {
+         super.init(config);
+ 
+-        Enumeration enum = config.getInitParameterNames();
+-        while (enum.hasMoreElements())
++        Enumeration path_enum = config.getInitParameterNames();
++        while (path_enum.hasMoreElements())
+         {
+-            String path=(String)enum.nextElement();
++            String path=(String)path_enum.nextElement();
+             String forward=config.getInitParameter(path);
+             _forwardMap.put(path,forward);
+         }
