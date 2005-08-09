@@ -104,8 +104,8 @@ src_install() {
 	mv ${D}/usr/bin/berkeley_db_svc ${D}/usr/sbin/berkeley_db42_svc
 
 	if use java; then
-		java-pkg_dojar ${D}/usr/lib/*.jar
-		rm -f ${D}/usr/lib/*.jar
+		java-pkg_dojar ${D}/usr/lib*/*.jar
+		rm -f ${D}/usr/lib*/*.jar
 	fi
 }
 
