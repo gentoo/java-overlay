@@ -98,13 +98,13 @@ src_unpack() {
 src_compile() {
 	local antflags="jar"
 	use jikes && antflags="${antflags} -Dbuild.compiler=jikes"
-	use junit && antflags="${targets} junitreport"
-	use doc && antflags="${targets} javadoc"
+	use junit && antflags="${antflags} junitreport"
+	use doc && antflags="${antflags} javadoc"
 	ant ${antflags} || die "Build failed."
 }
 
 src_install() {
-	java-pkg_dojar dist/hibernate2.jar
+	java-pkg_dojar dist/*.jar
 	dodoc *.txt
 	use doc && java-pkg_dohtml -r dist/doc/*
 	insinto /usr/share/doc/${P}/sample
