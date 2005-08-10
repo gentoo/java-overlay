@@ -11,7 +11,7 @@ LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~x86"
 IUSE="jikes doc"
-COMMON_DEPEND=">=dev-java/itext-1.02
+COMMON_DEPEND="=dev-java/itext-1.3*
 	>=dev-java/bsh-1.99
 	=dev-java/commons-beanutils-1.6*
 	>=dev-java/commons-collections-3.1
@@ -26,7 +26,8 @@ COMMON_DEPEND=">=dev-java/itext-1.02
 DEPEND=">=virtual/jdk-1.4
 	>=app-arch/unzip-5.50
 	>=dev-java/ant-core-1.4
-	jikes? ( >=dev-java/jikes-1.21 )"
+	jikes? ( >=dev-java/jikes-1.21 )
+	${COMMON_DEPEND}"
 RDEPEND=">=virtual/jre-1.4
 	${COMMMON_DEPEND}"	
 
