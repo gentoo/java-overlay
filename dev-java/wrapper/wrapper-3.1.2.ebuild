@@ -30,7 +30,7 @@ src_compile() {
 
 src_install() {
 	java-pkg_dojar lib/*.jar
-	java-pkg_dolib lib/*.so
+	java-pkg_doso lib/*.so
 	dobin bin/*
 	
 	dodoc doc/{AUTHORS,readme.txt,revisions.txt}
