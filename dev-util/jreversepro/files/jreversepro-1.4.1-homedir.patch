@@ -1,0 +1,11 @@
+--- src/jreversepro/common/AppConstants.java.orig	2002-10-22 01:38:23.000000000 +0200
++++ src/jreversepro/common/AppConstants.java	2005-07-22 09:02:30.000000000 +0200
+@@ -37,7 +37,7 @@
+     /**
+      * Name of property file.
+      **/
+-    String PROP_FILE = "jrev.ini";
++    String PROP_FILE = ".jrevrc";
+ 
+ 
+     /**

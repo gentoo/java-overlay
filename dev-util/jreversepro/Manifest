@@ -1,0 +1,5 @@
+MD5 5e9258384b7834064f2f53c27c088ce8 jreversepro-1.4.1.ebuild 1289
+MD5 0ac9a4451f0fdf1e9d6acf381f45f7c3 files/jreversepro-1.4.1-homedir.patch 319
+MD5 5d7707e2f11209b9af8d880784011b4b files/jreversepro-1.4.1-build_xml.patch 3113
+MD5 21214a172d3cac0f261cb6f170a06f9e files/jreversepro-1.4.1-java15.patch 3686
+MD5 eaf6bdd1ff02a48ad643914350c6ec0a files/digest-jreversepro-1.4.1 70
