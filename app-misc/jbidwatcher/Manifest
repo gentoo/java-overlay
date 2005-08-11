@@ -1,0 +1,4 @@
+MD5 10657cdcbd5cedfa0ce2f1496ea4596b jbidwatcher-0.9.8.ebuild 1339
+MD5 b3389dade779b6c295df309daab99d0e files/jbidwatcher-0.9.8-build_xml.patch 2634
+MD5 9e35f6ed9dd9312fafd1fd5d2161a3cf files/jbidwatcher-0.9.8-javadoc.patch 1232
+MD5 d0fdaf1156e8b181b282c9cd2dd4ad95 files/digest-jbidwatcher-0.9.8 69

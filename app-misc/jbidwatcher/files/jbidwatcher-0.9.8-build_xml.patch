@@ -1,0 +1,55 @@
+Only in jbidwatcher-0.9.8-patched/: JBidWatcher-0.9.8.jar
+diff -ru jbidwatcher-0.9.8/build.xml jbidwatcher-0.9.8-patched/build.xml
+--- jbidwatcher-0.9.8/build.xml	2005-08-04 20:56:46.000000000 -0400
++++ jbidwatcher-0.9.8-patched/build.xml	2005-08-10 20:12:35.000000000 -0400
+@@ -22,7 +22,7 @@
+   <property name="log.dir" value="logs" />
+   <property name="JAVADIR" value="." />
+ 
+-  <property name="build.compiler" value="jikes" />
++  <property name="build.compiler" value="modern" />
+   <property name="build.compiler.emacs" value="true" />
+ 
+   <property name="app.name"   value="JBidWatcher" />
+@@ -52,8 +52,8 @@
+ 
+   <target name="compile" depends="init">
+     <echo level="info" message="Compiling all classes." />
+-    <mkdir dir="${user.home}/.jbidwatcher" />
+-    <copy file="display.cfg" todir="${user.home}/.jbidwatcher" />
++    <mkdir dir="." />
++    <copy file="display.cfg" todir="." />
+       <javac srcdir="${src.dir}" destdir="${build.dir}" >
+           <classpath refid="project.class.path" />
+           <include name="*.java" />
+@@ -61,7 +61,6 @@
+   </target>
+ 
+   <!--
+-  <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask"/>
+         rulesets/basic.xml
+         rulesets/design.xml
+         rulesets/imports.xml
+@@ -104,7 +103,7 @@
+     <echo level="info" message="Building executable .jar file." />
+     <jar jarfile="${BINARY}" manifest="${MANIFEST}" index="true">
+       <fileset dir="${src.dir}" includes="*.jpg" />
+-      <fileset dir="${user.home}/.jbidwatcher" includes="display.cfg" />
++      <fileset dir="." includes="display.cfg" />
+       <fileset dir="${build.dir}" includes="**/*.class" />
+       <fileset dir="${src.dir}" includes="com/**/*.class" />
+       <fileset dir="${src.dir}" includes="org/**/*.class" />
+@@ -120,7 +119,7 @@
+     <tar destfile="${TARFILE}" compression="gzip">
+       <tarfileset prefix="${TARSRC}" dir="${src.dir}" includes="*.java" />
+       <tarfileset prefix="${TARSRC}" dir="${src.dir}" includes="*.jpg" />
+-      <tarfileset prefix="${TARSRC}" dir="${user.home}/.jbidwatcher" includes="display.cfg" />
++      <tarfileset prefix="${TARSRC}" dir="." includes="display.cfg" />
+       <tarfileset prefix="${TARSRC}" dir="${src.dir}" includes="auctions.dtd" />
+       <tarfileset prefix="${TARSRC}" dir="${src.dir}" includes="TODO" />
+       <tarfileset prefix="${TARSRC}" dir="${src.dir}" includes="Makefile" />
+Only in jbidwatcher-0.9.8-patched/: classes
+Only in jbidwatcher-0.9.8-patched/: docs
+Only in jbidwatcher-0.9.8-patched/: jbidwatcher-0.9.8
+Only in jbidwatcher-0.9.8-patched/: jbidwatcher-0.9.8-javadoc.patch
+Only in jbidwatcher-0.9.8-patched/: logs
