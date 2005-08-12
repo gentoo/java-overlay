@@ -1,0 +1,46 @@
+--- build-html.xml.orig	2005-04-10 11:59:00.000000000 -0500
++++ build-html.xml	2005-04-10 12:15:32.000000000 -0500
+@@ -3,6 +3,7 @@
+ <project default='all' basedir='.'>
+ 
+  <!-- PROPERTIES -->
++ <property file='build.properties'/>
+  <property name='version'   value='0.9.4'/>
+  <property name='name'      value='nekohtml'/>
+  <property name='fullname'  value='${name}-${version}'/>
+@@ -26,9 +27,9 @@
+  <property name='contents.jars'   value='${jarfile},${jarfileXni},${jarfileSamples}'/>
+  <property name='contents.source' value='src/html/META-INF/**,src/html/**/*.java,src/html/**/*.properties'/>
+  <property name='contents.docs'   value='doc/style.css,doc/html/**,data/html/test*.html*,data/html/canonical/*'/>
+- <property name='contents.libs'   value='lib/xercesMinimal.jar'/>
++ <!--<property name='contents.libs'   value='lib/xercesMinimal.jar'/>-->
+  <property name='contents' 
+-           value='${contents.misc},${contents.jars},${contents.source},${contents.docs},${contents.libs}'/>
++           value='${contents.misc},${contents.jars},${contents.source},${contents.docs}'/>
+ 
+  <property name='package' value='org.cyberneko.html'/>
+ 
+@@ -48,8 +49,21 @@
+ 
+  <target name='compile' depends='version'>
+   <mkdir dir="bin/html"/>
+-  <javac srcdir='src/html' destdir='bin/html' includes='org/**,sample/**' debug='true'/>
+-  <javac srcdir='bin/html/src' destdir='bin/html' includes='org/**'/>
++  <javac srcdir='src/html' destdir='bin/html' includes='org/**,sample/**' debug='true'>
++
++  <classpath>
++  	<pathelement path='${java.class.path}'/>
++	<pathelement path='${xerces.jar}'/>
++	<pathelement path='${xalan.jar}'/>
++  </classpath>
++  </javac>
++  <javac srcdir='bin/html/src' destdir='bin/html' includes='org/**'>
++  <classpath>
++  	<pathelement path='${java.class.path}'/>
++	<pathelement path='${xerces.jar}'/>
++	<pathelement path='${xalan.jar}'/>
++  </classpath>
++  </javac>
+  </target>
+ 
+  <target name='jar' depends='compile'>
