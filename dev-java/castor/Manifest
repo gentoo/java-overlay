@@ -1,0 +1,4 @@
+MD5 a2d01bbfdb24447f769ec613a60ff50a castor-0.9.7.ebuild 2038
+MD5 a07a47cbd64524563caccf7a0f649553 files/0.9.5.3-jikes.patch 1316
+MD5 21050c5d30ff492f6d2bedc47492a19c files/digest-castor-0.9.7 66
+MD5 925da383ab0658b27587273d0f315f06 files/build-xml.patch 2859
