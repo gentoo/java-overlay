@@ -42,7 +42,7 @@ SRC_URI="${BASELOCATION}/${MAINTARBALL}
 
 LICENSE="Apache-1.1 Apache-2.0 SPL W3C sun-bcla-j2eeeditor sun-bcla-javac sun-javac as-is docbook sun-resolver"
 SLOT="4.0"
-KEYWORDS="-x86 ~amd64"
+KEYWORDS="~x86 ~amd64"
 IUSE="debug doc"
 
 # dev-java/xml-commons-resolver for future versions
@@ -215,8 +215,8 @@ src_unpack () {
 
 	cd ${S}/junit/external/
 	touch junit-3.8.1-api.zip
-	java-pkg_jar-from ${JUNIT}
 	unscramble_and_empty
+	java-pkg_jar-from ${JUNIT}
 
 	cd ${S}/tasklist/external/
 	unscramble_and_empty
@@ -404,5 +404,7 @@ function remove_unscrambling() {
 
 	xsltproc -o ${T}/out.xml ${FILESDIR}/emptyunscramble.xsl ${file} \
 		|| die "Failed to remove unscrambling from one of the build.xml files"
-	mv ${T}/out.xml ${file}
+
+	mv ${T}/out.xml ${file} \
+		|| die "Failed to create a build.xml file without unscrambling"
 }
