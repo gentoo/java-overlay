@@ -2,14 +2,12 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg
+inherit java-pkg rpm
 
 MY_PN=${PN##*-}
-DESCRIPTION="GJT-JPL-Pattern contains interfaces used to recognize well known design patterns in a software system. Most interfaces are only useful for 'tagging' classes as being a part of certain design patterns, and there isn't any implementing code present here."
+DESCRIPTION="A set of interfaces used to recognize well known design patterns in a software system."
 HOMEPAGE="http://www.gjt.org/pkgdoc/org/gjt/lindfors/pattern/"
-# source download doesn't work from homepage
-# swipped form source rpm at jpackage: http://jpackage.org/rpm.php?id=987
-SRC_URI="mirror://gentoo/${PN}-source.zip"
+SRC_URI="http://mirrors.dotsrc.org/jpackage/1.6/generic/free/SRPMS/${P}-2jpp.src.rpm"
 
 # license 'unspecified' according to website
 LICENSE=""
@@ -25,7 +23,7 @@ RDEPEND="virtual/jre"
 S=${WORKDIR}/${MY_PN}
 
 src_unpack() {
-	unpack ${A}
+	rpm_src_unpack
 	cd ${S}
 	cp ${FILESDIR}/build-${PVR}.xml build.xml
 	mkdir -p src/org/gjt/lindfors/${MY_PN}

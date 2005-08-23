@@ -2,14 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg eutils
+inherit java-pkg eutils rpm
 
 MY_PN=${PN##*-}
 DESCRIPTION=" A collection of miscellaneous classes and methods that generally come in handy in all sorts of situations."
 HOMEPAGE="http://www.gjt.org/pkgdoc/org/gjt/lindfors/util/"
 # source download doesn't work from homepage
 # swipped form source rpm at jpackage: http://jpackage.org/rpm.php?id=988
-SRC_URI="mirror://gentoo/${PN}-source.zip"
+SRC_URI="http://mirrors.dotsrc.org/jpackage/1.6/generic/free/SRPMS/${P}-2jpp.src.rpm"
 
 # unspecified according to website
 LICENSE=""
@@ -26,7 +26,7 @@ RDEPEND="virtual/jre
 S=${WORKDIR}/${MY_PN}
 
 src_unpack() {
-	unpack ${A}
+	rpm_src_unpack
 	cd ${S}
 
 	# from jpackages
