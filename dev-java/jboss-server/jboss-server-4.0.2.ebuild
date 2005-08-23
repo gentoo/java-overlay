@@ -35,6 +35,9 @@ COMMON_DEPEND="dev-java/bcel
 	=dev-java/jboss-common-${PV}*
 	=dev-java/jboss-system-${PV}*
 	=dev-java/jboss-transaction-${PV}*
+	=dev-java/jboss-naming-${PV}*
 	=dev-java/jboss-jmx-${PV}*"
 DEPEND=">=virtual/jdk-1.3 ${COMMON_DEPEND}"
 RDEPEND=">=virtual/jre-1.3 ${COMMON_DEPEND}"
+
+# TODO remove enums
