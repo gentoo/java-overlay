@@ -8,7 +8,7 @@ MY_PN=${PN##*-}
 
 DESCRIPTION="Eclipse Compiler for Java"
 HOMEPAGE="http://www.eclipse.org/"
-SRC_URI="http://www.gentoo.org/~karltk/projects/java/distfiles/${P}-gentoo.tar.bz2"
+SRC_URI="http://www.scorec.rpi.edu/~nichoj/projects/java/${P}-gentoo-r1.tar.bz2"
 LICENSE="EPL-1.0"
 KEYWORDS="~x86"
 SLOT="3.1"
@@ -24,7 +24,7 @@ DEPEND="${RDEPEND}
 src_unpack() {
 	unpack ${A}
 	cd ${S}
-	epatch ${FILESDIR}/${P}-build_xml.patch
+#	epatch ${FILESDIR}/${P}-build_xml.patch
 }
 
 src_compile() {
