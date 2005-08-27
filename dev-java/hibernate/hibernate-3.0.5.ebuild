@@ -28,11 +28,11 @@ COMMON_DEPEND="
 	dev-java/oscache
 	dev-java/proxool
 	=dev-java/swarmcache-1*
-	=dev-java/jboss-cache-4.0*
-	=dev-java/jboss-common-4.0*
-	=dev-java/jboss-j2ee-4.0*
-	=dev-java/jboss-jmx-4.0*
-	=dev-java/jboss-system-4.0*
+	=dev-java/jboss-module-cache-4.0*
+	=dev-java/jboss-module-common-4.0*
+	=dev-java/jboss-module-j2ee-4.0*
+	=dev-java/jboss-module-jmx-4.0*
+	=dev-java/jboss-module-system-4.0*
 	=dev-java/xerces-2*"
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}
@@ -62,11 +62,11 @@ src_unpack() {
 	done
 	java-pkg_jar-from cglib-2.1 cglib.jar
 
-	java-pkg_jar-from jboss-cache-4 jboss-cache.jar
-	java-pkg_jar-from jboss-common-4 jboss-common.jar
-	java-pkg_jar-from jboss-j2ee-4 jboss-j2ee.jar
-	java-pkg_jar-from jboss-jmx-4 jboss-jmx.jar
-	java-pkg_jar-from jboss-system-4 jboss-system.jar
+	java-pkg_jar-from jboss-module-cache-4 jboss-cache.jar
+	java-pkg_jar-from jboss-module-common-4 jboss-common.jar
+	java-pkg_jar-from jboss-module-j2ee-4 jboss-j2ee.jar
+	java-pkg_jar-from jboss-module-jmx-4 jboss-jmx.jar
+	java-pkg_jar-from jboss-module-system-4 jboss-system.jar
 
 }
 src_compile() {

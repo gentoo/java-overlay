@@ -25,7 +25,7 @@ RDEPEND=">=virtual/jdk-1.3.1
 	dev-java/log4j
 	=dev-java/avalon-logkit-1.2*
 	=dev-java/jakarta-oro-2.0*
-	j2ee? ( =dev-java/jboss-j2ee-4.0* )
+	j2ee? ( =dev-java/jboss-module-j2ee-4.0* )
 	=dev-java/servletapi-2.2*
 	dev-java/werken-xpath"
 
@@ -45,7 +45,7 @@ src_unpack() {
 	java-pkg_jar-from avalon-logkit-1.2
 	java-pkg_jar-from servletapi-2.2
 	java-pkg_jar-from werken-xpath
-	use j2ee && java-pkg_jar-from jboss-j2ee-4
+	use j2ee && java-pkg_jar-from jboss-module-j2ee-4
 }
 
 src_compile () {

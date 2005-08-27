@@ -39,7 +39,7 @@ RDEPEND="virtual/jre
 	=dev-java/hibernate-3*
 	dev-java/itext
 	dev-java/sun-jaf-bin
-	=dev-java/jboss-j2ee-4.0*
+	=dev-java/jboss-module-j2ee-4.0*
 	dev-java/sun-qname-bin
 	dev-java/jdbc2-stdext
 	dev-java/jms
@@ -92,7 +92,7 @@ HIBERNATE3="hibernate-3 hibernate3.jar"
 HSQLDB="hsqldb hsqldb.jar"
 ITEXT="itext iText.jar itext-1.1.4.jar"
 ACTIVATION="sun-jaf-bin activation.jar"
-J2EE="jboss-j2ee-4 jboss-j2ee.jar"
+J2EE="jboss-module-j2ee-4 jboss-j2ee.jar"
 JAXRPC="jboss-j2ee-4 jboss-jaxrpc.jar"
 QNAME="sun-qname-bin"
 JDBC_STDEXT="jdbc2-stdext jdbc2_0-stdext.jar"

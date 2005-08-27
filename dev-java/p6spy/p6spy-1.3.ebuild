@@ -17,9 +17,9 @@ DEPEND="virtual/jdk
 	app-arch/unzip
 	jikes? (dev-java/jikes)"
 RDEPEND="virtual/jre
-	=dev-java/jboss-jmx-4.0*
-	=dev-java/jboss-system-4.0*
-	=dev-java/jboss-common-4.0*
+	=dev-java/jboss-module-jmx-4.0*
+	=dev-java/jboss-module-system-4.0*
+	=dev-java/jboss-module-common-4.0*
 	=dev-java/gnu-regexp-1*
 	>=dev-java/jakarta-regexp-1.3-r2
 	=dev-java/jakarta-regexp-1*
@@ -35,9 +35,9 @@ src_unpack() {
 
 	mkdir lib
 	cd lib
-	java-pkg_jar-from jboss-jmx-4 jboss-jmx.jar
-	java-pkg_jar-from jboss-system-4 jboss-system.jar
-	java-pkg_jar-from jboss-common-4 jboss-common.jar
+	java-pkg_jar-from jboss-module-jmx-4 jboss-jmx.jar
+	java-pkg_jar-from jboss-module-system-4 jboss-system.jar
+	java-pkg_jar-from jboss-module-common-4 jboss-common.jar
 	java-pkg_jar-from gnu-regexp-1
 	java-pkg_jar-from log4j
 	java-pkg_jar-from jakarta-regexp-1.3
