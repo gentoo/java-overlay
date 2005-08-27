@@ -18,3 +18,5 @@ COMMON_DEPEND="dev-java/junit
 	=dev-java/jboss-common-4.0.2*"
 DEPEND=">=virtual/jdk-1.3 ${COMMON_DEPEND}"
 RDEPEND=">=virtual/jre-1.3 ${COMMON_DEPEND}"
+
+# TODO jikes / 1.5 patch to get change enums
