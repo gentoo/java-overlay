@@ -23,7 +23,7 @@ DEPEND="${DEPEND}
 
 SLOT="4"
 
-MODULE="${PN/jboss-/}"
+MODULE="${PN/jboss-module-/}"
 
 JBOSS_ROOT="${WORKDIR}/${PN%%-*}-${PV}-src"
 JBOSS_THIRDPARTY="${JBOSS_ROOT}/thirdparty"
@@ -33,7 +33,7 @@ THIRDPARTY_P="jboss-thirdparty-${PV}-gentoo"
 TOOLS_P="jboss-tools-${PV}-gentoo"
 GENTOO_CONF="jboss-${PVR}-gentoo.data"
 BASE_URL="http://www.scorec.rpi.edu/~nichoj/projects/java"
-#BASE_URL="mirror://gentoo"#
+#BASE_URL="mirror://gentoo"
 ECLASS_URI="${BASE_URL}/${TOOLS_P}.tar.bz2 ${BASE_URL}/${THIRDPARTY_P}.tar.bz2
 mirror://gentoo/${GENTOO_CONF}"
 MY_A="${P}-gentoo.tar.bz2 ${TOOLS_P}.tar.bz2 ${THIRDPARTY_P}.tar.bz2"
@@ -52,27 +52,25 @@ quiet_popd() {
 
 # TODO: add error checking
 jboss-4_fix-dir() {
-	#echo "entering jboss-4_fix-dir"
+	debug-print-function ${FUNCNAME} $*
+
 	local relative_dir=${1}
-	#echo "relative_dir=${relative_dir}"
+	debug-print "relative_dir=${relative_dir}"
 
 	# We want to get the contents of a variable, with the same name as
 	# relative_dir, with _ substituted for -, and suffixed with _pkgs
 	# The contents of said variable should be a comma separated list of
 	# packages, in the format java-config -p would like
 	local temp=${relative_dir//\//_} # convert / to _
-	#echo "temp=${temp}"
 	temp="${temp//-/_}_pkgs" # convert - to _
-	#echo "temp=${temp}"
+	debug-print "variable name=${temp}"
 	eval java_pkg_args=\$$temp # get the contents of temp
-	#echo "java_pkg_args=${java_pkg_args}"
+	debug-print "value of ${temp}=${java_pkg_args}"
 
 	
 	local full_dir=${JBOSS_ROOT}/${relative_dir}
-	#echo "full_dir=${full_dir}"
-
-	
 	einfo "Fixing jars in ${full_dir}"
+
 	mkdir -p ${full_dir}
 
 	quiet_pushd ${full_dir}
@@ -82,7 +80,8 @@ jboss-4_fix-dir() {
 
 # fix all the thirdparty libraries for this module
 jboss-4_fix-thirdparty() {
-	#echo "entering jboss-4_fix-thirdparty"
+	debug-print-function ${FUNCNAME} $*
+	
 	for dir in $(jboss-4_get-dirs-to-fix); do
 		jboss-4_fix-dir thirdparty/${dir}
 	done
@@ -92,6 +91,8 @@ jboss-4_fix-thirdparty() {
 # lookup which directories need to be fixed for this module, and its
 # dependencies
 jboss-4_get-dirs-to-fix() {
+	debug-print-function ${FUNCNAME} $*
+
 	local dirs_to_fix=$(jboss-4_get-dirs-to-fix-for-module ${MODULE})
 	for module in $(jboss-4_get-modules-to-fix); do
 		dirs_to_fix="$(jboss-4_get-dirs-to-fix-for-module ${module}) ${dirs_to_fix}"
@@ -105,6 +106,8 @@ jboss-4_get-dirs-to-fix() {
 }
 
 jboss-4_get-dirs-to-fix-for-module() {
+	debug-print-function ${FUNCNAME} $*
+
 	local varname=${1//-/_}_library_dirs
 	#echo "jboss-4_get-dirs-to-fix:varname=${varname}" 1>&2
 	local dirs_to_fix=$(eval echo \$$varname)
@@ -115,12 +118,16 @@ jboss-4_get-dirs-to-fix-for-module() {
 
 # lookup which modules should be fixed for the current module
 jboss-4_get-modules-to-fix() {
+	debug-print-function ${FUNCNAME} $*
+
 	local varname="${MODULE//-/_}_module_depends"
 	local modules_to_fix=$(eval echo \$$varname)
 	echo ${modules_to_fix}
 }
 
 jboss-4_fix-modules() {
+	debug-print-function ${FUNCNAME} $*
+
 	for module in $(jboss-4_get-modules-to-fix); do
 		jboss-4_fix-module ${module}
 	done
@@ -128,19 +135,36 @@ jboss-4_fix-modules() {
 
 # get the jar files for a particular jboss module
 jboss-4_fix-module() {
+	debug-print-function ${FUNCNAME} $*
+
 	local module=${1}
-	local pkg=jboss-${module}-${SLOT}
+	local pkg=jboss-module-${module}-${SLOT}
 	local dir=${JBOSS_ROOT}/${module}/output/lib
 	local marker="${dir}/../build-marker"
 	einfo "Populating ${dir}"
 	mkdir -p ${dir}
+
 	quiet_pushd ${dir}
 	java-pkg_jar-from ${pkg}
+	local libdir="/usr/share/${pkg}/lib"
+	for jar in ${libdir}/*.jar; do
+		if [ -d "${jar}" ]; then
+			ln -sf ${jar}
+		fi
+	done
+	local servicedir="/usr/share/${pkg}/services"
+	for sar in ${servicedir}/*.sar; do
+		if [ -d "${sar}" ]; then
+			ln -sf ${sar}
+		fi
+	done
 	quiet_popd
 }
 
 # unpack source, then fix the shared build jars
 jboss-4_src_unpack() {
+	debug-print-function ${FUNCNAME} $*
+	
 	source ${DISTDIR}/${GENTOO_CONF}
 
 	unpack ${MY_A}
@@ -151,6 +175,8 @@ jboss-4_src_unpack() {
 }
 
 jboss-4_src_compile() {
+	debug-print-function ${FUNCNAME} $*
+	
 	cd ${S}
 	local antflags
 	use jikes && antflags="-Dbuild.compiler=jikes"
@@ -159,8 +185,93 @@ jboss-4_src_compile() {
 }
 
 jboss-4_src_install() {
-	java-pkg_dojar output/lib/*.jar
+	debug-print-function ${FUNCNAME} $*
+	
+#	for jar in output/lib/*.jar; do
+#		if [ -d ${jar} ]; then
+#			einfo "Creating ${jar}"
+#			debug-print-function "directory \"jar\" found. jar'ing it for real"
+#
+#			quiet_pushd ${jar}
+#			local newjar=$(basename ${jar})
+#			jar cvf ${newjar} *
+#			java-pkg_dojar ${newjar}
+#			quiet_popd
+#		elif [ -f ${jar} ]; then
+#			einfo "Instaling ${jar}"
+#			java-pkg_dojar ${jar}
+#		fi
+#	done
+	for jar in output/lib/*.jar; do
+		jboss-4_dojar ${jar}
+	done
+
+	for sar in output/lib/*.sar; do
+		jboss-4_dosar ${sar}
+	done
 }
+
+jboss-4_dojar() {
+	# Check for arguments
+	if [ -z "$*" ] ; then
+		die "at least one argument needed"
+	fi
+
+	# Set install paths
+	local sharepath="${DESTTREE}/share"
+	local pkg_name
+	if [ "$SLOT" == "0" ] ; then
+		pkg_name="${PN}"
+	else
+		pkg_name="${PN}-${SLOT}"
+	fi
+
+	local shareroot="${sharepath}/${pkg_name}"
+	local jarpath="${shareroot}/lib"
+
+	# Make sure directory is created
+	if [ ! -d "${D}${jarpath}" ] ; then
+		install -d "${D}${jarpath}"
+	fi
+	for i in $*; do
+		if [ -f "${i}" ]; then
+			java-pkg_dojar ${i}
+		elif [ -d "${i}" ]; then
+			cp -pPR ${i} ${D}/${jarpath}/
+		fi
+	done
+
+}
+
+# This could be migrated to java-pkg perhaps
+jboss-4_dosar() {
+	# Check for arguments
+	if [ -z "$*" ] ; then
+		die "at least one argument needed"
+	fi
+	# Set install paths
+	local sharepath="${DESTTREE}/share"
+	local pkg_name
+	if [ "$SLOT" == "0" ] ; then
+		pkg_name="${PN}"
+	else
+		pkg_name="${PN}-${SLOT}"
+	fi
+
+	local shareroot="${sharepath}/${pkg_name}"
+	local service_path="${shareroot}/services"
+
+	# Make sure directory is created
+	if [ ! -d "${D}${service_path}" ] ; then
+		install -d "${D}${service_path}"
+	fi
+
+	for i in $*; do
+		# TODO add checking that the sar is a directory?
+		cp -pPR ${i} ${D}/${service_path}/
+	done
+}
+
 #################################################
 #################################################
 #################################################
@@ -172,7 +283,7 @@ jboss-4_src_install() {
 #################################################
 #################################################
 jboss-4_fix-tools() {
-	einfo "Fixing jars in ${JBOSS_ROOT}/tools/lib"
+	debug-print-function "Fixing jars in ${JBOSS_ROOT}/tools/lib"
 	quiet_pushd ${JBOSS_ROOT}/tools/lib
 	java-pkg_jar-from ${ANT_JAVAMAIL} 
 	java-pkg_jar-from ${ANT_JUNIT}
