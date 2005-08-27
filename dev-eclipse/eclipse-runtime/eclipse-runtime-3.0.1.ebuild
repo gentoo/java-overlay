@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header$
 
-inherit eutils java-pkg
+inherit java-pkg
 
 DESCRIPTION="Eclipse runtime Libraries"
 HOMEPAGE="http://www.eclipse.org/"
@@ -11,13 +11,14 @@ LICENSE="CPL-1.0 LGPL-2.1 MPL-1.1"
 KEYWORDS="x86"
 SLOT="3.0"
 
-IUSE="gnome mozilla"
+IUSE=""
 
-RDEPEND="=dev-eclipse/eclipse-osgi-3.0*"
+RDEPEND=">=virtual/jre-1.4
+	=dev-eclipse/eclipse-osgi-3.0*"
 
 DEPEND="${RDEPEND}
 	>=virtual/jdk-1.4
-	dev-java/ant"
+	dev-java/ant-core"
 
 src_unpack() {
 	unpack ${A}
