@@ -4,9 +4,11 @@
 
 inherit java-pkg eutils
 
+MY_PN=${PN}-framework
+MY_P=${MY_PN}-${PV}
 DESCRIPTION="Spring is a layered Java/J2EE application framework, based on code published in Expert One-on-One J2EE Design and Development by Rod Johnson (Wrox, 2002)."
 HOMEPAGE="http://www.springframework.org/"
-SRC_URI="mirror://sourceforge/${PN/-/}/${P}.zip"
+SRC_URI="mirror://sourceforge/${MY_PN/-/}/${MY_P}.zip"
 
 LICENSE="Apache-2.0"
 SLOT="0"
@@ -69,6 +71,7 @@ RDEPEND="virtual/jre
 	=dev-java/velocity-1*
 	dev-java/velocity-tools
 	dev-java/xjavadoc"
+S=${WORKDIR}/${MY_P}
 
 ANTLR="antlr antlr.jar antlr-2.7.5H3.jar"
 AOPALLIANCE="aopalliance-1 aopalliance.jar"
