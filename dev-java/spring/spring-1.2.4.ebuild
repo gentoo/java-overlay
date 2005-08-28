@@ -49,6 +49,7 @@ RDEPEND="virtual/jre
 	dev-java/sun-jdbc-rowset-bin
 	=dev-java/xerces-2*
 	=dev-java/commons-attributes-2*
+	=dev-java/commons-beanutils-1.7*
 	dev-java/commons-dbcp
 	dev-java/commons-digester
 	dev-java/commons-fileupload
@@ -107,6 +108,7 @@ XML_APIS="xerces-2 xml-apis.jar"
 COMMON_COLLECTIONS="commons-collections commons-collections.jar"
 COMMONS_ATTRIBUTES_API="commons-attributes-2 commons-attributes-api.jar"
 COMMONS_ATTRIBUTES_COMPILER="commons-attributes-2 commons-attributes-compiler.jar"
+COMMONS_BEANUTILS="commons-beanutils-1.7"
 COMMONS_DBCP="commons-dbcp commons-dbcp.jar"
 COMMONS_DIGESTER="commons-digester commons-digester.jar"
 COMMONS_FILEUPLOAD="commons-fileupload commons-fileupload.jar"
@@ -135,16 +137,16 @@ XJAVADOC="xjavadoc xjavadoc.jar xjavadoc-1.1.jar"
 
 src_unpack() {
 	unpack ${A}
-
-	cd ${S}
-
 	# disable support for toplink, ojb, jsf, jdo, and ibatis until they can be
 	# propertly packaged
-	epatch ${FILESDIR}/${P}-excludes.patch
+	# tweak build.xml, so it doesn't try to use specific jars in its classpaths
+	epatch ${FILESDIR}/${P}-gentoo.patch
 
-	mkdir -p lib/jakarta-commons
-	
+
+	cd ${S}
+	mkdir -p lib
 	cd lib
+
 	java-pkg_jar-from ${ANTLR}
 
 	mkdir aopalliance
@@ -197,13 +199,14 @@ src_unpack() {
 	java-pkg_jar-from ${SERVLET_API}
 	java-pkg_jar-from ${XML_APIS}
 
-	cd ${S}/lib/jakarta-commons
+#	cd ${S}/lib/jakarta-commons
 	# the following are only used for the example
 	#rm commons-{beanutils,discovery,validator}.jar
 	java-pkg_jar-from ${COMMONS_ATTRIBUTES_API} #97008
 	java-pkg_jar-from ${COMMONS_ATTRIBUTES_COMPILER} #97008
 
-	cd ..
+#	cd ..
+	java-pkg_jar-from ${COMMONS_BEANUTILS}
 	java-pkg_jar-from ${COMMONS_DBCP}
 	java-pkg_jar-from ${COMMONS_DIGESTER}
 	java-pkg_jar-from ${COMMONS_FILEUPLOAD}
@@ -251,8 +254,8 @@ src_unpack() {
 	java-pkg_jar-from ${VELOCITY_TOOLS_GENERIC}
 	java-pkg_jar-from ${VELOCITY_TOOLS_VIEW}
 
-	mkdir xdoclet
-	cd xdoclet
+#	mkdir xdoclet
+#	cd xdoclet
 	java-pkg_jar-from ${XJAVADOC}
 }
 

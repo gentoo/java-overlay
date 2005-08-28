@@ -1,0 +1,43 @@
+diff -ru spring-framework-1.2.4/build.xml spring-framework-1.2.4-patched/build.xml
+--- spring-framework-1.2.4/build.xml	2005-07-22 17:57:14.000000000 -0400
++++ spring-framework-1.2.4-patched/build.xml	2005-08-28 00:05:08.000000000 -0400
+@@ -54,7 +54,9 @@
+ 
+ 
+ 	<path id="attribute-compiler-classpath">
++		<path refid="all-libs"/>
+ 
++		<!--
+ 		<fileset dir="lib/jakarta-commons">
+ 			<include name="commons-attributes-compiler.jar"/>
+ 			<include name="commons-collections.jar"/>
+@@ -62,7 +64,7 @@
+ 		<fileset dir="lib/xdoclet">
+ 			<include name="xjavadoc-1.1.jar"/>
+ 		</fileset>
+-
++		-->
+ 	</path>
+ 
+ 
+@@ -140,6 +142,12 @@
+ 			<!-- Include Commons Attributes generated Java sources -->
+ 			<src path="${commons.attributes.tempdir.src}"/>
+ 			<classpath refid="all-libs"/>
++                       <exclude name="**/toplink/**"/>
++                       <exclude name="**/ojb/**"/>
++                       <exclude name="**/jsf/**"/>
++                       <exclude name="**/jdo/**"/>
++                       <exclude name="**/ibatis/**"/>
++
+ 		</javac>
+ 
+ 		<rmic base="${target.classes.dir}" classname="org.springframework.remoting.rmi.RmiInvocationWrapper"/>
+@@ -1432,4 +1440,4 @@
+ 		</jrc>
+ 	</target>
+ 
+-</project>
+\ No newline at end of file
++</project>
+Only in spring-framework-1.2.4-patched/: build.xml.orig
