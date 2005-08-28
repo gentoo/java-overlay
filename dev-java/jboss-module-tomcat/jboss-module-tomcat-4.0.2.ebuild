@@ -43,7 +43,7 @@ DEPEND=">=virtual/jdk-1.3 ${COMMON_DEPEND}"
 RDEPEND=">=virtual/jre-1.3 ${COMMON_DEPEND}"
 
 pkg_setup() {
-	if has_version "<www-servers/tomcat-5.5.9"; then
+	if ! has_version ">=www-servers/tomcat-5.5.9"; then
 		eerror "Version 5.5.9 or greater is required for this package."
 		eerror "Please emerge \">=www-servers/tomcat-5.5.9\" before continuing"
 		die
