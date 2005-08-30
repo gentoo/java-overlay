@@ -1,0 +1,14 @@
+# Copyright 1999-2004 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+VERSION="@P@"
+JAVA_HOME="/opt/@P@"
+CLASSPATH="${JAVA_HOME}/jre/lib/rt.jar"
+JDK_HOME="${JAVA_HOME}"
+JAVAC="${JAVA_HOME}/bin/javac"
+MANPATH="${JAVA_HOME}/man"
+ADDPATH="${JAVA_HOME}/bin:${JAVA_HOME}/jre/bin"
+ADDLDPATH="${JAVA_HOME}/jre/lib/@PLATFORM@/"
+ENV_VARS="JAVA_HOME CLASSPATH JDK_HOME JAVAC ADDPATH ADDLDPATH"
+
