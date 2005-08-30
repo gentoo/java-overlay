@@ -65,7 +65,7 @@ RDEPEND=">=virtual/jre-1.4.2
 		   dev-java/flute
 		 >=dev-java/jmi-interface-1.0-r1
 		 >=dev-java/javahelp-bin-2.0.02-r1
-		  =www-servers/tomcat-5.5.7*
+		  =www-servers/tomcat-5.5*
 		   dev-java/sun-j2ee-deployment-bin
 		   dev-java/xml-commons
 		   dev-java/jakarta-jstl
