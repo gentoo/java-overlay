@@ -5,22 +5,16 @@
 inherit eutils
 
 DESCRIPTION="A fast implementation of jar"
-
 HOMEPAGE="http://gcc.gnu.org/"
-
 SRC_URI="ftp://gcc.gnu.org/pub/gcc/releases/gcc/gcc-${PV}.tar.bz2"
 
 LICENSE="GPL-2"
-
 SLOT="0"
-
 KEYWORDS="~ppc ~x86"
-
 IUSE=""
 
 DEPEND=""
-
-#RDEPEND=""
+RDEPEND="sys-libs/zlib"
 
 S=${WORKDIR}/gcc-${PV}
 
