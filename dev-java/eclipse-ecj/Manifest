@@ -1,6 +1,0 @@
-MD5 76e1a906aa6530aacc54e6d759ad57ea eclipse-ecj-3.1-r2.ebuild 937
-MD5 b3a9fd37ab69d40d37e76b0866c58876 eclipse-ecj-3.1-r1.ebuild 939
-MD5 40aa9ee0cfa8d16adb2da4585ebe6d0b files/eclipse-ecj-3.1-messages.patch 15336
-MD5 39d7408e3d7db735eb33087afbacdcdc files/eclipse-ecj-3.1-build_xml.patch 2527
-MD5 84380a0ea8165c3dc74318a3840d5fff files/digest-eclipse-ecj-3.1-r1 78
-MD5 84380a0ea8165c3dc74318a3840d5fff files/digest-eclipse-ecj-3.1-r2 78
