@@ -12,25 +12,25 @@ SRC_URI="mirror://apache/jakarta/commons/jelly/source/${MY_P}.tar.gz"
 LICENSE="Apache-2.0"
 SLOT="1"
 KEYWORDS="~x86"
-IUSE="doc"
+IUSE="doc jikes"
 
 LDEPEND="~dev-java/servletapi-2.3
-=dev-java/commons-cli-1*
-dev-java/commons-lang
-dev-java/commons-discovery
-dev-java/forehead
-dev-java/jakarta-jstl
-=dev-java/commons-jexl-1.0*
-=dev-java/commons-beanutils-1.6*
-dev-java/commons-collections
-dev-java/commons-logging
-=dev-java/dom4j-1*
-=dev-java/jaxen-1.1*
-=dev-java/xerces-2*
-"
+	=dev-java/commons-cli-1*
+	dev-java/commons-lang
+	dev-java/commons-discovery
+	dev-java/forehead
+	dev-java/jakarta-jstl
+	=dev-java/commons-jexl-1.0*
+	=dev-java/commons-beanutils-1.6*
+	dev-java/commons-collections
+	dev-java/commons-logging
+	=dev-java/dom4j-1*
+	=dev-java/jaxen-1.1*
+	=dev-java/xerces-2*"
 DEPEND="virtual/jdk
 	dev-java/ant-core
-dev-java/junit"
+	jikes? (dev-java/jikes)
+	dev-java/junit"
 RDEPEND="virtual/jre"
 
 S=${WORKDIR}/${MY_P}
