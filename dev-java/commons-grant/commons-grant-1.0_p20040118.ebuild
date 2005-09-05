@@ -38,7 +38,7 @@ src_compile(){
 }
 
 src_install(){
-	java-pkg_newjar target/${PN}-1.0-beta-4.jar ${PN}
+	java-pkg_newjar target/${PN}-1.0-beta-4.jar ${PN}.jar
 	use doc && java-pkg_dohtml -r dist/docs/api
 }
 
