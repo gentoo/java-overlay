@@ -6,7 +6,8 @@ inherit java-pkg eutils
 MY_PN=graph2
 MY_PV=${PV%%_*}.cvs20040118
 MY_P=${MY_PN}-${MY_PV}
-DESCRIPTION="Jelly is a tool for turning XML into executable code. So Jelly is a Java and XML based scripting and processing engine."
+DESCRIPTION="A toolkit for managing graphs and graph based data structures"
+# This is borked, but I don't have anywhere else to turn
 HOMEPAGE="http://jakarta.apache.org/commons/sandbox/graph/"
 # this was extracted from a source rpm at jpackage... maybe I'll use it directly
 # at some point
@@ -22,6 +23,7 @@ DEPEND=">=virtual/jdk-1.3
 	${LDEPEND}"
 RDEPEND=">=virtual/jdk-1.3
 	${LDEPEND}"
+
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
