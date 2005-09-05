@@ -15,5 +15,5 @@ KEYWORDS="~x86"
 DEPEND="=dev-java/commons-jelly-tags-junit-1.0*"
 
 commons-jelly-tags_fix-jars() {
-	java-pkg_jar-from commons-jelly-tags-junit
+	java-pkg_jar-from commons-jelly-tags-junit-1.0
 }
