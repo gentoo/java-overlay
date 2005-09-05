@@ -38,6 +38,7 @@ LDEPEND="dev-java/commons-jelly
 	dev-java/commons-collections
 	=dev-java/commons-jexl-1.0*
 	dev-java/commons-logging
+	dev-java/commons-lang
 	=dev-java/dom4j-1*
 	=dev-java/jaxen-1.1*
 	=dev-java/xerces-2*
@@ -56,7 +57,7 @@ LICENSE=""
 
 SRC_URI="http://gentoo/${P}.tar.bz2 mirror://gentoo/commons-jelly-tags-1.0-gentoo.patch.bz2"
 
-EXPORT_FUNCTIONS src_unpack src_compile src_install
+EXPORT_FUNCTIONS src_unpack src_compile src_install src_test
 
 commons-jelly-tags_fix-jars() {
 	# empty! implement for each ebuild
@@ -69,6 +70,9 @@ commons-jelly-tags_fix-common-jars() {
 	java-pkg_jar-from commons-beanutils-1.6
 	java-pkg_jar-from commons-cli-1
 	java-pkg_jar-from commons-collections
+	java-pkg_jar-from commons-logging
+	java-pkg_jar-from commons-lang
+	java-pkg_jar-from commons-jexl-1.0
 	java-pkg_jar-from dom4j-1
 	java-pkg_jar-from jaxen-1.1
 	java-pkg_jar-from junit
@@ -104,6 +108,6 @@ commons-jelly-tags_src_install() {
 	use doc && java-pkg_dohtml -r dist/docs/api
 }
 
-commons-jelly_tags_src_test() {
+commons-jelly-tags_src_test() {
 	ant test || die "Tests failed"
 }
