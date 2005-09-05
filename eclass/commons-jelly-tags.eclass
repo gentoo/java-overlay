@@ -7,6 +7,28 @@
 # Purpose: facilitate packaging commons-jellyt-tags-*
 #
 
+# Procedure for packaging common-jelly-tags:
+# * Go to the SVN repository located at:
+# 		http://svn.apache.org/repos/asf/jakarta/commons/proper/jelly/
+# 	You'll probably want to use things that are tagged, so:
+#		http://svn.apache.org/repos/asf/jakarta/commons/proper/jelly/tags/
+# * For whatever set to package, from the repository, figure out where the
+# 	source actually lives in the repository.
+#		ie for log, it'd be http://svn.apache.org/repos/asf/jakarta/commons/proper/jelly/tags/COMMONS-JELLY-LOG-1_0/jelly-tags/log/
+# * Make a checkout of the source to ${P}
+# * Make a patch to the build.xml to remove deps: 'get-deps' from compile, and 'test' from
+# TODO: maybe a generic patch can be used everywhere (since the build.xmls are
+# so close)?
+# * svn revert build.xml
+# * Run 'ant get-deps', to figure out what it depends on.
+# * For everything that isn't part of LDEPEND below, add it to RDEPEND of the
+# 	ebuild
+# * If there is anything isn't part of LDEPEND below, also declare a function
+#	commons-jelly-tags_src_unpack(), and make the appropriate java-pkg_jar-from
+#	calls
+# * ant clean
+# * Create a tarball of the checkout as ${P}.tar.bz2
+
 inherit java-pkg eutils
 
 ECLASS="commons-jelly-tags"
