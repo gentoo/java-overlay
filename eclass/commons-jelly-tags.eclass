@@ -54,7 +54,7 @@ SLOT="${PV}"
 IUSE="doc jikes"
 LICENSE=""
 
-SRC_URI="http://gentoo/${P}.tar.bz2"
+SRC_URI="http://gentoo/${P}.tar.bz2 mirror://gentoo/commons-jelly-tags-1.0-gentoo.patch.bz2"
 
 EXPORT_FUNCTIONS src_unpack src_compile src_install
 
@@ -78,11 +78,7 @@ commons-jelly-tags_fix-common-jars() {
 commons-jelly-tags_src_unpack() {
 	unpack ${A}
 	cd ${S}
-	# Gentoo-specific patch, ie disable dependency fetching and automatic test
-	# running
-	if [ -f ${FILESDIR}/${P}-gentoo.patch ]; then
-		epatch ${FILESDIR}/${P}-gentoo.patch
-	fi
+	epatch ${WORKDIR}/commons-jelly-tags-1.0-gentoo.patch
 	mkdir -p target/lib
 	cd target/lib
 	commons-jelly-tags_fix-common-jars
