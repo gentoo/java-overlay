@@ -30,8 +30,10 @@ LDEPEND="~dev-java/servletapi-2.3
 DEPEND="virtual/jdk
 	dev-java/ant-core
 	jikes? (dev-java/jikes)
-	dev-java/junit"
-RDEPEND="virtual/jre"
+	dev-java/junit
+	${LDEPEND}"
+RDEPEND="virtual/jre
+	${LDEPEND}"
 
 S=${WORKDIR}/${MY_P}
 
