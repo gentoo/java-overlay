@@ -10,8 +10,8 @@ HOMEPAGE=""
 # tar cjvf commons-jelly-tags-ant-1.0.tar.bz2 commons-jelly-tags-ant-1.0
 #SRC_URI="mirror://gentoo/${P}.tar.bz2"
 
+SLOT="1"
 KEYWORDS="~x86"
-
 RDEPEND="dev-java/commons-grant"
 
 commons-jelly-tags_fix-jars() {

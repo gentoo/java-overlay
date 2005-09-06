@@ -66,7 +66,6 @@ commons-jelly-tags_fix-jars() {
 }
 
 commons-jelly-tags_fix-common-jars() {
-	cd ${S}/target/lib
 	java-pkg_jar-from commons-jelly-1
 	java-pkg_jar-from commons-beanutils-1.6
 	java-pkg_jar-from commons-cli-1
@@ -83,7 +82,12 @@ commons-jelly-tags_fix-common-jars() {
 commons-jelly-tags_src_unpack() {
 	unpack ${A}
 	cd ${S}
-	epatch ${WORKDIR}/commons-jelly-tags-1.0-gentoo.patch
+	if [ -f ${FILESDIR}/${P}-gentoo.patch ]; then
+		epatch ${FILESDIR}/${P}-gentoo.patch
+	else
+		epatch ${WORKDIR}/commons-jelly-tags-1.0-gentoo.patch
+	fi
+
 	mkdir -p target/lib
 	cd target/lib
 	commons-jelly-tags_fix-common-jars
@@ -91,7 +95,7 @@ commons-jelly-tags_src_unpack() {
 }
 
 commons-jelly-tags_src_compile() {
-	local antflags="jar"
+	local antflags="jar -Dfinal.name=${PN}"
 	use jikes && antflags="${antflags} -Dbuild.compiler=jikes"
 	use doc && antflags="${antflags} javadoc"
 	ant ${antflags} || die "compile failed"
@@ -99,13 +103,14 @@ commons-jelly-tags_src_compile() {
 
 commons-jelly-tags_src_install() {
 #	java-pkg_newjar target/${PN}*.jar ${PN}.jar
-	for jar in target/*.jar ; do
-		# could there be a better way?
-		# basically, don't want there to be SNAPSHOT in the jar name
-		local jarname=$(basename ${jar})
-		jarname=${jarname%%-${PV}*}
-		java-pkg_newjar ${jar} ${jarname}.jar
-	done
+#	for jar in target/*.jar ; do
+#		# could there be a better way?
+#		# basically, don't want there to be SNAPSHOT in the jar name
+#		local jarname=$(basename ${jar})
+#		jarname=${jarname%%-1*} # this is ugly... 
+#		java-pkg_newjar ${jar} ${jarname}.jar
+#	done
+	java-pkg_dojar target/*.jar
 	use doc && java-pkg_dohtml -r dist/docs/api
 }
 

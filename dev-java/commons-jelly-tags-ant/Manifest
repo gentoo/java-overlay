@@ -1,2 +1,5 @@
-MD5 5ed945a5d8b0d7f090aa7741a7a03da0 commons-jelly-tags-ant-1.0.ebuild 557
+MD5 91541327f41562fc8cc91b6aed5ed487 commons-jelly-tags-ant-1.1.ebuild 529
+MD5 2caf625a37c7efe91977564a2b712b5d commons-jelly-tags-ant-1.0.ebuild 565
+MD5 885425f2e980898382c7f39d7dec0fbf files/commons-jelly-tags-ant-1.1-gentoo.patch 3001
 MD5 e5c292ac172f225f293387694ecf94d9 files/digest-commons-jelly-tags-ant-1.0 159
+MD5 7655460fb349537512e25ceea7546329 files/digest-commons-jelly-tags-ant-1.1 159
