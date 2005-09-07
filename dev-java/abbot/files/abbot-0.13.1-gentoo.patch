@@ -1,0 +1,42 @@
+Only in abbot-patched/: .build.xml.swp
+Only in abbot-patched/: build
+diff -ru abbot/build.xml abbot-patched/build.xml
+--- abbot/build.xml	2004-11-11 13:09:34.000000000 -0500
++++ abbot-patched/build.xml	2005-09-06 22:09:31.000000000 -0400
+@@ -48,7 +48,8 @@
+     <property name="i18n" value="${classes}/abbot/i18n"/>
+     <property name="i18n.editor" value="${classes}/abbot/editor/i18n"/>
+ 
+-    <fileset id="jars.thirdparty" dir=".">
++    <fileset id="jars.thirdparty" dir="." includes="lib/*.jar"/>
++	  <!--
+       <patternset id="jars.ps">
+         <include name="lib/junit.jar"/>   
+         <include name="lib/jdom.jar"/>   
+@@ -60,6 +61,7 @@
+         <include name="${jars.clover}"/>
+       </patternset>
+     </fileset>
++	-->
+     
+     <path id="test.classpath">
+       <path id="build.classpath">
+Only in abbot-patched/doc/api: abbot
+Only in abbot-patched/doc/api: allclasses-frame.html
+Only in abbot-patched/doc/api: allclasses-noframe.html
+Only in abbot-patched/doc/api: constant-values.html
+Only in abbot-patched/doc/api: deprecated-list.html
+Only in abbot-patched/doc/api: help-doc.html
+Only in abbot-patched/doc/api: index-all.html
+Only in abbot-patched/doc/api: index.html
+Only in abbot-patched/doc/api: junit
+Only in abbot-patched/doc/api: overview-frame.html
+Only in abbot-patched/doc/api: overview-summary.html
+Only in abbot-patched/doc/api: overview-tree.html
+Only in abbot-patched/doc/api: package-list
+Only in abbot-patched/doc/api: packages.html
+Only in abbot-patched/doc/api: resources
+Only in abbot-patched/doc/api: serialized-form.html
+Only in abbot-patched/doc/api: stylesheet.css
+Only in abbot/doc: reports
+Only in abbot-patched/: lib
