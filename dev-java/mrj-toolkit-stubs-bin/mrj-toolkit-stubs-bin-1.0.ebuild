@@ -10,7 +10,7 @@ HOMEPAGE="http://developer.apple.com/samplecode/MRJToolkitStubs/MRJToolkitStubs.
 SRC_URI="http://developer.apple.com/samplecode/MRJToolkitStubs/${MY_PN}.zip"
 
 LICENSE=""
-SLOT="0"
+SLOT="1"
 KEYWORDS="~x86"
 IUSE=""
 
