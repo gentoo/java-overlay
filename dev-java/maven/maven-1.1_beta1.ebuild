@@ -36,9 +36,12 @@ RDEPEND=">=virtual/jre-1.4
 		 =dev-java/commons-jelly-tags-define-1*
 		 =dev-java/commons-jelly-tags-util-1*
 		 =dev-java/commons-jelly-tags-xml-1*
+		 =dev-java/commons-jelly-tags-interaction-1*
+		 =dev-java/commons-jelly-tags-velocity-1*
 		 =dev-java/commons-jexl-1.0*
 		 >=dev-java/commons-lang-2.0
 		 >=dev-java/commons-logging-1.0.3
+		 >=dev-java/commons-net-1.2.1
 		 =dev-java/dom4j-1.4*
 		 =dev-java/xerces-2*
 		 >=dev-java/forehead-1.0_beta5
@@ -51,6 +54,10 @@ RDEPEND=">=virtual/jre-1.4
 		 ~dev-java/jdom-1.0_beta10
 		 =dev-java/mrj-toolkit-stubs-1*
 		 =dev-java/abbot-0.13*
+		 dev-java/saxpath
+		 =dev-java/jaxen-1.0*
+		 =dev-java/velocity-1*
+		 >=dev-java/antlr-2.7.5
 		 "
 
 REPOSITORY="${WORKDIR}/.maven/repository"
@@ -58,7 +65,7 @@ src_unpack() {
 	unpack ${A} || die "Unpack Failed!"
 
 	cd ${WORKDIR}/maven-plugins
-	epatch ${FILESDIR}/maven-plugins-20050905-gentoo.patch
+#	epatch ${FILESDIR}/maven-plugins-20050905-gentoo.patch
 	cd ${S}
 	epatch ${FILESDIR}/${P}-gentoo.patch
 
@@ -68,7 +75,8 @@ src_unpack() {
 	java-pkg_jar-from ant-core ant.jar ant-1.6.5.jar
 	java-pkg_jar-from ant-core ant.jar ant-1.5.3-1.jar
 	java-pkg_jar-from ant-core ant-launcher.jar ant-launcher-1.6.5.jar
-	# TODO ant-optional-1.5.3-1.jar
+	# this probably isn't reliable...
+	java-pkg_jar-from ant-tasks ant-junit.jar ant-optional-1.5.3-1.jar
 	
 	java-pkg_jar-from ant-tasks ant-trax.jar ant-trax-1.6.5.jar
 	java-pkg_jar-from ant-tasks ant-junit.jar ant-junit-1.6.5.jar
@@ -106,6 +114,12 @@ src_unpack() {
 		commons-jelly-tags-xml.jar commons-jelly-tags-xml-1.0.jar
 	java-pkg_jar-from commons-jelly-tags-xml-1 \
 		commons-jelly-tags-xml.jar commons-jelly-tags-xml-1.1.jar
+	java-pkg_jar-from commons-jelly-tags-interaction-1 \
+		commons-jelly-tags-interaction.jar commons-jelly-tags-interaction-1.0.jar
+	java-pkg_jar-from commons-jelly-tags-velocity-1 \
+		commons-jelly-tags-velocity.jar commons-jelly-tags-velocity-1.0.jar
+	java-pkg_jar-from commons-jelly-tags-antlr-1 \
+		commons-jelly-tags-antlr.jar commons-jelly-tags-antlr-1.0.jar
 
 	mkdir -p ${REPOSITORY}/commons-jexl/jars
 	cd ${REPOSITORY}/commons-jexl/jars
@@ -118,6 +132,10 @@ src_unpack() {
 	mkdir -p ${REPOSITORY}/commons-logging/jars
 	cd ${REPOSITORY}/commons-logging/jars
 	java-pkg_jar-from commons-logging commons-logging.jar commons-logging-1.0.3.jar
+
+	mkdir -p ${REPOSITORY}/commons-net/jars
+	cd ${REPOSITORY}/commons-net/jars
+	java-pkg_jar-from commons-net commons-net.jar commons-net-1.2.1.jar
 
 	mkdir -p ${REPOSITORY}/dom4j/jars
 	cd ${REPOSITORY}/dom4j/jars
@@ -149,6 +167,10 @@ src_unpack() {
 	java-pkg_jar-from xerces-2 xercesImpl.jar xerces-2.4.0.jar
 	java-pkg_jar-from xerces-2 xmlParserAPIs.jar xmlParserAPIs-2.2.1.jar
 
+	mkdir -p ${REPOSITORY}/xml-apis/jars
+	cd ${REPOSITORY}/xml-apis/jars
+	java-pkg_jar-from xerces-2 xml-apis.jar xml-apis-1.0.b2.jar
+
 	mkdir -p ${REPOSITORY}/junit/jars
 	cd ${REPOSITORY}/junit/jars
 	java-pkg_jar-from junit junit.jar junit-3.8.1.jar
@@ -165,6 +187,23 @@ src_unpack() {
 	cd ${REPOSITORY}/mrj/jars
 	java-pkg_jar-from mrj-toolkit-stubs-bin-1 MRJToolkitStubs.jar MRJToolkitStubs-1.0.jar
 
+	mkdir -p ${REPOSITORY}/saxpath/jars
+	cd ${REPOSITORY}/saxpath/jars
+	java-pkg_jar-from saxpath saxpath.jar saxpath-1.0-FCS.jar
+
+	mkdir -p ${REPOSITORY}/jaxen/jars
+	cd ${REPOSITORY}/jaxen/jars
+	java-pkg_jar-from jaxen jaxen-full.jar jaxen-1.0-FCS-full.jar
+
+	mkdir -p ${REPOSITORY}/velocity/jars
+	cd ${REPOSITORY}/velocity/jars
+	java-pkg_jar-from velocity-1 velocity.jar velocity-1.4-dev.jar
+
+	mkdir -p ${REPOSITORY}/antlr/jars
+	cd ${REPOSITORY}/antlr/jars
+	java-pkg_jar-from antlr antlr.jar antlr-2.7.5.jar
+
+	
 }
 
 src_compile() {
