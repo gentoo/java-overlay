@@ -5,7 +5,7 @@ MD5 257ce52cfc15f63798cb7b13ee761cb4 tomcat-3.3.2-r2.ebuild 3217
 MD5 bd83fcedaedc2fbc6bcc8493bfc3f4f6 tomcat-5.0.28-r4.ebuild 9481
 MD5 b1c21f5d6e28fee276fe3c85a54dd2ec ChangeLog 13420
 MD5 c11ce937193406815ff7a2b306784fd8 metadata.xml 555
-MD5 c8edc92da6e6359cfe00d9a5450478fa tomcat-5.5.7.ebuild 9748
+MD5 6d5700af86e461652bcfe0d326e71544 tomcat-5.5.7.ebuild 9758
 MD5 9ba7e3a6bb7c8ecb9fce2824b4c1d59d files/digest-tomcat-5.5.7 77
 MD5 1b5c341cc0c0d3b2d247d877fc18b03d files/digest-tomcat-5.5.9 77
 MD5 71d59fd713a960e63c1b894ca5893a1b files/digest-tomcat-4.1.30-r5 74

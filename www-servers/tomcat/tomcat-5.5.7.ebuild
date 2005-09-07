@@ -16,7 +16,7 @@ DEPEND="sys-apps/sed
 	   >=virtual/jdk-1.4
 	   ${RDEPEND}"
 RDEPEND=">=virtual/jdk-1.4
-	   dev-eclipse/eclipse-jdtcore
+	   =dev-eclipse/eclipse-jdtcore-3.0*
 	   =dev-java/commons-beanutils-1.7*
 	   >=dev-java/commons-collections-3.1
 	   >=dev-java/commons-daemon-1.0
@@ -103,7 +103,7 @@ src_compile(){
 	antflags="${antflags} -Dcommons-launcher.jar=$(java-config -p commons-launcher)"
 	antflags="${antflags} -Dcommons-modeler.jar=$(java-config -p commons-modeler)"
 	antflags="${antflags} -Djunit.jar=$(java-config -p junit)"
-	antflags="${antflags} -Djdt.jar=$(java-pkg_getjar eclipse-jdtcore jdtcore.jar)"
+	antflags="${antflags} -Djdt.jar=$(java-pkg_getjar eclipse-jdtcore-3.0 jdtcore.jar)"
 	antflags="${antflags} -Dlog4j.jar=$(java-config -p log4j)"
 	antflags="${antflags} -Dregexp.jar=$(java-config -p jakarta-regexp-1.3)"
 	antflags="${antflags} -Dstruts.jar=$(java-pkg_getjar struts struts.jar)"
