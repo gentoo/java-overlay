@@ -1,0 +1,20 @@
+Index: abbot/project.xml
+===================================================================
+--- abbot/project.xml	(revision 278814)
++++ abbot/project.xml	(working copy)
+@@ -142,6 +142,7 @@
+         <abbot.webstart>true</abbot.webstart>
+       </properties>
+     </dependency>
++	<!--
+     <dependency>
+       <groupId>ant</groupId>
+       <artifactId>ant-optional</artifactId>
+@@ -150,6 +151,7 @@
+         <abbot.webstart>true</abbot.webstart>
+       </properties>
+     </dependency>
++	-->
+     <dependency>
+       <groupId>commons-jelly</groupId>
+       <artifactId>commons-jelly-tags-xml</artifactId>

@@ -1,0 +1,15 @@
+Index: build-bootstrap.xml
+===================================================================
+--- build-bootstrap.xml	(revision 278892)
++++ build-bootstrap.xml	(working copy)
+@@ -222,7 +222,9 @@
+       failonerror="true">
+       <arg value="-Dmaven.home.local=${maven.home.local}"/>
+       <arg value="-Dmaven.repo.local=${maven.repo.local}"/>
+-      <arg value="-Dmaven.download.meter=bootstrap"/>
++      <arg value="-o"/>
++      <arg value="-Dmaven.mode.online=false"/>
++      <arg value="-Dmaven.test.skip=true"/>
+       <arg value="-Dbootstrapping=true"/>
+       <arg value="-e"/>
+       <arg value="${maven.bootstrap.online}"/>
