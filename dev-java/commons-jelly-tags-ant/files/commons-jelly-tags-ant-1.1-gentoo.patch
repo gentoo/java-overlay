@@ -1,0 +1,72 @@
+Index: build.xml
+===================================================================
+--- build.xml	(revision 278900)
++++ build.xml	(working copy)
+@@ -37,36 +37,7 @@
+   <property name="proxy.password" value="">
+   </property>
+   <path id="build.classpath">
+-    <pathelement location="${libdir}/ant/jars/ant-1.6.2.jar">
+-    </pathelement>
+-    <pathelement location="${libdir}/ant/jars/ant-launcher-1.6.2.jar">
+-    </pathelement>
+-    <pathelement location="${libdir}/ant/jars/ant-junit-1.6.2.jar">
+-    </pathelement>
+-    <pathelement location="${libdir}/commons-jelly/jars/commons-jelly-tags-junit-1.0.jar">
+-    </pathelement>
+-    <pathelement location="${libdir}/commons-jelly/jars/commons-jelly-tags-util-1.1.1.jar">
+-    </pathelement>
+-    <pathelement location="${libdir}/commons-cli/jars/commons-cli-1.0.jar">
+-    </pathelement>
+-    <pathelement location="${libdir}/xml-apis/jars/xml-apis-1.0.b2.jar">
+-    </pathelement>
+-    <pathelement location="${libdir}/commons-beanutils/jars/commons-beanutils-1.6.jar">
+-    </pathelement>
+-    <pathelement location="${libdir}/commons-collections/jars/commons-collections-2.1.jar">
+-    </pathelement>
+-    <pathelement location="${libdir}/commons-jexl/jars/commons-jexl-1.0.jar">
+-    </pathelement>
+-    <pathelement location="${libdir}/commons-jelly/jars/commons-jelly-SNAPSHOT.jar">
+-    </pathelement>
+-    <pathelement location="${libdir}/commons-logging/jars/commons-logging-1.0.3.jar">
+-    </pathelement>
+-    <pathelement location="${libdir}/dom4j/jars/dom4j-1.5.jar">
+-    </pathelement>
+-    <pathelement location="${libdir}/jaxen/jars/jaxen-1.1-beta-2.jar">
+-    </pathelement>
+-    <pathelement location="${libdir}/xerces/jars/xerces-2.2.1.jar">
+-    </pathelement>
++	<fileset dir="${libdir}" includes="**/*.jar"/>
+   </path>
+   <target name="init" description="o Initializes some properties">
+     <mkdir dir="${libdir}">
+@@ -92,7 +63,7 @@
+       </and>
+     </condition>
+   </target>
+-  <target name="compile" description="o Compile the code" depends="get-deps">
++  <target name="compile" description="o Compile the code" depends="">
+     <mkdir dir="${classesdir}">
+     </mkdir>
+     <javac destdir="${classesdir}" deprecation="true" debug="true" optimize="false" excludes="**/package.html">
+@@ -109,10 +80,8 @@
+         </include>
+       </fileset>
+     </copy>
+-    <copy todir="${classesdir}/META-INF" file="${basedir}/../../LICENSE.txt">
+-    </copy>
+   </target>
+-  <target name="jar" description="o Create the jar" depends="compile,test">
++  <target name="jar" description="o Create the jar" depends="compile">
+     <jar jarfile="${defaulttargetdir}/${final.name}.jar" excludes="**/package.html" basedir="${classesdir}">
+     </jar>
+   </target>
+@@ -201,7 +170,7 @@
+       </fileset>
+     </copy>
+   </target>
+-  <target name="javadoc" description="o Generate javadoc" depends="get-deps">
++  <target name="javadoc" description="o Generate javadoc" depends="">
+     <mkdir dir="${javadocdir}">
+     </mkdir>
+     <tstamp>
