@@ -9,11 +9,11 @@ HOMEPAGE="http://abbot.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${P}-src.jar"
 
 LICENSE=""
-SLOT="0"
+SLOT="0.13"
 KEYWORDS="~x86"
 IUSE="doc jikes"
 
-LDEPEND="dev-java/mrj-toolkit-stubs
+LDEPEND="=dev-java/mrj-toolkit-stubs-bin-1*
 		~dev-java/jdom-1.0_beta10
 		=dev-java/xerces-2*
 		=dev-java/gnu-regexp-1*
@@ -36,7 +36,7 @@ src_unpack() {
 	mkdir lib
 	cd lib
 
-	java-pkg_jar-from mrj-toolkit-stubs
+	java-pkg_jar-from mrj-toolkit-stubs-bin-1
 	java-pkg_jar-from jdom-1.0_beta10
 	java-pkg_jar-from xerces-2 xml-apis.jar
 	java-pkg_jar-from xerces-2 xercesImpl.jar
