@@ -57,12 +57,11 @@ src_compile() {
 		confargs="${confargs} --enable-pure-java-math"
 		ewarn "You have don't have the gmp use flag set."
 		ewarn "Using gmp is the default upstream setting."
-		ewarn ""
-		ewarn ""
 		sleep 3
 	fi
 
 	if ! use gtk; then
+		ewarn ""
 		ewarn "The gtk use flag is needed for a awt implementation."
 		ewarn "Don't file bugs for awt not working when you have"
 		ewarn "gtk use flag turned off."
