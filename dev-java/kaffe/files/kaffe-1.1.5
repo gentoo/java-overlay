@@ -1,0 +1,13 @@
+# Copyright 1999-2004 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: /var/cvsroot/gentoo-x86/dev-java/kaffe/files/kaffe-1.1.5,v 1.1 2005/04/09 18:53:35 karltk Exp $
+
+VERSION="Kaffe @PV@"
+JAVA_HOME=/opt/@P@
+CLASSPATH=/opt/@P@/jre/lib/rt.jar
+JDK_HOME=/opt/@P@
+JAVAC=${JAVA_HOME}/bin/javac
+MANPATH=/opt/@P@/man
+ADDPATH="${JAVA_HOME}/bin:${JAVA_HOME}/jre/bin"
+ADDLDPATH="/opt/@P@/jre/lib/i386/"
+ENV_VARS="JAVA_HOME CLASSPATH JDK_HOME JAVAC ADDPATH ADDLDPATH"

@@ -1,0 +1,4 @@
+PATH=/opt/kaffe/bin
+ROOTPATH=/opt/kaffe/bin
+MANPATH=/opt/kaffe/man
+LDPATH=/opt/kaffe/lib
