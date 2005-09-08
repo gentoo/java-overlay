@@ -27,8 +27,7 @@ DEPEND="
 	gtk? (
 		>=dev-libs/glib-2.0
 		>=x11-libs/gtk+-2.0
-		>=media-libs/libart_lgpl-2.0
-		media-libs/gdk-pixbuf )
+		>=media-libs/libart_lgpl-2.0 )
 	esd?( media-sound/esound )
 	alsa?( media-libs/alsa-lib )
 	gmp?( >=dev-libs/gmp-3.1 )"
@@ -43,16 +42,7 @@ PROVIDE="virtual/jdk
 	virtual/jre"
 #S=${WORKDIR}/kaffe-${date}
 
-src_compile() {
-	local confargs=""
-
-	# see #88330
-	strip-flags "-fomit-frame-pointer"
-
-	if ! use alsa && ! use esd; then
-		confargs="${confargs} --disable-sound"
-	fi
-
+pkg_setup() {
 	if ! use gmp; then
 		confargs="${confargs} --enable-pure-java-math"
 		ewarn "You have don't have the gmp use flag set."
@@ -66,6 +56,17 @@ src_compile() {
 		ewarn "Don't file bugs for awt not working when you have"
 		ewarn "gtk use flag turned off."
 		sleep 3
+	fi
+}
+
+src_compile() {
+	local confargs=""
+
+	# see #88330
+	strip-flags "-fomit-frame-pointer"
+
+	if ! use alsa && ! use esd; then
+		confargs="${confargs} --disable-sound"
 	fi
 
 #		$(use_with X x) \
