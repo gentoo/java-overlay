@@ -44,7 +44,6 @@ PROVIDE="virtual/jdk
 
 pkg_setup() {
 	if ! use gmp; then
-		confargs="${confargs} --enable-pure-java-math"
 		ewarn "You have don't have the gmp use flag set."
 		ewarn "Using gmp is the default upstream setting."
 		sleep 3
@@ -68,6 +67,8 @@ src_compile() {
 	if ! use alsa && ! use esd; then
 		confargs="${confargs} --disable-sound"
 	fi
+
+	! use gmp && confargs="${confargs} --enable-pure-java-math"
 
 #		$(use_with X x) \
 #		$(use_with X kaffe-x-awt) \
