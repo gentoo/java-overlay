@@ -23,7 +23,7 @@ RDEPEND=">=virtual/jre-1.4"
 S="${WORKDIR}/${PN}"
 
 src_compile() {
-	local antflags="-Dproject.name=${PN} jar"
+	local antflags="jar"
 	use jikes && antflags="-Dbuild.compiler=jikes ${antflags}"
 	use doc && antflags="${antflags} javadoc"
 
@@ -31,6 +31,6 @@ src_compile() {
 }
 
 src_install() {
-	java-pkg_dojar build/aopalliance.jar
+	java-pkg_dojar build/${PN}.jar
 	use doc && java-pkg_dohtml -r build/api 
 }
