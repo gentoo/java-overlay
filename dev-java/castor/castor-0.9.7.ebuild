@@ -6,7 +6,7 @@ inherit eutils java-pkg
 
 DESCRIPTION="Data binding framework for Java"
 SRC_URI="http://dist.codehaus.org/${PN}/${PV}/${P}-src.tgz"
-HOMEPAGE="http://castor.exolab.org/"
+HOMEPAGE="http://www.castor.org"
 LICENSE="Exolab"
 KEYWORDS="~x86"
 SLOT="0.9"
