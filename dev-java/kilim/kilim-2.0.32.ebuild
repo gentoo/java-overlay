@@ -18,7 +18,7 @@ DEPEND="virtual/jdk
 	jikes? (dev-java/jikes)"
 RDEPEND="virtual/jre
 	dev-java/monolog
-	dev-java/jmx
+	=dev-java/mx4j-3.0*
 	dev-java/log4j
 	=dev-java/crimson-1*"
 
@@ -33,7 +33,7 @@ src_unpack() {
 	cd ${S}/lib
 	rm *.jar
 	java-pkg_jar-from crimson-1
-	java-pkg_jar-from jmx
+	java-pkg_jar-from mx4j-3.0
 	java-pkg_jar-from log4j
 	java-pkg_jar-from monolog ow_util_log_api.jar
 	java-pkg_jar-from monolog ow_util_log_wrp_log4j.jar
