@@ -20,11 +20,11 @@ DEPEND="virtual/jdk
 RDEPEND="virtual/jre
 	=dev-java/carol-2.0*
 	dev-java/commons-logging
-	dev-java/sun-j2ee-connector-bin
 	=dev-java/howl-logger-0.1*
-	dev-java/jta
 	dev-java/log4j
 	dev-java/p6spy"
+#	dev-java/sun-j2ee-connector-bin
+#	dev-java/jta
 S=${WORKDIR}/${MY_P}
 
 src_unpack() {
@@ -39,15 +39,17 @@ src_unpack() {
 	rm *.jar
 	java-pkg_jar-from carol-2.0 ow_carol.jar
 	java-pkg_jar-from commons-logging commons-logging.jar
-	java-pkg_jar-from sun-j2ee-connector-bin
 	java-pkg_jar-from howl-logger-0.1 howl.jar
-	java-pkg_jar-from jta
 	java-pkg_jar-from log4j
 	java-pkg_jar-from p6spy
+	# don't seem to need these
+#	java-pkg_jar-from jta
+#	java-pkg_jar-from sun-j2ee-connector-bin
 }
 
 src_compile() {
-	local antflags="jar"
+	# TODO patch build.xml to make jar depend on compile
+	local antflags="clean compile jar"
 	use jikes && antflags="-Dbuild.compiler=jikes ${antflags}"
 	use doc && antflags="${antflags} jdoc -Ddist.jdoc=output/dist/api"
 
