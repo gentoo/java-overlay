@@ -20,7 +20,7 @@ DEPEND="=virtual/jdk-1.4*
 	dev-java/ant"
 RDEPEND="=virtual/jre-1.4*
 	=dev-java/servletapi-2.4*
-	dev-java/sun-jaf-bin
+	=dev-java/gnu-jaf-1*
 	=www-servers/axis-1*
 	dev-java/commons-collections
 	dev-java/commons-dbcp
@@ -32,7 +32,7 @@ RDEPEND="=virtual/jre-1.4*
 S="${WORKDIR}/${PN}-${MY_PV}-src"
 
 SERVLET_API="servletapi-2.4 servlet-api.jar"
-ACTIVATION="sun-jaf-bin"
+ACTIVATION="gnu-jaf-1"
 AXIS="axis-1"
 COMMONS_COLLECTIONS="commons-collections"
 COMMONS_DBCP="commons-dbcp"
@@ -50,7 +50,7 @@ src_unpack() {
 	java-pkg_jar-from ${SERVLET_API}
 	java-pkg_jar-from ${ACTIVATION}
 	
-	einfo "Fixing jars in webapp/WEB-INF/lib/"
+#	einfo "Fixing jars in webapp/WEB-INF/lib/"
 	cd ${S}/webapp/WEB-INF/lib
 	java-pkg_jar-from ${AXIS}
 	java-pkg_jar-from ${COMMONS_COLLECTIONS}
