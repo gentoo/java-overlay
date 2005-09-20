@@ -19,7 +19,6 @@ COMMOND_DEPEND="
 		>=dev-java/dom4j-1.5
 		dev-java/ehcache
 		dev-java/odmg
-		dev-java/jta
 		dev-java/c3p0
 		dev-java/commons-pool
 		dev-java/commons-dbcp
@@ -27,8 +26,10 @@ COMMOND_DEPEND="
 		dev-java/proxool
 		dev-java/oscache
 		=dev-java/swarmcache-1.0*
-		dev-java/sun-j2ee-connector-bin
+		=dev-java/jboss-module-j2ee-4.0*
 "
+		#dev-java/jta
+		#dev-java/sun-j2ee-connector-bin
 RDEPEND=">=virtual/jre-1.4
 		${COMMOND_DEPEND}"
 DEPEND="${RDEPEND}
@@ -50,7 +51,7 @@ src_unpack() {
 	mv lib old-lib
 	mkdir lib
 	cd lib
-	java-pkg_jar-from sun-j2ee-connector-bin
+	java-pkg_jar-from jboss-module-j2ee-4
 
 	java-pkg_jar-from cglib-2
 	java-pkg_jar-from commons-collections
@@ -59,7 +60,7 @@ src_unpack() {
 	java-pkg_jar-from concurrent-util
 	java-pkg_jar-from dom4j-1
 	java-pkg_jar-from ehcache
-	java-pkg_jar-from jta
+#	java-pkg_jar-from jta
 	java-pkg_jar-from odmg
 
 	java-pkg_jar-from c3p0

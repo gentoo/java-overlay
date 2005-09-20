@@ -22,8 +22,6 @@ COMMON_DEPEND="
 	=dev-java/dom4j-1*
 	dev-java/ehcache
 	=dev-java/jaxen-1.1*
-	dev-java/jdbc2-stdext
-	dev-java/jta
 	dev-java/log4j
 	dev-java/oscache
 	dev-java/proxool
@@ -34,9 +32,10 @@ COMMON_DEPEND="
 	=dev-java/jboss-module-jmx-4.0*
 	=dev-java/jboss-module-system-4.0*
 	=dev-java/xerces-2*"
+#	dev-java/jdbc2-stdext
+#	dev-java/jta
 RDEPEND=">=virtual/jre-1.4
-	${COMMON_DEPEND}
-"
+	${COMMON_DEPEND}"
 DEPEND="${RDEPEND}
 		>=virtual/jdk-1.4
 		>=dev-java/ant-core-1.5
@@ -55,7 +54,7 @@ src_unpack() {
 	rm *.jar
 
 	local JAR_PACKAGES="asm-2 c3p0 commons-collections 
-		commons-logging dom4j-1 ehcache jaxen-1.1 jdbc2-stdext jta 
+		commons-logging dom4j-1 ehcache jaxen-1.1 jdbc2-stdext 
 		log4j oscache proxool swarmcache-1.0 xerces-2"
 	for PACKAGE in ${JAR_PACKAGES}; do
 		java-pkg_jar-from ${PACKAGE}
