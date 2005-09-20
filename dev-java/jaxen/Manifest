@@ -1,0 +1,5 @@
+MD5 859a202650a2427c8b8183886546dd37 jaxen-1.1_beta7.ebuild 1388
+MD5 917b383454a8f38fb290d4a69ddb47ca files/jaxen-1.1_beta2-gentoo.diff 1254
+MD5 316a481f610ecae9085418b487d1fe1b files/build.xml.patch 1018
+MD5 18b53511f075c771c0b69c5bc0b65dba files/MANIFEST.MF 307
+MD5 a1e39698b13f5388ba47d580378df4b6 files/digest-jaxen-1.1_beta7 72
