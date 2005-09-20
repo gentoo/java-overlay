@@ -51,7 +51,7 @@ src_unpack() {
 }
 
 src_compile() {
-	local antflags="jar"
+	local antflags="jar -Dproject.name=${PN}"
 #	use jikes && antflags="-Dbuild.compiler=jikes ${antflags}"
 	use doc && antflags="${antflags} javadoc"
 
