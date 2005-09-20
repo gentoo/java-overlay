@@ -38,7 +38,7 @@ RDEPEND="virtual/jre
 	=dev-java/hibernate-2*
 	=dev-java/hibernate-3*
 	dev-java/itext
-	dev-java/sun-jaf-bin
+	=dev-java/gnu-jaf-1*
 	=dev-java/jboss-module-j2ee-4.0*
 	dev-java/sun-qname-bin
 	dev-java/jdbc2-stdext
@@ -91,7 +91,7 @@ HIBERNATE2="hibernate-2 hibernate2.jar"
 HIBERNATE3="hibernate-3 hibernate3.jar"
 HSQLDB="hsqldb hsqldb.jar"
 ITEXT="itext iText.jar itext-1.1.4.jar"
-ACTIVATION="sun-jaf-bin activation.jar"
+ACTIVATION="gnu-jaf-1 activation.jar"
 J2EE="jboss-module-j2ee-4 jboss-j2ee.jar"
 JAXRPC="jboss-module-j2ee-4 jboss-jaxrpc.jar"
 QNAME="sun-qname-bin"
@@ -100,7 +100,7 @@ JMS="jms jms.jar"
 JSP_API="servletapi-2.4 jsp-api.jar"
 JSTL="jakarta-jstl jstl.jar"
 JTA="jta jta.jar"
-MAIL="sun-javamail-bin mail.jar"
+MAIL="gnu-javamail gnumail.jar mail.jar"
 ROWSET="sun-jdbc-rowset-bin rowset.jar"
 SERVLET_API="servletapi-2.4 servlet-api.jar"
 XML_APIS="xerces-2 xml-apis.jar"

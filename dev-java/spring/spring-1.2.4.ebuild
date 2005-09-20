@@ -18,11 +18,12 @@ KEYWORDS="~x86"
 #IUSE="doc jikes"
 IUSE="doc"
 
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	dev-java/ant
 	dev-java/antlr"
 #	jikes? (dev-java/jikes)
-RDEPEND="virtual/jre
+# TODO replace sun-jdbc-rowset-bin with free implementation
+RDEPEND=">=virtual/jre-1.4
 	=www-servers/axis-1*
 	=dev-java/aopalliance-1*
 	dev-java/wsdl4j
@@ -38,14 +39,10 @@ RDEPEND="virtual/jre
 	=dev-java/hibernate-2*
 	=dev-java/hibernate-3*
 	dev-java/itext
-	dev-java/sun-jaf-bin
+	=dev-java/gnu-jaf-1*
 	=dev-java/jboss-module-j2ee-4.0*
-	dev-java/sun-qname-bin
-	dev-java/jdbc2-stdext
-	dev-java/jms
 	=dev-java/servletapi-2.4*
 	dev-java/jakarta-jstl
-	dev-java/jta
 	dev-java/sun-jdbc-rowset-bin
 	=dev-java/xerces-2*
 	=dev-java/commons-attributes-2*
@@ -57,10 +54,8 @@ RDEPEND="virtual/jre
 	dev-java/commons-lang
 	dev-java/commons-logging
 	dev-java/commons-pool
-	>=app-text/jasperreports-0.6.8
+	=app-text/jasperreports-0.6*
 	=dev-java/jamon-1*
-	dev-java/jmx
-	=dev-java/mx4j-2.1*
 	=dev-java/jotm-2.0*
 	=dev-java/xapool-1.5*
 	dev-java/junit
@@ -71,7 +66,16 @@ RDEPEND="virtual/jre
 	=dev-java/struts-1.2*
 	=dev-java/velocity-1*
 	dev-java/velocity-tools
-	dev-java/xjavadoc"
+	dev-java/xjavadoc
+	=dev-java/gnu-javamail-1*
+	=dev-java/mx4j-3.0*
+	=dev-java/jboss-module-j2ee-4.0*
+	dev-java/wsdl4j"
+#	dev-java/jmx
+#	dev-java/jta
+#	dev-java/jms
+#	dev-java/jdbc2-stdext
+#	dev-java/sun-qname-bin
 S=${WORKDIR}/${MY_P}
 
 ANTLR="antlr antlr.jar antlr-2.7.5H3.jar"
@@ -92,16 +96,17 @@ HIBERNATE2="hibernate-2 hibernate2.jar"
 HIBERNATE3="hibernate-3 hibernate3.jar"
 HSQLDB="hsqldb hsqldb.jar"
 ITEXT="itext iText.jar itext-1.1.4.jar"
-ACTIVATION="sun-jaf-bin activation.jar"
+ACTIVATION="gnu-jaf-1 activation.jar"
 J2EE="jboss-module-j2ee-4 jboss-j2ee.jar"
 JAXRPC="jboss-module-j2ee-4 jboss-jaxrpc.jar"
-QNAME="sun-qname-bin"
+QNAME="wsdl4j qname.jar"
 JDBC_STDEXT="jdbc2-stdext jdbc2_0-stdext.jar"
-JMS="jms jms.jar"
+#JMS="jms jms.jar"
+JMS="jboss-module-j2ee-4 jboss-j2ee.jar"
 JSP_API="servletapi-2.4 jsp-api.jar"
 JSTL="jakarta-jstl jstl.jar"
 JTA="jta jta.jar"
-MAIL="sun-javamail-bin mail.jar"
+MAIL="gnu-javamail-1 gnumail.jar mail.jar"
 ROWSET="sun-jdbc-rowset-bin rowset.jar"
 SERVLET_API="servletapi-2.4 servlet-api.jar"
 XML_APIS="xerces-2 xml-apis.jar"
@@ -118,10 +123,9 @@ COMMONS_LOGGING="commons-logging commons-logging.jar"
 COMMONS_POOL="commons-pool commons-pool.jar"
 STANDARD="jakarta-jstl standard.jar"
 JAMON="jamon-1 jamon.jar JAMon.jar"
-JASPERREPORTS="jasperreports jasperreports.jar jaspereports-0.6.6.jar"
-JMXRI="jmx jmxri.jar"
-JMXREMOTE="jmx jmxremote.jar"
-MX4J_REMOTE="mx4j-2.1 mx4j-remote.jar"
+JASPERREPORTS="jasperreports-0.6 jasperreports.jar jaspereports-0.6.6.jar"
+MX4J="mx4j-3.0 mx4j.jar"
+MX4J_REMOTE="mx4j-3.0 mx4j-remote.jar"
 JOTM="jotm-2.0 jotm.jar"
 XAPOOL="xapool-1.5 xapool.jar"
 JUNIT="junit junit.jar"
@@ -193,11 +197,12 @@ src_unpack() {
 	java-pkg_jar-from ${JMS}
 	java-pkg_jar-from ${JSP_API}
 	java-pkg_jar-from ${JSTL}
-	java-pkg_jar-from ${JTA}
 	java-pkg_jar-from ${MAIL}
 	java-pkg_jar-from ${ROWSET} #97012
 	java-pkg_jar-from ${SERVLET_API}
 	java-pkg_jar-from ${XML_APIS}
+	# don't need for compiling
+#	java-pkg_jar-from ${JTA}
 
 #	cd ${S}/lib/jakarta-commons
 	# the following are only used for the example
@@ -225,7 +230,7 @@ src_unpack() {
 
 	# TODO ${S}/lib/jdo
 	
-	java-pkg_jar-from ${JMXRI}
+	java-pkg_jar-from ${MX4J}
 	java-pkg_jar-from ${MX4J_REMOTE}
 #	rm jmxremote_optional.jar # only needed for testing
 
