@@ -16,18 +16,22 @@ IUSE="doc jikes"
 DEPEND="virtual/jdk
 	dev-java/ant
 	jikes? (dev-java/jikes)"
+# TODO: verify that jacorb actually provides JTS classes
+# ( org.omg.CosTransactions.PropagationContextHelper )
 RDEPEND="virtual/jre
 	=dev-java/commons-cli-1*
 	dev-java/commons-logging
 	=dev-java/howl-logger-0.1*
 	=dev-java/jeremie-4*
 	=dev-java/jonathan-core-4*
-	dev-java/sun-jts
-	dev-java/jta
 	=dev-java/kilim-1*
 	dev-java/log4j
 	=dev-java/carol-2.0*
-	dev-java/sun-j2ee-connector-bin"
+	=dev-java/jboss-module-j2ee-4.0*
+	=dev-java/jacorb-2.2*"
+#	dev-java/jta
+#	dev-java/sun-jts-bin
+#	dev-java/sun-j2ee-connector-bin"
 
 src_unpack() {
 	unpack ${A}
@@ -44,12 +48,14 @@ src_unpack() {
 	java-pkg_jar-from howl-logger-0.1
 	java-pkg_jar-from jeremie-4
 	java-pkg_jar-from jonathan-core-4
-	java-pkg_jar-from sun-jts
-	java-pkg_jar-from jta
+#	java-pkg_jar-from sun-jts-bin
+#	java-pkg_jar-from jta
 	java-pkg_jar-from kilim-1 kilim.jar
 	java-pkg_jar-from log4j
 	java-pkg_jar-from carol-2.0 ow_carol.jar
-	java-pkg_jar-from sun-j2ee-connector-bin
+#	java-pkg_jar-from sun-j2ee-connector-bin
+	java-pkg_jar-from jboss-module-j2ee-4
+	java-pkg_jar-from jacorb-2.2 omg_services.jar
 }
 
 src_compile() {
