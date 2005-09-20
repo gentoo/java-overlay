@@ -1,0 +1,14 @@
+diff -ru ubermq-2.7-src/src/com/ubermq/jms/client/multicast/LrmpConnectionInfo.java ubermq-2.7-src-patched/src/com/ubermq/jms/client/multicast/LrmpConnectionInfo.java
+--- ubermq-2.7-src/src/com/ubermq/jms/client/multicast/LrmpConnectionInfo.java	2004-12-02 18:25:24.000000000 -0500
++++ ubermq-2.7-src-patched/src/com/ubermq/jms/client/multicast/LrmpConnectionInfo.java	2005-09-19 22:19:41.000000000 -0400
+@@ -54,8 +54,8 @@
+         profile.throughput = LrmpProfile.AdaptedThroughput;
+ 
+         /* the data rate in kbits/sec if the throughput is set to AdaptedThroughput */
+-        profile.minRate = 8;
+-        profile.maxRate = 64;
++//        profile.setMinRate = 8;
++ //       profile.maxRate = 64;
+ 
+         /* the buffer space in kilo bytes */
+         profile.sendWindowSize = 64;
