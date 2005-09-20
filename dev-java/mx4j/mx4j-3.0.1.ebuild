@@ -20,7 +20,7 @@ RDEPEND=">=virtual/jre-1.4
 	=dev-java/gnu-jaf-1*
 	=dev-java/gnu-javamail-1*
 	dev-java/jython
-	=dev-java/hessian-3.0*
+	=dev-java/hessian-3.0.8*
 "
 	
 LICENSE="mx4j"
@@ -40,7 +40,7 @@ src_unpack(){
 	java-pkg_jar-from gnu-jaf-1
 	java-pkg_jar-from gnu-javamail-1 gnumail.jar
 	java-pkg_jar-from jython
-	java-pkg_jar-from hessian-3.0
+	java-pkg_jar-from hessian-3.0.8
 }
 
 src_compile() {
