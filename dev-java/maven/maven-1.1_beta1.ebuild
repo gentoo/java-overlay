@@ -22,7 +22,7 @@ S=${WORKDIR}/${MY_P}
 DEPEND=">=virtual/jdk-1.4
         >=dev-java/ant-core-1.5
 		jikes? ( >=dev-java/jikes-1.21 )
-		=dev-java/jaxen-1.1"
+		=dev-java/jaxen-1.1*"
 RDEPEND=">=virtual/jre-1.4
 		 >=dev-java/ant-core-1.6
 		 >=dev-java/ant-tasks-1.6
@@ -48,13 +48,12 @@ RDEPEND=">=virtual/jre-1.4
 		 =dev-java/xerces-2*
 		 >=dev-java/forehead-1.0_beta5
 		 >=dev-java/log4j-1.2.8
-		 >=dev-java/xml-commons-1.0
 		 >=dev-java/forehead-1.0_beta5
 		 >=dev-java/log4j-1.2.8
 		 >=dev-java/plexus-utils-1.0_alpha2
 		 >=dev-java/junit-3.8.1
 		 ~dev-java/jdom-1.0_beta10
-		 =dev-java/mrj-toolkit-stubs-1*
+		 =dev-java/mrj-toolkit-stubs-bin-1*
 		 =dev-java/abbot-0.13*
 		 dev-java/saxpath
 		 =dev-java/jaxen-1.0*
@@ -67,11 +66,12 @@ RDEPEND=">=virtual/jre-1.4
 		 =dev-java/wagon-http-1*
 		 =dev-java/wagon-ftp-1*
 		 >=dev-java/jsch-0.1.14
-		 >=dev-java/aspectj-1.2.1
+		 >=dev-java/aspectj-1.2
 		 =dev-java/castor-0.9*
 		 =dev-java/jakarta-regexp-1.3*
-		 >=dev-java/cvslib-3.6
 		 "
+#		 >=dev-java/cvslib-3.6
+#		 >=dev-java/xml-commons-1.0
 
 REPOSITORY="${WORKDIR}/.maven/repository"
 src_unpack() {
