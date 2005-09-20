@@ -1,0 +1,15 @@
+# ChangeLog for dev-java/commons-io
+# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-java/commons-io/ChangeLog,v 1.2 2005/05/04 16:59:57 luckyduck Exp $
+
+  04 May 2005; Jan Brinkmann <luckyduck@gentoo.org> commons-io-1.0.ebuild:
+  stable on amd64 and x86, added ~ppc to KEYWORDS. introduced support for the
+  source useflag.
+
+*commons-io-1.0 (10 Mar 2005)
+
+  10 Mar 2005; Jan Brinkmann <luckyduck@gentoo.org> +metadata.xml,
+  +files/commons-io-1.0-gentoo.diff, +commons-io-1.0.ebuild:
+  Initial import, ebuild based on the contribution by Vibhav Garg
+  <vibhavgarg@gmail.com>. Fixes #70625
+
