@@ -10,10 +10,6 @@ SRC_URI="mirror://apache/struts/source/${MY_P}.tar.gz"
 HOMEPAGE="http://jakarta.apache.org/struts/index.html"
 LICENSE="Apache-2.0"
 SLOT="1.2"
-DEPEND=">=virtual/jdk-1.4
-	>=dev-java/ant-1.6.0
-	jikes? ( dev-java/jikes )
-	source? ( app-arch/zip )"
 RDEPEND=">=virtual/jre-1.4
 	dev-java/antlr
 	=dev-java/commons-beanutils-1.7*
@@ -26,6 +22,11 @@ RDEPEND=">=virtual/jre-1.4
 	>=dev-java/commons-validator-1.1.4
 	=dev-java/jakarta-oro-2.0*
 	=dev-java/servletapi-2.3*"
+DEPEND=">=virtual/jdk-1.4
+	${RDEPEND}
+	>=dev-java/ant-1.6.0
+	jikes? ( dev-java/jikes )
+	source? ( app-arch/zip )"
 IUSE="doc examples jikes source"
 KEYWORDS="~x86 ~ppc ~amd64"
 
@@ -53,12 +54,11 @@ src_compile() {
 	ant ${antflags} || die "compile failed"
 }
 
-
 src_install() {
 	java-pkg_dojar target/library/struts.jar
 
 	#install the tld files
-	insinto /usr/share/${PN}/lib
+	insinto /usr/share/${PN}-${SLOT}/lib
 	doins target/library/*.tld
 
 	dodoc README STATUS.txt
