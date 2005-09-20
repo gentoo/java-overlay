@@ -10,7 +10,7 @@ SRC_URI="http://www.caucho.com/hessian/download/${P}-src.jar"
 
 # Supposedly something Apache
 LICENSE=""
-SLOT="3.0"
+SLOT="3.0.8"
 KEYWORDS="~x86"
 IUSE="jikes doc"
 
