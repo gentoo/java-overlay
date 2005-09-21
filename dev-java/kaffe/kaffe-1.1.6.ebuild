@@ -73,6 +73,11 @@ src_compile() {
 #		$(use_with X kaffe-x-awt) \
 #		$(use_with qt kaffe-qt-awt ) \
 
+	# according to dalibor, this is needed on ppc because jit is
+	# not complete
+	# needs testing!
+	use ppc && confargs="${confargs} --with-engine=intrp"
+
 	./configure \
 		--prefix=/opt/${P} \
 		--host=${CHOST} \
