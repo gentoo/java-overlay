@@ -4,7 +4,7 @@
 
 inherit java-pkg
 
-At="${PN##*-}${PV//./_}.zip"
+At="jts${PV//./_}.zip"
 DESCRIPTION="Java Transaction Service (JTS) specifies the implementation of a Transaction Manager which supports the Java Transaction API (JTA) 1.0"
 HOMEPAGE="http://java.sun.com/products/jts/"
 SRC_URI="${At}"
@@ -16,7 +16,6 @@ IUSE="doc jikes"
 RESTRICT="fetch"
 
 DEPEND="virtual/jdk
-	dev-java/ant
 	app-arch/unzip
 	jikes? (dev-java/jikes)"
 RDEPEND="virtual/jre"
