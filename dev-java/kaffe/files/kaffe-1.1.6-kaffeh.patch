@@ -1,0 +1,653 @@
+Index: ChangeLog
+===================================================================
+RCS file: /cvs/kaffe/kaffe/ChangeLog,v
+retrieving revision 1.4448
+retrieving revision 1.4451
+diff -u -p -r1.4448 -r1.4451
+--- ChangeLog	21 Sep 2005 03:18:46 -0000	1.4448
++++ ChangeLog	21 Sep 2005 22:37:53 -0000	1.4451
+@@ -1,3 +1,386 @@
++2005-09-22  Dalibor Topic  <robilad@kaffe.org>
++
++	* kaffe/kaffeh/Makefile.am:
++	(BINRELOC_SOURCES) Added.
++	(kaffeh_SOURCES) Added BINRELOC_SOURCES.
++
++	* kaffe/kaffeh/main.c: Include system.h for path_separator.
++	Include prefix.h is binreloc is available. Include headers for
++	gettext.
++	(options) Handle -classpath and -bootclasspath options.
++	Use a default bootclasspath if no bootclasspath is given.
++
++	Fixes build of libreadline-java 0.8.0.
++
++	Reported by:  Joshua Nichols  <joshua.nichols@gmail.com>
++
++2005-09-21  Santiago Gala <sgala@apache.org>
++
++	* libraries/javalib/java/security/VMAccessController.java:
++	Use given combiner in pushed AccessControlContext.
++
++	Fixes tomcat 5 startup with security manager enabled.
++
++	Reported by:  Wolfgang Baer <WBaer@gmx.de>
++
++2005-09-21  Dalibor Topic  <robilad@kaffe.org>
++
++	Resynced with GNU Classpath.
++
++	2005-09-21  Lillian Angel  <langel@redhat.com>
++
++        * javax/swing/ToolTipManager.java
++        (showTip): Added code to move currentPoint to a new place.
++        (getGoodPoint): Removed, not needed.
++
++	2005-09-21  David Gilbert  <david.gilbert@object-refinery.com>
++
++        * javax/swing/plaf/metal/MetalFileChooserUI.java: new file (partial
++        implementation).
++
++	2005-09-20  Lillian Angel  <langel@redhat.com>
++
++        * javax/swing/JPopupMenu.java
++        (setVisible): If HeavyWeightPopup, setLightWeightPopupEnabled
++        is false.
++        * javax/swing/ToolTipManager.java
++        (showTip): Change so toolTips on lightWeightPopups are
++        added different than those on heavyWeightPopups.
++        (canToolTipFit): Removed. This is not needed/used.
++
++	2005-09-20  Lillian Angel  <langel@redhat.com>
++
++        * javax/swing/ToolTipManager.java
++        (mouseMoved): Removed unneeded code. If the mouse
++        moves into another component, then mouseEntered would
++        do the same thing. Otherwise, it is not needed.
++        (showTip): Fixed so that the containerPanel is an
++        instance of Panel. Made code more efficent.
++        Tooltips were causing weird problems with the
++        JMenus.
++        (getGoodPoint): Fixed to return a better location.
++        * javax/swing/plaf/basic/BasicMenuBarUI.java
++        (mouseClicked): Fixed to prevent a NPE.
++
++	2005-09-20  Tom Tromey  <tromey@redhat.com>
++
++        PR classpath/22906:
++        * gnu/java/net/protocol/jar/Connection.java (get): Added useCaches
++        argument.
++        (connect): Updated.
++
++	2005-09-20  Tom Tromey  <tromey@redhat.com>
++
++        * javax/print/DocFlavor.java (serialVersionUID): Fixed typo.
++
++	2005-09-19  Anthony Balkissoon  <abalkiss@redhat.com>
++
++        * javax/swing/text/DefaultEditorKit.java:
++        (write): Partially Implemented and made slight correction to API docs.
++        * javax/swing/text/html/HTMLEditorKit.java:
++        (createDefaultDocument): Override parent method because we need to
++        return an HTMLDocument not a DefaultStyledDocument.
++
++	2005-09-20  Roman Kennke  <kennke@aicas.com>
++
++        Fixes PR #23900.
++        * javax/swing/JLayeredPane.java
++        (remove(int)): Removed repaint() call. This is unnecessary because
++        already triggered by Container.remove().
++        (remove(Component)): Removed this superfluous method. It's not
++        in the specs and the functionality is already in Container.
++        (paint): New method. Overridden in order to provide reasonable
++        painting for JLayeredPanes.
++
++	2005-09-20  Roman Kennke  <kennke@aicas.com>
++
++        * javax/swing/plaf/basic/BasicTextUI.java
++        (UpdateHandler): Renamed to PropertyChangeHandler. This name is
++        closer to the purpose of this class.
++        (PropertyChangeHandler.propertyChange): Delegate property change
++        to propertyChange hook method in the enclosing BasicTextUI.
++        (propertyChange): New protected method. This serves as a hook
++        for subclasses to handle property changes in the text component.
++        * javax/swing/plaf/basic/BasicTextUI.java
++        (properyChange): Handle editable property here and adjust background
++        accordingly.
++
++	2005-09-20  Roman Kennke  <kennke@aicas.com>
++
++        * javax/swing/text/DefaultStyledDocument.java
++        (getParagraphElement): If the position argument is out of the
++        document's bounds, then the closest paragraph element must be
++        returned. This is fixed.
++
++	2005-09-20  Roman Kennke  <kennke@aicas.com>
++
++        * javax/swing/JTable.java
++        (resizeAndRepaint): New protected method.
++
++	2005-09-20  Tom Tromey  <tromey@redhat.com>
++
++        * javax/xml/namespace/QName.java: Now Serializable.
++        (serialVersionUID): New field.
++        (qName, hashCode): Now transient.
++        (QName): Don't compute qName here.
++        (equals): Now final.
++        (hashCode): Simplified.
++        (toString): Compute qName here.
++
++	2005-09-20  Roman Kennke  <kennke@aicas.com>
++
++        * javax/swing/plaf/metal/MetalBorders.java
++        (getTextFieldBorder): This method must return an BorderUIResource
++        instance. Fixed.
++
++	2005-09-20  Roman Kennke  <kennke@aicas.com>
++
++        * javax/swing/plaf/basic/BasicButtonUI.java
++        (installDefaults): Handle the rollover UIDefaults property.
++        (paintText): Correctly paint disabled button label text.
++        * javax/swing/plaf/basic/BasicLookAndFeel.java
++        (initComponentDefaults): Fix some text component border defaults.
++        * javax/swing/plaf/basic/BasicTextPaneUI.java
++        (installUI): New method. This sets up some style attributes
++        for the JTextPane.
++
++	2005-09-20  Roman Kennke  <kennke@aicas.com>
++
++        * javax/swing/plaf/metal/MetalLookAndFeel.java
++        (initComponentDefault): Added and fixed some UI defaults.
++
++	2005-09-20  Roman Kennke  <kennke@aicas.com>
++
++        * javax/swing/plaf/metal/MetalBorders.java
++        (ButtonBorder.paintBorder): Fetch correct color for disabled
++        button border.
++        (getTextFieldBorder): Correctly initialize text field border. This
++        should be a compound border with a MarginBorder and TextFieldBorder
++        instead of a plain TextFieldBorder.
++        (getTextBorder): New method.
++
++	2005-09-20  Roman Kennke  <kennke@aicas.com>
++
++        * javax/swing/text/DefaultStyledDocument.java
++        (setParagraphAttributes): Implemented this method.
++        (insertUpdate): Fixed attribute comparison to avoid NPE.
++
++	2005-09-20  Thomas Fitzsimmons  <fitzsim@redhat.com>
++
++        PR awt/23951
++        * native/jni/gtk-peer/gnu_java_awt_peer_gtk_GtkComponentPeer.c
++        (isRealized): Leave GDK critical region when exiting early.
++
++	2005-09-19  Tom Tromey  <tromey@redhat.com>
++
++        * java/awt/PopupMenu.java (AccessibleAWTPopupMenu.serialVersionUID):
++        New field.
++        * java/awt/TextField.java (AccessibleAWTTextField.serialVersionUID):
++        New field.
++        * java/awt/TextArea.java (AccessibleAWTTextArea.serialVersionUID):
++        New field.
++        * java/awt/Menu.java (AccessibleAWTMenu.serialVersionUID): New field.
++        * java/awt/CheckboxMenuItem.java (AccessibleAWTCheckboxMenuItem.serialVersionUID):
++        New field.
++        * java/awt/TextComponent.java (AccessibleAWTTextComponent.serialVersionUID):
++        New field.
++        * java/awt/MenuItem.java (AccessibleAWTMenuItem.serialVersionUID):
++        New field.
++        * java/awt/Frame.java (AccessibleAWTFrame.serialVersionUID): New
++        field.
++        * java/awt/Dialog.java (AccessibleAWTDialog.serialVersionUID): New
++        field.
++        * java/awt/Button.java (AccessibleAWTButton.serialVersionUID): New
++        field.
++        * java/awt/Window.java (AccessibleAWTWindow.serialVersionUID): New
++        field.
++        * java/awt/ScrollPane.java (AccessibleAWTScrollPane.serialVersionUID):
++        New field.
++        * java/awt/List.java (AccessibleAWTList.serialVersionUID): New field.
++        (AccessibleAWTListChild.serialVersionUID): Likewise.
++        (AccessibleAWTListChild.parent): Moved earlier.
++        (AccessibleAWTListChild.indexInParent): Renamed.
++
++	2005-09-19  David Gilbert  <david.gilbert@object-refinery.com>
++
++        * javax/swing/filechooser/FileView.java:
++        Reformatted and added API doc comments.
++
++	2005-09-19  Anthony Balkissoon  <abalkiss@redhat.com>
++
++        * javax/swing/JRootPane.java:
++        (createGlassPane): Don't set the layout manager to BorderLayout.  Leave
++        it as JPanel's default FlowLayout.
++
++	2005-09-19  Lillian Angel  <langel@redhat.com>
++
++        * javax/swing/ToolTipManager.java:
++        Changed tooltip to be JDialog (no entry in taskbar),
++        instead of JWindow.
++        (actionPerformed): No need to start timer here.
++        (mouseEntered): No need to call showTip here, it is called
++        when the timer fires.
++        (showTip): Shouldn't show tip if it is already visible or
++        the current component is not showing.
++        * javax/swing/plaf/basic/BasicTreeUI.java
++        (getRowForPath): Re-implemented.
++        (mousePressed): Call getRowForPath instead, also
++        added a check in for leaf icons.
++
++	2005-09-19  Anthony Balkissoon  <abalkiss@redhat.com>
++
++        * javax/swing/JLayeredPane.java:
++        (<init>): Set layout manager to null.
++
++	2005-09-19  Anthony Balkissoon  <abalkiss@redhat.com>
++
++        * javax/swing/plaf/basic/BasicInternalFrameUI.java:
++        (GlassPaneDispatcher.handleEvent): Added check for mouseEventTarget
++        being null to avoid NPE.
++
++	2005-09-19  Anthony Balkissoon  <abalkiss@redhat.com>
++
++        * javax/swing/JRootPane.java:
++        (RootLayout.layoutContainer): Added comment about how the
++        components should be sized.  Fixed size of glassPane which fills the
++        entire viewable region, including overtop the menuBar.  Used bounds
++        minus insets for containerSize, as indicated in comment, rather than
++        getSize().  Used setBounds instead of setSize for layeredPane because
++        its relation to the other components' sizes is more obvious that way.
++
++	2005-09-19  Anthony Balkissoon  <abalkiss@redhat.com>
++
++        * javax/swing/plaf/basic/BasicInternalFrameUI.java:
++        (GlassPaneDispatcher.handleEvent): Replaced call to SwingUtilities'
++        convertMouseEvent (with identical source and desination) with a simple
++        cast.  If acquireComponentForMouseEvent reveals we're going to
++        re-dispatch this event to ourselves (and loop infinitely), return. Also
++        replaced contentPane by glassPane as the source argument to
++        SwingUtilities.convertMouseEvent since the glassPane is the real source.
++
++	2005-09-19  David Gilbert  <david.gilbert@object-refinery.com>
++
++        * javax/swing/plaf/basic/BasicArrowButton.java
++        (paintTriangle): minor correction to highlight on triangle for disabled
++        buttons.
++
++	2005-09-19  Tom Tromey  <tromey@redhat.com>
++
++        * javax/print/DocFlavor.java (BYTE_ARRAY.serialVersionUID): New field.
++        (INPUT_STREAM.serialVersionUID): Likewise.
++
++	2005-09-19  Tom Tromey  <tromey@redhat.com>
++
++        * java/text/DateFormat.java (serialVersionUID): New field.
++
++	2005-19-19  Lillian Angel  <langel@redhat.com>
++
++        * javax/swing/plaf/basic/BasicTreeUI.java
++        (selectPath): Changed so DISCONTIGUOUS_TREE_SELECTION is the
++        default.
++        * javax/swing/JTree.java
++        (AccessibleJTreeNode): Initialized all fields.
++        (addAccessibleSelection): Implemented.
++        (clearAccessibleSelection): Implemented.
++        (doAccessibleAction): Implemented.
++        (getAccessibleAction): Implemented.
++        (getAccessibleActionCount): Implemented.
++        (getAccessibleActionDescription): Implemented.
++        (getAccesssibleChild): Remove mod variable, made global.
++        (getAccessibleComponent): Changed to return this, since this
++        class implements AccessibleComponent.
++        (getAccessibleSelection): Likewise.
++        (getAccessibleSelection): Implemented.
++        (getAccessibleSelectionCount): Implemented.
++        (getAccessibleStateSet): Remove mod variable, made global.
++        (getCursor): Implemented.
++        (isAccessibleChildSelected): Remove mod variable, made global.
++        (removeAccessibleSelection): Implemented.
++        (selectAllAccessibleSelection): Implemented.
++        (setCursor): Implemented.
++        (AccessibleJTree): Nothing to do.
++        (getAccessibleAt): Implemented.
++        (getAccessibleSelection): Implemented.
++        (getAccessibleSelection): Implemented.
++
++	2005-09-19  Tom Tromey  <tromey@redhat.com>
++
++        * javax/xml/xpath/XPathFunctionException.java (serialVersionUID): New
++        field.
++        * javax/xml/xpath/XPathFactoryConfigurationException.java
++        (serialVersionUID): New field.
++        * javax/xml/xpath/XPathExpressionException.java (serialVersionUID): New
++        field.
++        * javax/xml/xpath/XPathException.java (serialVersionUID): New field.
++        * javax/xml/transform/TransformerConfigurationException.java (locator):
++        Removed.
++        (TransformerConfigurationException): Pass locator to super constructor.
++        (serialVersionUID): New field.
++        * javax/xml/transform/TransformerFactoryConfigurationError.java
++        (serialVersionUID): New field.
++        * javax/xml/transform/TransformerException.java (containedException):
++        Renamed field.
++        (serialVersionUID): New field.
++
++	2005-09-19  Roman Kennke  <kennke@aicas.com>
++
++        * javax/swing/plaf/basic/BasicTextUI.java
++        (UpdateHandler.propertyChange): Handle changes of the editable
++        property.
++        (paintBackground): Moved implementation to
++        UpdateHandler.propertyChange. This method itself should not fill
++        the background.
++
++	2005-09-19  Roman Kennke  <kennke@aicas.com>
++
++        * javax/swing/border/TitledBorder.java
++        (paintBorder): Correctly set the Y offset for the border title.
++        (getMeasurements): Determine the correct Y offset for the border
++        title.
++
++	2005-09-19  Robert Schuster  <robertschuster@fsfe.org>
++
++        * java/awt/Checkbox.java:
++        (Checkbox): Properly set as selected checkbox in corresponding
++        checkbox group.
++        (paramString): Removed checkbox group information.
++        * java/awt/Component.java:
++        (paramString): Removed redundant "=".
++
++	2005-09-19  David Gilbert  <david.gilbert@object-refinery.com>
++
++        * javax/swing/plaf/basic/BasicComboBoxUI.java
++        (installComponents): call configureArrowButton after creating button,
++        (configureEditor): set the selected item,
++        (configureArrowButton): set a zero margin,
++        (getPreferredSize): delegate to getMinimumSize(),
++        (getMinimumSize): now uses code that was in getPreferredSize(),
++        (getDefaultSize): reduce default height,
++        (ComboBoxLayoutManager.layoutComponent): use comboBox height as button
++        width,
++        (PropertyChangeHandler.propertyChange): set font on arrow button,
++        * javax/swing/plaf/metal/MetalComboBoxUI.java
++        (instances): deleted field,
++        (MetalComboBoxLayoutManager): new class,
++        (MetalPropertyChangeListener): new class,
++        (MetalComboPopup): new class,
++        (createUI): just return new instance,
++        (createEditor): implemented,
++        (createPopup): implemented,
++        (createArrowButton): implemented,
++        (createPropertyChangeListener): implemented,
++        (paint): implemented,
++        (editablePropertyChanged): implemented,
++        (createLayoutManager): implemented,
++        (removeListeners): implemented,
++        (getMinimumSize): implemented.
++
++	2005-09-19  Andreas Tobler  <a.tobler@schweiz.ch>
++
++        * native/jni/gtk-peer/gnu_java_awt_peer_gtk_GdkFontPeer.c
++        (Java_gnu_java_awt_peer_gtk_GdkFontPeer_dispose): Fix double
++        unreferencing pfont->font. Unref pfont->layout instead.
++
+ 2005-09-20  Dalibor Topic  <robilad@kaffe.org>
+ 
+ 	Resynced with GNU Classpath.
+Index: kaffe/kaffeh/Makefile.am
+===================================================================
+RCS file: /cvs/kaffe/kaffe/kaffe/kaffeh/Makefile.am,v
+retrieving revision 1.18
+retrieving revision 1.19
+diff -u -p -r1.18 -r1.19
+--- kaffe/kaffeh/Makefile.am	21 Dec 2004 07:45:17 -0000	1.18
++++ kaffe/kaffeh/Makefile.am	21 Sep 2005 22:37:58 -0000	1.19
+@@ -30,11 +30,18 @@ DISTCLEANFILES = $(GEN_SRCS)
+ kaffeh_CFLAGS = \
+ 	$(CFLAGS_PG)
+ 
++if ENABLE_BINRELOC
++BINRELOC_SOURCES=\
++	../../binreloc/prefix.c \
++	../../binreloc/prefix.h
++endif
++
+ kaffeh_SOURCES = \
+ 	main.c \
+ 	mem.c \
+ 	sigs.c \
+-	support.c
++	support.c \
++	$(BINRELOC_SOURCES)
+ 
+ nodist_kaffeh_SOURCES = $(GEN_SRCS)
+ 
+Index: kaffe/kaffeh/Makefile.in
+===================================================================
+RCS file: /cvs/kaffe/kaffe/kaffe/kaffeh/Makefile.in,v
+retrieving revision 1.152
+retrieving revision 1.153
+diff -u -p -r1.152 -r1.153
+--- kaffe/kaffeh/Makefile.in	17 Sep 2005 21:37:41 -0000	1.152
++++ kaffe/kaffeh/Makefile.in	21 Sep 2005 22:37:58 -0000	1.153
+@@ -78,13 +78,17 @@ CONFIG_CLEAN_FILES =
+ am__installdirs = "$(DESTDIR)$(bindir)"
+ binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
+ PROGRAMS = $(bin_PROGRAMS)
++am__kaffeh_SOURCES_DIST = main.c mem.c sigs.c support.c \
++	../../binreloc/prefix.c ../../binreloc/prefix.h
++@ENABLE_BINRELOC_TRUE@am__objects_1 = kaffeh-prefix.$(OBJEXT)
+ am_kaffeh_OBJECTS = kaffeh-main.$(OBJEXT) kaffeh-mem.$(OBJEXT) \
+-	kaffeh-sigs.$(OBJEXT) kaffeh-support.$(OBJEXT)
+-am__objects_1 = kaffeh-constants.$(OBJEXT) kaffeh-debug.$(OBJEXT) \
++	kaffeh-sigs.$(OBJEXT) kaffeh-support.$(OBJEXT) \
++	$(am__objects_1)
++am__objects_2 = kaffeh-constants.$(OBJEXT) kaffeh-debug.$(OBJEXT) \
+ 	kaffeh-file.$(OBJEXT) kaffeh-inflate.$(OBJEXT) \
+ 	kaffeh-jar.$(OBJEXT) kaffeh-readClass.$(OBJEXT) \
+ 	kaffeh-utf8const.$(OBJEXT)
+-nodist_kaffeh_OBJECTS = $(am__objects_1)
++nodist_kaffeh_OBJECTS = $(am__objects_2)
+ kaffeh_OBJECTS = $(am_kaffeh_OBJECTS) $(nodist_kaffeh_OBJECTS)
+ kaffeh_LDADD = $(LDADD)
+ DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)/config
+@@ -98,7 +102,7 @@ LTCOMPILE = $(LIBTOOL) --tag=CC --mode=c
+ LINK = $(LIBTOOL) --tag=CC --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+ 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+ SOURCES = $(kaffeh_SOURCES) $(nodist_kaffeh_SOURCES)
+-DIST_SOURCES = $(kaffeh_SOURCES)
++DIST_SOURCES = $(am__kaffeh_SOURCES_DIST)
+ HEADERS = $(noinst_HEADERS)
+ ETAGS = etags
+ CTAGS = ctags
+@@ -404,11 +408,16 @@ DISTCLEANFILES = $(GEN_SRCS)
+ kaffeh_CFLAGS = \
+ 	$(CFLAGS_PG)
+ 
++@ENABLE_BINRELOC_TRUE@BINRELOC_SOURCES = \
++@ENABLE_BINRELOC_TRUE@	../../binreloc/prefix.c \
++@ENABLE_BINRELOC_TRUE@	../../binreloc/prefix.h
++
+ kaffeh_SOURCES = \
+ 	main.c \
+ 	mem.c \
+ 	sigs.c \
+-	support.c
++	support.c \
++	$(BINRELOC_SOURCES)
+ 
+ nodist_kaffeh_SOURCES = $(GEN_SRCS)
+ noinst_HEADERS = \
+@@ -495,6 +504,7 @@ distclean-compile:
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kaffeh-jar.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kaffeh-main.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kaffeh-mem.Po@am__quote@
++@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kaffeh-prefix.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kaffeh-readClass.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kaffeh-sigs.Po@am__quote@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kaffeh-support.Po@am__quote@
+@@ -576,6 +586,20 @@ kaffeh-support.obj: support.c
+ @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='support.c' object='kaffeh-support.obj' libtool=no @AMDEPBACKSLASH@
+ @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+ @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kaffeh_CFLAGS) $(CFLAGS) -c -o kaffeh-support.obj `if test -f 'support.c'; then $(CYGPATH_W) 'support.c'; else $(CYGPATH_W) '$(srcdir)/support.c'; fi`
++
++kaffeh-prefix.o: ../../binreloc/prefix.c
++@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kaffeh_CFLAGS) $(CFLAGS) -MT kaffeh-prefix.o -MD -MP -MF "$(DEPDIR)/kaffeh-prefix.Tpo" -c -o kaffeh-prefix.o `test -f '../../binreloc/prefix.c' || echo '$(srcdir)/'`../../binreloc/prefix.c; \
++@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/kaffeh-prefix.Tpo" "$(DEPDIR)/kaffeh-prefix.Po"; else rm -f "$(DEPDIR)/kaffeh-prefix.Tpo"; exit 1; fi
++@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='../../binreloc/prefix.c' object='kaffeh-prefix.o' libtool=no @AMDEPBACKSLASH@
++@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
++@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kaffeh_CFLAGS) $(CFLAGS) -c -o kaffeh-prefix.o `test -f '../../binreloc/prefix.c' || echo '$(srcdir)/'`../../binreloc/prefix.c
++
++kaffeh-prefix.obj: ../../binreloc/prefix.c
++@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kaffeh_CFLAGS) $(CFLAGS) -MT kaffeh-prefix.obj -MD -MP -MF "$(DEPDIR)/kaffeh-prefix.Tpo" -c -o kaffeh-prefix.obj `if test -f '../../binreloc/prefix.c'; then $(CYGPATH_W) '../../binreloc/prefix.c'; else $(CYGPATH_W) '$(srcdir)/../../binreloc/prefix.c'; fi`; \
++@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/kaffeh-prefix.Tpo" "$(DEPDIR)/kaffeh-prefix.Po"; else rm -f "$(DEPDIR)/kaffeh-prefix.Tpo"; exit 1; fi
++@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='../../binreloc/prefix.c' object='kaffeh-prefix.obj' libtool=no @AMDEPBACKSLASH@
++@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
++@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kaffeh_CFLAGS) $(CFLAGS) -c -o kaffeh-prefix.obj `if test -f '../../binreloc/prefix.c'; then $(CYGPATH_W) '../../binreloc/prefix.c'; else $(CYGPATH_W) '$(srcdir)/../../binreloc/prefix.c'; fi`
+ 
+ kaffeh-constants.o: constants.c
+ @am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(kaffeh_CFLAGS) $(CFLAGS) -MT kaffeh-constants.o -MD -MP -MF "$(DEPDIR)/kaffeh-constants.Tpo" -c -o kaffeh-constants.o `test -f 'constants.c' || echo '$(srcdir)/'`constants.c; \
+Index: kaffe/kaffeh/main.c
+===================================================================
+RCS file: /cvs/kaffe/kaffe/kaffe/kaffeh/main.c,v
+retrieving revision 1.17
+retrieving revision 1.18
+diff -u -p -r1.17 -r1.18
+--- kaffe/kaffeh/main.c	17 Jul 2005 08:11:20 -0000	1.17
++++ kaffe/kaffeh/main.c	21 Sep 2005 22:37:58 -0000	1.18
+@@ -18,6 +18,21 @@
+ #include "kaffeh-support.h"
+ #include "utf8const.h"
+ #include "debug.h"
++#include "system.h"
++
++#if defined(HAVE_GETTEXT)
++#include <libintl.h>
++#define _(T) gettext(T)
++#else
++#define _(T) (T)
++#endif
++#if defined(HAVE_LC_MESSAGES)
++#include <locale.h>
++#endif
++
++#ifdef ENABLE_BINRELOC
++#include "prefix.h"
++#endif
+ 
+ #define	BUFSZ	1024
+ #define	PATHSZ	1024
+@@ -214,6 +229,26 @@ options(int argc, char** argv)
+ {
+ 	int i;
+ 
++
++	char * bootclasspath = NULL;
++	char * classpath = NULL;
++
++	bootclasspath = malloc(1);
++	if (bootclasspath == NULL) 
++	  {
++	    fprintf(stderr,  _("Error: out of memory.\n"));
++	    exit(EXIT_FAILURE);
++	  }
++	*bootclasspath = '\0';
++
++	classpath = malloc(1);
++	if (classpath == NULL) 
++	  {
++	    fprintf(stderr,  _("Error: out of memory.\n"));
++	    exit(EXIT_FAILURE);
++	  }
++	*classpath = '\0';
++
+ 	for (i = 1; i < argc; i++) {
+ 		if (argv[i][0] != '-') {
+ 			break;
+@@ -243,12 +278,54 @@ options(int argc, char** argv)
+ 		}
+ #endif /*KAFFE_VMDEBUG*/
+ 		else if (strcmp(argv[i], "-classpath") == 0) {
+-			i++;
+-			strcpy(realClassPath, argv[i]);
++		  char * newcp;
++		  size_t cplen;
++
++		  i++;
++
++		  cplen = strlen(classpath)
++		    + strlen(argv[i])
++		    + strlen(path_separator)
++		    + 1;
++
++		  newcp = malloc(cplen);
++		  if (newcp == NULL)
++		    {
++		      fprintf(stderr,  _("Error: out of memory.\n"));
++		      exit(EXIT_FAILURE);
++		    }
++		  
++		  strcpy(newcp, classpath);
++		  strcat(newcp, path_separator);
++		  strcat(newcp, argv[i]);
++
++		  free(classpath);
++		  classpath = newcp;
+ 		}
+ 		else if (strcmp(argv[i], "-bootclasspath") == 0) {
+-			i++;
+-			strcpy(realClassPath, argv[i]);
++		  char * newcp;
++		  size_t cplen;
++
++		  i++;
++
++		  cplen = strlen(bootclasspath)
++		    + strlen(argv[i])
++		    + strlen(path_separator)
++		    + 1;
++
++		  newcp = malloc(cplen);
++		  if (newcp == NULL)
++		    {
++		      fprintf(stderr,  _("Error: out of memory.\n"));
++		      exit(EXIT_FAILURE);
++		    }
++		  
++		  strcpy(newcp, bootclasspath);
++		  strcat(newcp, path_separator);
++		  strcat(newcp, argv[i]);
++
++		  free(bootclasspath);
++		  bootclasspath = newcp;
+ 		}
+ 		else if (strcmp(argv[i], "-o") == 0) {
+ 			i++;
+@@ -262,6 +339,28 @@ options(int argc, char** argv)
+ 			dprintf("Unknown flag: %s\n", argv[i]);
+ 		}
+ 	}
++
++
++	if (strlen(bootclasspath) > 0) 
++	  {
++	    strcpy(realClassPath, bootclasspath);
++	  } 
++	else 
++	  {
++
++#if defined(ENABLE_BINRELOC)
++	    strcpy(realClassPath, BR_PREFIX("/jre/lib/rt.jar"));
++#endif
++	  }
++
++	free(bootclasspath);
++
++	if (strlen(classpath) > 0)
++	  {
++	    strcat(realClassPath, classpath);
++	  }
++
++	free(classpath);
+ 
+ 	/* Return first no-flag argument */
+ 	return (i);

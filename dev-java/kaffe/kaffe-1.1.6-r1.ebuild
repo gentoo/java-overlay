@@ -57,6 +57,14 @@ pkg_setup() {
 	fi
 }
 
+src_unpack() {
+	unpack ${A}
+	cd ${S}
+	
+	# a fix from upstream, courtesy of dalibor
+	epatch ${FILESDIR}/${P}-kaffeh.patch
+}
+
 src_compile() {
 	local confargs=""
 
