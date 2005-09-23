@@ -15,7 +15,7 @@ KEYWORDS="~x86 ~sparc ~ppc ~amd64"
 #See their bug 24025
 
 #cairo to official tree after >=0.5.0 is out of package.mask
-IUSE="cairo examples gtk xml2"
+IUSE="cairo examples gcj gtk xml2"
 
 RDEPEND="cairo? ( >=x11-libs/cairo-0.5.0 )
 		gtk? ( >=x11-libs/gtk+-2.4
@@ -23,7 +23,8 @@ RDEPEND="cairo? ( >=x11-libs/cairo-0.5.0 )
 		xml2? ( >=dev-libs/libxml2-2.6.8 >=dev-libs/libxslt-1.1.11 )"
 
 DEPEND="app-arch/zip
-		dev-java/jikes
+		gcj? ( >=sys-devel/gcc-4.0.1 )
+		!gcj? ( dev-java/jikes )
 		${REPEND}"
 
 S=${WORKDIR}/${MY_P}
@@ -33,7 +34,13 @@ src_compile() {
 	# at a later point. Currently Gentoo uses mainly GCJ 3.3 (from the
 	# corresponding GCC) which cannot compile GNU Classpath correctly.
 	# Another possibility would be ECJ (from Eclipse).
-	local compiler="--with-jikes"
+	declare compiler
+
+	if use gjc; then
+		compiler="--with-gcj"
+	else
+		compiler="--with-jikes"
+	fi
 
 	econf ${compiler} \
 		$(use_enable cairo gtk-cairo) \
