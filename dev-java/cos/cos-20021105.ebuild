@@ -10,8 +10,7 @@ DESCRIPTION=" The com.oreilly.servlet package is the \"must have\" class library
 HOMEPAGE="http://servlets.com/cos/"
 SRC_URI="http://servlets.com/${PN}/${MY_P}.zip"
 
-# TODO determine license
-LICENSE=""
+LICENSE="cos"
 SLOT="0"
 KEYWORDS="~x86"
 IUSE="jikes doc"
@@ -19,7 +18,7 @@ IUSE="jikes doc"
 # TODO determine vm version requirements
 DEPEND="virtual/jdk
 	app-arch/unzip
-	dev-java/ant
+	dev-java/ant-core
 	jikes? (dev-java/jikes)"
 RDEPEND="virtual/jre
 	=dev-java/servletapi-2.3*"
@@ -36,7 +35,7 @@ src_unpack() {
 	rm src/com/oreilly/servlet/CacheHttpServlet.java
 
 	cp ${FILESDIR}/build-${PVR}.xml build.xml
-	cat > build.properties <<-EOF 
+	cat > build.properties <<-EOF
 		classpath=$(java-pkg_getjars servletapi-2.3)
 	EOF
 }
