@@ -17,7 +17,7 @@ KEYWORDS="~x86"
 IUSE="doc jikes"
 
 DEPEND="virtual/jdk
-	dev-java/ant
+	dev-java/ant-core
 	jikes? (dev-java/jikes)"
 RDEPEND="virtual/jre
 	dev-java/commons-collections"
@@ -26,7 +26,7 @@ S=${WORKDIR}/${PN}
 src_unpack() {
 	unpack ${A}
 	cd ${S}
-	
+
 	cd ${S}/externals
 	rm *.jar
 	java-pkg_jar-from commons-collections
@@ -42,6 +42,6 @@ src_compile() {
 
 src_install() {
 	java-pkg_dojar build/*.jar
-	
+
 	use doc && java-pkg_dohtml -r build/api
 }
