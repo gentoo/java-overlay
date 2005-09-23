@@ -1,0 +1,9 @@
+# ChangeLog for dev-java/kaffe-sdk
+# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-projects/bsd/fbsd/overlay/dev-java/kaffe-sdk/ChangeLog,v 1.1 2005/09/08 10:46:40 flameeyes Exp $
+
+*kaffe-sdk-1.4 (08 Sep 2005)
+
+  08 Sep 2005; Diego Pettenò <flameeyes@gentoo.org> +kaffe-sdk-1.4.ebuild:
+  Added dummy ebuild to get around java virtuals.
+
