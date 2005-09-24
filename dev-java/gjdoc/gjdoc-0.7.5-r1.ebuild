@@ -6,7 +6,7 @@ inherit java-pkg
 
 DESCRIPTION="A javadoc compatible Java source documentation generator."
 HOMEPAGE="http://www.gnu.org/software/cp-tools/"
-SRC_URI="ftp://ftp.gnu.org/gnu/classpath/gjdoc-${PV}.tar.gz"
+SRC_URI="ftp://ftp.gnu.org/gnu/classpath/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -23,6 +23,7 @@ KEYWORDS="~x86 ~ppc"
 #
 IUSE=""
 
+# TODO use a specific version of jdk/jre
 DEPEND=">=dev-java/antlr-2.7.1
 	virtual/jdk"
 
@@ -37,6 +38,9 @@ src_compile() {
 }
 
 src_install() {
-	java-pkg_dojar *.jar
+	local jars="com-sun-tools-doclets-Taglet gnu-classpath-tools-gjdoc com-sun-javadoc"
+	for jar in ${jars}; do
+		java-pkg_newjar ${jar}-${PV}.jar ${jar}.jar
+	done
 	dobin ${FILESDIR}/gjdoc
 }
