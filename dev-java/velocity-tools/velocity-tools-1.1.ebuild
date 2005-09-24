@@ -27,7 +27,7 @@ COMMON_DEPEND="
 	=dev-java/velocity-1*
 	dev-java/dvsl"
 DEPEND="virtual/jdk
-	dev-java/ant
+	dev-java/ant-core
 	jikes? (dev-java/jikes)
 	${COMMON_DEPEND}"
 RDEPEND="virtual/jre
@@ -44,7 +44,7 @@ src_unpack() {
 
 	local packages="commons-beanutils-1.6 commons-collections commons-digester
 		commons-logging commons-validator dom4j-1 jaxen-1.1 
-		servletapi-2.3 struts struts-sslext-1.1 velocity-1 dvsl"
+		servletapi-2.3 struts-1.1 struts-sslext-1.1 velocity-1 dvsl"
 	local classpath
 	for dependency in ${packages}; do
 		local dependency_classpath=$(java-pkg_getjars ${dependency})
