@@ -14,10 +14,11 @@ SLOT="3.1"
 KEYWORDS="~x86"
 IUSE="jikes doc"
 
-DEPEND="virtual/jdk
+# TODO test with 1.3
+DEPEND=">=virtual/jdk-1.4
 	dev-java/ant
 	jikes? (dev-java/jikes)"
-RDEPEND="virtual/jre"
+RDEPEND=">=virtual/jre-1.4"
 S="${WORKDIR}/${MY_P}"
 
 src_compile() {
@@ -32,7 +33,7 @@ src_install() {
 	java-pkg_dojar lib/*.jar
 	java-pkg_doso lib/*.so
 	dobin bin/*
-	
+
 	dodoc doc/{AUTHORS,readme.txt,revisions.txt}
 
 	use doc && java-pkg_dohtml -r doc/english/ api
