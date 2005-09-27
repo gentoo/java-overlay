@@ -1,7 +1,0 @@
-# ChangeLog for dev-java/gjdoc
-# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-  24 Sep 2005; <nichoj@gentoo.org> ChangeLog:
-  Imported from the Java experimental overlay. Ebuild initially by belanger.
-
