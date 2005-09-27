@@ -2,13 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/kaffe/kaffe-1.1.5-r1.ebuild,v 1.4 2005/09/13 14:45:46 gustavoz Exp $
 
-inherit eutils java flag-o-matic
+inherit base eutils java flag-o-matic
 
 DESCRIPTION="A cleanroom, open source Java VM and class libraries"
 SRC_URI="http://www.kaffe.org/ftp/pub/kaffe/v1.1.x-development/${P/_/-}.tar.gz"
 HOMEPAGE="http://www.kaffe.org/"
 
-#robilad recommned in bug 103978 that we leave the X and QT 
+#robilad recommended in bug 103978 that we leave the X and QT
 #awt backends disabled for now. Please check the status of these
 #backends with new upstream versions.
 #	X?( virtual/x11 )
@@ -31,15 +31,18 @@ DEPEND="
 	alsa? ( >=media-libs/alsa-lib-1.0.1 )
 	gmp? ( >=dev-libs/gmp-3.1 )"
 RDEPEND=${DEPEND}
+#We need to build this after kaffe because it is implemented in java
+PDEPEND="dev-java/gjdoc"
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86 sparc ~amd64 -ppc"
+KEYWORDS="~x86 ~sparc ~amd64 ~ppc"
 #X qt
 IUSE="alsa esd gmp gtk nls"
 
 PROVIDE="virtual/jdk
 	virtual/jre"
-#S=${WORKDIR}/kaffe-${date}
+
+PATCHES="${FILESDIR}/${P}-kaffeh.patch"
 
 pkg_setup() {
 	if ! use gmp; then
@@ -55,14 +58,6 @@ pkg_setup() {
 		ewarn "gtk use flag turned off."
 		epause 3
 	fi
-}
-
-src_unpack() {
-	unpack ${A}
-	cd ${S}
-	
-	# a fix from upstream, courtesy of dalibor
-	epatch ${FILESDIR}/${P}-kaffeh.patch
 }
 
 src_compile() {
@@ -86,7 +81,9 @@ src_compile() {
 	# TODO needs testing!
 	use ppc && confargs="${confargs} --with-engine=intrp"
 
+	# --with-rt-jar in 1.1.7 to use the system installed classpath
 	./configure \
+		--disable-dependency-tracking \
 		--prefix=/opt/${P} \
 		--host=${CHOST} \
 		$(use_with alsa)\
@@ -95,10 +92,8 @@ src_compile() {
 		$(use_enable nls) \
 		$(use_with gtk classpath-gtk-awt) \
 		${confargs} \
-		--with-jikes \
-		# TODO disable gjdoc, PDEPEND on gjdoc, then patch javadoc to use our 
-		# -classpath $(java-config -p gjdoc)
-		--enable-gjdoc || die "Failed to configure"
+		--with-jikes || die "Failed to configure."
+
 	# --with-bcel
 	# --with-profiling
 	make || die "Failed to compile"
@@ -107,6 +102,7 @@ src_compile() {
 src_install() {
 	make DESTDIR=${D} install || die "Failed to install"
 	set_java_env ${FILESDIR}/${VMHANDLE} || die "Failed to install environment files"
+	dosym /usr/bin/gjdoc /opt/${P}/bin/javadoc
 }
 
 pkg_postinst() {
