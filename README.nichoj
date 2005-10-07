@@ -4,12 +4,7 @@ Notes so I don't forget to fix them eventually:
 ################
 # Packages that don't need full ant, only ant-core
 ################
-dev-java/poi
-dev-java/joscar
-dev-java/asm-1.4
-dev-java/ant-owanttask
 dev-java/ant-contrib
-dev-java/glazedlists
 
 ###################################################
 # Packages that just need ant-tasks for unit tests
