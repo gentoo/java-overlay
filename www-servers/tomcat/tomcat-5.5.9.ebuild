@@ -31,16 +31,16 @@ RDEPEND=">=virtual/jdk-1.4
 	   >=dev-java/commons-pool-1.2
 	   ~dev-java/jaxen-1.0
 	   >=dev-java/junit-3.8.1
-	   dev-java/jmx
+	   =dev-java/mx4j-2.1*
 	   >=dev-java/log4j-1.2.8
 	   >=dev-java/jakarta-regexp-1.3
 	   >=dev-java/saxpath-1.0
 	   ~dev-java/servletapi-2.4
 	   =dev-java/struts-1.1*
-	   dev-java/sun-jaf-bin
+	   =dev-java/gnu-jaf-1*
 	   >=dev-java/xerces-2.6.2-r1
 		jikes? ( dev-java/jikes )"
-IUSE="examples jikes"
+IUSE="doc examples jikes"
 
 S=${WORKDIR}/jakarta-${P}-src
 
@@ -64,7 +64,7 @@ src_unpack() {
 
 	mkdir ./bin && cd ./bin
 	java-pkg_jar-from commons-logging commons-logging-api.jar
-	java-pkg_jar-from jmx jmxri.jar jmx.jar
+	java-pkg_jar-from mx4j-2.1 mx4j.jar jmx.jar
 	java-pkg_jar-from commons-daemon
 
 	mkdir ../common/endorsed && cd ../common/endorsed
@@ -91,7 +91,7 @@ src_compile(){
 	local antflags="-Dbase.path=${T}"
 	use jikes && antflags="${antflags} -Dbuild.compiler=jikes"
 
-	antflags="${antflags} -Dactivation.jar=$(java-config -p sun-jaf-bin)"
+	antflags="${antflags} -Dactivation.jar=$(java-config -p gnu-jaf-1)"
 	antflags="${antflags} -Dcommons-collections.jar=$(java-config -p commons-collections)"
 	antflags="${antflags} -Dcommons-daemon.jar=$(java-config -p commons-daemon)"
 	antflags="${antflags} -Dcommons-digester.jar=$(java-config -p commons-digester)"
@@ -106,13 +106,13 @@ src_compile(){
 	antflags="${antflags} -Djdt.jar=$(java-pkg_getjar eclipse-jdtcore-3.0 jdtcore.jar)"
 	antflags="${antflags} -Dlog4j.jar=$(java-config -p log4j)"
 	antflags="${antflags} -Dregexp.jar=$(java-config -p jakarta-regexp-1.3)"
-	antflags="${antflags} -Dstruts.jar=$(java-pkg_getjar struts struts.jar)"
+	antflags="${antflags} -Dstruts.jar=$(java-pkg_getjar struts-1.1 struts.jar)"
 	antflags="${antflags} -Dcommons-beanutils.jar=$(java-pkg_getjar commons-beanutils-1.7 commons-beanutils.jar)"
 	antflags="${antflags} -Dcommons-logging.jar=$(java-pkg_getjar commons-logging commons-logging.jar)"
 	antflags="${antflags} -Dcommons-logging-api.jar=$(java-pkg_getjar commons-logging commons-logging-api.jar)"
 	antflags="${antflags} -Djaxen.jar=$(java-pkg_getjar jaxen jaxen-full.jar)"
-	antflags="${antflags} -Djmx.jar=$(java-pkg_getjar jmx jmxri.jar)"
-	antflags="${antflags} -Djmx-tools.jar=$(java-pkg_getjar jmx jmxtools.jar)"
+	antflags="${antflags} -Djmx.jar=$(java-pkg_getjar mx4j-2.1 mx4j.jar)"
+	antflags="${antflags} -Djmx-tools.jar=$(java-pkg_getjar mx4j-2.1 mx4j-tools.jar)"
 	antflags="${antflags} -Dsaxpath.jar=$(java-pkg_getjar saxpath saxpath.jar)"
 	antflags="${antflags} -DxercesImpl.jar=$(java-pkg_getjar xerces-2 xercesImpl.jar)"
 	antflags="${antflags} -Dxml-apis.jar=$(java-pkg_getjar xerces-2 xml-apis.jar)"
@@ -191,7 +191,7 @@ src_install() {
 	# replace a packed struts.jar
 	cd server/webapps/admin/WEB-INF/lib
 	rm -f struts.jar
-	java-pkg_jar-from struts struts.jar
+	java-pkg_jar-from struts-1.1 struts.jar
 	cd ${base}
 
 	# replace the default pw with a random one, see #92281 

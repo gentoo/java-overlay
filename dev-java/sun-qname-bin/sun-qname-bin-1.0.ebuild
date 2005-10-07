@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="~x86"
 IUSE=""
 
-DEPEND="virtual/jdk"
+DEPEND="app-arch/unzip"
 RDEPEND="virtual/jre"
 DOWNLOAD_URL="http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&PartDetailId=7751-javax_qname-1.0-fr-class-oth-JSpec&SiteId=JSC&TransactionId=noreg"
 

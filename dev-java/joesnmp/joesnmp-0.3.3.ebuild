@@ -16,7 +16,7 @@ IUSE="doc jikes"
 # TODO determine java veresions
 DEPEND="virtual/jdk
 	app-arch/unzip
-	dev-java/ant
+	dev-java/ant-core
 	jikes? (dev-java/jikes)"
 RDEPEND="virtual/jre"
 

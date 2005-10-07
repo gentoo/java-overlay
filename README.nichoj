@@ -1,0 +1,45 @@
+
+Notes so I don't forget to fix them eventually:
+
+################
+# Packages that don't need full ant, only ant-core
+################
+dev-java/adaptx
+dev-java/xmlrpc
+dev-java/joda-time
+dev-java/poi
+dev-java/joscar
+dev-java/asm-1.4
+dev-java/ant-owanttask
+dev-java/ant-contrib
+dev-java/glazedlists
+
+###################################################
+# Packages that just need ant-tasks for unit tests
+# and/or should use src_test for testing
+###################################################
+dev-java/commons-pool
+dev-java/commons-jexl
+dev-java/commons-digester
+dev-java/commons-discovery
+dev-java/commons-httpclient
+dev-java/junitperf
+dev-java/xpp3
+dev-java/saxpath
+
+####################################################
+# Broken jikes
+###################################################
+dev-java/joda-time
+
+
+###################################################
+# Get rid of xjavac
+###################################################
+xerces
+
+
+##################################
+# doesn't need ant
+##################################
+dev-java/trove

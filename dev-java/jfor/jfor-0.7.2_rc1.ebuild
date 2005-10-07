@@ -25,7 +25,7 @@ KEYWORDS="~x86 ~ppc"
 IUSE=""
 
 DEPEND="virtual/jdk
-	dev-java/ant
+	dev-java/ant-core
 	dev-java/xerces
 	|| (	dev-java/avalon-logkit
 		dev-java/avalon-logkit-bin)"

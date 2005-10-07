@@ -17,9 +17,10 @@ IUSE="jikes doc"
 DEPEND="virtual/jdk
 	app-arch/unzip
 	jikes? (dev-java/jikes)
-	dev-java/ant"	
+	dev-java/ant-core"
 RDEPEND="virtual/jre
-	=dev-java/servletapi-2.3*"
+	=dev-java/servletapi-2.3*
+	=dev-java/burlap-2.1*"
 
 SERVLET="servletapi-2.3 servlet.jar"
 
@@ -42,7 +43,7 @@ src_unpack() {
 }
 
 src_compile() {
-	local antflags="-Dproject.name=${PN} jar"
+	local antflags="-Dproject.name=${PN} -Dclasspath=$(java-pkg_getjars burlap-2.1) jar"
 	use jikes && antflags="-Dbuild.compiler=jikes ${antflags}"
 	use doc && antflags="${antflags} javadoc"
 

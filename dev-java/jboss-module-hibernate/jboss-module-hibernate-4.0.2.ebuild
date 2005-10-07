@@ -4,7 +4,7 @@
 
 inherit jboss-4
 DESCRIPTION="Hibernate module of JBoss Application Server"
-GENTOO_CONF="jboss-${PVR}-gentoo-r1.data"
+GENTOO_CONF="jboss-${PV}-gentoo-r2.data"
 SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${BASE_URL}/${GENTOO_CONF} ${ECLASS_URI}"
 HOMEPAGE="http://www.jboss.org"
 LICENSE="LGPL-2"

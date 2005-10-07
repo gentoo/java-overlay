@@ -6,8 +6,8 @@ inherit java-pkg eutils
 
 MY_P=${P/_beta/-beta-}-src
 DESCRIPTION="Project Management and Comprehension Tool for Java"
-SRC_URI="mirror://gentoo/${MY_P}.tar.bz2
-mirror://gentoo/maven-plugins-20050905.tar.bz2"
+SRC_URI="http://gentooexperimental.org/distfiles/${MY_P}.tar.bz2
+http://gentooexperimental.org/distfiles/maven-plugins-20050905.tar.bz2"
 # svn co http://svn.apache.org/repos/asf/maven/maven-1/core/tags/maven-1.1-beta-1/
 # on 2005-09-05:
 # svn co http://svn.apache.org/repos/asf/maven/maven-1/plugins/trunk/ maven-plugins

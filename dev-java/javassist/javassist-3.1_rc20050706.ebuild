@@ -7,7 +7,7 @@ inherit java-pkg
 MY_PV="20050706"
 MY_P="${PN}-${MY_PV}"
 DESCRIPTION="Javassist makes Java bytecode manipulation simple."
-SRC_URI="http://www.scorec.rpi.edu/~nichoj/projects/java/${MY_P}.tar.bz2"
+SRC_URI="http://gentooexperimental.org/distfiles/${MY_P}.tar.bz2"
 HOMEPAGE="http://www.csg.is.titech.ac.jp/~chiba/javassist/"
 
 LICENSE="MPL-1.1"

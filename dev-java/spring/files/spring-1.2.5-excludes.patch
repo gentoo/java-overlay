@@ -1,0 +1,22 @@
+diff -ru spring-framework-1.2.4/build.xml spring-framework-1.2.4-patched/build.xml
+--- spring-framework-1.2.4/build.xml	2005-08-27 23:59:46.000000000 -0400
++++ spring-framework-1.2.4-patched/build.xml	2005-08-28 00:03:58.000000000 -0400
+@@ -140,11 +140,12 @@
+ 			<!-- Include Commons Attributes generated Java sources -->
+ 			<src path="${commons.attributes.tempdir.src}"/>
+ 			<classpath refid="all-libs"/>
+-			<exclude name="**/toplink/**"/>
+-			<exclude name="**/ojb/**"/>
+-			<exclude name="**/jsf/**"/>
+-			<exclude name="**/jdo/**"/>
+-			<exclude name="**/ibatis/**"/>
++                       <exclude name="**/toplink/**"/>
++                       <exclude name="**/ojb/**"/>
++                       <exclude name="**/jsf/**"/>
++                       <exclude name="**/jdo/**"/>
++                       <exclude name="**/ibatis/**"/>
++
+ 		</javac>
+ 
+ 		<rmic base="${target.classes.dir}" classname="org.springframework.remoting.rmi.RmiInvocationWrapper"/>
+Only in spring-framework-1.2.4: build.xml.orig

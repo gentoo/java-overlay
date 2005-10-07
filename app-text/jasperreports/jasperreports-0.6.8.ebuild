@@ -8,7 +8,7 @@ DESCRIPTION="JasperReports is a powerful report-generating tool that has the abi
 HOMEPAGE="http://jasperreports.sourceforge.net/"
 SRC_URI="mirror://sourceforge/jasperreports/${P}-project.zip"
 LICENSE="LGPL-2.1"
-SLOT="0"
+SLOT="0.6"
 KEYWORDS="~x86"
 IUSE="jikes doc"
 COMMON_DEPEND="=dev-java/itext-1.3*
@@ -44,7 +44,7 @@ src_unpack() {
 	java-pkg_jar-from commons-collections
 	java-pkg_jar-from commons-digester
 	java-pkg_jar-from commons-logging
-	java-pkg_jar-from eclipse-jdtcore jdtcore.jar
+	java-pkg_jar-from eclipse-jdtcore-3.0 jdtcore.jar
 	java-pkg_jar-from hsqldb hsqldb.jar
 	java-pkg_jar-from poi poi.jar
 	java-pkg_jar-from servletapi-2.3

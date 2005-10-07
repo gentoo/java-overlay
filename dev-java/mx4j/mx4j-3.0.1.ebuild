@@ -8,7 +8,7 @@ DESCRIPTION="MX4J is a project to build an Open Source implementation of the Jav
 HOMEPAGE="http://mx4j.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${P}-src.tar.gz"
 DEPEND=">=virtual/jdk-1.4
-	>=dev-java/ant-1.6
+	>=dev-java/ant-core-1.6
 	jikes? ( >=dev-java/jikes-1.21 )
 	source? ( app-arch/zip )"
 RDEPEND=">=virtual/jre-1.4

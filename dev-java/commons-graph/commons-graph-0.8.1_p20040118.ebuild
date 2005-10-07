@@ -7,11 +7,10 @@ MY_PN=graph2
 MY_PV=${PV%%_*}.cvs20040118
 MY_P=${MY_PN}-${MY_PV}
 DESCRIPTION="A toolkit for managing graphs and graph based data structures"
-# This is borked, but I don't have anywhere else to turn
+# This page is broken, but I don't have anywhere else to turn
 HOMEPAGE="http://jakarta.apache.org/commons/sandbox/graph/"
-# this was extracted from a source rpm at jpackage... maybe I'll use it directly
-# at some point
-SRC_URI="mirror://gentoo/distfiles/${MY_P}.tar.gz"
+# this was extracted from a source rpm at jpackage
+SRC_URI="http://gentooexperimental.org/distfiles/${MY_P}.tar.gz"
 LDEPEND="dev-java/log4j
 	dev-java/commons-collections
 	dev-java/junit

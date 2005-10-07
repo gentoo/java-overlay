@@ -2,12 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg
+inherit java-pkg versionator
 
-MY_PV=0.9rc3
+MY_PV=$(replace_version_separator 2 '')
+MY_P="${PN}-${MY_PV}-src"
 DESCRIPTION="jUDDI is an open source Java implementation of the Universal Description, Discovery, and Integration (UDDI) specification for Web Services."
 HOMEPAGE="http://ws.apache.org/juddi/"
-SRC_URI="http://archive.apache.org/dist/ws/${PN}/${MY_PV}/${PN}-${MY_PV}-src.tar.gz"
+MY_PV_DIR=$(replace_version_separator 1 _ ${MY_PV})
+SRC_URI="http://archive.apache.org/dist/ws/${PN}/${MY_PV_DIR}/${MY_P}.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
@@ -17,7 +19,7 @@ IUSE="jikes doc"
 # TODO claims to be >= 1.3.1, but needs testing
 DEPEND="=virtual/jdk-1.4*
 	jikes? (dev-java/jikes)
-	dev-java/ant"
+	dev-java/ant-core"
 RDEPEND="=virtual/jre-1.4*
 	=dev-java/servletapi-2.4*
 	=dev-java/gnu-jaf-1*
@@ -29,7 +31,7 @@ RDEPEND="=virtual/jre-1.4*
 	dev-java/commons-pool
 	dev-java/log4j
 	dev-java/wsdl4j"
-S="${WORKDIR}/${PN}-${MY_PV}-src"
+S="${WORKDIR}/${MY_P}"
 
 SERVLET_API="servletapi-2.4 servlet-api.jar"
 ACTIVATION="gnu-jaf-1"

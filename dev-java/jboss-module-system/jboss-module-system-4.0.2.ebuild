@@ -5,7 +5,7 @@
 inherit jboss-4
 
 DESCRIPTION="System module for JBoss Application Server"
-GENTOO_CONF="jboss-${PVR}-gentoo.data"
+GENTOO_CONF="jboss-${PVR}-gentoo-r2.data"
 SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${BASE_URL}/${GENTOO_CONF} ${ECLASS_URI}"
 HOMEPAGE="http://www.jboss.org"
 LICENSE="LGPL-2"

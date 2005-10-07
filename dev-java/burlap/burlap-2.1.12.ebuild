@@ -18,7 +18,7 @@ IUSE="doc jikes"
 
 DEPEND="virtual/jdk
 	app-arch/unzip
-	dev-java/ant"	
+	dev-java/ant-core"
 RDEPEND="virtual/jre
 	=dev-java/servletapi-2.3*"
 

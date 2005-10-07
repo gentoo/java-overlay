@@ -7,9 +7,9 @@ MY_PV=${PV%%_*}.b5.cvs20040118
 MY_P=${PN}-${MY_PV}
 
 DESCRIPTION="A small collection of hacks to make using Ant in an embedded envinronment much easier."
-# This is borked, but I don't have anywhere else to turn
+# This seems dead, but I don't have anywhere else to turn
 HOMEPAGE="http://jakarta.apache.org/commons/sandbox/grant/"
-SRC_URI="mirror://gentoo/distfiles/${MY_P}.tar.gz"
+SRC_URI="http://gentooexperimental.org/distfiles/${MY_P}.tar.gz"
 DEPEND=">=virtual/jdk-1.3
 	jikes? ( dev-java/jikes )
 	dev-java/ant-core

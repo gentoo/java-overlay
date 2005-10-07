@@ -5,7 +5,7 @@
 inherit jboss-4
 
 DESCRIPTION="JCA module of JBoss Application Server"
-GENTOO_CONF="jboss-${PVR}-gentoo.data"
+GENTOO_CONF="jboss-${PV}-gentoo-r2.data"
 SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${BASE_URL}/${GENTOO_CONF} ${ECLASS_URI}"
 HOMEPAGE="http://www.jboss.org"
 LICENSE="LGPL-2"
@@ -25,7 +25,7 @@ COMMON_DEPEND="
 	dev-java/commons-logging
 	dev-java/log4j
 	dev-java/concurrent-util
-	dev-java/sun-javamail-bin
+	dev-java/gnu-javamail
 	=dev-java/jboss-module-j2ee-${PV}*
 	=dev-java/jboss-module-security-${PV}*
 	=dev-java/jboss-module-server-${PV}*

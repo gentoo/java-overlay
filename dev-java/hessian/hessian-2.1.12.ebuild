@@ -15,7 +15,7 @@ KEYWORDS="~x86"
 IUSE="jikes doc"
 
 DEPEND="virtual/jdk
-	dev-java/ant"	
+	dev-java/ant-core"
 RDEPEND="virtual/jre
 	=dev-java/servletapi-2.3*"
 

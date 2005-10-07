@@ -18,7 +18,7 @@ KEYWORDS="~x86"
 IUSE="jikes doc"
 
 DEPEND="=virtual/jdk-1.4*
-	dev-java/ant
+	dev-java/ant-core
 	jikes? (dev-java/jikes)"
 RDEPEND="=virtual/jre-1.4*"
 

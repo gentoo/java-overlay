@@ -13,7 +13,7 @@ KEYWORDS="x86 amd64 ppc"
 IUSE="doc jikes"
 DEPEND=">=virtual/jdk-1.3
 	jikes? ( >=dev-java/jikes-1.21 )
-	dev-java/ant
+	dev-java/ant-core
 	dev-java/ant-owanttask"
 RDEPEND=">=virtual/jre-1.3"
 

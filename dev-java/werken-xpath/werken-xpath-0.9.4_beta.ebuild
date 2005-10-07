@@ -5,12 +5,13 @@
 inherit java-pkg eutils
 
 MY_PN=${PN//-/.}
+# TODO make MY_PV more maintainable
 MY_PV="0.9.4-beta"
 MY_P="${MY_PN}-${MY_PV}"
 DESCRIPTION="W3C XPath-Rec implementation for DOM4J"
 HOMEPAGE="http://sourceforge.net/projects/werken-xpath/"
-SRC_URI="http://www.scorec.rpi.edu/~nichoj/projects/java/${MY_P}-src.tar.gz"
-#SRC_URI="mirror://gentoo/${MY_P}-src.tar.gz"
+#SRC_URI="http://gentooexperimental.org/distfiles/${MY_P}-src.tar.gz"
+SRC_URI="mirror://gentoo/${MY_P}-src.tar.gz"
 # This tarball was acquired from jpacckage's src rpm for the package of the same
 # name
 
@@ -20,7 +21,7 @@ KEYWORDS="~x86"
 IUSE="doc jikes"
 
 DEPEND="virtual/jdk
-	dev-java/ant
+	dev-java/ant-core
 	dev-java/antlr
 	jikes? (dev-java/jikes)"
 RDEPEND="virtual/jre

@@ -6,7 +6,7 @@ inherit java-pkg eutils
 
 DESCRIPTION="JBoss buildmagic tasks module"
 HOMEPAGE="http://www.jboss.org"
-BASE_URL="http://sigmachi.yi.org/~nichoj/projects/java"
+BASE_URL="http://gentooexperimental.org/distfiles"
 #BASE_URL="mirror://gentoo"
 # These source files were obtained from jpackage's srpm for
 # jboss4-buildmagic-tasks

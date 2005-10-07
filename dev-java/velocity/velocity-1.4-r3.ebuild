@@ -14,7 +14,7 @@ KEYWORDS="~x86"
 IUSE="doc j2ee jikes junit"
 
 DEPEND=">=virtual/jdk-1.3.1
-	dev-java/ant
+	dev-java/ant-core
 	dev-java/antlr
 	dev-java/junit
 	jikes? (dev-java/jikes)"

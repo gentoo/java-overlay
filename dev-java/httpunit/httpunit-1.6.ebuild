@@ -6,8 +6,10 @@ inherit java-pkg
 
 DESCRIPTION="HttpUnit emulates the relevant portions of browser behavior, including form submission, JavaScript, basic http authentication, cookies and automatic page redirection, and allows Java test code to examine returned pages either as text, an XML DOM, or containers of forms, tables, and links."
 HOMEPAGE="http://httpunit.sourceforge.net/"
+# TODO what is metainf for?
+# TODO where did it come from?
 SRC_URI="mirror://sourceforge/${PN}/${P}.zip
-	http://sigmachi.yi.org/~nichoj/projects/java/${P}-metainf.tar.gz"
+	http://gentooexperimental.org/distfiles/${P}-metainf.tar.gz"
 
 # TODO: new license needed?
 # http://httpunit.sourceforge.net/doc/license.html
@@ -17,7 +19,7 @@ KEYWORDS="~x86"
 IUSE="doc"
 
 DEPEND="virtual/jdk
-	dev-java/ant"
+	dev-java/ant-core"
 RDEPEND="virtual/jre
 	dev-java/jtidy
 	=dev-java/rhino-1.6*

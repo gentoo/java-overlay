@@ -1,4 +1,4 @@
-MD5 f8ebcc91e239dc5553224e8b3ecaed13 jboss-module-webservice-4.0.2.ebuild 1491
-MD5 84134792c37e98331af61324dc50df4e files/digest-jboss-module-webservice-4.0.2 383
+MD5 42bda89bf73a61859ab1678ad710fff4 jboss-module-webservice-4.0.2.ebuild 1486
+MD5 1c6201b7c43572ef80f2a4000dbbae75 files/digest-jboss-module-webservice-4.0.2 388
 MD5 1f123505b8d168f22a80dddf3775bf70 files/digest-jboss-module-hibernate-4.0.2 382
 MD5 f878c4a307d00aefd5876a94dafb7a5e files/digest-jboss-module-tomcat-4.0.2 311

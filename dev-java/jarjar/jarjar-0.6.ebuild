@@ -17,7 +17,7 @@ LIB_DEPEND="=dev-java/asm-2*
 	=dev-java/gnu-regexp-1*"
 DEPEND="virtual/jdk
 	app-arch/unzip
-	dev-java/ant
+	dev-java/ant-core
 	jikes? (dev-java/jikes)
 	${LIB_DEPEND}"
 RDEPEND="virtual/jre

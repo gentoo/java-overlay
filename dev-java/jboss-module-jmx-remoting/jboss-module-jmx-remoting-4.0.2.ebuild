@@ -5,7 +5,7 @@
 inherit jboss-4
 
 DESCRIPTION="JMX-Remoting module of JBoss Application Server"
-GENTOO_CONF="jboss-${PVR}-gentoo.data"
+GENTOO_CONF="jboss-${PV}-gentoo-r2.data"
 SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${BASE_URL}/${GENTOO_CONF} ${ECLASS_URI}"
 HOMEPAGE="http://www.jboss.org"
 LICENSE="LGPL-2"
@@ -19,3 +19,5 @@ COMMON_DEPEND="dev-java/log4j
 	=dev-java/jboss-module-remoting-${PV}*"
 DEPEND=">=virtual/jdk-1.3 ${COMMON_DEPEND}"
 RDEPEND=">=virtual/jre-1.3 ${COMMON_DEPEND}"
+
+ANT_TARGET="output"

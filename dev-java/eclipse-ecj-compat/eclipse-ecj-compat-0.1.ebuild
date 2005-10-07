@@ -6,7 +6,7 @@ inherit eutils java-pkg
 
 DESCRIPTION="Javac compatibility wrapper for the Eclipse Compiler for Java"
 HOMEPAGE="http://www.eclipse.org/"
-SRC_URI="http://www.scorec.rpi.edu/~nichoj/projects/java/${P}.tar.bz2"
+SRC_URI="http://gentooexperimental.org/distfiles/${P}.tar.bz2"
 LICENSE="GPL-2"
 KEYWORDS="~x86"
 SLOT="0"

@@ -16,11 +16,12 @@ KEYWORDS="~x86"
 # Jikes is broken:
 # http://opensource.atlassian.com/projects/spring/browse/SPR-1097
 #IUSE="doc jikes"
-IUSE="doc"
+IUSE="doc source"
 
 DEPEND=">=virtual/jdk-1.4
-	dev-java/ant
-	dev-java/antlr"
+	dev-java/ant-core
+	dev-java/antlr
+	app-arch/zip"
 #	jikes? (dev-java/jikes)
 # TODO replace sun-jdbc-rowset-bin with free implementation
 RDEPEND=">=virtual/jre-1.4
@@ -280,6 +281,7 @@ src_install() {
 	dodoc changelog.txt notice.txt readme.txt
 
 	use doc && java-pkg_dohtml -r docs/{MVC-step-by-step,api,taglib} reference
+	use source && java-pkg_dosrc ${S}/src
 }
 
 # TODO figure out what the heck we should say here

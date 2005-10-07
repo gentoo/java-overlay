@@ -17,6 +17,7 @@ KEYWORDS="~x86"
 IUSE="doc jikes source"
 
 DEPEND="virtual/jdk
+		dev-java/ant-core
 		app-arch/unzip
 		jikes? (dev-java/jikes)
 		source? (app-arch/zip) "

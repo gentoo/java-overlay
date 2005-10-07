@@ -4,9 +4,11 @@
 
 inherit eutils linux-info
 
+MY_PV="20050425"
+MY_P="${PN}-gentoo-${MY_PV}"
 DESCRIPTION="Java(tm) Binary Kernel Support for Linux"
 HOMEPAGE="http://www.linuxhq.com/java.html"
-SRC_URI="mirror://gentoo/java-kernel-support-gentoo-20050425.tar.bz2"
+SRC_URI="http://gentooexperimental.org/distfiles/${MY_P}.tar.bz2"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~x86"

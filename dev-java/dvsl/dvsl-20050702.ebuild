@@ -10,7 +10,7 @@ DESCRIPTION="Declarative Velocity Style Language."
 HOMEPAGE="http://jakarta.apache.org/velocity/dvsl/index.html"
 # TODO figure out how i checked this out...
 # TODO find out if there's a tagged branch or something
-SRC_URI="http://sigmachi.yi.org/~nichoj/projects/java/${P}.tar.bz2"
+SRC_URI="http://gentooexperimental.org/distfiles/${P}.tar.bz2"
 
 # I'm guessing some sort of apache-ness
 LICENSE=""

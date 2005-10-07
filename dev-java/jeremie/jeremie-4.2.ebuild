@@ -6,7 +6,7 @@ inherit java-pkg
 
 DESCRIPTION="Jeremie provides an RMI-like programming style."
 HOMEPAGE="http://jonathan.objectweb.org/"
-SRC_URI="mirror://gentoo/${P}.tar.bz2"
+SRC_URI="http://gentooexperimental.org/distfiles/${P}.tar.bz2"
 # cvs -d:pserver:anonymous@cvs.forge.objectweb.org:/cvsroot/jonathan login
 # cvs -z3 -d:pserver:anonymous@cvs.forge.objectweb.org:/cvsroot/jonathan export -r JEREMIE_4_2 jeremie
 # tar cjvf jeremie-4.2.tar.bz jeremie
@@ -17,7 +17,7 @@ KEYWORDS="~x86"
 IUSE="doc jikes"
 
 DEPEND="virtual/jdk
-	app-arch/unzip
+	dev-java/ant-core
 	jikes? (dev-java/jikes)
 	dev-java/ant-owanttask"
 RDEPEND="virtual/jre

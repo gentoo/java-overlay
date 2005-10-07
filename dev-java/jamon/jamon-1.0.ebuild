@@ -15,9 +15,9 @@ KEYWORDS="~x86"
 IUSE="doc jikes"
 
 DEPEND="virtual/jdk
-	dev-java/ant
+	dev-java/ant-core
 	app-arch/unzip
-	jikes? (dev-java/jikes)"	
+	jikes? (dev-java/jikes)"
 RDEPEND="virtual/jre"
 
 src_unpack() {

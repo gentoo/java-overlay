@@ -16,7 +16,7 @@ KEYWORDS="~x86"
 IUSE="jikes"
 
 DEPEND="virtual/jdk
-	dev-java/ant
+	dev-java/ant-core
 	jikes? (dev-java/jikes)
 	app-arch/unzip"
 RDEPEND="virtual/jre

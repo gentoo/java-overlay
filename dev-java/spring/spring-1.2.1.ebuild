@@ -19,7 +19,7 @@ KEYWORDS="~x86"
 IUSE="doc"
 
 DEPEND="virtual/jdk
-	dev-java/ant
+	dev-java/ant-core
 	dev-java/antlr"
 #	jikes? (dev-java/jikes)
 RDEPEND="virtual/jre

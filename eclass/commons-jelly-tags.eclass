@@ -56,7 +56,7 @@ IUSE="doc jikes"
 LICENSE=""
 
 #SRC_URI="mirror://gentoo/${P}.tar.bz2 mirror://gentoo/commons-jelly-tags-1.0-gentoo.patch.bz2"
-SRC_URI="http://www.scorec.rpi.edu/~nichoj/projects/java/${P}.tar.bz2 http://www.scorec.rpi.edu/~nichoj/projects/java/commons-jelly-tags-1.0-gentoo.patch.bz2"
+SRC_URI="http://gentooexperimental.org/distfiles/${P}.tar.bz2 http://gentooexperimental.org/distfiles/commons-jelly-tags-1.0-gentoo.patch.bz2"
 
 EXPORT_FUNCTIONS src_unpack src_compile src_install src_test
 

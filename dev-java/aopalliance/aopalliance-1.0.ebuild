@@ -5,7 +5,7 @@
 inherit java-pkg
 
 DESCRIPTION="Aspect-Oriented Programming (AOP) Alliance classes"
-SRC_URI="http://www.scorec.rpi.edu/~nichoj/projects/java/${P}.tar.bz2"
+SRC_URI="http://gentooexperimental.org/distfiles/${P}.tar.bz2"
 #SRC_URI="mirror://gentoo/${P}.tar.bz2"
 #cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/aopalliance login 
 # cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/aopalliance export -r interception_1_0 aopalliance

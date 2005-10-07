@@ -18,7 +18,7 @@ SRC_URI="mirror://apache/jakarta/commons/validator/source/${MY_P}.tar.gz mirror:
 # TODO: report this travesty
 
 DEPEND=">=virtual/jdk-1.3
-	>=dev-java/ant-1.4
+	>=dev-java/ant-core-1.4
 	jikes? ( dev-java/jikes )
 	source? ( app-arch/zip )"
 RDEPEND=">=virtual/jre-1.3

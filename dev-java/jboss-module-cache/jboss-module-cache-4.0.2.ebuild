@@ -5,6 +5,7 @@
 inherit jboss-4
 
 DESCRIPTION="Cache module of JBoss Application Server"
+GENTOO_CONF="jboss-${PV}-gentoo-r2.data"
 SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${BASE_URL}/${GENTOO_CONF} ${ECLASS_URI}"
 HOMEPAGE="http://www.jboss.org"
 LICENSE="LGPL-2"
@@ -23,7 +24,7 @@ COMMON_DEPEND="
 	dev-db/db-je
 	=dev-java/crimson-1*
 	dev-java/gnu-jaxp
-	dev-java/jmx
+	=dev-java/mx4j-3.0*
 	dev-java/xdoclet
 	=dev-java/jboss-module-j2ee-${PV}*
 	=dev-java/jboss-module-common-${PV}*

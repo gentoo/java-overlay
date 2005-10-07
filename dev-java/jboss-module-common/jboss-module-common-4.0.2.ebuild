@@ -5,9 +5,9 @@
 inherit jboss-4
 
 DESCRIPTION="Common module of JBoss Application Server"
-GENTOO_CONF="jboss-${PVR}-gentoo.data"
-SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${BASE_URL}/${GENTOO_CONF} ${ECLASS_URI}"
-MY_A="${P}-gentoo.tar.bz2 ${MY_A}"
+GENTOO_CONF="jboss-${PVR}-gentoo-r2.data"
+SRC_URI="${BASE_URL}/${P}-gentoo-r1.tar.bz2 ${BASE_URL}/${GENTOO_CONF} ${ECLASS_URI}"
+MY_A="${P}-gentoo-r1.tar.bz2 jboss-tools-${PV}-gentoo-r1.tar.bz2"
 LICENSE="LGPL-2"
 
 HOMEPAGE="http://www.jboss.org"
@@ -27,10 +27,10 @@ COMMON_DEPEND="=dev-java/bsf-2.3*
 	=dev-java/commons-httpclient-2*
 	dev-java/commons-lang
 	dev-java/commons-logging
-	dev-java/log4j
 	dev-java/jakarta-slide-webdavclient
 	=dev-java/gnu-regexp-1*
 	dev-java/concurrent-util
+	dev-java/log4j
 	=dev-java/dtdparser-1.21*"
 DEPEND=">=virtual/jdk-1.3
 	dev-java/ant-core

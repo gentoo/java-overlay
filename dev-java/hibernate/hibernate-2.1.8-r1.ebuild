@@ -36,7 +36,7 @@ DEPEND="${RDEPEND}
 		>=virtual/jdk-1.4
 		>=dev-java/ant-core-1.5
 		junit? (
-			dev-java/ant
+			>=dev-java/ant-tasks-1.5
 			dev-java/junit
 			dev-db/hsqldb
 		)"

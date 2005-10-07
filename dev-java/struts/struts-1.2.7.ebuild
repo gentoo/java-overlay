@@ -24,7 +24,7 @@ RDEPEND=">=virtual/jre-1.4
 	=dev-java/servletapi-2.3*"
 DEPEND=">=virtual/jdk-1.4
 	${RDEPEND}
-	>=dev-java/ant-1.6.0
+	>=dev-java/ant-core-1.6.0
 	jikes? ( dev-java/jikes )
 	source? ( app-arch/zip )"
 IUSE="doc examples jikes source"

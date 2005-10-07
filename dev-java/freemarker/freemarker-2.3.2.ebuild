@@ -16,7 +16,8 @@ IUSE="doc jikes"
 
 # TODO determine vm requirement
 DEPEND="virtual/jdk
-	dev-java/ant"
+	jikes? (dev-java/jikes)
+	dev-java/ant-core"
 RDEPEND="virtual/jre
 	=dev-java/servletapi-2.3*
 	=dev-java/jdom-1.0_beta9*

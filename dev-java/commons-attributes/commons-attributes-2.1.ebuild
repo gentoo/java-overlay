@@ -6,7 +6,7 @@ inherit eutils java-pkg
 
 DESCRIPTION="Commons Attributes enables Java programmers to use C#/.Net-style attributes in their code."
 HOMEPAGE="http://jakarta.apache.org/commons/attributes/"
-SRC_URI="http://www.wmwweb.com/apache/jakarta/commons/attributes/source/${P}-src.tgz"
+SRC_URI="mirror://apache/jakarta/commons/attributes/source/${P}-src.tgz"
 
 LICENSE="Apache-2"
 SLOT="2"
@@ -15,7 +15,7 @@ IUSE="doc jikes"
 
 # TODO determine jvm version requirements
 DEPEND="virtual/jdk
-	dev-java/ant
+	dev-java/ant-core
 	jikes? (dev-java/jikes)
 	dev-java/xjavadoc"
 RDEPEND="virtual/jre

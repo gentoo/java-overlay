@@ -5,7 +5,7 @@
 inherit jboss-4
 
 DESCRIPTION="IIOP module of JBoss Application Server"
-GENTOO_CONF="jboss-${PVR}-gentoo.data"
+GENTOO_CONF="jboss-${PV}-gentoo-r2.data"
 SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${BASE_URL}/${GENTOO_CONF} ${ECLASS_URI}"
 HOMEPAGE="http://www.jboss.org"
 LICENSE="LGPL-2"
@@ -20,7 +20,7 @@ COMMON_DEPEND="
 	=dev-java/avalon-logkit-1.2*
 	dev-java/log4j
 	dev-java/junit
-	dev-java/sun-javamail-bin
+	dev-java/gnu-javamail
 	=dev-java/jboss-module-j2ee-${PV}*
 	=dev-java/jboss-module-common-${PV}*
 	=dev-java/jboss-module-system-${PV}*

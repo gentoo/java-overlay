@@ -4,7 +4,7 @@
 
 inherit jboss-4
 DESCRIPTION="Console module of JBoss Application Server"
-GENTOO_CONF="jboss-${PVR}-gentoo-r1.data"
+GENTOO_CONF="jboss-${PV}-gentoo-r2.data"
 # TODO: upload jboss-module-console-4.0.2-gentoo.tar.bz2
 # TODO: upload new .data file
 SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${BASE_URL}/${GENTOO_CONF} ${ECLASS_URI}"

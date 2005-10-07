@@ -11,7 +11,8 @@ standard XML interfaces."
 HOMEPAGE="http://people.apache.org/~andyc/neko/doc/html/"
 SRC_URI="www.apache.org/~andyc/neko/${P}.tar.gz"
 DEPEND=">=virtual/jdk-1.3
-		dev-java/ant"
+		dev-java/ant-core
+		test? (dev-java/junit dev-java/ant-tasks)"
 RDEPEND=">=virtual/jre-1.3
 		=dev-java/xerces-2*
 		dev-java/xalan"

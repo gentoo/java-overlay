@@ -14,7 +14,8 @@ SLOT="2.0"
 KEYWORDS="~x86"
 IUSE="doc jikes"
 
-DEPEND="virtual/jdk"
+DEPEND="virtual/jdk
+	dev-java/ant-core"
 RDEPEND="virtual/jre
 	dev-java/commons-collections
 	dev-java/commons-logging

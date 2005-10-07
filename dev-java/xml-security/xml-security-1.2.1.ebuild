@@ -4,19 +4,23 @@
 
 inherit java-pkg
 
+# TODO use versionator
 MY_PV=${PV//./_}
 MY_P=${PN}-${MY_PV}
 
+# TODO find a description. Doesn't seem to be any on website.
 DESCRIPTION=""
 HOMEPAGE="http://xml.apache.org/security/Java/index.html"
 SRC_URI="http://xml.apache.org/security/dist/java-library/xml-security-src-1_2_1.zip"
 
 LICENSE="Apache-2.0"
-SLOT="0"
+SLOT="1.2"
 KEYWORDS="~x86"
 IUSE="jikes doc"
 
+# TODO check if junit is only needed at buildtime
 DEPEND=">=virtual/jdk-1.4
+	dev-java/ant-core
 	jikes? (dev-java/jikes)
 	app-arch/unzip"
 RDEPEND=">=virtual/jre-1.4
@@ -41,7 +45,7 @@ S="${WORKDIR}/${MY_P}"
 
 src_unpack() {
 	unpack ${A}
-	
+
 	cd ${S}
 
 	echo lib.logging=`java-pkg_getjar ${COMMONS_LOGGING}` > build.properties
@@ -63,9 +67,10 @@ src_compile() {
 }
 
 src_install() {
-	java-pkg_newjar build/xmlsec-${PV}.jar xmlsec.jar
-	java-pkg_newjar build/xmlsecSamples-${PV}.jar xmlsecSamples.jar
-	java-pkg_newjar build/xmlsecTests-${PV}.jar xmlsecTests.jar
+	# TODO install samples based on use flag
+	for jar in xmlsec xmlsecSamples xmlsecTests; do
+		java-pkg_newjar build/${jar}-${PV}.jar ${jar}.jar
+	done
 
 	dodoc INSTALL KEYS NOTICE README TODO
 	dohtml Readme.html

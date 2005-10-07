@@ -1,3 +1,0 @@
-All the licenses for mdr have the same principle.
-Everyone of them permits redistribution.
-Besides these we also need spl of course. 

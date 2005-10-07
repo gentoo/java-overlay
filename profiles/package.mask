@@ -1,0 +1,17 @@
+#####################################################################
+# $Header: $
+# When you add an entry to this file, add your name, the date, and an
+# explanation of why something is getting masked
+#
+# NOTE: Please add your entry at the top!
+#
+
+# Joshua Nichols <nichoj@alum.rpi.edu> (26 Aug 2005)
+# Place-holder ebuilds for tapestry.
+dev-java/tapestry
+dev-java/hivemind
+
+
+# Joshua Nichols <nichoj@alum.rpi.edu> (05 Sept 2005)
+# Hessian 3.0.13 wants Java 1.5
+>=dev-java/hessian-3.0.13

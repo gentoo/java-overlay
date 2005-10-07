@@ -6,7 +6,7 @@ inherit java-pkg eutils
 
 DESCRIPTION="Goal-oriented process framework"
 HOMEPAGE="http://werkz.sourceforge.net/"
-SRC_URI="mirror://gentoo/${P}.tar.bz2"
+SRC_URI="http://gentooexperimental.org/distfiles/${P}.tar.bz2"
 # cvs -d :pserver:anonymous@cvs.werkz.codehaus.org:/home/projects/werkz/scm login
 # cvs -z3 -d :pserver:anonymous@cvs.werkz.codehaus.org:/home/projects/werkz/scm export -r WERKZ_MAVEN_1_0-BRANCH werkz
 # tar cjvf werkz-1.0_beta4.tar.bz2 werkz
@@ -17,7 +17,7 @@ IUSE="doc jikes"
 
 LDEPEND="dev-java/commons-logging
 	=dev-java/commons-jelly-1*
-	=dev-java/commons-jelly-tags-ant-1.0*"
+	=dev-java/commons-jelly-tags-ant-1*"
 DEPEND="virtual/jdk
 	dev-java/ant-core
 	dev-java/junit
@@ -35,7 +35,7 @@ src_unpack() {
 	cd ${S}/lib
 	java-pkg_jar-from commons-logging
 	java-pkg_jar-from commons-jelly-1
-	java-pkg_jar-from commons-jelly-tags-ant-1.0
+	java-pkg_jar-from commons-jelly-tags-ant-1
 }
 
 src_compile() {

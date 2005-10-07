@@ -47,9 +47,10 @@ src_compile() {
 		$(use_enable examples) \
 		$(use_enable gtk gtk-peer) \
 		$(use_enable xml2 xmlj) \
-		$(use_with   doc   gjdoc) \
 		--enable-jni \
 		|| die "configure failed"
+# disabled for now... see above.
+#		$(use_with   doc   gjdoc) \
 
 	emake || die "make failed"
 }

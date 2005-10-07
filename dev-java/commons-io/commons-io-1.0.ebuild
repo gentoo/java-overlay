@@ -13,9 +13,9 @@ SLOT="1"
 KEYWORDS="x86 amd64 ~ppc"
 IUSE="doc jikes junit source"
 
-DEPEND="jikes? ( >=dev-java/jikes-1.21 )
-	junit? ( >=dev-java/junit-3.8 dev-java/ant )
-	!junit? ( dev-java/ant-core )
+DEPEND="dev-java/ant-core
+	jikes? ( >=dev-java/jikes-1.21 )
+	junit? ( >=dev-java/junit-3.8 dev-java/ant-tasks )
 	source? ( app-arch/zip )
 	>=virtual/jdk-1.3"
 RDEPEND=">=virtual/jre-1.3"

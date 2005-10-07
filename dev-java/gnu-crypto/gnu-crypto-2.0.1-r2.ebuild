@@ -24,14 +24,16 @@ src_unpack() {
 	cd ${S}
 
 	epatch ${FILESDIR}/${P}-jdk15.patch
+#	epatch ${FILESDIR}/${P}-clone-exception.patch
 }
 
 src_compile() {
 	# jikes support disabled, doesnt work: #86655
-	local my_javac=${JAVAC}
-	use jikes && my_javac="jikes -bootclasspath ${JAVA_HOME}/jre/lib/rt.jar"
+#	local my_javac=${JAVAC}
+#	use jikes && my_javac="jikes -bootclasspath ${JAVA_HOME}/jre/lib/rt.jar"
 	
-	JAVAC=${my_javac} econf \
+	#JAVAC=${my_javac} 
+	econf \
 		--with-jce=yes \
 		--with-sasl=yes \
 		|| die

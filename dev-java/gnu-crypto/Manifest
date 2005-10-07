@@ -1,3 +1,4 @@
-MD5 9516e8c3391f362f47995a67ad846614 gnu-crypto-2.0.1-r2.ebuild 1278
+MD5 4405644335e0b0e483079228b3e79dfe gnu-crypto-2.0.1-r2.ebuild 1331
+MD5 73d7f444c165543aa69b5c9c3f3bf426 files/gnu-crypto-2.0.1-clone-exception.patch 1080
 MD5 a30727b2c8c5fc36a69558733c20d877 files/digest-gnu-crypto-2.0.1-r2 70
 MD5 8450af49bee9ffde3a26100560db5842 files/gnu-crypto-2.0.1-jdk15.patch 1551

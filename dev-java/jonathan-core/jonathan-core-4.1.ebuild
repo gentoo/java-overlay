@@ -7,7 +7,7 @@ inherit java-pkg
 MY_PN="${PN//-/}"
 DESCRIPTION="Jonathan is a Distributed Object Platform (DOP) written entirely in Java."
 HOMEPAGE="http://jonathan.objectweb.org/index.html"
-SRC_URI="mirror://gentoo/${P}.tar.bz2"
+SRC_URI="http://gentooexperimental.org/distfiles/${P}.tar.bz2"
 # cvs -d:pserver:anonymous@cvs.forge.objectweb.org:/cvsroot/jonathan login
 # cvs -z3 -d:pserver:anonymous@cvs.forge.objectweb.org:/cvsroot/jonathan export -r JONATHAN_CORE_4_1 jonathancore
 # tar cjvf jonathan-core-4.1.tar.bz2 jonathancore
@@ -18,7 +18,7 @@ KEYWORDS="~x86"
 IUSE="doc jikes"
 
 DEPEND="virtual/jdk
-	dev-java/ant
+	dev-java/ant-core
 	jikes? (dev-java/jikes)"
 RDEPEND="virtual/jre
 	=dev-java/nanoxml-2.2*

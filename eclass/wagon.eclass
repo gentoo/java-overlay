@@ -15,7 +15,7 @@ HOMEPAGE=""
 MY_PV="${PV/_alpha/-alpha-}"
 MY_P="${PN}-${MY_PV}"
 S="${WORKDIR}/${MY_P}"
-SRC_URI="mirror://gentoo/${MY_P}.tar.bz2 mirror://gentoo/build-wagon.xml.bz2"
+SRC_URI="http://gentooexperimental.org/distfiles/${MY_P}.tar.bz2 http://gentooexperimental.org/distfiles/build-wagon.xml.bz2"
 
 DEPEND="virtual/jdk
 	dev-java/ant-core"

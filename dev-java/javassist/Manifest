@@ -1,5 +1,5 @@
-MD5 b7242669c398598a77d7038d4f07696e javassist-3.1_rc20050706.ebuild 1038
+MD5 f1ac00f58b4a81ef9dc9d10fdf11603c javassist-3.1_rc20050706.ebuild 1030
 MD5 c014f5f4012370bec8c4e42922c51331 javassist-3.0.ebuild 902
 MD5 9c24b818e4e0126da3f47a046f4b43d0 files/digest-javassist-20050706 71
 MD5 bb876377b6f758b77dd8a68cb7a37dd0 files/digest-javassist-3.0 63
-MD5 9c24b818e4e0126da3f47a046f4b43d0 files/digest-javassist-3.1_rc20050706 71
+MD5 ed270eaa8926b51798e31ed93950aa63 files/digest-javassist-3.1_rc20050706 71

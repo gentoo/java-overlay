@@ -21,6 +21,7 @@ LDEPEND="=dev-java/commons-cli-1*
 	dev-java/commons-logging"
 # TODO test earlier vm?
 DEPEND=">=virtual/jdk-1.4
+	dev-java/ant-core
 	app-arch/unzip
 	jikes? (dev-java/jikes)
 	${LDEPEND}"

@@ -17,8 +17,7 @@ SLOT="0"
 KEYWORDS="~x86"
 IUSE="doc"
 
-DEPEND="virtual/jdk
-	app-arch/unzip"
+DEPEND="app-arch/unzip"
 RDEPEND="virtual/jre"
 
 src_unpack() {

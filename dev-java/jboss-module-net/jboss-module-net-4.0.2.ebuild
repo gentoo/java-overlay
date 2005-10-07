@@ -5,7 +5,7 @@
 inherit jboss-4
 
 DESCRIPTION="JBoss.net module of JBoss Application Server"
-GENTOO_CONF="jboss-${PVR}-gentoo.data"
+GENTOO_CONF="jboss-${PV}-gentoo-r2.data"
 SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${BASE_URL}/${GENTOO_CONF} ${ECLASS_URI}"
 HOMEPAGE="http://www.jboss.org"
 LICENSE="LGPL-2"
@@ -28,8 +28,8 @@ COMMON_DEPEND="=dev-java/commons-beanutils-1.6*
 	dev-java/dom4j
 	dev-java/wsdl4j
 	dev-java/junit
-	dev-java/sun-jaf-bin
-	dev-java/sun-javamail-bin
+	=dev-java/gnu-jaf-1*
+	dev-java/gnu-javamail
 	=dev-java/servletapi-2.4*
 	=dev-java/jboss-module-common-${PV}*
 	=dev-java/jboss-module-j2ee-${PV}*
