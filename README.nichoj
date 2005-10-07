@@ -4,9 +4,6 @@ Notes so I don't forget to fix them eventually:
 ################
 # Packages that don't need full ant, only ant-core
 ################
-dev-java/adaptx
-dev-java/xmlrpc
-dev-java/joda-time
 dev-java/poi
 dev-java/joscar
 dev-java/asm-1.4
@@ -23,6 +20,7 @@ dev-java/commons-jexl
 dev-java/commons-digester
 dev-java/commons-discovery
 dev-java/commons-httpclient
+dev-java/joda-time
 dev-java/junitperf
 dev-java/xpp3
 dev-java/saxpath
