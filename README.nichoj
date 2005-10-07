@@ -4,6 +4,27 @@ Notes so I don't forget to fix them eventually:
 ################
 # Packages that don't need full ant, only ant-core
 ################
+dev-java/soap
+dev-java/xmlunit
+dev-java/xmlrpc
+dev-java/commmons-validator
+dev-java/struts-legacy
+dev-java/saxpath
+dev-java/quartz
+dev-java/poi
+dev-java/picocontainer
+dev-java/radeox
+dev-java/jump
+dev-java/jruby
+dev-java/joscar
+dev-java/jldap
+dev-java/jcommon
+dev-java/javatar
+dev-java/cocoon
+=dev-java/cglib-2.0*
+dev-java/aspectj
+=dev-java/asm-2.0
+=dev-java/asm-1.5
 
 
 ###################################################
@@ -18,7 +39,31 @@ dev-java/commons-httpclient
 dev-java/joda-time
 dev-java/junitperf
 dev-java/xpp3
+dev-java/lucene
 dev-java/saxpath
+dev-java/metadata-extractor
+
+#####
+# pulls things from ant-tasks
+#####
+dev-java/jtds
+
+###################################
+# Optional ant tasks
+#################################
+# xmlvalidate
+dev-java/xdoclet
+
+# traxliason
+dev-java/tagsoup
+dev-java/struts
+dev-java/fop
+
+# propertyfile
+dev-java/jswat
+
+# setproxy
+dev-java/blowfishj
 
 ####################################################
 # Broken jikes
@@ -35,3 +80,4 @@ xerces
 ##################################
 # doesn't need ant
 ##################################
+dev-java/openjgraph
