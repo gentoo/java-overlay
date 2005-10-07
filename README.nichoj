@@ -4,7 +4,7 @@ Notes so I don't forget to fix them eventually:
 ################
 # Packages that don't need full ant, only ant-core
 ################
-dev-java/ant-contrib
+
 
 ###################################################
 # Packages that just need ant-tasks for unit tests
