@@ -6,25 +6,16 @@ Notes so I don't forget to fix them eventually:
 ################
 dev-java/soap
 dev-java/xmlunit
-dev-java/xmlrpc
 dev-java/commmons-validator
-dev-java/struts-legacy
 dev-java/saxpath
 dev-java/quartz
-dev-java/poi
 dev-java/picocontainer
 dev-java/radeox
-dev-java/jump
 dev-java/jruby
-dev-java/joscar
 dev-java/jldap
-dev-java/jcommon
-dev-java/javatar
 dev-java/cocoon
+<dev-java/poi-2.5.1
 =dev-java/cglib-2.0*
-dev-java/aspectj
-=dev-java/asm-2.0
-=dev-java/asm-1.5
 
 
 ###################################################
