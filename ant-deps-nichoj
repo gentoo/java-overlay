@@ -1,10 +1,19 @@
 
 Notes so I don't forget to fix them eventually:
 
+
+################
+# Packages that are fixed in ~arch
+# Will be fixed after these hit stable
+################
+dev-java/cglib-2.0.2-r1
+dev-java/poi-2.5.1
+
+
 ################
 # Packages that don't need full ant, only ant-core
 ################
-dev-java/soap
+
 dev-java/xmlunit
 dev-java/commmons-validator
 dev-java/saxpath
@@ -12,10 +21,6 @@ dev-java/quartz
 dev-java/picocontainer
 dev-java/radeox
 dev-java/jruby
-dev-java/jldap
-dev-java/cocoon
-<dev-java/poi-2.5.1
-=dev-java/cglib-2.0*
 
 
 ###################################################
