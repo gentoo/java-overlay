@@ -42,4 +42,5 @@ src_compile() {
 src_install() {
 	java-pkg_dojar share/java/*.jar
 	dobin bin/*	
+	use doc && dodoc design/*
 }
