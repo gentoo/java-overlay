@@ -1,0 +1,80 @@
+These are my notes for:
+	myself, so I don't forget them
+	others, so they can see what I have planned
+
+####################
+# JBoss
+####################
+
+* document jboss-4.eclass
+
+* find better / cleaner way of populating jboss source tree?
+
+* modules remaining:
+	varia (see dev-java/jboss-module-varia/compile-errors)
+	console (depends on varia)
+
+* put everything together.
+	there are different 'profiles', ie minimal, default, and all
+	should have enough to do minimal, maybe default?
+	should we put the files together ourselves, or populate the jboss source tree the way it expects to be, and let the build script take care of it?
+
+
+##################
+# Spring
+##################
+
+* Fix -gentoo.patch for 1.2.5
+* patch build.xml to detect when optional dependencies are available
+* fix javadoc generation
+* Missing (optional) dependencies
+	oracle toplink
+	a JDO implementation
+
+####################
+# Tapestry
+#####################
+* Figure out what's TODO :)
+* Dependencies:
+	ognl
+	hivemind
+* Complain to upstream
+
+
+###################
+# Maven
+#################
+
+### Progress ###
+Most of the dependencies have been packaged.
+Maven's 'core' can be built
+Lot of effort/overhead to add the jars that maven expects to find
+
+### TODO ####
+* What isn't there TODO? :)
+
+* Document commons-jelly-tags.eclass and wagon.eclass
+
+* Eclass for populating a local maven repository?
+	would be pretty tricky mapping specific version dependencies from maven to portage
+
+* Portage backend for maven?
+
+* Split ebuilds
+	'maven-core' could be separate from maven-plugins
+	maven-plugins could have separate packages for each plugin. they're developed / maintained in isolation to some extent
+
+* Add unit testing
+
+* Dependencies:
+	maven-model (uses maven to build)
+
+#################
+# Misc
+################
+
+* investigate mockobjects dependency on dev-java/jms
+
+* Submit useful patches / build.xml's upstream
+
+* Enable FEATURES=test where applicable
