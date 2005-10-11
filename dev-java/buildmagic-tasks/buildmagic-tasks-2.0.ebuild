@@ -28,7 +28,7 @@ COMMON=${WORKDIR}/jboss-common
 
 src_unpack() {
 	unpack ${A}
-	
+
 	cd ${S}/..
 
 	# TODO: make this into a patch

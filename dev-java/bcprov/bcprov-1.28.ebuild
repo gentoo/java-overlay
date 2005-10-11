@@ -41,6 +41,6 @@ src_compile() {
 src_install() {
 	java-pkg_dojar dist/${PN}.jar
 
-	dohtml *.html 
+	dohtml *.html
 	use doc && java-pkg_dohtml -r api
 }

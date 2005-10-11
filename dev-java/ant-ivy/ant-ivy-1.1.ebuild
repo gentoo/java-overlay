@@ -38,7 +38,7 @@ src_unpack() {
 	epatch ${FILESDIR}/${MY_P}-noresolve.patch
 	# add clean and javadoc targets (submitted upstream)
 	epatch ${FILESDIR}/${MY_P}-tasks.patch
-	
+
 	mkdir ${S}/lib
 	cd ${S}/lib
 	java-pkg_jar-from commons-cli-1,commons-httpclient,commons-logging

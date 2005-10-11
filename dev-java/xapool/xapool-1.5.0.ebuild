@@ -30,7 +30,7 @@ S=${WORKDIR}/${MY_P}
 src_unpack() {
 	unpack ${A}
 	cd ${S}
-	
+
 	epatch ${FILESDIR}/${P}-gentoo.patch
 	# don't build oracle or instantdb support
 	epatch ${FILESDIR}/${P}-no-instandb-no-oracle.patch

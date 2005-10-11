@@ -1,4 +1,4 @@
-MD5 40fca3c7be7f95d6ef75b58640c41a17 xapool-1.5.0.ebuild 1540
+MD5 2828909af7b89658950d03772325a6e1 xapool-1.5.0.ebuild 1539
 MD5 b5515a766674c6f1d9955a285b167274 files/digest-xapool-1.5.0 66
 MD5 a82d2d1471d5c0782b8a514e308fe04b files/xapool-1.5.0-no-instandb-no-oracle.patch 1468
 MD5 8ecb1cec45f725c3097d548649f21dfe files/xapool-1.5.0-gentoo.patch 1852

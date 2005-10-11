@@ -1,0 +1,33 @@
+compile-classes:
+    [mkdir] Created dir: /var/tmp/portage/jboss-module-varia-4.0.2/work/jboss-4.0.2-src/varia/output/classes
+    [javac] Compiling 201 source files to /var/tmp/portage/jboss-module-varia-4.0.2/work/jboss-4.0.2-src/varia/output/classes
+    [javac] /var/tmp/portage/jboss-module-varia-4.0.2/work/jboss-4.0.2-src/varia/src/main/org/jboss/services/deployment/DeploymentManager.java:148: cannot resolve symbol
+    [javac] symbol  : method encodeFileName (java.lang.String)
+    [javac] location: class org.jboss.util.file.Files
+    [javac]       if (!module.equals(Files.encodeFileName(module)))
+    [javac]                               ^
+    [javac] /var/tmp/portage/jboss-module-varia-4.0.2/work/jboss-4.0.2-src/varia/src/main/org/jboss/services/deployment/DeploymentManager.java:183: warning: mergeTemplate(java.lang.String,org.apache.velocity.context.Context,java.io.Writer) in org.apache.velocity.app.VelocityEngine has been deprecated
+    [javac]                boolean success = ve.mergeTemplate(template + '/' + vmTemplate, ctx, out);
+    [javac]                                    ^
+    [javac] /var/tmp/portage/jboss-module-varia-4.0.2/work/jboss-4.0.2-src/varia/src/main/org/jboss/services/deployment/DeploymentManager.java:232: warning: mergeTemplate(java.lang.String,org.apache.velocity.context.Context,java.io.Writer) in org.apache.velocity.app.VelocityEngine has been deprecated
+    [javac]                   boolean success = ve.mergeTemplate(template + '/' + ti.getInput(), ctx, out);
+    [javac]                                       ^
+    [javac] /var/tmp/portage/jboss-module-varia-4.0.2/work/jboss-4.0.2-src/varia/src/main/org/jboss/services/deployment/LibraryManager.java:113: cannot resolve symbol
+    [javac] symbol  : method copy (java.net.URL,java.io.File)
+    [javac] location: class org.jboss.util.file.Files
+    [javac]                Files.copy(src, target);
+    [javac]                     ^
+    [javac] /var/tmp/portage/jboss-module-varia-4.0.2/work/jboss-4.0.2-src/varia/src/main/org/jboss/web/loadbalancer/Loadbalancer.java:273: warning: recycle() in org.apache.commons.httpclient.HttpMethod has been deprecated
+    [javac]             schedRequest.getMethod().recycle();
+    [javac]                                   ^
+    [javac] /var/tmp/portage/jboss-module-varia-4.0.2/work/jboss-4.0.2-src/varia/src/main/org/jboss/web/loadbalancer/Loadbalancer.java:303: warning: recycle() in org.apache.commons.httpclient.HttpMethod has been deprecated
+    [javac]         schedRequest.getMethod().recycle();
+    [javac]                               ^
+    [javac] /var/tmp/portage/jboss-module-varia-4.0.2/work/jboss-4.0.2-src/varia/src/main/org/jboss/web/loadbalancer/monitor/AbstractMonitor.java:160: warning: recycle() in org.apache.commons.httpclient.methods.GetMethod has been deprecated    [javac]       method.recycle();
+    [javac]             ^
+    [javac] /var/tmp/portage/jboss-module-varia-4.0.2/work/jboss-4.0.2-src/varia/output/gen-src/org/jboss/varia/stats/DataSourceInterceptor.java:724: warning: setUnicodeStream(int,java.io.InputStream,int) in java.sql.PreparedStatement has been deprecated
+    [javac]          target.setUnicodeStream(parameterIndex, x, length);
+    [javac]                ^
+    [javac] 2 errors
+    [javac] 6 warnings
+

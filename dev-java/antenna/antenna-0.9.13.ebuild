@@ -21,7 +21,7 @@ DEPEND=">=virtual/jdk-1.4
 RDEPEND=">=virtual/jre-1.4
 	~dev-java/servletapi-2.3"
 
-src_unpack() {	
+src_unpack() {
 	mkdir ${S} && cd ${S}
 
 	unpack ${A}

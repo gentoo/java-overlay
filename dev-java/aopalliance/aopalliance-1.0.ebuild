@@ -32,5 +32,5 @@ src_compile() {
 
 src_install() {
 	java-pkg_dojar build/${PN}.jar
-	use doc && java-pkg_dohtml -r build/api 
+	use doc && java-pkg_dohtml -r build/api
 }
