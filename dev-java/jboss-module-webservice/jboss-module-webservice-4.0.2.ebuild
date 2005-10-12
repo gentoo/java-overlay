@@ -3,11 +3,9 @@
 # $Header: $
 
 inherit jboss-4
+
 DESCRIPTION="Web Service module of JBoss Application Server"
-GENTOO_CONF="jboss-${PV}-gentoo-r2.data"
-SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${BASE_URL}/${GENTOO_CONF} ${ECLASS_URI}"
-HOMEPAGE="http://www.jboss.org"
-LICENSE="LGPL-2"
+SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${ECLASS_URI}"
 IUSE="jikes"
 SLOT="4"
 KEYWORDS="~x86"

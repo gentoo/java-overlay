@@ -2,15 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-# Not functional yet. seems to be some problems getting a few functions/classes
-# from jboss-common
-
 inherit jboss-4
+
 DESCRIPTION="Tomcat module of JBoss Application Server"
-GENTOO_CONF="jboss-${PV}-gentoo-r2.data"
-SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${BASE_URL}/${GENTOO_CONF} ${ECLASS_URI}"
-HOMEPAGE="http://www.jboss.org"
-LICENSE="LGPL-2"
+SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${ECLASS_URI}"
 IUSE="jikes"
 SLOT="4"
 KEYWORDS="~x86"

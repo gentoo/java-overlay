@@ -3,11 +3,9 @@
 # $Header: $
 
 inherit jboss-4
+
 DESCRIPTION="Hibernate module of JBoss Application Server"
-GENTOO_CONF="jboss-${PV}-gentoo-r2.data"
-SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${BASE_URL}/${GENTOO_CONF} ${ECLASS_URI}"
-HOMEPAGE="http://www.jboss.org"
-LICENSE="LGPL-2"
+SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${ECLASS_URI}"
 # TODO get jikes to work.
 # It mysteriously dies, without any useful errors.
 # I suspect this happens when libraries are used that have errors that jikes

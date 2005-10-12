@@ -31,12 +31,13 @@ S="${JBOSS_ROOT}/${MODULE}"
 
 THIRDPARTY_P="jboss-thirdparty-${PV}-gentoo"
 TOOLS_P="jboss-tools-${PV}-gentoo-r1"
-GENTOO_CONF="jboss-${PVR}-gentoo.data"
-#BASE_URL="http://www.scorec.rpi.edu/~nichoj/projects/java"
+GENTOO_CONF="jboss-${PVR}-gentoo-r2.data"
 BASE_URL="http://gentooexperimental.org/distfiles"
 ECLASS_URI="${BASE_URL}/${TOOLS_P}.tar.bz2 ${BASE_URL}/${THIRDPARTY_P}.tar.bz2
 mirror://gentoo/${GENTOO_CONF}"
 MY_A="${P}-gentoo.tar.bz2 ${TOOLS_P}.tar.bz2 ${THIRDPARTY_P}.tar.bz2"
+HOMEPAGE="http://www.jboss.org"
+LICENSE="LGPL-2"
 
 EXPORT_FUNCTIONS src_unpack src_compile src_install
 

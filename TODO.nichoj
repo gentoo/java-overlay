@@ -14,10 +14,14 @@ These are my notes for:
 	varia (see dev-java/jboss-module-varia/compile-errors)
 	console (depends on varia)
 
+* Make all modules use the same data file
+
 * put everything together.
 	there are different 'profiles', ie minimal, default, and all
 	should have enough to do minimal, maybe default?
 	should we put the files together ourselves, or populate the jboss source tree the way it expects to be, and let the build script take care of it?
+
+* Add dosar function
 
 
 ##################
