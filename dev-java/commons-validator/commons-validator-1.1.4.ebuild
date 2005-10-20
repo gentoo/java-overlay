@@ -7,7 +7,8 @@ inherit java-pkg
 MY_P=${P}-src
 DESCRIPTION="Jakarta component to validate user input, or data input"
 HOMEPAGE="http://jakarta.apache.org/commons/validator/"
-SRC_URI="mirror://apache/jakarta/commons/validator/source/${MY_P}.tar.gz mirror://gentoo/${P}-gentoo-missingfiles.tar.bz2"
+SRC_URI="mirror://apache/jakarta/commons/validator/source/${MY_P}.tar.gz
+http://gentooexperimental.org/distfiles/${P}-gentoo-missingfiles.tar.bz2"
 # 1) Download commons-validator-1.1.3-gentoo-missingfiles.tar.bz2
 # 2) Extract
 # 3) mv commons-validator-1.1.3 commons-validator-1.1.4
