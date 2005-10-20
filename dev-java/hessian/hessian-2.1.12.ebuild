@@ -8,8 +8,7 @@ DESCRIPTION="The Hessian binary web service protocol makes web services usable w
 HOMEPAGE="http://www.caucho.com/hessian/"
 SRC_URI="http://www.caucho.com/hessian/download/${P}-src.jar"
 
-# Supposedly Apache, but not sure which version
-LICENSE=""
+LICENSE="Apache-1.1"
 SLOT="2.1"
 KEYWORDS="~x86"
 IUSE="jikes doc"
@@ -31,9 +30,7 @@ src_unpack() {
 	cp ${FILESDIR}/build-${PVR}.xml build.xml
 
 	# Populate classpath
-	cat > build.properties <<-EOF 
-		classpath=$(java-pkg_getjars servletapi-2.3)
-	EOF
+	echo "classpath=$(java-pkg_getjars servletapi-2.3)" >> build.properties
 }
 
 src_compile() {
