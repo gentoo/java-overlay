@@ -20,7 +20,7 @@ DEPEND=">=virtual/jdk-1.3
 	jikes? ( dev-java/jikes )
 	dev-java/ant-core
 	${LDEPEND}"
-RDEPEND=">=virtual/jdk-1.3
+RDEPEND=">=virtual/jre-1.3
 	${LDEPEND}"
 
 LICENSE="Apache-2.0"

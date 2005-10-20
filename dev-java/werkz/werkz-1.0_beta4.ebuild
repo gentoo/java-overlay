@@ -18,11 +18,11 @@ IUSE="doc jikes"
 LDEPEND="dev-java/commons-logging
 	=dev-java/commons-jelly-1*
 	=dev-java/commons-jelly-tags-ant-1*"
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	dev-java/junit
 	${LDEPEND}"
-RDEPEND="virtual/jre
+RDEPEND=">=virtual/jre-1.4
 	${LDEPEND}"
 S=${WORKDIR}/${PN}
 

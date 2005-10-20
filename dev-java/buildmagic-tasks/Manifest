@@ -1,4 +1,4 @@
-MD5 220aa9adfa4e9d22e9f56c8ecf78f700 buildmagic-tasks-2.0.ebuild 3676
-MD5 a423b6ae393db5604e0610c372d880d4 files/digest-buildmagic-tasks-2.0 147
+MD5 d221cc1fc24ed598f220c189a83b9481 buildmagic-tasks-2.0.ebuild 3687
 MD5 41a6429eed909cf88248f5e94b38c9a8 files/2.0-local.properties 479
+MD5 a423b6ae393db5604e0610c372d880d4 files/digest-buildmagic-tasks-2.0 147
 MD5 b89d97874f66df322901a9daca9e78a4 files/jboss4-buildmagic-tasks-build_xml.patch 973

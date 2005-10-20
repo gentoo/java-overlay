@@ -16,10 +16,10 @@ KEYWORDS="~x86"
 #IUSE="doc"
 IUSE="doc jikes"
 
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	app-arch/unzip
 	dev-java/ant-core"
-RDEPEND="virtual/jre
+RDEPEND=">=virtual/jre-1.4
 	=dev-java/servletapi-2.3*"
 
 SERVLET="servletapi-2.3 servlet.jar"

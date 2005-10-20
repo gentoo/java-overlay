@@ -27,11 +27,11 @@ COMMON_DEPEND="dev-java/jgroups
 	=dev-java/jisp-2.5*
 	=dev-java/struts-1.1*
 	dev-db/hsqldb"
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	jikes? (dev-java/jikes)
 	${COMMON_DEPEND}"
-RDEPEND="virtual/jre
+RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"
 
 S=${WORKDIR}/${MY_PN}

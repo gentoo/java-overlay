@@ -15,9 +15,9 @@ IUSE=""
 
 LDEPEND="dev-java/gnu-activation
 	dev-java/jakarta-regexp"
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core"
-RDEPEND="virtual/jre"
+RDEPEND=">=virtual/jre-1.4"
 
 src_unpack() {
 	:;

@@ -15,8 +15,8 @@ SLOT="2.2"
 KEYWORDS="~x86"
 IUSE="doc"
 
-DEPEND="virtual/jdk"
-RDEPEND="virtual/jre
+DEPEND=">=virtual/jdk-1.4"
+RDEPEND=">=virtual/jre-1.4
 	dev-java/sax"
 
 S=${WORKDIR}/${MY_P}

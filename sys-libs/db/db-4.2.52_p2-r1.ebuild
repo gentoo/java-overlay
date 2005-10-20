@@ -26,7 +26,7 @@ done
 
 LICENSE="DB"
 SLOT="4.2"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="-amd64 ~x86"
 IUSE="tcltk java doc nocxx bootstrap"
 
 DEPEND="tcltk? ( >=dev-lang/tcl-8.4 )

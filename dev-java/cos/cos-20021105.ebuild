@@ -16,11 +16,11 @@ KEYWORDS="~x86"
 IUSE="jikes doc"
 
 # TODO determine vm version requirements
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	app-arch/unzip
 	dev-java/ant-core
 	jikes? (dev-java/jikes)"
-RDEPEND="virtual/jre
+RDEPEND=">=virtual/jre-1.4
 	=dev-java/servletapi-2.3*"
 S=${WORKDIR}/${PN}
 

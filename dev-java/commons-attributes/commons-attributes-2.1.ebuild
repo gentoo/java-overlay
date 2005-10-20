@@ -14,11 +14,11 @@ KEYWORDS="~x86"
 IUSE="doc jikes"
 
 # TODO determine jvm version requirements
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	jikes? (dev-java/jikes)
 	dev-java/xjavadoc"
-RDEPEND="virtual/jre
+RDEPEND=">=virtual/jre-1.4
 	dev-java/commons-collections
 	dev-java/junit"
 

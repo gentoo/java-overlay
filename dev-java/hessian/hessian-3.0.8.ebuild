@@ -14,11 +14,11 @@ SLOT="3.0.8"
 KEYWORDS="~x86"
 IUSE="jikes doc"
 
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	app-arch/unzip
 	jikes? (dev-java/jikes)
 	dev-java/ant-core"
-RDEPEND="virtual/jre
+RDEPEND=">=virtual/jre-1.4
 	=dev-java/servletapi-2.3*"
 
 SERVLET="servletapi-2.3 servlet.jar"

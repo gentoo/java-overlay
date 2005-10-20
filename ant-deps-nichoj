@@ -76,3 +76,10 @@ xerces
 ##################################
 # doesn't need ant
 ##################################
+dev-java/openjgraph
+
+
+##################################
+# Always builds docs
+##################################
+dev-java/commons-httpclient-2.0*

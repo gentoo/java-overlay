@@ -15,11 +15,11 @@ SLOT="0"
 KEYWORDS="~x86"
 IUSE="jikes"
 
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	jikes? (dev-java/jikes)
 	app-arch/unzip"
-RDEPEND="virtual/jre
+RDEPEND=">=virtual/jre-1.4
 	dev-java/log4j
 	dev-java/p6spy
 	=dev-java/velocity-1*"

@@ -15,10 +15,10 @@ KEYWORDS="~x86"
 IUSE="doc jikes"
 
 # TODO determine vm requirement
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	jikes? (dev-java/jikes)
 	dev-java/ant-core"
-RDEPEND="virtual/jre
+RDEPEND=">=virtual/jre-1.4
 	=dev-java/servletapi-2.3*
 	=dev-java/jdom-1.0_beta9*
 	=dev-java/jaxen-1.1*

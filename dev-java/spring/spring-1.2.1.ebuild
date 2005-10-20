@@ -18,11 +18,11 @@ KEYWORDS="~x86"
 #IUSE="doc jikes"
 IUSE="doc"
 
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	dev-java/antlr"
 #	jikes? (dev-java/jikes)
-RDEPEND="virtual/jre
+RDEPEND=">=virtual/jre-1.4
 	=www-servers/axis-1*
 	=dev-java/aopalliance-1*
 	dev-java/wsdl4j

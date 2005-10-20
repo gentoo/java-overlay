@@ -26,11 +26,11 @@ COMMON_DEPEND="
 	=dev-java/struts-sslext-1.1*
 	=dev-java/velocity-1*
 	dev-java/dvsl"
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	jikes? (dev-java/jikes)
 	${COMMON_DEPEND}"
-RDEPEND="virtual/jre
+RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"
 
 src_unpack() {

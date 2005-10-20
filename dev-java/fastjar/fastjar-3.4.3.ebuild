@@ -13,6 +13,7 @@ SLOT="0"
 KEYWORDS="~ppc ~x86"
 IUSE=""
 
+# TODO more deps!
 DEPEND=""
 RDEPEND="sys-libs/zlib"
 

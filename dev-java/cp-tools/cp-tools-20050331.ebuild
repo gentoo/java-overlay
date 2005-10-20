@@ -26,8 +26,6 @@ DEPEND="dev-java/sablevm
 
 #RDEPEND=""
 
-S=${WORKDIR}/${P}
-
 src_unpack() {
 	unpack ${A}
 	cd ${S}

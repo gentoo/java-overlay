@@ -14,11 +14,11 @@ KEYWORDS="~x86"
 IUSE="doc jikes"
 
 # TODO determine java veresions
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	app-arch/unzip
 	dev-java/ant-core
 	jikes? (dev-java/jikes)"
-RDEPEND="virtual/jre"
+RDEPEND=">=virtual/jre-1.4"
 
 src_unpack() {
 	unpack ${A}

@@ -24,7 +24,8 @@ KEYWORDS="~x86 ~ppc"
 
 IUSE=""
 
-DEPEND="virtual/jdk
+# TODO remove -bin dep
+DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	dev-java/xerces
 	|| (	dev-java/avalon-logkit

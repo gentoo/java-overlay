@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+# TODO remove! already has a package somewhere apparently
 inherit java-pkg
 
 MY_PN="MRJToolkitStubs"

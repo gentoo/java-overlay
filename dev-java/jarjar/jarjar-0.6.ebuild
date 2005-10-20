@@ -15,12 +15,12 @@ IUSE="doc jikes"
 
 LIB_DEPEND="=dev-java/asm-2*
 	=dev-java/gnu-regexp-1*"
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	app-arch/unzip
 	dev-java/ant-core
 	jikes? (dev-java/jikes)
 	${LIB_DEPEND}"
-RDEPEND="virtual/jre
+RDEPEND=">=virtual/jre-1.4
 	${LIB_DEPEND}"
 
 src_unpack() {

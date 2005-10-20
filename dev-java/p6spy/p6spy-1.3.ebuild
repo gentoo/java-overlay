@@ -13,10 +13,10 @@ SLOT="0"
 KEYWORDS="~x86"
 IUSE="doc jikes"
 
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	app-arch/unzip
 	jikes? (dev-java/jikes)"
-RDEPEND="virtual/jre
+RDEPEND=">=virtual/jre-1.4
 	=dev-java/jboss-module-jmx-4.0*
 	=dev-java/jboss-module-system-4.0*
 	=dev-java/jboss-module-common-4.0*

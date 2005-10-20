@@ -14,7 +14,7 @@ DEPEND=">=virtual/jdk-1.3
 	jikes? ( dev-java/jikes )
 	dev-java/ant-core
 	dev-java/junit"
-RDEPEND=">=virtual/jdk-1.3"
+RDEPEND=">=virtual/jre-1.3"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"

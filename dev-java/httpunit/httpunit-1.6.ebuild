@@ -18,9 +18,9 @@ SLOT="0"
 KEYWORDS="~x86"
 IUSE="doc"
 
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core"
-RDEPEND="virtual/jre
+RDEPEND=">=virtual/jre-1.4
 	dev-java/jtidy
 	=dev-java/rhino-1.6*
 	dev-java/nekohtml

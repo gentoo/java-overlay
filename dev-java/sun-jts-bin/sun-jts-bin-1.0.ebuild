@@ -15,10 +15,11 @@ KEYWORDS="~x86"
 IUSE="doc jikes"
 RESTRICT="fetch"
 
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	app-arch/unzip
-	jikes? (dev-java/jikes)"
-RDEPEND="virtual/jre"
+	jikes? (dev-java/jikes)
+	dev-java/ant-core"
+RDEPEND=">=virtual/jre-1.4"
 DOWNLOAD_URL="http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&PartDetailId=7310-jts-1.0-oth-JPR&SiteId=JSC&TransactionId=noreg"
 
 pkg_nofetch() {

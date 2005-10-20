@@ -14,11 +14,11 @@ SLOT="1"
 KEYWORDS="~x86"
 IUSE="doc jikes"
 
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	app-arch/unzip
 	jikes? (dev-java/jikes)"
-RDEPEND="virtual/jre"
+RDEPEND=">=virtual/jre-1.4"
 
 src_unpack() {
 	# The structure of the archive is really messy, so we have to clean it up a

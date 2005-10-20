@@ -18,8 +18,7 @@ KEYWORDS="~x86"
 IUSE="doc"
 RESTRICT="fetch"
 
-DEPEND="virtual/jdk
-	app-arch/unzip"
+DEPEND="app-arch/unzip"
 RDEPEND="virtual/jre"
 S="${WORKDIR}/${MY_PN}${PV}mrel-ri"
 

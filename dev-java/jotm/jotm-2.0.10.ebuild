@@ -13,12 +13,12 @@ SLOT="2.0"
 KEYWORDS="~x86"
 IUSE="doc jikes"
 
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	jikes? (dev-java/jikes)"
 # TODO: verify that jacorb actually provides JTS classes
 # ( org.omg.CosTransactions.PropagationContextHelper )
-RDEPEND="virtual/jre
+RDEPEND=">=virtual/jre-1.4
 	=dev-java/commons-cli-1*
 	dev-java/commons-logging
 	=dev-java/howl-logger-0.1*

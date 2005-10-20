@@ -15,8 +15,8 @@ SLOT="3"
 KEYWORDS="~x86"
 IUSE=""
 
-DEPEND="virtual/jdk"
-RDEPEND="virtual/jre
+DEPEND=">=virtual/jdk-1.4"
+RDEPEND=">=virtual/jre-1.4
 	=dev-java/ognl-2.6*"
 
 src_compile() {

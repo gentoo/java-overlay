@@ -27,12 +27,12 @@ LDEPEND="~dev-java/servletapi-2.3
 	=dev-java/dom4j-1*
 	=dev-java/jaxen-1.1*
 	=dev-java/xerces-2*"
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	jikes? (dev-java/jikes)
 	dev-java/junit
 	${LDEPEND}"
-RDEPEND="virtual/jre
+RDEPEND=">=virtual/jre-1.4
 	${LDEPEND}"
 
 S=${WORKDIR}/${MY_P}

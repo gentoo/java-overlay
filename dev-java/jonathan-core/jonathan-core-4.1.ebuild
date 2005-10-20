@@ -17,10 +17,10 @@ SLOT="4"
 KEYWORDS="~x86"
 IUSE="doc jikes"
 
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	jikes? (dev-java/jikes)"
-RDEPEND="virtual/jre
+RDEPEND=">=virtual/jre-1.4
 	=dev-java/nanoxml-2.2*
 	=dev-java/kilim-1*
 	dev-java/monolog"

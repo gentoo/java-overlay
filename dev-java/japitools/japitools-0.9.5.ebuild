@@ -16,9 +16,9 @@ KEYWORDS="~x86"
 IUSE="doc"
 
 DEPEND="dev-java/ant-core
-		virtual/jdk"
+		>=virtual/jdk-1.4"
 
-RDEPEND="virtual/jre
+RDEPEND=">=virtual/jre-1.4
 		dev-lang/perl"
 
 S=${WORKDIR}/${PN}
