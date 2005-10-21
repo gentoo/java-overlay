@@ -6,4 +6,4 @@ MD5 ee3436c82ea5c8b7be0a8c7d2620f896 files/digest-hessian-3.0.13 67
 MD5 3b1b79f1af4dbee2b94e9b3cfaaea881 files/digest-hessian-3.0.8 66
 MD5 8030fd0398a489540a170e684ef0a6cb hessian-2.1.12.ebuild 1215
 MD5 b1c42c5bfea61cfc7550e0a1e74f373e hessian-3.0.13.ebuild 1483
-MD5 fd15caafec2d5ce9171b1d74763d41dd hessian-3.0.8.ebuild 1295
+MD5 fafe0c73326d3cdf296455fd3bdbb6f2 hessian-3.0.8.ebuild 1260

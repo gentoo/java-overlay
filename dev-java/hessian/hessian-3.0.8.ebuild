@@ -11,7 +11,7 @@ SRC_URI="http://www.caucho.com/hessian/download/${P}-src.jar"
 LICENSE="Apache-1.1"
 SLOT="3.0.8"
 KEYWORDS="~x86"
-IUSE="jikes doc"
+IUSE="jikes doc source"
 
 DEPEND=">=virtual/jdk-1.4
 	app-arch/unzip
@@ -23,10 +23,6 @@ RDEPEND=">=virtual/jre-1.4
 src_unpack() {
 	mkdir -p ${P}/src
 	unzip -qq -d ${S}/src ${DISTDIR}/${A}
-
-	# We need to move things around a bit
-#	mkdir -p ${S}/src
-#	mv com ${S}/src
 
 	cd ${S}
 	# No included ant script! Bad Java developer, bad!
@@ -48,4 +44,5 @@ src_install() {
 	java-pkg_dojar dist/${PN}.jar
 
 	use doc && java-pkg_dohtml -r dist/doc/api
+	use source && java-pkg_dosrc src/*
 }
