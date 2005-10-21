@@ -11,7 +11,7 @@ SRC_URI="http://www.caucho.com/hessian/download/${P}-src.jar"
 LICENSE="Apache-1.1"
 SLOT="3.0.8"
 KEYWORDS="~x86"
-IUSE="jikes doc source"
+IUSE="doc jikes source"
 
 DEPEND=">=virtual/jdk-1.4
 	app-arch/unzip
