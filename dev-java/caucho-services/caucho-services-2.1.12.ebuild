@@ -14,11 +14,12 @@ KEYWORDS="~x86"
 
 IUSE="doc jikes source"
 
-DEPEND=">=virtual/jdk-1.4
-		app-arch/unzip
-		dev-java/ant-core"
 RDEPEND=">=virtual/jre-1.4
 		=dev-java/servletapi-2.3*"
+DEPEND=">=virtual/jdk-1.4
+		app-arch/unzip
+		dev-java/ant-core
+		${RDEPEND}"
 
 src_compile() {
 	local antflags="jar -Dservletapi=$(java-pkg_getjars servletapi-2.3)"
