@@ -6,16 +6,19 @@ inherit java-pkg
 
 DESCRIPTION="The Burlap web service protocol makes web services usable without requiring a large framework, and without learning yet another alphabet soup of protocols."
 HOMEPAGE="http://www.caucho.com/burlap/"
-SRC_URI="http://www.caucho.com/burlap/download/burlap-2.1.12-src.jar"
+SRC_URI="mirror://gentoo/${P}.tar.bz2"
 
 LICENSE="Apache-1.1"
-SLOT="2.1"
+SLOT="3.0"
 KEYWORDS="~x86"
 
 IUSE="doc jikes source"
 
 RDEPEND=">=virtual/jre-1.4
-		=dev-java/servletapi-2.3*"
+		=dev-java/servletapi-2.3*
+		~dev-java/hessian-${PV}
+		~dev-java/caucho-services-${PV}"
+
 DEPEND=">=virtual/jdk-1.4
 		app-arch/unzip
 		dev-java/ant-core
@@ -23,20 +26,13 @@ DEPEND=">=virtual/jdk-1.4
 		source? ( app-arch/zip )
 		${RDEPEND}"
 
-src_unpack() {
-	mkdir -p ${P}/src
-	unzip -qq -d ${S}/src ${DISTDIR}/${A}
-
-	cd ${S}
-	# No ant script! Bad upstream... bad!
-	cp ${FILESDIR}/build-${PVR}.xml build.xml
-
-	# Populate classpath
-	echo classpath=$(java-pkg_getjar servletapi-2.3 servlet.jar) >> build.properties
-}
-
 src_compile() {
-	local antflags="-Dproject.name=${PN} jar"
+	# Populate classpath
+	local classpath="$(java-pkg_getjar servletapi-2.3 servlet.jar)"
+	classpath="${classpath}:$(java-pkg_getjars hessian-3.0.8)"
+	classpath="${classpath}:$(java-pkg_getjars caucho-services-3.0)"
+
+	local antflags="jar -Dclasspath=${classpath}"
 	use jikes && antflags="-Dbuild.compiler=jikes ${antflags}"
 	use doc && antflags="${antflags} javadoc"
 
