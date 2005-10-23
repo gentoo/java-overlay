@@ -1,3 +1,3 @@
-MD5 fbb5e3bfbe0a5edcbafb39579d48cc73 jessie-1.0.0-r1.ebuild 1502
-MD5 5f70d8a7822ce83c05a4089c92968a31 files/jessie-1.0.0-javadoc.patch 2893
 MD5 c614b4d53c89c67391b2d7e5c0d06fcf files/digest-jessie-1.0.0-r1 64
+MD5 5f70d8a7822ce83c05a4089c92968a31 files/jessie-1.0.0-javadoc.patch 2893
+MD5 6f7762c9be20432a0a64448bda364aec jessie-1.0.0-r1.ebuild 1417

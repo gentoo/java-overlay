@@ -13,12 +13,12 @@ KEYWORDS="~x86"
 IUSE="doc ssl"
 #IUSE="doc jikes ssl"
 
-LDEPEND=">=dev-java/gnu-classpath-0.08_rc1
-	ssl? ( dev-java/gnu-crypto )"
 RDEPEND=">=virtual/jre-1.4
-	${LDEPEND}"
+	ssl? ( dev-java/gnu-crypto )"
+
 DEPEND=">=virtual/jdk-1.4
-	${LDEPEND}"
+	${RDEPEND}"
+
 # Jikes needs to learn how to get system libraries so it can play nice.
 # Until then, we're going to disable jikes support
 #	jikes? ( >=dev-java/jikes-1.19 )
@@ -33,7 +33,7 @@ src_unpack() {
 
 src_compile() {
 
-	local MY_CLASSPATH=${CLASSPATH}:/usr/share/classpath/glibj.zip
+	local MY_CLASSPATH=${CLASSPATH}
 	use ssl && MY_CLASSPATH=${MY_CLASSPATH}:$(java-pkg_getjars gnu-crypto)
 
 #	local MY_JAVAC=$(java-config -c)
