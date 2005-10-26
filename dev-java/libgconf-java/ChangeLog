@@ -1,0 +1,56 @@
+# ChangeLog for dev-java/libgconf-java
+# Copyright 2002-2005 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-java/libgconf-java/ChangeLog,v 1.8 2005/06/29 15:11:30 axxo Exp $
+
+*libgconf-java-2.12.1 (25 Oct 2005)
+
+  25 Oct 2005; Andrew Cowie <andrew@operationaldynamics.com>
+  +libgconf-java-2.12.1.ebuild
+  Version bump
+
+*libgconf-java-2.12.0 (03 Oct 2005)
+
+  03 Oct 2005; Andrew Cowie <andrew@operationaldynamics.com>
+  +libgconf-java-2.12.0.ebuild
+  Next version release from upstream
+
+  29 Jun 2005; Thomas Matthijs <axxo@gentoo.org>
+  -libgconf-java-2.8.2.ebuild, libgconf-java-2.8.3.1.ebuild:
+  remove older ebuilds + keyword x86
+
+*libgconf-java-2.10.1 (01 May 2005)
+
+  01 May 2005; Karl Trygve Kalleberg <karltk@gentoo.org>
+  +files/libgconf-java-2.10.0_fix-install-dir.patch,
+  libgconf-java-2.8.3.1.ebuild, +libgconf-java-2.10.1.ebuild:
+  Updates from Andrew Cowie <andrew@operationaldynamics.com>, partial fix for
+  #87978.
+
+  31 Mar 2005; Thomas Matthijs <axxo@gentoo.org>
+  libgconf-java-2.8.3.1.ebuild:
+  add include paths to jni.h
+
+*libgconf-java-2.8.3.1 (12 Mar 2005)
+
+  12 Mar 2005; Jan Brinkmann <luckyduck@gentoo.org>
+  +files/libgconf-java-2.8.3.1_gentoo-PN-SLOT.patch,
+  +libgconf-java-2.8.3.1.ebuild:
+  new upstream version, partially closes #83366. added ~amd64 to KEYWORDS.
+  ebuilds and patches contributed by Andrew Cowie
+  <andrew@operationaldynamics.com>.
+
+  28 Dec 2004; Thomas Matthijs <axxo@gentoo.org> libgconf-java-2.8.2.ebuild:
+  make it find jni.h
+
+  04 Dec 2004; Karl Trygve Kalleberg <karltk@gentoo.org> :
+  Initial import. Fixes #70562.
+
+* libgconf-java-2.8.2 (08 Nov 2004)
+
+  08 Nov 2004; Andrew Cowie <andrew@operationaldynamics.com> 
+  libgconf-java-2.8.ebuild:
+
+  New ebuild. What used to be java-gnome is now multiplexed into various modular 
+  subcomponents. Upstream CVS was all re-arranged, and now there is a release 
+  tarball for each piece. This is the Java binding around GConf
+

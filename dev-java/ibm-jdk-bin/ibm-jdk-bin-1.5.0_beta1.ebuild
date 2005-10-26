@@ -21,6 +21,7 @@ SRC_URI="
 PROVIDE="virtual/jdk
 	virtual/jre"
 SLOT="1.5"
+# TODO add license
 LICENSE="IBM-J1.5"
 KEYWORDS="~ppc ~amd64 -*"
 RESTRICT="fetch"

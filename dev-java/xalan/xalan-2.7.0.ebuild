@@ -30,8 +30,7 @@ src_unpack() {
 	unpack ${A}
 	cd ${S}/lib
 	rm -f *.jar
-	java-pkg_jar-from xerces-2 xercesImpl.jar
-	java-pkg_jar-from xerces-2 xml-apis.jar
+	java-pkg_jar-from xerces-2 
 #	java-pkg_jar-from javacup javacup.jar java_cup.jar
 	java-pkg_jar-from javacup javacup.jar runtime.jar
 	java-pkg_jar-from bcel bcel.jar BCEL.jar
@@ -42,7 +41,7 @@ src_unpack() {
 }
 
 src_compile() {
-	local antflags="jar"
+	local antflags="-lib $(java-pkg_getjar gnu-jaxp gnujaxp.jar) jar"
 	# TODO use doc
 	use jikes && antflags="${antflags} -Dbuild.compiler=jikes"
 	ant ${antflags} || die "build failed"

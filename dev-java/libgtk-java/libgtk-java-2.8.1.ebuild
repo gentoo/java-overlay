@@ -16,29 +16,28 @@ GNOME_TARBALL_SUFFIX="gz"
 
 inherit eutils gnome.org
 
-DESCRIPTION="Common core glib classes of the java-gnome Java bindings"
+DESCRIPTION="Java bindings for GTK libraries (allow GTK applications to be written in Java)"
 HOMEPAGE="http://java-gnome.sourceforge.net/"
 
 # temporary until we get back to using ftp.gnome.org
 SRC_URI="http://research.operationaldynamics.com/linux/java-gnome/dist/${P}.tar.gz"
 
-RDEPEND=">=dev-libs/glib-2.8.1
+RDEPEND=">=x11-libs/gtk+-2.8.3
+	>=dev-java/glib-java-0.2.1
+	>=dev-java/cairo-java-1.0.1
 	>=virtual/jre-1.4"
 
 DEPEND=">=virtual/jdk-1.4
 	${RDEPEND}
-	app-arch/zip
-	!gcj? (dev-java/jikes)"
+	app-arch/zip"
 
 #
 # Critical that this match gtkapiversion
 #
-SLOT="0.2"
+SLOT="2.8"
 LICENSE="LGPL-2.1"
 KEYWORDS="~ppc ~amd64 ~x86"
-IUSE="gcj source"
-
-# TODO check if gcc compiled with USE=gcj
+IUSE="gcj"
 
 src_unpack() {
 	unpack ${A}
@@ -80,12 +79,14 @@ src_compile() {
 src_install() {
 	make DESTDIR=${D} install || die "install step failed"
 
+	mv ${D}/usr/share/doc/libgtk${SLOT}-java ${D}/usr/share/doc/${PF}
+
 	# the upstream install scatters things around a bit. The following cleans
 	# that up to make it policy compliant.
 
 	dodir /usr/share/${PN}-${SLOT}/src
 	cd ${S}/src/java
-	find . -name '*.java' | xargs zip ${D}/usr/share/${PN}-${SLOT}/src/glib-java-${PV}.src.zip
+	find . -name '*.java' | xargs zip ${D}/usr/share/${PN}-${SLOT}/src/libgtk-java-${PV}.src.zip
 
 	# again, with dojar misbehaving, better do to this manually for the 
 	# time being.
@@ -93,8 +94,6 @@ src_install() {
 	echo "DESCRIPTION=${DESCRIPTION}" \
 		>  ${D}/usr/share/${PN}-${SLOT}/package.env
 
-	echo "CLASSPATH=/usr/share/${PN}-${SLOT}/lib/glib${SLOT}.jar" \
+	echo "CLASSPATH=/usr/share/${PN}-${SLOT}/lib/gtk${SLOT}.jar" \
 		>> ${D}/usr/share/${PN}-${SLOT}/package.env
-
-	use source && java-pkg_dosrc src/java/*
 }

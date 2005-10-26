@@ -2,5 +2,5 @@ MD5 b72000f6e00823a49682b68b44f6c18d ChangeLog 561
 MD5 edca89f932d67023b4073bd8c2667ec3 files/digest-glib-java-0.2.0 67
 MD5 1d2e28a6488384bd29477c8488017453 files/digest-glib-java-0.2.1 67
 MD5 454ac7f6adfc47b51ecf371b98bb657d glib-java-0.2.0.ebuild 2730
-MD5 be99dfc537e49fd72501afcaa22dd92c glib-java-0.2.1.ebuild 2815
+MD5 71a1818414cbfd671c9441e6228e9374 glib-java-0.2.1.ebuild 2846
 MD5 01c4416fe00def9ec0679371fa4487ac metadata.xml 897

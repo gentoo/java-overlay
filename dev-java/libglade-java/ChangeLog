@@ -1,0 +1,81 @@
+# ChangeLog for dev-java/libglade-java
+# Copyright 2002-2005 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-java/libglade-java/ChangeLog,v 1.9 2005/06/29 15:11:18 axxo Exp $
+
+*libglade-java-2.12.1 (25 Oct 2005)
+
+  25 Oct 2005; Andrew Cowie <andrew@operationaldynamics.com>
+  +libglade-java-2.12.1.ebuild
+  Version bump
+
+*libglade-java-2.12.0 (03 Oct 2005)
+
+  03 Oct 2005; Andrew Cowie <andrew@operationaldynamics.com>
+  +libglade-java-2.12.0.ebuild
+  Next version release from upstream
+
+  29 Jun 2005; Thomas Matthijs <axxo@gentoo.org>
+  -libglade-java-2.8.2.ebuild, -libglade-java-2.8.2-r1.ebuild,
+  -libglade-java-2.8.2.2.ebuild, libglade-java-2.8.3.1.ebuild:
+  remove older ebuilds + keyword x86
+
+*libglade-java-2.10.1 (01 May 2005)
+
+  01 May 2005; Karl Trygve Kalleberg <karltk@gentoo.org>
+  +files/libglade-java-2.10.0_fix-install-dir.patch,
+  +libglade-java-2.10.1.ebuild:
+  Updates from Andrew Cowie <andrew@operationaldynamics.com>, partial fix for
+  #87978.
+
+  31 Mar 2005; Jan Brinkmann <luckyduck@gentoo.org>
+  libglade-java-2.8.2-r1.ebuild, libglade-java-2.8.2.2.ebuild,
+  libglade-java-2.8.2.ebuild, libglade-java-2.8.3.1.ebuild:
+  added missing libgnomecanvas dependency, fixes #72630
+
+  31 Mar 2005; Thomas Matthijs <axxo@gentoo.org>
+  libglade-java-2.8.3.1.ebuild:
+  add include paths to jni.h
+
+*libglade-java-2.8.3.1 (12 Mar 2005)
+
+  12 Mar 2005; Jan Brinkmann <luckyduck@gentoo.org>
+  +files/libglade-java-2.8.3.1_gentoo-PN-SLOT.patch,
+  +libglade-java-2.8.3.1.ebuild:
+  new upstream version, partially closes #83366. added ~amd64 to KEYWORDS.
+  ebuilds and patched contributed by Andrew Cowie
+  <andrew@operationaldynamics.com>.
+
+* libglade-java-2.8.2.2 (27 Dec 2004)
+
+  27 Dec 2004; Andrew Cowie <andrew@operationaldynamics.com> +libglade-java-2.8.2.2.ebuild:
+  New upstream with the fix below. Note that 2.8.2.1 had an internal version 
+  number glitch
+
+* libglade-java-2.8.2-r1 (24 Dec 2004)
+
+  24 Dec 2004; Andrew Cowie <andrew@operationaldynamics.com> +libglade-java-2.8.2-r1.ebuild, -libglade-java-2.8.2.ebuild:
+  Nasty little bug with respect to signal connection. Luckily, simple fix.
+  See gnome.org bug #161190 which in turn is based on Red Hat bug #141713. This
+  will go away very shortly if a new upstream is released (largely and only 
+  containing this patch).
+
+  18 Nov 2004; Andrew Cowie <andrew@operationaldynamics.com> libglade-java-2.8.2.ebuild:
+  Marked stable on x86
+
+* libglade-java-2.8.2 (08 Nov 2004)
+
+  08 Nov 2004; Andrew Cowie <andrew@operationaldynamics.com>:
+  New ebuild. What used to be java-gnome is now multiplexed into various modular
+  subcomponents. Upstream CVS was all re-arranged, and now there is a release
+  tarball for each piece. This is the Java binding for LibGlade.
+
+* libglade-java-2.8.2 (04 Dec 2004)
+
+  04 Dec 2004; Karl Trygve Kalleberg <karltk@gentoo.org> :
+  Initial import. Fixes #70561.
+
+  08 Nov 2004; Andrew Cowie <andrew@operationaldynamics.com> 
+  libglade-java-2.8.8.ebuild:
+  New ebuild. What used to be java-gnome is now multiplexed into various modular
+  subcomponents. Upstream CVS was all re-arranged, and now there is a release
+  tarball for each piece. This is the Java binding for LibGlade.

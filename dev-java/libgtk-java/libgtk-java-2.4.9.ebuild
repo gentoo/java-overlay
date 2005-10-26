@@ -1,6 +1,6 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/libgtk-java/libgtk-java-2.6.2-r1.ebuild,v 1.3 2005/07/19 09:35:09 axxo Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/libgtk-java/libgtk-java-2.4.9.ebuild,v 1.3 2005/07/19 09:35:09 axxo Exp $
 
 #
 # WARNING: Because java-gnome is a set of bindings to native GNOME libraries, 
@@ -12,44 +12,39 @@
 # BE VERY SUBTLE IF IT DOES NOT WORK.
 # 
 
-GNOME_TARBALL_SUFFIX="gz"
-
 inherit eutils gnome.org
 
-DESCRIPTION="Common core glib classes of the java-gnome Java bindings"
+DESCRIPTION="Java bindings for GTK libraries (allow GTK applications to be written in Java)"
 HOMEPAGE="http://java-gnome.sourceforge.net/"
+RDEPEND=">=x11-libs/gtk+-2.4
+	>=virtual/jre-1.2"
 
-# temporary until we get back to using ftp.gnome.org
-SRC_URI="http://research.operationaldynamics.com/linux/java-gnome/dist/${P}.tar.gz"
-
-RDEPEND=">=dev-libs/glib-2.8.1
-	>=virtual/jre-1.4"
-
-DEPEND=">=virtual/jdk-1.4
+DEPEND=">=virtual/jdk-1.2
 	${RDEPEND}
-	app-arch/zip
-	!gcj? (dev-java/jikes)"
+	app-arch/zip"
 
 #
 # Critical that this match gtkapiversion
 #
-SLOT="0.2"
+SLOT="2.4"
 LICENSE="LGPL-2.1"
-KEYWORDS="~ppc ~amd64 ~x86"
-IUSE="gcj source"
-
-# TODO check if gcc compiled with USE=gcj
+KEYWORDS="~ppc x86"
+IUSE="gcj"
 
 src_unpack() {
 	unpack ${A}
 	cd ${S}
 
-	# adjust for Gentoo Java policy locations
-	# thanks to yselkowitz@hotmail.com for the suggestion of using sed
-	sed -i \
-		-e "s:/share/${PN}/:/share/${PN}-${SLOT}/:" \
-		-e "s:/share/java/:/share/${PN}-${SLOT}/lib/:" \
-		configure || die "sed configure error"
+	# I know it's better to use ${P}, but I don't feel like duplicating 
+	# the patch files for every bloody point release. I'll copy them at 
+	# major version releases.
+
+	epatch ${FILESDIR}/libgtk-java-2.4.8.1_gentoo-PN-SLOT.patch
+
+	use gcj || epatch ${FILESDIR}/libgtk-java-2.4.8.1_find-jni.patch
+
+	# Rediculous glitch from upstream's packaging.
+	rm -f ${S}/config.cache
 }
 
 src_compile() {
@@ -67,25 +62,31 @@ src_compile() {
 	# NOTE: THIS RELIES ON PORTAGE PASSING $PN AND $SLOT IN THE ENVIRONMENT
 	#
 
-	export JAVADOC_OPTIONS="-use"
-
 	./configure \
 		--host=${CHOST} \
 		--prefix=/usr \
-		--with-jardir=/usr/share/${PN}-${SLOT}/lib \
 			${conf} || die "./configure failed"
 	make || die
 }
 
 src_install() {
-	make DESTDIR=${D} install || die "install step failed"
+	make prefix=${D}/usr install || die
+
+	mv ${D}/usr/share/doc/libgtk${SLOT}-java ${D}/usr/share/doc/${PF}
 
 	# the upstream install scatters things around a bit. The following cleans
 	# that up to make it policy compliant.
 
-	dodir /usr/share/${PN}-${SLOT}/src
+	# I originally tried java-pkg_dojar here, but it has a few glitches 
+	# like not copying symlinks as symlinks which makes a mess.
+
+	dodir /usr/share/${PN}-${SLOT}/lib
+	mv ${D}/usr/share/java/*.jar ${D}/usr/share/${PN}-${SLOT}/lib
+	rm -rf ${D}/usr/share/java
+
+	mkdir ${D}/usr/share/${PN}-${SLOT}/src
 	cd ${S}/src/java
-	find . -name '*.java' | xargs zip ${D}/usr/share/${PN}-${SLOT}/src/glib-java-${PV}.src.zip
+	zip -r ${D}/usr/share/${PN}-${SLOT}/src/libgtk-java-${PV}.src.zip *
 
 	# again, with dojar misbehaving, better do to this manually for the 
 	# time being.
@@ -93,8 +94,6 @@ src_install() {
 	echo "DESCRIPTION=${DESCRIPTION}" \
 		>  ${D}/usr/share/${PN}-${SLOT}/package.env
 
-	echo "CLASSPATH=/usr/share/${PN}-${SLOT}/lib/glib${SLOT}.jar" \
+	echo "CLASSPATH=/usr/share/${PN}-${SLOT}/lib/gtk${SLOT}.jar" \
 		>> ${D}/usr/share/${PN}-${SLOT}/package.env
-
-	use source && java-pkg_dosrc src/java/*
 }

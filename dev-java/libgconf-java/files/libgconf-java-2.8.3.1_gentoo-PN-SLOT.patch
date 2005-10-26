@@ -1,0 +1,12 @@
+diff -Nuar libgconf-java-2.8.3.1-ORIG/configure libgconf-java-2.8.3.1-WORK/configure
+--- libgconf-java-2.8.3.1-ORIG/configure	2005-02-12 13:03:15.000000000 +1100
++++ libgconf-java-2.8.3.1-WORK/configure	2005-02-24 17:34:16.000000000 +1100
+@@ -19563,7 +19563,7 @@
+ apiversion="2.8"
+ VERSION="2.8.3.1"
+ 
+-INSTALLED_CLASSPATH=\${prefix}/share/java/gconf${apiversion}-${VERSION}.jar
++INSTALLED_CLASSPATH=\${prefix}/share/${PN}-${SLOT}/lib/gconf${apiversion}-${VERSION}.jar
+ INSTALLED_JNI_DIR=\${prefix}/lib/
+ 
+ 

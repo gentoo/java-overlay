@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<herd>java</herd>
+	<maintainer>
+		<email>andrew@operationaldynamics.com</email>
+		<name>Andrew Cowie</name>
+	</maintainer>
+	<longdescription>
+		An elegant set of language bindings to allow you to write
+		native GNOME applications in Java. Works with both traditional
+		Java VMs and also with GCJ, allowing the creation of native
+		Linux executable binaries.
+
+		This library comes from the java-gnome project, which in turn
+		is part of the official suite of GNOME language bindings.
+
+		These are the Java bindings for the core GNOME libraries (which
+		therefore depends on a fairly complete and modern GNOME
+		installation). If you *do* have GNOME installed, then you
+		probably want to emerge java-gnome - a meta package which in
+		turn depends on the various GNOME libraries which comprise the
+		complete java-gnome language binding suite.
+	</longdescription>
+</pkgmetadata>

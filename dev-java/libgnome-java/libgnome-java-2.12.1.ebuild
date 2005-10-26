@@ -1,6 +1,6 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/libgtk-java/libgtk-java-2.6.2-r1.ebuild,v 1.3 2005/07/19 09:35:09 axxo Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/libgnome-java/libgnome-java-2.10.1.ebuild,v 1.3 2005/07/19 11:13:38 axxo Exp $
 
 #
 # WARNING: Because java-gnome is a set of bindings to native GNOME libraries, 
@@ -16,36 +16,37 @@ GNOME_TARBALL_SUFFIX="gz"
 
 inherit eutils gnome.org
 
-DESCRIPTION="Common core glib classes of the java-gnome Java bindings"
+DESCRIPTION="Java bindings for the core GNOME libraries (allow GNOME/GTK applications to be written in Java)"
 HOMEPAGE="http://java-gnome.sourceforge.net/"
 
 # temporary until we get back to using ftp.gnome.org
 SRC_URI="http://research.operationaldynamics.com/linux/java-gnome/dist/${P}.tar.gz"
 
-RDEPEND=">=dev-libs/glib-2.8.1
+RDEPEND=">=gnome-base/libgnome-2.10.0
+	>=gnome-base/libgnomeui-2.12.0
+	>=gnome-base/libgnomecanvas-2.12.0
+	>=dev-java/glib-java-0.2.1
+	>=dev-java/libgtk-java-2.8.1
 	>=virtual/jre-1.4"
 
 DEPEND=">=virtual/jdk-1.4
 	${RDEPEND}
-	app-arch/zip
-	!gcj? (dev-java/jikes)"
+	app-arch/zip"
 
 #
-# Critical that this match gtkapiversion
+# Critical that this match the gnome apiversion
 #
-SLOT="0.2"
+SLOT="2.12"
 LICENSE="LGPL-2.1"
-KEYWORDS="~ppc ~amd64 ~x86"
-IUSE="gcj source"
-
-# TODO check if gcc compiled with USE=gcj
+KEYWORDS="~ppc ~x86"
+IUSE="gcj"
 
 src_unpack() {
 	unpack ${A}
 	cd ${S}
 
-	# adjust for Gentoo Java policy locations
-	# thanks to yselkowitz@hotmail.com for the suggestion of using sed
+#	epatch ${FILESDIR}/libgnome-java-2.10.0_fix-install-dir.patch
+
 	sed -i \
 		-e "s:/share/${PN}/:/share/${PN}-${SLOT}/:" \
 		-e "s:/share/java/:/share/${PN}-${SLOT}/lib/:" \
@@ -64,10 +65,6 @@ src_compile() {
 	# the trick, but there are paths hard coded in .pc files and in the
 	# `make install` step itself that need to be influenced.
 	#
-	# NOTE: THIS RELIES ON PORTAGE PASSING $PN AND $SLOT IN THE ENVIRONMENT
-	#
-
-	export JAVADOC_OPTIONS="-use"
 
 	./configure \
 		--host=${CHOST} \
@@ -78,23 +75,23 @@ src_compile() {
 }
 
 src_install() {
+	# workaround Makefile bug not creating necessary parent directories
+
 	make DESTDIR=${D} install || die "install step failed"
 
-	# the upstream install scatters things around a bit. The following cleans
-	# that up to make it policy compliant.
+	# actually, at time of writing, there were no DOCUMENTS, but leave it here...
+	mv ${D}/usr/share/doc/libgnome${SLOT}-java ${D}/usr/share/doc/${PF}
 
 	dodir /usr/share/${PN}-${SLOT}/src
 	cd ${S}/src/java
-	find . -name '*.java' | xargs zip ${D}/usr/share/${PN}-${SLOT}/src/glib-java-${PV}.src.zip
+	find . -name '*.java' | xargs zip ${D}/usr/share/${PN}-${SLOT}/src/libgnome-java-${PV}.src.zip
 
 	# again, with dojar misbehaving, better do to this manually for the 
-	# time being.
+	# time being. Yes, this is bad hard coding, but what in this ebuild isn't?
 
 	echo "DESCRIPTION=${DESCRIPTION}" \
 		>  ${D}/usr/share/${PN}-${SLOT}/package.env
 
-	echo "CLASSPATH=/usr/share/${PN}-${SLOT}/lib/glib${SLOT}.jar" \
+	echo "CLASSPATH=/usr/share/${PN}-${SLOT}/lib/gnome${SLOT}.jar" \
 		>> ${D}/usr/share/${PN}-${SLOT}/package.env
-
-	use source && java-pkg_dosrc src/java/*
 }

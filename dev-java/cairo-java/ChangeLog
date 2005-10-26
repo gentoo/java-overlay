@@ -1,0 +1,16 @@
+# ChangeLog for dev-java/cairo-java
+# Copyright 2002-2005 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-java/libgtk-java/ChangeLog,v 1.10 2005/06/29 15:10:08 axxo Exp $
+
+*cairo-java-1.0.1 (25 Oct 2005)
+
+  25 Oct 2005; Andrew Cowie <andrew@operationaldynamics.com>
+  +cairo-java-1.0.1.ebuild
+  Version bump
+
+*cairo-java-1.0.0 (03 Oct 2005)
+
+  03 Oct 2005; Andrew Cowie <andrew@operationaldynamics.com>
+  +cairo-java-1.0.0.ebuild
+  New ebuild for a new pre-requisite library. Note that cairo-java, unlike the
+  rest of java-gnome, comes from freedesktop.org CVS, not gnome.org CVS.
