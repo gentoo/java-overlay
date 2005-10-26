@@ -1,0 +1,16 @@
+# ChangeLog for dev-java/glib-java
+# Copyright 2002-2005 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-java/libgtk-java/ChangeLog,v 1.10 2005/06/29 15:10:08 axxo Exp $
+
+*glib-java-0.2.1 (25 Oct 2005)
+
+  25 Oct 2005; Andrew Cowie <andrew@operationaldynamics.com>
+  +glib-java-0.2.1.ebuild
+  Version bump
+
+*glib-java-0.2.0 (03 Oct 2005)
+
+  03 Oct 2005; Andrew Cowie <andrew@operationaldynamics.com>
+  +glib-java-0.2.0.ebuild
+  New ebuild for a new pre-requisite library. Note that glib-java is
+  "jg-common" in GNOME CVS.
