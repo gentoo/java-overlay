@@ -6,6 +6,6 @@ MD5 641058823d1ba9cbf1ebadfb21a7163e files/spring-1.2.4-excludes.patch 1028
 MD5 38d40e9109885660aeaa49ffe230b1d5 files/spring-1.2.4-gentoo.patch 1350
 MD5 641058823d1ba9cbf1ebadfb21a7163e files/spring-1.2.5-excludes.patch 1028
 MD5 38d40e9109885660aeaa49ffe230b1d5 files/spring-1.2.5-gentoo.patch 1350
-MD5 2aaa03019642d292b470a8e35d57eb77 spring-1.2.1.ebuild 7458
+MD5 6ca3f832d2f4a23682d601ac4f4eb8b8 spring-1.2.1.ebuild 7470
 MD5 ca1e31d83081068472e83fd2ed7a34f4 spring-1.2.4.ebuild 7888
 MD5 ca1e31d83081068472e83fd2ed7a34f4 spring-1.2.5.ebuild 7888

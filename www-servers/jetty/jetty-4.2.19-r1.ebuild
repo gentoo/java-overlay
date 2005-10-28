@@ -14,7 +14,7 @@ LICENSE="Apache-1.1"
 SLOT="0"
 DEPEND=">=virtual/jdk-1.2
 		dev-java/ant-core
-		dev-java/jmx
+		dev-java/sun-jmx
 		=dev-java/xerces-2*
 "
 RDEPEND=">=virtual/jre-1.2
@@ -46,8 +46,8 @@ src_unpack() {
 	echo "ant.jar=`java-pkg_getjar ant-core ant.jar`" >> build.properties
 	# TODO: use our own jasper-*.jar once its in portage
 	# TODO: find package for jcert.jar
-	echo "jmxri.jar=`java-pkg_getjar jmx jmxri.jar`" >> build.properties
-	echo "jmxtools.jar=`java-pkg_getjar jmx jmxtools.jar`" >> build.properties
+	echo "jmxri.jar=`java-pkg_getjar sun-jmx jmxri.jar`" >> build.properties
+	echo "jmxtools.jar=`java-pkg_getjar sun-jmx jmxtools.jar`" >> build.properties
 	# TODO: find package for jnet.jar
 	# TODO: this might be the best way to get the path...
 	echo "jsse.jar=${JAVA_HOME}/jre/lib/jsse.jar" >> build.properties

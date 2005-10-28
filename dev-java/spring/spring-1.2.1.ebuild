@@ -58,7 +58,7 @@ RDEPEND=">=virtual/jre-1.4
 	dev-java/commons-pool
 	>=app-text/jasperreports-0.6.8
 	=dev-java/jamon-1*
-	dev-java/jmx
+	dev-java/sun-jmx
 	=dev-java/mx4j-2.1*
 	=dev-java/jotm-2.0*
 	=dev-java/xapool-1.5*
@@ -117,8 +117,8 @@ COMMONS_POOL="commons-pool commons-pool.jar"
 STANDARD="jakarta-jstl standard.jar"
 JAMON="jamon-1 jamon.jar JAMon.jar"
 JASPERREPORTS="jasperreports jasperreports.jar jaspereports-0.6.6.jar"
-JMXRI="jmx jmxri.jar"
-JMXREMOTE="jmx jmxremote.jar"
+JMXRI="sun-jmx jmxri.jar"
+JMXREMOTE="sun-jmx jmxremote.jar"
 MX4J_REMOTE="mx4j-2.1 mx4j-remote.jar"
 JOTM="jotm-2.0 jotm.jar"
 XAPOOL="xapool-1.5 xapool.jar"

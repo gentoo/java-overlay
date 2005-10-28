@@ -16,7 +16,7 @@ JETTY_NAME="${PN}${SLOT}"
 
 DEPEND=">=virtual/jdk-1.2
 		dev-java/ant-core
-		dev-java/jmx
+		dev-java/sun-jmx
 		=dev-java/xerces-2*
 "
 RDEPEND=">=virtual/jre-1.2
@@ -48,8 +48,8 @@ src_unpack() {
 	einfo "Constructing build.properties..."
 	echo "ant.jar=`java-pkg_getjar ant-core ant.jar`" >> build.properties
 	# TODO: use our own jasper-*.jar once its in portage
-	echo "jmxri.jar=`java-pkg_getjar jmx jmxri.jar`" >> build.properties
-	echo "jmxtools.jar=`java-pkg_getjar jmx jmxtools.jar`" >> build.properties
+	echo "jmxri.jar=`java-pkg_getjar sun-jmx jmxri.jar`" >> build.properties
+	echo "jmxtools.jar=`java-pkg_getjar sun-jmx jmxtools.jar`" >> build.properties
 	echo "xercesImpl.jar=`java-pkg_getjar xerces-2 xercesImpl.jar`" >> build.properties	
 	echo "xml-apis.jar=`java-pkg_getjar xerces-2 xml-apis.jar`" >> build.properties	
 

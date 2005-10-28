@@ -31,7 +31,7 @@ RDEPEND=">=virtual/jdk-1.4
 	   >=dev-java/commons-pool-1.2
 	   ~dev-java/jaxen-1.0
 	   >=dev-java/junit-3.8.1
-	   dev-java/jmx
+	   dev-java/sun-jmx
 	   >=dev-java/log4j-1.2.8
 	   >=dev-java/jakarta-regexp-1.3
 	   >=dev-java/saxpath-1.0
@@ -64,7 +64,7 @@ src_unpack() {
 
 	mkdir ./bin && cd ./bin
 	java-pkg_jar-from commons-logging commons-logging-api.jar
-	java-pkg_jar-from jmx jmxri.jar jmx.jar
+	java-pkg_jar-from sun-jmx jmxri.jar jmx.jar
 	java-pkg_jar-from commons-daemon
 
 	mkdir ../common/endorsed && cd ../common/endorsed
@@ -111,8 +111,8 @@ src_compile(){
 	antflags="${antflags} -Dcommons-logging.jar=$(java-pkg_getjar commons-logging commons-logging.jar)"
 	antflags="${antflags} -Dcommons-logging-api.jar=$(java-pkg_getjar commons-logging commons-logging-api.jar)"
 	antflags="${antflags} -Djaxen.jar=$(java-pkg_getjar jaxen jaxen-full.jar)"
-	antflags="${antflags} -Djmx.jar=$(java-pkg_getjar jmx jmxri.jar)"
-	antflags="${antflags} -Djmx-tools.jar=$(java-pkg_getjar jmx jmxtools.jar)"
+	antflags="${antflags} -Djmx.jar=$(java-pkg_getjar sun-jmx jmxri.jar)"
+	antflags="${antflags} -Djmx-tools.jar=$(java-pkg_getjar sun-jmx jmxtools.jar)"
 	antflags="${antflags} -Dsaxpath.jar=$(java-pkg_getjar saxpath saxpath.jar)"
 	antflags="${antflags} -DxercesImpl.jar=$(java-pkg_getjar xerces-2 xercesImpl.jar)"
 	antflags="${antflags} -Dxml-apis.jar=$(java-pkg_getjar xerces-2 xml-apis.jar)"

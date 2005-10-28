@@ -56,7 +56,7 @@ IUSE="debug doc"
 RDEPEND=">=virtual/jre-1.4.2
 		  =dev-java/commons-logging-1.0*
 		   dev-java/commons-el
-		   dev-java/jmx
+		   dev-java/sun-jmx
 		  =dev-java/junit-3.8*
 		  =dev-java/servletapi-2.2*
 		  =dev-java/servletapi-2.3*
