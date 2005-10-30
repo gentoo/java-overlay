@@ -1,5 +1,0 @@
-MD5 be9e988337c40d7d28262b034afa1a7f jabref-1.8.ebuild 1844
-MD5 ecd0980ac0a8147eddf0141cb6735623 files/jabref-1.8-fix_jarbundler.patch 926
-MD5 280fb96a2fe36be70c17a115248befcf files/jabref-1.8-nojarbundler.patch 2364
-MD5 008da3292b19b877ec94155af9f36be3 files/digest-jabref-1.8 68
-MD5 cfa957ae95e31719e0deeef0139b4fef files/jabref-1.8-classpath_cleanup.patch 6558
