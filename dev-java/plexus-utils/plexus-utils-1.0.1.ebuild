@@ -6,11 +6,11 @@ inherit java-pkg
 
 DESCRIPTION=""
 HOMEPAGE=""
-SRC_URI="mirror://gentoo/${P}.tar.gz"
+SRC_URI="http://gentooexperimental.org/distfiles/${P}.tar.gz"
 # download http://svn.plexus.codehaus.org/tags/plexus-utils-1.0.1.tar.gz?view=tar
 LICENSE=""
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
 IUSE="doc jikes"
 
 DEPEND=">=virtual/jdk-1.4
