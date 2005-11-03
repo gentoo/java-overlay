@@ -14,8 +14,6 @@ These are my notes for:
 	varia (see dev-java/jboss-module-varia/compile-errors)
 	console (depends on varia)
 
-* Make all modules use the same data file
-
 * put everything together.
 	there are different 'profiles', ie minimal, default, and all
 	should have enough to do minimal, maybe default?
@@ -42,7 +40,7 @@ These are my notes for:
 * Dependencies:
 	ognl
 	hivemind
-* Complain to upstream
+* Complain to upstream (er, but I forget about what :-/)
 
 
 ###################

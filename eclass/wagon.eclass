@@ -17,9 +17,9 @@ MY_P="${PN}-${MY_PV}"
 S="${WORKDIR}/${MY_P}"
 SRC_URI="http://gentooexperimental.org/distfiles/${MY_P}.tar.bz2 http://gentooexperimental.org/distfiles/build-wagon.xml.bz2"
 
-DEPEND="virtual/jdk
+DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core"
-RDEPEND="virtual/jre"
+RDEPEND=">=virtual/jre-1.4"
 
 
 wagon_src_unpack() {
