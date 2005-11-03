@@ -28,7 +28,7 @@ RDEPEND=">=virtual/jre-1.4
 	=dev-java/avalon-framework-4.1*
 	dev-java/concurrent-util
 	=dev-java/avalon-logkit-2.0*
-	=dev-java/wrapper-3.1*
+	=dev-java/java-service-wrapper-3.1*
 	dev-java/log4j"
 S="${WORKDIR}/${MY_P}"
 
@@ -36,7 +36,7 @@ ANT_ANTLR="antlr antlr.jar antlr-2.7.2.jar"
 AVALON_FRAMEWORK="avalon-framework-4.1 avalon-framework.jar avalon-framework-4.1.5.jar"
 CONCURRENT="concurrent-util concurrent.jar concurrent-1.3.2.jar"
 LOGKIT="avalon-logkit-2.0 avalon-logkit.jar logkit-1.2.jar"
-WRAPPER="wrapper-3.1 wrapper.jar wrapper-3.1.0.jar"
+WRAPPER="java-service-wrapper-3.1 wrapper.jar wrapper-3.1.0.jar"
 
 src_unpack() {
 	unpack ${A}
