@@ -14,7 +14,7 @@ SRC_URI="https://sdlcweb3c.sun.com/ECom/EComActionServlet;jsessionid=30F646A663A
 
 LICENSE=""
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 RESTRICT="fetch"
 

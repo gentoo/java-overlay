@@ -22,6 +22,7 @@ DEPEND=">=virtual/jdk-1.4
 RDEPEND=">=virtual/jre-1.4"
 S="${WORKDIR}/${MY_P}"
 
+# TODO file upstream
 PATCHES="${FILESDIR}/${P}-gentoo.patch"
 
 src_compile() {
