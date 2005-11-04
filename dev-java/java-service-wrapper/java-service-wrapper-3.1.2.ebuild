@@ -2,16 +2,17 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg
+inherit base java-pkg
 
-MY_P="${PN}_${PV}_src"
+MY_PN=wrapper
+MY_P="${MY_PN}_${PV}_src"
 DESCRIPTION=" The Wrapper makes it possible to install a Java Application as a Windows NT Service. The scripts provided with the Wrapper also make it very easy to install those same Java Applications as daemon processes on UNIX systems."
 HOMEPAGE="http://wrapper.tanukisoftware.org/doc/english/introduction.html"
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 
 LICENSE="java-service-wrapper"
 SLOT="3.1"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="jikes doc"
 
 # TODO test with 1.3
@@ -20,6 +21,8 @@ DEPEND=">=virtual/jdk-1.4
 	jikes? (dev-java/jikes)"
 RDEPEND=">=virtual/jre-1.4"
 S="${WORKDIR}/${MY_P}"
+
+PATCHES="${FILESDIR}/${P}-gentoo.patch"
 
 src_compile() {
 	local antflags="main"
