@@ -63,6 +63,7 @@ src_compile() {
 	local antflags="all core_jacorb_jar jacorb_services_jar omg_services_jar \
 	http_tunneling_jar security_jar"
 	use doc && antflags="${antflags} doc"
+	ant realclean
 	ant ${antflags} || die "Ant failed"
 
 	cd ${S}/bin
