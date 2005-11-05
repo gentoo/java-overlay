@@ -1,4 +1,4 @@
-# Copyright 1999-2004 Gentoo Foundation
+# Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -15,8 +15,11 @@ RESTRICT="fetch"
 # Before going official with this all the jars should be checked for packed stuff
 # I think the lib/jsrXXX.jar probably are at least packed jars
 DEPEND=">=dev-java/sun-jaf-bin-1.0
-        >=sun-javamail-bin-1.3"
-RDEPEND=">=virtual/jdk-1.4.2"
+		>=sun-javamail-bin-1.3"
+RDEPEND="${DEPEND}
+		>=virtual/jdk-1.4.2
+		virtual/x11"
+
 S=${WORKDIR}
 
 MY_FILE=${DISTDIR}/${A}
@@ -43,7 +46,7 @@ src_unpack() {
 		sed ${WORKDIR}/bin/${file} --in-place --expression \
 			"s@pathtowtk=\$@pathtowtk=\`java-config --jdk-home\`\"/bin/\"@" ||die
 	done
-	
+
 	#replace included jar files with local versions
 	cd bin
 	rm -f activation.jar
