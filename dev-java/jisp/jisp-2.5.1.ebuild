@@ -2,15 +2,19 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg
+inherit java-pkg eutils
 
 DESCRIPTION="Java Indexed Serialization Package: A small, embedded database engine written in Pure Java"
 HOMEPAGE="http://www.coyotegulch.com/products/jisp/"
-SRC_URI="mirror://gentoo/${P}-source.tar.gz"
+
+# TODO contact upstream about hosting jisp-2.5 on their site.
+# They only maintain 3.0 at the moment
+# This tarball is from jpackage's jisp2 source rpm
+SRC_URI="http://gentooexperimental.org/distfiles/${P}-source.tar.gz"
 
 LICENSE="SVFL"
 SLOT="2.5"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc jikes"
 
 DEPEND=">=virtual/jdk-1.4
@@ -21,6 +25,9 @@ RDEPEND=">=virtual/jre-1.4"
 src_unpack() {
 	unpack ${A}
 	cd ${S}
+
+	epatch ${FILESDIR}/${P}-java15.patch
+	
 	mkdir src
 	mv com src
 	cp ${FILESDIR}/build-${PVR}.xml build.xml

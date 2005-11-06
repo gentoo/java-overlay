@@ -1,3 +1,4 @@
 MD5 1a897f417a9ba4226716c67df0054985 files/build-2.5.1.xml 1588
 MD5 64b6a59173de47481e28297dfaef22da files/digest-jisp-2.5.1 68
-MD5 44af2c6960979564f912ff2fe5bafc24 jisp-2.5.1.ebuild 906
+MD5 666518a6919fd61f39f85e78d021ddc2 files/jisp-2.5.1-java15.patch 1828
+MD5 ab1aa9a13d6c6e3fb7f2ca94f18bc729 jisp-2.5.1.ebuild 1138
