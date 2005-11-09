@@ -1,6 +1,8 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/gnu-classpath/gnu-classpath-0.18.ebuild,v 1.1 2005/09/23 22:07:26 betelgeuse Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/gnu-classpath/gnu-classpath-0.18.ebuild,v 1.6 2005/10/28 16:32:06 axxo Exp $
+
+inherit eutils autotools
 
 MY_P=${P/gnu-/}
 DESCRIPTION="Free core class libraries for use with virtual machines and compilers for the Java programming language"
@@ -9,7 +11,7 @@ HOMEPAGE="http://www.gnu.org/software/classpath"
 
 LICENSE="GPL-2-with-linking-exception"
 SLOT="0"
-KEYWORDS="~x86 ~sparc ~ppc ~amd64"
+KEYWORDS="~x86 ~sparc ~ppc ~amd64 ~ppc64"
 
 #Add the doc use flag after the upstream build system is improved
 #See their bug 24025
@@ -28,6 +30,14 @@ DEPEND="app-arch/zip
 		${REPEND}"
 
 S=${WORKDIR}/${MY_P}
+
+src_unpack() {
+	unpack ${A}
+	cd ${S}
+
+	epatch ${FILESDIR}/gtk28.patch
+	eautoconf
+}
 
 src_compile() {
 	# Note: This is written in a way to easily support GCJ and other compilers
