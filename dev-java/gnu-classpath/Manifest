@@ -1,3 +1,5 @@
 MD5 e8174eff88cbeae8528507c699821eea files/digest-gnu-classpath-0.18 67
+MD5 2fa214c9b3ef402739df2a954d83c46e files/digest-gnu-classpath-0.19 67
 MD5 887f044e4350323f1324cc1368943c1a files/gtk28.patch 1522
 MD5 59b6bc5464dac8927ad8d237bc5b0f9d gnu-classpath-0.18.ebuild 2074
+MD5 5cd533c0ede3dfe0e585193077170a7a gnu-classpath-0.19.ebuild 2302
