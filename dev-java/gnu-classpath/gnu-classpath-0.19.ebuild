@@ -73,6 +73,11 @@ src_compile() {
 	emake || die "make failed"
 }
 
+src_install() {
+	einstall || die "einstall failed"
+	dodoc AUTHORS BUGS ChangeLog* HACKING NEWS README THANKYOU TODO
+}
+
 pkg_postinst() {
 	if use cairo; then
 		einfo "GNU Classpath was compiled with preliminary cairo support."
