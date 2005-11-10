@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/gnu-classpath/gnu-classpath-0.18.ebuild,v 1.6 2005/10/28 16:32:06 axxo Exp $
 
+inherit eutils autotools
+
 MY_P=${P/gnu-/}
 DESCRIPTION="Free core class libraries for use with virtual machines and compilers for the Java programming language"
 SRC_URI="ftp://ftp.gnu.org/gnu/classpath/${MY_P}.tar.gz"
@@ -14,18 +16,12 @@ KEYWORDS="~x86 ~sparc ~ppc ~amd64 ~ppc64"
 # Add the doc use flag after the upstream build system is improved
 # See their bug 24025
 
-# Add dssi after their bug 24768 is resolved
-# http://gcc.gnu.org/bugzilla/show_bug.cgi?id=24768
-#		dssi? ( >=media-libs/dssi-0.9 )
+IUSE="cairo debug dssi examples gcj gtk xml2 qt"
 
-IUSE="cairo debug examples gcj gtk xml2 qt"
-
-# See http://gcc.gnu.org/bugzilla/show_bug.cgi?id=24769
-# for block on dssi
-RDEPEND="!media-libs/dssi
-		cairo? ( >=x11-libs/cairo-0.5.0 )
+RDEPEND="cairo? ( >=x11-libs/cairo-0.5.0 )
+		dssi? ( >=media-libs/dssi-0.9 )
 		gtk? ( >=x11-libs/gtk+-2.4
-				>=dev-libs/glib-2.0)
+				>=dev-libs/glib-2.0 )
 		xml2? ( >=dev-libs/libxml2-2.6.8 >=dev-libs/libxslt-1.1.11 )
 		qt? ( >=x11-libs/qt-4.0.1 )"
 
@@ -35,6 +31,17 @@ DEPEND="app-arch/zip
 		${REPEND}"
 
 S=${WORKDIR}/${MY_P}
+
+src_unpack() {
+	unpack ${A}
+	cd ${S}
+
+	cp ${FILESDIR}/${PV}-dssi_data.h native/jni/midi-dssi/dssi_data.h \
+		|| die "Copying dssi_data.h failed."
+
+	epatch ${FILESDIR}/${PV}-dssi.patch
+	eautoconf
+}
 
 src_compile() {
 	# Note: This is written in a way to easily support GCJ and other compilers
@@ -56,20 +63,17 @@ src_compile() {
 		$(use_enable gtk gtk-peer) \
 		$(use_enable xml2 xmlj) \
 		$(use_enable qt qt-peer) \
+		$(use_enable dssi ) \
 		--enable-jni \
-		--disable-dssi \
 		--disable-dependency-tracking \
 		|| die "configure failed"
 # disabled for now... see above.
 #		$(use_with   doc   gjdoc) \
-#		$(use_enable dssi ) \
 
 	emake || die "make failed"
 }
 
-src_install () {
-	einstall || die "make install failed"
-
+pkg_postinst() {
 	if use cairo; then
 		einfo "GNU Classpath was compiled with preliminary cairo support."
 		einfo "To use that functionality set the system property"
