@@ -1,0 +1,56 @@
+_m2_make_goals()
+{
+ plugin=$1
+ mojos=$2
+ for mojo in $mojos
+ do
+   export goals="$goals $plugin:$mojo"
+ done
+}
+
+_m2_complete()
+{
+ local cur goals
+
+ COMPREPLY=()
+ cur=${COMP_WORDS[COMP_CWORD]}
+ goals='clean compile test install package deploy site'
+
+ # plugins from apache
+ goals=$goals _m2_make_goals "ant" "ant"
+ goals=$goals _m2_make_goals "antlr" "generate"
+ goals=$goals _m2_make_goals "archetype" "create"
+ goals=$goals _m2_make_goals "assembly" "assembly directory unpack"
+ goals=$goals _m2_make_goals "checkstyle" "checkstyle"
+ goals=$goals _m2_make_goals "clover" "check instrument log report"
+ goals=$goals _m2_make_goals "compiler" "compile testCompile"
+ goals=$goals _m2_make_goals "deploy" "deploy"
+ goals=$goals _m2_make_goals "eclipse" "add-maven-repo clean eclipse"
+ goals=$goals _m2_make_goals "ejb" "ejb"
+ goals=$goals _m2_make_goals "idea" "idea"
+ goals=$goals _m2_make_goals "install" "install-fire install"
+ goals=$goals _m2_make_goals "jar" "jar test-jar"
+ goals=$goals _m2_make_goals "javadoc" "jar javadoc"
+ goals=$goals _m2_make_goals "plexus" "app bundle-application
+bundle-runtime descriptor runtime service"
+ goals=$goals _m2_make_goals "plugin" "descriptor
+addPluginArtifactMetadata report updateRegistry xdoc"
+ goals=$goals _m2_make_goals "projecthelp" "active-profiles describe
+effective-pom effective-settings"
+ goals=$goals _m2_make_goals "project-info-reports" "cim dependencies
+issue-tracking license mailing-list scm project-team"
+ goals=$goals _m2_make_goals "rar" "rar"
+ goals=$goals _m2_make_goals "release" "perform prepare"
+ goals=$goals _m2_make_goals "resources" "resources testResources"
+ goals=$goals _m2_make_goals "source" "jar"
+ goals=$goals _m2_make_goals "surefire" "test"
+ goals=$goals _m2_make_goals "verifier" "verify"
+ goals=$goals _m2_make_goals "war" "exploded inplace war"
+
+ # plugins from mojo
+
+ cur=`echo $cur | sed 's/\\\\//g'`
+ COMPREPLY=($(compgen -W "${goals}" ${cur} | sed 's/\\\\//g') )
+}
+
+complete -F _m2_complete -o filenames mvn
