@@ -1,6 +1,6 @@
 # Copyright 1999-2005 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/gnu-classpath/gnu-classpath-0.18.ebuild,v 1.6 2005/10/28 16:32:06 axxo Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/gnu-classpath/gnu-classpath-0.19.ebuild,v 1.1 2005/11/11 19:20:31 betelgeuse Exp $
 
 inherit eutils autotools
 
@@ -16,12 +16,15 @@ KEYWORDS="~x86 ~sparc ~ppc ~amd64 ~ppc64"
 # Add the doc use flag after the upstream build system is improved
 # See their bug 24025
 
-IUSE="cairo debug dssi examples gcj gtk xml2 qt"
+IUSE="alsa cairo debug dssi examples gcj gtk xml2 qt"
 
-RDEPEND="cairo? ( >=x11-libs/cairo-0.5.0 )
+RDEPEND="alsa? ( media-libs/alsa-lib )
 		dssi? ( >=media-libs/dssi-0.9 )
 		gtk? ( >=x11-libs/gtk+-2.4
-				>=dev-libs/glib-2.0 )
+				>=dev-libs/glib-2.0
+				virtual/x11
+				cairo? ( >=x11-libs/cairo-0.5.0 )
+		     )
 		xml2? ( >=dev-libs/libxml2-2.6.8 >=dev-libs/libxslt-1.1.11 )
 		qt? ( >=x11-libs/qt-4.0.1 )"
 
@@ -57,6 +60,7 @@ src_compile() {
 	fi
 
 	econf ${compiler} \
+		$(use_enable alsa) \
 		$(use_enable cairo gtk-cairo) \
 		$(use_enable debug ) \
 		$(use_enable examples) \
@@ -79,7 +83,7 @@ src_install() {
 }
 
 pkg_postinst() {
-	if use cairo; then
+	if use gtk && use cairo; then
 		einfo "GNU Classpath was compiled with preliminary cairo support."
 		einfo "To use that functionality set the system property"
 		einfo "gnu.java.awt.peer.gtk.Graphics to Graphics2D at runtime."
