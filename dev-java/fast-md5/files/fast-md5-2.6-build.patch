@@ -1,0 +1,61 @@
+Files fast-md5/build/com/twmacinta/io/NullOutputStream.class and fast-md5-patched/build/com/twmacinta/io/NullOutputStream.class differ
+Files fast-md5/build/com/twmacinta/util/MD5.class and fast-md5-patched/build/com/twmacinta/util/MD5.class differ
+Files fast-md5/build/com/twmacinta/util/MD5InputStream.class and fast-md5-patched/build/com/twmacinta/util/MD5InputStream.class differ
+Files fast-md5/build/com/twmacinta/util/MD5OutputStream.class and fast-md5-patched/build/com/twmacinta/util/MD5OutputStream.class differ
+Files fast-md5/build/com/twmacinta/util/MD5State.class and fast-md5-patched/build/com/twmacinta/util/MD5State.class differ
+Files fast-md5/build/com/twmacinta/util/test/MD5OutputStreamTest.class and fast-md5-patched/build/com/twmacinta/util/test/MD5OutputStreamTest.class differ
+Only in fast-md5/build: lib
+diff -ru fast-md5/build.xml fast-md5-patched/build.xml
+--- fast-md5/build.xml	2005-05-18 23:12:14.000000000 -0400
++++ fast-md5-patched/build.xml	2005-11-11 21:59:05.000000000 -0500
+@@ -93,14 +93,7 @@
+   
+   <!-- =============================== -->
+   
+-  <target name="dist" depends="compile,javadoc" description="Create binary distribution">
+-
+-    <!-- Copy documentation subdirectories -->
+-    <mkdir     dir="${dist.home}/docs"/>
+-    <copy    todir="${dist.home}/docs">
+-      <fileset dir="${docs.home}"/>
+-    </copy>
+-
++  <target name="jar" depends="compile">
+     <!-- Create application JAR file -->
+     <jar jarfile="${dist.home}/${app.name}.jar"
+          basedir="${build.home}" index="true">
+@@ -110,6 +103,15 @@
+       </manifest>         
+     </jar>
+ 
++  </target>
++  <target name="dist" depends="jar,javadoc" description="Create binary distribution">
++
++    <!-- Copy documentation subdirectories -->
++    <mkdir     dir="${dist.home}/docs"/>
++    <copy    todir="${dist.home}/docs">
++      <fileset dir="${docs.home}"/>
++    </copy>
++
+     <!-- Copy additional files to ${dist.home} as necessary -->
+     <!--
+     <copy    todir="${dist.home}/libs">
+@@ -129,13 +131,13 @@
+   
+   <!-- =============================== -->
+   
+-  <target name="javadoc" depends="compile"  description="Create Javadoc API documentation">
++  <target name="javadoc" depends=""  description="Create Javadoc API documentation">
+ 
+     <mkdir dir="${dist.home}/docs/javadoc"/>
+-    <javadoc sourcepath="${src.home}" destdir="${dist.home}/docs/javadoc"  packagenames="com.*"/>
++    <javadoc sourcepath="${src.home}" destdir="${dist.home}/docs/api"  packagenames="com.*"/>
+ 
+   </target>
+   
+   <!-- =============================== -->
+   
+-</project>
+\ No newline at end of file
++</project>
+Only in fast-md5-patched/: dist
