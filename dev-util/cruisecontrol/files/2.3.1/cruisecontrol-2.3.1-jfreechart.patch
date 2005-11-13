@@ -1,0 +1,38 @@
+diff -ru cruisecontrol-2.3.1/reporting/jsp/src/net/sourceforge/cruisecontrol/chart/PieChartData.java cruisecontrol-2.3.1-patched/reporting/jsp/src/net/sourceforge/cruisecontrol/chart/PieChartData.java
+--- cruisecontrol-2.3.1/reporting/jsp/src/net/sourceforge/cruisecontrol/chart/PieChartData.java	2004-04-08 07:12:04.000000000 -0400
++++ cruisecontrol-2.3.1-patched/reporting/jsp/src/net/sourceforge/cruisecontrol/chart/PieChartData.java	2005-11-12 16:59:32.000000000 -0500
+@@ -40,7 +40,7 @@
+ 
+ import net.sourceforge.cruisecontrol.BuildInfoSummary;
+ 
+-import org.jfree.data.DefaultPieDataset;
++import org.jfree.data.general.DefaultPieDataset;
+ 
+ import de.laures.cewolf.DatasetProduceException;
+ 
+@@ -57,4 +57,4 @@
+     public String getProducerId() {
+         return "PieChartData DatasetProducer";
+     }
+-}
+\ No newline at end of file
++}
+diff -ru cruisecontrol-2.3.1/reporting/jsp/src/net/sourceforge/cruisecontrol/chart/TimeChartData.java cruisecontrol-2.3.1-patched/reporting/jsp/src/net/sourceforge/cruisecontrol/chart/TimeChartData.java
+--- cruisecontrol-2.3.1/reporting/jsp/src/net/sourceforge/cruisecontrol/chart/TimeChartData.java	2005-07-17 20:08:06.000000000 -0400
++++ cruisecontrol-2.3.1-patched/reporting/jsp/src/net/sourceforge/cruisecontrol/chart/TimeChartData.java	2005-11-12 16:59:45.000000000 -0500
+@@ -52,7 +52,7 @@
+ import org.jfree.chart.axis.NumberAxis;
+ import org.jfree.chart.axis.NumberTickUnit;
+ import org.jfree.chart.plot.XYPlot;
+-import org.jfree.chart.renderer.StandardXYItemRenderer;
++import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
+ import org.jfree.data.time.Minute;
+ import org.jfree.data.time.TimeSeries;
+ import org.jfree.data.time.TimeSeriesCollection;
+@@ -145,4 +145,4 @@
+         renderer.setDefaultShapeFilled(true);
+         plot.setRenderer(renderer);
+     }
+-}
+\ No newline at end of file
++}

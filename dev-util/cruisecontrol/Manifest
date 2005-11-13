@@ -1,0 +1,6 @@
+MD5 b1ea720013ee1cfc8e3a0e6b4397f638 cruisecontrol-2.3.1.ebuild 5261
+MD5 c48beecf3e42958c25b3f9a5405f5ba1 files/cruisecontrol.init 1702
+MD5 5d9091e1bb7c7aa27304085fb2339b22 files/digest-cruisecontrol-2.3.1 70
+MD5 bdc5bc62dffa501f65402edfff01c20f files/2.3.1/cruisecontrol-2.3.1-jfreechart.patch 1871
+MD5 6e457db191568a79b76d27659d814290 files/2.3.1/cruisecontrol-2.3.1-findbugs.patch 13439
+MD5 954be3ec42fcc8b08545d061e2b8b75c files/2.3.1/cruisecontrol-2.3.1-gentoo.patch 1072

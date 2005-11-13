@@ -1,0 +1,14 @@
+diff -ur cruisecontrol-2.3.1.orig/main/build.xml cruisecontrol-2.3.1/main/build.xml
+--- cruisecontrol-2.3.1.orig/main/build.xml	2005-10-10 09:16:06.000000000 -0500
++++ cruisecontrol-2.3.1/main/build.xml	2005-11-11 13:13:24.000000000 -0600
+@@ -335,7 +335,9 @@
+ 
+     <target name="clean-all" depends="clean, all" description="Performs a clean build, runs tests, and builds jar"/>
+     
+-    <target name="all" depends="init,compile,compile-starteam,compile-sametime,checkstyle,check-duplication,test,test-starteam,test-sametime,jar" description="Performs a build, runs tests, and builds jar" />
++    <target name="all" depends="init,compile,compile-starteam,compile-sametime,checkstyle,check-duplication,test-all,jar" description="Performs a build, runs tests, and builds jar" />
++
++    <target name="test-all" depends="test,test-starteam,test-sametime" description="Performs all tests" />
+ 
+     <target name="cvs-update" depends="init" if="localCopy">
+         <cvs command="update -d -P" cvsroot=":pserver:anonymous@cvs.sourceforge.net:/cvsroot/cruisecontrol"
