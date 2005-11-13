@@ -21,7 +21,7 @@ DEPEND=">=virtual/jdk-1.4
 	dev-java/commons-net
 	dev-java/commons-logging
 	=dev-java/jakarta-oro-2.0*
-	dev-java/jcommon
+	=dev-java/jcommon-0.8*
 	=dev-java/jdom-1.0*
 	test? (dev-java/ant-tasks dev-java/junit)
 	dev-java/log4j
@@ -100,7 +100,7 @@ src_unpack() {
 	java-pkg_jar-from cewolf-0.10
 	java-pkg_jar-from checkstyle checkstyle.jar checkstyle-all-3.1.jar
 	java-pkg_jar-from commons-logging commons-logging.jar
-	java-pkg_jar-from jcommon jcommon.jar jcommons-0.8.0.jar
+	java-pkg_jar-from jcommon-0.8 jcommon.jar jcommons-0.8.0.jar
 	java-pkg_jar-from jfreechart-0.9.8 jfreechart.jar jfreechart-0.9.8.jar
 	java-pkg_jar-from jfreechart-0.9.8 jfreechart-demo.jar jfreechart-0.9.8-demo.jar
 	java-pkg_jar-from servletapi-2.3 servlet.jar
@@ -115,10 +115,6 @@ src_compile() {
 	cd ${S}/main
 	use jikes && antflags="${antflags} -Dbuild.compiler=jikes"
 	use doc && antflags="${antflags} javadoc"
-	# Disabling checkstyle, because we probably don't care about it when
-	# installing... -nichoj
-#	use checkstyle &&  antflags="${antflags} checkstyle"
-
 	ant ${antflags} || die "Compilation of CruiseControl failed"
 
 	einfo "Building CruiseControl Web App"
@@ -126,7 +122,6 @@ src_compile() {
 	cd ${S}/reporting/jsp
 
 	# TODO: detect jdk version, and set the correct properties
-
 	cat << EOF > override.properties
 user.log.dir=${CRUISE_WORK_DIR}/logs
 user.build.status.file=buildstatus.txt
@@ -135,24 +130,13 @@ jdk1.4=true
 EOF
 
 	antflags="war"
-	# disabling checkstyle, because we probably don't care about it when
-	# building -nichoj
-	#use checkstyle && antflags="${antflags} checkstyle"
-	use jikes && antflags="${antflags} -Dbuild.compiler=jikes"
-
 	ant ${antflags} || die "Compile of CruiseControl web app failed"
 }
 
 src_install() {
 	cd ${S}/main
 
-	java-pkg_dojar dist/cruisecontrol.jar
-
-	# 
-	# This script TOTALLY doesn't work. -cgs
-	# 
-	#exeinto /usr/bin
-	#doexe bin/cruisecontrol.sh
+	java-pkg_dojar dist/${PN}.jar
 
 	if use doc; then
 		dohtml -r docs
