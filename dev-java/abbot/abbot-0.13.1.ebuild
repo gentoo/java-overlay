@@ -13,7 +13,7 @@ SLOT="0.13"
 KEYWORDS="~x86"
 IUSE="doc jikes"
 
-LDEPEND="=dev-java/mrj-toolkit-stubs-bin-1*
+LDEPEND="dev-java/apple-java-extensions-bin
 		~dev-java/jdom-1.0_beta10
 		=dev-java/xerces-2*
 		=dev-java/gnu-regexp-1*
@@ -36,7 +36,7 @@ src_unpack() {
 	mkdir lib
 	cd lib
 
-	java-pkg_jar-from mrj-toolkit-stubs-bin-1
+	java-pkg_jar-from apple-java-extensions-bin
 	java-pkg_jar-from jdom-1.0_beta10
 	java-pkg_jar-from xerces-2 xml-apis.jar
 	java-pkg_jar-from xerces-2 xercesImpl.jar
