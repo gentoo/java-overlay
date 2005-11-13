@@ -1,4 +1,4 @@
-MD5 f0acce42c37b9bba18f147d2d66fb908 cruisecontrol-2.3.1.ebuild 5347
+MD5 14c014a1a6a3f258af5c7b5f982eb900 cruisecontrol-2.3.1.ebuild 4893
 MD5 5d9091e1bb7c7aa27304085fb2339b22 files/digest-cruisecontrol-2.3.1 70
 MD5 bdc5bc62dffa501f65402edfff01c20f files/2.3.1/cruisecontrol-2.3.1-jfreechart.patch 1871
 MD5 9378c70e7f93a4585f8cef7f307ddbc3 files/2.3.1/config.xml 2907
