@@ -12,19 +12,18 @@ LICENSE="ThoughtWorks"
 SLOT="0"
 KEYWORDS="x86"
 
-IUSE="doc jikes junit checkstyle"
+IUSE="doc jikes test"
 
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
-	dev-java/ant-tasks
 	=dev-java/batik-1.5.1*
-	dev-java/checkstyle
+	dev-util/checkstyle
 	dev-java/commons-net
 	dev-java/commons-logging
 	=dev-java/jakarta-oro-2.0*
 	dev-java/jcommon
 	=dev-java/jdom-1.0*
-	junit? (dev-java/junit)
+	test? (dev-java/ant-tasks dev-java/junit)
 	dev-java/log4j
 	=dev-java/mx4j-2.1*
 	=dev-java/servletapi-2.3*
@@ -71,7 +70,7 @@ src_unpack() {
 
 	cd ${S}/main
 	# Remove classes we can't deal with:
-	# uses library with dead upstream
+	#	uses library with dead upstream
 	rm src/net/sourceforge/cruisecontrol/publishers/X10Publisher.java
 
 	cd ${S}/main/lib
@@ -82,7 +81,6 @@ src_unpack() {
 	java-pkg_jar-from commons-net commons-net.jar
 	java-pkg_jar-from jakarta-oro-2.0 jakarta-oro.jar
 	java-pkg_jar-from jdom-1.0 jdom.jar
-	java-pkg_jar-from junit junit.jar
 	java-pkg_jar-from log4j log4j.jar
 	java-pkg_jar-from sun-javamail-bin mail.jar
 	java-pkg_jar-from mx4j-2.1 mx4j-remote.jar
@@ -93,24 +91,18 @@ src_unpack() {
 	java-pkg_jar-from xerces-2 xml-apis.jar
 	java-pkg_jar-from jetty-5 org.mortbay.jetty.jar
 	java-pkg_jar-from smack-2.0 smack.jar
-	# TODO: replace clover.jar
 
 	cd ${S}/reporting/jsp/lib
-
-	# Remove files with version numbers, ugh -cgs
 	rm *.jar
-
 	java-pkg_jar-from batik-1.5.1 batik-awt-util.jar
 	java-pkg_jar-from batik-1.5.1 batik-svggen.jar
 	java-pkg_jar-from batik-1.5.1 batik-util.jar
-
 	java-pkg_jar-from cewolf-0.10
 	java-pkg_jar-from checkstyle checkstyle.jar checkstyle-all-3.1.jar
 	java-pkg_jar-from commons-logging commons-logging.jar
 	java-pkg_jar-from jcommon jcommon.jar jcommons-0.8.0.jar
 	java-pkg_jar-from jfreechart-0.9.8 jfreechart.jar jfreechart-0.9.8.jar
 	java-pkg_jar-from jfreechart-0.9.8 jfreechart-demo.jar jfreechart-0.9.8-demo.jar
-	java-pkg_jar-from junit junit.jar
 	java-pkg_jar-from servletapi-2.3 servlet.jar
 	java-pkg_jar-from xalan xalan.jar
 	java-pkg_jar-from xerces-2 xercesImpl.jar
@@ -123,7 +115,6 @@ src_compile() {
 	cd ${S}/main
 	use jikes && antflags="${antflags} -Dbuild.compiler=jikes"
 	use doc && antflags="${antflags} javadoc"
-	use junit && antflags="${antflags} test-all"
 	# Disabling checkstyle, because we probably don't care about it when
 	# installing... -nichoj
 #	use checkstyle &&  antflags="${antflags} checkstyle"
@@ -156,7 +147,6 @@ src_install() {
 	cd ${S}/main
 
 	java-pkg_dojar dist/cruisecontrol.jar
-	java-pkg_dojar lib/fast-md5.jar
 
 	# 
 	# This script TOTALLY doesn't work. -cgs
@@ -184,10 +174,10 @@ src_install() {
 	/usr/sbin/nscd -i passwd
 
 	insinto ${CRUISE_CONF_DIR}
-	newins ${FILESDIR}/config-2.2.1.xml config.xml
+	doins ${FILESDIR}/${PV}/config.xml
 
-	exeinto /etc/init.d
-	newinitd ${FILESDIR}/cruisecontrol.init cruisecontrol
+	newinitd ${FILESDIR}/${PV}/${PN}.init ${PN}
+	newconfd ${FILESDIR}/${PV}/${PN}.conf ${PN}
 
 	diropts -m 0775 -o root -g ${CRUISE_GROUP}
 	keepdir ${CRUISE_LOG_DIR}
@@ -201,3 +191,17 @@ src_install() {
 	keepdir ${CRUISE_WORK_DIR}/logs
 }
 
+src_test() {
+	if use test; then
+		cd ${S}/main/
+
+		local antflags="${antflags} test-all"
+		ant ${antflags} || die "unit tests failed"
+
+	else
+		ewarn "Skipping unit tests..."
+		ewarn "You must specify USE=test in order to get the proper"
+		ewarn "dependencies to run unit tests, in addition to"
+		ewarn "FEATURES=test."
+	fi
+}
