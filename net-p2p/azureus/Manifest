@@ -2,8 +2,7 @@ MD5 fa06dfd414a4dc1289c8b92c014978c8 ChangeLog 1393
 MD5 6b67283a0df254ef3630a592b2d51b2d azureus-2.3.0.6.ebuild 2436
 MD5 21218e1a7c134f02c8e42bcb63375e74 files/SWTThread.java 2549
 MD5 e3cc00baa30d499993d4f65e56ad03bc files/UpdaterPatcher.java 2523
-MD5 bf000c039bd1ea9c41a03455e0910b1a files/azureus-gentoo-2.3.0.6.sh 961
-MD5 77d299aef0633c501b998f3ec0c1f0c9 files/azureus-gentoo.sh 1010
+MD5 40e8dcae979278915f346fa5876a29b1 files/azureus-gentoo-2.3.0.6.sh 1021
 MD5 70c17db47c9a596929112714f82ac010 files/azureus.desktop 153
 MD5 2d3136c60488dd51bef012cbcb59201b files/azureus.png 743
 MD5 3ae1e81c8450fa93040e4e97a1311d88 files/build.xml 661
