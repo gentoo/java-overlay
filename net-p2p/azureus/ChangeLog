@@ -1,0 +1,39 @@
+# ChangeLog for net-p2p/azureus
+# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/net-p2p/azureus/ChangeLog,v 1.8 2005/11/24 23:04:16 betelgeuse Exp $
+
+  24 Nov 2005; Petteri Räty <betelgeuse@gentoo.org> azureus-2.3.0.4.ebuild:
+  Increased allowed memory size while compiling to allow building on amd64.
+
+  20 Nov 2005; Joseph Jezak <josejx@gentoo.org> azureus-2.3.0.4.ebuild:
+  Marked ~ppc for bug #111273.
+
+  07 Oct 2005; Thomas Matthijs <axxo@gentoo.org> azureus-2.2.0.0-r1.ebuild,
+  azureus-2.3.0.4.ebuild:
+  Fix deps
+
+*azureus-2.3.0.4 (02 Oct 2005)
+
+  02 Oct 2005; <mkay@gentoo.org> +files/azureus-gentoo-2.3.0.4.sh,
+  +files/UpdaterPatcher.java, +azureus-2.3.0.4.ebuild:
+  version bump
+
+  12 May 2005; Jochen Maes <sejo@gentoo.org> azureus-2.2.0.0-r1.ebuild:
+  added an ewarn about not using it as root
+
+  03 Apr 2005; Thomas Matthijs <axxo@gentoo.org> azureus-2.2.0.0-r1.ebuild:
+  block azureus-bin
+
+*azureus-2.2.0.0-r1 (20 Dec 2004)
+
+  20 Dec 2004; Karl Trygve Kalleberg <karltk@gentoo.org>
+  files/azureus-gentoo.sh, files/build.xml, +azureus-2.2.0.0-r1.ebuild,
+  -azureus-2.2.0.0.ebuild:
+  Rewrote startup script. Reindented ebuild. Requires properly SLOTed version
+  of dev-java/swt. Modified build.xml script. Should fix #71378.
+
+*azureus-2.2.0.0-r1 (20 Dec 2004)
+
+  15 Nov 2004; <SeJo@gentoo.org> :
+  initial add of ebuild
+
