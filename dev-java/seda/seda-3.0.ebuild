@@ -22,31 +22,31 @@ DEPEND="virtual/jdk
 		${RDEPEND}"
 
 BASE="${WORKDIR}/${MY_P}/${PN}"
-S="${WORKDIR}/${MY_P}/${PN}/src/${PN}"
-
-src_unpack() {
-	unpack ${A}
-	rm ${BASE}/bin/*
-}
+S="${BASE}/src/${PN}"
 
 src_compile() {
+
 	for dir in "${S}/nbio/jni" "${S}/util/jni"; do
 		cd ${dir}
 		econf --with-jdk="$(java-config --jdk-home)" || die "Failed to run configure in ${dir}."
 	done
 
 	local classpath="${CLASSPATH}:${BASE}/src:."
+
 	cd ${S}
+
 	CLASSPATH="${classpath}" \
 	LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${BASE}/lib" \
 		emake || die "Compiling failed."
 	
 	local jar=$(java-config -j)
+
 	find . -name '*.class' -type f -print0 | xargs -0 \
 		${jar} cf ${WORKDIR}/${PN}.jar || die "Creating ${PN}.jar failed"	
 
 	if use doc; then
 		cd ${BASE}/docs/javadoc
+
 		CLASSPATH="${classpath}" make \
 			|| die "Failed to generate documentation."
 	fi
@@ -57,4 +57,5 @@ src_install() {
 	java-pkg_dojar ${WORKDIR}/*.jar
 	dodoc ${BASE}/README
 	use doc && java-pkg_dohtml -r ${BASE}/docs/*
+	use source && java-pkg_dosrc ${S}/{nbio,sandStorm,util}
 }
