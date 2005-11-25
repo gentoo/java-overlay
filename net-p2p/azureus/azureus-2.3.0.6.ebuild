@@ -54,9 +54,6 @@ src_compile() {
 	if [ ! -z "$(java-config --java-version | grep IBM)" ] ; then
 		# IBM JRE
 		ant_extra_opts="-Dbootclasspath=$(java-config --jdk-home)/jre/lib/core.jar:$(java-config --jdk-home)/jre/lib/xml.jar:$(java-config --jdk-home)/jre/lib/graphics.jar"
-	else
-		# Sun derived JREs (Blackdown, Sun)
-		ant_extra_opts="-Dbootclasspath=$(java-config --jdk-home)/jre/lib/rt.jar"
 	fi
 
 	# Fails to build on amd64 without this
@@ -75,7 +72,9 @@ src_install() {
 	doicon "${FILESDIR}/azureus.png"
 	insinto /usr/share/applications
 	doins "${FILESDIR}/azureus.desktop"
+}
 
-	ewarn "Please do not run azureus as root!"
-	ewarn "Azureus has not been developed for multi-user environments!!!!!"
+pkg_postinst() {
+	ewarn "Please, do not run azureus as root!"
+	ewarn "Azureus has not been developed for multi-user environments!"
 }
