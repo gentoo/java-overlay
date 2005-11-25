@@ -10,6 +10,9 @@ SRC_URI="mirror://sourceforge/azureus/Azureus_${PV}_source.zip"
 LICENSE="GPL-2 BSD"
 SLOT="0"
 KEYWORDS="~ppc ~x86"
+
+IUSE="source"
+
 RDEPEND=">=virtual/jre-1.4
 	>=dev-java/swt-3.0-r2
 	>=dev-java/log4j-1.2.8
@@ -17,7 +20,6 @@ RDEPEND=">=virtual/jre-1.4
 	dev-java/junit"
 DEPEND=">=virtual/jdk-1.4
 	${RDEPEND}
-	=dev-java/seda-3.0*
 	>=dev-java/ant-core-1.6.2
 	>=app-arch/unzip-5.0
 	!net-p2p/azureus-bin"
@@ -72,6 +74,7 @@ src_install() {
 	doicon "${FILESDIR}/azureus.png"
 	insinto /usr/share/applications
 	doins "${FILESDIR}/azureus.desktop"
+	use source && java-pkg_dosrc ${S}/{com,org}
 }
 
 pkg_postinst() {
