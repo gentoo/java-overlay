@@ -78,6 +78,30 @@ src_install() {
 }
 
 pkg_postinst() {
+	echo
+	einfo "Due to the nature of the portage system, we recommend"
+	einfo "that users check portage for new versions of Azureus"
+	einfo "instead of attempting to use the auto-update feature."
+	einfo "You can disable the upgrade warning in"
+	einfo "View->Configuration->Interface->Start"
+	echo
+	einfo "After running azureus for the first time, configuration"
+	einfo "options will be placed in ~/.Azureus/gentoo.config"
+	einfo "It is recommended that you modify this file rather than"
+	einfo "the azureus startup script directly."
+	echo
+	einfo "As of this version, the new ui type 'console' is supported,"
+	einfo "and this may be set in ~/.Azureus/gentoo.config."
+	echo
+	ewarn "If you are upgrading, and the menu in azurues has entries like"
+	ewarn "\"!MainWindow.menu.transfers!\" then you have a stray"
+	ewarn "MessageBundle.properties file,"
+	ewarn "and you may safely delete ~/.Azureus/MessagesBundle.properties"
+	echo
+	einfo "It's recommended to use sun-java in version 1.5 or later."
+	einfo "If you'll notice any problems running azureus and you've"
+	einfo "got older java, try to upgrade it"
+	echo
 	ewarn "Please, do not run azureus as root!"
 	ewarn "Azureus has not been developed for multi-user environments!"
 }
