@@ -7,7 +7,7 @@ inherit java
 DESCRIPTION="A robust, clean, extremely portable, efficient, and specification-compliant Java virtual machine."
 HOMEPAGE="http://sablevm.org/"
 
-SRC_URI="http://sablevm.org/download/release/${PV}/${PV}.tar.gz"
+SRC_URI="http://sablevm.org/download/release/${PV}/${P}.tar.gz"
 
 LICENSE="LGPL-2.1 GPL-2 libffi as-is IBM"
 SLOT="0"
