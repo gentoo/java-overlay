@@ -8,7 +8,7 @@ DESCRIPTION="Eclipse runtime Libraries"
 HOMEPAGE="http://www.eclipse.org/"
 SRC_URI="http://misc.ajiaojr.org/gentoo/eclipse-runtime-${PV}.tar.bz2"
 LICENSE="CPL-1.0 LGPL-2.1 MPL-1.1"
-KEYWORDS="x86"
+KEYWORDS="~amd64 x86"
 SLOT="3.0"
 
 IUSE=""
