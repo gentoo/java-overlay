@@ -8,7 +8,7 @@ DESCRIPTION="Apache Servlet-2.4/JSP-2.0 Container"
 
 SLOT="5.5"
 #Some mirrors don't have 5.5.7
-SRC_URI="http://apache.kgt.org/jakarta/tomcat-${SLOT/.*}/v${PV}/src/jakarta-${P}-src.tar.gz"
+SRC_URI="http://gentooexperimental.org/distfiles/jakarta-${P}-src.tar.gz"
 HOMEPAGE="http://jakarta.apache.org/tomcat"
 KEYWORDS="~x86 ~amd64"
 LICENSE="Apache-2.0"
