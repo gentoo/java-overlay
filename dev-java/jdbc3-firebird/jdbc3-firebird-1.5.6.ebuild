@@ -10,7 +10,7 @@ HOMEPAGE="http://firebird.sourceforge.net"
 SRC_URI="mirror://sourceforge/firebird/${At}.zip"
 LICENSE="LGPL-2"
 SLOT="0"
-KEYWORDS="x86 ppc ~sparc amd64"
+KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc examples jikes source"
 
 RDEPEND=">=virtual/jre-1.4"
