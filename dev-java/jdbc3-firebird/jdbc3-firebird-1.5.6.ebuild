@@ -13,12 +13,14 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~sparc ~x86"
 IUSE="doc examples jikes source"
 
-RDEPEND=">=virtual/jre-1.4"
+RDEPEND=">=virtual/jre-1.4
+		dev-java/concurrent-util
+		dev-java/log4j"
 DEPEND=">=virtual/jdk-1.4
 		app-arch/unzip
-		dev-java/concurrent-util
-		dev-java/log4j
-		jikes? ( dev-java/jikes )"
+		${RDEPEND}
+		jikes? ( dev-java/jikes )
+		source? ( app-arch/zip )"
 
 S="${WORKDIR}/client-java"
 
