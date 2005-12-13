@@ -1,0 +1,28 @@
+# ChangeLog for dev-java/jdbc3-firebird
+# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-java/jdbc3-firebird/ChangeLog,v 1.6 2005/12/13 05:38:20 nichoj Exp $
+
+*jdbc3-firebird-1.5.3-r1 (13 Dec 2005)
+
+  13 Dec 2005; Joshua Nichols <nichoj@gentoo.org>
+  +jdbc3-firebird-1.5.3-r1.ebuild:
+  No longer installs bundled jars (bug #99435).
+
+  13 Dec 2005; Joshua Nichols <nichoj@gentoo.org>
+  jdbc3-firebird-1.5.3.ebuild:
+  Updated HOMEPAGE.
+
+  14 May 2005; Jan Brinkmann <luckyduck@gentoo.org>
+  jdbc3-firebird-1.5.3.ebuild:
+  stable on amd64, ppc and x86
+
+  03 Nov 2004; Thomas Matthijs <axxo@gentoo.org>
+  jdbc3-firebird-1.5.3.ebuild:
+  depend on app-arch/unzip
+
+*jdbc3-firebird-1.5.3 (20 Oct 2004)
+
+  20 Oct 2004; Dylan Carlson <absinthe@gentoo.org> +metadata.xml,
+  +jdbc3-firebird-1.5.3.ebuild:
+  Initial import. Closes bug 48331.
+
