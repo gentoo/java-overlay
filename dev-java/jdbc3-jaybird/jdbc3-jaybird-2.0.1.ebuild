@@ -41,7 +41,7 @@ src_unpack() {
 }
 
 src_compile() {
-	antflags="jars"
+	local antflags="jars"
 	use doc && antflags="${antflags} javadocs"
 	use jikes && antflags="${antflags} -Dbuild.compiler=jikes"
 	ant ${antflags} || die "Building failed."
