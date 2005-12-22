@@ -22,7 +22,7 @@ RDEPEND=">=virtual/jre-1.4
 	=dev-java/irmi-1.0*
 	=dev-java/jacorb-2.2*
 	=dev-java/mx4j-3.0*
-	=dev-java/velocity-1*
+	dev-java/velocity
 	dev-java/jgroups"
 
 S=${WORKDIR}/${MY_P}
@@ -39,7 +39,7 @@ src_unpack() {
 	java-pkg_jar-from irmi-1.0
 	java-pkg_jar-from jacorb-2.2 jacorb.jar
 	java-pkg_jar-from mx4j-3.0 mx4j.jar
-	java-pkg_jar-from velocity-1
+	java-pkg_jar-from velocity
 	java-pkg_jar-from jgroups jgroups-core.jar
 }
 
