@@ -21,6 +21,7 @@ RDEPEND=">=virtual/jre-1.4
 	=dev-java/gnu-javamail-1*
 	dev-java/jython
 	=dev-java/hessian-3.0.8*
+	=dev-java/burlap-3.0*
 "
 	
 LICENSE="mx4j"
@@ -41,6 +42,7 @@ src_unpack(){
 	java-pkg_jar-from gnu-javamail-1 gnumail.jar mail.jar
 	java-pkg_jar-from jython
 	java-pkg_jar-from hessian-3.0.8
+	java-pkg_jar-from burlap-3.0
 }
 
 src_compile() {
