@@ -38,7 +38,7 @@ src_unpack(){
 	java-pkg_jar-from axis-1
 	java-pkg_jar-from servletapi-2.3
 	java-pkg_jar-from gnu-jaf-1
-	java-pkg_jar-from gnu-javamail-1 mail.jar
+	java-pkg_jar-from gnu-javamail-1 gnumail.jar mail.jar
 	java-pkg_jar-from jython
 	java-pkg_jar-from hessian-3.0.8
 }
