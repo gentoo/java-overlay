@@ -1,6 +1,5 @@
 MD5 c089b7d34f96c556a34bb8c402794023 files/build-1.0.xml 1546
 MD5 5146e7d9155602b66633d3c32c96db1d files/digest-jamon-1.0 65
 MD5 0471fe0fd152795bd80f0d84ba2d9f70 files/digest-jamon-1.01 64
-MD5 22467dc95e6eb2c2c2d739393131967e files/jamon-1.01-java1.5.patch 1688
 MD5 7ccd92b8093e72f3916d350c2d9d1e5c jamon-1.0.ebuild 1398
 MD5 299491e114e07aa6ed2753594c0fb9d1 jamon-1.01.ebuild 1494
