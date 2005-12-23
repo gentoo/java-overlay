@@ -22,6 +22,7 @@ RDEPEND=">=virtual/jre-1.4
 	>=dev-java/commons-logging-1.0.4
 	=dev-java/mx4j-2.1*
 	=dev-java/xerces-2*
+	=dev-java/xml-commons-external-1.3*
 	dev-java/jakarta-tomcat-jasper"
 #	extra? ( dev-java/gnu-activation
 #			=dev-java/commons-cli-1*
@@ -60,8 +61,7 @@ src_unpack() {
 	java-pkg_jar-from mx4j-2.1 mx4j-remote.jar
 	java-pkg_jar-from mx4j-2.1 mx4j.jar
 	java-pkg_jar-from xerces-2 xercesImpl.jar
-	java-pkg_jar-from xerces-2 xml-apis.jar
-	java-pkg_jar-from xerces-2 xmlParserAPIs.jar
+	java-pkg_jar-from xml-commons-external-1.3 xml-apis.jar
 	java-pkg_jar-from jakarta-tomcat-jasper-2
 
 #	if use extra; then
@@ -70,18 +70,18 @@ src_unpack() {
 #			rm -f ${JAR}*.jar
 #		done
 #		java-pkg_jar-from gnu-activation
-#		# TODO carol.jar
+#		# TODO carol.jar ... dev-java/carol
 #		java-pkg_jar-from commons-cli-1 commons-cli.jar
 #		# TODO connector.jar
-#		# TODO howl.jar
+#		# TODO howl.jar dev-java/howl-logger
 #		java-pkg_jar-from hsqldb hsqldb.jar
-#		# TODO jotm.jar, jotm_iiop_stubs, jotm_jrmp_stubs
+#		# TODO jotm.jar, jotm_iiop_stubs, jotm_jrmp_stubs... dev-java/jotm
 #		# TODO jta-spec
 #		java-pkg_jar-from jta jta.jar
-#		# TODO jts1_0.jar
+#		# TODO jts1_0.jar ... dev-java/sun-jts-bin
 #		java-pkg_jar-from log4j log4j.jar
 #		java-pkg_jar-from sun-javamail-bin mail.jar
-#		# TODO: xapool
+#		# TODO: xapool... dev-java/xapool
 #	fi
 }
 
@@ -189,6 +189,7 @@ src_install() {
 		insinto ${JETTY_HOME}
 		doins ant.properties build.xml
 
+		# TODO use java-pkg_dosrc
 		for DIR in extra/ftp/src extra/ftp/test/src extra/ibmjsse/src extra/j2ee/src extra/jdk1.2/src extra/jsr77/src extra/loadbalancer/src extra/plus/demo/src extra/plus/src extra/plus/test/src src test; do
 			dodir ${JETTY_HOME}/${DIR}
 			cp -a ${S_ORIG}/${DIR}/* ${D}/${JETTY_HOME}/${DIR}
