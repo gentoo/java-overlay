@@ -3,7 +3,7 @@
 # $Header: $
 
 #
-# Original Author: nichoj
+# Original Author: Joshua Nichols <nichoj@gentoo.org>
 # Purpose: facilitate packaging commons-jellyt-tags-*
 #
 
@@ -29,10 +29,17 @@
 # * ant clean
 # * Create a tarball of the checkout as ${P}.tar.bz2
 
-inherit java-pkg eutils
+inherit java-pkg eutils base
 
 ECLASS="commons-jelly-tags"
 INHERITED="$INHERITED $ECLASS"
+
+DECRIPTION="An Executable XML Java Elements Framework"
+HOMEPAGE="http://jakarta.apache.org/commons/jelly/"
+#SRC_URI="mirror://gentoo/${P}.tar.bz2 mirror://gentoo/commons-jelly-tags-1.0-gentoo.patch.bz2"
+SRC_URI="http://gentooexperimental.org/distfiles/${P}.tar.bz2
+		 http://gentooexperimental.org/distfiles/commons-jelly-tags-${SLOT}-gentoo.patch.bz2"
+
 LDEPEND="dev-java/commons-jelly
 	=dev-java/commons-beanutils-1.6*
 	dev-java/commons-collections
@@ -53,10 +60,9 @@ DEPEND="virtual/jdk
 	${LDEPEND}"
 SLOT="${PV}"
 IUSE="doc jikes"
-LICENSE=""
+LICENSE="Apache-2.0"
 
-#SRC_URI="mirror://gentoo/${P}.tar.bz2 mirror://gentoo/commons-jelly-tags-1.0-gentoo.patch.bz2"
-SRC_URI="http://gentooexperimental.org/distfiles/${P}.tar.bz2 http://gentooexperimental.org/distfiles/commons-jelly-tags-1.0-gentoo.patch.bz2"
+PATCHES="${PATCHES:=${WORKDIR}/commons-jelly-tags-1.0-gentoo.patch}"
 
 EXPORT_FUNCTIONS src_unpack src_compile src_install src_test
 
@@ -65,6 +71,7 @@ commons-jelly-tags_fix-jars() {
 	true;
 }
 
+# Pull jars that will be used by all commons-jelly-tags packages
 commons-jelly-tags_fix-common-jars() {
 	java-pkg_jar-from commons-jelly-1
 	java-pkg_jar-from commons-beanutils-1.6
@@ -80,16 +87,13 @@ commons-jelly-tags_fix-common-jars() {
 }
 
 commons-jelly-tags_src_unpack() {
-	unpack ${A}
-	cd ${S}
-	if [ -f ${FILESDIR}/${P}-gentoo.patch ]; then
-		epatch ${FILESDIR}/${P}-gentoo.patch
-	else
-		epatch ${WORKDIR}/commons-jelly-tags-1.0-gentoo.patch
-	fi
+	# use base to unpack and apply PATCHES
+	base_src_unpack
 
 	mkdir -p target/lib
 	cd target/lib
+
+	# populate the lib dir with dependencies
 	commons-jelly-tags_fix-common-jars
 	commons-jelly-tags_fix-jars
 }
@@ -98,6 +102,7 @@ commons-jelly-tags_src_compile() {
 	local antflags="jar -Dfinal.name=${PN}"
 	use jikes && antflags="${antflags} -Dbuild.compiler=jikes"
 	use doc && antflags="${antflags} javadoc"
+
 	ant ${antflags} || die "compile failed"
 }
 
