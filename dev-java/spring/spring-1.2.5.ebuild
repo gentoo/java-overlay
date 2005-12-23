@@ -12,17 +12,20 @@ SRC_URI="mirror://sourceforge/${MY_PN/-/}/${MY_P}.zip"
 
 LICENSE="Apache-2.0"
 SLOT="0"
+
+# Masked until I fix the gentoo patch
 KEYWORDS="~x86"
 # Jikes is broken:
 # http://opensource.atlassian.com/projects/spring/browse/SPR-1097
 #IUSE="doc jikes"
-IUSE="doc"
+IUSE="doc source"
 
 DEPEND=">=virtual/jdk-1.4
-	dev-java/ant
-	dev-java/antlr"
+	dev-java/ant-core
+	dev-java/antlr
+	app-arch/zip"
 #	jikes? (dev-java/jikes)
-# TODO replace sun-jdbc-rowset-bin with free implementation
+# TODO replace sun-jdbc-rowset-bin with free implementation?
 RDEPEND=">=virtual/jre-1.4
 	=www-servers/axis-1*
 	=dev-java/aopalliance-1*
@@ -64,13 +67,14 @@ RDEPEND=">=virtual/jre-1.4
 	dev-java/poi
 	dev-java/quartz
 	=dev-java/struts-1.2*
-	=dev-java/velocity-1*
+	dev-java/velocity
 	dev-java/velocity-tools
 	dev-java/xjavadoc
 	=dev-java/gnu-javamail-1*
 	=dev-java/mx4j-3.0*
 	=dev-java/jboss-module-j2ee-4.0*
-	dev-java/wsdl4j"
+	dev-java/wsdl4j
+	=dev-java/jexcelapi-2.5*"
 #	dev-java/jmx
 #	dev-java/jta
 #	dev-java/jms
@@ -134,9 +138,10 @@ JAKARTA_ORO="jakarta-oro-2.0 jakarta-oro.jar jakarta-oro-2.0.8.jar"
 POI="poi poi.jar poi-2.5.1.jar"
 QUARTZ="quartz quartz.jar"
 STRUTS="struts-1.2 struts.jar"
-VELOCITY="velocity-1 velocity.jar velocity-1.4.jar"
+VELOCITY="velocity velocity.jar velocity-1.4.jar"
 VELOCITY_TOOLS_GENERIC="velocity-tools velocity-tools-generic.jar velocity-tools-generic-1.1.jar"
 VELOCITY_TOOLS_VIEW="velocity-tools velocity-tools-view.jar velocity-tools-view.1.jar"
+JEXCELAPI="jexcelapi-2.5"
 XJAVADOC="xjavadoc xjavadoc.jar xjavadoc-1.1.jar"
 
 src_unpack() {
@@ -204,13 +209,14 @@ src_unpack() {
 	# don't need for compiling
 #	java-pkg_jar-from ${JTA}
 
-#	cd ${S}/lib/jakarta-commons
+	mkdir ${S}/lib/jakarta-commons
+	cd ${S}/lib/jakarta-commons
 	# the following are only used for the example
 	#rm commons-{beanutils,discovery,validator}.jar
 	java-pkg_jar-from ${COMMONS_ATTRIBUTES_API} #97008
 	java-pkg_jar-from ${COMMONS_ATTRIBUTES_COMPILER} #97008
 
-#	cd ..
+	cd ..
 	java-pkg_jar-from ${COMMONS_BEANUTILS}
 	java-pkg_jar-from ${COMMONS_DBCP}
 	java-pkg_jar-from ${COMMONS_DIGESTER}
@@ -259,8 +265,10 @@ src_unpack() {
 	java-pkg_jar-from ${VELOCITY_TOOLS_GENERIC}
 	java-pkg_jar-from ${VELOCITY_TOOLS_VIEW}
 
-#	mkdir xdoclet
-#	cd xdoclet
+	java-pkg_jar-from ${JEXCELAPI}
+
+	mkdir xdoclet
+	cd xdoclet
 	java-pkg_jar-from ${XJAVADOC}
 }
 
@@ -280,6 +288,7 @@ src_install() {
 	dodoc changelog.txt notice.txt readme.txt
 
 	use doc && java-pkg_dohtml -r docs/{MVC-step-by-step,api,taglib} reference
+	use source && java-pkg_dosrc ${S}/src
 }
 
 # TODO figure out what the heck we should say here
