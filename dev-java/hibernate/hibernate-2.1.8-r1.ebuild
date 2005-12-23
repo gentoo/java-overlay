@@ -40,7 +40,7 @@ DEPEND="${RDEPEND}
 			dev-java/junit
 			dev-db/hsqldb
 		)"
-IUSE="doc jikes junit"
+IUSE="doc jikes junit source"
 #IUSE="doc jikes jboss junit"
 
 S=${WORKDIR}/${PN}-${PV:0:3}
@@ -110,4 +110,5 @@ src_install() {
 	use doc && java-pkg_dohtml -r dist/doc/*
 	insinto /usr/share/doc/${P}/sample
 	doins etc/*.xml etc/*.properties etc/*.ccf src/META-INF/ra.xml
+	use source && java-pkg_dosrc src/net
 }
