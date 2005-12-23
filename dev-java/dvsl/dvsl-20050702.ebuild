@@ -21,7 +21,7 @@ IUSE="doc jikes"
 COMMON_DEPEND="=dev-java/crimson-1*
 	=dev-java/dom4j-1*
 	dev-java/gnu-jaxp
-	=dev-java/velocity-1*
+	dev-java/velocity
 	dev-java/xalan
 	=dev-java/xerces-1.3*"
 #	dev-java/jdbc2-stdext
@@ -40,7 +40,7 @@ src_unpack() {
 	rm -r lib/*.jar
 
 	local classpath;
-	for jars in crimson-1 dom4j-1 gnu-jaxp velocity-1 xalan ant-core; do
+	for jars in crimson-1 dom4j-1 gnu-jaxp velocity xalan ant-core; do
 		classpath="${classpath}:`java-pkg_getjars ${jars}`"
 	done
 
