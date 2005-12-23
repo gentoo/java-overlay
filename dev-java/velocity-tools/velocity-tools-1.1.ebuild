@@ -24,7 +24,7 @@ COMMON_DEPEND="
 	=dev-java/servletapi-2.3*
 	=dev-java/struts-1.1*
 	=dev-java/struts-sslext-1.1*
-	=dev-java/velocity-1*
+	dev-java/velocity
 	dev-java/dvsl"
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
@@ -44,7 +44,7 @@ src_unpack() {
 
 	local packages="commons-beanutils-1.6 commons-collections commons-digester
 		commons-logging commons-validator dom4j-1 jaxen-1.1 
-		servletapi-2.3 struts-1.1 struts-sslext-1.1 velocity-1 dvsl"
+		servletapi-2.3 struts-1.1 struts-sslext-1.1 velocity dvsl"
 	local classpath
 	for dependency in ${packages}; do
 		local dependency_classpath=$(java-pkg_getjars ${dependency})
