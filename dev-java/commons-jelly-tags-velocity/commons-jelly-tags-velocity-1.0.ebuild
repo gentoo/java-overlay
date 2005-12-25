@@ -12,8 +12,8 @@ HOMEPAGE=""
 SLOT="1"
 KEYWORDS="~x86"
 
-RDEPEND="=dev-java/velocity-1*"
+RDEPEND="dev-java/velocity"
 
 commons-jelly-tags_fix-jars() {
-	java-pkg_jar-from velocity-1
+	java-pkg_jar-from velocity
 }

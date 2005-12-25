@@ -36,11 +36,12 @@ INHERITED="$INHERITED $ECLASS"
 
 DECRIPTION="An Executable XML Java Elements Framework"
 HOMEPAGE="http://jakarta.apache.org/commons/jelly/"
-#SRC_URI="mirror://gentoo/${P}.tar.bz2 mirror://gentoo/commons-jelly-tags-1.0-gentoo.patch.bz2"
+SLOT=${SLOT:=${PV}}
+JELLY_PATCH_VERSION=${JELLY_PATCH_VERSION:="1.0"}
 SRC_URI="http://gentooexperimental.org/distfiles/${P}.tar.bz2
-		 http://gentooexperimental.org/distfiles/commons-jelly-tags-${SLOT}-gentoo.patch.bz2"
+		 http://gentooexperimental.org/distfiles/commons-jelly-tags-${JELLY_PATCH_VERSION}-gentoo.patch.bz2"
 
-LDEPEND="dev-java/commons-jelly
+COMMON_DEPS="dev-java/commons-jelly
 	=dev-java/commons-beanutils-1.6*
 	dev-java/commons-collections
 	=dev-java/commons-jexl-1.0*
@@ -51,15 +52,15 @@ LDEPEND="dev-java/commons-jelly
 	=dev-java/xerces-2*
 	dev-java/junit"
 
-RDEPEND="virtual/jre
-	${LDEPEND}"
-DEPEND="virtual/jdk
+RDEPEND=">=virtual/jre-1.4
+	${COMMON_DEPS}"
+DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	dev-java/ant-tasks
-	jikes? (dev-java/jikes)
-	${LDEPEND}"
-SLOT="${PV}"
-IUSE="doc jikes"
+	jikes? ( dev-java/jikes )
+	source? ( app-arch/zip )
+	${COMMON_DEPS}"
+IUSE="doc jikes source"
 LICENSE="Apache-2.0"
 
 PATCHES="${PATCHES:=${WORKDIR}/commons-jelly-tags-1.0-gentoo.patch}"
@@ -87,11 +88,16 @@ commons-jelly-tags_fix-common-jars() {
 }
 
 commons-jelly-tags_src_unpack() {
-	# use base to unpack and apply PATCHES
-	base_src_unpack
+	unpack ${A}
+	cd ${S}
 
-	mkdir -p target/lib
-	cd target/lib
+	# apply PATCHES
+	for patch in ${PATCHES}; do
+		epatch ${patch}
+	done
+
+	mkdir -p ${S}/target/lib
+	cd ${S}/target/lib
 
 	# populate the lib dir with dependencies
 	commons-jelly-tags_fix-common-jars
@@ -117,6 +123,7 @@ commons-jelly-tags_src_install() {
 #	done
 	java-pkg_dojar target/*.jar
 	use doc && java-pkg_dohtml -r dist/docs/api
+	use source && java-pkg_dosrc src/java/*
 }
 
 commons-jelly-tags_src_test() {
