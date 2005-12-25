@@ -6,5 +6,5 @@ MD5 0fae681b71e7fc3ed94f80f9a1125f3a files/digest-netbeans-4.1 163
 MD5 a80b4daebbce9c3aa54890ab458f8ecd files/emptyunscramble.xsl 405
 MD5 57a1b8260847e55aea8b1650c6c1babd files/extfilecheck.rb 626
 MD5 e7fcbf7f5131562425fda47afe3b39b9 metadata.xml 1128
-MD5 3de54d081909bbefe788a80314c9c8c1 netbeans-4.0-r3.ebuild 12059
-MD5 5d353006c8b20bf0439729583051a6bb netbeans-4.1.ebuild 11903
+MD5 93d0dd52af7b051c52f43c16149e4500 netbeans-4.0-r3.ebuild 12058
+MD5 0d965ad37a872b6b081e0f40154e937d netbeans-4.1.ebuild 11902

@@ -53,7 +53,7 @@ RDEPEND=">=virtual/jre-1.4.2
 		  =dev-java/servletapi-2.2*
 		  =dev-java/servletapi-2.3*
 		  =dev-java/servletapi-2.4*
-		  =dev-java/xerces-2.6.2*
+		 >=dev-java/xerces-2.6.2
 		   dev-java/sac
 		   dev-java/flute
 		 >=dev-java/jmi-interface-1.0-r1

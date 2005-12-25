@@ -69,7 +69,7 @@ RDEPEND=">=virtual/jre-1.4.2
 		   dev-java/sun-j2ee-deployment-bin
 		   dev-java/xml-commons
 		   dev-java/jakarta-jstl
-		  =dev-java/xerces-2.6.2*
+		 >=dev-java/xerces-2.6.2
 		   "
 DEPEND="${RDEPEND}
 		>=virtual/jdk-1.4.2
