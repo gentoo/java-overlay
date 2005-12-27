@@ -1,0 +1,43 @@
+--- build.xml.orig	2005-12-22 23:57:55.000000000 -0500
++++ build.xml	2005-12-24 21:47:28.000000000 -0500
+@@ -37,14 +37,7 @@
+   <property name="proxy.password" value="">
+   </property>
+   <path id="build.classpath">
+-    <pathelement location="${libdir}/commons-io/jars/commons-io-1.1.jar">
+-    </pathelement>
+-    <pathelement location="${libdir}/javax.servlet/jars/servlet-api-2.3.jar">
+-    </pathelement>
+-    <pathelement location="${libdir}/javax.portlet/jars/portlet-api-1.0.jar">
+-    </pathelement>
+-    <pathelement location="${libdir}/junit/jars/junit-3.8.1.jar">
+-    </pathelement>
++	<fileset dir="target/lib" includes="**/*.jar"/>
+   </path>
+   <target name="init" description="o Initializes some properties">
+     <mkdir dir="${libdir}">
+@@ -70,7 +63,7 @@
+       </and>
+     </condition>
+   </target>
+-  <target name="compile" description="o Compile the code" depends="get-deps">
++  <target name="compile" description="o Compile the code" depends="">
+     <mkdir dir="${classesdir}">
+     </mkdir>
+     <javac destdir="${classesdir}" deprecation="true" debug="true" optimize="false" excludes="**/package.html">
+@@ -90,7 +83,7 @@
+       </fileset>
+     </copy>
+   </target>
+-  <target name="jar" description="o Create the jar" depends="compile,test">
++  <target name="jar" description="o Create the jar" depends="compile">
+     <jar jarfile="${defaulttargetdir}/${final.name}.jar" excludes="**/package.html" basedir="${classesdir}">
+     </jar>
+   </target>
+@@ -254,4 +247,4 @@
+     <unjar dest="${maven.home}" src="${user.home}/maven-install-latest.jar">
+     </unjar>
+   </target>
+-</project>
+\ No newline at end of file
++</project>
