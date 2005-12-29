@@ -9,4 +9,4 @@ MD5 d247ccb834326627d7314e4a77b63932 files/spring-1.2.5-gentoo.patch 807
 MD5 daa2a5b0055c72312b445a087ddc4b78 files/spring-framework-1.2.5-excludes.patch 735
 MD5 6ca3f832d2f4a23682d601ac4f4eb8b8 spring-1.2.1.ebuild 7470
 MD5 ca1e31d83081068472e83fd2ed7a34f4 spring-1.2.4.ebuild 7888
-MD5 03466f11a3deefa1a40e7b1f01142dcf spring-1.2.5.ebuild 8035
+MD5 d702cfc0b16e7231eee1447c38b62a8a spring-1.2.5.ebuild 8050

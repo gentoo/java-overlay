@@ -14,7 +14,8 @@ LICENSE="Apache-2.0"
 SLOT="0"
 
 # Masked until I fix the gentoo patch
-KEYWORDS="~x86"
+KEYWORDS="-*"
+#KEYWORDS="~x86"
 # Jikes is broken:
 # http://opensource.atlassian.com/projects/spring/browse/SPR-1097
 #IUSE="doc jikes"
