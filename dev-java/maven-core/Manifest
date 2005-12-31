@@ -1,0 +1,4 @@
+MD5 0b22164e8091fceb25c2fc45e0eae710 files/digest-maven-core-1.0.2 71
+MD5 58bb1280ab84a045d2c02cfe6c73212d files/maven-core-1.0.2-coreonly.patch 12407
+MD5 3bb8de182e69c954ad93bc0808c0e084 files/maven-core-1.0.2-script.patch 2122
+MD5 cb2c050256b77b007d2cd38a7d92206b maven-core-1.0.2.ebuild 3187
