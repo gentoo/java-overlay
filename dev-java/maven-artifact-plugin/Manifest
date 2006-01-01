@@ -1,0 +1,4 @@
+MD5 927068b99472af37f58181a2752906e5 files/build-1.4.1.xml 16169
+MD5 21ba7a7956d1c59eae81cc40969876f4 files/digest-maven-artifact-plugin-1.4.1 86
+MD5 d4a19e694fb8e8b362bc2067f2d05432 files/maven-artifact-plugin-1.4.1-fileutils.patch 1182
+MD5 173624006fb62018fca79b437a83b373 maven-artifact-plugin-1.4.1.ebuild 1391

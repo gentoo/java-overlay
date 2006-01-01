@@ -1,0 +1,22 @@
+Only in maven-artifact-plugin-1.4.1-patched/: build.xml
+diff -ru maven-artifact-plugin-1.4.1/src/main/org/apache/maven/artifact/deployer/DefaultArtifactDeployer.java maven-artifact-plugin-1.4.1-patched/src/main/org/apache/maven/artifact/deployer/DefaultArtifactDeployer.java
+--- maven-artifact-plugin-1.4.1/src/main/org/apache/maven/artifact/deployer/DefaultArtifactDeployer.java	2005-12-31 18:06:59.000000000 -0500
++++ maven-artifact-plugin-1.4.1-patched/src/main/org/apache/maven/artifact/deployer/DefaultArtifactDeployer.java	2005-12-31 22:16:56.000000000 -0500
+@@ -477,7 +477,7 @@
+         try
+         {
+             file = new File(artifact.getParent(), filename);
+-            FileUtils.fileWrite(file.getAbsolutePath(), snapshotVersion);
++            FileUtils.writeStringToFile(file, snapshotVersion, null);
+ 
+         }
+         catch (Exception e)
+@@ -516,7 +516,7 @@
+         try
+         {
+             md5ChecksumFile = new File(file.getAbsoluteFile() + ".md5");
+-            FileUtils.fileWrite(md5ChecksumFile.getAbsolutePath(), checksum);
++            FileUtils.writeStringToFile(md5ChecksumFile, checksum, null);
+         }
+         catch (Exception e)
+         {

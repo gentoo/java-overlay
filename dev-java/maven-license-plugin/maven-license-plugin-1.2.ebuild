@@ -4,10 +4,10 @@
 
 inherit java-maven java-pkg
 
-DESCRIPTION="Javadoc plugin for Maven"
+DESCRIPTION="License plugin for Maven"
 HOMEPAGE="http://maven.apache.org"
-#  svn co http://svn.apache.org/repos/asf/maven/maven-1/plugins/tags/MAVEN_JAVADOC_1_7/ maven-javadoc-plugin-1.7
-# tar cjvf maven-javadoc-plugin-1.7-gentoo.tar.bz2 maven-javadoc-plugin-1.7/
+#  svn co http://svn.apache.org/repos/asf/maven/maven-1/plugins/tags/MAVEN_LICENSE_1_2 maven-license-plugin-1.2
+# tar cjvf maven-license-plugin-1.2-gentoo.tar.bz2 maven-license-plugin-1.2
 SRC_URI="http://gentooexperimental.org/distfiles/${P}-gentoo.tar.bz2"
 
 LICENSE="Apache-2.0"
@@ -15,9 +15,10 @@ SLOT="1"
 KEYWORDS="~x86"
 IUSE=""
 
-DEPEND="virtual/jdk"
-RDEPEND="virtual/jre"
-S="${WORKDIR}/${P}/javadoc"
+DEPEND=">=virtual/jdk-1.4
+	dev-java/ant-core"
+RDEPEND="${DEPEND}"
+S="${WORKDIR}/${P}/license"
 
 src_unpack() {
 	unpack ${A}

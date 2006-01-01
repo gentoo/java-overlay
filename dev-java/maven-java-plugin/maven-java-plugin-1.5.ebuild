@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg
+inherit java-maven
 
 DESCRIPTION="Java plugin for Maven"
 HOMEPAGE="http://maven.apache.org"
@@ -15,7 +15,7 @@ SLOT="1"
 KEYWORDS="~x86"
 IUSE=""
 
-RDEPEND=">=virtual/jre-1.4
+RDEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core"
 DEPEND="${RDEPEND}"
 
@@ -35,5 +35,5 @@ src_compile() {
 }
 
 src_install() {
-	java-pkg_newjar target/${P}.jar ${PN}.jar
+	java-maven_newplugin target/${P}.jar ${PN}.jar
 }

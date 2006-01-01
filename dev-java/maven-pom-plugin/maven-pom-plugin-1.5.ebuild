@@ -3,7 +3,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg
+inherit java-maven
 
 DESCRIPTION="POM plugin for Maven"
 HOMEPAGE="http://maven.apache.org"
@@ -40,5 +40,5 @@ src_compile() {
 }
 
 src_install() {
-	java-pkg_newjar target/${P}.jar ${PN}.jar
+	java-maven_newplugin target/${P}.jar ${PN}.jar
 }

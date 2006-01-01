@@ -109,5 +109,53 @@ src_compile() {
 src_install() {
 	java-pkg_dojar bootstrap/${MY_PN}.jar
 
-	dobin src/bin/maven
+	dodir ${JAVA_MAVEN_SYSTEM_HOME}
+
+	dodir ${JAVA_MAVEN_SYSTEM_BIN}
+	cp src/bin/maven ${D}/${JAVA_MAVEN_SYSTEM_BIN}
+	insinto ${JAVA_MAVEN_SYSTEM_BIN}
+	doins src/bin/forehead.conf
+
+#	ln -sf ${JAVA_MAVEN_SYSTEM_BIN}/maven ${D}/usr/bin/maven
+#	dosym ${D}/${JAVA_MAVEN_SYSTEM_BIN}/maven /usr/bin/maven
+
+	keepdir ${JAVA_MAVEN_SYSTEM_PLUGINS}
+
+	dodir ${JAVA_MAVEN_SYSTEM_LIB}
+	cd ${D}/${JAVA_MAVEN_SYSTEM_LIB}
+	java-pkg_jar-from ant-core ant.jar ant-1.5.3-1.jar
+	java-pkg_jar-from ant-tasks
+	java-pkg_jar-from commons-collections
+	java-pkg_jar-from dom4j-1
+	java-pkg_jar-from log4j log4j.jar log4j-1.2.8.jar
+	java-pkg_jar-from werkz
+	java-pkg_jar-from xml-commons which.jar
+	java-pkg_jar-from commons-cli-1
+	java-pkg_jar-from commons-beanutils-1.6
+	# forehead needs to be named properly
+	java-pkg_jar-from forehead forehead.jar forehead-1.0-beta-5.jar
+	java-pkg_jar-from commons-logging commons-logging.jar \
+		commons-logging-1.0.3.jar
+	java-pkg_jar-from commons-jexl-1.0
+	java-pkg_jar-from commons-lang
+	java-pkg_jar-from plexus-utils
+	java-pkg_jar-from commons-betwixt
+	java-pkg_jar-from commons-graph
+	java-pkg_jar-from commons-grant commons-grant.jar \
+		commons-grant-1.0-beta-4.jar
+	java-pkg_jar-from commons-jelly-1
+	java-pkg_jar-from commons-jelly-tags-define-1
+	java-pkg_jar-from commons-jelly-tags-xml-1
+	java-pkg_jar-from commons-jelly-tags-util-1
+	java-pkg_jar-from commons-jelly-tags-ant-1
+	java-pkg_jar-from commons-io-1
+	java-pkg_jar-from commons-digester
+	java-pkg_jar-from commons-httpclient
+	java-pkg_jar-from maven-jelly-tags
+	ln -sf /usr/share/maven-core-1/lib/maven.jar
+
+	mkdir endorsed
+	cd endorsed
+	java-pkg_jar-from xerces-2 xercesImpl.jar xerces-2.4.0.jar
+	java-pkg_jar-from xerces-2 xml-apis.jar xml-apis-1.0.b2.jar
 }
