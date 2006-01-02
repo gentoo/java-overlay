@@ -58,6 +58,7 @@
         <include name="*.xsd"></include>
         <include name="*.dtd"></include>
         <include name="*.mod"></include>
+        <include name="*.properties"></include>
         <include name="driver.jelly"></include>
         <include name="LICENCE.txt"></include>
       </fileset>
