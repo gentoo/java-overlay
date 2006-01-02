@@ -124,8 +124,9 @@ src_install() {
 	insinto ${JAVA_MAVEN_SYSTEM_BIN}
 	doins ${FILESDIR}/forehead.conf
 
+	dodir /usr/bin
 #	ln -s ${JAVA_MAVEN_SYSTEM_BIN}/maven ${D}/usr/bin/maven
-#	dosym ${D}/${JAVA_MAVEN_SYSTEM_BIN}/maven /usr/bin/maven
+	dosym ${JAVA_MAVEN_SYSTEM_BIN}/maven /usr/bin/${MY_PN}
 
 	keepdir ${JAVA_MAVEN_SYSTEM_PLUGINS}
 
