@@ -121,9 +121,9 @@ src_install() {
 	dodir ${JAVA_MAVEN_SYSTEM_BIN}
 	cp src/bin/maven ${D}/${JAVA_MAVEN_SYSTEM_BIN}
 	insinto ${JAVA_MAVEN_SYSTEM_BIN}
-	doins src/bin/forehead.conf
+	doins ${FILESDIR}/forehead.conf
 
-#	ln -sf ${JAVA_MAVEN_SYSTEM_BIN}/maven ${D}/usr/bin/maven
+#	ln -s ${JAVA_MAVEN_SYSTEM_BIN}/maven ${D}/usr/bin/maven
 #	dosym ${D}/${JAVA_MAVEN_SYSTEM_BIN}/maven /usr/bin/maven
 
 	keepdir ${JAVA_MAVEN_SYSTEM_PLUGINS}
@@ -158,10 +158,9 @@ src_install() {
 		commons-graph-0.8.1.jar
 	java-pkg_jar-from commons-grant commons-grant.jar \
 		commons-grant-1.0-beta-4.jar
-	java-pkg_jar-from commons-jelly-1 \
+	java-pkg_jar-from commons-jelly-1 commons-jelly.jar \
 		commons-jelly-20030902.160215.jar
-	java-pkg_jar-from commons-jelly-tags-define-1 commons-jelly-tags-define.jar
-	\
+	java-pkg_jar-from commons-jelly-tags-define-1 commons-jelly-tags-define.jar \
 		commons-jelly-tags-define-20030211.142932.jar
 	java-pkg_jar-from commons-jelly-tags-xml-1 commons-jelly-tags-xml.jar \
 		commons-jelly-tags-xml-20040613.030723.jar
