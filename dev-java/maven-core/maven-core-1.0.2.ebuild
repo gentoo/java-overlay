@@ -22,6 +22,7 @@ DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	dev-java/commons-collections
 	=dev-java/dom4j-1*
+	=dev-java/jaxen-1.1*
 	dev-java/werkz
 	dev-java/xml-commons
 	=dev-java/commons-cli-1*
@@ -176,6 +177,7 @@ src_install() {
 		commons-httpclient-2.0.jar
 	java-pkg_jar-from maven-jelly-tags maven-jelly-tags.jar \
 		maven-jelly-tags-1.0.jar
+	java-pkg_jar-from jaxen-1.1
 	ln -sf /usr/share/maven-core-1/lib/maven.jar
 
 	mkdir endorsed

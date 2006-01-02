@@ -15,8 +15,12 @@ SLOT="1"
 KEYWORDS="~x86"
 IUSE=""
 
-DEPEND="virtual/jdk"
-RDEPEND="virtual/jre"
+RDEPEND=">=virtual/jdk-1.4
+	dev-java/ant-core
+	dev-java/commons-lang
+	dev-java/commons-collections
+	=dev-java/maven-xdoc-plugin-1*"
+DEPEND="${RDEPEND}"
 S="${WORKDIR}/${P}/javadoc"
 
 src_unpack() {
@@ -38,6 +42,5 @@ src_compile() {
 }
 
 src_install() {
-	#java-pkg_newjar target/${P}.jar ${PN}.jar
 	java-maven_newplugin target/${P}.jar ${PN}.jar
 }
