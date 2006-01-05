@@ -63,8 +63,12 @@ src_install() {
 	doins -r .version.properties build.xml src || die "doins failed"
 	rm -rf "${D}/${LI}"/src/java-* || die "failed to remove sources."
 
-	dosym ${SD}/lib ${LI}/build
-	dodir ${LI}/lib
+	cd "${D}/${LI}"
+	ln -s  ../lib build
+
+	cd "${S}"
+
+#	dodir ${LI}/lib
 
 	use doc && java-pkg_dohtml -r docs/api
 	dodoc NOTES CHANGES || die "dodoc failed"
