@@ -1,0 +1,16 @@
+--- bin/xins.orig	2005-12-27 15:11:57.000000000 +0100
++++ bin/xins	2005-12-27 15:16:33.000000000 +0100
+@@ -8,11 +8,8 @@
+ # Make sure XINS_HOME is set
+ if [ "${XINS_HOME}" = "" ]
+ then
+-   # Determine script directory
+-   __DIRNAME__=`dirname $0`
+-
+-   # Assume parent of script directory is XINS home
+-   XINS_HOME=`dirname ${__DIRNAME__}`
++   # Fallback to Gentoo-specific installment directory
++   XINS_HOME=`dirname $0`/../share/%%PN-SLOT%%/installment
+    if [ "${XINS_VERBOSE}" = "true" ]; then
+       echo "XINS_HOME not set, assuming: ${XINS_HOME}"
+    fi
