@@ -10,7 +10,7 @@ SRC_URI="mirror://apache/jakarta/commons/digester/source/${P}-src.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="doc jikes junit source"
 
 # 1.3 support might be possible by adding an additional depend on xml-commons[-external]
