@@ -33,7 +33,7 @@ src_compile() {
 	ant ${antflags} || die "Processing of Ant build file failed."
 
 	if use doc; then
-		mv build/javadoc build/api || "Renaming javadoc failed."
+		mv build/javadoc build/api || die "Renaming javadoc failed."
 	fi
 }
 
