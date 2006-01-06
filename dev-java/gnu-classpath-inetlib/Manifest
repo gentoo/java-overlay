@@ -1,0 +1,6 @@
+MD5 a01a45eb14f5cb885374b46af1ff5a71 ChangeLog 1580
+MD5 a2a578355c1f554d3ae84752aaab1c19 files/digest-gnu-classpath-inetlib-1.0-r1 63
+MD5 d8e4542d02c3180ee42b1c87c424c968 files/digest-gnu-classpath-inetlib-1.1-r1 63
+MD5 0d7eb22a0a534397e7f466d59e9970d3 gnu-classpath-inetlib-1.0-r1.ebuild 1809
+MD5 4ee44d227b8ea7e3aa857744157da4c9 gnu-classpath-inetlib-1.1-r1.ebuild 1478
+MD5 cae9047aa616f454f13653091a077f60 metadata.xml 430
