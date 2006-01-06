@@ -1,3 +1,5 @@
 MD5 a30727b2c8c5fc36a69558733c20d877 files/digest-gnu-crypto-2.0.1-r2 70
+MD5 0762a14f740a4b424df548a44eaa0069 files/digest-gnu-crypto-2.1.0 70
 MD5 8450af49bee9ffde3a26100560db5842 files/gnu-crypto-2.0.1-jdk15.patch 1551
-MD5 4405644335e0b0e483079228b3e79dfe gnu-crypto-2.0.1-r2.ebuild 1331
+MD5 30f7caeadd2c6ed295c1337fb8042701 gnu-crypto-2.0.1-r2.ebuild 1331
+MD5 3f1b35d27cef61e9ae8fc010408018ed gnu-crypto-2.1.0.ebuild 1301

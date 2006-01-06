@@ -6,16 +6,17 @@ inherit java-pkg eutils
 
 DESCRIPTION="GNU Crypto cryptographic primitives for Java"
 HOMEPAGE="http://www.gnu.org/software/gnu-crypto/"
-SRC_URI="ftp://ftp.gnupg.org/GnuPG/gnu-crypto/gnu-crypto-${PV}.tar.bz2"
+SRC_URI="ftp://ftp.gnu.org/gnu/${PN}/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ppc ~ppc64 ~x86"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 IUSE="doc jikes"
 
-DEPEND=">=virtual/jdk-1.3
+# Needs javax.security.sasl which is not in 1.4
+DEPEND=">=virtual/jdk-1.5
 	jikes? ( dev-java/jikes )"
-RDEPEND=">=virtual/jre-1.3"
+RDEPEND=">=virtual/jre-1.5"
 
 RESTRICT="test"
 
@@ -23,8 +24,8 @@ src_unpack() {
 	unpack ${A}
 	cd ${S}
 
-	epatch ${FILESDIR}/${P}-jdk15.patch
-#	epatch ${FILESDIR}/${P}-clone-exception.patch
+#	epatch "${FILESDIR}/${PN}-2.0.1-jdk15.patch"
+#	epatch "${FILESDIR}/${PN}-2.0.1-clone-exception.patch"
 }
 
 src_compile() {
@@ -44,14 +45,12 @@ src_compile() {
 }
 
 src_install() {
-	einstall || die
-	rm ${D}/usr/share/*.jar
+	make DESTDIR="${D}" install || die
+	rm ${D}/usr/share/*.jar || die
 
-	java-pkg_dojar source/gnu-crypto.jar
-	java-pkg_dojar jce/javax-crypto.jar
-	java-pkg_dojar security/javax-security.jar
+	java-pkg_dojar source/*.jar
 
 	use doc && java-pkg_dohtml -r api/*
 
-	dodoc AUTHORS COPYING ChangeLog INSTALL NEWS README THANKS
+	dodoc AUTHORS ChangeLog INSTALL README THANKS
 }
