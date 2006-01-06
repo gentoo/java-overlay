@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/gnu-crypto/gnu-crypto-2.0.1-r1.ebuild,v 1.3 2005/07/25 11:16:21 dholm Exp $
 
-inherit java-pkg eutils
+inherit eutils java-pkg java-utils
 
 DESCRIPTION="GNU Crypto cryptographic primitives for Java"
 HOMEPAGE="http://www.gnu.org/software/gnu-crypto/"
@@ -34,7 +34,7 @@ src_compile() {
 #	use jikes && my_javac="jikes -bootclasspath ${JAVA_HOME}/jre/lib/rt.jar"
 
 	#JAVAC=${my_javac}
-	econf \
+	econf JAVACFLAGS="-target 1.4 -source 1.4" \
 		--with-jce=yes \
 		--with-sasl=yes \
 		|| die
