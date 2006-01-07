@@ -1,0 +1,18 @@
+# ChangeLog for dev-java/jdbc2-firebird
+# Copyright 1999-2005 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-java/jdbc2-firebird/ChangeLog,v 1.5 2005/05/18 17:50:50 luckyduck Exp $
+
+  18 May 2005; Jan Brinkmann <luckyduck@gentoo.org>
+  jdbc2-firebird-1.5.3.ebuild:
+  stable on amd64, ppc and x86
+
+  03 Nov 2004; Thomas Matthijs <axxo@gentoo.org>
+  jdbc2-firebird-1.5.3.ebuild:
+  depend on app-arch/unzip
+
+*jdbc2-firebird-1.5.3 (20 Oct 2004)
+
+  20 Oct 2004; Dylan Carlson <absinthe@gentoo.org> +metadata.xml,
+  +jdbc2-firebird-1.5.3.ebuild:
+  Initial import. Closes bug 48331.
+
