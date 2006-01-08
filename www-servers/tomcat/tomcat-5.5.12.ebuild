@@ -60,14 +60,12 @@ src_unpack() {
 		tomcatbuild-xml.patch
 		catalinabuild-xml.patch
 		jasperbuild-xml.patch
-		gentoo.patch
-		setclasspath.patch
 	"
 	for patch in ${PATCHES}; do
 		epatch "${FILESDIR}/${PV}/${patch}"
 	done
 
-#	use jikes && epatch ${FILESDIR}/${PV}/jikes.patch
+	use jikes && epatch ${FILESDIR}/${PV}/jikes.patch
 
 	# avoid packed jars :-)
 	mkdir -p ${S}/jakarta-tomcat-5/build/common
