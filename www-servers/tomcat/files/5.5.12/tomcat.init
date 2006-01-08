@@ -3,44 +3,44 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/www-servers/tomcat/files/5.0.28/tomcat.init,v 1.6 2005/11/14 20:17:58 betelgeuse Exp $
 
-# Add on extra jar files to CLASSPATH
-if [ -n "$JSSE_HOME" ]; then
-  CLASSPATH="$CLASSPATH":"$JSSE_HOME"/lib/jcert.jar:"$JSSE_HOME"/lib/jnet.jar:"$JSSE_HOME"/lib/jsse.jar
+
+if [ -r "$CATALINA_HOME"/bin/tomcat-juli.jar ]; then
+	JAVA_OPTS="$JAVA_OPTS -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
+						  -Djava.util.logging.config.file=/etc/tomcat-5.5/$PROFILE/logging.properties"
 fi
-CLASSPATH="$CLASSPATH":"$CATALINA_HOME"/bin/bootstrap.jar:$(java-config -p commons-logging):$(java-config -p log4j)
+# Add on extra jar files to CLASSPATH
+CLASSPATH="${CLASSPATH}:$(java-config -O)/lib/tools.jar"
+if [ -n "$JSSE_HOME" ]; then
+	CLASSPATH="$CLASSPATH:$JSSE_HOME/lib/jcert.jar:$JSSE_HOME/lib/jnet.jar:$JSSE_HOME/lib/jsse.jar"
+fi
+CLASSPATH="$CLASSPATH:$CATALINA_HOME/bin/bootstrap.jar:$(java-config -p commons-logging)"
+
+OPTS_CP="$JAVA_OPTS $CATALINA_OPTS -Djava.endorsed.dirs=$CATALINA_HOME/common/endorsed -classpath $CLASSPATH"
+
+STD_ARGS="-Dcatalina.base=$CATALINA_BASE \
+		  -Dcatalina.home=$CATALINA_HOME \
+		  -Djava.io.tmpdir=$CATALINA_TMPDIR \
+		  org.apache.catalina.startup.Bootstrap "
 
 depend() {
 	use dns logger mysql postgresql net
 }
-
 start()	{
 	ebegin "Starting Tomcat"
 	if [[ "$TOMCAT_START" == "debug" ]] ; then
-		exec "$_RUNJDB" $JAVA_OPTS $CATALINA_OPTS \
-		-Djava.endorsed.dirs="$JAVA_ENDORSED_DIRS" -classpath "$CLASSPATH" \
-		-sourcepath "$CATALINA_HOME"/../../jakarta-tomcat-catalina/catalina/src/share \
-		-Dcatalina.base="$CATALINA_BASE" \
-		-Dcatalina.home="$CATALINA_HOME" \
-		-Djava.io.tmpdir="$CATALINA_TMPDIR" \
-		org.apache.catalina.startup.Bootstrap "$@" start \
-		>> "$CATALINA_BASE"/logs/catalina.out 2>&1 &
-		if [ ! -z "$CATALINA_PID" ]; then
-			echo $! > $CATALINA_PID
-		fi
+		start-stop-daemon --start --quiet --background --chuid tomcat:tomcat \
+	        	--make-pidfile --pidfile /var/run/tomcat.pid \
+				--exec $(java-config -O)/bin/jdb -- $OPTS_CP \
+					-sourcepath $CATALINA_HOME/../../jakarta-tomcat-catalina/catalina/src/share \
+					$STD_ARGS debug
 	elif [[ "$TOMCAT_START" == "debug -security" ]] ; then
-		exec "$_RUNJDB" $JAVA_OPTS $CATALINA_OPTS \
-		-Djava.endorsed.dirs="$JAVA_ENDORSED_DIRS" -classpath "$CLASSPATH" \
-		-sourcepath "$CATALINA_HOME"/../../jakarta-tomcat-catalina/catalina/src/share \
-		-Djava.security.manager \
-		-Djava.security.policy=="$CATALINA_BASE"/conf/catalina.policy \
-		-Dcatalina.base="$CATALINA_BASE" \
-		-Dcatalina.home="$CATALINA_HOME" \
-		-Djava.io.tmpdir="$CATALINA_TMPDIR" \
-		org.apache.catalina.startup.Bootstrap "$@" start \
-		>> "$CATALINA_BASE"/logs/catalina.out 2>&1 &
-		if [ ! -z "$CATALINA_PID" ]; then
-			echo $! > $CATALINA_PID
-		fi
+		start-stop-daemon --start --quiet --background --chuid tomcat:tomcat \
+	        	--make-pidfile --pidfile /var/run/tomcat.pid \
+				--exec $(java-config -O)/bin/jdb -- $OPTS_CP \
+					-sourcepath $CATALINA_HOME/../../jakarta-tomcat-catalina/catalina/src/share \
+					-Djava.security.manager \
+					-Djava.security.policy==$CATALINA_BASE/conf/catalina.policy \
+					$STD_ARGS debug -security
 	elif [[ "$TOMCAT_START" == "jpda start" ]] ; then
 		if [ -z "$JPDA_TRANSPORT" ]; then
 			JPDA_TRANSPORT="dt_socket"
@@ -53,40 +53,25 @@ start()	{
 		fi
 		CATALINA_OPTS="$CATALINA_OPTS $JPDA_OPTS"
 	elif [[ "$TOMCAT_START" == "start" ]] ; then
-		java $JAVA_OPTS $CATALINA_OPTS \
-		-Djava.endorsed.dirs="$JAVA_ENDORSED_DIRS" -classpath "$CLASSPATH" \
- 		-Dcatalina.base="$CATALINA_BASE" \
-		-Dcatalina.home="$CATALINA_HOME" \
-		-Djava.io.tmpdir="$CATALINA_TMPDIR" \
-		org.apache.catalina.startup.Bootstrap "$@" start \
-		>> "$CATALINA_BASE"/logs/catalina.out 2>&1 &
-		if [ ! -z "$CATALINA_PID" ]; then
-			echo $! > $CATALINA_PID
-		fi
+		start-stop-daemon --start --quiet --background --chuid tomcat:tomcat \
+	        	--make-pidfile --pidfile /var/run/tomcat.pid \
+				--exec $(java-config --java) -- $OPTS_CP $STD_ARGS start
 	elif [[ "$TOMCAT_START" == "start -security" ]] ; then
-		java $JAVA_OPTS $CATALINA_OPTS \
-		-Djava.endorsed.dirs="$JAVA_ENDORSED_DIRS" -classpath "$CLASSPATH" \
-		-Djava.security.manager \
-		-Djava.security.policy=="$CATALINA_BASE"/conf/catalina.policy \
- 		-Dcatalina.base="$CATALINA_BASE" \
-		-Dcatalina.home="$CATALINA_HOME" \
-		-Djava.io.tmpdir="$CATALINA_TMPDIR" \
-		org.apache.catalina.startup.Bootstrap "$@" start \
-		>> "$CATALINA_BASE"/logs/catalina.out 2>&1 &
-		if [ ! -z "$CATALINA_PID" ]; then
-			echo $! > $CATALINA_PID
-		fi
+		cd ${CATALINA_BASE}/webapps
+		start-stop-daemon --start --quiet --background --chuid tomcat:tomcat \
+	        	--make-pidfile --pidfile /var/run/tomcat.pid \
+				--exec $(java-config --java) --
+					-Djava.security.manager \
+					-Djava.security.policy==$CATALINA_BASE/conf/catalina.policy \
+ 					$STD_ARGS start -security
 	fi
 	eend $?
 }
 
 stop()	{
 	ebegin "Stopping Tomcat"
- 	java $JAVA_OPTS $CATALINA_OPTS \
-	-Djava.endorsed.dirs="$JAVA_ENDORSED_DIRS" -classpath "$CLASSPATH" \
-	-Dcatalina.base="$CATALINA_BASE" \
-	-Dcatalina.home="$CATALINA_HOME" \
-	-Djava.io.tmpdir="$CATALINA_TMPDIR" \
-	org.apache.catalina.startup.Bootstrap "$@" stop
+	start-stop-daemon --stop --quiet \
+	       	--make-pidfile --pidfile /var/run/tomcat.pid \
+			--exec $(java-config --java) -- $OPTS_CP $STD_ARGS stop
 	eend $?
 }

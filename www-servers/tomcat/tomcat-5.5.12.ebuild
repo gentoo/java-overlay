@@ -41,7 +41,7 @@ DEPEND=">=virtual/jdk-1.4
 	${RDEPEND}
 	sys-apps/sed
 	dev-java/ant"
-IUSE="doc examples jaf javamail jikes puretls source test"
+IUSE="doc examples jikes puretls source test"
 
 S=${WORKDIR}/apache-${P}-src
 

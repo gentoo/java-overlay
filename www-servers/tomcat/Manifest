@@ -26,9 +26,9 @@ MD5 cbf92daf3af912f048004bf400e8d983 files/5.5.12/jasperbuild-xml.patch 542
 MD5 7f095e1be49ad30d29a299a4d175538c files/5.5.12/mainbuild-xml.patch 1132
 MD5 619d5985ec1c4c847c6ad60f69333977 files/5.5.12/setclasspath.patch 3931
 MD5 e5de361748078d8c9e578c037d158a36 files/5.5.12/setclasspath.sh 1451
-MD5 36d1fd42bc6aa47f01b4ef1d4cee5320 files/5.5.12/tomcat.conf 2646
+MD5 9fa94a9d6dd63fc0b782ece524dd1fc7 files/5.5.12/tomcat.conf 2593
 MD5 f41b77c0652379c5cfbe0f04bf99b4c2 files/5.5.12/tomcat.env 36
-MD5 32ee035d16ed30a47383d6e4070c93cc files/5.5.12/tomcat.init 628
+MD5 854a7f8cd97f973345ea40759f213408 files/5.5.12/tomcat.init 3132
 MD5 f7837344c834c23a143c849fdade400d files/5.5.12/tomcatbuild-xml.patch 5351
 MD5 ce4e367b3433f7811aa6e904b233f81a files/5.5.7/catalinabuild-xml.patch 1214
 MD5 3c23c6002cd40ec903757ae5c50de8ef files/5.5.7/gentoo.patch 998
@@ -60,6 +60,6 @@ MD5 c11ce937193406815ff7a2b306784fd8 metadata.xml 555
 MD5 257ce52cfc15f63798cb7b13ee761cb4 tomcat-3.3.2-r2.ebuild 3217
 MD5 b8bdcdd27b76556b90401621fc29996c tomcat-4.1.30-r5.ebuild 3614
 MD5 b1b082a9d71411ae91913bd9afe99c9f tomcat-5.0.27-r4.ebuild 3716
-MD5 5bef556a01bb481bee7547f2c31cb043 tomcat-5.5.12.ebuild 11259
+MD5 c8a1e7f3e55f6c86ecc23e5fcb93c224 tomcat-5.5.12.ebuild 11229
 MD5 e784267249b9bb89e42aaa68c16f5d6d tomcat-5.5.7.ebuild 9774
 MD5 59b64e3c4b93e345ec4cf0de1e532a9b tomcat-5.5.9.ebuild 9771
