@@ -9,6 +9,9 @@ DESCRIPTION="POM plugin for Maven"
 # tar cjvf maven-pom-plugin-1.5-gentoo.tar.bz2 maven-pom-plugin-1.5/
 SLOT="1"
 KEYWORDS="~x86"
+RDEPEND="=dev-java/maven-core-1*
+	=dev-java/dom4j-1*
+	=dev-java/commons-jelly-tags-logs-1*"
 
 maven-plugin_populate-jars() {
 	java-pkg_jar-from maven-core-1
