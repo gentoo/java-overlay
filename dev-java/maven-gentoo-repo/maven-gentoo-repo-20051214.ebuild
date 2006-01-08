@@ -8,7 +8,7 @@ SRC_URI="http://dev.gentoo.org/~nichoj/maven/${PF}.tar.bz2"
 
 LICENSE=""
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 S="${WORKDIR}/${PN}"
