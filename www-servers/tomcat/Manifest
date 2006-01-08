@@ -28,7 +28,7 @@ MD5 619d5985ec1c4c847c6ad60f69333977 files/5.5.12/setclasspath.patch 3931
 MD5 e5de361748078d8c9e578c037d158a36 files/5.5.12/setclasspath.sh 1451
 MD5 9fa94a9d6dd63fc0b782ece524dd1fc7 files/5.5.12/tomcat.conf 2593
 MD5 f41b77c0652379c5cfbe0f04bf99b4c2 files/5.5.12/tomcat.env 36
-MD5 854a7f8cd97f973345ea40759f213408 files/5.5.12/tomcat.init 3132
+MD5 126c6e6e99be4facfdea4c1c47842ac5 files/5.5.12/tomcat.init 2955
 MD5 f7837344c834c23a143c849fdade400d files/5.5.12/tomcatbuild-xml.patch 5351
 MD5 ce4e367b3433f7811aa6e904b233f81a files/5.5.7/catalinabuild-xml.patch 1214
 MD5 3c23c6002cd40ec903757ae5c50de8ef files/5.5.7/gentoo.patch 998
