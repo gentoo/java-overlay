@@ -11,7 +11,7 @@ SLOT="1"
 KEYWORDS="~x86"
 RDEPEND="=dev-java/maven-core-1*
 	=dev-java/dom4j-1*
-	=dev-java/commons-jelly-tags-logs-1*"
+	=dev-java/commons-jelly-tags-log-1*"
 
 maven-plugin_populate-jars() {
 	java-pkg_jar-from maven-core-1
