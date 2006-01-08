@@ -6,8 +6,10 @@ inherit eutils java-pkg
 
 DESCRIPTION="Apache Servlet-2.4/JSP-2.0 Container"
 
+MY_P="apache-${P}-src"
 SLOT="5.5"
-SRC_URI="mirror://apache/jakarta/tomcat-${SLOT}/v${PV}/src/apache-${P}-src.tar.gz"
+#SRC_URI="mirror://apache/tomcat-5/v${PV}/src/apache-${P}-src.tar.gz"
+SRC_URI="mirror://apache/${PN}/${PN}-5/v${PV}/src/${MY_P}.tar.gz"
 HOMEPAGE="http://jakarta.apache.org/tomcat"
 KEYWORDS="~x86"
 LICENSE="Apache-2.0"
@@ -43,7 +45,7 @@ DEPEND=">=virtual/jdk-1.4
 	dev-java/ant"
 IUSE="doc examples jikes puretls source test"
 
-S=${WORKDIR}/apache-${P}-src
+S=${WORKDIR}/${MY_P}
 
 TOMCAT_HOME="/usr/share/${PN}-${SLOT}"
 TOMCAT_NAME="${PN}-${SLOT}"
@@ -65,7 +67,7 @@ src_unpack() {
 		epatch "${FILESDIR}/${PV}/${patch}"
 	done
 
-	use jikes && epatch ${FILESDIR}/${PV}/jikes.patch
+#	use jikes && epatch ${FILESDIR}/${PV}/jikes.patch
 
 	# avoid packed jars :-)
 	mkdir -p ${S}/jakarta-tomcat-5/build/common
@@ -141,10 +143,10 @@ src_install() {
 	newconfd ${FILESDIR}/${PV}/tomcat.conf ${TOMCAT_NAME}
 	newenvd ${FILESDIR}/${PV}/${PN}.env 21${PN}
 
-	if use jikes; then
-		sed -e "\cCATALINA_OPTScaCATALINA_OPTS=\"-Dbuild.compiler.emacs=true\"" \
-			-i ${D}/etc/conf.d/${TOMCAT_NAME}
-	fi
+#	if use jikes; then
+#		sed -e "\cCATALINA_OPTScaCATALINA_OPTS=\"-Dbuild.compiler.emacs=true\"" \
+#			-i ${D}/etc/conf.d/${TOMCAT_NAME}
+#	fi
 
 	# create dir structure
 	diropts -m755 -o tomcat -g tomcat
