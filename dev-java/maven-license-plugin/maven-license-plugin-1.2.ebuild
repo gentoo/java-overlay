@@ -10,6 +10,9 @@ DESCRIPTION="License plugin for Maven"
 SLOT="1"
 KEYWORDS="~x86"
 
+RDEPEND="dev-java/commons-lang
+	dev-java/commons-collections"
+
 S="${WORKDIR}/${P}/license"
 
 maven-plugin_populate-jars() {
