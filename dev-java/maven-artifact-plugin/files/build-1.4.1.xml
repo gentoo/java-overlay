@@ -8,7 +8,7 @@
   <property file="${user.home}/build.properties"></property>
   <!--Build properties-->
   <property name="defaulttargetdir" value="${basedir}/target"></property>
-  <property name="libdir" value="${user.home}/.maven/repository"></property>
+  <property name="libdir" value="target/lib"></property>
   <property name="classesdir" value="${basedir}/target/classes"></property>
   <property name="distdir" value="${basedir}/dist"></property>
   <property name="javadocdir" value="${basedir}/dist/docs/api"></property>
@@ -18,7 +18,7 @@
   <property name="proxy.username" value=""></property>
   <property name="proxy.password" value=""></property>
   <path id="build.classpath">
-    <fileset dir="target/lib" includes="*.jar"/>
+    <fileset dir="${libdir}" includes="*.jar"/>
 	<!--
     <pathelement location="${libdir}/maven/jars/maven-1.0.jar"></pathelement>
     <pathelement location="${libdir}/commons-io/jars/commons-io-20030203.000550.jar"></pathelement>
