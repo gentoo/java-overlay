@@ -20,8 +20,10 @@ RDEPEND=">=virtual/jdk-1.4
 	=dev-java/maven-clean-plugin-1*
 	=dev-java/maven-jar-plugin-1*
 	=dev-java/maven-javadoc-plugin-1*
+	=dev-java/maven-xdoc-plugin-1*
 	=dev-java/maven-java-plugin-1*
 	=dev-java/maven-license-plugin-1*
 	=dev-java/maven-pom-plugin-1*
 	=dev-java/maven-test-plugin-1*
+	=dev-java/maven-plugin-plugin-1.5*
 "
