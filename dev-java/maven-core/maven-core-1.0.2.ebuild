@@ -29,6 +29,7 @@ DEPEND=">=virtual/jdk-1.4
 	=dev-java/commons-beanutils-1.6*
 	dev-java/forehead
 	dev-java/commons-logging
+	=dev-java/commons-betwixt-0.6*
 	=dev-java/commons-jexl-1.0*
 	dev-java/commons-lang
 	dev-java/plexus-utils

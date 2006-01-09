@@ -3,4 +3,4 @@ MD5 0b22164e8091fceb25c2fc45e0eae710 files/digest-maven-core-1.0.2 71
 MD5 4401e5c85de1ec4b0aa5159dc5e4c8a5 files/forehead.conf 1271
 MD5 58bb1280ab84a045d2c02cfe6c73212d files/maven-core-1.0.2-coreonly.patch 12407
 MD5 3bb8de182e69c954ad93bc0808c0e084 files/maven-core-1.0.2-script.patch 2122
-MD5 dff20e2061c47df509e59344201e0580 maven-core-1.0.2.ebuild 6055
+MD5 5c712876a8c25f98d9e75f80fcbf3251 maven-core-1.0.2.ebuild 6087
