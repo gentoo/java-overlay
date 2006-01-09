@@ -1,7 +1,15 @@
-Index: build.xml
-===================================================================
---- build.xml	(revision 278900)
-+++ build.xml	(working copy)
+diff -u -r commons-jelly-tags-ant-1.1/build.xml commons-jelly-tags-ant-1.1-patched/build.xml
+--- commons-jelly-tags-ant-1.1/build.xml	2005-09-05 22:38:17.000000000 -0400
++++ commons-jelly-tags-ant-1.1-patched/build.xml	2006-01-08 23:42:31.000000000 -0500
+@@ -14,7 +14,7 @@
+ 
+   <property name="defaulttargetdir" value="${basedir}/target">
+   </property>
+-  <property name="libdir" value="${user.home}/.maven/repository">
++  <property name="libdir" value="target/lib">
+   </property>
+   <property name="classesdir" value="${basedir}/target/classes">
+   </property>
 @@ -37,36 +37,7 @@
    <property name="proxy.password" value="">
    </property>
@@ -36,7 +44,7 @@ Index: build.xml
 -    </pathelement>
 -    <pathelement location="${libdir}/xerces/jars/xerces-2.2.1.jar">
 -    </pathelement>
-+	<fileset dir="${libdir}" includes="**/*.jar"/>
++    <fileset dir="${libdir}" includes="*.jar"/>
    </path>
    <target name="init" description="o Initializes some properties">
      <mkdir dir="${libdir}">
@@ -61,7 +69,16 @@ Index: build.xml
      <jar jarfile="${defaulttargetdir}/${final.name}.jar" excludes="**/package.html" basedir="${classesdir}">
      </jar>
    </target>
-@@ -201,7 +170,7 @@
+@@ -128,8 +97,6 @@
+     <copy todir="dist">
+       <fileset dir="${defaulttargetdir}" includes="*.jar">
+       </fileset>
+-      <fileset dir="${basedir}" includes="LICENSE*, README*">
+-      </fileset>
+     </copy>
+   </target>
+   <target name="test" description="o Run the test cases" if="test.failure" depends="internal-test">
+@@ -201,7 +168,7 @@
        </fileset>
      </copy>
    </target>
