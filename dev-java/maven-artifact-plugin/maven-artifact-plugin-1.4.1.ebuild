@@ -11,6 +11,19 @@ SLOT="1"
 KEYWORDS="~x86"
 IUSE=""
 
+RDEPEND="
+	=dev-java/maven-core-1*
+	=dev-java/commons-io-1*
+	dev-java/commons-net
+	=dev-java/commons-httpclient-2*
+	dev-java/commons-lang
+	dev-java/commons-logging
+	=dev-java/jsch
+	=dev-java/commons-jelly-1*
+	=dev-java/commons-jelly-tags-velocity-1*
+	dev-java/velocity
+"
+
 PATCHES="${FILESDIR}/${P}-fileutils.patch"
 
 maven-plugin_populate-jars() {
