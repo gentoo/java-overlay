@@ -23,6 +23,7 @@ DEPEND=">=virtual/jdk-1.4
 	dev-java/commons-collections
 	=dev-java/dom4j-1*
 	=dev-java/jaxen-1.1*
+	dev-java/log4j
 	dev-java/werkz
 	dev-java/xml-commons
 	=dev-java/commons-cli-1*
@@ -38,7 +39,6 @@ DEPEND=">=virtual/jdk-1.4
 	dev-java/commons-grant
 	=dev-java/commons-jelly-1*
 	=dev-java/commons-jelly-tags-define-1*
-	dev-java/maven-jelly-tags
 	=dev-java/commons-jelly-tags-xml-1*
 	=dev-java/commons-jelly-tags-util-1*
 	=dev-java/commons-jelly-tags-ant-1*
@@ -82,11 +82,11 @@ src_unpack() {
 	java-pkg_jar-from commons-beanutils-1.6
 	java-pkg_jar-from forehead
 	java-pkg_jar-from commons-logging
+	java-pkg_jar-from commons-betwixt
 	java-pkg_jar-from commons-jexl-1.0
 	java-pkg_jar-from commons-lang
 	java-pkg_jar-from plexus-utils
 	java-pkg_jar-from xerces-2
-	java-pkg_jar-from commons-betwixt
 	java-pkg_jar-from commons-graph
 	java-pkg_jar-from commons-grant
 	java-pkg_jar-from commons-jelly-1
@@ -98,9 +98,6 @@ src_unpack() {
 	java-pkg_jar-from commons-digester
 	java-pkg_jar-from commons-httpclient
 	java-pkg_jar-from maven-jelly-tags
-
-#	cd ../src/bin
-#	epatch ${FILESDIR}/${P}-script.patch
 }
 
 src_compile() {
@@ -145,7 +142,6 @@ src_install() {
 		commons-cli-1.0-beta-2.jar
 	java-pkg_jar-from commons-beanutils-1.6 commons-beanutils.jar \
 		commons-beanutils-1.6.1.jar
-	# forehead needs to be named properly
 	java-pkg_jar-from forehead forehead.jar forehead-1.0-beta-5.jar
 	java-pkg_jar-from commons-logging commons-logging.jar \
 		commons-logging-1.0.3.jar
@@ -185,5 +181,6 @@ src_install() {
 	mkdir endorsed
 	cd endorsed
 	java-pkg_jar-from xerces-2 xercesImpl.jar xerces-2.4.0.jar
+	# TODO should get this from xml-commons-external
 	java-pkg_jar-from xerces-2 xml-apis.jar xml-apis-1.0.b2.jar
 }
