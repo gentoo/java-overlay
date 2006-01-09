@@ -1,0 +1,6 @@
+MD5 fd810716ae761ec5936cdfd9bd3845c4 files/build-1.5.2.xml 7833
+MD5 08be41d3b1a56fa62a1d75ac5b72a7c3 files/build-1.7.xml 19238
+MD5 a4fe7a625a29a0b42f9ca96b228601fe files/digest-maven-plugin-plugin-1.5.2 84
+MD5 ff3fad2ef9742b06d3103fe729b50b30 files/digest-maven-plugin-plugin-1.7 82
+MD5 7e9d8479ef5a3ea8b76687ba6cdc5e15 maven-plugin-plugin-1.5.2.ebuild 639
+MD5 197019ada7078bffdd0d434e83d6029c maven-plugin-plugin-1.7.ebuild 1091
