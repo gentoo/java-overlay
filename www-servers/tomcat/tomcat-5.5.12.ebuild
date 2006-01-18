@@ -225,8 +225,8 @@ src_install() {
 	dosym /var/tmp/${TOMCAT_NAME}/default ${CATALINA_BASE}/temp
 	dosym /var/run/${TOMCAT_NAME}/default ${CATALINA_BASE}/work
 
-	cp ${FILESDIR}/${PV}/log4j.properties ${D}/etc/${TOMCAT_NAME}/
-	chown tomcat:tomcat ${D}/etc/${TOMCAT_NAME}/log4j.properties
+#	cp ${FILESDIR}/${PV}/log4j.properties ${D}/etc/${TOMCAT_NAME}/
+#	chown tomcat:tomcat ${D}/etc/${TOMCAT_NAME}/log4j.properties
 
 	dodoc  ${S}/jakarta-tomcat-5/{RELEASE-NOTES,RUNNING.txt}
 	fperms 640 /etc/${TOMCAT_NAME}/default/tomcat-users.xml
