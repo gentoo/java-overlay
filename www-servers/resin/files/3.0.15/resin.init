@@ -1,0 +1,23 @@
+#!/sbin/runscript
+# Copyright 1999-2004 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: /var/cvsroot/gentoo-x86/www-servers/resin/files/3.0.12/resin.init,v 1.1 2005/04/19 14:03:56 luckyduck Exp $
+
+depend() {
+	need net
+	use dns logger mysql postgresql
+}
+
+start()	{
+	ebegin "Starting Resin"
+	cd ${RESIN_HOME}
+	su - ${RESIN_USER} -c "/opt/resin/bin/httpd.sh ${RESIN_START}" 
+	eend $?
+}
+
+stop()	{
+	ebegin "Stopping Resin"
+	su - ${RESIN_USER} -c "/opt/resin/bin/httpd.sh ${RESIN_STOP}"
+	sleep 2
+	eend $?
+}

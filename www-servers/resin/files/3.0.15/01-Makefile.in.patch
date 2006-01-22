@@ -1,0 +1,39 @@
+diff -Nru resin-3.0.15.vanilla/Makefile.in resin-3.0.15/Makefile.in
+--- resin-3.0.15.vanilla/Makefile.in	2005-11-25 17:09:40.000000000 +0100
++++ resin-3.0.15/Makefile.in	2005-11-25 17:09:53.000000000 +0100
+@@ -8,20 +8,20 @@
+ 
+ install	:
+ 	(cd modules/c/src; $(MAKE) install)
+-	if test $(PREFIX) != `pwd`; then \
+-	  mkdir -p $(PREFIX)/lib; \
+-	  mkdir -p $(PREFIX)/libexec; \
+-	  cp -r libexec/* $(PREFIX)/libexec; \
+-	  cp lib/*.jar $(PREFIX)/lib; \
+-	  mkdir -p $(PREFIX)/bin; \
+-	  cp bin/* $(PREFIX)/bin; \
+-	  mkdir -p $(PREFIX)/webapps; \
+-	  cp -r webapps/* $(PREFIX)/webapps; \
+-	  mkdir -p $(PREFIX)/conf; \
+-	  cp conf/resin.conf $(PREFIX)/conf/resin.conf.orig; \
+-	  cp conf/app-default.xml $(PREFIX)/conf/app-default.xml.orig; \
+-	  if test ! -r $(PREFIX)/conf/resin.conf; then \
+-	    cp conf/resin.conf $(PREFIX)/conf/resin.conf; \
+-	    cp conf/app-default.xml $(PREFIX)/conf/app-default.xml; \
++	if test $(DESTDIR)$(PREFIX) != `pwd`; then \
++	  mkdir -p $(DESTDIR)$(PREFIX)/lib; \
++	  mkdir -p $(DESTDIR)$(PREFIX)/libexec; \
++	  cp -r libexec/* $(DESTDIR)$(PREFIX)/libexec; \
++	  cp lib/*.jar $(DESTDIR)$(PREFIX)/lib; \
++	  mkdir -p $(DESTDIR)$(PREFIX)/bin; \
++	  cp bin/* $(DESTDIR)$(PREFIX)/bin; \
++	  mkdir -p $(DESTDIR)$(PREFIX)/webapps; \
++	  cp -r webapps/* $(DESTDIR)$(PREFIX)/webapps; \
++	  mkdir -p $(DESTDIR)$(PREFIX)/conf; \
++	  cp conf/resin.conf $(DESTDIR)$(PREFIX)/conf/resin.conf.orig; \
++	  cp conf/app-default.xml $(DESTDIR)$(PREFIX)/conf/app-default.xml.orig; \
++	  if test ! -r $(DESTDIR)$(PREFIX)/conf/resin.conf; then \
++	    cp conf/resin.conf $(DESTDIR)$(PREFIX)/conf/resin.conf; \
++	    cp conf/app-default.xml $(DESTDIR)$(PREFIX)/conf/app-default.xml; \
+ 	  fi; \
+ 	fi
