@@ -1,3 +1,4 @@
+MD5 3638217ea99b079b7849e1be156329d7 ChangeLog 3464
 MD5 0af95ebd4bc58fb0e11e0f8c79c8e9d0 files/3.0.15/01-Makefile.in.patch 1710
 MD5 9c3e8de5b94465ef3205d0209a12ae00 files/3.0.15/03-build.xml.patch 1622
 MD5 7253f15dd37d3e9823392cfe78ce2708 files/3.0.15/04-wrapper.pl.patch 1268
@@ -5,6 +6,12 @@ MD5 bd4b33beb95c8c147e1e1bdf189089d2 files/3.0.15/05-Resin.java.patch 1201
 MD5 5e72e20b51a6013bf62800c1d4c4629e files/3.0.15/21resin 22
 MD5 434124e8bcd68f5757e8fb35dea42eb6 files/3.0.15/resin.conf 1151
 MD5 b113cda023ae557981e4b2e36023d401 files/3.0.15/resin.init 549
+MD5 5e72e20b51a6013bf62800c1d4c4629e files/3.0.17/21resin 22
+MD5 c733ca1b1a72d387de34bef5c0dd2d0a files/3.0.17/resin-3.0.17-gentoo.patch 5819
+MD5 5f9037620f5ada625e513959a94388a1 files/3.0.17/resin.conf 1029
+MD5 40ce75e4905d56a9b7a72b6013665c55 files/3.0.17/resin.init 574
 MD5 e1f2e767cdf5f90e26ff338b2e95b97b files/digest-resin-3.0.15 69
+MD5 e0c630218563d670917551e397cdb0a0 files/digest-resin-3.0.17 69
 MD5 83f6bf68e595b0ec2e45d8e4b78c1f5a metadata.xml 224
 MD5 492f86998d80fa1df7a09d93a9b4e282 resin-3.0.15.ebuild 4027
+MD5 02ba66bc697d89288dfaf1add0f6b127 resin-3.0.17.ebuild 3832
