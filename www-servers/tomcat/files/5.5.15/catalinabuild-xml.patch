@@ -1,0 +1,30 @@
+--- apache-tomcat-5.5.15-src/container/catalina/build.xml	2006-01-03 10:15:07.000000000 -0500
++++ container/catalina/build.xml	2006-01-28 11:57:25.000000000 -0500
+@@ -60,6 +60,7 @@
+     <pathelement location="${jaas.jar}"/>
+     <pathelement location="${javagroups.jar}"/>
+     <pathelement location="${jcert.jar}"/>
++    <pathelement location="${jdt.jar}"/>
+     <pathelement location="${jmx.jar}"/>
+     <pathelement location="${jmx-remote.jar}"/>
+     <pathelement location="${jndi.jar}"/>
+@@ -91,6 +92,7 @@
+     <pathelement location="${commons-modeler.jar}"/>
+     <pathelement location="${jaas.jar}"/>
+     <pathelement location="${jcert.jar}"/>
++    <pathelement location="${jdt.jar}"/>
+     <pathelement location="${jmx.jar}"/>
+     <pathelement location="${jndi.jar}"/>
+     <pathelement location="${jnet.jar}"/>
+@@ -548,9 +550,10 @@
+ <!--
+     <copy todir="${catalina.build}/common/lib" file="${servlet-api.jar}"/>
+ -->
++    <!--
+     <copy todir="${catalina.build}/common/lib"
+            file="${tomcat-dbcp.jar}" />
+-
++    -->
+     <!-- Configuration Files -->
+     <copy todir="${catalina.build}/conf">
+       <fileset dir="src/conf">
