@@ -1,5 +1,5 @@
---- jakarta-tomcat-catalina/catalina/src/conf/web.xml	2004-06-18 03:10:14.000000000 +0200
-+++ jakarta-tomcat-catalina/catalina/src/conf/web.xml	2004-07-28 18:51:39.192165664 +0200
+--- container/catalina/src/conf/web.xml	2004-06-18 03:10:14.000000000 +0200
++++ container/catalina/src/conf/web.xml	2004-07-28 18:51:39.192165664 +0200
 @@ -186,6 +186,10 @@
      <servlet>
          <servlet-name>jsp</servlet-name>

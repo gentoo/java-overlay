@@ -1,5 +1,5 @@
---- ../jakarta-tomcat-5.5.7-src.orig/jakarta-tomcat-jasper/jasper2/build.xml	2005-02-13 19:28:36.000000000 +0100
-+++ jakarta-tomcat-jasper/jasper2/build.xml	2005-02-13 20:46:15.554972064 +0100
+--- jasper/jasper2/build.xml	2005-02-13 19:28:36.000000000 +0100
++++ jasper/jasper2/build.xml	2005-02-13 20:46:15.554972064 +0100
 @@ -30,6 +30,7 @@
      <pathelement location="${jsp-api.jar}"/>
      <pathelement location="${tools.jar}"/>
