@@ -68,8 +68,8 @@ src_unpack() {
 	use jikes && epatch ${FILESDIR}/${PV}/jikes.patch
 
 	# avoid packed jars :-)
-	mkdir -p ${S}/jakarta-tomcat-5/build/common
-	cd ${S}/jakarta-tomcat-5/build
+	mkdir -p ${S}/build/build/common
+	cd ${S}/build/build
 
 	mkdir ./bin && cd ./bin
 	java-pkg_jar-from commons-logging commons-logging-api.jar
@@ -125,6 +125,7 @@ src_compile(){
 	antflags="${antflags} -DxercesImpl.jar=$(java-pkg_getjar xerces-2 xercesImpl.jar)"
 	antflags="${antflags} -Dxml-apis.jar=$(java-pkg_getjar xerces-2 xml-apis.jar)"
 	antflags="${antflags} -Dstruts.home=/usr/share/struts"
+	antflags="${antflags} -Djasper.home=${S}/jasper/jasper2"
 
 	ant ${antflags} || die "compile failed"
 
@@ -134,7 +135,7 @@ src_install() {
 	enewgroup tomcat
 	enewuser tomcat -1 -1 /dev/null tomcat
 
-	cd ${S}/jakarta-tomcat-5/build
+	cd ${S}/build/build
 
 	# init.d, env.d, conf.d
 	newinitd ${FILESDIR}/${PV}/tomcat.init ${TOMCAT_NAME}
@@ -168,9 +169,9 @@ src_install() {
 
 	# copy the manager and admin context's to the right position
 	mkdir -p conf/Catalina/localhost
-	cp ${S}/jakarta-tomcat-catalina/webapps/admin/admin.xml \
+	cp ${S}/container/webapps/admin/admin.xml \
 		conf/Catalina/localhost
-	cp ${S}/jakarta-tomcat-catalina/webapps/manager/manager.xml \
+	cp ${S}/container/webapps/manager/manager.xml \
 		conf/Catalina/localhost
 
 	# make the jars available via java-config -p and jar-from, etc
@@ -228,7 +229,7 @@ src_install() {
 #	cp ${FILESDIR}/${PV}/log4j.properties ${D}/etc/${TOMCAT_NAME}/
 #	chown tomcat:tomcat ${D}/etc/${TOMCAT_NAME}/log4j.properties
 
-	dodoc  ${S}/jakarta-tomcat-5/{RELEASE-NOTES,RUNNING.txt}
+	dodoc  ${S}/build/{RELEASE-NOTES,RUNNING.txt}
 	fperms 640 /etc/${TOMCAT_NAME}/default/tomcat-users.xml
 }
 
