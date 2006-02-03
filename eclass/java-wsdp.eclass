@@ -44,33 +44,40 @@ java-wsdp_pkg_nofetch() {
 
 java-wsdp_pkg_setup() {
 
+	# JWSDP version is a version for *whole* pack! Each component has it's own
+	# version, so we have to know also the JWSDP version:
 	[[ -z "${JWSDP_VERSION}" ]] && die "No JWSDP version given."
 
 }
 
+# The file downloaded from Sun is self-extracting archive, it uses obsolete
+# `tail +<number>` syntax, and... breaks, so:
 java-wsdp_src_unpack() {
 
 	einfo "Extracting zip file..."
 	mkdir "${T}/unpacked" || die "mkdir failed"
 
-	# This tries to figure out right offset:
+	# This tries to figure out right offset from `tail +<number>`:
 	offset="`grep -a '^tail +' ${DISTDIR}/${A} | sed -e 's/.*+\([0-9]\+\).*/\1/'`"
 
+	# Get the archive from .sh file:
 	tail -n +${offset} "${DISTDIR}/${A}" > "${T}/unpacked/packed.zip" || \
 		die	"tail failed"
 
+	# And finally unpack it:
 	cd "${T}/unpacked/"
 	unzip "packed.zip" &> /dev/null || die "unzip failed"
 
+	# Now the Sun's installer is run to get the files:
 	einfo "Installing using Sun's installer, please wait..."
 	cd "${T}/unpacked/"
 	java JWSDP -silent -P installLocation="${WORKDIR}/base" || die "java failed"
 
+	# A little cleanup (remove unneeded files like uninstaller, images for it,
+	# bundled ant:
 	einfo "Removing useless files..."
 	cd "${WORKDIR}/base"
-	rm -fr _uninst uninstall.sh images
-	# Bundled ant? Why?
-	rm -fr apache-ant
+	rm -fr _uninst uninstall.sh images apache-ant
 
 }
 
@@ -79,7 +86,9 @@ java-wsdp_src_install() {
 	einfo "Installing ${JWSDP_PKG}..."
 	cd "${WORKDIR}/base/${JWSDP_PKG}"
 
-	# Remove existing compiled jars:
+	# Remove existing compiled jars that belong to other packages (ebuild has to
+	# define REMOVE_JARS="jar 1 jar2" without ".jar" extension. All jars in
+	# lib/endorsed/ are ignored:
 	for i in ${REMOVE_JARS}; do
 		rm -f lib/${i}.jar
 	done
