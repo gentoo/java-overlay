@@ -54,7 +54,7 @@ java-wsdp_pkg_setup() {
 # `tail +<number>` syntax, and... breaks, so:
 java-wsdp_src_unpack() {
 
-	einfo "Extracting zip file..."
+	ebegin "Extracting zip file"
 	mkdir "${T}/unpacked" || die "mkdir failed"
 
 	# This tries to figure out right offset from `tail +<number>`:
@@ -67,15 +67,16 @@ java-wsdp_src_unpack() {
 	# And finally unpack it:
 	cd "${T}/unpacked/"
 	unzip -qq "packed.zip" || die "unzip failed"
+	eend 0
 
 	# Now the Sun's installer is run to get the files:
-	einfo "Installing using Sun's installer, please wait..."
+	ebegin "Installing using Sun's installer, please wait"
 	cd "${T}/unpacked/"
 	java JWSDP -silent -P installLocation="${WORKDIR}/base" || die "java failed"
+	eend 0
 
 	# A little cleanup (remove unneeded files like uninstaller, images for it,
 	# bundled ant:
-	einfo "Removing useless files..."
 	cd "${WORKDIR}/base"
 	rm -fr _uninst uninstall.sh images apache-ant
 
@@ -83,7 +84,6 @@ java-wsdp_src_unpack() {
 
 java-wsdp_src_install() {
 
-	einfo "Installing ${JWSDP_PKG}..."
 	cd "${WORKDIR}/base/${JWSDP_PKG}"
 
 	# Remove existing compiled jars that belong to other packages (ebuild has to
@@ -96,12 +96,7 @@ java-wsdp_src_install() {
 	java-pkg_dojar lib/*.jar
 
 	if use doc; then
-		if [[ -d docs ]]; then
-			einfo "Installing documentation..."
-			java-pkg_dohtml -r docs/*
-		else
-			einfo "No docs directory"
-		fi
+		[[ -d docs ]] && java-pkg_dohtml -r docs/*
 	fi
 
 }
