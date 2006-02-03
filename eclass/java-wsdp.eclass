@@ -66,7 +66,7 @@ java-wsdp_src_unpack() {
 
 	# And finally unpack it:
 	cd "${T}/unpacked/"
-	unzip "packed.zip" &> /dev/null || die "unzip failed"
+	unzip -qq "packed.zip" || die "unzip failed"
 
 	# Now the Sun's installer is run to get the files:
 	einfo "Installing using Sun's installer, please wait..."
