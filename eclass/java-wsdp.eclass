@@ -12,9 +12,8 @@ inherit java-pkg
 ECLASS="java-wsdp"
 INHERITED="$INHERITED $ECLASS"
 
-EXPORT_FUNCTIONS src_unpack src_install pkg_nofetch
+EXPORT_FUNCTIONS src_unpack src_install pkg_nofetch pkg_setup
 
-[[ -z "${JWSDP_VERSION}" ]] && die "No JWSDP version given."
 JWSDP_VERSION="${JWSDP_VERSION/./_}"
 JWSDP_PKG="${PN/sun-/}"
 JWSDP_PKG="${JWSDP_PKG/-bin/}"
@@ -34,12 +33,18 @@ DEPEND=">=virtual/jdk-1.5
 	dev-java/xalan
 	dev-java/xerces"
 
-pkg_nofetch() {
+java-wsdp_pkg_nofetch() {
 
 	einfo "Please go to following URL:"
 	einfo " ${HOMEPAGE}"
 	einfo "download file named jwsdp-${JWSDP_VERSION}-unix.sh and place it in:"
 	einfo " ${DISTDIR}"
+
+}
+
+java-wsdp_pkg_setup() {
+
+	[[ -z "${JWSDP_VERSION}" ]] && die "No JWSDP version given."
 
 }
 

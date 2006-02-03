@@ -21,10 +21,16 @@ DEPEND="sun-fastinfoset-bin
 	sun-xmldsig-bin
 	sun-xws-security-bin"
 
+src_unpack() {
+
+	use doc && java-wsdp_src_unpack
+
+}
+
 src_install() {
 
-	cd "${WORKDIR}/base"
 	if use doc; then
+		cd "${WORKDIR}/base"
 		einfo "Installing documentation..."
 		java-pkg_dohtml -r docs/*
 	fi
