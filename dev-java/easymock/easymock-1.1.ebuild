@@ -12,7 +12,7 @@ SRC_URI="mirror://sourceforge/${PN}/${MY_P}.zip"
 # TODO figure out license
 LICENSE=""
 SLOT="1"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc jikes"
 
 DEPEND=">=virtual/jdk-1.4
