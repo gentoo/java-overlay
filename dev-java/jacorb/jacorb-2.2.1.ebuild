@@ -13,7 +13,7 @@ SRC_URI="http://www.jacorb.org/releases/${PV}/${MY_P}-full.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="2.2"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 # Some patching will be needed for jikes support
 IUSE="doc"
 

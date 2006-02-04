@@ -10,7 +10,7 @@ SRC_URI="mirror://sourceforge/${PN}/${PN}-src.zip"
 
 LICENSE="Apache-1.1"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc jikes"
 
 DEPEND=">=virtual/jdk-1.4

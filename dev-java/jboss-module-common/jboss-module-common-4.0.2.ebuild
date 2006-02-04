@@ -8,7 +8,7 @@ DESCRIPTION="Common module of JBoss Application Server"
 SRC_URI="${BASE_URL}/${P}-gentoo-r1.tar.bz2 ${ECLASS_URI}"
 MY_A="${MY_A/${P}-gentoo/${P}-gentoo-r1}"
 IUSE="jikes"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 
 COMMON_DEPEND="=dev-java/bsf-2.3*
 	dev-java/xml-commons-resolver

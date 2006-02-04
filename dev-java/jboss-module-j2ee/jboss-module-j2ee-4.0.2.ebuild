@@ -10,7 +10,7 @@ HOMEPAGE="http://www.jboss.org"
 LICENSE="LGPL-2"
 IUSE="jikes"
 SLOT="4"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 
 COMMON_DEPEND="=dev-java/gnu-jaf-1*
 	~dev-java/servletapi-2.4

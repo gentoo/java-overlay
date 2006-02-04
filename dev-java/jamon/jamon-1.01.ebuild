@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg
+inherit java-pkg eutils
 MY_PN="JAMon"
 MY_PV="103005"
 DESCRIPTION="Java Application Monitor (JAMon) is a free, simple, high performance, thread safe, Java API that allows developers to easily monitor production applications. JAMon can be used to determine application performance bottlenecks, user/application interactions, and application scalability"

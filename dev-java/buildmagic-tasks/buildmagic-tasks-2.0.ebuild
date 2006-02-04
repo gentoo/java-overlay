@@ -14,7 +14,7 @@ SRC_URI="${BASE_URL}/jboss-buildmagic-${PV}.tar.gz ${BASE_URL}/jboss-common-4.0.
 
 LICENSE="LGPL-2"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="jikes"
 
 DEPEND=">=virtual/jdk-1.4

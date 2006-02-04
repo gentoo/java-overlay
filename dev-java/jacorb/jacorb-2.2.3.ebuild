@@ -14,7 +14,7 @@ SRC_URI="http://www.jacorb.org/releases/${PV}/${MY_P}-source.tar.gz"
 LICENSE="GPL-2"
 SLOT="2.2"
 #KEYWORDS="-*"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 # Some patching will be needed for jikes support
 IUSE="doc"
 
@@ -29,6 +29,7 @@ RDEPEND=">=virtual/jre-1.4
 	dev-java/concurrent-util
 	=dev-java/avalon-logkit-2.0*
 	=dev-java/java-service-wrapper-3.1*
+	=dev-java/picocontainer-1*
 	dev-java/log4j"
 S="${WORKDIR}/${MY_P}"
 

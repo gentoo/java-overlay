@@ -4,18 +4,26 @@
 
 inherit java-pkg
 
+MY_PN="j2me_wireless_toolkit"
+MY_PV="${PV//./_}" # TODO use versionator instead
+MY_P=${MY_PN}-${MY_PV}
+
+A_bin=${MY_P}-linux-i386.bin
+A_patch=${MY_P}-update_1-linux.zip
+
 DESCRIPTION="Java 2 Micro Edition Wireless Toolkit for developing wireless applications"
 HOMEPAGE="http://java.sun.com/products/j2mewtoolkit/"
-SRC_URI="j2me_wireless_toolkit-${PV//./_}-linux-i386.bin"
+SRC_URI="${A_bin} ${A_patch}"
 LICENSE="sun-bcla-j2me"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~x86 -*"
 IUSE="doc examples"
 RESTRICT="fetch"
 # Before going official with this all the jars should be checked for packed stuff
 # I think the lib/jsrXXX.jar probably are at least packed jars
 DEPEND=">=dev-java/sun-jaf-bin-1.0
-		>=sun-javamail-bin-1.3"
+		>=sun-javamail-bin-1.3
+		app-arch/unzip"
 RDEPEND="${DEPEND}
 		>=virtual/jdk-1.4.2
 		virtual/x11"
@@ -28,6 +36,7 @@ pkg_nofetch() {
 	einfo "Please download ${A} from:"
 	einfo "http://java.sun.com/products/sjwtoolkit/download-2_2.html"
 	einfo "and move it to ${DISTDIR}"
+	
 }
 
 src_unpack() {
