@@ -52,12 +52,12 @@ src_install() {
 	java-pkg_newjar ${MY_PN}-${PV}.jar ${PN}.jar
 
 	for jar in full pool test; do
-		java-pkg_newjar ${MY_PN}-${jar}-${PV}.jar ${MY_PN}-${jar}.jar
+		java-pkg_newjar ${MY_PN}-${jar}-${PV}.jar ${MY_PN}-${jar}.jar || die "java-pkg_newjar ${MY_PN}-${jar}.jar failed"
 	done
 
         cd "${S}"/output/native
-        java-pkg_doso libjaybird2.so
-        java-pkg_newso libjaybird2.so
+	sodest="/usr/lib/"
+        java-pkg_doso libjaybird2.so || die "java-pkg_doso ${sodest}libjaybird2.so failed"
 
 	cd "${S}"
 
