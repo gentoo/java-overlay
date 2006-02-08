@@ -1,0 +1,6 @@
+MD5 1b0d34fe7a92fe716d5454f825f49c5b ChangeLog 1339
+MD5 1e8094206c6318f27770a5d0062d59d6 files/88_mod_jk.conf 5392
+MD5 b5bf44f9a4297f181bf8a6e74f9c443a files/digest-mod_jk-1.2.15 88
+MD5 83e37c0f3e893815403a6f9e4efde4f1 files/jk-workers.properties 1034
+MD5 123cf9440c1d4ac78f2caba1624765f9 metadata.xml 158
+MD5 4ca16a883c4b8fdcea85760ed355cf32 mod_jk-1.2.15.ebuild 1790
