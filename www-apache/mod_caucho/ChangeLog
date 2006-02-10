@@ -1,0 +1,9 @@
+# ChangeLog for www-apache/mod_caucho
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  10 Feb 2006; Krzysiek Pawlik <nelchael@gentoo.org> +ChangeLog,
+  +mod_caucho-3.0.17.ebuild, +files/mod_caucho-3.0.17-gentoo.patch,
+  +files/88_mod_caucho.conf, +metadata.xml:
+  Initial version.
+
