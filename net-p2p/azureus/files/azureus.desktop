@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Azureus
+Comment=Azureus BitTorrent Client
+Exec=azureus
+Icon=azureus.png
+Terminal=0
+Categories=Application;Network;
+Type=Application
