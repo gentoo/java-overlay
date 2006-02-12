@@ -18,9 +18,11 @@ SLOT="3"
 LICENSE="CPL-1.0 LGPL-2.1 MPL-1.1"
 KEYWORDS="~amd64 ~ppc ~x86"
 
-IUSE="accessibility cairo firefox gnome mozilla"
+IUSE="cairo firefox gnome mozilla"
 RDEPEND=">=virtual/jre-1.4
 		 >=x11-libs/gtk+-2.6.8
+		 dev-libs/atk
+		 || ( virtual/x11 x11-libs/libXtst )
 		 mozilla? (
 		 			 firefox?	(
 					 				>=www-client/mozilla-firefox-1.0.6
@@ -32,9 +34,9 @@ RDEPEND=">=virtual/jre-1.4
 		 cairo? ( >=x11-libs/cairo-1.0.2 )"
 DEPEND=">=virtual/jdk-1.4
 		${RDEPEND}
-		  dev-util/pkgconfig
-		  dev-java/ant-core
-		  app-arch/unzip"
+		dev-util/pkgconfig
+		dev-java/ant-core
+		app-arch/unzip"
 
 S=${WORKDIR}
 
@@ -73,10 +75,9 @@ src_compile() {
 	einfo "Building SWT library"
 	emake -f make_linux.mak make_swt || die "Failed to build SWT support"
 
-	if use accessibility ; then
-		einfo "Building JAVA-AT-SPI bridge"
-		emake -f make_linux.mak make_atk || die "Failed to build ATK support"
-	fi
+	# Building this always as azureus does not start without this
+	echo "Building JAVA-AT-SPI bridge"
+	emake -f make_linux.mak make_atk || die "Failed to build ATK support"
 
 	if use gnome ; then
 		einfo "Building GNOME VFS support"
