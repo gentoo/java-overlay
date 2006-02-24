@@ -19,10 +19,10 @@ KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 
 # TODO: test if X is needed at runtime
+# TODO: re-add X dep, with modular-X deps
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
-	jikes? (dev-java/jikes)
-	virtual/x11"
+	jikes? (dev-java/jikes)"
 RDEPEND=">=virtual/jre-1.4
 	dev-java/antlr
 	=dev-java/avalon-framework-4.1*
