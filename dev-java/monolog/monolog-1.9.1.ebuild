@@ -32,7 +32,7 @@ src_unpack() {
 
 	cd externals
 	rm *.jar
-	java-pkg_jar-from log4j,p6spy,velocity-1
+	java-pkg_jar-from log4j,p6spy,velocity
 }
 
 src_compile() {
