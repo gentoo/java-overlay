@@ -16,7 +16,7 @@ COMMON_DEPEND="dev-java/commons-codec
 	dev-java/commons-discovery
 	dev-java/commons-fileupload
 	=dev-java/commons-httpclient-2*
-	dev-java/commons-lang
+	=dev-java/commons-lang-2.0*
 	dev-java/commons-logging
 	=dev-java/bsf-2.3*
 	dev-java/log4j

@@ -19,7 +19,7 @@ COMMON_DEPEND="
 	dev-java/commons-discovery
 	dev-java/commons-fileupload
 	dev-java/commons-httpclient
-	dev-java/commons-lang
+	=dev-java/commons-lang-2.0*
 	dev-java/commons-logging
 	dev-java/xml-commons-resolver
 	=dev-java/xerces-2*

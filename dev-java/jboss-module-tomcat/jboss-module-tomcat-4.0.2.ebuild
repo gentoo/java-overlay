@@ -17,7 +17,7 @@ COMMON_DEPEND="=dev-java/commons-beanutils-1.6*
 	dev-java/commons-discovery
 	dev-java/commons-fileupload
 	=dev-java/commons-httpclient-2*
-	dev-java/commons-lang
+	=dev-java/commons-lang-2.0*
 	dev-java/commons-logging
 	=www-servers/tomcat-5.5*
 	=dev-java/dom4j-1*

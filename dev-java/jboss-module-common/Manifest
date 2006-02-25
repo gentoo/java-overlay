@@ -4,6 +4,6 @@ SHA256 b1b2c0e7bf1303b2533510da9b24600e9d7c1eebe7b83ac6054b0a47fc43eabd files/di
 MD5 97197036c0ac1eef441be061cd92a347 files/jboss-module-4.0.2-gentoo.patch 21810
 RMD160 a5768dd95b0f64e8142a6ae48e7b3f45ba1f71f4 files/jboss-module-4.0.2-gentoo.patch 21810
 SHA256 6188e7b6c29b0623d60146ad458f8de0c0d8f031d626c03e98b5aa2684ac449f files/jboss-module-4.0.2-gentoo.patch 21810
-MD5 9eab0820db90cfe531e0222cd0269b88 jboss-module-common-4.0.2.ebuild 1009
-RMD160 1033bc9535748683664efc5668f62b1c6e03a867 jboss-module-common-4.0.2.ebuild 1009
-SHA256 b41a1d4519cbf01d8dfbbbe6b56721afa1cfee6c2a1996e1be0f955f9e331095 jboss-module-common-4.0.2.ebuild 1009
+MD5 5302d0b1888bdf4ae6932bcaeebc39d8 jboss-module-common-4.0.2.ebuild 1015
+RMD160 24d8308fadf9b6b8df2b0c0a105debe4b654548a jboss-module-common-4.0.2.ebuild 1015
+SHA256 69188913d53922d2357b81f2fe5a1813fba1395e9d5e86e64fa2295b1c64a41f jboss-module-common-4.0.2.ebuild 1015

@@ -18,7 +18,7 @@ COMMON_DEPEND="dev-java/log4j
 	dev-java/commons-discovery
 	dev-java/commons-fileupload
 	dev-java/commons-httpclient
-	dev-java/commons-lang
+	=dev-java/commons-lang-2.0*
 	dev-java/commons-logging
 	dev-java/concurrent-util
 	=dev-java/jboss-module-j2ee-${PV}*
