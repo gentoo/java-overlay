@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/app-text/jasperreports/jasperreports-0.6.1-r2.ebuild,v 1.3 2005/01/20 16:02:31 mr_bones_ Exp $
 
-inherit java-pkg
+inherit java-pkg eutils
 
 DESCRIPTION="JasperReports is a powerful report-generating tool that has the ability to deliver rich content onto the screen, to the printer or into PDF, HTML, XLS, CSV and XML files."
 HOMEPAGE="http://jasperreports.sourceforge.net/"
@@ -17,12 +17,13 @@ COMMON_DEPEND="=dev-java/itext-1.3*
 	>=dev-java/commons-collections-3.1
 	>=dev-java/commons-digester-1.5
 	>=dev-java/commons-logging-1.0.4
-	dev-eclipse/eclipse-jdtcore
 	dev-db/hsqldb
 	>=dev-java/poi-2
 	~dev-java/servletapi-2.3
 	>=dev-java/xalan-2.5.2
-	=dev-java/xerces-2*"
+	=dev-java/eclipse-ecj-3.1*
+	=dev-java/xerces-2*
+	=dev-java/xml-commons-external-1.3*"
 DEPEND=">=virtual/jdk-1.4
 	>=app-arch/unzip-5.50
 	>=dev-java/ant-core-1.4
@@ -34,6 +35,7 @@ RDEPEND=">=virtual/jre-1.4
 src_unpack() {
 	unpack ${A}
 	cd ${S}
+	epatch ${FILESDIR}/${P}-eclipse-3.1.patch
 
 	cd ${S}/lib
 	rm -f *.jar
@@ -44,13 +46,13 @@ src_unpack() {
 	java-pkg_jar-from commons-collections
 	java-pkg_jar-from commons-digester
 	java-pkg_jar-from commons-logging
-	java-pkg_jar-from eclipse-jdtcore-3.0 jdtcore.jar
 	java-pkg_jar-from hsqldb hsqldb.jar
 	java-pkg_jar-from poi poi.jar
 	java-pkg_jar-from servletapi-2.3
+	java-pkg_jar-from eclipse-ecj-3.1
 	java-pkg_jar-from xalan
 	java-pkg_jar-from xerces-2 xercesImpl.jar
-	java-pkg_jar-from xerces-2 xmlParserAPIs.jar
+	java-pkg_jar-from xml-commons-external-1.3
 }
 
 src_compile() {
