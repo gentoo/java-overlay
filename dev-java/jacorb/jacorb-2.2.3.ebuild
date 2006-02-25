@@ -30,7 +30,8 @@ RDEPEND=">=virtual/jre-1.4
 	=dev-java/avalon-logkit-2.0*
 	=dev-java/java-service-wrapper-3.1*
 	=dev-java/picocontainer-1*
-	dev-java/log4j"
+	dev-java/log4j
+	dev-java/backport-util-concurrent"
 S="${WORKDIR}/${MY_P}"
 
 ANTLR="antlr antlr.jar antlr-2.7.2.jar"
@@ -56,11 +57,12 @@ src_unpack() {
 	java-pkg_jar-from ${LOGKIT} 
 	java-pkg_jar-from ${WRAPPER}
 	java-pkg_jar-from ${PICOCONTAINER}
+	java-pkg_jar-from backport-util-concurrent
 }
 
 src_compile() {
 	local antflags="realclean all core_jacorb_jar jacorb_services_jar omg_services_jar \
-	http_tunneling_jar security_jar"
+	security_jar"
 	use doc && antflags="${antflags} doc"
 
 	# Need to up maximum memory to avoid OutOfMemoryErrors
