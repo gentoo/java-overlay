@@ -71,11 +71,11 @@ RDEPEND=">=virtual/jre-1.4
 	=dev-java/gnu-javamail-1*
 	=dev-java/mx4j-3.0*
 	=dev-java/jboss-module-j2ee-4.0*
+	dev-java/jdbc2-stdext
 	dev-java/wsdl4j"
 #	dev-java/jmx
 #	dev-java/jta
 #	dev-java/jms
-#	dev-java/jdbc2-stdext
 #	dev-java/sun-qname-bin
 S=${WORKDIR}/${MY_P}
 
@@ -135,7 +135,7 @@ JAKARTA_ORO="jakarta-oro-2.0 jakarta-oro.jar jakarta-oro-2.0.8.jar"
 POI="poi poi.jar poi-2.5.1.jar"
 QUARTZ="quartz quartz.jar"
 STRUTS="struts-1.2 struts.jar"
-VELOCITY="velocity-1 velocity.jar velocity-1.4.jar"
+VELOCITY="velocity velocity.jar velocity-1.4.jar"
 VELOCITY_TOOLS_GENERIC="velocity-tools velocity-tools-generic.jar velocity-tools-generic-1.1.jar"
 VELOCITY_TOOLS_VIEW="velocity-tools velocity-tools-view.jar velocity-tools-view.1.jar"
 XJAVADOC="xjavadoc xjavadoc.jar xjavadoc-1.1.jar"
