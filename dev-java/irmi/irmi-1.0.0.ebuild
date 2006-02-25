@@ -6,7 +6,7 @@ inherit java-pkg
 
 DESCRIPTION="Intercepting RMI implementation for the Java platform"
 HOMEPAGE="http://carol.objectweb.org/"
-SRC_URI="${P}.tar.bz2"
+SRC_URI="http://gentooexperimental.org/distfiles/${P}.tar.bz2"
 # cvs -d:pserver:anonymous@cvs.forge.objectweb.org:/cvsroot/carol login 
 # cvs -z3 -d:pserver:anonymous@cvs.forge.objectweb.org:/cvsroot/carol export -r IRMI_1_0_0 irmi
 # tar jcvf irmi-1.0.0.tar.bz2 irmi/
