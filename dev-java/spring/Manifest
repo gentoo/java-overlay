@@ -10,6 +10,9 @@ SHA256 da4c8ad2fa7a6f267f6260d6750eda2e0d51f7a96f149c6e1c3b20408436027a files/di
 MD5 5906fbdb7ff298b5b8888a55430b1d81 files/digest-spring-1.2.6 265
 RMD160 67d4da13a955cbe3bba930264402f6f38ab76372 files/digest-spring-1.2.6 265
 SHA256 568e7a03b7d8cbb97eb58e38063178850ffba9e641bfd3e54ab680672d51b4d3 files/digest-spring-1.2.6 265
+MD5 4f0bdb526e4270a56ecb7ac1a995b2de files/digest-spring-1.2.7 265
+RMD160 4466b4de9e24d38c129e6f74ddb8d4ec92ae4729 files/digest-spring-1.2.7 265
+SHA256 4bf41e8c5927d1264980478186b078d2925a0c979583a16169a2d68af6bc2dea files/digest-spring-1.2.7 265
 MD5 1e80a4af4773e57420e9b35987b9e868 files/spring-1.2.1-excludes.patch 1027
 RMD160 b41da27d9b5fea422a270098d8b13f7ef45159da files/spring-1.2.1-excludes.patch 1027
 SHA256 7274db6c02f3001194b8a8234c97155bfdaf0ba9ae2dfacf990ede05128f98e2 files/spring-1.2.1-excludes.patch 1027
@@ -28,6 +31,9 @@ SHA256 f4f241c283d3e8e9c94a9ef980f8a9e322d0707c56022fdbe1170b0e315bb025 files/sp
 MD5 f6422fba1563bce73d13a14e4e8bafcd files/spring-1.2.6-excludes.patch 807
 RMD160 1ebbd4ce6f926aece98be5285991f50f6368ddc8 files/spring-1.2.6-excludes.patch 807
 SHA256 eb0de7ee2e11abc95542af787a775c20531617f3cca3e61575154844b9f5bfe0 files/spring-1.2.6-excludes.patch 807
+MD5 842b2932cceafa8a9c3e2711a70eb51b files/spring-1.2.7-excludes.patch 807
+RMD160 fddc263bd8f80ec6c00c74d2b1933a083db59ac5 files/spring-1.2.7-excludes.patch 807
+SHA256 461b5a7be742e2d769e5f6d5e71069d6d7c813ec6e9c0e1a655fd693f6ae2736 files/spring-1.2.7-excludes.patch 807
 MD5 daa2a5b0055c72312b445a087ddc4b78 files/spring-framework-1.2.5-excludes.patch 735
 RMD160 23a0ac9fdc8f73e8924678479de23a3b620f10c9 files/spring-framework-1.2.5-excludes.patch 735
 SHA256 15a09033c2699b8c6264fb2a7ac0c23284a75bb585368b966b80766f36fede9a files/spring-framework-1.2.5-excludes.patch 735
@@ -43,3 +49,6 @@ SHA256 d9d2a2f18ead10f357dd4eb8ccbe66f51fa6f75bcc0b822f8d841f3153b69fe9 spring-1
 MD5 7a47117731ec940e19db5a2128f78586 spring-1.2.6.ebuild 8219
 RMD160 f3a9c9f10b90f5a795e96e650dfef9e5ca1c65cb spring-1.2.6.ebuild 8219
 SHA256 21f53026524e7920409e3b7a74c788897d80bc4454709db57814d687fe4fa661 spring-1.2.6.ebuild 8219
+MD5 1d47a23475af2ba883832cf8256d62cd spring-1.2.7.ebuild 8254
+RMD160 4928efced18c2b9153ae65a7cfbfd2bb8e54fde4 spring-1.2.7.ebuild 8254
+SHA256 73dccade85179cc10d42c1cbdeadefa68a94c84051ad8e035151e7cf5f16bd25 spring-1.2.7.ebuild 8254

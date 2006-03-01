@@ -1,0 +1,22 @@
+diff -ru spring-framework-1.2.7/build.xml spring-framework-1.2.7-patched/build.xml
+--- spring-framework-1.2.7/build.xml	2006-02-27 21:30:38.000000000 -0500
++++ spring-framework-1.2.7-patched/build.xml	2006-02-28 21:59:44.000000000 -0500
+@@ -140,6 +140,11 @@
+ 			<!-- Include Commons Attributes generated Java sources -->
+ 			<src path="${commons.attributes.tempdir.src}"/>
+ 			<classpath refid="all-libs"/>
++			<exclude name="**/toplink/**"/>
++			<exclude name="**/ojb/**"/>
++			<exclude name="**/jsf/**"/>
++			<exclude name="**/jdo/**"/>
++			<exclude name="**/ibatis/**"/>
+ 		</javac>
+ 
+ 		<rmic base="${target.classes.dir}" classname="org.springframework.remoting.rmi.RmiInvocationWrapper"/>
+@@ -1463,4 +1468,4 @@
+ 		</jrc>
+ 	</target>
+ 
+-</project>
+\ No newline at end of file
++</project>
