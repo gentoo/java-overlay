@@ -9,7 +9,7 @@ DESCRIPTION="Hibernate is a powerful, ultra-high performance object / relational
 SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 HOMEPAGE="http://www.hibernate.org"
 LICENSE="LGPL-2"
-IUSE="doc"
+IUSE="doc source"
 SLOT="3.1"
 KEYWORDS="~x86 ~amd64"
 
@@ -75,4 +75,5 @@ src_install() {
 	java-pkg_dojar dist/hibernate3.jar
 	dodoc changelog.txt readme.txt
 	use doc && java-pkg_dohtml -r dist/doc/api doc/other doc/reference
+	use source && java-pkg_dosrc src/*
 }
