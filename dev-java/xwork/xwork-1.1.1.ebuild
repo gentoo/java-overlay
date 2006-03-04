@@ -17,7 +17,14 @@ DEPEND="java5? ( >=virtual/jdk-1.5 )
 	!java5? ( >=virtual/jdk-1.4 )
 	app-arch/unzip"
 RDEPEND="java5? ( >=virtual/jre-1.5 )
-	!java5? ( >=virtual/jre-1.4 )"
+	!java5? ( >=virtual/jre-1.4 )
+	=dev-java/ognl-2.6*
+	=dev-java/oscore-2.2*
+	dev-java/rife-continuations
+	dev-java/commons-logging
+	=dev-java/commons-attributes-2*
+	=dev-java/cglib-2.0*
+	=dev-java/spring-1.2*"
 
 S="${WORKDIR}"
 
@@ -28,7 +35,17 @@ ant_src_unpack() {
 
 	rm *.jar
 	cd lib
-	einfo "QA Notice: Using bundled jars!"
+	rm -r *
+	java-pkg_jar-from ognl-2.6
+	java-pkg_jar-from oscore-2.2
+	java-pkg_jar-from rife-continuations
+	java-pkg_jar-from commons-logging
+	java-pkg_jar-from commons-attributes-2
+	java-pkg_jar-from dom4j-1
+	java-pkg_jar-from cglib-2 cglib.jar
+	for jar in core aop web beans context; do
+		java-pkg_jar-from spring-1.2 spring-${jar}.jar
+	done
 }
 
 src_compile() {
