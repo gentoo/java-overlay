@@ -64,9 +64,9 @@ SHA256 c469234adb744d1d405840d09fd1ea2268bcd56032d47c5c116e70a957ab29c9 files/5.
 MD5 f41b77c0652379c5cfbe0f04bf99b4c2 files/5.5.15/tomcat.env 36
 RMD160 2d6488d26696ec0624b7774d3a31cb02afeaeea0 files/5.5.15/tomcat.env 36
 SHA256 c2aa217a92fb637fb81a77c98cd769932923bbe65e72c25295993f7cf4982fef files/5.5.15/tomcat.env 36
-MD5 bbdc8d64ea6aa8a65611b0c3d5a4c8c4 files/5.5.15/tomcat.init 3063
-RMD160 f0588a47de533f0a2d1ab6706756eb0c60d4cd65 files/5.5.15/tomcat.init 3063
-SHA256 fa13def32a3e9f4efc59b9224c621f62705aa153a48cfd285ba43bc0bc42f75d files/5.5.15/tomcat.init 3063
+MD5 a8e72043eb3aeca45bfadf62a8485a19 files/5.5.15/tomcat.init 3034
+RMD160 4fca1d45ddbe0331e71020c3f32b001b02f1ce19 files/5.5.15/tomcat.init 3034
+SHA256 1eab4e209a767cf09976b2d712b7958becd83c35275e71bb9f2b079acce15f04 files/5.5.15/tomcat.init 3034
 MD5 276495751102b4c1e19aa944043055e6 files/5.5.15/tomcatbuild-xml.patch 5235
 RMD160 b82aae53ac882e5914aea8dfc8f80283bee7f9b1 files/5.5.15/tomcatbuild-xml.patch 5235
 SHA256 d5f621c8d3972a88a057db3c028baedf4affab4333c3f1c6117461d3dd0b6cec files/5.5.15/tomcatbuild-xml.patch 5235
