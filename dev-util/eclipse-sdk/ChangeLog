@@ -1,0 +1,7 @@
+# ChangeLog for dev-util/eclipse-sdk
+# Copyright 2003-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-util/eclipse-sdk/ChangeLog,v 1.101 2005/11/12 00:29:48 axxo Exp $
+
+  10 Mar 2006; Joshua Nichols <nichoj@gentoo.org> ChangeLog:
+  Adding eclipse-sdk-3.1.2 to java-experimental. Had to disable firefox 
+  support, because it seems that firefox-1.5 has some issues with eclipse.
