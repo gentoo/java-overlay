@@ -10,7 +10,7 @@ SRC_URI="https://webwork.dev.java.net/files/documents/693/28623/webwork-2.2.1.zi
 
 LICENSE=""
 SLOT="2.2"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="

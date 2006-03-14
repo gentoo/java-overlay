@@ -8,7 +8,7 @@ DESCRIPTION="Server module for JBoss Application Server"
 SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${ECLASS_URI}"
 IUSE="jikes"
 SLOT="4"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 
 COMMON_DEPEND="dev-java/bcel
 	=dev-java/commons-beanutils-1.6*
@@ -38,3 +38,5 @@ DEPEND=">=virtual/jdk-1.3 ${COMMON_DEPEND}"
 RDEPEND=">=virtual/jre-1.3 ${COMMON_DEPEND}"
 
 # TODO remove enums
+# TODO need to increase maximum stack size on amd64 w/ blackdown, ie
+# ANT_OPTS=-Xmx640m

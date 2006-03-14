@@ -11,14 +11,14 @@ SRC_URI="http://download.forge.objectweb.org/${PN}/${MY_PN}_${PV//./_}-src.tar.g
 
 LICENSE="LGPL-2.1"
 SLOT="1"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc jikes"
 
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	jikes? (dev-java/jikes)"
 RDEPEND=">=virtual/jre-1.4
-	=dev-java/nanoxml-2.2*"
+	dev-java/nanoxml"
 S=${WORKDIR}/${PN}
 
 src_unpack() {
@@ -27,7 +27,7 @@ src_unpack() {
 	
 	cd externals
 	rm *.jar
-	java-pkg_jar-from nanoxml-2.2 nanoxml-lite.jar
+	java-pkg_jar-from nanoxml nanoxml-lite.jar
 }
 
 src_compile() {

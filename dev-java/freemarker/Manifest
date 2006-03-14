@@ -1,2 +1,6 @@
 MD5 44579f091d8c56304639000ecae66de2 files/digest-freemarker-2.3.2 69
-MD5 ca0ac7e32937f0c33278b4e045d09295 freemarker-2.3.2.ebuild 1318
+RMD160 ac19ad6d4957eadec22ef88a26c022dee4cf27fd files/digest-freemarker-2.3.2 69
+SHA256 46184e11e5ba1775db9595c96c9356f5cc763d9df73a082e56b49c901b41bb97 files/digest-freemarker-2.3.2 69
+MD5 a8c517eb00f3a2df4a3138b1619061ca freemarker-2.3.2.ebuild 1325
+RMD160 f34ea0098556d539196f94f579ec112099cbebf9 freemarker-2.3.2.ebuild 1325
+SHA256 f8f8a9bf644fa0e639950876d39a65a4c84ddabbdcfdc175c36cf4cc710408a2 freemarker-2.3.2.ebuild 1325

@@ -12,7 +12,7 @@ SRC_URI="mirror://sourceforge/jboss/${MY_P}.zip"
 # TODO: verify that LICENSE is right
 LICENSE="LGPL-2"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="virtual/jdk

@@ -12,7 +12,7 @@ SRC_URI="mirror://sourceforge/${MY_PN}/${MY_A}.tar.gz"
 
 LICENSE=""
 SLOT="1.1"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc jikes"
 
 COMMON_DEPEND="=dev-java/struts-1.1*

@@ -8,7 +8,7 @@ DESCRIPTION="Transaction module for JBoss Application Server"
 SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${ECLASS_URI}"
 IUSE="jikes"
 SLOT="4"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 
 COMMON_DEPEND="dev-java/log4j
 	=dev-java/commons-beanutils-1.6*

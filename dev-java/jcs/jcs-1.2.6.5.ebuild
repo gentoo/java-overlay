@@ -14,7 +14,7 @@ SRC_URI="http://gentooexperimental.org/distfiles/${P}.tar.bz2"
 
 LICENSE="Apache-2.0"
 SLOT="1.2"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 
 COMMON_DEPEND="dev-java/jgroups

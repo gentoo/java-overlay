@@ -14,14 +14,14 @@ SRC_URI="http://gentooexperimental.org/distfiles/${P}.tar.bz2"
 
 LICENSE="LGPL-2.1"
 SLOT="4"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc jikes"
 
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	jikes? (dev-java/jikes)"
 RDEPEND=">=virtual/jre-1.4
-	=dev-java/nanoxml-2.2*
+	dev-java/nanoxml
 	=dev-java/kilim-1*
 	dev-java/monolog"
 S=${WORKDIR}/${MY_PN}
@@ -33,7 +33,7 @@ src_unpack() {
 	cd config
 	#rm *.jar
 	java-pkg_jar-from kilim-1 kilim-tools.jar
-	java-pkg_jar-from nanoxml-2.2 nanoxml-lite.jar nanoxml-lite-2.2.1.jar
+	java-pkg_jar-from nanoxml nanoxml-lite.jar nanoxml-lite-2.2.1.jar
 	# when we use the jar from this package, jar and jdoc targets break...
 	#java-pkg_jar-from ow-util-ant-tasks
 

@@ -12,7 +12,7 @@ SRC_URI="http://downloads.sleepycat.com/${MY_P}.tar.gz"
 
 LICENSE="Sleepycat"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="jikes doc"
 
 DEPEND="=virtual/jdk-1.4*

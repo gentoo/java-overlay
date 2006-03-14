@@ -12,7 +12,7 @@ SRC_URI="http://download.forge.objectweb.org/${PN}/${MY_P}.zip"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="jikes"
 
 DEPEND=">=virtual/jdk-1.4

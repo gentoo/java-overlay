@@ -13,18 +13,19 @@ SRC_URI="mirror://sourceforge/jboss/${MY_P}.zip"
 # http://prdownloads.sourceforge.net/jboss/HibernateTools-3.1.0.beta4.zip?download
 LICENSE=""
 SLOT="3.1"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="eclipse"
 
 S="${WORKDIR}"
 
 DEPEND="virtual/jdk"
 RDEPEND="virtual/jre
-	dev-eclipse/eclipse-wst
-	dev-eclipse/eclipse-emf
-	dev-eclipse/eclipse-gef
-	dev-eclipse/eclipse-jem
-	"
+	eclipse? (
+		dev-eclipse/eclipse-wst
+		dev-eclipse/eclipse-emf
+		dev-eclipse/eclipse-gef
+		dev-eclipse/eclipse-jem
+	)"
 
 
 PLUGIN_DIR="plugins/org.hibernate.eclipse_3.1.0.beta4"

@@ -14,7 +14,7 @@ SRC_URI="mirror://sourceforge/hibernate/${MY_P}.tar.gz mirror://sourceforge/hibe
 # http://prdownloads.sourceforge.net/hibernate/hibernate-annotations-3.1beta8.tar.gz?download
 LICENSE=""
 SLOT="3.0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 
 DEPEND=">=virtual/jdk-1.5"

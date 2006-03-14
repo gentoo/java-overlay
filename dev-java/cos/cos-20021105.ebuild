@@ -12,7 +12,7 @@ SRC_URI="http://servlets.com/${PN}/${MY_P}.zip"
 
 LICENSE="cos"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="jikes doc"
 
 # TODO determine vm version requirements

@@ -15,7 +15,7 @@ SRC_URI="http://gentooexperimental.org/distfiles/${P}.tar.bz2"
 # I'm guessing some sort of apache-ness
 LICENSE=""
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc jikes"
 
 COMMON_DEPEND="=dev-java/crimson-1*

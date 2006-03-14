@@ -13,7 +13,7 @@ SRC_URI="http://gentooexperimental.org/distfiles/${P}.tar.bz2"
 
 LICENSE="LGPL-2.1"
 SLOT="1.0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc jikes"
 
 DEPEND=">=virtual/jdk-1.4

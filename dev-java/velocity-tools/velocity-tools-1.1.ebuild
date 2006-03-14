@@ -6,11 +6,11 @@ inherit java-pkg eutils
 
 DESCRIPTION="A collection of Velocity subprojects with a common goal of creating tools and infrastructure for building both web and non-web applications using the Velocity template engine."
 HOMEPAGE="http://jakarta.apache.org/velocity/tools/"
-SRC_URI="mirror://apache/jakarta/velocity-tools/source/${P}-src.tar.gz"
+SRC_URI="http://archive.apache.org/dist/jakarta/${PN}/source/${P}-src.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc jikes"
 COMMON_DEPEND="
 	=dev-java/commons-beanutils-1.6*
