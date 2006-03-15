@@ -2,6 +2,9 @@
 # Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/swt/ChangeLog,v 1.33 2006/02/04 06:06:05 compnerd Exp $
 
+  15 Mar 2006; Hanno Meyer-Thurow <h.mth@web.de> swt-3.2_pre4.ebuild:
+  Add check for gcj jdk
+
   04 Feb 2006; Saleem Abdulrasool <compnerd@gentoo.org> swt-3.1-r1.ebuild,
   swt-3.2_pre1.ebuild:
   Dropping Firefox 1.5 support as it is known to be broken

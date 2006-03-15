@@ -53,6 +53,8 @@ src_compile() {
 	# Identify the AWT path
 	if [[ ! -z "$(java-config --java-version | grep 'IBM')" ]] ; then
 		export AWT_LIB_PATH=$JAVA_HOME/jre/bin
+	elif [[ ! -z "$(java-config --java-version | grep 'GNU libgcj')" ]] ; then
+		export AWT_LIB_PATH=$JAVA_HOME/lib
 	else
 		if [[ ${ARCH} == 'x86' ]] ; then
 			export AWT_LIB_PATH=$JAVA_HOME/jre/lib/i386

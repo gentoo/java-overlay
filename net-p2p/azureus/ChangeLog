@@ -2,6 +2,17 @@
 # Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/net-p2p/azureus/ChangeLog,v 1.15 2006/01/02 22:12:19 betelgeuse Exp $
 
+  15 Mar 2006; Hanno Meyer-Thurow <h.mth@web.de>
+  +net-p2p/azureus/azureus-2.4.0.0-r1.ebuild,
+  +net-p2p/azureus/files/azureus-gentoo-2.4.0.0-r1.sh,
+  +net-p2p/azureus/files/fedora/azureus-cache-size.patch,
+  +net-p2p/azureus/files/fedora/azureus-no-restart.patch,
+  +net-p2p/azureus/files/fedora/azureus-remove-manifest-classpath.patch,
+  +net-p2p/azureus/files/fedora/azureus-remove-win32-osx-platforms.patch,
+  +net-p2p/azureus/files/fedora/azureus-remove-win32-PlatformManagerUpdateChecker.patch:
+  Revbump: Drop junit, add bouncycastle and jessie depends. Add fedora patches.
+  Remove shipped copy of bouncycastle.
+
   02 Jan 2006; Petteri Räty <betelgeuse@gentoo.org>
   -files/azureus-gentoo-2.3.0.4.sh, -files/azureus-gentoo.sh,
   -azureus-2.2.0.0-r1.ebuild, -azureus-2.3.0.4.ebuild:
