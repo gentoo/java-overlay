@@ -7,9 +7,9 @@ SHA256 33a3ca048da1c6563f10a60212e881227bb47e11a29a4cc7c6ce67ebaf20fb7b files/SW
 MD5 c964f0ff0b83afdfd76d872821540574 files/build.xml 476
 RMD160 c2cd2ce905d85c464f03cd71478cde8d84344aa1 files/build.xml 476
 SHA256 9a329f77f4df1a7cd6c185a9e37836edfcffd47c2837cda22d1888dee3d356e3 files/build.xml 476
-MD5 cde8d7cd7c1ae4d6e49e5e091f950947 files/digest-swt-3.2_pre4 265
-RMD160 2fd9c488ba7ea74b7125adad2ab12ab62367fa0a files/digest-swt-3.2_pre4 265
-SHA256 5b92258609e71fb1373451dac52ecddabde85e828601ac56f427b473d9b43d10 files/digest-swt-3.2_pre4 265
+MD5 9590eaeeb8729d13b3492d5aa39e69d5 files/digest-swt-3.2_pre4 274
+RMD160 38047362f5b8c693fd174dbeac1c0eefab2045e3 files/digest-swt-3.2_pre4 274
+SHA256 85c09e8acb200b196cce96a720a1ce47ff4aa4e5a6f05e11577e1268c4580b4d files/digest-swt-3.2_pre4 274
 MD5 b246c6ca2f33a241ab92d5a8c74da665 files/swt-cairo-0.9.2-amd64.patch 8325
 RMD160 658b6b620cbf202afd438f3d5d7f834444df2c67 files/swt-cairo-0.9.2-amd64.patch 8325
 SHA256 1e21b11b59618036099619fac480d3ed657f0b27fa4cac59230b4866241d641b files/swt-cairo-0.9.2-amd64.patch 8325
