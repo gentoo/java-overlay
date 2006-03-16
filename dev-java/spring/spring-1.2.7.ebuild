@@ -19,9 +19,10 @@ KEYWORDS="~amd64 ~x86"
 #IUSE="doc jikes"
 IUSE="doc source java5"
 
+# ARGH! 1.6 breaks it already!
 DEPEND="
-	java5? ( >=virtual/jdk-1.5 )
-	!java5? ( >=virtual/jdk-1.4 )
+	java5? ( =virtual/jdk-1.5* )
+	!java5? ( || ( =virtual/jdk-1.4* =virtual/jdk-1.5* ) )
 	dev-java/ant-core
 	dev-java/antlr
 	app-arch/zip"
@@ -29,10 +30,10 @@ DEPEND="
 # TODO replace sun-jdbc-rowset-bin with free implementation?
 RDEPEND="
 	java5? ( 
-		>=virtual/jre-1.5
+		=virtual/jre-1.5*
 		=dev-java/hibernate-annotations-3.0*
 	)
-	!java5? ( >=virtual/jre-1.4 )
+	!java5? ( || ( =virtual/jre-1.4* =virtual/jre-1.5* ) )
 	=www-servers/axis-1*
 	=dev-java/aopalliance-1*
 	dev-java/wsdl4j
