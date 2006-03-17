@@ -16,10 +16,11 @@ IUSE="doc"
 #  - iso-relax has (amd64, ppc, x86)
 KEYWORDS="~amd64 ~x86"
 
-DEPEND=">=virtual/jdk-1.5
-	dev-java/ant-core
-	>=dev-java/iso-relax-20050331
+RDEPEND=">=virtual/jdk-1.5
+	>=dev-java/iso-relax-20050331"
+DEPEND="${RDEPEND}
 	dev-java/aopalliance
+	dev-java/ant-core
 	dev-libs/openssl"
 
 RESIN_HOME="/opt/resin"
@@ -27,13 +28,7 @@ RESIN_HOME="/opt/resin"
 src_unpack() {
 
 	unpack "${A}"
-
-	epatch "${FILESDIR}/${PV}/01-Makefile.in.patch"
-	# Not needed anymore
-	#epatch "${FILESDIR}/${PV}/02-config.c.patch"
-	epatch "${FILESDIR}/${PV}/03-build.xml.patch"
-	epatch "${FILESDIR}/${PV}/04-wrapper.pl.patch"
-	epatch "${FILESDIR}/${PV}/05-Resin.java.patch"
+	epatch "${FILESDIR}/${PV}/${P}-gentoo.patch"
 
 }
 
@@ -45,6 +40,9 @@ pkg_preinst() {
 	einfo "Fixing ownership..."
 	chown -R resin:resin ${D}${RESIN_HOME}
 	chown -R resin:resin ${D}/var/log/resin
+
+	einfo "Removing *.in files..."
+	rm -f ${D}/${RESIN_HOME}/bin/*.in
 
 	einfo "Fixing permissions..."
 	chmod 755 ${D}${RESIN_HOME}/bin/*

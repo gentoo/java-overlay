@@ -11,13 +11,13 @@ depend() {
 start()	{
 	ebegin "Starting Resin"
 	cd ${RESIN_HOME}
-	su - ${RESIN_USER} -c "/opt/resin/bin/httpd.sh ${RESIN_START}" 
+	su - ${RESIN_USER} -c "/opt/resin/bin/httpd.sh ${JAVA_OPTS} ${RESIN_START}"
 	eend $?
 }
 
 stop()	{
 	ebegin "Stopping Resin"
-	su - ${RESIN_USER} -c "/opt/resin/bin/httpd.sh ${RESIN_STOP}"
+	su - ${RESIN_USER} -c "/opt/resin/bin/httpd.sh ${JAVA_OPTS} ${RESIN_STOP}"
 	sleep 2
 	eend $?
 }
