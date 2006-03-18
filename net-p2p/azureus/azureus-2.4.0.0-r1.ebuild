@@ -17,7 +17,6 @@ RDEPEND=">=virtual/jre-1.4
 	>dev-java/swt-3.2_pre1
 	>=dev-java/log4j-1.2.8
 	>=dev-java/commons-cli-1.0
-	>=dev-java/jessie-1.0.1
 	>=dev-java/bcprov-1.31
 	!net-p2p/azureus-bin"
 DEPEND=">=virtual/jdk-1.4

@@ -17,10 +17,10 @@ SLOT="0"
 KEYWORDS="~x86"
 IUSE="jikes doc"
 
-DEPEND="=virtual/jdk-1.4*
+DEPEND=">=virtual/jdk-1.4*
 	dev-java/ant-core
 	jikes? (dev-java/jikes)"
-RDEPEND="=virtual/jre-1.4*"
+RDEPEND=">=virtual/jre-1.4*"
 
 S=${WORKDIR}/${MY_P}
 

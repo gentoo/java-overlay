@@ -58,7 +58,7 @@ fi
 
 #cd "${dotazudir}"
 
-CLASSPATH="$(java-config -p bcprov,jessie,log4j,commons-cli-1,swt-3,azureus)"
+CLASSPATH="$(java-config -p bcprov,log4j,commons-cli-1,swt-3,azureus)"
 exec $(java-config --java)  -cp "${CLASSPATH}" \
 	-Djava.library.path=$(java-config -i swt-3) \
 	-Dazureus.install.path="${dotazudir}" \
