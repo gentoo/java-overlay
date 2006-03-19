@@ -19,6 +19,7 @@ IUSE="jikes doc"
 
 DEPEND="=virtual/jdk-1.4*
 	dev-java/ant-core
+	dev-java/junit
 	jikes? ( dev-java/jikes )"
 RDEPEND="=virtual/jre-1.4*"
 
@@ -30,8 +31,8 @@ src_unpack() {
 }
 
 src_compile() {
-	local antflags="-Dproject.name=${PN} jar"
-
+	local junit="$(java-pkg_getjars junit)"
+	local antflags="-Dproject.name=${PN} jar -Dclasspath=${junit}"
 	use jikes && antflags="-Dbuild.compiler=jikes ${antflags}"
 
 	ant ${antflags} || die "Compile failed"
