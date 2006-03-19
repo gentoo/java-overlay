@@ -50,7 +50,13 @@ src_compile() {
 	fi
 
 	# Fails to build on amd64 without this
-	ANT_OPTS="${ANT_OPTS} -Xmx1g" \
+	# Globally enabling this makes x86 machines with
+	# little memory fail...
+	if use amd64; then
+		ANT_OPTS="${ANT_OPTS} -Xmx248m"
+	fi
+
+	ANT_OPTS="${ANT_OPTS}" \
 		ant -q -q ${ant_extra_opts} jar \
 		|| die "ant build failed"
 }
