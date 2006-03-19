@@ -1,2 +1,6 @@
-MD5 7388bc521924e1d3400f77be67e4abb5 aopalliance-1.0.ebuild 1156
+MD5 cdcc01312019e17c22b4ba64f0dec3a7 aopalliance-1.0.ebuild 1158
+RMD160 02174d3f2e157e5054ad989c66289c1e20c4e2fd aopalliance-1.0.ebuild 1158
+SHA256 26f9f178a4483cf4f460892ddfa3231464ae12619c514990efe5bad54d0a15ec aopalliance-1.0.ebuild 1158
 MD5 fd354756e670948cd99f495f781a77ba files/digest-aopalliance-1.0 66
+RMD160 b71e8c3fd517d280a3ab1c5f4da794250ca02008 files/digest-aopalliance-1.0 66
+SHA256 1f8946edc6d945e9908cf9aec3082d5d3c8f10b4678a6c791e6c78f1c641d143 files/digest-aopalliance-1.0 66

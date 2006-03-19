@@ -15,7 +15,7 @@ IUSE="doc jikes"
 
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
-	jikes? (dev-java/jikes)"
+	jikes? ( dev-java/jikes )"
 # TODO: verify that jacorb actually provides JTS classes
 # ( org.omg.CosTransactions.PropagationContextHelper )
 RDEPEND=">=virtual/jre-1.4

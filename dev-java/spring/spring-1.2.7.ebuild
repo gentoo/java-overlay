@@ -26,7 +26,7 @@ DEPEND="
 	dev-java/ant-core
 	dev-java/antlr
 	app-arch/zip"
-#	jikes? (dev-java/jikes)
+#	jikes? ( dev-java/jikes )
 # TODO replace sun-jdbc-rowset-bin with free implementation?
 RDEPEND="
 	java5? ( 

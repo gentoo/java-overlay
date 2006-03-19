@@ -17,7 +17,7 @@ RESTRICT="fetch"
 
 DEPEND=">=virtual/jdk-1.4
 	app-arch/unzip
-	jikes? (dev-java/jikes)
+	jikes? ( dev-java/jikes )
 	dev-java/ant-core"
 RDEPEND=">=virtual/jre-1.4"
 DOWNLOAD_URL="http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&PartDetailId=7310-jts-1.0-oth-JPR&SiteId=JSC&TransactionId=noreg"

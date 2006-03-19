@@ -21,7 +21,7 @@ LDEPEND="dev-java/concurrent-util
 		=dev-java/webcanal-bin-2*"
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
-	jikes? (dev-java/jikes)
+	jikes? ( dev-java/jikes )
 	${LDEPEND}"
 RDEPEND=">=virtual/jre-1.4
 	${LDEPEND}"

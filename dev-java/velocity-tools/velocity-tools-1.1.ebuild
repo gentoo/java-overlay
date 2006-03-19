@@ -28,7 +28,7 @@ COMMON_DEPEND="
 	dev-java/dvsl"
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
-	jikes? (dev-java/jikes)
+	jikes? ( dev-java/jikes )
 	${COMMON_DEPEND}"
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"

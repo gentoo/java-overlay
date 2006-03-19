@@ -1,2 +1,6 @@
-MD5 a37c91a7d992f75987c0355cce803ce9 juddi-0.9_rc3.ebuild 2141
 MD5 1a157a4dbfe55db2d214d0652615f5bc files/digest-juddi-0.9_rc3 69
+RMD160 8601c7ef8dc8d0362a9c1c10c78e2e84c8a5caa6 files/digest-juddi-0.9_rc3 69
+SHA256 fa296b5b7400d8f76d63c81c3fbe5e7c1420abcd5af24da5ad02610a20691999 files/digest-juddi-0.9_rc3 69
+MD5 ca9671f23bb8ece1af25ec5ac67ef5ac juddi-0.9_rc3.ebuild 2143
+RMD160 e03afb75a080456fbbd6c5e27ed946dc594fa1ed juddi-0.9_rc3.ebuild 2143
+SHA256 5d1230273c90db761b64e3fa9b49a489484c3921224aabfa24218f8d239c3d8a juddi-0.9_rc3.ebuild 2143

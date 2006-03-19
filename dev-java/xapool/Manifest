@@ -7,6 +7,6 @@ SHA256 bdff72a7b78b4e58ecd9a63652daff1b6f722181014ea2dc4d7b04f5406c1072 files/xa
 MD5 a82d2d1471d5c0782b8a514e308fe04b files/xapool-1.5.0-no-instandb-no-oracle.patch 1468
 RMD160 fadc74d48854af44231908279e765611fc214261 files/xapool-1.5.0-no-instandb-no-oracle.patch 1468
 SHA256 5f416d7465e9ac26bb45ad18ef49b1765afb7d714434fb6cf0a2465bf943272c files/xapool-1.5.0-no-instandb-no-oracle.patch 1468
-MD5 13151accc606c964b3558eb209f860ac xapool-1.5.0.ebuild 1558
-RMD160 16526c89f881f7606c9a3773365ef070faf8b182 xapool-1.5.0.ebuild 1558
-SHA256 dc167b1aa3b624bdfc0a8d9a48a8c87f8dc7949dbdd81505cfbd0a75b7252a4e xapool-1.5.0.ebuild 1558
+MD5 e0d82b087c168e184673ac8fd31a3b87 xapool-1.5.0.ebuild 1560
+RMD160 388d8707885cc32de828c6b60097f3da79898cb7 xapool-1.5.0.ebuild 1560
+SHA256 5323721ed630868af5ee26f3b8053a25803c8d50f6a38ae594993f3ebceec9e2 xapool-1.5.0.ebuild 1560

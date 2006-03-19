@@ -20,7 +20,7 @@ LDEPEND="dev-java/apple-java-extensions-bin
 		dev-java/bsh"
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
-	jikes? (dev-java/jikes)
+	jikes? ( dev-java/jikes )
 	app-arch/unzip
 	${LDEPEND}"
 RDEPEND=">=virtual/jre-1.4

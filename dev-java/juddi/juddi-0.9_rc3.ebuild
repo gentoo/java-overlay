@@ -18,7 +18,7 @@ IUSE="jikes doc"
 
 # TODO claims to be >= 1.3.1, but needs testing
 DEPEND="=virtual/jdk-1.4*
-	jikes? (dev-java/jikes)
+	jikes? ( dev-java/jikes )
 	dev-java/ant-core"
 RDEPEND="=virtual/jre-1.4*
 	=dev-java/servletapi-2.4*

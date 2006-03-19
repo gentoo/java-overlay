@@ -19,7 +19,7 @@ IUSE="doc jikes source"
 DEPEND=">=virtual/jdk-1.4
 		dev-java/ant-core
 		app-arch/unzip
-		jikes? (dev-java/jikes)
+		jikes? ( dev-java/jikes )
 		source? (app-arch/zip) "
 
 RDEPEND=">=virtual/jre-1.4"

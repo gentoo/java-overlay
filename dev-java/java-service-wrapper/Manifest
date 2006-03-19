@@ -4,6 +4,6 @@ SHA256 805ff25526877b134e4cf756205ead8dddcd3c27b7c0deff0ba9114787a60b07 files/di
 MD5 bb80ebd446c7c7c1e131d4e091b0bcb0 files/java-service-wrapper-3.1.2-gentoo.patch 1138
 RMD160 5eb8ed337ee75e23dcdb072cc90d838fb6841570 files/java-service-wrapper-3.1.2-gentoo.patch 1138
 SHA256 b01ecd38b33c93648699409af1e78f28660830e6d2bfbebc85e9ce609a8cc55d files/java-service-wrapper-3.1.2-gentoo.patch 1138
-MD5 40f4ba5be2580c807daec27cec885069 java-service-wrapper-3.1.2.ebuild 1209
-RMD160 269c6a965f3b88af54710c1885c3a046190bc005 java-service-wrapper-3.1.2.ebuild 1209
-SHA256 074bab4abdad6b6ad03819827ef7b78b447526f62c6a91afdc2993fdab78109b java-service-wrapper-3.1.2.ebuild 1209
+MD5 b3bbf8ae156bd005d651d06f16a96534 java-service-wrapper-3.1.2.ebuild 1211
+RMD160 c2e4b591a218c3f1efb8e03a14713aae7738b43e java-service-wrapper-3.1.2.ebuild 1211
+SHA256 7872c62fa309b5aea7778aee074fa7667f301d10af88391d850aec64ef275e9e java-service-wrapper-3.1.2.ebuild 1211

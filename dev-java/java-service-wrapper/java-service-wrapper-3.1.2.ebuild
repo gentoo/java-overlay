@@ -18,7 +18,7 @@ IUSE="jikes doc"
 # TODO test with 1.3
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant
-	jikes? (dev-java/jikes)"
+	jikes? ( dev-java/jikes )"
 RDEPEND=">=virtual/jre-1.4"
 S="${WORKDIR}/${MY_P}"
 

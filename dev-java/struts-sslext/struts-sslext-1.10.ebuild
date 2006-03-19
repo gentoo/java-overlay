@@ -20,7 +20,7 @@ COMMON_DEPEND="=dev-java/struts-1.1*
 	dev-java/commons-digester"
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
-	jikes? (dev-java/jikes)
+	jikes? ( dev-java/jikes )
 	${COMMON_DEPEND}"
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"

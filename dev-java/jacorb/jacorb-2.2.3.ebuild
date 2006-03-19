@@ -22,7 +22,7 @@ IUSE="doc"
 # TODO: re-add X dep, with modular-X deps
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
-	jikes? (dev-java/jikes)"
+	jikes? ( dev-java/jikes )"
 RDEPEND=">=virtual/jre-1.4
 	dev-java/antlr
 	=dev-java/avalon-framework-4.1*

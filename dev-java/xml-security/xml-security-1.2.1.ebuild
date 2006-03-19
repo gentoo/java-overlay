@@ -21,7 +21,7 @@ IUSE="jikes doc"
 # TODO check if junit is only needed at buildtime
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
-	jikes? (dev-java/jikes)
+	jikes? ( dev-java/jikes )
 	app-arch/unzip"
 RDEPEND=">=virtual/jre-1.4
 	dev-java/commons-logging

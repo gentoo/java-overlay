@@ -13,6 +13,6 @@ SHA256 2a12a868b327f51c310c9f58488846d68383b809209be7abe95c6b38d547a7ab files/di
 MD5 bd0c3074ae3990cea9832f1ece3b4166 files/gjt-jpl-util-build_xml-jpp.patch 1316
 RMD160 3740ec74507b2e6fe9c567fe6b0a394ef6611c9f files/gjt-jpl-util-build_xml-jpp.patch 1316
 SHA256 767ee060d8b9a67fd39f379661974f94359891c3838e00f221173d775c82d83d files/gjt-jpl-util-build_xml-jpp.patch 1316
-MD5 9ba38cc65093773c38aaf22ba10bc8d5 gjt-jpl-util-0.6.ebuild 1326
-RMD160 28d8524004cfa35dbc44ec6e448babd43f187e02 gjt-jpl-util-0.6.ebuild 1326
-SHA256 dbcf55da3fb1ebc18795e0e32927020dafa2c714be8f7e23a8ea19ba3a0a4cf9 gjt-jpl-util-0.6.ebuild 1326
+MD5 ab1d24104d42ddccdb859240a265b02b gjt-jpl-util-0.6.ebuild 1328
+RMD160 fe1a2114e7d72998a511a94ca20ca398eb8664aa gjt-jpl-util-0.6.ebuild 1328
+SHA256 e555019b4baf05f76029525ed3e52b592603f0957c4e2c3c8c14f0293ff3e9f7 gjt-jpl-util-0.6.ebuild 1328

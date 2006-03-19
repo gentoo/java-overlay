@@ -21,7 +21,7 @@ IUSE="doc"
 # TODO: test if X is needed at runtime
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
-	jikes? (dev-java/jikes)
+	jikes? ( dev-java/jikes )
 	virtual/x11"
 RDEPEND=">=virtual/jre-1.4
 	dev-java/antlr

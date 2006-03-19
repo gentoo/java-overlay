@@ -7,6 +7,6 @@ SHA256 eb030370e6279814eedb3f36c5d1f03cab3d13b565650fe173078c2747321958 files/di
 MD5 31f43a6dcb9fdada02302017722003b8 files/digest-gjt-jpl-pattern-1 70
 RMD160 9c901558212bc0a86273662df2133317d355bad1 files/digest-gjt-jpl-pattern-1 70
 SHA256 917e5a439a940235428c516ccc990c7180acf2992dd15e1b53a1917d5859dda9 files/digest-gjt-jpl-pattern-1 70
-MD5 bdb2b2fa05ba972922df3067ccd11500 gjt-jpl-pattern-0.2.ebuild 1133
-RMD160 e92f22bde65d5805e49fb000a2626d8dfec517f3 gjt-jpl-pattern-0.2.ebuild 1133
-SHA256 52e69e8d01bf4de115c2f6fd5683ad0f4a05e3c7555b9eb16a884f6c58b017b3 gjt-jpl-pattern-0.2.ebuild 1133
+MD5 492d9611a4f1dda5ee588a86d01e1547 gjt-jpl-pattern-0.2.ebuild 1135
+RMD160 ee98dd9f5b246f951c26d790630c216ac60d7ff1 gjt-jpl-pattern-0.2.ebuild 1135
+SHA256 a264ebcbde5ecacb66d91e497b3aa90167b4e1baf89a827765682794591566c2 gjt-jpl-pattern-0.2.ebuild 1135

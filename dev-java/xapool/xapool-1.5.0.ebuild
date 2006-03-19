@@ -16,7 +16,7 @@ IUSE="doc jikes"
 
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
-	jikes? (dev-java/jikes)"
+	jikes? ( dev-java/jikes )"
 RDEPEND=">=virtual/jre-1.4
 	=dev-java/carol-2.0*
 	dev-java/commons-logging
