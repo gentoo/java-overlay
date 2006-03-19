@@ -16,9 +16,9 @@ SHA256 37a0ba49b70b5a07e2b221e6cf1335f55519c37d405aa95b481ceb88cc415848 files/az
 MD5 312e00ecdfc4f87cbee8d08b99086624 files/azureus-gentoo-2.4.0.0.sh 1664
 RMD160 4f528952ec3ff337b0082fbd8e6b8b0fe55fe591 files/azureus-gentoo-2.4.0.0.sh 1664
 SHA256 d122b24108e338004f6d196a1cb423d055827bb54014612786bf918bb1c1a0fb files/azureus-gentoo-2.4.0.0.sh 1664
-MD5 d05d355ce5716c59e18d83d51c61bbb9 files/azureus-gentoo-2.4.0.2.sh 1671
-RMD160 30a7c85e2aaf8162ac86920133014e052f25db71 files/azureus-gentoo-2.4.0.2.sh 1671
-SHA256 f6c22eb56ca8a3a68cc4d81f497fd315b20bd58f5ae443974a951eecaa34e557 files/azureus-gentoo-2.4.0.2.sh 1671
+MD5 b420b082d9bd4b8c87cd9373986e65b9 files/azureus-gentoo-2.4.0.2.sh 1644
+RMD160 0773d80a457b20a99cb163541676fa9006ecea66 files/azureus-gentoo-2.4.0.2.sh 1644
+SHA256 63c3deeca2cc732dd01286ac45aa33fdde15b3f52b33a1db586df7ec742db82d files/azureus-gentoo-2.4.0.2.sh 1644
 MD5 70c17db47c9a596929112714f82ac010 files/azureus.desktop 153
 RMD160 817c8e44b1068b5030b19d5f61a516f560fd4e92 files/azureus.desktop 153
 SHA256 6eb562481d31292ed0ab9cf16f88c9385318b4c3a3c015fd26238624e1fe9f7c files/azureus.desktop 153

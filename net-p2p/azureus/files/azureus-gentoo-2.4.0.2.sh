@@ -36,7 +36,7 @@ else
 	fi
 
 	# Setup defaults
-	UI_OPTIONS="--ui=swt"
+	UI="swt"
 
 	echo "Creating ${gentoocfg}"
 
@@ -45,10 +45,7 @@ else
 # User Interface options:
 # console   - console based
 # swt       - swt (GUI) based
-#
-# When selecting just 1, use '--ui=<ui>'
-# When selecting multiple, use '--uis=<ui>,<ui>'
-UI_OPTIONS="${UI_OPTIONS}"
+UI="${UI}"
 
 # Options you want to pass to the java binary
 JAVA_OPTIONS=""
@@ -58,8 +55,12 @@ fi
 
 #cd "${dotazudir}"
 
+if [[ ! -z "${UI_OPTIONS}" ]]; then
+	echo '${UI_OPTIONS} is deprecated, use ${UI} instead' > /dev/stderr
+fi
+
 CLASSPATH="$(java-config -p bcprov,junit,log4j,commons-cli-1,swt-3,azureus)"
 exec $(java-config --java)  -cp "${CLASSPATH}" \
 	-Djava.library.path=$(java-config -i swt-3) \
 	-Dazureus.install.path="${dotazudir}" \
-	${JAVA_OPTIONS} org.gudy.azureus2.ui.common.Main ${UI_OPTIONS} "${@}"
+	${JAVA_OPTIONS} org.gudy.azureus2.ui.${UI}.Main "${@}"
