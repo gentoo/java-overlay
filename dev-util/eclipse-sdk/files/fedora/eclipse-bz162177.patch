@@ -1,0 +1,11 @@
+--- eclipse-3.1.0_fc/plugins/org.eclipse.jdt.core/batch/org/eclipse/jdt/internal/compiler/batch/Main.java~	2005-06-17 21:40:09.000000000 +0100
++++ eclipse-3.1.0_fc/plugins/org.eclipse.jdt.core/batch/org/eclipse/jdt/internal/compiler/batch/Main.java	2005-07-04 15:12:23.000000000 +0100
+@@ -2027,7 +2027,7 @@
+ 			}
+ 			if (mode == InsideClasspath || mode == InsideBootClasspath || mode == InsideSourcepath) {
+ 				StringTokenizer tokenizer = new StringTokenizer(currentArg,
+-						File.pathSeparator + "[]", true); //$NON-NLS-1$
++						File.pathSeparator, true); //$NON-NLS-1$
+ 				// state machine
+ 				final int start = 0; 
+ 				final int readyToClose = 1;

@@ -1,0 +1,235 @@
+Index: formatter/org/eclipse/jdt/core/formatter/DefaultCodeFormatterConstants.java
+===================================================================
+RCS file: /home/eclipse/org.eclipse.jdt.core/formatter/org/eclipse/jdt/core/formatter/DefaultCodeFormatterConstants.java,v
+retrieving revision 1.61
+diff -u -r1.61 DefaultCodeFormatterConstants.java
+--- plugins/org.eclipse.jdt.core/formatter/org/eclipse/jdt/core/formatter/DefaultCodeFormatterConstants.java	1 Apr 2005 10:54:15 -0000	1.61
++++ plugins/org.eclipse.jdt.core/formatter/org/eclipse/jdt/core/formatter/DefaultCodeFormatterConstants.java	18 Apr 2005 18:17:47 -0000
+@@ -3134,6 +3134,16 @@
+ 		return DefaultCodeFormatterOptions.getEclipseDefaultSettings().getMap();
+ 	}
+ 
++  /**
++   * Returns the default GNU formatter settings
++   * 
++   * @return the GNU default settings
++   * @since 3.1
++   */
++  public static Map getGNUSettings() {
++    return DefaultCodeFormatterOptions.getGNUSettings().getMap();
++  }
++  
+ 	/**
+ 	 * <p>Return the force value of the given alignment value.
+ 	 * The given alignment value should be created using the <code>createAlignmentValue(boolean, int, int)</code>
+Index: formatter/org/eclipse/jdt/internal/formatter/DefaultCodeFormatterOptions.java
+===================================================================
+RCS file: /home/eclipse/org.eclipse.jdt.core/formatter/org/eclipse/jdt/internal/formatter/DefaultCodeFormatterOptions.java,v
+retrieving revision 1.63
+diff -u -r1.63 DefaultCodeFormatterOptions.java
+--- plugins/org.eclipse.jdt.core/formatter/org/eclipse/jdt/internal/formatter/DefaultCodeFormatterOptions.java	1 Apr 2005 10:54:15 -0000	1.63
++++ plugins/org.eclipse.jdt.core/formatter/org/eclipse/jdt/internal/formatter/DefaultCodeFormatterOptions.java	18 Apr 2005 18:17:48 -0000
+@@ -39,6 +39,12 @@
+ 		return options;
+ 	}
+ 
++  public static DefaultCodeFormatterOptions getGNUSettings() {
++    DefaultCodeFormatterOptions options = new DefaultCodeFormatterOptions();
++    options.setGNUDefaultSettings();
++    return options;
++  }
++  
+ 	public static DefaultCodeFormatterOptions getJavaConventionsSettings() {
+ 		DefaultCodeFormatterOptions options = new DefaultCodeFormatterOptions();
+ 		options.setJavaConventionsSettings();
+@@ -2036,6 +2042,190 @@
+ 		this.tab_size = 4;
+ 	}
+ 
++  public void setGNUDefaultSettings() {
++    this.comment_clear_blank_lines = true;
++    this.comment_format = true;
++    this.comment_format_header = false;
++    this.comment_format_html = true;
++    this.comment_format_source = true;
++    this.comment_indent_parameter_description = true;
++    this.comment_indent_root_tags = true;
++    this.comment_line_length = 80;
++    this.comment_insert_new_line_for_parameter = true;
++    this.comment_indent_root_tags = true;
++    this.align_type_members_on_columns = false;
++    this.alignment_for_arguments_in_allocation_expression = 18;
++    this.alignment_for_arguments_in_explicit_constructor_call = 18;
++    this.alignment_for_arguments_in_method_invocation = 18;
++    this.alignment_for_arguments_in_qualified_allocation_expression = 18;
++    this.alignment_for_binary_expression = 18;
++    this.alignment_for_compact_if = 16;
++    this.alignment_for_conditional_expression = 82;
++    this.alignment_for_expressions_in_array_initializer = 18;
++    this.alignment_for_multiple_fields = 16;
++    this.alignment_for_parameters_in_constructor_declaration = 18;
++    this.alignment_for_parameters_in_method_declaration = 18;
++    this.alignment_for_selector_in_method_invocation = 0;
++    this.alignment_for_superclass_in_type_declaration = 16;
++    this.alignment_for_superinterfaces_in_type_declaration = 16;
++    this.alignment_for_throws_clause_in_constructor_declaration = 16;
++    this.alignment_for_throws_clause_in_method_declaration = 16;
++    this.blank_lines_after_imports = 1;
++    this.blank_lines_after_package = 1;
++    this.blank_lines_before_field = 1;
++    this.blank_lines_before_first_class_body_declaration = 0;
++    this.blank_lines_before_imports = 1;
++    this.blank_lines_before_member_type = 1;
++    this.blank_lines_before_method = 1;
++    this.blank_lines_before_new_chunk = 1;
++    this.blank_lines_before_package = 2;
++    this.blank_lines_between_type_declarations = 1;
++    this.brace_position_for_anonymous_type_declaration = DefaultCodeFormatterConstants.NEXT_LINE;
++    this.brace_position_for_array_initializer = DefaultCodeFormatterConstants.END_OF_LINE;
++    this.brace_position_for_block = DefaultCodeFormatterConstants.NEXT_LINE_SHIFTED;
++    this.brace_position_for_block_in_case = DefaultCodeFormatterConstants.NEXT_LINE;
++    this.brace_position_for_constructor_declaration = DefaultCodeFormatterConstants.NEXT_LINE;
++    this.brace_position_for_method_declaration = DefaultCodeFormatterConstants.NEXT_LINE;
++    this.brace_position_for_switch = DefaultCodeFormatterConstants.NEXT_LINE_SHIFTED;
++    this.brace_position_for_type_declaration = DefaultCodeFormatterConstants.NEXT_LINE;
++    this.compact_else_if = true;
++    this.continuation_indentation = 2;
++    this.continuation_indentation_for_array_initializer = 2;
++    this.keep_guardian_clause_on_one_line = false;
++    this.indent_body_declarations_compare_to_type_header = true;
++    this.indent_breaks_compare_to_cases = true;
++    this.indent_statements_compare_to_block = true;
++    this.indent_statements_compare_to_body = true;
++    this.indent_switchstatements_compare_to_cases = true;
++    this.indent_switchstatements_compare_to_switch = false;
++    this.insert_new_line_after_opening_brace_in_array_initializer = false;
++    this.insert_new_line_before_catch_in_try_statement = true;
++    this.insert_new_line_before_closing_brace_in_array_initializer = false;
++    this.insert_new_line_before_else_in_if_statement = true;
++    this.insert_new_line_before_finally_in_try_statement = true;
++    this.insert_new_line_before_while_in_do_statement = true;
++    this.insert_new_line_in_empty_anonymous_type_declaration = true;
++    this.insert_new_line_in_empty_block = true;
++    this.insert_new_line_in_empty_method_body = true;
++    this.insert_new_line_in_empty_type_declaration = true;
++    this.insert_space_after_assignment_operator = true;
++    this.insert_space_after_binary_operator = true;
++    this.insert_space_after_closing_brace_in_block = true;
++    this.insert_space_after_closing_paren_in_cast = true;
++    this.insert_space_after_colon_in_assert = true;
++    this.insert_space_after_colon_in_case = true;
++    this.insert_space_after_colon_in_conditional = true;
++    this.insert_space_after_colon_in_labeled_statement = true;
++    this.insert_space_after_comma_in_allocation_expression = true;
++    this.insert_space_after_comma_in_array_initializer = true;
++    this.insert_space_after_comma_in_constructor_declaration_parameters = true;
++    this.insert_space_after_comma_in_constructor_declaration_throws = true;
++    this.insert_space_after_comma_in_explicit_constructor_call_arguments = true;
++    this.insert_space_after_comma_in_for_increments = true;
++    this.insert_space_after_comma_in_for_inits = true;
++    this.insert_space_after_comma_in_method_declaration_parameters = true;
++    this.insert_space_after_comma_in_method_declaration_throws = true;
++    this.insert_space_after_comma_in_method_invocation_arguments = true;
++    this.insert_space_after_comma_in_multiple_field_declarations = true;
++    this.insert_space_after_comma_in_multiple_local_declarations = true;
++    this.insert_space_after_comma_in_superinterfaces = true;
++    this.insert_space_after_opening_brace_in_array_initializer = true;
++    this.insert_space_after_opening_bracket_in_array_allocation_expression = false;
++    this.insert_space_after_opening_bracket_in_array_reference = false;
++    this.insert_space_after_opening_paren_in_cast = false;
++    this.insert_space_after_opening_paren_in_catch = false;
++    this.insert_space_after_opening_paren_in_constructor_declaration = false;
++    this.insert_space_after_opening_paren_in_for = false;
++    this.insert_space_after_opening_paren_in_if = false;
++    this.insert_space_after_opening_paren_in_method_declaration = false;
++    this.insert_space_after_opening_paren_in_method_invocation = false;
++    this.insert_space_after_opening_paren_in_parenthesized_expression = false;
++    this.insert_space_after_opening_paren_in_switch = false;
++    this.insert_space_after_opening_paren_in_synchronized = false;
++    this.insert_space_after_opening_paren_in_while = false;
++    this.insert_space_after_postfix_operator = false;
++    this.insert_space_after_prefix_operator = false;
++    this.insert_space_after_question_in_conditional = true;
++    this.insert_space_after_semicolon_in_for = true;
++    this.insert_space_after_unary_operator = false;
++    this.insert_space_before_assignment_operator = true;
++    this.insert_space_before_binary_operator = true;
++    this.insert_space_before_closing_brace_in_array_initializer = true;
++    this.insert_space_before_closing_bracket_in_array_allocation_expression = false;
++    this.insert_space_before_closing_bracket_in_array_reference = false;
++    this.insert_space_before_closing_paren_in_cast = false;
++    this.insert_space_before_closing_paren_in_catch = false;
++    this.insert_space_before_closing_paren_in_constructor_declaration = false;
++    this.insert_space_before_closing_paren_in_for = false;
++    this.insert_space_before_closing_paren_in_if = false;
++    this.insert_space_before_closing_paren_in_method_declaration = false;
++    this.insert_space_before_closing_paren_in_method_invocation = false;
++    this.insert_space_before_closing_paren_in_parenthesized_expression = false;
++    this.insert_space_before_closing_paren_in_switch = false;
++    this.insert_space_before_closing_paren_in_synchronized = false;
++    this.insert_space_before_closing_paren_in_while = false;
++    this.insert_space_before_colon_in_assert = true;
++    this.insert_space_before_colon_in_case = false;
++    this.insert_space_before_colon_in_conditional = true;
++    this.insert_space_before_colon_in_default = false;
++    this.insert_space_before_colon_in_labeled_statement = false;
++    this.insert_space_before_comma_in_allocation_expression = false;
++    this.insert_space_before_comma_in_array_initializer = false;
++    this.insert_space_before_comma_in_constructor_declaration_parameters = false;
++    this.insert_space_before_comma_in_constructor_declaration_throws = false;
++    this.insert_space_before_comma_in_explicit_constructor_call_arguments = false;
++    this.insert_space_before_comma_in_for_increments = false;
++    this.insert_space_before_comma_in_for_inits = false;
++    this.insert_space_before_comma_in_method_declaration_parameters = false;
++    this.insert_space_before_comma_in_method_declaration_throws = false;
++    this.insert_space_before_comma_in_method_invocation_arguments = false;
++    this.insert_space_before_comma_in_multiple_field_declarations = false;
++    this.insert_space_before_comma_in_multiple_local_declarations = false;
++    this.insert_space_before_comma_in_superinterfaces = false;
++    this.insert_space_before_opening_brace_in_anonymous_type_declaration = true;
++    this.insert_space_before_opening_brace_in_array_initializer = true;
++    this.insert_space_before_opening_brace_in_block = true;
++    this.insert_space_before_opening_brace_in_constructor_declaration = true;
++    this.insert_space_before_opening_brace_in_method_declaration = true;
++    this.insert_space_before_opening_brace_in_switch = true;
++    this.insert_space_before_opening_brace_in_type_declaration = true;
++    this.insert_space_before_opening_bracket_in_array_allocation_expression = false;
++    this.insert_space_before_opening_bracket_in_array_reference = false;
++    this.insert_space_before_opening_bracket_in_array_type_reference = false;
++    this.insert_space_before_opening_paren_in_catch = true;
++    this.insert_space_before_opening_paren_in_constructor_declaration = false;
++    this.insert_space_before_opening_paren_in_for = true;
++    this.insert_space_before_opening_paren_in_if = true;
++    this.insert_space_before_opening_paren_in_method_declaration = false;
++    this.insert_space_before_opening_paren_in_method_invocation = false;
++    this.insert_space_before_opening_paren_in_parenthesized_expression = false;
++    this.insert_space_before_opening_paren_in_switch = true;
++    this.insert_space_before_opening_paren_in_synchronized = true;
++    this.insert_space_before_opening_paren_in_while = true;
++    this.insert_space_before_postfix_operator = false;
++    this.insert_space_before_prefix_operator = false;
++    this.insert_space_before_question_in_conditional = true;
++    this.insert_space_before_semicolon = false;
++    this.insert_space_before_semicolon_in_for = false;
++    this.insert_space_before_unary_operator = false;
++    this.insert_space_between_brackets_in_array_type_reference = false;
++    this.insert_space_between_empty_braces_in_array_initializer = false;
++    this.insert_space_between_empty_brackets_in_array_allocation_expression = false;
++    this.insert_space_between_empty_parens_in_constructor_declaration = false;
++    this.insert_space_between_empty_parens_in_method_declaration = false;
++    this.insert_space_between_empty_parens_in_method_invocation = false;
++    this.keep_else_statement_on_same_line = false;
++    this.keep_empty_array_initializer_on_one_line = true;
++    this.keep_simple_if_on_one_line = false;
++    this.keep_then_statement_on_same_line = false;
++    this.page_width = 80;
++    this.blank_lines_at_beginning_of_method_body = 0;
++    this.number_of_empty_lines_to_preserve = 1;
++    this.put_empty_statement_on_new_line = true;
++    this.tab_char = SPACE;
++    this.tab_size = 2;
++  }
++  
+ 	public void setJavaConventionsSettings() {
+ 		this.alignment_for_arguments_in_allocation_expression = Alignment.M_COMPACT_SPLIT;
+ 		this.alignment_for_arguments_in_enum_constant = Alignment.M_COMPACT_SPLIT;

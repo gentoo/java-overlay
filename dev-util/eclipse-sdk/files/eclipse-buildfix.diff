@@ -1,0 +1,10 @@
+--- plugins/org.eclipse.core.runtime.compatibility.registry/build.xml.orig	2006-03-10 01:22:56.000000000 +0100
++++ plugins/org.eclipse.core.runtime.compatibility.registry/build.xml	2006-03-10 01:23:36.000000000 +0100
+@@ -61,6 +61,7 @@
+ 			<pathelement path="${build.result.folder}/../org.eclipse.osgi/@dot"/>
+ 			<pathelement path="${build.result.folder}/../org.eclipse.core.jobs/bin/"/>
+ 			<pathelement path="${build.result.folder}/../org.eclipse.core.jobs/@dot"/>
++			<pathelement path="${build.result.folder}/../org.eclipse.core.runtime/@dot"/>
+ 			<pathelement path="${build.result.folder}/../org.eclipse.equinox.common/bin/"/>
+ 			<pathelement path="${build.result.folder}/../org.eclipse.equinox.common/@dot"/>
+ 			<pathelement path="classes/"/>

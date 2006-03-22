@@ -1,0 +1,72 @@
+Index: ui/org/eclipse/jdt/internal/ui/preferences/formatter/FormatterMessages.properties
+===================================================================
+RCS file: /home/eclipse/org.eclipse.jdt.ui/ui/org/eclipse/jdt/internal/ui/preferences/formatter/FormatterMessages.properties,v
+retrieving revision 1.39
+diff -u -r1.39 FormatterMessages.properties
+--- plugins/org.eclipse.jdt.ui/ui/org/eclipse/jdt/internal/ui/preferences/formatter/FormatterMessages.properties	1 Apr 2005 13:45:00 -0000	1.39
++++ plugins/org.eclipse.jdt.ui/ui/org/eclipse/jdt/internal/ui/preferences/formatter/FormatterMessages.properties	18 Apr 2005 18:26:05 -0000
+@@ -519,6 +519,7 @@
+ NewLinesTabPage_annotations_group_title=Annotations
+ NewLinesTabPage_annotations_group_option_after_annotation=&Insert new line after annotations
+ 
++ProfileManager_gnu_profile_name=GNU [built-in]
+ ProfileManager_default_profile_name=Eclipse 2.1 [built-in]
+ ProfileManager_eclipse_profile_name=Eclipse [built-in]
+ ProfileManager_java_conventions_profile_name=Java Conventions [built-in]
+Index: ui/org/eclipse/jdt/internal/ui/preferences/formatter/ProfileManager.java
+===================================================================
+RCS file: /home/eclipse/org.eclipse.jdt.ui/ui/org/eclipse/jdt/internal/ui/preferences/formatter/ProfileManager.java,v
+retrieving revision 1.19
+diff -u -r1.19 ProfileManager.java
+--- plugins/org.eclipse.jdt.ui/ui/org/eclipse/jdt/internal/ui/preferences/formatter/ProfileManager.java	1 Apr 2005 13:45:00 -0000	1.19
++++ plugins/org.eclipse.jdt.ui/ui/org/eclipse/jdt/internal/ui/preferences/formatter/ProfileManager.java	18 Apr 2005 18:26:05 -0000
+@@ -292,6 +292,7 @@
+ 	 */
+ 	public final static String ECLIPSE21_PROFILE= "org.eclipse.jdt.ui.default_profile"; //$NON-NLS-1$
+ 	public final static String ECLIPSE_PROFILE= "org.eclipse.jdt.ui.default.eclipse_profile"; //$NON-NLS-1$
++	public final static String GNU_PROFILE= "org.eclipse.jdt.ui.default.gnu_profile"; //$NON-NLS-1$
+ 	public final static String JAVA_PROFILE= "org.eclipse.jdt.ui.default.sun_profile"; //$NON-NLS-1$
+ 	public final static String SHARED_PROFILE= "org.eclipse.jdt.ui.default.shared"; //$NON-NLS-1$
+ 	
+@@ -582,6 +583,10 @@
+ 		final Profile eclipse21Profile= new BuiltInProfile(ECLIPSE21_PROFILE, FormatterMessages.ProfileManager_default_profile.name, getEclipse21Settings(), 3); //$NON-NLS-1$
+ 		profiles.put(eclipse21Profile.getID(), eclipse21Profile);
+ 		profilesByName.add(eclipse21Profile);
++    
++		final Profile gnuProfile = new BuiltInProfile(GNU_PROFILE, FormatterMessages.ProfileManager_gnu_profile_name, getGNUSettings(), 4); //$NON-NLS-1$
++		profiles.put(gnuProfile.getID(), gnuProfile);
++		profilesByName.add(gnuProfile);
+ 	}
+ 	
+ 	
+@@ -604,8 +609,18 @@
+ 		ProfileVersioner.setLatestCompliance(options);
+ 		return options;
+ 	}
+-
+-	/** 
++	
++	/**
++	 * @return Returns the settings for the GNU profile.
++	 */
++	public static Map getGNUSettings() {
++		final Map options = DefaultCodeFormatterConstants.getGNUSettings();
++		
++		ProfileVersioner.setLatestCompliance(options);
++		return options;
++	}
++	
++	/**
+ 	 * @return Returns the settings for the Java Conventions profile.
+ 	 */
+ 	public static Map getJavaSettings() {
+--- plugins/org.eclipse.jdt.ui/ui/org/eclipse/jdt/internal/ui/preferences/formatter/FormatterMessages.java.orig	2006-03-09 23:13:02.000000000 +0100
++++ plugins/org.eclipse.jdt.ui/ui/org/eclipse/jdt/internal/ui/preferences/formatter/FormatterMessages.java	2006-03-09 23:13:51.000000000 +0100
+@@ -429,6 +429,7 @@
+ 	public static String NewLinesTabPage_array_group_option_before_closing_brace_of_array_initializer;
+ 	public static String NewLinesTabPage_annotations_group_title;
+ 	public static String NewLinesTabPage_annotations_group_option_after_annotation;
++	public static String ProfileManager_gnu_profile_name;
+ 	public static String ProfileManager_default_profile_name;
+ 	public static String ProfileManager_eclipse_profile_name;
+ 	public static String ProfileManager_unnamed_profile_name0;
