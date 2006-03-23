@@ -273,6 +273,9 @@ pkg_postinst() {
 	if ! use examples; then
 		ewarn
 		ewarn "You do not have the examples USE flag set, examples have NOT been installed."
+		ewarn "Without examples, http://localhost:8080/ will only return a blank page"
+		ewarn "by default. The blank page is confirmation that Tomcat is running, listening"
+		ewarn "to, and responding to requests on port 8080 on the localhost."
 		ewarn
 	fi
 	einfo
