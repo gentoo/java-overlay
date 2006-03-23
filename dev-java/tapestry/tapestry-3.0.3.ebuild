@@ -13,7 +13,7 @@ SRC_URI="http://archive.apache.org/dist/jakarta/${PN}/${MY_P}-src.tar.gz http://
 
 LICENSE="Apache-2.0"
 SLOT="3"
-KEYWORDS="~x86"
+KEYWORDS="-*"
 IUSE=""
 
 DEPEND=">=virtual/jdk-1.4"
