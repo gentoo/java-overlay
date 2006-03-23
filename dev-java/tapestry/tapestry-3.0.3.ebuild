@@ -8,7 +8,8 @@ inherit java-pkg
 MY_P=${P/t/T}
 DESCRIPTION="An open-source framework for creating dynamic, robust, highly scalable web applications in Java."
 HOMEPAGE="http://jakarta.apache.org/tapestry/"
-SRC_URI="mirror://apache/jakarta/${PN}/${MY_P}-bin.tar.gz mirror://apache/jakarta/${PN}/${MY_P}-src.tar.gz"
+#SRC_URI="mirror://apache/jakarta/${PN}/${MY_P}-bin.tar.gz mirror://apache/jakarta/${PN}/${MY_P}-src.tar.gz"
+SRC_URI="http://archive.apache.org/dist/jakarta/${PN}/${MY_P}-src.tar.gz http://archive.apache.org/dist/jakarta/${PN}/${MY_P}-bin.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="3"
