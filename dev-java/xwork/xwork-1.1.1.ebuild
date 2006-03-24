@@ -10,7 +10,7 @@ SRC_URI="https://${PN}.dev.java.net/files/documents/709/28621/${P}.zip"
 
 LICENSE=""
 SLOT="1.1"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc java5 source"
 
 DEPEND="java5? ( >=virtual/jdk-1.5 )

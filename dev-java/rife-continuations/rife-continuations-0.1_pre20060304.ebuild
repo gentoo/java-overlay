@@ -12,7 +12,7 @@ SRC_URI="http://www.gentoo.org/~nichoj/distfiles/${MY_P}.tar.bz2"
 
 LICENSE=""
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=">=virtual/jdk-1.4
