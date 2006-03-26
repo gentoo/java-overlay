@@ -4,9 +4,6 @@ SHA256 e356eec8e82e0a087223cfd3d9dc1cd68b49d92320d143da7ef0b70307e9f9e4 ChangeLo
 MD5 7f6ffc2a4b20f4c08685777b6f8822ed eclipse-sdk-3.1.2.ebuild 10478
 RMD160 06b7831d25302b06ea23e2782e723d844dbd9f01 eclipse-sdk-3.1.2.ebuild 10478
 SHA256 130ea44f7aebf9a4b22a05b8d5edb28ce69b6190501388abe9ac905459d6cc41 eclipse-sdk-3.1.2.ebuild 10478
-MD5 38bdf5d876fe5d2faab82a3118634787 eclipse-sdk-3.2_pre5.ebuild 12014
-RMD160 6d31acd1a8fa374cf8f3187e79c2d94d713babde eclipse-sdk-3.2_pre5.ebuild 12014
-SHA256 c3d7bf274fd8c458d1e87df9a04403af8da2835cef52ff7c94d3d0a902519091 eclipse-sdk-3.2_pre5.ebuild 12014
 MD5 ab0f6620b4767e065bd533b06245b0fc files/01-distribute_ant_target-2.1.patch 1103
 RMD160 b1e41e2a202fcd91135b9df0573b3611c27bc046 files/01-distribute_ant_target-2.1.patch 1103
 SHA256 98b71329db9aae0bbeef88613939c68a9220764e8c207f4301f38a9087e72cd3 files/01-distribute_ant_target-2.1.patch 1103
@@ -25,9 +22,9 @@ SHA256 f2a492ccc0a24fec3af54e64594ea06814267e6849b0d7d9a31ee80cbdcea67b files/04
 MD5 3110e7ec528bc98ef251172c2d7e2956 files/05-mozilla-xpcom.patch 862
 RMD160 307f83c9751c7f58a805026a3dff53ff98d26788 files/05-mozilla-xpcom.patch 862
 SHA256 aa188e120d350c55b333cbdcde7fed0a79015d4608a424d48ffcf1735c494648 files/05-mozilla-xpcom.patch 862
-MD5 079f75226c43ea3705bfae89d9d54364 files/06-path-fixups.patch 2788
-RMD160 2631e8f68f886dccabd3d7152649ccbc6c51a0c9 files/06-path-fixups.patch 2788
-SHA256 241934b9ef5d61a22e41e9bd00e4ac7db0542ca7de22b1397f4a869e37e78a13 files/06-path-fixups.patch 2788
+MD5 a9f983102fa1b491ad4c4f154123d509 files/06-path-fixups.patch 4707
+RMD160 9870d6a1c6278d37f1dbbfaf966aef3604fae4e4 files/06-path-fixups.patch 4707
+SHA256 f031191538783d91e8370832ac7b712e47d2d32515d3979bdc409ac46567a4ca files/06-path-fixups.patch 4707
 MD5 21bde556ac55c5e22578cf4998135913 files/digest-eclipse-sdk-2.1.3-r5 176
 RMD160 76b5e63377154183e29120a665e2df21213b6131 files/digest-eclipse-sdk-2.1.3-r5 176
 SHA256 df97f85bfc9bed03156b89a09646cc2654ea18d25d3ac445d7bb318e9091af82 files/digest-eclipse-sdk-2.1.3-r5 176
@@ -49,9 +46,6 @@ SHA256 8c5f1687cc5701180e20605b6672f79a2a1d3b9d6800a63f28b02b26e5e39346 files/di
 MD5 0dd05cebf3928888ff566c433da96335 files/digest-eclipse-sdk-3.1.2 310
 RMD160 dea902b88d52673c42f034ab9451e145bc52b30c files/digest-eclipse-sdk-3.1.2 310
 SHA256 01187ce1cad8c9037d48c130cd9d98167d7c934e075d42c7c55f3adae8105749 files/digest-eclipse-sdk-3.1.2 310
-MD5 f90e7013f9451494c98bf16754793ce9 files/digest-eclipse-sdk-3.2_pre5 313
-RMD160 f2675d95599b6762c510e19b2ca6d373a9309d1c files/digest-eclipse-sdk-3.2_pre5 313
-SHA256 59740d6e0618a2750172f3dec4644b30406e61165474bd9de0bf127ace46d162 files/digest-eclipse-sdk-3.2_pre5 313
 MD5 de999f62aa03505bfd16a01f7e1a28a3 files/eclipse-2 956
 RMD160 0045f44e9e47f4e3b80535c3a25de590c7ab92e2 files/eclipse-2 956
 SHA256 a842d3ee3f135d695e659811598340bc2b3b42222d44bf3d2155c9c59ac4e778 files/eclipse-2 956
