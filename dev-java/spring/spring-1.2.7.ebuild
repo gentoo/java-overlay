@@ -22,7 +22,7 @@ IUSE="doc source java5"
 # ARGH! 1.6 breaks it already!
 DEPEND="
 	java5? ( =virtual/jdk-1.5* )
-	!java5? ( || ( =virtual/jdk-1.4* =virtual/jdk-1.5* ) )
+	!java5? ( =virtual/jdk-1.4* )
 	dev-java/ant-core
 	dev-java/antlr
 	app-arch/zip"
