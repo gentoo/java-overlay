@@ -49,7 +49,7 @@ S=${WORKDIR}/${MY_P}
 
 TOMCAT_HOME="/usr/share/${PN}-${SLOT}"
 TOMCAT_NAME="${PN}-${SLOT}"
-WEBAPPS_DIR="/var/lib/${TOMCAT_NAME}/default/webapps"
+WEBAPPS_DIR="/var/lib/${TOMCAT_NAME}/webapps"
 
 src_unpack() {
 	unpack ${A}
@@ -68,8 +68,8 @@ src_unpack() {
 	use jikes && epatch ${FILESDIR}/${PV}/jikes.patch
 
 	# avoid packed jars :-)
-	mkdir -p ${S}/jakarta-tomcat-5/build/common
-	cd ${S}/jakarta-tomcat-5/build
+	mkdir -p ${S}/build/build/common
+	cd ${S}/build/build
 
 	mkdir ./bin && cd ./bin
 	java-pkg_jar-from commons-logging commons-logging-api.jar
@@ -125,6 +125,7 @@ src_compile(){
 	antflags="${antflags} -DxercesImpl.jar=$(java-pkg_getjar xerces-2 xercesImpl.jar)"
 	antflags="${antflags} -Dxml-apis.jar=$(java-pkg_getjar xerces-2 xml-apis.jar)"
 	antflags="${antflags} -Dstruts.home=/usr/share/struts"
+	antflags="${antflags} -Djasper.home=${S}/jasper/jasper2"
 
 	ant ${antflags} || die "compile failed"
 
@@ -134,7 +135,7 @@ src_install() {
 	enewgroup tomcat
 	enewuser tomcat -1 -1 /dev/null tomcat
 
-	cd ${S}/jakarta-tomcat-5/build
+	cd ${S}/build/build
 
 	# init.d, env.d, conf.d
 	newinitd ${FILESDIR}/${PV}/tomcat.init ${TOMCAT_NAME}
@@ -149,17 +150,17 @@ src_install() {
 	# create dir structure
 	diropts -m755 -o tomcat -g tomcat
 	dodir /usr/share/${TOMCAT_NAME}
-	keepdir /var/log/${TOMCAT_NAME}/default
-	keepdir /var/tmp/${TOMCAT_NAME}/default
-	keepdir /var/run/${TOMCAT_NAME}/default
+	keepdir /var/log/${TOMCAT_NAME}/
+	keepdir /var/tmp/${TOMCAT_NAME}/
+	keepdir /var/run/${TOMCAT_NAME}/
 
-	local CATALINA_BASE=/var/lib/${TOMCAT_NAME}/default/
+	local CATALINA_BASE=/var/lib/${TOMCAT_NAME}/
 	dodir   ${CATALINA_BASE}
 	keepdir ${CATALINA_BASE}/shared/lib
 	keepdir ${CATALINA_BASE}/shared/classes
 
-	dodir   /etc/${TOMCAT_NAME}/default
-	fperms  440 /etc/${TOMCAT_NAME}/default
+	dodir   /etc/${TOMCAT_NAME}
+	fperms  440 /etc/${TOMCAT_NAME}
 
 	diropts -m0755
 
@@ -168,9 +169,9 @@ src_install() {
 
 	# copy the manager and admin context's to the right position
 	mkdir -p conf/Catalina/localhost
-	cp ${S}/jakarta-tomcat-catalina/webapps/admin/admin.xml \
+	cp ${S}/container/webapps/admin/admin.xml \
 		conf/Catalina/localhost
-	cp ${S}/jakarta-tomcat-catalina/webapps/manager/manager.xml \
+	cp ${S}/container/webapps/manager/manager.xml \
 		conf/Catalina/localhost
 
 	# make the jars available via java-config -p and jar-from, etc
@@ -206,7 +207,7 @@ src_install() {
 	# copy over the directories	
 	chmod -R 750 conf/*
 	chown -R tomcat:tomcat webapps/* conf/*
-	cp -pR conf/* ${D}/etc/${TOMCAT_NAME}/default || die "failed to copy conf"
+	cp -pR conf/* ${D}/etc/${TOMCAT_NAME} || die "failed to copy conf"
 	cp -R bin common server shared ${D}/usr/share/${TOMCAT_NAME} || die "failed to copy"
 
 	keepdir               ${WEBAPPS_DIR}
@@ -220,16 +221,16 @@ src_install() {
 	fi
 
 	# symlink the directories to make CATALINA_BASE possible
-	dosym /etc/${TOMCAT_NAME}/default ${CATALINA_BASE}/conf
-	dosym /var/log/${TOMCAT_NAME}/default ${CATALINA_BASE}/logs
-	dosym /var/tmp/${TOMCAT_NAME}/default ${CATALINA_BASE}/temp
-	dosym /var/run/${TOMCAT_NAME}/default ${CATALINA_BASE}/work
+	dosym /etc/${TOMCAT_NAME} ${CATALINA_BASE}/conf
+	dosym /var/log/${TOMCAT_NAME} ${CATALINA_BASE}/logs
+	dosym /var/tmp/${TOMCAT_NAME} ${CATALINA_BASE}/temp
+	dosym /var/run/${TOMCAT_NAME} ${CATALINA_BASE}/work
 
 #	cp ${FILESDIR}/${PV}/log4j.properties ${D}/etc/${TOMCAT_NAME}/
 #	chown tomcat:tomcat ${D}/etc/${TOMCAT_NAME}/log4j.properties
 
-	dodoc  ${S}/jakarta-tomcat-5/{RELEASE-NOTES,RUNNING.txt}
-	fperms 640 /etc/${TOMCAT_NAME}/default/tomcat-users.xml
+	dodoc  ${S}/build/{RELEASE-NOTES,RUNNING.txt}
+	fperms 640 /etc/${TOMCAT_NAME}/tomcat-users.xml
 }
 
 pkg_postinst() {
@@ -245,8 +246,8 @@ pkg_postinst() {
 	einfo "     Contains application data, configuration files."
 	einfo " 2.  Runtime settings: /etc/conf.d/${TOMCAT_NAME}"
 	einfo "     Contains CLASSPATH and JAVA_HOME settings."
-	einfo " 3.  Configuration:  /etc/${TOMCAT_NAME}/default"
-	einfo " 4.  Logs:  /var/log/${TOMCAT_NAME}/default"
+	einfo " 3.  Configuration:  /etc/${TOMCAT_NAME}"
+	einfo " 4.  Logs:  /var/log/${TOMCAT_NAME}"
 	einfo
 	einfo
 	einfo " STARTING AND STOPPING TOMCAT:"
@@ -265,7 +266,7 @@ pkg_postinst() {
 	einfo
 	einfo " NETWORK CONFIGURATION:"
 	einfo " By default, Tomcat runs on port 8080.  You can change this"
-	einfo " value by editing /etc/${TOMCAT_NAME}/default/server.xml."
+	einfo " value by editing /etc/${TOMCAT_NAME}/server.xml."
 	einfo
 	einfo " To test Tomcat while it's running, point your web browser to:"
 	einfo " http://localhost:8080/"

@@ -12,7 +12,7 @@ init_env_vars() {
 	# Activate Logging
 	if [[ -r "${CATALINA_HOME}"/bin/tomcat-juli.jar ]]; then
 		JAVA_OPTS="${JAVA_OPTS} -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
-								-Djava.util.logging.config.file=/etc/tomcat-5.5/${PROFILE}/logging.properties"
+								-Djava.util.logging.config.file=/etc/tomcat-5.5/logging.properties"
 	fi
 
 	# Populate the classpath
@@ -56,7 +56,7 @@ start()	{
 		start-helper $JAVA_HOME/bin/jdb \
 			-sourcepath ${CATALINA_HOME}/../../jakarta-tomcat-catalina/catalina/src/share \
 			-Djava.security.manager \
-			-Djava.security.policy=/etc/tomcat-5.5/${PROFILE}/conf/catalina.policy
+			-Djava.security.policy=/etc/tomcat-5.5/conf/catalina.policy
 	elif [[ "${TOMCAT_START}" == "jpda start" ]] ; then
 		start-helper $JAVA_HOME/bin/java ${JPDA_OPTS}
 	elif [[ "${TOMCAT_START}" == "start" ]] ; then
@@ -64,7 +64,7 @@ start()	{
 	elif [[ "${TOMCAT_START}" == "start -security" ]] ; then
 		start-helper $JAVA_HOME/bin/java \
 			-Djava.security.manager \
-			-Djava.security.policy=/etc/tomcat-5.5/${PROFILE}/catalina.policy
+			-Djava.security.policy=/etc/tomcat-5.5/catalina.policy
 	else
 		eerror "Invalid TOMCAT_START variable value, or one is not set"
 		eerror "Please see /etc/conf.d/tomcat-5.5 for more information"
