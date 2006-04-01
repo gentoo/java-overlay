@@ -25,6 +25,9 @@ DEPEND="${RDEPEND}
 	jikes? ( dev-java/jikes )"
 S="${WORKDIR}/${MY_P}"
 
+# Contains text relocations, should be fixed at some point
+RESTRICT="stricter"
+
 # TODO file upstream
 PATCHES="${FILESDIR}/${P}-gentoo.patch"
 
