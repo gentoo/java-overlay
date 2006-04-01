@@ -15,22 +15,32 @@ SLOT="3.1"
 KEYWORDS="~amd64 ~x86"
 IUSE="jikes doc"
 
+RDEPEND=">=virtual/jre-1.4
+		dev-java/junit"
+
 # TODO test with 1.3
-DEPEND=">=virtual/jdk-1.4
+DEPEND="${RDEPEND}
+	>=virtual/jdk-1.4
 	dev-java/ant
 	jikes? ( dev-java/jikes )"
-RDEPEND=">=virtual/jre-1.4"
 S="${WORKDIR}/${MY_P}"
 
 # TODO file upstream
 PATCHES="${FILESDIR}/${P}-gentoo.patch"
+
+src_unpack() {
+	unpack ${A}
+	# renamed to avoid usage of stuff here"
+	mv "${P}/tools" "${P}/tools-renamed-by-gentoo"
+}
 
 src_compile() {
 	local antflags="main"
 	use jikes && antflags="${antflags} -Dbuild.compiler=jikes"
 	use doc && antflags="${antflags} jdoc -Djdoc.dir=api"
 
-	ant ${antflags} || die "Ant failed"
+	CLASSPATH="$(java-pkg_getjars junit):${CLASSPATH}" \
+		 ant ${antflags} || die "Ant failed"
 }
 
 src_install() {
