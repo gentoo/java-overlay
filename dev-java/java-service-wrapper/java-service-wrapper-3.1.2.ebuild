@@ -6,7 +6,7 @@ inherit base java-pkg
 
 MY_PN=wrapper
 MY_P="${MY_PN}_${PV}_src"
-DESCRIPTION=" The Wrapper makes it possible to install a Java Application as a Windows NT Service. The scripts provided with the Wrapper also make it very easy to install those same Java Applications as daemon processes on UNIX systems."
+DESCRIPTION="The Wrapper makes it possible to install a Java Application as daemon." 
 HOMEPAGE="http://wrapper.tanukisoftware.org/doc/english/introduction.html"
 SRC_URI="mirror://sourceforge/${MY_PN}/${MY_P}.tar.gz"
 
