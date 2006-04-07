@@ -10,11 +10,12 @@ IUSE="jikes"
 SLOT="4"
 KEYWORDS="~amd64 ~x86"
 
+# this doesn't like javacc-4 apparently, but depending on =3* would create a
+# up/downgrade cycle
 COMMON_DEPEND="dev-java/log4j
 	=dev-java/dom4j-1*
 	dev-java/junit
 	dev-db/hsqldb
-	dev-java/javacc
 	dev-java/concurrent-util
 	=dev-java/jboss-module-j2ee-${PV}*
 	=dev-java/jboss-module-common-${PV}*

@@ -10,6 +10,7 @@ IUSE="jikes"
 SLOT="4"
 KEYWORDS="~amd64 ~x86"
 
+# unhappy on amd64? or is javacc-4.0 evil?
 COMMON_DEPEND="dev-java/bcel
 	=dev-java/commons-beanutils-1.6*
 	dev-java/commons-codec

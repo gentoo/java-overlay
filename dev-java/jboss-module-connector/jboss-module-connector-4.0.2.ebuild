@@ -31,6 +31,7 @@ COMMON_DEPEND="
 	=dev-java/jboss-module-jmx-${PV}*
 	=dev-java/jboss-module-transaction-${PV}*"
 DEPEND=">=virtual/jdk-1.3
+	dev-java/javacc
 	${COMMON_DEPEND}"
 RDEPEND=">=virtual/jre-1.3
 	${COMMON_DEPEND}"

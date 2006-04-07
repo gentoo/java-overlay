@@ -10,6 +10,7 @@ MY_A="${MY_A/${P}-gentoo/${P}-gentoo-r1}"
 IUSE="jikes"
 KEYWORDS="~amd64 ~x86"
 
+# uh, apparently this doesn't like newer xerces.
 COMMON_DEPEND="=dev-java/bsf-2.3*
 	dev-java/xml-commons-resolver
 	dev-java/xalan
