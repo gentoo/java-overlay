@@ -18,7 +18,7 @@ DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	jikes? ( dev-java/jikes )"
 RDEPEND=">=virtual/jre-1.4
-	dev-java/nanoxml"
+	=dev-java/nanoxml-2.2*"
 S=${WORKDIR}/${PN}
 
 src_unpack() {
@@ -27,7 +27,7 @@ src_unpack() {
 	
 	cd externals
 	rm *.jar
-	java-pkg_jar-from nanoxml nanoxml-lite.jar
+	java-pkg_jar-from nanoxml-2.2 nanoxml-lite.jar
 }
 
 src_compile() {
