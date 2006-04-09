@@ -11,7 +11,7 @@ SLOT="5.5"
 #SRC_URI="mirror://apache/tomcat-5/v${PV}/src/apache-${P}-src.tar.gz"
 SRC_URI="mirror://apache/${PN}/${PN}-5/v${PV}/src/${MY_P}.tar.gz"
 HOMEPAGE="http://jakarta.apache.org/tomcat"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 LICENSE="Apache-2.0"
 
 RDEPEND=">=virtual/jdk-1.4
