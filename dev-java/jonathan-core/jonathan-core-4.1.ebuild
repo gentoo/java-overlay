@@ -21,7 +21,7 @@ DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	jikes? ( dev-java/jikes )"
 RDEPEND=">=virtual/jre-1.4
-	dev-java/nanoxml
+	=dev-java/nanoxml-2.2*
 	=dev-java/kilim-1*
 	dev-java/monolog"
 S=${WORKDIR}/${MY_PN}
@@ -33,7 +33,7 @@ src_unpack() {
 	cd config
 	#rm *.jar
 	java-pkg_jar-from kilim-1 kilim-tools.jar
-	java-pkg_jar-from nanoxml nanoxml-lite.jar nanoxml-lite-2.2.1.jar
+	java-pkg_jar-from nanoxml-2.2 nanoxml-lite.jar nanoxml-lite-2.2.1.jar
 	# when we use the jar from this package, jar and jdoc targets break...
 	#java-pkg_jar-from ow-util-ant-tasks
 
