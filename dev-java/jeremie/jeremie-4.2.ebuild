@@ -24,7 +24,7 @@ RDEPEND=">=virtual/jre-1.4
 	=dev-java/jonathan-core-4*
 	=dev-java/kilim-2*
 	dev-java/monolog
-	dev-java/nanoxml"
+	=dev-java/nanoxml-2.2*"
 
 S=${WORKDIR}/${PN}
 
@@ -37,7 +37,7 @@ src_unpack() {
 	java-pkg_jar-from jonathan-core-4
 	java-pkg_jar-from kilim-1 kilim.jar
 	java-pkg_jar-from monolog ow_monolog.jar
-	java-pkg_jar-from nanoxml nanoxml-lite.jar nanoxml-lite-2.2.1.jar
+	java-pkg_jar-from nanoxml-2.2 nanoxml-lite.jar nanoxml-lite-2.2.1.jar
 	
 	# the jar from my ow-util-ant-tasks seems to slightly not work
 	cd ../config
