@@ -23,7 +23,7 @@ DEPEND="${RDEPEND}
 	dev-java/ant-core
 	dev-libs/openssl"
 
-RESIN_HOME="/opt/resin"
+RESIN_HOME="/usr/lib/resin"
 
 src_unpack() {
 
@@ -37,10 +37,6 @@ pkg_preinst() {
 	enewgroup resin
 	enewuser resin -1 /bin/bash ${RESIN_HOME} resin
 
-	einfo "Fixing ownership..."
-	chown -R resin:resin ${D}${RESIN_HOME}
-	chown -R resin:resin ${D}/var/log/resin
-
 }
 
 src_compile() {
@@ -51,7 +47,8 @@ src_compile() {
 	econf --prefix=${RESIN_HOME} || die "econf failed"
 
 	einfo "Building libraries..."
-	emake || die "emake failed"
+	# Broken with -jn where n > 1
+	emake -j1 || die "emake failed"
 
 	CP=`java-config -p iso-relax,aopalliance-1`:${CLASSPATH}
 
@@ -73,8 +70,10 @@ src_install() {
 	mv ${D}/${RESIN_HOME}/conf ${D}/etc/resin
 	dosym /etc/resin ${RESIN_HOME}/conf
 
-	dodir /var/log/resin
 	keepdir /var/log/resin
+	keepdir /var/log/resin
+	keepdir /var/run/resin
+
 	dosym /var/log/resin ${RESIN_HOME}/logs
 	dosym /var/log/resin ${RESIN_HOME}/log
 
@@ -82,11 +81,15 @@ src_install() {
 
 	newinitd ${FILESDIR}/${PV}/resin.init resin
 	newconfd ${FILESDIR}/${PV}/resin.conf resin
-	doenvd ${FILESDIR}/${PV}/21resin
 
 	java-pkg_dojar ${S}/lib/*.jar
 	rm -fr ${D}/${RESIN_HOME}/lib
-	dosym /usr/share/${PN}/lib ${RESIN_HOME}/lib
+	dosym /usr/share/resin/lib ${RESIN_HOME}/lib
+
+	dodir /var/lib/resin/webapps
+	mv ${D}/${RESIN_HOME}/webapps/* ${D}/var/lib/resin/webapps
+	rm -rf ${D}/${RESIN_HOME}/webapps
+	dosym /var/lib/resin/webapps ${RESIN_HOME}/webapps
 
 	dosym /etc/resin/resin.conf /etc/resin/resin.xml
 
@@ -95,33 +98,28 @@ src_install() {
 	rm -f ${D}/etc/resin/*.orig
 
 	einfo "Fixing permissions..."
+	chown -R resin:resin ${D}${RESIN_HOME}
+	chown -R resin:resin ${D}/etc/resin
+	chown -R resin:resin ${D}/var/log/resin
+	chown -R resin:resin ${D}/var/lib/resin
+	chown -R resin:resin ${D}/var/run/resin
+
 	chmod 755 ${D}${RESIN_HOME}/bin/*
 	chmod 644 ${D}/etc/conf.d/resin
 	chmod 755 ${D}/etc/init.d/resin
+	chmod 750 ${D}/var/lib/resin
+	chmod 750 ${D}/var/run/resin
+	chmod 750 ${D}/etc/resin
 
 }
 
 pkg_postinst() {
 
 	einfo
-	einfo " NOTICE!"
 	einfo " User and group 'resin' have been added."
-	einfo " "
-	einfo " FILE LOCATIONS:"
-	einfo " 1.  Resin home directory: ${RESIN_HOME}"
-	einfo "     Contains application data, configuration files."
-	einfo " 2.  Runtime settings: /etc/conf.d/resin"
-	einfo "     Contains CLASSPATH and JAVA_HOME settings."
-	einfo " 3.  Logs:  /var/log/resin/"
 	einfo
-	einfo " STARTING AND STOPPING RESIN:"
-	einfo "   /etc/init.d/resin start"
-	einfo "   /etc/init.d/resin stop"
-	einfo "   /etc/init.d/resin restart"
-	einfo
-	einfo " NETWORK CONFIGURATION:"
 	einfo " By default, Resin runs on port 8080.  You can change this"
-	einfo " value by editing ${RESIN_HOME}/conf/resin.conf."
+	einfo " value by editing /etc/conf/resin.conf."
 	einfo
 	einfo " To test Resin while it's running, point your web browser to:"
 	einfo " http://localhost:8080/"
@@ -132,15 +130,7 @@ pkg_postinst() {
 	einfo " Resin or the network gateway.  Simply redirect port 80 to"
 	einfo " port 8080."
 	einfo
-	einfo " BUGS:"
-	einfo " Please file any bugs at http://bugs.gentoo.org/ or else it"
-	einfo " may not get seen.  Thank you."
+	einfo " webapps directory was moved to /var/lib/resin/webapps "
 	einfo
-
-}
-
-pkg_postrm() {
-
-	einfo "You may want to remove the resin user and group"
 
 }

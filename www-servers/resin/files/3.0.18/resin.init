@@ -10,14 +10,12 @@ depend() {
 
 start()	{
 	ebegin "Starting Resin"
-	cd ${RESIN_HOME}
-	su - ${RESIN_USER} -c "/opt/resin/bin/httpd.sh ${JAVA_OPTS} ${RESIN_START}"
+	su resin -c "${RESIN_HOME}/bin/httpd.sh ${JAVA_OPTS} -pid-dir /var/run/resin/ -java_home ${JAVA_HOME} -resin_home ${RESIN_HOME} -cp ${CLASSPATH} -stdout ${RESIN_OUT} -stderr ${RESIN_ERR} ${RESIN_START}"
 	eend $?
 }
 
 stop()	{
 	ebegin "Stopping Resin"
-	su - ${RESIN_USER} -c "/opt/resin/bin/httpd.sh ${JAVA_OPTS} ${RESIN_STOP}"
-	sleep 2
+	su resin -c "${RESIN_HOME}/bin/httpd.sh ${JAVA_OPTS} -pid-dir /var/run/resin/ ${RESIN_STOP}"
 	eend $?
 }
