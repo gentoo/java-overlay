@@ -32,8 +32,9 @@ src_unpack() {
 
 }
 
-pkg_preinst() {
+pkg_setup() {
 
+	einfo "Adding resin:resin"
 	enewgroup resin
 	enewuser resin -1 /bin/bash ${RESIN_HOME} resin
 
