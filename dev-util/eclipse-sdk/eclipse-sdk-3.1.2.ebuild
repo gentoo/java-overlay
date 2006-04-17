@@ -160,7 +160,7 @@ src_install() {
 	fi
 
 	# Install startup script
-#	/usr/bin
+	exeinto /usr/bin
 	doexe ${FILESDIR}/eclipse-${SLOT}
 
 	# TODO use make_desktop_entry from eutils instead
@@ -333,6 +333,7 @@ install_link_file() {
 }
 
 # TODO figure out if we really need the *-3.link files -nichoj
+# TODO there's a problem with actually installing the files.
 install-link-files() {
 	einfo "Installing link files"
 
@@ -366,5 +367,3 @@ strip-docs() {
 		${bp}/plugins/org.eclipse.jdt.doc.* \
 		${bp}/plugins/org.eclipse.pde.doc.*
 }
-
-
