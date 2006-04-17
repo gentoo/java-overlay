@@ -42,7 +42,9 @@ ECLIPSE_LINKS_DIR="${ECLIPSE_DIR}/links"
 
 pkg_setup() {
 	debug-print "Checking for sufficient physical RAM"
-	check-ram
+	CHECKREQS_MEMORY="768"
+	check_reqs
+
 	debug-print "Checking for bad CFLAGS"
 	check-cflags
 
@@ -136,7 +138,6 @@ src_install() {
 
 	debug-print "Installing features and plugins"
 
-	# TODO figure out if we need to extract this tarball -nichoj
 	[ -f result/linux-gtk-${eclipsearch}-sdk.tar.gz ] || die "tar.gz bundle was not built properly!"
 	tar zxf result/linux-gtk-${eclipsearch}-sdk.tar.gz -C ${D}/usr/lib || die "Failed to extract the built package"
 
@@ -221,14 +222,14 @@ get-memory-total() {
 }
 
 check-ram() {
-	local mem=$(get-memory-total)
-	if [ $(get-memory-total) -lt 775000 ]; then
+#	local mem=$(get-memory-total)
+#	if [ $(get-memory-total) -lt 775000 ]; then
+#		echo
+#		ewarn "To build Eclipse, at least 768MB of RAM is recommended."
+#		ewarn "Your machine has less RAM. Continuing anyway. If the build"
+#		ewarn "stops with an error about invalid memory, increase your swap."
 		echo
-		ewarn "To build Eclipse, at least 768MB of RAM is recommended."
-		ewarn "Your machine has less RAM. Continuing anyway. If the build"
-		ewarn "stops with an error about invalid memory, increase your swap."
-		echo
-	fi
+#	fi
 }
 
 check-cflags() {
@@ -261,12 +262,12 @@ setup-jvm-opts() {
 	# Figure out correct boot classpath
 	# karltk: this should be handled by the java-pkg eclass in setup-vm
 	if [ ! -z "`java-config --java-version | grep IBM`" ] ; then
-		# IBM JRE
+		# IBM JDK
 		local bp="$(java-config --jdk-home)/jre/lib"
 		bootclasspath="${bp}/core.jar:${bp}/xml.jar:${bp}/graphics.jar:${bp}/security.jar:${bp}/server.jar"
 		JAVA_LIB_DIR="$(java-config --jdk-home)/jre/bin"
 	else
-		# Sun derived JREs (Blackdown, Sun)
+		# Sun derived JDKs (Blackdown, Sun)
 		local bp="$(java-config --jdk-home)/jre/lib"
 		bootclasspath="${bp}/rt.jar:${bp}/jsse.jar"
 		JAVA_LIB_DIR="$(java-config --jdk-home)/jre/lib/${jvmarch}"
@@ -326,14 +327,12 @@ install-desktop-entry() {
 }
 
 install_link_file() {
-	local file=${1}
-	local path=${2}
+	local path=${1}
+	local file=${2}
 
-	echo "path=${path}" > ${D}/${ECLIPSE_LINKS_DIR}/"${file}"
+	echo "path=${path}" > "${D}/${ECLIPSE_LINKS_DIR}/${file}"
 }
 
-# TODO figure out if we really need the *-3.link files -nichoj
-# TODO there's a problem with actually installing the files.
 install-link-files() {
 	einfo "Installing link files"
 
