@@ -1,7 +1,7 @@
-diff -Nru resin-3.0.17.vanilla/configure.in resin-3.0.17/configure.in
---- resin-3.0.17.vanilla/configure.in	2006-02-10 15:14:26.000000000 +0100
-+++ resin-3.0.17/configure.in	2006-02-10 15:14:56.000000000 +0100
-@@ -293,16 +293,6 @@
+diff -Nru resin-3.0.18.vanilla/configure.in resin-3.0.18/configure.in
+--- resin-3.0.18.vanilla/configure.in	2006-04-18 19:31:13.000000000 +0200
++++ resin-3.0.18/configure.in	2006-04-18 19:31:42.000000000 +0200
+@@ -295,16 +295,6 @@
    apache_bin="${apache_dir}/bin"
  fi
  
@@ -18,10 +18,10 @@ diff -Nru resin-3.0.17.vanilla/configure.in resin-3.0.17/configure.in
  #
  # heuristics for finding the Apache module directory
  #
-diff -Nru resin-3.0.17.vanilla/modules/c/src/apache2/Makefile.in resin-3.0.17/modules/c/src/apache2/Makefile.in
---- resin-3.0.17.vanilla/modules/c/src/apache2/Makefile.in	2006-02-10 15:14:26.000000000 +0100
-+++ resin-3.0.17/modules/c/src/apache2/Makefile.in	2006-02-10 15:22:14.000000000 +0100
-@@ -35,11 +35,8 @@
+diff -Nru resin-3.0.18.vanilla/modules/c/src/apache2/Makefile.in resin-3.0.18/modules/c/src/apache2/Makefile.in
+--- resin-3.0.18.vanilla/modules/c/src/apache2/Makefile.in	2006-04-18 19:31:13.000000000 +0200
++++ resin-3.0.18/modules/c/src/apache2/Makefile.in	2006-04-18 19:31:42.000000000 +0200
+@@ -36,11 +36,8 @@
  	$(CC) -c $(INCLUDES) $(CFLAGS) $<
  
  install	: mod_caucho.la
