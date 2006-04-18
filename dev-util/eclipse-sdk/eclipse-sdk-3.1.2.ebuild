@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-util/eclipse-sdk/eclipse-sdk-3.1.1.ebuild,v 1.1 2005/11/09 19:00:28 axxo Exp $
 
-inherit eutils java-utils flag-o-matic
+inherit eutils java-utils flag-o-matic check-reqs
 
 MY_A="eclipse-sourceBuild-srcIncluded-${PV}.zip"
 RELEASE_DATE="200601181600"
@@ -170,6 +170,12 @@ src_install() {
 	doman ${FILESDIR}/eclipse.1
 
 	install-link-files
+
+	# TODO fix permission
+	dodir /var/lib/eclipse-${SLOT}
+	touch ${D}/var/lib/eclipse-${SLOT}/.eclipseextension
+	fowners root:eclipse /var/lib/eclipse-${SLOT}
+
 }
 
 # -----------------------------------------------------------------------------
@@ -215,21 +221,6 @@ fix_amd64_ibm_jvm() {
 
 clean-prebuilt-code() {
 	find ${S} -type f \( -name '*.class' -o -name '*.so' -o -name '*.so.*' -o -name 'eclipse' \) | xargs rm -f
-}
-
-get-memory-total() {
-	cat /proc/meminfo | grep MemTotal | sed -r "s/[^0-9]*([0-9]+).*/\1/"
-}
-
-check-ram() {
-#	local mem=$(get-memory-total)
-#	if [ $(get-memory-total) -lt 775000 ]; then
-#		echo
-#		ewarn "To build Eclipse, at least 768MB of RAM is recommended."
-#		ewarn "Your machine has less RAM. Continuing anyway. If the build"
-#		ewarn "stops with an error about invalid memory, increase your swap."
-		echo
-#	fi
 }
 
 check-cflags() {

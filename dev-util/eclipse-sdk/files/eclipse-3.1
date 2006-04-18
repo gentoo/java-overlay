@@ -25,6 +25,8 @@ else
 		ECLIPSE_BIN=${ECLIPSE_HOME}/eclipse-gtk
 	elif [ -x ${ECLIPSE_HOME}/eclipse-motif ] ; then
 		ECLIPSE_BIN=${ECLIPSE_HOME}/eclipse-motif
+    elif [ -x ${ECLIPSE_HOME}/eclipse ] ; then
+        ECLIPSE_BIN=${ECLIPSE_HOME}/eclipse
 	fi
 fi
 
