@@ -51,6 +51,14 @@ TOMCAT_HOME="/usr/share/${PN}-${SLOT}"
 TOMCAT_NAME="${PN}-${SLOT}"
 WEBAPPS_DIR="/var/lib/${TOMCAT_NAME}/webapps"
 
+pkg_setup() {
+
+	# new user for tomcat
+	enewgroup tomcat
+	enewuser tomcat -1 -1 /dev/null tomcat
+
+}
+
 src_unpack() {
 	unpack ${A}
 	cd ${S}
@@ -131,10 +139,6 @@ src_compile(){
 
 }
 src_install() {
-	# new user for tomcat
-	enewgroup tomcat
-	enewuser tomcat -1 -1 /dev/null tomcat
-
 	cd ${S}/build/build
 
 	# init.d, env.d, conf.d
