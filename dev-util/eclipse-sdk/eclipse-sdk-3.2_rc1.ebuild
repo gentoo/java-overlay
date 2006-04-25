@@ -143,6 +143,8 @@ src_install() {
 
 	[ -f result/linux-gtk-${eclipsearch}-sdk.tar.gz ] || die "tar.gz bundle was not built properly!"
 	tar zxf result/linux-gtk-${eclipsearch}-sdk.tar.gz -C ${D}/usr/lib || die "Failed to extract the built package"
+	# workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=138049
+	cp -r baseLocation/plugins/* ${D}/usr/lib/eclipse/plugins
 
 
 	mv ${D}/usr/lib/eclipse ${D}/${ECLIPSE_DIR}
