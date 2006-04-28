@@ -54,7 +54,7 @@ src_compile() {
 	if [[ ! -z "$(java-config --java-version | grep 'IBM')" ]] ; then
 		export AWT_LIB_PATH=$JAVA_HOME/jre/bin
 	elif [[ ! -z "$(java-config --java-version | grep 'GNU libgcj')" ]] ; then
-		export AWT_LIB_PATH=$JAVA_HOME/lib
+		export AWT_LIB_PATH=$JAVA_HOME/$(get_libdir)
 	else
 		if [[ ${ARCH} == 'x86' ]] ; then
 			export AWT_LIB_PATH=$JAVA_HOME/jre/lib/i386
@@ -78,7 +78,7 @@ src_compile() {
 	emake -f make_linux.mak make_swt || die "Failed to build SWT support"
 
 	# Building this always as azureus does not start without this
-	echo "Building JAVA-AT-SPI bridge"
+	einfo "Building JAVA-AT-SPI bridge"
 	emake -f make_linux.mak make_atk || die "Failed to build ATK support"
 
 	if use gnome ; then
