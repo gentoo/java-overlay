@@ -4,9 +4,10 @@
 
 inherit java-pkg versionator
 
+MY_PV=$(replace_version_separator 1 '_')
 DESCRIPTION="A set of monitoring APIs and tools for monitoring the performance of the JVM in production environments."
 HOMEPAGE="http://java.sun.com/performance/jvmstat/"
-SRC_URI="jvmstat-3_0.zip"
+SRC_URI="jvmstat-${MY_PV}.zip"
 
 LICENSE="sun-bcla-jvmstat"
 SLOT="0"
