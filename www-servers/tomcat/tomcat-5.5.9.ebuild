@@ -47,6 +47,12 @@ S=${WORKDIR}/jakarta-${P}-src
 TOMCAT_HOME="/usr/share/${PN}-${SLOT}"
 TOMCAT_NAME="${PN}-${SLOT}"
 
+pkg_setup() {
+	# new user for tomcat
+	enewgroup tomcat
+	enewuser tomcat -1 -1 /dev/null tomcat
+}
+
 src_unpack() {
 	unpack ${A}
 
@@ -122,10 +128,6 @@ src_compile(){
 
 }
 src_install() {
-	# new user for tomcat
-	enewgroup tomcat
-	enewuser tomcat -1 -1 /dev/null tomcat
-
 	cd ${S}/jakarta-tomcat-5/build
 
 	# init.d, env.d, conf.d
