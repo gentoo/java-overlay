@@ -15,7 +15,7 @@ KEYWORDS="~amd64 ~x86"
 LICENSE="Apache-2.0"
 
 RDEPEND=">=virtual/jdk-1.4
-	   >=dev-java/eclipse-ecj-3.1*
+	   =dev-java/eclipse-ecj-3.1*
            =dev-java/commons-beanutils-1.7*
            >=dev-java/commons-collections-3.1
            >=dev-java/commons-daemon-1.0.1
