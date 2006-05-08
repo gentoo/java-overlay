@@ -31,11 +31,11 @@ COMMON_DEPEND="=dev-java/bsf-2.3*
 	dev-java/concurrent-util
 	dev-java/log4j
 	=dev-java/dtdparser-1.21*"
-DEPEND=">=virtual/jdk-1.3
+DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	dev-java/ant-tasks
 	dev-java/junit
 	${COMMON_DEPEND}
 "
-RDEPEND=">=virtual/jre-1.3
+RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"

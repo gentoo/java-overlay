@@ -105,7 +105,8 @@ src_compile() {
 	fi
 
 	# TODO use cleaner form for getting 1.5 vm
-	./build -os linux -arch ${eclipsearch} -ws gtk -java5home $(GENTOO_VM=sun-jdk-1.5 java-config --jdk-home)
+	local java5home=$(depend-java-query --get-vm ">=virtual/jdk-1.5")
+	./build -os linux -arch ${eclipsearch} -ws gtk -java5home ${java5home}
 #	use jikes && bootstrap_ant_opts="-Dbuild.compiler=jikes"
 
 #	debug-print "Bootstrapping bootstrap ecj"

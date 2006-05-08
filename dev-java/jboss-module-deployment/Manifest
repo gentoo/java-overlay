@@ -1,2 +1,6 @@
-MD5 dad2ee35ed8c2550b4d514bd55cc9184 jboss-module-deployment-4.0.2.ebuild 567
 MD5 a99d5ad0353e15a9c1da8090a2ff8c6c files/digest-jboss-module-deployment-4.0.2 322
+RMD160 2e5be86aba5333d27513946d528011bf91b4f694 files/digest-jboss-module-deployment-4.0.2 322
+SHA256 e680e0ddd8780a06446c2edde9393404641bee92dcb2ab84fb5536df4acfb616 files/digest-jboss-module-deployment-4.0.2 322
+MD5 0bd8558233f68dd4f7857a9fd7b24b42 jboss-module-deployment-4.0.2.ebuild 567
+RMD160 937529baccca1c09618a07761496d07fe93139d8 jboss-module-deployment-4.0.2.ebuild 567
+SHA256 8f74a85c2f61685390da4f133f51a3e95ca3c7127ac2d80e79d8450a7bd38bad jboss-module-deployment-4.0.2.ebuild 567

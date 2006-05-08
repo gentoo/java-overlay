@@ -38,5 +38,5 @@ COMMON_DEPEND="=dev-java/commons-beanutils-1.6*
 	=dev-java/jboss-module-server-${PV}*
 	=dev-java/jboss-module-system-${PV}*
 	=dev-java/jboss-module-transaction-${PV}*"
-DEPEND=">=virtual/jdk-1.3 ${COMMON_DEPEND}"
-RDEPEND=">=virtual/jre-1.3 ${COMMON_DEPEND}"
+DEPEND=">=virtual/jdk-1.4 ${COMMON_DEPEND}"
+RDEPEND=">=virtual/jre-1.4 ${COMMON_DEPEND}"

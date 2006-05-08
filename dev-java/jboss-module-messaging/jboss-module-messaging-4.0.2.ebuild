@@ -10,6 +10,7 @@ IUSE="jikes"
 SLOT="4"
 KEYWORDS="~amd64 ~x86"
 
+# FIXME doesn't like javacc-4
 COMMON_DEPEND="dev-java/commons-codec
 	dev-java/commons-collections
 	dev-java/commons-digester
@@ -29,7 +30,7 @@ COMMON_DEPEND="dev-java/commons-codec
 	=dev-java/jboss-module-security-${PV}*
 	=dev-java/jboss-module-jmx-${PV}*
 	=dev-java/jboss-module-transaction-${PV}*"
-DEPEND=">=virtual/jdk-1.3 
+DEPEND=">=virtual/jdk-1.4 
 	dev-java/javacc
 	${COMMON_DEPEND}"
-RDEPEND=">=virtual/jre-1.3 ${COMMON_DEPEND}"
+RDEPEND=">=virtual/jre-1.4 ${COMMON_DEPEND}"

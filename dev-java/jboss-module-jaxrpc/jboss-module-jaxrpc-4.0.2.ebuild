@@ -32,5 +32,6 @@ COMMON_DEPEND="
 	=dev-java/jboss-module-j2ee-${PV}*
 	=dev-java/jboss-module-jmx-${PV}*
 	=dev-java/jboss-module-system-${PV}*"
-DEPEND=">=virtual/jdk-1.3 ${COMMON_DEPEND}"
-RDEPEND=">=virtual/jre-1.3 ${COMMON_DEPEND} "
+# TODO check with 1.5
+DEPEND="=virtual/jdk-1.4* ${COMMON_DEPEND}"
+RDEPEND=">=virtual/jre-1.4 ${COMMON_DEPEND} "

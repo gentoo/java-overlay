@@ -20,5 +20,5 @@ DEPEND=">=virtual/jdk-1.4
 RDEPEND=">=virtual/jre-1.4"
 
 src_unpack() {
-	:;
+	die "Whoops, ebuild not done"
 }

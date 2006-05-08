@@ -34,9 +34,9 @@ COMMON_DEPEND="dev-java/commons-codec
 	=dev-java/jboss-module-messaging-${PV}*
 	=dev-java/jboss-module-security-${PV}*
 	=dev-java/jboss-module-transaction-${PV}*"
-DEPEND=">=virtual/jdk-1.3
+DEPEND=">=virtual/jdk-1.4
 	${COMMON_DEPEND}"
-RDEPEND=">=virtual/jre-1.3
+RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"
 
 #src_install() {

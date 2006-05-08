@@ -7,7 +7,7 @@
 # Purpose: 
 #
 
-inherit java-pkg
+inherit java-pkg-2 
 
 ECLASS="jboss-4"
 INHERITED="$INHERITED $ECLASS"
@@ -169,6 +169,8 @@ jboss-4_src_unpack() {
 	
 	source ${DISTDIR}/${GENTOO_CONF}
 
+	# NOTE: don't use java-ant's src_unpack! it cases some funky issues with
+	# buildmagic
 	unpack ${MY_A}
 
 	mkdir -p ${JBOSS_THIRDPARTY}/sun-servlet/lib # workaround because something
@@ -183,9 +185,8 @@ jboss-4_src_compile() {
 	
 	cd ${S}
 	local antflags="${ANT_TARGET:-jars}"
-	use jikes && antflags="-Dbuild.compiler=jikes"
 
-	ant ${antflags} || die "Build script failed"
+	eant -lib $(java-pkg_getjars buildmagic-tasks) ${antflags}
 }
 
 jboss-4_src_install() {

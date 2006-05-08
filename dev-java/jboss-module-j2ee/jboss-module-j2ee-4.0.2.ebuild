@@ -15,7 +15,7 @@ KEYWORDS="~amd64 ~x86"
 COMMON_DEPEND="=dev-java/gnu-jaf-1*
 	~dev-java/servletapi-2.4
 	=dev-java/jboss-module-common-4.0.2*"
-DEPEND=">=virtual/jdk-1.3
+DEPEND=">=virtual/jdk-1.4
 	${COMMON_DEPEND}"
-RDEPEND=">=virtual/jre-1.3
+RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"

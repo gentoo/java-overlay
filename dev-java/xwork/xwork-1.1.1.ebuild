@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg-2
+inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="A command-pattern framework that is used to power WebWork as well as other applications"
 HOMEPAGE="http://opensymphony.com/xwork/"
@@ -44,7 +44,7 @@ ant_src_unpack() {
 	java-pkg_jar-from dom4j-1
 	java-pkg_jar-from cglib-2 cglib.jar
 	for jar in core aop web beans context; do
-		java-pkg_jar-from spring-1.2 spring-${jar}.jar
+		java-pkg_jar-from spring spring-${jar}.jar
 	done
 }
 

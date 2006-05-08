@@ -1,2 +1,6 @@
-MD5 aa345a3132593d0e0a72313e806866e4 jboss-module-jms-4.0.2.ebuild 683
 MD5 b1fc8c759e65805485254c342c022060 files/digest-jboss-module-jms-4.0.2 315
+RMD160 ac511a39c643ae0349c544dbeb2cb9d7aa7c436a files/digest-jboss-module-jms-4.0.2 315
+SHA256 d821638a4cbe8f6745e7d61c5c74540a13ee61d9b5a5b59f4f606061edaab987 files/digest-jboss-module-jms-4.0.2 315
+MD5 71dda0433bc6d52dacb9b63fe8d9d0aa jboss-module-jms-4.0.2.ebuild 683
+RMD160 549cee86f30534c9b2a60c889714aebff654510e jboss-module-jms-4.0.2.ebuild 683
+SHA256 af8fabb75216394403218d0c8ebfb8c35f0dcfb79a112e02aefa6908fca56a3e jboss-module-jms-4.0.2.ebuild 683

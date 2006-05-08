@@ -34,8 +34,8 @@ COMMON_DEPEND="=dev-java/commons-beanutils-1.6*
 	=dev-java/jboss-module-cluster-${PV}*
 	=dev-java/jboss-module-cache-${PV}*
 	=dev-java/jboss-module-connector-${PV}*"	
-DEPEND=">=virtual/jdk-1.3 ${COMMON_DEPEND}"
-RDEPEND=">=virtual/jre-1.3 ${COMMON_DEPEND}"
+DEPEND=">=virtual/jdk-1.4 ${COMMON_DEPEND}"
+RDEPEND=">=virtual/jre-1.4 ${COMMON_DEPEND}"
 
 pkg_setup() {
 	if ! has_version ">=www-servers/tomcat-5.5.9"; then

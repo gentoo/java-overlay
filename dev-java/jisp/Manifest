@@ -4,9 +4,15 @@ SHA256 a6b38b8f17c5ec3a0fa1b7b0b7a94acaec498a889ad7d990feb5c580f3616d1a files/bu
 MD5 64b6a59173de47481e28297dfaef22da files/digest-jisp-2.5.1 68
 RMD160 dab24bf22417a81ab88c8b596d6d39f2f38da4d1 files/digest-jisp-2.5.1 68
 SHA256 596c50d6f6b38f1be0d223321889fd2d44d8b1c810d19c9a684541db48eddb5e files/digest-jisp-2.5.1 68
+MD5 8a0874599a8b5c856d759c58bba7c4e7 files/digest-jisp-2.5.1-r1 250
+RMD160 9d5a56e1f8ef00b834dea442951510d5e65eb36c files/digest-jisp-2.5.1-r1 250
+SHA256 44d2f3fafec67fa0a891cdc7264cf72e839de78f4742cf74cd540167202ffbef files/digest-jisp-2.5.1-r1 250
 MD5 666518a6919fd61f39f85e78d021ddc2 files/jisp-2.5.1-java15.patch 1828
 RMD160 feffa6b29bb1b3ebac00e4faf1efe7398bdeb68f files/jisp-2.5.1-java15.patch 1828
 SHA256 9c96ff406dce1572ad86461f662c41de8de4c8b1c0b9e3e274ecb050481e54be files/jisp-2.5.1-java15.patch 1828
+MD5 941c7dda07084a1745ca757e913e60b6 jisp-2.5.1-r1.ebuild 981
+RMD160 2f86755da44e80b4efe1dcbd4af3fdd404fc86c4 jisp-2.5.1-r1.ebuild 981
+SHA256 51d6a8a3128c0351464dccb3a2d78e5f0022680b2eb94f2bbeed75f45ced97c6 jisp-2.5.1-r1.ebuild 981
 MD5 444e5a5be5deb2d12b8779c43917052a jisp-2.5.1.ebuild 1140
 RMD160 07228651f2f937175c12842782caaa7eb1e46cd2 jisp-2.5.1.ebuild 1140
 SHA256 326c4c3af560a49ccafbee65b3fdf16c8bf666e336ebd9472036455ea2a8919f jisp-2.5.1.ebuild 1140

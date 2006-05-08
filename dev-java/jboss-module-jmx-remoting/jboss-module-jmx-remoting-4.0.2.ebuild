@@ -14,7 +14,7 @@ COMMON_DEPEND="dev-java/log4j
 	dev-java/concurrent-util
 	=dev-java/jboss-module-jmx-${PV}*
 	=dev-java/jboss-module-remoting-${PV}*"
-DEPEND=">=virtual/jdk-1.3 ${COMMON_DEPEND}"
-RDEPEND=">=virtual/jre-1.3 ${COMMON_DEPEND}"
+DEPEND=">=virtual/jdk-1.4 ${COMMON_DEPEND}"
+RDEPEND=">=virtual/jre-1.4 ${COMMON_DEPEND}"
 
 ANT_TARGET="output"

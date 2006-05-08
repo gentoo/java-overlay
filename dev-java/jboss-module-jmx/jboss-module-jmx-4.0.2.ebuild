@@ -31,7 +31,7 @@ COMMON_DEPEND="=dev-java/jboss-module-common-${PV}*
 	=dev-java/crimson-1*
 	dev-java/gnu-jaxp
 	dev-java/sax"
-DEPEND=">=virtual/jdk-1.3 ${COMMON_DEPEND}"
-RDEPEND=">=virtual/jre-1.3 ${COMMON_DEPEND}"
+DEPEND=">=virtual/jdk-1.4 ${COMMON_DEPEND}"
+RDEPEND=">=virtual/jre-1.4 ${COMMON_DEPEND}"
 
 ANT_TARGET="output"

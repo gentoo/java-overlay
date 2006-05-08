@@ -7,6 +7,6 @@ SHA256 2ade4ee1676dc72e3978f319a991d5e377fa35a7a44a0c1e1a10bfb0345db404 files/di
 MD5 21269c3d0dbafcb533e1b4b938844a5e files/digest-jboss-module-webservice-4.0.2 928
 RMD160 ffd26f91ca6c6e7f624ae95362120d4b8ebe9beb files/digest-jboss-module-webservice-4.0.2 928
 SHA256 161ed35a730f06cf99825abefddf621905d4389c9b0df3b8081962af1c6ee440 files/digest-jboss-module-webservice-4.0.2 928
-MD5 c076911c44da6c742c46af2ec4a19d5a jboss-module-webservice-4.0.2.ebuild 1376
-RMD160 bdfc3eab5d8cbcc55229a68356e1c38717789b2a jboss-module-webservice-4.0.2.ebuild 1376
-SHA256 6e21e0619e17aa308183bece40634d9c41ef8db9ff783a0692f7630b131fe7e4 jboss-module-webservice-4.0.2.ebuild 1376
+MD5 43bcf8b399c4f6e783b4a1982cfe872b jboss-module-webservice-4.0.2.ebuild 1376
+RMD160 7c389687873f401b80b07a188b4c6a8c4b7f6738 jboss-module-webservice-4.0.2.ebuild 1376
+SHA256 be6a3f3fe8fa0d80347d182661766891d7ebbbc2a15aaa5b23708f070222c1dc jboss-module-webservice-4.0.2.ebuild 1376

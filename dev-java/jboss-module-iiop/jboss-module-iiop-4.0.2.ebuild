@@ -22,13 +22,11 @@ COMMON_DEPEND="
 	=dev-java/jboss-module-common-${PV}*
 	=dev-java/jboss-module-system-${PV}*
 	=dev-java/jboss-module-jmx-${PV}*"
-DEPEND=">=virtual/jdk-1.3
+DEPEND=">=virtual/jdk-1.4
 	${COMMON_DEPEND}"
-RDEPEND=">=virtual/jre-1.3
+RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"
 
 src_compile() {
-	cd ${S}
-
-	ant || die "Build script failed"
+	eant 
 }

@@ -30,8 +30,9 @@ COMMON_DEPEND="
 	=dev-java/jboss-module-system-${PV}*
 	=dev-java/jboss-module-jmx-${PV}*
 	=dev-java/jboss-module-transaction-${PV}*"
-DEPEND=">=virtual/jdk-1.3
+# TODO should be || ( =virtual/jdk-1.4* =virtual/jdk-1.5* )
+DEPEND="=virtual/jdk-1.4*
 	dev-java/javacc
 	${COMMON_DEPEND}"
-RDEPEND=">=virtual/jre-1.3
+RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"

@@ -35,8 +35,8 @@ COMMON_DEPEND="dev-java/bcel
 	=dev-java/jboss-module-transaction-${PV}*
 	=dev-java/jboss-module-naming-${PV}*
 	=dev-java/jboss-module-jmx-${PV}*"
-DEPEND=">=virtual/jdk-1.3 ${COMMON_DEPEND}"
-RDEPEND=">=virtual/jre-1.3 ${COMMON_DEPEND}"
+DEPEND="=virtual/jdk-1.4* ${COMMON_DEPEND}"
+RDEPEND=">=virtual/jre-1.4 ${COMMON_DEPEND}"
 
 # TODO remove enums
 # TODO need to increase maximum stack size on amd64 w/ blackdown, ie

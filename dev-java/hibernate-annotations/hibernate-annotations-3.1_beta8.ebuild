@@ -11,11 +11,10 @@ HIBERNATE_P="hibernate-3.1.2"
 DESCRIPTION="Annotations support for Hibernate"
 HOMEPAGE="http://annotations.hibernate.org"
 SRC_URI="mirror://sourceforge/hibernate/${MY_P}.tar.gz mirror://sourceforge/hibernate/${HIBERNATE_P}.tar.gz"
-# http://prdownloads.sourceforge.net/hibernate/hibernate-annotations-3.1beta8.tar.gz?download
 LICENSE=""
 SLOT="3.1"
 KEYWORDS="~x86"
-IUSE="doc"
+IUSE="doc source"
 
 DEPEND=">=virtual/jdk-1.5"
 RDEPEND=">=virtual/jre-1.5
@@ -60,4 +59,6 @@ src_compile() {
 src_install() {
 	java-pkg_dojar ${PN}.jar
 
+	use doc && java-pkg_dohtml -r doc/api
+	use source && java-pkg_dosrc src/*
 }

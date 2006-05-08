@@ -35,11 +35,11 @@ COMMON_DEPEND="=dev-java/commons-beanutils-1.6*
 	=dev-java/jboss-module-server-${PV}*
 	=dev-java/jboss-module-security-${PV}*
 	=dev-java/jboss-module-system-${PV}*"
-DEPEND=">=virtual/jdk-1.3 ${COMMON_DEPEND}"
-RDEPEND=">=virtual/jre-1.3 ${COMMON_DEPEND}"
+DEPEND=">=virtual/jdk-1.4 ${COMMON_DEPEND}"
+RDEPEND=">=virtual/jre-1.4 ${COMMON_DEPEND}"
 
 S="${JBOSS_ROOT}/jboss.net"
 
 src_compile() {
-	ant || die "Build script failed"
+	eant
 }

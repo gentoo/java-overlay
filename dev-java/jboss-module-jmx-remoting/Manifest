@@ -1,2 +1,6 @@
-MD5 6f787ed4c5ae960e67d77e78cc6782f4 jboss-module-jmx-remoting-4.0.2.ebuild 537
 MD5 2a736742e47251499270ee71b95596e8 files/digest-jboss-module-jmx-remoting-4.0.2 324
+RMD160 8a79005629a306faab7baf8509c20e8a80901306 files/digest-jboss-module-jmx-remoting-4.0.2 324
+SHA256 6354dee1dd7a53b6ccf8ccaef106dc3323f34d5c8bd69e668c6f04b271fa491d files/digest-jboss-module-jmx-remoting-4.0.2 324
+MD5 c77f23ecc8e8fee02eb59eeb1fe0ab2e jboss-module-jmx-remoting-4.0.2.ebuild 537
+RMD160 84ce2f6ad0be7adb2390c2a1767d02968da8e331 jboss-module-jmx-remoting-4.0.2.ebuild 537
+SHA256 012bb5252a48170712c4af8ab9cf71fe08462e59b9e3ce298162da900b95b968 jboss-module-jmx-remoting-4.0.2.ebuild 537
