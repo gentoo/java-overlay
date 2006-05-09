@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg
+inherit java-pkg-2
 
 DESCRIPTION="Echo2 is the next-generation of the Echo Web Framework"
 HOMEPAGE="http://www.nextapp.com/platform/echo2/echo/"
@@ -17,8 +17,8 @@ IUSE="doc"
 
 RESTRICT="fetch"
 
-DEPEND="virtual/jdk"
-RDEPEND="virtual/jre
+DEPEND=">=virtual/jdk-1.4"
+RDEPEND=">=virtual/jre-1.4
 	>=dev-java/servletapi-2.4"
 
 S="${WORKDIR}/NextApp_Echo2/"

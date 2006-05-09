@@ -7,7 +7,7 @@
 # Purpose: Automate installation of Sun's JWSDP components
 #
 
-inherit java-pkg
+inherit java-pkg-2
 
 ECLASS="java-wsdp"
 INHERITED="$INHERITED $ECLASS"
@@ -27,11 +27,12 @@ RESTRICT="fetch nostrip"
 
 IUSE="doc"
 
-DEPEND=">=virtual/jdk-1.5
-	app-arch/unzip
+DEPEND="app-arch/unzip
 	dev-java/sax
 	dev-java/xalan
 	dev-java/xerces"
+RDEPEND=">=virtual/jre-1.5
+	${RDEPEND}"
 
 java-wsdp_pkg_nofetch() {
 

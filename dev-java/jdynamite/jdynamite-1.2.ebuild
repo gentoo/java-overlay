@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg
+inherit java-pkg-2
 
 MY_PV="${PV/./_}"
 DESCRIPTION="Dynamic Template in Java"

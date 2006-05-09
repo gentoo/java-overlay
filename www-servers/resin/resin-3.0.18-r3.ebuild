@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg eutils flag-o-matic java-utils
+inherit java-pkg-2 eutils flag-o-matic java-utils-2
 
 DESCRIPTION="A fast Servlet 2.4 and JSP 2.0 engine with EJB and distributed session load balancing."
 HOMEPAGE="http://www.caucho.com"

@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg versionator
+inherit java-pkg-2 versionator
 
 MY_PV=$(replace_version_separator 1 '_')
 DESCRIPTION="A set of monitoring APIs and tools for monitoring the performance of the JVM in production environments."
@@ -16,7 +16,7 @@ IUSE="doc"
 
 RESTRICT="fetch nostrip"
 
-DEPEND=">=virtual/jdk-1.5*"
+DEPEND=""
 RDEPEND=">=virtual/jre-1.5*"
 
 S="${WORKDIR}/jvmstat/"
