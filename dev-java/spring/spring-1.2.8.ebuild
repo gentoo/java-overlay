@@ -81,11 +81,11 @@ RDEPEND="
 	=dev-java/mx4j-3.0*
 	=dev-java/jboss-module-j2ee-4.0*
 	dev-java/wsdl4j
-	dev-java/jdbc2-stdext
 	=dev-java/jexcelapi-2.5*"
 #	dev-java/jmx
 #	dev-java/jta
 #	dev-java/jms
+#	dev-java/jdbc2-stdext
 #	dev-java/sun-qname-bin
 S=${WORKDIR}/${MY_P}
 
