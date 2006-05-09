@@ -60,7 +60,7 @@ src_install() {
 	for jar in full pool; do
 		java-pkg_newjar ${MY_PN}-${jar}-${PV/_beta1}.jar ${MY_PN}-${jar}.jar || die "java-pkg_newjar ${MY_PN}-${jar}.jar failed"
 	done
-	if use junit; then
+	if use test; then
 		java-pkg_newjar ${MY_PN}-test-${PV/_beta1}.jar ${MY_PN}-${jar}.jar || die "java-pkg_newjar ${MY_PN}-${jar}.jar failed"
 	fi
 
