@@ -4,6 +4,9 @@ SHA256 df7c36e0fa1b2f44259e3050fddf0eef2855231121aa812d5f10d4befd061faa ChangeLo
 MD5 c7923964ae2173b41c918444256640f4 azureus-2.4.0.0-r1.ebuild 3446
 RMD160 0a7a550b47c0aa1da8792a3ba0f2324ac6a6137b azureus-2.4.0.0-r1.ebuild 3446
 SHA256 f99bf653586b3b02deaa143219b116c526b52afc9f0fc336c3f9445e748b6544 azureus-2.4.0.0-r1.ebuild 3446
+MD5 ec7badc2cdb734f4571b866f036fe160 azureus-2.4.0.0-r2.ebuild 3485
+RMD160 d551c3ec86f8a9cf33625ca0581614e321162949 azureus-2.4.0.0-r2.ebuild 3485
+SHA256 4348285eadab1bd4f1228b7f5495ffdcff3e4ab9dc5c8f4ea3b3fa7a9857fbe5 azureus-2.4.0.0-r2.ebuild 3485
 MD5 474717a4b9b773aaa2be1afbf3c183ec azureus-2.4.0.0.ebuild 3291
 RMD160 82ea645da43003c87c4a60dc271dd385565f4810 azureus-2.4.0.0.ebuild 3291
 SHA256 064bad0c129114de6c8795daf83bbd246dca5392f8c08b8121b8c0cae573d855 azureus-2.4.0.0.ebuild 3291
@@ -31,6 +34,9 @@ SHA256 a8f0b5d51f50afe16bbe6ea05c78b32b5c43f6f2c63080b0ce3f798e5ad6fb19 files/di
 MD5 497f8a2bf6381748bb47e98cbeec8a1d files/digest-azureus-2.4.0.0-r1 262
 RMD160 ee0c23f350b5c49ac514f69ae02e80741b57b9a1 files/digest-azureus-2.4.0.0-r1 262
 SHA256 a8f0b5d51f50afe16bbe6ea05c78b32b5c43f6f2c63080b0ce3f798e5ad6fb19 files/digest-azureus-2.4.0.0-r1 262
+MD5 497f8a2bf6381748bb47e98cbeec8a1d files/digest-azureus-2.4.0.0-r2 262
+RMD160 ee0c23f350b5c49ac514f69ae02e80741b57b9a1 files/digest-azureus-2.4.0.0-r2 262
+SHA256 a8f0b5d51f50afe16bbe6ea05c78b32b5c43f6f2c63080b0ce3f798e5ad6fb19 files/digest-azureus-2.4.0.0-r2 262
 MD5 0865591e643067b5b233f5b8380a83fc files/digest-azureus-2.4.0.2 262
 RMD160 40649bc96d9c7d34abf348ec21c0511749e1a64f files/digest-azureus-2.4.0.2 262
 SHA256 5bec02bde87a6537da4ed830c90ffd5ab83ab5c35c0365f6dafb57ccd6275a63 files/digest-azureus-2.4.0.2 262
