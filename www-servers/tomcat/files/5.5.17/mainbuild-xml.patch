@@ -1,0 +1,19 @@
+--- apache-tomcat-5.5.15-src/build.xml 
++++ build.xml
+@@ -64,13 +64,14 @@
+   <target name="checkout"
+           description="Update or checkout required sources from SVN">
+ 
++    <!--
+     <echo level="info"
+         message="If the checkout fails, - todo - " />
+ 
+     <exec dir="${basedir}" executable="svn">
+          <arg line="checkout ${svnroot}/${current.loc} ${basedir}" />
+     </exec>
+-
++    -->
+   </target>
+ 
+   <!-- *************** UTILITY TARGETS *************** -->
+
