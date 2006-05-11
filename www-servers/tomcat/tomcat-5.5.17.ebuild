@@ -155,7 +155,7 @@ src_install() {
 	keepdir ${CATALINA_BASE}/shared/classes
 
 	dodir   /etc/${TOMCAT_NAME}
-	fperms  440 /etc/${TOMCAT_NAME}
+	fperms  750 /etc/${TOMCAT_NAME}
 
 	diropts -m0755
 
@@ -200,7 +200,7 @@ src_install() {
 	sed -e s:SHUTDOWN:${randpw}: -i conf/{server,server-minimal}.xml
 
 	# copy over the directories	
-	chmod -R 750 conf/*
+	#chmod -R 750 conf/*
 	chown -R tomcat:tomcat webapps/* conf/*
 	cp -pR conf/* ${D}/etc/${TOMCAT_NAME} || die "failed to copy conf"
 	cp -R bin common server shared ${D}/usr/share/${TOMCAT_NAME} || die "failed to copy"
