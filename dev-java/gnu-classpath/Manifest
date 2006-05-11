@@ -1,6 +1,0 @@
-MD5 50601eed7ae1e20d101af4a58b903946 files/0.19-dssi.patch 1443
-MD5 7e2cbdd8bd825a0e9b8fff8312f08c23 files/0.19-dssi_data.h 4174
-MD5 2fa214c9b3ef402739df2a954d83c46e files/digest-gnu-classpath-0.19 67
-MD5 7ad8a96a352a8be631601acbad2b57ce files/digest-gnu-classpath-0.20_pre 71
-MD5 4184b093bd5018b804cf9365bd0b0b5c gnu-classpath-0.19.ebuild 2499
-MD5 9f71503aaedd96dafa23550cf29dcfe2 gnu-classpath-0.20_pre.ebuild 2512
