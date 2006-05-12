@@ -18,7 +18,7 @@ DEPEND=">=virtual/jdk-1.3
 	>=dev-java/ant-core-1.6
 	source? ( app-arch/zip )"
 
-src_unpack() {
+ant_src_unpack() {
 	unpack "${A}"
 	rm -rf "${S}/build" || die "Failed to remove ${S}/build"
 }
