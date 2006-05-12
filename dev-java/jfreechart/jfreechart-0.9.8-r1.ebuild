@@ -41,4 +41,3 @@ src_install() {
 	dodoc README
 	use doc && java-pkg_dojavadoc javadoc
 }
-
