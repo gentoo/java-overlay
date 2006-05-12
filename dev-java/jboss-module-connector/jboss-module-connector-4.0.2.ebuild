@@ -30,9 +30,11 @@ COMMON_DEPEND="
 	=dev-java/jboss-module-system-${PV}*
 	=dev-java/jboss-module-jmx-${PV}*
 	=dev-java/jboss-module-transaction-${PV}*"
-# TODO should be || ( =virtual/jdk-1.4* =virtual/jdk-1.5* )
-DEPEND="=virtual/jdk-1.4*
+DEPEND=">=virtual/jdk-1.4
 	dev-java/javacc
 	${COMMON_DEPEND}"
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"
+
+# TODO fix for Java 1.6... has problems due to JDBC4
+JAVA_PKG_NV_DEPEND="=virtual/jdk-1.4* =virtual/jdk-1.5*"

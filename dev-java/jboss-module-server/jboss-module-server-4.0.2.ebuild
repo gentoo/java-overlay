@@ -35,9 +35,10 @@ COMMON_DEPEND="dev-java/bcel
 	=dev-java/jboss-module-transaction-${PV}*
 	=dev-java/jboss-module-naming-${PV}*
 	=dev-java/jboss-module-jmx-${PV}*"
-DEPEND="=virtual/jdk-1.4* ${COMMON_DEPEND}"
+DEPEND=">=virtual/jdk-1.4 ${COMMON_DEPEND}"
 RDEPEND=">=virtual/jre-1.4 ${COMMON_DEPEND}"
 
-# TODO remove enums
+# TODO fix compilations with Java 1.6 due to JDBC4 
+JAVA_PKG_NV_DEPEND="=virtual/jdk-1.4* =virtual/jdk-1.5*"
 # TODO need to increase maximum stack size on amd64 w/ blackdown, ie
 # ANT_OPTS=-Xmx640m

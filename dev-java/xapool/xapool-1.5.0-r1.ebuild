@@ -14,10 +14,8 @@ SLOT="1.5"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 
-# TODO notify upstream about JDBC api change, which changed with 1.6
-# TODO use || ( =virtual/jdk-1.4* =virtual/jdk-1.5* )
 DEPEND="
-	=virtual/jdk-1.4*
+	>=virtual/jdk-1.4
 	dev-java/ant-core
 	jikes? ( dev-java/jikes )"
 RDEPEND=">=virtual/jre-1.4
@@ -28,6 +26,9 @@ RDEPEND=">=virtual/jre-1.4
 	dev-java/p6spy"
 #	dev-java/sun-j2ee-connector-bin
 #	dev-java/jta
+# TODO fix for Java 1.6... has problems due to JDBC4
+JAVA_PKG_NV_DEPEND="=virtual/jdk-1.4* =virtual/jdk-1.5*"
+
 S=${WORKDIR}/${MY_P}
 
 ant_src_unpack() {

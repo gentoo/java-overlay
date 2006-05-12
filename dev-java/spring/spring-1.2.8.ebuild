@@ -19,7 +19,7 @@ KEYWORDS="~amd64 ~x86"
 #IUSE="doc jikes"
 IUSE="doc source java5"
 
-# ARGH! 1.6 breaks it already!
+# TODO fix compilation with Java 1.6 due to JDBC4
 DEPEND="
 	java5? ( =virtual/jdk-1.5* )
 	!java5? ( =virtual/jdk-1.4* )
@@ -81,11 +81,11 @@ RDEPEND="
 	=dev-java/mx4j-3.0*
 	=dev-java/jboss-module-j2ee-4.0*
 	dev-java/wsdl4j
+	dev-java/jdbc2-stdext
 	=dev-java/jexcelapi-2.5*"
 #	dev-java/jmx
 #	dev-java/jta
 #	dev-java/jms
-#	dev-java/jdbc2-stdext
 #	dev-java/sun-qname-bin
 S=${WORKDIR}/${MY_P}
 

@@ -36,11 +36,11 @@ COMMON_DEPEND="
 #	dev-java/jta
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"
-# TODO use || ( =virtual/jdk-1.4* =virtual/jdk-1.5* )
-# TODO fix 1.6 compile issue because of JDBC 4
-DEPEND="=virtual/jdk-1.4*
+DEPEND=">=virtual/jdk-1.4
 		>=dev-java/ant-core-1.5
 		${COMMON_DEPEND}"
+# TODO fix for Java 1.6... has problems due to JDBC4
+JAVA_PKG_NV_DEPEND="=virtual/jdk-1.4* =virtual/jdk-1.5*"
 
 S=${WORKDIR}/${PN}-${MY_PV}
 

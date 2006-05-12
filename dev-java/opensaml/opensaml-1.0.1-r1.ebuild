@@ -13,12 +13,14 @@ SLOT="0"
 KEYWORDS="~x86"
 IUSE="doc"
 
-DEPEND="=virtual/jdk-1.4*
+DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core"
 RDEPEND="=virtual/jre-1.4*
 	=dev-java/servletapi-2.3*
 	dev-java/xalan
 	=dev-java/xml-security-1.2*"
+
+JAVA_PKG_NV_DEPEND="=virtual/jdk-1.4*"
 
 S="${WORKDIR}/${PN}/java"
 

@@ -35,13 +35,13 @@ COMMON_DEPEND="
 	=dev-java/xerces-2*"
 #	dev-java/jdbc2-stdext
 #	dev-java/jta
-# TODO change dep to || ( =virtual/jxx-1.4* =virtual/jxx-1.5* )
-# TODO fix compile issue with 1.6 due to JDBC 4 API changes
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"
-DEPEND="=virtual/jdk-1.4*
+DEPEND=">=virtual/jdk-1.4
 	>=dev-java/ant-core-1.5
 	${COMMON_DEPEND}"
+# TODO fix for Java 1.6... has problems due to JDBC4
+JAVA_PKG_NV_DEPEND="=virtual/jdk-1.4* =virtual/jdk-1.5*"
 
 S=${WORKDIR}/${PN}-${MY_PV}
 
@@ -65,6 +65,7 @@ ant_src_unpack() {
 	java-pkg_jar-from jboss-module-j2ee-4 jboss-j2ee.jar
 	java-pkg_jar-from jboss-module-jmx-4 jboss-jmx.jar
 	java-pkg_jar-from jboss-module-system-4 jboss-system.jar
+	java-pkg_jar-from ant-tasks ant-antlr.jar
 
 }
 src_compile() {

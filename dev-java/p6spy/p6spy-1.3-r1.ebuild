@@ -13,12 +13,10 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 
-# should be || ( =virtual/jdk-1.5* =virtual/jdk-1.4* )
-# TODO report 1.6 breakage
-DEPEND="=virtual/jdk-1.4*
+DEPEND=">=virtual/jdk-1.4
 	app-arch/unzip
 	jikes? ( dev-java/jikes )"
-RDEPEND="=virtual/jre-1.4*
+RDEPEND=">=virtual/jre-1.4
 	=dev-java/jboss-module-jmx-4.0*
 	=dev-java/jboss-module-system-4.0*
 	=dev-java/jboss-module-common-4.0*
@@ -27,6 +25,9 @@ RDEPEND="=virtual/jre-1.4*
 	=dev-java/jakarta-regexp-1*
 	dev-java/ant-core
 	dev-java/log4j"
+# TODO fix for Java 1.6... has problems due to JDBC4
+JAVA_PKG_NV_DEPEND="=virtual/jdk-1.4* =virtual/jdk-1.5*"
+
 S=${WORKDIR}
 
 ant_src_unpack() {
