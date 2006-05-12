@@ -12,14 +12,15 @@ LICENSE="LGPL-2"
 SLOT="0.9.8"
 KEYWORDS="~x86 ~ppc ~amd64"
 IUSE="doc"
-RDEPEND=">=virtual/jdk-1.3
+COMMON_DEP="
 	=dev-java/jcommon-0.8*
 	=dev-java/servletapi-2.3*
 	dev-java/gnu-jaxp"
+RDEPEND=">=virtual/jre-1.3
+	${COMMON_DEP}"
 DEPEND=">=virtual/jdk-1.3
-	${RDEPEND}
-	dev-java/ant-core
-	jikes? ( dev-java/jikes )"
+	${COMMON_DEP}
+	dev-java/ant-core"
 
 ant_src_unpack() {
 	unpack ${A}
@@ -38,6 +39,6 @@ src_install() {
 	java-pkg_newjar ${P}.jar ${PN}.jar
 	java-pkg_newjar ${P}-demo.jar ${PN}-demo.jar
 	dodoc README
-	use doc && java-pkg_dohtml -r javadoc/
+	use doc && java-pkg_dojavadoc javadoc
 }
 
