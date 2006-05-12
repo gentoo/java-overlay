@@ -3,34 +3,37 @@
 # $Header: /var/cvsroot/gentoo-x86/dev-util/eclipse-sdk/eclipse-sdk-3.1.2-r2.ebuild,v 1.1 2006/04/20 13:49:19 nichoj Exp $
 
 inherit eutils java-pkg-2 flag-o-matic check-reqs
-
 MY_PV=${PV/_rc/RC}
-DATESTAMP=200604131718
+DATESTAMP=200605051306
 MY_A="eclipse-sourceBuild-srcIncluded-${MY_PV}.zip"
 DESCRIPTION="Eclipse Tools Platform"
 HOMEPAGE="http://www.eclipse.org/"
 SRC_URI="http://ftp.osuosl.org/pub/eclipse//eclipse/downloads/drops/S-${MY_PV}-${DATESTAMP}/${MY_A}"
-IUSE="nogecko-sdk gnome jikes nosrc nodoc atk"
+IUSE="nogecko-sdk gnome cairo opengl"
 SLOT="3.2"
 LICENSE="CPL-1.0"
 #KEYWORDS="~x86 ~ppc ~amd64"
 KEYWORDS="-*"
 S="${WORKDIR}"
 
-RDEPEND="=virtual/jre-1.4*
+COMMON_DEP="
 	>=x11-libs/gtk+-2.2.4
 	!nogecko-sdk? ( net-libs/gecko-sdk )
-	atk? ( >=dev-libs/atk-1.6 )
-	gnome? ( =gnome-base/gnome-vfs-2* =gnome-base/libgnomeui-2* )"
+	gnome? ( =gnome-base/gnome-vfs-2* =gnome-base/libgnomeui-2* )
+	opengl? ( virtual/opengl )"
 
-DEPEND="${RDEPEND}
+RDEPEND=">=virtual/jre-1.4
+	${COMMON_DEP}"
+DEPEND="
+	${COMMON_DEP}
 	=virtual/jdk-1.4*
-	jikes? ( >=dev-java/jikes-1.21 )
+	>=virtual/jdk-1.5
 	>=dev-java/ant-1.6.2
 	>=dev-java/ant-core-1.6.2-r4
 	>=sys-apps/findutils-4.1.7
 	app-arch/unzip
 	app-arch/zip"
+JAVA_PKG_NV_DEPEND="=virtual/jdk-1.4*"
 
 ECLIPSE_DIR="/usr/lib/eclipse-${SLOT}"
 ECLIPSE_LINKS_DIR="${ECLIPSE_DIR}/links"
@@ -42,7 +45,6 @@ ECLIPSE_LINKS_DIR="${ECLIPSE_DIR}/links"
 # - ppc support not tested, but not explicitly broken either
 # - make a extension location in /var/lib that's writable by 'eclipse' group
 # - use make_desktop_entry from eutils instead of our own stuff
-# - 
 
 pkg_setup() {
 	java-pkg-2_pkg_setup
@@ -50,9 +52,6 @@ pkg_setup() {
 	debug-print "Checking for sufficient physical RAM"
 	CHECKREQS_MEMORY="768"
 	check_reqs
-
-	debug-print "Checking for bad CFLAGS"
-	check-cflags
 
 	# All other gentoo archs match in eclipse build system except amd64
 	if use amd64 ; then
@@ -85,19 +84,13 @@ ant_src_unpack() {
 
 	einfo "Patching makefiles"
 	fix_makefiles
-	fix_amd64_ibm_jvm
 }
 
 src_compile() {
-	# karltk: this should be handled by the java-pkg eclass in setup-vm 
-	addwrite "/proc/self/maps"
-	addwrite "/proc/cpuinfo"
-	addwrite "/dev/random"
-
 	# Figure out VM, set up ant classpath and native library paths
 	setup-jvm-opts
 
-	if use !nogecko-sdk ; then
+	if ! use nogecko-sdk ; then
 		einfo "Will compile embedded Mozilla support against net-libs/gecko-sdk"
 		setup-mozilla-opts
 	else
@@ -105,8 +98,10 @@ src_compile() {
 	fi
 
 	# TODO use cleaner form for getting 1.5 vm
-	./build -os linux -arch ${eclipsearch} -ws gtk -java5home $(GENTOO_VM=sun-jdk-1.5 java-config --jdk-home)
-#	use jikes && bootstrap_ant_opts="-Dbuild.compiler=jikes"
+	local java5vm=$(depend-java-query --get-vm ">=virtual/jdk-1.5")
+	local java5home=$(GENTOO_VM=${java5vm} java-config --jdk-home)
+	einfo "Using ${java5home} for java5home"
+	./build -os linux -arch ${eclipsearch} -ws gtk -java5home ${java5home}
 
 #	debug-print "Bootstrapping bootstrap ecj"
 #	ant ${bootstrap_ant_opts} -q -f jdtcoresrc/compilejdtcorewithjavac.xml || die "Failed to bootstrap ecj"
@@ -141,11 +136,9 @@ src_install() {
 
 	debug-print "Installing features and plugins"
 
-	[ -f result/linux-gtk-${eclipsearch}-sdk.tar.gz ] || die "tar.gz bundle was not built properly!"
-	tar zxf result/linux-gtk-${eclipsearch}-sdk.tar.gz -C ${D}/usr/lib || die "Failed to extract the built package"
-	# workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=138049
-	cp -r baseLocation/plugins/* ${D}/usr/lib/eclipse/plugins
-
+	[[ -f result/linux-gtk-${eclipsearch}-sdk.tar.gz ]] || die "tar.gz bundle was not built properly!"
+	tar zxf result/linux-gtk-${eclipsearch}-sdk.tar.gz -C ${D}/usr/lib \
+		|| die "Failed to extract the built package"
 
 	mv ${D}/usr/lib/eclipse ${D}/${ECLIPSE_DIR}
 	insinto ${ECLIPSE_DIR}
@@ -154,16 +147,6 @@ src_install() {
 	debug-print "Installing eclipse-gtk binary"
 	doexe eclipse-gtk || die "Failed to install eclipse binary"
 	# need to rename inf file to eclipse-gtk.ini, see bug #128128
-
-	if use nosrc; then
-		debug-print "Removing source code"
-		strip-src
-	fi
-
-	if use nodoc ; then
-		debug-print "Removing documentation"
-		strip-docs
-	fi
 
 	# Install startup script
 	exeinto /usr/bin
@@ -188,9 +171,6 @@ src_install() {
 # -----------------------------------------------------------------------------
 
 fix_makefiles() {
-	# Comment out hard-coded JAVA_HOME
-#	sed -i 's/^JAVA_HOME/#JAVA_HOME/' plugins/org.eclipse.core.resources.linux/src/Makefile || die "Failed to patch Makefile"
-
 	# Select the set of native libraries to compile
 	local libs="make_swt make_awt make_atk"
 
@@ -199,30 +179,24 @@ fix_makefiles() {
 		libs="${libs} make_gnome"
 	fi
 
-	if use !nogecko-sdk ; then
+	if ! use nogecko-sdk ; then
 		einfo "Building Mozilla embed support"
 		libs="${libs} make_mozilla"
 	fi
 
-	if use atk ; then
-		einfo "Building ATK support"
-		libs="${libs} make_atk"
+	if use cairo ; then
+		einfo "Building CAIRO support"
+		libs="${libs} make_cairo"
+	fi
+
+	if use opengl ; then
+		einfo "Building OpenGL support"
+		libs="${libs} make_glx"
+		
 	fi
 
 	sed -i "s/^all:.*/all: ${libs}/" "plugins/org.eclipse.swt/Eclipse SWT PI/gtk/library/make_linux.mak" || die "Failed to patch make_linux.mak"
 }
-
-fix_amd64_ibm_jvm() {
-	# the ibm jdk ebuild should have fixed headers, but until then
-	# we just fix the compiling here (see bug #97421)
-	if use amd64 ; then
-	    if [ ! -z "`java-config --java-version | grep IBM`" ] ; then
-			einfo "Fixing IBM jdk header problem"
-			find plugins -name "make_linux.mak" -print0 | xargs -0 sed -i -e 's/^CFLAGS =/CFLAGS = -D_JNI_IMPORT_OR_EXPORT_= /'
-	    fi
-	fi
-}
-
 
 clean-prebuilt-code() {
 	find ${S} -type f \( -name '*.class' -o -name '*.so' -o -name '*.so.*' -o -name 'eclipse' \) | xargs rm -f
@@ -343,22 +317,22 @@ install-link-files() {
 #	install_link_file /var/lib/eclipse-${SLOT} eclipse-var-${SLOT}.link
 }
 
-strip-src() {
-	local bp=${D}/${ECLIPSE_DIR}
+#strip-src() {
+#	local bp=${D}/${ECLIPSE_DIR}
+#
+#	rm -rf ${bp}/plugins/org.eclipse.pde.source_3* \
+#		${bp}/plugins/org.eclipse.jdt.source_3* \
+#		${bp}/plugins/org.eclipse.platform.source.linux.* \
+#		${bp}/plugins/org.eclipse.platform.source_3* \
+#		${bp}/features/org.eclipse.jdt.source_3* \
+#		${bp}/features/org.eclipse.pde.source_3* \
+#		${bp}/features/org.eclipse.platform.source_3*
+#}
 
-	rm -rf ${bp}/plugins/org.eclipse.pde.source_3* \
-		${bp}/plugins/org.eclipse.jdt.source_3* \
-		${bp}/plugins/org.eclipse.platform.source.linux.* \
-		${bp}/plugins/org.eclipse.platform.source_3* \
-		${bp}/features/org.eclipse.jdt.source_3* \
-		${bp}/features/org.eclipse.pde.source_3* \
-		${bp}/features/org.eclipse.platform.source_3*
-}
-
-strip-docs() {
-	local bp=${D}/${ECLIPSE_DIR}
-
-	rm -rf ${bp}/plugins/org.eclipse.platform.doc.* \
-		${bp}/plugins/org.eclipse.jdt.doc.* \
-		${bp}/plugins/org.eclipse.pde.doc.*
-}
+#strip-docs() {
+#	local bp=${D}/${ECLIPSE_DIR}
+#
+#	rm -rf ${bp}/plugins/org.eclipse.platform.doc.* \
+#		${bp}/plugins/org.eclipse.jdt.doc.* \
+#		${bp}/plugins/org.eclipse.pde.doc.*
+#}

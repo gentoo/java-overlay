@@ -10,7 +10,7 @@ MY_A="eclipse-sourceBuild-srcIncluded-${MY_PV}.zip"
 DESCRIPTION="Eclipse Tools Platform"
 HOMEPAGE="http://www.eclipse.org/"
 SRC_URI="http://ftp.osuosl.org/pub/eclipse//eclipse/downloads/drops/S-${MY_PV}-${DATESTAMP}/${MY_A}"
-IUSE="nogecko-sdk gnome jikes nosrc nodoc atk"
+IUSE="nogecko-sdk gnome nosrc nodoc atk"
 SLOT="3.2"
 LICENSE="CPL-1.0"
 #KEYWORDS="~x86 ~ppc ~amd64"
@@ -25,7 +25,6 @@ RDEPEND="=virtual/jre-1.4*
 
 DEPEND="${RDEPEND}
 	=virtual/jdk-1.4*
-	jikes? ( >=dev-java/jikes-1.21 )
 	>=dev-java/ant-1.6.2
 	>=dev-java/ant-core-1.6.2-r4
 	>=sys-apps/findutils-4.1.7
@@ -42,7 +41,6 @@ ECLIPSE_LINKS_DIR="${ECLIPSE_DIR}/links"
 # - ppc support not tested, but not explicitly broken either
 # - make a extension location in /var/lib that's writable by 'eclipse' group
 # - use make_desktop_entry from eutils instead of our own stuff
-# - 
 
 pkg_setup() {
 	java-pkg-2_pkg_setup
@@ -85,15 +83,9 @@ ant_src_unpack() {
 
 	einfo "Patching makefiles"
 	fix_makefiles
-	fix_amd64_ibm_jvm
 }
 
 src_compile() {
-	# karltk: this should be handled by the java-pkg eclass in setup-vm 
-	addwrite "/proc/self/maps"
-	addwrite "/proc/cpuinfo"
-	addwrite "/dev/random"
-
 	# Figure out VM, set up ant classpath and native library paths
 	setup-jvm-opts
 
@@ -105,9 +97,9 @@ src_compile() {
 	fi
 
 	# TODO use cleaner form for getting 1.5 vm
-	local java5home=$(depend-java-query --get-vm ">=virtual/jdk-1.5")
+	local java5vm=$(depend-java-query --get-vm ">=virtual/jdk-1.5")
+	local java5home=$(GENTOO_VM=${java5vm} java-config --jdk-home)
 	./build -os linux -arch ${eclipsearch} -ws gtk -java5home ${java5home}
-#	use jikes && bootstrap_ant_opts="-Dbuild.compiler=jikes"
 
 #	debug-print "Bootstrapping bootstrap ecj"
 #	ant ${bootstrap_ant_opts} -q -f jdtcoresrc/compilejdtcorewithjavac.xml || die "Failed to bootstrap ecj"
