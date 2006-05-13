@@ -10,7 +10,7 @@ SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 
 LICENSE="freemarker"
 SLOT="2.3"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc jikes"
 
 DEPEND=">=virtual/jdk-1.4
