@@ -1,0 +1,17 @@
+diff -Nru freemarker-2.3.6.vanilla/src/freemarker/ext/rhino/RhinoFunctionModel.java freemarker-2.3.6/src/freemarker/ext/rhino/RhinoFunctionModel.java
+--- freemarker-2.3.6.vanilla/src/freemarker/ext/rhino/RhinoFunctionModel.java	2006-05-13 11:30:05.000000000 +0200
++++ freemarker-2.3.6/src/freemarker/ext/rhino/RhinoFunctionModel.java	2006-05-13 11:31:16.000000000 +0200
+@@ -37,7 +37,11 @@
+         for (int i = 0; i < args.length; i++) {
+             args[i] = wrapper.unwrap((TemplateModel)args[i], Scriptable.class);
+         }
+-        return wrapper.wrap(((Function)getScriptable()).call(cx, 
+-                ScriptableObject.getTopLevelScope(fnThis), fnThis, args));
++        try {
++            return wrapper.wrap(((Function)getScriptable()).call(cx, 
++                    ScriptableObject.getTopLevelScope(fnThis), fnThis, args));
++        } catch (Exception e) {
++            throw new TemplateModelException(e.getMessage());
++        }
+     }
+ }
