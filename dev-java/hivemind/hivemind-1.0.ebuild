@@ -10,7 +10,7 @@ SRC_URI="mirror://apache/jakarta/${PN}/${P}.tar.gz"
 
 LICENSE=""
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="-*"
 IUSE=""
 
 DEPEND="virtual/jdk"

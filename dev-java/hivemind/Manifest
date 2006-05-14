@@ -1,3 +1,8 @@
-MD5 463e90be61ae5b03e561c757db0acc81 .hivemind-1.0.ebuild.swp 12288
-MD5 32a0e2ebb760eff0b8d396d7d0fb322f hivemind-1.0.ebuild 450
+DIST hivemind-1.0.tar.gz 840039 size 840039
+EBUILD hivemind-1.0.ebuild 499 RMD160 9006786d97a6845079482994cef62dff8ba5540e SHA1 4e159cb734355ac14c70b6488baffbe27e088090 SHA256 e1951a5518debd7eba2f0cdb8f6e02ba87ab594d7c4861c0d97ab5bf369e0310 size 499
+MD5 7294213faf36b8895b42e8c2aa11e9da hivemind-1.0.ebuild 499
+RMD160 9006786d97a6845079482994cef62dff8ba5540e hivemind-1.0.ebuild 499
+SHA256 e1951a5518debd7eba2f0cdb8f6e02ba87ab594d7c4861c0d97ab5bf369e0310 hivemind-1.0.ebuild 499
 MD5 b1708e997182ece53e4106ca5ed97d0a files/digest-hivemind-1.0 64
+RMD160 2221933589a25297b4062ebfb01c7bb78617305d files/digest-hivemind-1.0 64
+SHA256 cc52d7be154f84474fe519d3462869d9e5f074089b359a14cc227f9f5893d29a files/digest-hivemind-1.0 64
