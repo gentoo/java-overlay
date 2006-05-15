@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Eclipse @PV@
-Comment=A Java Development Environment
-Icon=/usr/lib/eclipse-2/icon.xpm
-Exec=/usr/bin/eclipse-2
-Terminal=false
-Type=Application
-Categories=GNOME;Application;Development
-StartupNotify=true

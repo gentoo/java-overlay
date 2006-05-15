@@ -8,12 +8,11 @@ DATESTAMP=200605051306
 MY_A="eclipse-sourceBuild-srcIncluded-${MY_PV}.zip"
 DESCRIPTION="Eclipse Tools Platform"
 HOMEPAGE="http://www.eclipse.org/"
-SRC_URI="http://ftp.osuosl.org/pub/eclipse//eclipse/downloads/drops/S-${MY_PV}-${DATESTAMP}/${MY_A}"
+SRC_URI="http://ftp.osuosl.org/pub/eclipse/eclipse/downloads/drops/S-${MY_PV}-${DATESTAMP}/${MY_A}"
 IUSE="nogecko-sdk gnome cairo opengl"
 SLOT="3.2"
 LICENSE="CPL-1.0"
-#KEYWORDS="~x86 ~ppc ~amd64"
-KEYWORDS="-*"
+KEYWORDS="~x86 ~ppc ~amd64"
 S="${WORKDIR}"
 
 COMMON_DEP="
@@ -66,18 +65,20 @@ pkg_setup() {
 		jvmarch=${ARCH}
 	fi
 
-	# eventually, we'll have a plugin directory that's user writable, as group
-	# 'eclipse' -nichoj
-
-	# Add the eclipse group, for our plugin directories
-	#enewgroup eclipse
+	# Add the eclipse group, for our plugins/features directories
+	enewgroup eclipse
 }
 
 ant_src_unpack() {
 	unpack ${A}
 
-	# TODO figure out what this does -nichoj
-	epatch ${FILESDIR}/06-path-fixups-3.2m4.patch
+	#   1: fix classpath (eclipse bug #128921)
+	#   2: fix building of native code filesystem library
+	#      - hard coded JAVA_HOME, use ebuild CFLAGS
+	#   3: fix building of native update code library
+	#      - remove hard coded x86 path
+	#      - some gcc versions refuse if both -static and -fPIC are used
+	epatch ${FILESDIR}/${P}-gentoo.patch
 
 	einfo "Cleaning out prebuilt code"
 	clean-prebuilt-code
@@ -97,44 +98,19 @@ src_compile() {
 		einfo "Not building embedded Mozilla support"
 	fi
 
-	# TODO use cleaner form for getting 1.5 vm
 	local java5vm=$(depend-java-query --get-vm ">=virtual/jdk-1.5")
 	local java5home=$(GENTOO_VM=${java5vm} java-config --jdk-home)
 	einfo "Using ${java5home} for java5home"
-	./build -os linux -arch ${eclipsearch} -ws gtk -java5home ${java5home}
-
-#	debug-print "Bootstrapping bootstrap ecj"
-#	ant ${bootstrap_ant_opts} -q -f jdtcoresrc/compilejdtcorewithjavac.xml || die "Failed to bootstrap ecj"
-
-#	debug-print "Bootstrapping ecj"
-#	ant -lib jdtcoresrc/ecj.jar -q -f jdtcoresrc/compilejdtcore.xml || die "Failed to bootstrap ecj"
-#
-#	debug-print "Compiling Eclipse -- see ${S}/compilelog.txt for details"
-#	ANT_OPTS="-Xmx1024M" \
-#		ant -lib jdtcoresrc/ecj.jar -q -f build.xml \
-#		-DinstallOs=linux \
-#		-DinstallWs=gtk \
-#		-DinstallArch=${eclipsearch} \
-#		-Dbootclasspath=${bootclasspath} \
-#		-Dlibsconfig=true \
-#		-DjavacTarget=1.4 \
-#		-DjavacSource=1.4 \
-#		-DjavacVerbose=false \
-#		-DjavacFailOnError=true \
-#		-DjavacDebugInfo=true \
-#		-DbuildId="Gentoo Linux ${PF}" \
-#		|| die "Failed to compile Eclipse"
-
+	# TODO patch build to take buildId
+	./build -os linux \
+		-arch ${eclipsearch} \
+		-ws gtk \
+		-java5home ${java5home} || die "build failed"
 	cp eclipse/eclipse eclipse-gtk || die "Cannot find eclipse binary"
-
-	# TODO use make_desktop_entry from eutils during src_install instead -nichoj
-	create-desktop-entry
 }
 
 src_install() {
 	dodir /usr/lib
-
-	debug-print "Installing features and plugins"
 
 	[[ -f result/linux-gtk-${eclipsearch}-sdk.tar.gz ]] || die "tar.gz bundle was not built properly!"
 	tar zxf result/linux-gtk-${eclipsearch}-sdk.tar.gz -C ${D}/usr/lib \
@@ -147,23 +123,28 @@ src_install() {
 	debug-print "Installing eclipse-gtk binary"
 	doexe eclipse-gtk || die "Failed to install eclipse binary"
 	# need to rename inf file to eclipse-gtk.ini, see bug #128128
+	newins eclipse.ini eclipse-gtk.ini
 
 	# Install startup script
 	exeinto /usr/bin
 	doexe ${FILESDIR}/eclipse-${SLOT}
-
-	install-desktop-entry
-
 	doman ${FILESDIR}/eclipse.1
+
+	make_desktop_entry eclipse-${SLOT} "Eclipse ${PV}" "${ECLIPSE_DIR}/icon.xpm"
+
 
 	install-link-files
 
-	# eventually, we'll have a user writable extension location -nichoj
-	# TODO make g+w
+	# eventually, we'll have a user writable extension location, so we'll
+	# comply with FHS 
+
 	#dodir /var/lib/eclipse-${SLOT}
 	#touch ${D}/var/lib/eclipse-${SLOT}/.eclipseextension
 	#fowners root:eclipse /var/lib/eclipse-${SLOT}
-
+	#fperms -R g+w /var/lib/eclipse-${SLOT}
+	fperms -R g+w ${ECLIPSE_DIR}
+	fowners -R root:eclipse ${ECLIPSE_DIR}
+	find ${D}${ECLIPSE_DIR} -type d -exec chmod g+s {} \;
 }
 
 # -----------------------------------------------------------------------------
@@ -172,30 +153,31 @@ src_install() {
 
 fix_makefiles() {
 	# Select the set of native libraries to compile
-	local libs="make_swt make_awt make_atk"
+	local targets="make_swt make_awt make_atk"
 
 	if use gnome ; then
 		einfo "Building GNOME VFS support"
-		libs="${libs} make_gnome"
+		targets="${targets} make_gnome"
 	fi
 
 	if ! use nogecko-sdk ; then
 		einfo "Building Mozilla embed support"
-		libs="${libs} make_mozilla"
+		targets="${targets} make_mozilla"
 	fi
 
 	if use cairo ; then
 		einfo "Building CAIRO support"
-		libs="${libs} make_cairo"
+		targets="${targets} make_cairo"
 	fi
 
 	if use opengl ; then
 		einfo "Building OpenGL support"
-		libs="${libs} make_glx"
-		
+		targets="${targets} make_glx"
 	fi
 
-	sed -i "s/^all:.*/all: ${libs}/" "plugins/org.eclipse.swt/Eclipse SWT PI/gtk/library/make_linux.mak" || die "Failed to patch make_linux.mak"
+	sed -i "s/^all:.*/all: ${targets}/" \
+		"plugins/org.eclipse.swt/Eclipse SWT PI/gtk/library/make_linux.mak" \
+		|| die "Failed to tweak make_linux.mak"
 }
 
 clean-prebuilt-code() {
@@ -213,7 +195,7 @@ check-cflags() {
 			error=true
 		fi
 	done
-	if [ ${error} == "true" ]; then
+	if [[ ${error} == "true" ]]; then
 		echo
 		ewarn "One or more potentially gruesome CFLAGS detected. When you run into trouble,"
 		ewarn "please edit /etc/make.conf and remove all offending flags, then recompile"
@@ -231,22 +213,20 @@ check-cflags() {
 setup-jvm-opts() {
 	# Figure out correct boot classpath
 	# karltk: this should be handled by the java-pkg eclass in setup-vm
-	if [ ! -z "`java-config --java-version | grep IBM`" ] ; then
+	local bp="$(java-config --jdk-home)/jre/lib"
+	local bootclasspath=$(java-config --runtime)
+	if [[ ! -z "`java-config --java-version | grep IBM`" ]] ; then
 		# IBM JDK
-		local bp="$(java-config --jdk-home)/jre/lib"
-		bootclasspath="${bp}/core.jar:${bp}/xml.jar:${bp}/graphics.jar:${bp}/security.jar:${bp}/server.jar"
 		JAVA_LIB_DIR="$(java-config --jdk-home)/jre/bin"
 	else
 		# Sun derived JDKs (Blackdown, Sun)
-		local bp="$(java-config --jdk-home)/jre/lib"
-		bootclasspath="${bp}/rt.jar:${bp}/jsse.jar"
 		JAVA_LIB_DIR="$(java-config --jdk-home)/jre/lib/${jvmarch}"
 	fi
 
 	einfo "Using bootclasspath ${bootclasspath}"
 	einfo "Using JVM library path ${JAVA_LIB_DIR}"
 
-	if [ ! -f ${JAVA_LIB_DIR}/libawt.so ] ; then
+	if [[ ! -f ${JAVA_LIB_DIR}/libawt.so ]] ; then
 	    die "Could not find libawt.so native library"
 	fi
 
@@ -256,7 +236,7 @@ setup-jvm-opts() {
 setup-mozilla-opts() {
 	mozilla_dir="--mozdir-unset---"
 
-	if [ -f ${ROOT}/usr/lib/gecko-sdk/lib/libgtkembedmoz.so ] ; then
+	if [[ -f ${ROOT}/usr/lib/gecko-sdk/lib/libgtkembedmoz.so ]] ; then
 		mozilla_dir=/usr/lib/gecko-sdk
 	else
 		# TODO need to update this appropriately for gecko-sdk
@@ -280,22 +260,6 @@ setup-mozilla-opts() {
 	export GECKO_LIBS="-L${GECKO_SDK}/lib -lgtkembedmoz"
 }
 
-build-native() {
-	sh features/org.eclipse.platform.launchers/library/gtk/build.sh \
-		-os linux -ws gtk \
-		-arch ${eclipsearch} || die "Failed to build launcher"
-}
-create-desktop-entry() {
-	sed -e "s/@PV@/${PV}/" ${FILESDIR}/eclipse-${SLOT}.desktop \
-		> eclipse-${SLOT}.desktop || die "Failed to create desktop entry"
-}
-
-install-desktop-entry() {
-	dodir /usr/share/applications
-	insinto /usr/share/applications
-	doins eclipse-${SLOT}.desktop
-}
-
 install_link_file() {
 	local path=${1}
 	local file=${2}
@@ -304,35 +268,21 @@ install_link_file() {
 }
 
 install-link-files() {
-	einfo "Installing link files"
-
 	dodir ${ECLIPSE_LINKS_DIR}
 	install_link_file /opt/eclipse-extensions-3 eclipse-binary-extensions-3.link
 	install_link_file /opt/eclipse-extensions-${SLOT} eclipse-binary-extensions-${SLOT}.link
 
-	install_link_file /usr/lib/eclipse-extensions-3 eclipse-extensions-3.link install_link_file /usr/lib/eclipse-extensions-${SLOT}
-	eclipse-extensions-${SLOT}.link
+	install_link_file /usr/lib/eclipse-extensions-3 eclipse-extensions-3.link 
+	install_link_file /usr/lib/eclipse-extensions-${SLOT} eclipse-extensions-${SLOT}.link
 
 #	install_link_file /var/lib/eclipse-3 eclipse-var-3.link
 #	install_link_file /var/lib/eclipse-${SLOT} eclipse-var-${SLOT}.link
 }
 
-#strip-src() {
-#	local bp=${D}/${ECLIPSE_DIR}
-#
-#	rm -rf ${bp}/plugins/org.eclipse.pde.source_3* \
-#		${bp}/plugins/org.eclipse.jdt.source_3* \
-#		${bp}/plugins/org.eclipse.platform.source.linux.* \
-#		${bp}/plugins/org.eclipse.platform.source_3* \
-#		${bp}/features/org.eclipse.jdt.source_3* \
-#		${bp}/features/org.eclipse.pde.source_3* \
-#		${bp}/features/org.eclipse.platform.source_3*
-#}
-
-#strip-docs() {
-#	local bp=${D}/${ECLIPSE_DIR}
-#
-#	rm -rf ${bp}/plugins/org.eclipse.platform.doc.* \
-#		${bp}/plugins/org.eclipse.jdt.doc.* \
-#		${bp}/plugins/org.eclipse.pde.doc.*
-#}
+pkg_postinst() {
+	einfo "In order to use the Update Manager, add yourself to the 'eclipse' group"
+	echo
+	einfo "Eclipse plugin packages (ie eclipse-cdt) will likely go away in"
+	einfo "the near future until they can be properly packaged. Update Manager"
+	einfo "is prefered in the meantime."
+}
