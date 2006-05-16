@@ -43,7 +43,7 @@ ECLIPSE_LINKS_DIR="${ECLIPSE_DIR}/links"
 #   - also submit patch to bugs.eclipse.org
 # - ppc support not tested, but not explicitly broken either
 # - make a extension location in /var/lib that's writable by 'eclipse' group
-# - use make_desktop_entry from eutils instead of our own stuff
+# - update man page
 
 pkg_setup() {
 	java-pkg-2_pkg_setup
@@ -112,6 +112,7 @@ src_compile() {
 src_install() {
 	dodir /usr/lib
 
+	# TODO maybe there's a better way of installing than extracting the tar?
 	[[ -f result/linux-gtk-${eclipsearch}-sdk.tar.gz ]] || die "tar.gz bundle was not built properly!"
 	tar zxf result/linux-gtk-${eclipsearch}-sdk.tar.gz -C ${D}/usr/lib \
 		|| die "Failed to extract the built package"
@@ -131,7 +132,6 @@ src_install() {
 	doman ${FILESDIR}/eclipse.1
 
 	make_desktop_entry eclipse-${SLOT} "Eclipse ${PV}" "${ECLIPSE_DIR}/icon.xpm"
-
 
 	install-link-files
 
@@ -182,32 +182,6 @@ fix_makefiles() {
 
 clean-prebuilt-code() {
 	find ${S} -type f \( -name '*.class' -o -name '*.so' -o -name '*.so.*' -o -name 'eclipse' \) | xargs rm -f
-}
-
-check-cflags() {
-	local badflags="-fomit-frame-pointer -msse2"
-	local error=false
-	local flag
-
-	for flag in ${badflags} ; do
-		if is-flag ${flag}; then
-			ewarn "Found offending option ${flag} in your CFLAGS"
-			error=true
-		fi
-	done
-	if [[ ${error} == "true" ]]; then
-		echo
-		ewarn "One or more potentially gruesome CFLAGS detected. When you run into trouble,"
-		ewarn "please edit /etc/make.conf and remove all offending flags, then recompile"
-		ewarn "Eclipse and all its dependencies before submitting a bug report."
-		echo
-		ewarn "In particular, gtk+ is extremely sensitive to which which flags it was"
-		ewarn "compiled with."
-		echo
-		einfo "Tip: use equery depgraph \"=${PF}\" to list all dependencies."
-		echo
-		ebeep
-	fi
 }
 
 setup-jvm-opts() {
