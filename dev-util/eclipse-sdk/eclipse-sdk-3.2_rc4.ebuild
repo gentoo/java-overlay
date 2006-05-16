@@ -78,7 +78,7 @@ ant_src_unpack() {
 	#   3: fix building of native update code library
 	#      - remove hard coded x86 path
 	#      - some gcc versions refuse if both -static and -fPIC are used
-	epatch ${FILESDIR}/${P}-gentoo.patch
+	epatch ${FILESDIR}/${PN}-3.2_rc3-gentoo.patch
 
 	einfo "Cleaning out prebuilt code"
 	clean-prebuilt-code
