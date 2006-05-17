@@ -1,0 +1,8 @@
+DIST jaf-1_1-fr.zip 380084 RMD160 6675c5e2dee3c882949bf4b131cbb9e077f61b9c SHA1 c092c42cf65873a9b360c01e64149fbf9b7c2eac SHA256 3230f1b3ec676fdaeebcfae2c2f0dfeb9b0c543f43312cae5c2b9396a1198813 size 380084
+EBUILD sun-jaf-bin-1.1.ebuild 976 RMD160 3f9e371f6a166e2413df57ea3f720d30db31a711 SHA1 ba5b51435076f17fc46c7a6d2af3d705d76d4fa4 SHA256 02ee410726fe63e46cfc3d5a8a4a6347e1eb8fe72711bac58fe785e9cdae1cd0 size 976
+MD5 03b5ed68a74e3ab5e05c0ce717629f72 sun-jaf-bin-1.1.ebuild 976
+RMD160 3f9e371f6a166e2413df57ea3f720d30db31a711 sun-jaf-bin-1.1.ebuild 976
+SHA256 02ee410726fe63e46cfc3d5a8a4a6347e1eb8fe72711bac58fe785e9cdae1cd0 sun-jaf-bin-1.1.ebuild 976
+MD5 11e25a07efb9a4b437e90ce02a87509a files/digest-sun-jaf-bin-1.1 223
+RMD160 a47944f2f31ca56231f8934f184ed8b4e41ecbc3 files/digest-sun-jaf-bin-1.1 223
+SHA256 9c87f86c092f31acc4f3acfb43fd08e848fc6fe0915eaa9ae574bdc6e6c6f0be files/digest-sun-jaf-bin-1.1 223
