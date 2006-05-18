@@ -9,6 +9,8 @@ MY_PVA=${PV//./_}
 S="${WORKDIR}/jdk${MY_PVL}"
 DESCRIPTION="Sun's J2SE Development Kit, version ${PV}"
 HOMEPAGE="http://java.sun.com/j2se/1.5.0/"
+SRC_URI="x86? ( http://download.java.net/dlj/binaries/jdk-${MY_PVA}-distro-linux-i586.bin )
+        amd64? ( http://download.java.net/dlj/binaries/jdk-${MY_PVA}-distro-linux-amd64.bin )"
 SLOT="1.5"
 LICENSE="dlj-1.1"
 KEYWORDS="~x86 ~amd64 -*"
