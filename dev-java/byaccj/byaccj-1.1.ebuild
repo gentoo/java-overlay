@@ -5,10 +5,10 @@
 DESCRIPTION="A java extension of BSD YACC-compatible parser generator"
 
 HOMEPAGE="http://byaccj.sourceforge.net/"
-SRC_URI="mirror://gentoo/${PN}${PV}.tar.gz"
+#SRC_URI="mirror://gentoo/${PN}${PV}.tar.gz"
 LICENSE="as-is"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="-*"
 IUSE=""
 DEPEND=""
 
