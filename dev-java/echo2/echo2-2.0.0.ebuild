@@ -39,9 +39,9 @@ pkg_nofetch() {
 
 src_compile() {
 
-	export CLASSPATH=`java-config -p servletapi-2.4`
+	export SERVLET_LIB_JAR=$(java-config -p servletapi-2.4)
 	cd "${S}/SourceCode"
-	ant dist || die "ant failed"
+	eant dist || die "ant failed"
 
 }
 
