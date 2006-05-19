@@ -42,7 +42,7 @@ SRC_URI="${BASELOCATION}/${MAINTARBALL}
 
 LICENSE="Apache-1.1 Apache-2.0 SPL W3C sun-bcla-j2eeeditor sun-bcla-javac sun-javac as-is docbook sun-resolver"
 SLOT="4.1"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~x86 ~amd64 -*"
 IUSE="debug doc"
 
 # dev-java/xml-commons-resolver for future versions
@@ -72,7 +72,7 @@ RDEPEND=">=virtual/jre-1.5.0
 		 >=dev-java/xerces-2.6.2
 		   "
 DEPEND="${RDEPEND}
-		>=virtual/jdk-1.4.2
+		>=virtual/jdk-1.5.0
 		>=dev-java/ant-1.6.2
 		  dev-util/pmd
 		  dev-libs/libxslt
@@ -112,6 +112,9 @@ DESTINATION="${ROOT}usr/share/netbeans-${SLOT}"
 antflags=""
 
 set_env() {
+
+	ewarn "This is an experimental ebuild and does not fully compile yet"
+	ewarn "Proceed if you wish, you have been warned!"
 
 	antflags=""
 
