@@ -31,9 +31,10 @@ HOMEPAGE="http://www.netbeans.org"
 # Remove the unset DISPLAY line from src_compile to get graphical license dialogs and pause before
 # unscramble
 
-MY_PV=${PV/./_}
+MY_PV=${PV/_/-}
+MY_PV=${MY_PV/./_}
 
-BASELOCATION="http://www.netbeans.org/download/${MY_PV}/fcs/200601251500/"
+BASELOCATION="http://us1.mirror.netbeans.org/download/${MY_PV/-//}/200605090801"
 MAINTARBALL="netbeans-${MY_PV}-ide_sources.tar.bz2"
 JAVADOCTARBALL="netbeans-${MY_PV}-javadoc.tar.bz2"
 
