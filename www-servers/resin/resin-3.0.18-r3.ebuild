@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg-2 eutils flag-o-matic java-utils-2
+inherit java-pkg-2 eutils flag-o-matic
 
 DESCRIPTION="A fast Servlet 2.4 and JSP 2.0 engine with EJB and distributed session load balancing."
 HOMEPAGE="http://www.caucho.com"
@@ -51,14 +51,14 @@ src_compile() {
 	# Broken with -jn where n > 1
 	emake -j1 || die "emake failed"
 
-	CP=`java-config -p iso-relax,aopalliance-1`:${CLASSPATH}
+	export CLASSPATH=`java-config -p iso-relax,aopalliance-1`
 
 	einfo "Building jars..."
-	CLASSPATH=${CP} ant || die "ant failed"
+	ant || die "ant failed"
 
 	if use doc; then
 		einfo "Building docs..."
-		CLASSPATH=${CP} ant doc || die "ant doc failed"
+		ant doc || die "ant doc failed"
 	fi
 
 }
