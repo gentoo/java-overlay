@@ -11,10 +11,9 @@ SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 LICENSE="freemarker"
 SLOT="2.3"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc jikes"
+IUSE="doc"
 
 DEPEND=">=virtual/jdk-1.4
-	jikes? (dev-java/jikes)
 	dev-java/ant-core"
 RDEPEND=">=virtual/jre-1.4
 	=dev-java/servletapi-2.3*
@@ -26,21 +25,17 @@ GETJARS_ARG="servletapi-2.3,jaxen-1.1"
 src_unpack() {
 
 	unpack ${A}
-
 	epatch "${FILESDIR}/${P}-gentoo.patch"
 
 }
 
 src_compile() {
 
-	local antflags="jar -Djavacc.home=/usr/share/javacc/lib"
+	local antflags="jar -Djavacc.home=/usr/share/javacc/lib -lib $(java-pkg_getjars ${GETJARS_ARG})"
 
-	antflags="${antflags} -lib $(java-pkg_getjars ${GETJARS_ARG})"
-
-	use jikes && antflags="-Dbuild.compiler=jikes ${antflags}"
 	use doc && antflags="${antflags} javadoc"
 
-	ant clean ${antflags} || die "Compilation failed"
+	eant clean ${antflags} || die "Compilation failed"
 
 }
 
