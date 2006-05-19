@@ -1,18 +1,23 @@
+AUX build-1.xml 1546 RMD160 ebd507967b0bb2fabe2aac044ef60e3785189654 SHA1 68699e0269a51d6f4eba82e5b15bd485974d8084 SHA256 db486d24f063b5ec263d6da56b52dd2a7cae686cb9c347fb9702cc0d3dda7868 size 1546
 MD5 c089b7d34f96c556a34bb8c402794023 files/build-1.xml 1546
 RMD160 ebd507967b0bb2fabe2aac044ef60e3785189654 files/build-1.xml 1546
 SHA256 db486d24f063b5ec263d6da56b52dd2a7cae686cb9c347fb9702cc0d3dda7868 files/build-1.xml 1546
-MD5 31f43a6dcb9fdada02302017722003b8 files/digest-gjt-jpl-pattern-1 70
-RMD160 9c901558212bc0a86273662df2133317d355bad1 files/digest-gjt-jpl-pattern-1 70
-SHA256 917e5a439a940235428c516ccc990c7180acf2992dd15e1b53a1917d5859dda9 files/digest-gjt-jpl-pattern-1 70
-MD5 41f01fa2bf737a8a312271930654588d files/digest-gjt-jpl-util-0.6 73
-RMD160 a1396a278a5cb28caa9eb20d432cd2e8a6633d0f files/digest-gjt-jpl-util-0.6 73
-SHA256 f6206d90cb3a891ffb3cf12e67d9467d0b0b807306b9d12c3ebaafd1195987ee files/digest-gjt-jpl-util-0.6 73
-MD5 5b4ebb3074de0d3f7b9217ab0ed98c9b files/digest-gjt-jpl-util-1 68
-RMD160 acefaa3771b57d77df450a9f4c9379ed782e5413 files/digest-gjt-jpl-util-1 68
-SHA256 2a12a868b327f51c310c9f58488846d68383b809209be7abe95c6b38d547a7ab files/digest-gjt-jpl-util-1 68
+AUX gjt-jpl-util-build_xml-jpp.patch 1316 RMD160 3740ec74507b2e6fe9c567fe6b0a394ef6611c9f SHA1 b5e029cd6314d78e24397e00eac865c343706fc9 SHA256 767ee060d8b9a67fd39f379661974f94359891c3838e00f221173d775c82d83d size 1316
 MD5 bd0c3074ae3990cea9832f1ece3b4166 files/gjt-jpl-util-build_xml-jpp.patch 1316
 RMD160 3740ec74507b2e6fe9c567fe6b0a394ef6611c9f files/gjt-jpl-util-build_xml-jpp.patch 1316
 SHA256 767ee060d8b9a67fd39f379661974f94359891c3838e00f221173d775c82d83d files/gjt-jpl-util-build_xml-jpp.patch 1316
+DIST gjt-jpl-util-0.6-2jpp.src.rpm 99920 RMD160 f928248a6955fc3edf637c6aca825d64ff2cc97e SHA256 7da6fab89ce1c1bbd4d9848d71b5197152a457fa5ecc4c369f974526a23f674d size 99920
+EBUILD gjt-jpl-util-0.6-r1.ebuild 1216 RMD160 cf8acfb89f126e482ec29f8e228a17b8a8c5aae3 SHA1 43ec502f617e10cfae030cc24f77e5c8cc2f2bc8 SHA256 01def1e59dd9d57bdb593ec7511539eb86b3dff8ca66aafca1693d0835ee8975 size 1216
+MD5 fe45c06e0aa137a83cce05bc1b7ae5a8 gjt-jpl-util-0.6-r1.ebuild 1216
+RMD160 cf8acfb89f126e482ec29f8e228a17b8a8c5aae3 gjt-jpl-util-0.6-r1.ebuild 1216
+SHA256 01def1e59dd9d57bdb593ec7511539eb86b3dff8ca66aafca1693d0835ee8975 gjt-jpl-util-0.6-r1.ebuild 1216
+EBUILD gjt-jpl-util-0.6.ebuild 1328 RMD160 fe1a2114e7d72998a511a94ca20ca398eb8664aa SHA1 5f9ad576ac9581acfac439c92c5d87441442f65f SHA256 e555019b4baf05f76029525ed3e52b592603f0957c4e2c3c8c14f0293ff3e9f7 size 1328
 MD5 ab1d24104d42ddccdb859240a265b02b gjt-jpl-util-0.6.ebuild 1328
 RMD160 fe1a2114e7d72998a511a94ca20ca398eb8664aa gjt-jpl-util-0.6.ebuild 1328
 SHA256 e555019b4baf05f76029525ed3e52b592603f0957c4e2c3c8c14f0293ff3e9f7 gjt-jpl-util-0.6.ebuild 1328
+MD5 a3de55c3b12d237aaf08ae6911b30fb8 files/digest-gjt-jpl-util-0.6 265
+RMD160 cecdc764d44c2657d5fc98c90ca57aaa4b53437a files/digest-gjt-jpl-util-0.6 265
+SHA256 2874573d61dacee6ebf6b85f41debbd563a1e65db67a3c4954e220d5ea0f2463 files/digest-gjt-jpl-util-0.6 265
+MD5 a3de55c3b12d237aaf08ae6911b30fb8 files/digest-gjt-jpl-util-0.6-r1 265
+RMD160 cecdc764d44c2657d5fc98c90ca57aaa4b53437a files/digest-gjt-jpl-util-0.6-r1 265
+SHA256 2874573d61dacee6ebf6b85f41debbd563a1e65db67a3c4954e220d5ea0f2463 files/digest-gjt-jpl-util-0.6-r1 265
