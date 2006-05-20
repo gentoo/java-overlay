@@ -11,7 +11,7 @@ HOMEPAGE="http://www.eclipse.org/"
 SRC_URI="http://ftp.osuosl.org/pub/eclipse/eclipse/downloads/drops/S-${MY_PV}-${DATESTAMP}/${MY_A}"
 IUSE="nogecko-sdk gnome cairo opengl"
 SLOT="3.2"
-LICENSE="CPL-1.0"
+LICENSE="EPL-1.0"
 KEYWORDS="~x86 ~ppc ~amd64"
 S="${WORKDIR}"
 
