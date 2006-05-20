@@ -3,12 +3,15 @@
 # $Header: /var/cvsroot/gentoo-x86/dev-util/eclipse-sdk/eclipse-sdk-3.1.2-r2.ebuild,v 1.1 2006/04/20 13:49:19 nichoj Exp $
 
 inherit eutils java-pkg-2 flag-o-matic check-reqs
+
+#http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops/S-3.2RC5-200605191206/eclipse-sourceBuild-srcIncluded-3.2RC5.zip&url=http://download.eclipse.org/eclipse/downloads/drops/S-3.2RC5-200605191206/eclipse-sourceBuild-srcIncluded-3.2RC5.zip&mirror_id=1
 MY_PV=${PV/_rc/RC}
-DATESTAMP=200605121600
+DATESTAMP=200605191206
 MY_A="eclipse-sourceBuild-srcIncluded-${MY_PV}.zip"
 DESCRIPTION="Eclipse Tools Platform"
 HOMEPAGE="http://www.eclipse.org/"
-SRC_URI="http://ftp.osuosl.org/pub/eclipse/eclipse/downloads/drops/S-${MY_PV}-${DATESTAMP}/${MY_A}"
+#SRC_URI="http://ftp.osuosl.org/pub/eclipse/eclipse/downloads/drops/S-${MY_PV}-${DATESTAMP}/${MY_A}"
+SRC_URI="http://download.eclipse.org/eclipse/downloads/drops/S-${MY_PV}-${DATESTAMP}/${MY_A}"
 IUSE="nogecko-sdk gnome cairo opengl"
 SLOT="3.2"
 LICENSE="EPL-1.0"
