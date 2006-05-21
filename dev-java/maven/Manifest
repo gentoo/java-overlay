@@ -1,5 +1,0 @@
-MD5 d41d8cd98f00b204e9800998ecf8427e files/digest-maven-1.0.2 0
-MD5 c82b56b048e480b637e8ef3169abaa7c files/digest-maven-1.1_beta1 149
-MD5 c9f23f580107966ea59b33718ee1bfb6 files/maven-1.1_beta1-gentoo.patch 634
-MD5 f28d5b5c7b150d15035a9fe12fdbe1b3 files/maven-plugins-20050905-gentoo.patch 603
-MD5 0c74cc9e7fe55ab8ba9ce2662548b906 maven-1.0.2.ebuild 714

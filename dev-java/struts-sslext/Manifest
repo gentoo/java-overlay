@@ -1,15 +1,12 @@
+AUX build-1.10.xml 1546 RMD160 ebd507967b0bb2fabe2aac044ef60e3785189654 SHA1 68699e0269a51d6f4eba82e5b15bd485974d8084 SHA256 db486d24f063b5ec263d6da56b52dd2a7cae686cb9c347fb9702cc0d3dda7868 size 1546
 MD5 c089b7d34f96c556a34bb8c402794023 files/build-1.10.xml 1546
 RMD160 ebd507967b0bb2fabe2aac044ef60e3785189654 files/build-1.10.xml 1546
 SHA256 db486d24f063b5ec263d6da56b52dd2a7cae686cb9c347fb9702cc0d3dda7868 files/build-1.10.xml 1546
-MD5 8500c4b7ffde270e3b4d85673e9bf301 files/digest-struts-sslext-1.10 72
-RMD160 f33d6796af669db9cbb2a5fa6f80fce20e0fc5cc files/digest-struts-sslext-1.10 72
-SHA256 cbbe87643217b21299182ba417a40bdb0c2d6cb6b2e386bf9c1df576035ce2e5 files/digest-struts-sslext-1.10 72
-MD5 8467c5caad452214607ec347b0d9893a files/digest-struts-sslext-1.10-r1 262
-RMD160 26e75c994d739b0e962faaab70a994f8ed91cd52 files/digest-struts-sslext-1.10-r1 262
-SHA256 bb2a50946ca354b441aeaeebef39397da6faa05601d15f3acd89a1acc0029337 files/digest-struts-sslext-1.10-r1 262
+DIST sslext-struts1.10-src.tar.gz 15711 RMD160 60706b597e5bd658f18738929f42bff39ac18fe9 SHA256 f5587e14d3f1fc74a14b6d09741af459a4c939f14c55056762268308b42e9321 size 15711
+EBUILD struts-sslext-1.10-r1.ebuild 1336 RMD160 bb65d7ef37b649cae69510f9b24b7239d9f4590f SHA1 382518e9ce9f84eed8164d52ffea036352d3a639 SHA256 f7a624ec8d5d8055131441359b4f3619ef333996a679fee40e9a9d145f757f9b size 1336
 MD5 8f91e9d93acefbd82aa226bc38c46c9f struts-sslext-1.10-r1.ebuild 1336
 RMD160 bb65d7ef37b649cae69510f9b24b7239d9f4590f struts-sslext-1.10-r1.ebuild 1336
 SHA256 f7a624ec8d5d8055131441359b4f3619ef333996a679fee40e9a9d145f757f9b struts-sslext-1.10-r1.ebuild 1336
-MD5 99e25b51ef569659c2ebfc26a0056671 struts-sslext-1.10.ebuild 1322
-RMD160 da89e53a911d0b0a8a570b785c224d83acb6fda3 struts-sslext-1.10.ebuild 1322
-SHA256 678f6fd37f440b5fcc27eea08a58bd0d2f93f68aab935a3b0c6a44ebd2f8d78b struts-sslext-1.10.ebuild 1322
+MD5 8467c5caad452214607ec347b0d9893a files/digest-struts-sslext-1.10-r1 262
+RMD160 26e75c994d739b0e962faaab70a994f8ed91cd52 files/digest-struts-sslext-1.10-r1 262
+SHA256 bb2a50946ca354b441aeaeebef39397da6faa05601d15f3acd89a1acc0029337 files/digest-struts-sslext-1.10-r1 262

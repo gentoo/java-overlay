@@ -7,13 +7,6 @@ EBUILD opensaml-1.0.1-r1.ebuild 1150 RMD160 f4305b34c4b126e9fe1df59788d4f1fa4a72
 MD5 720a935a1c8eb026c0ac89ac55629e03 opensaml-1.0.1-r1.ebuild 1150
 RMD160 f4305b34c4b126e9fe1df59788d4f1fa4a7205b0 opensaml-1.0.1-r1.ebuild 1150
 SHA256 ddf5a20ecdcde2557768c5830a67f177e84b7ddef7566028c52290b6e5e280d4 opensaml-1.0.1-r1.ebuild 1150
-EBUILD opensaml-1.0.1.ebuild 1166 RMD160 d4684938664e1ec2559ccf89d111c86db3562e0b SHA1 78c9be8e71c803756da79e71c043c1735a4f3a4a SHA256 41f3b318296456dfd6dd979a8c6a2471c808d65cbecc7baa7b34cd884ffde81a size 1166
-MD5 11dc7501963183d46a80e85a009e2cb4 opensaml-1.0.1.ebuild 1166
-RMD160 d4684938664e1ec2559ccf89d111c86db3562e0b opensaml-1.0.1.ebuild 1166
-SHA256 41f3b318296456dfd6dd979a8c6a2471c808d65cbecc7baa7b34cd884ffde81a opensaml-1.0.1.ebuild 1166
-MD5 69b5e5fcac276bb7dabd1f5322abcb51 files/digest-opensaml-1.0.1 262
-RMD160 9496b4ca2c92ce0b0a022f9dae2c3c5770a53ecc files/digest-opensaml-1.0.1 262
-SHA256 f5dd8bea15ee8b51afd7631cac6eff7822cea4da546b4b95d8459b5307a6d483 files/digest-opensaml-1.0.1 262
 MD5 69b5e5fcac276bb7dabd1f5322abcb51 files/digest-opensaml-1.0.1-r1 262
 RMD160 9496b4ca2c92ce0b0a022f9dae2c3c5770a53ecc files/digest-opensaml-1.0.1-r1 262
 SHA256 f5dd8bea15ee8b51afd7631cac6eff7822cea4da546b4b95d8459b5307a6d483 files/digest-opensaml-1.0.1-r1 262

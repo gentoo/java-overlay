@@ -1,12 +1,8 @@
-MD5 6fce6d93c369de68f9ee96397c53ec98 files/digest-monolog-1.9.1 247
-RMD160 f8148acfc0695a6e35a1a8978f87200d5efa875a files/digest-monolog-1.9.1 247
-SHA256 dbcf06f060f95306add5d1b2ca5702eb8aa3cdbd683e3ee3f9f54b1370d8ee26 files/digest-monolog-1.9.1 247
-MD5 915b8a6e72bdb3627a0248c2033477d5 files/digest-monolog-1.9.1-r1 247
-RMD160 acbcc0372ea2f2008072ec3ddadfcd8d9af257b2 files/digest-monolog-1.9.1-r1 247
-SHA256 834e3e6dfbc8e72af54d3b3530cc52ef8652b52cee31dd873ad2af44d20187d7 files/digest-monolog-1.9.1-r1 247
+DIST Monolog_1.9.1_src.zip 4493734 RMD160 3f8c16c861e252141a3c5a295cea2c5dd7c57d5c SHA256 6df683356a69d13fadf70001629266ec25342ad8420520b7e29f153545129506 size 4493734
+EBUILD monolog-1.9.1-r1.ebuild 941 RMD160 14a45d47efb34a6e3a28671acd46ef22fbca9c72 SHA1 0296541c4faf55d886b1d92938b79dd3ee943e06 SHA256 7af8688283cc50d9dda6e9e3723e6e96cfa3b87a403d0876ffb9b88fad28b5c8 size 941
 MD5 87f39df8aa5e6f9fd7a73f268ccc54b7 monolog-1.9.1-r1.ebuild 941
 RMD160 14a45d47efb34a6e3a28671acd46ef22fbca9c72 monolog-1.9.1-r1.ebuild 941
 SHA256 7af8688283cc50d9dda6e9e3723e6e96cfa3b87a403d0876ffb9b88fad28b5c8 monolog-1.9.1-r1.ebuild 941
-MD5 c1e30270043dbe11a00fab1531e68ee6 monolog-1.9.1.ebuild 942
-RMD160 d45eae7a341f7fb5dd17d0a7d6c66236ee2365e9 monolog-1.9.1.ebuild 942
-SHA256 f8d4979c3e6c4bf11a954cd165238dcac1685c8241dd3d801f431e1ecc154f2e monolog-1.9.1.ebuild 942
+MD5 915b8a6e72bdb3627a0248c2033477d5 files/digest-monolog-1.9.1-r1 247
+RMD160 acbcc0372ea2f2008072ec3ddadfcd8d9af257b2 files/digest-monolog-1.9.1-r1 247
+SHA256 893424af9ed6bb105b94230fca96ba96bb86827839a7f7a8457245fa2074442f files/digest-monolog-1.9.1-r1 247

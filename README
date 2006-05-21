@@ -1,0 +1,6 @@
+
+This overlay contains only packages migrated to generation 2 (java-*-2 eclass
+using ebuilds).
+
+gentoo-java-experimental should contain only generation 1 ebuilds.
+

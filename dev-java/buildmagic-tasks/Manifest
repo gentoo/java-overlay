@@ -1,7 +1,3 @@
-AUX 2.0-local.properties 479 RMD160 41d9b2f67689f840a980412575e4704de21cf2d7 SHA1 b14bc7790f27bf81cd6cfc9a6c8d4c6ea844f950 SHA256 ed92008099ddc8e45f6c928e67f2229ac31edc9a67cf8207eedb59f449220ab7 size 479
-MD5 41a6429eed909cf88248f5e94b38c9a8 files/2.0-local.properties 479
-RMD160 41d9b2f67689f840a980412575e4704de21cf2d7 files/2.0-local.properties 479
-SHA256 ed92008099ddc8e45f6c928e67f2229ac31edc9a67cf8207eedb59f449220ab7 files/2.0-local.properties 479
 AUX jboss4-buildmagic-tasks-build_xml.patch 973 RMD160 47d20525ce277418d3167efa4949afde3b4e9233 SHA1 f3802bb034a662a7e02c422f4f8649024b5ffaa8 SHA256 f97dd196afe63df114d380c5e51e551192fe4755f6dcd6c1ea9c3d91f43edc34 size 973
 MD5 b89d97874f66df322901a9daca9e78a4 files/jboss4-buildmagic-tasks-build_xml.patch 973
 RMD160 47d20525ce277418d3167efa4949afde3b4e9233 files/jboss4-buildmagic-tasks-build_xml.patch 973
@@ -12,13 +8,6 @@ EBUILD buildmagic-tasks-2.0-r1.ebuild 3664 RMD160 b3fff42cbf404799d36de73c083232
 MD5 b7f88c14d4ff3aba25f8b1ef6d81a971 buildmagic-tasks-2.0-r1.ebuild 3664
 RMD160 b3fff42cbf404799d36de73c083232a9a9313c86 buildmagic-tasks-2.0-r1.ebuild 3664
 SHA256 e85846015df06d4479ffc3d458cdd2b16f5140245bdca8023474809ba7142695 buildmagic-tasks-2.0-r1.ebuild 3664
-EBUILD buildmagic-tasks-2.0.ebuild 3694 RMD160 81593f193151611843ec07a1e1c60d0cd0e84f85 SHA1 f7492b30e1c5667692906d807273130e003537e9 SHA256 0018522af457e9fd0ea8d0c54ebd950568c287572980cc83d767a755fb5d0839 size 3694
-MD5 37eae339675cbb237ef16fd4f53d8581 buildmagic-tasks-2.0.ebuild 3694
-RMD160 81593f193151611843ec07a1e1c60d0cd0e84f85 buildmagic-tasks-2.0.ebuild 3694
-SHA256 0018522af457e9fd0ea8d0c54ebd950568c287572980cc83d767a755fb5d0839 buildmagic-tasks-2.0.ebuild 3694
-MD5 031835595e758a7a45368b970f46b71f files/digest-buildmagic-tasks-2.0 533
-RMD160 7d083dc6cc7ea1dda9e423b4757dec212ae3a0f8 files/digest-buildmagic-tasks-2.0 533
-SHA256 84639e35705fb30e7229a3bb72aff40bf41e891d5093ef2533d2e9b630267384 files/digest-buildmagic-tasks-2.0 533
 MD5 031835595e758a7a45368b970f46b71f files/digest-buildmagic-tasks-2.0-r1 533
 RMD160 7d083dc6cc7ea1dda9e423b4757dec212ae3a0f8 files/digest-buildmagic-tasks-2.0-r1 533
 SHA256 84639e35705fb30e7229a3bb72aff40bf41e891d5093ef2533d2e9b630267384 files/digest-buildmagic-tasks-2.0-r1 533

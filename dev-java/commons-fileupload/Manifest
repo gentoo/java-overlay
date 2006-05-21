@@ -1,19 +1,12 @@
-AUX commons-fileupload-1.1-gentoo.patch 1649 RMD160 220ea74795b9caa58223ab9464bc875db952d3a6 SHA1 cc0d6427b30728aa432efd32584cc670285067dc SHA256 9c90d6872028b47801af3090268c56aade3d6119d8566e5525ed1964ce564e16 size 1649
-MD5 88aff6d6870cacfb473e32f11cae3473 files/commons-fileupload-1.1-gentoo.patch 1649
-RMD160 220ea74795b9caa58223ab9464bc875db952d3a6 files/commons-fileupload-1.1-gentoo.patch 1649
-SHA256 9c90d6872028b47801af3090268c56aade3d6119d8566e5525ed1964ce564e16 files/commons-fileupload-1.1-gentoo.patch 1649
+AUX A 1649 RMD160 220ea74795b9caa58223ab9464bc875db952d3a6 SHA1 cc0d6427b30728aa432efd32584cc670285067dc SHA256 9c90d6872028b47801af3090268c56aade3d6119d8566e5525ed1964ce564e16 size 1649
+MD5 88aff6d6870cacfb473e32f11cae3473 files/A 1649
+RMD160 220ea74795b9caa58223ab9464bc875db952d3a6 files/A 1649
+SHA256 9c90d6872028b47801af3090268c56aade3d6119d8566e5525ed1964ce564e16 files/A 1649
 DIST commons-fileupload-1.1-src.tar.gz 98333 size 98333
 EBUILD commons-fileupload-1.1-r1.ebuild 1333 RMD160 3af0db21c6a78894a1aa1725abcd350fe7380625 SHA1 9a9dcaac0d19c10d1d952e70ad16e467160db3db SHA256 c807ef7cbc7a96d6bb616e26bf167c6beb319507b093a16afe21bac645e65ae5 size 1333
 MD5 9cd3b7ddb00c74adc3f0f7d8a786af74 commons-fileupload-1.1-r1.ebuild 1333
 RMD160 3af0db21c6a78894a1aa1725abcd350fe7380625 commons-fileupload-1.1-r1.ebuild 1333
 SHA256 c807ef7cbc7a96d6bb616e26bf167c6beb319507b093a16afe21bac645e65ae5 commons-fileupload-1.1-r1.ebuild 1333
-EBUILD commons-fileupload-1.1.ebuild 1497 RMD160 91f93c15f29ca40f4ee27b90211b0103f1724188 SHA1 889594d652245843337f04394aacf1c7d84385ad SHA256 130315e49d05037f3b5c3b54c21fbd62bbb7cab7cc4362f0578265454aea125a size 1497
-MD5 cd5ae29d79fcd1e5df4eacdc08f5fec2 commons-fileupload-1.1.ebuild 1497
-RMD160 91f93c15f29ca40f4ee27b90211b0103f1724188 commons-fileupload-1.1.ebuild 1497
-SHA256 130315e49d05037f3b5c3b54c21fbd62bbb7cab7cc4362f0578265454aea125a commons-fileupload-1.1.ebuild 1497
-MD5 3038e00825123a2e80bec30fabefbace files/digest-commons-fileupload-1.1 77
-RMD160 869ad9794549633e3d8a51bea1480b7a37e82709 files/digest-commons-fileupload-1.1 77
-SHA256 22b8777e80e59631ef66773e97f90acba060ad6d8d46e9888928a24d8ef0874f files/digest-commons-fileupload-1.1 77
 MD5 3038e00825123a2e80bec30fabefbace files/digest-commons-fileupload-1.1-r1 77
 RMD160 869ad9794549633e3d8a51bea1480b7a37e82709 files/digest-commons-fileupload-1.1-r1 77
 SHA256 22b8777e80e59631ef66773e97f90acba060ad6d8d46e9888928a24d8ef0874f files/digest-commons-fileupload-1.1-r1 77

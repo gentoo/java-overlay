@@ -1,6 +1,0 @@
-MD5 7183f893482c6a7c5586771182861b5b files/digest-xml-security-1.2.1 72
-RMD160 5dca25cfc9466da15a1617953c7e9e6d92e3d22f files/digest-xml-security-1.2.1 72
-SHA256 8fcb76f14e7c179dccca2a4c588de2ea65bdeb67771840ed683a354dfdbbc058 files/digest-xml-security-1.2.1 72
-MD5 a6923729b411bea01b7d0f9cb1c7ef9e xml-security-1.2.1.ebuild 2235
-RMD160 11c75b092bfb82d1849c23e31ca14e3de9cfbdf8 xml-security-1.2.1.ebuild 2235
-SHA256 248872cd677aecaa99475600893ee5cdab827343bd2cdb3134785a33f225cd2f xml-security-1.2.1.ebuild 2235
