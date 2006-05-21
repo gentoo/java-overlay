@@ -1,6 +1,0 @@
-MD5 2d9a6004ca5890d0ccc1d3a640bd9a11 files/digest-jboss-module-transaction-4.0.2 929
-RMD160 05c7fa087337814c2e87b0f0b7761781be229e52 files/digest-jboss-module-transaction-4.0.2 929
-SHA256 92cd177c4865d23f3ac423af74a48a311aaaf17cc0a0d83145af26d86c50d225 files/digest-jboss-module-transaction-4.0.2 929
-MD5 b3be6afa66259605ec067e94dcbe2f17 jboss-module-transaction-4.0.2.ebuild 851
-RMD160 3d1c56fc18d103416a8d1a4b741d8d30b32f0444 jboss-module-transaction-4.0.2.ebuild 851
-SHA256 90031598497d232df00ffebb827d4572069bf776eb8636bc7d5c6b13fefd49ea jboss-module-transaction-4.0.2.ebuild 851

@@ -1,6 +1,0 @@
-MD5 49319284d6c1a475584a5dd7ffdd32f1 files/digest-jboss-module-messaging-4.0.2 928
-RMD160 d5662e12fc8ede5dd9d50fb44bbf328f4cd44adb files/digest-jboss-module-messaging-4.0.2 928
-SHA256 07d5dc2b0930dec1a3d42044b0e638d7b378e8ddb3c259e4db5801d8da47185a files/digest-jboss-module-messaging-4.0.2 928
-MD5 cf904b4d4132782403928e3fdfac87ee jboss-module-messaging-4.0.2.ebuild 1060
-RMD160 a5fa5422835388a17bfecd1cb2019c2c37a9b6ba jboss-module-messaging-4.0.2.ebuild 1060
-SHA256 a380dcb049a0709f9e6964e640b11095db6f4af776331845ee8ac616b70f4def jboss-module-messaging-4.0.2.ebuild 1060

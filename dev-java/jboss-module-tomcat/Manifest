@@ -1,6 +1,0 @@
-MD5 c034b225d89307e6a2b73ea2c9ec53d0 files/digest-jboss-module-tomcat-4.0.2 925
-RMD160 c990468db28d7f6b26b3793f78dcf2d6bb594ab8 files/digest-jboss-module-tomcat-4.0.2 925
-SHA256 e0065c3b873162a4c8c15800caea35d7e5dcb8d989514a655c76a9b8b76e2d7b files/digest-jboss-module-tomcat-4.0.2 925
-MD5 4601024fa7d2fc14707a0d5bbaece947 jboss-module-tomcat-4.0.2.ebuild 1349
-RMD160 d42c499cd2c7009096d9951b97f88f0591ae4b64 jboss-module-tomcat-4.0.2.ebuild 1349
-SHA256 74cd5eb7c4373f2befa79f90506763784371f01b206b1a49a23890cf0763e17a jboss-module-tomcat-4.0.2.ebuild 1349
