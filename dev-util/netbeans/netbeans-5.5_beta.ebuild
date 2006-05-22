@@ -42,8 +42,8 @@ SRC_URI="${BASELOCATION}/${MAINTARBALL}
 	 doc? ( ${BASELOCATION}/${JAVADOCTARBALL} )"
 
 LICENSE="Apache-1.1 Apache-2.0 SPL W3C sun-bcla-j2eeeditor sun-bcla-javac sun-javac as-is docbook sun-resolver"
-SLOT="4.1"
-KEYWORDS="~x86 ~amd64 -*"
+SLOT="5.5"
+KEYWORDS="~amd64 ~x86"
 IUSE="debug doc"
 
 # dev-java/xml-commons-resolver for future versions
@@ -53,7 +53,7 @@ IUSE="debug doc"
 #		 =dev-java/jaxen-1.1*
 #		  dev-java/jtidy
 
-
+# NB 5.5 requires javahelp 2.0_03 not yet released :(
 RDEPEND=">=virtual/jre-1.5.0
 		  =dev-java/commons-logging-1.0*
 		   dev-java/commons-el
@@ -70,7 +70,7 @@ RDEPEND=">=virtual/jre-1.5.0
 		   dev-java/sun-j2ee-deployment-bin
 		   dev-java/xml-commons
 		   dev-java/jakarta-jstl
-		 >=dev-java/xerces-2.6.2
+		 >=dev-java/xerces-2.8.0
 		   "
 DEPEND="${RDEPEND}
 		>=virtual/jdk-1.5.0
@@ -84,8 +84,8 @@ TOMCATSLOT="5.5"
 
 # Replacement JARs for Netbeans
 COMMONS_LOGGING="commons-logging commons-logging.jar commons-logging-1.0.4.jar"
-JASPERCOMPILER="tomcat-${TOMCATSLOT} jasper-compiler.jar jasper-compiler-5.5.9.jar"
-JASPERRUNTIME="tomcat-${TOMCATSLOT} jasper-runtime.jar jasper-runtime-5.5.9.jar"
+#JASPERCOMPILER="tomcat-${TOMCATSLOT} jasper-compiler.jar jasper-compiler-5.5.9.jar"
+#JASPERRUNTIME="tomcat-${TOMCATSLOT} jasper-runtime.jar jasper-runtime-5.5.9.jar"
 JH="javahelp-bin jh.jar jh-2.0_02.jar"
 JHALL="javahelp-bin jhall.jar jhall-2.0_02.jar"
 JMI="jmi-interface jmi.jar jmi.jar"
@@ -99,23 +99,22 @@ SERVLET22="servletapi-2.2 servlet.jar servlet-2.2.jar"
 SERVLET23="servletapi-2.3 servlet.jar servlet-2.3.jar"
 SERVLET24="servletapi-2.4 servlet-api.jar servlet-api-2.4.jar"
 STANDARD="jakarta-jstl standard.jar standard-1.1.2.jar"
-XERCES="xerces-2 xercesImpl.jar xerces-2.6.2.jar"
+XERCES="xerces-2 xercesImpl.jar xerces-2.8.0.jar"
 XMLCOMMONS="xml-commons xml-apis.jar xml-commons-dom-ranges-1.0.b2.jar"
 
 #REGEXP="jakarta-regexp-1.3 jakarta-regexp.jar regexp-1.2.jar"
 
 S=${WORKDIR}/netbeans-src
 BUILDDESTINATION="${S}/nbbuild/netbeans"
-IDE_VERSION="5"
-MY_FDIR="${FILESDIR}/4.1"
+ENTERPRISE="3"
+IDE_VERSION="7"
+PLATFORM="6"
+MY_FDIR="${FILESDIR}/${SLOT}"
 DESTINATION="${ROOT}usr/share/netbeans-${SLOT}"
 
 antflags=""
 
 set_env() {
-
-        ewarn "This is an experimental ebuild and does not fully compile yet"
-        ewarn "Proceed if you wish, you have been warned!"
 
 	antflags=""
 
@@ -152,6 +151,9 @@ src_unpack () {
 		unpack ${JAVADOCTARBALL} || die "Unable to extract javadoc"
 		rm -f *.zip
 	fi
+
+        cd ${S}
+        epatch ${FILESDIR}/${SLOT}/public-packages.patch
 
 	cd ${S}/nbbuild
 	# Disable the bundled Tomcat in favor of Portage installed version
@@ -207,7 +209,7 @@ src_install() {
 
 	fperms 755 \
 		   ${DESTINATION}/bin/netbeans \
-		   ${DESTINATION}/platform${IDE_VERSION}/lib/nbexec
+		   ${DESTINATION}/platform${PLATFORM}/lib/nbexec
 
 	# The wrapper wrapper :)
 	newbin ${MY_FDIR}/startscript.sh netbeans-${SLOT}
@@ -239,11 +241,11 @@ src_install() {
 
 	dodir ${DESTINATION}/icons
 	insinto ${DESTINATION}/icons
-	doins ${S}/core/ide/release/bin/icons/*png
+	doins ${S}/ide/branding/release/*png
 
 	for res in "16x16" "24x24" "32x32" "48x48" "128x128" ; do
 		dodir /usr/share/icons/hicolor/${res}/apps
-		dosym ${DESTINATION}/icons/nb${res}.png /usr/share/icons/hicolor/${res}/apps/netbeans.png
+		dosym ${DESTINATION}/icons/netbeans.png /usr/share/icons/hicolor/${res}/apps/netbeans.png
 	done
 
 	make_desktop_entry netbeans-${SLOT} "Netbeans ${SLOT}" netbeans Development
@@ -283,18 +285,20 @@ function fix_manifest() {
 function place_symlinks() {
 	einfo "Symlinking scrambled jars to system jars"
 
-	cd ${S}/core/external
-	hide jh*.jar || die 
-	java-pkg_jar-from ${JH}
+# Commented out till 2.0_03 is released
+#	cd ${S}/core/external
+#	hide jh*.jar || die 
+#	java-pkg_jar-from ${JHALL}
 
 	cd ${S}/mdr/external/
 	hide jmi.jar mof.jar || die
 	java-pkg_jar-from ${JMI} || die
 	java-pkg_jar-from ${MOF} || die
 
-	cd ${S}/nbbuild/external
-	hide jhall*.jar || die
-	java-pkg_jar-from ${JHALL} || die
+# Commented out till 2.0_03 is released
+#	cd ${S}/nbbuild/external
+#	hide jhall*.jar || die
+#	java-pkg_jar-from ${JHALL} || die
 
 	cd ${S}/libs/external/
 	hide xerces*.jar commons-logging*.jar xml-commons*.jar pmd*.jar  || die
@@ -316,11 +320,12 @@ function place_symlinks() {
 	java-pkg_jar-from ${JUNIT} || die
 
 	cd ${S}/web/external
-	hide servlet*.jar jasper*.jar jsp*.jar jstl*.jar standard*.jar commons-el*.jar || die
+#	hide servlet-*.jar jasper*.jar jsp*.jar jstl*.jar standard*.jar commons-el*.jar || die
+	hide servlet-*.jar  jsp*.jar jstl*.jar standard*.jar commons-el*.jar || die
 	java-pkg_jar-from ${SERVLET23} || die
 	java-pkg_jar-from ${SERVLET24} || die 
-	java-pkg_jar-from ${JASPERCOMPILER} || die
-	java-pkg_jar-from ${JASPERRUNTIME} || die
+#	java-pkg_jar-from ${JASPERCOMPILER} || die
+#	java-pkg_jar-from ${JASPERRUNTIME} || die
 	java-pkg_jar-from ${JSPAPI} || die
 	java-pkg_jar-from ${JSTL} || die
 	java-pkg_jar-from ${STANDARD} || die
@@ -344,27 +349,25 @@ function symlink_extjars() {
 	java-pkg_jar-from ${MOF}
 	java-pkg_jar-from ${JUNIT}
 
-	cd ${1}/ide${IDE_VERSION}/modules/autoload/ext
+	cd ${1}/ide${IDE_VERSION}/modules/ext
 	java-pkg_jar-from ${SERVLET22}
 	java-pkg_jar-from ${XERCES}
 	java-pkg_jar-from ${XMLCOMMONS}
 
-	cd ${1}/enterprise1/modules/autoload/ext
+	cd ${1}/enterprise${ENTERPRISE}/modules/ext
 	java-pkg_jar-from commons-el
 	java-pkg_jar-from ${SERVLET23}
 	java-pkg_jar-from ${SERVLET24}
 	java-pkg_jar-from ${JSR}
-	java-pkg_jar-from ${JASPERCOMPILER}
-	java-pkg_jar-from ${JASPERRUNTIME}
+#	java-pkg_jar-from ${JASPERCOMPILER}
+#	java-pkg_jar-from ${JASPERRUNTIME}
 	java-pkg_jar-from ${JSPAPI}
-
-
-	cd ${1}/enterprise1/config/TagLibraries/JSTL11
 	java-pkg_jar-from jakarta-jstl jstl.jar
 	java-pkg_jar-from jakarta-jstl standard.jar
 
-	cd ${1}/platform${IDE_VERSION}/modules/ext
-	java-pkg_jar-from ${JH}
+# Commented out till 2.0_03 is released
+#	cd ${1}/platform${IDE_VERSION}/modules/ext
+#	java-pkg_jar-from ${JHALL}
 }
 
 function hide() {
