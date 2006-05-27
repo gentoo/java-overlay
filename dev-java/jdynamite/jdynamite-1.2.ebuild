@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg-2
+inherit java-pkg-2 java-ant-2
 
 MY_PV="${PV/./_}"
 DESCRIPTION="Dynamic Template in Java"
@@ -34,10 +34,10 @@ src_unpack() {
 }
 
 src_compile() {
-
+	
 	mkdir "${S}/build" || die "mkdir failed"
-	export CLASSPATH=$(java-config -p gnu-regexp-1)
-	ant jar || die "ant failed"
+
+	eant -lib $(java-pkg_getjars gnu-regexp-1) jar || die "ant failed"
 
 }
 
