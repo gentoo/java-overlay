@@ -4,9 +4,8 @@
 
 inherit eutils java-pkg-2 flag-o-matic check-reqs
 
-#http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops/S-3.2RC5-200605191206/eclipse-sourceBuild-srcIncluded-3.2RC5.zip&url=http://download.eclipse.org/eclipse/downloads/drops/S-3.2RC5-200605191206/eclipse-sourceBuild-srcIncluded-3.2RC5.zip&mirror_id=1
 MY_PV=${PV/_rc/RC}
-DATESTAMP=200605191206
+DATESTAMP=200605260010
 MY_A="eclipse-sourceBuild-srcIncluded-${MY_PV}.zip"
 DESCRIPTION="Eclipse Tools Platform"
 HOMEPAGE="http://www.eclipse.org/"
