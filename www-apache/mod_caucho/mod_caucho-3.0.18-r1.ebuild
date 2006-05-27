@@ -19,8 +19,7 @@ APACHE2_MOD_DEFINE="CAUCHO"
 
 need_apache2
 
-RDEPEND="${RDEPEND}
-	~www-servers/resin-${PV}"
+RDEPEND="${RDEPEND}"
 
 S="${WORKDIR}/resin-${PV}"
 
