@@ -26,7 +26,7 @@ S=${WORKDIR}/${MY_P}
 
 ant_src_unpack() {
 	unpack ${A}
-	cp ${FILESDIR}/1.28/build.xml ${S}
+	cp ${FILESDIR}/build.xml ${S}
 }
 
 src_compile() {
