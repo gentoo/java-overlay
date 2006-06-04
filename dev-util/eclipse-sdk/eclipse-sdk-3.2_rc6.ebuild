@@ -14,6 +14,7 @@ SRC_URI="http://download.eclipse.org/eclipse/downloads/drops/S-${MY_PV}-${DATEST
 IUSE="nogecko-sdk gnome cairo opengl"
 SLOT="3.2"
 LICENSE="EPL-1.0"
+# TODO might be able to have ia64 and ppc64 support
 KEYWORDS="~x86 ~ppc ~amd64"
 S="${WORKDIR}"
 
@@ -21,7 +22,10 @@ COMMON_DEP="
 	>=x11-libs/gtk+-2.2.4
 	!nogecko-sdk? ( net-libs/gecko-sdk )
 	gnome? ( =gnome-base/gnome-vfs-2* =gnome-base/libgnomeui-2* )
-	opengl? ( virtual/opengl )"
+	opengl? ( virtual/opengl )
+	>=dev-java/ant-core-1.6.2-r4
+	>=dev-java/ant-tasks-1.6.2
+	=dev-java/lucene-1*"
 
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEP}"
@@ -29,11 +33,10 @@ DEPEND="
 	${COMMON_DEP}
 	=virtual/jdk-1.4*
 	>=virtual/jdk-1.5
-	>=dev-java/ant-1.6.2
-	>=dev-java/ant-core-1.6.2-r4
 	>=sys-apps/findutils-4.1.7
 	app-arch/unzip
 	app-arch/zip"
+# Force 1.4 to be used for building
 JAVA_PKG_NV_DEPEND="=virtual/jdk-1.4*"
 
 ECLIPSE_DIR="/usr/lib/eclipse-${SLOT}"
@@ -82,11 +85,28 @@ ant_src_unpack() {
 	#      - some gcc versions refuse if both -static and -fPIC are used
 	epatch ${FILESDIR}/${PN}-3.2_rc3-gentoo.patch
 
-	einfo "Cleaning out prebuilt code"
 	clean-prebuilt-code
-
-	einfo "Patching makefiles"
 	fix_makefiles
+	prune-other-archs
+	
+	pushd plugins/org.apache.ant/lib
+	rm *.jar
+	java-pkg_jar-from ant-core,ant-tasks
+	popd
+
+	pushd plugins/org.junit
+	rm *.jar
+	java-pkg_jar-from junit
+	popd
+
+	pushd plugins/org.apache.lucene
+	rm *.jar
+	java-pkg_jar-from lucene-1 lucene.jar lucene-1.4.3.jar
+	popd
+
+	# TODO replace stuff in plugins/org.eclipse.team.cvs.ssh2
+	# TODO replace stuff in plugins/org.eclipse.tomcat
+	# TODO replace stuff in plugins/org.junit4
 }
 
 src_compile() {
@@ -180,6 +200,13 @@ fix_makefiles() {
 	sed -i "s/^all:.*/all: ${targets}/" \
 		"plugins/org.eclipse.swt/Eclipse SWT PI/gtk/library/make_linux.mak" \
 		|| die "Failed to tweak make_linux.mak"
+}
+
+prune_other_archs() {
+	pushd plugins
+	rm -rf *solaris* *hpux* *win32* *hpux* *macosx*
+	# TODO remove archs that aren't ours
+	popd
 }
 
 clean-prebuilt-code() {
