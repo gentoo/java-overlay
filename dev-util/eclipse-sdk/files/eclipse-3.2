@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 #
 # Tiny startup wrapper for the Eclipse 3.2.x series
 #
@@ -8,25 +8,10 @@
 # Licensed under the GNU General Public License, version 2
 #
 
-if [ -f $HOME/.eclipserc ] ; then
-	. $HOME/.eclipserc
-fi
+[[ -f $HOME/.eclipserc ]] && $HOME/.eclipserc
 
-if [ -z "${ECLIPSE_HOME}" ] ; then
-	ECLIPSE_HOME=/usr/lib/eclipse-3.2
-fi
-
-if [ "${PREFERRED_FRONTEND}" == "gtk" ] && [ -x ${ECLIPSE_HOME}/eclipse-gtk ] ; then
-	ECLIPSE_BIN=${ECLIPSE_HOME}/eclipse-gtk
-elif [ "${PREFERRED_FRONTEND}" == "motif" ] && [ -x ${ECLIPSE_HOME}/eclipse-motif ] ; then
-	ECLIPSE_BIN=${ECLIPSE_HOME}/eclipse-motif
-else
-	if [ -x ${ECLIPSE_HOME}/eclipse-gtk ] ; then
-		ECLIPSE_BIN=${ECLIPSE_HOME}/eclipse-gtk
-	elif [ -x ${ECLIPSE_HOME}/eclipse-motif ] ; then
-		ECLIPSE_BIN=${ECLIPSE_HOME}/eclipse-motif
-	fi
-fi
+ECLIPSE_HOME=${ECLIPSE_HOME:="/usr/lib/eclipse-3.2"}
+ECLIPSE_BIN="${ECLIPSE_HOME}/eclipse"
 
 if [ ! -x ${ECLIPSE_BIN} ] ; then
 	echo "Failed to find executable '${ECLIPSE_BIN}'" > /dev/stderr
@@ -44,7 +29,7 @@ if [ $(whoami) == "root" ] ; then
 	echo "!!!  3) 'emerge eclipse-sdk'"
 fi
 
-if [ -d /usr/lib/gecko-sdk/lib/ ] && [ -f /usr/lib/gecko-sdk/lib/libgtkembedmoz.so ] ; then
+if [[ -d /usr/lib/gecko-sdk/lib/ ]] && [[ -f /usr/lib/gecko-sdk/lib/libgtkembedmoz.so ]] ; then
     export MOZILLA_FIVE_HOME="/usr/lib/gecko-sdk/lib/"
 fi
 

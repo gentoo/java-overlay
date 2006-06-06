@@ -15,9 +15,7 @@ IUSE="nogecko-sdk gnome cairo opengl"
 SLOT="3.2"
 LICENSE="EPL-1.0"
 # TODO might be able to have ia64 and ppc64 support
-#KEYWORDS="~x86 ~ppc ~amd64"
-# Disabled until I work out the patches -nichoj
-KEYWORDS="-*"
+KEYWORDS="~x86 ~ppc ~amd64"
 S="${WORKDIR}"
 
 COMMON_DEP="
@@ -87,9 +85,8 @@ src_unpack() {
 	#      - some gcc versions refuse if both -static and -fPIC are used
 	#epatch ${FILESDIR}/${PN}-3.2_rc3-gentoo.patch
 
-	clean-prebuilt-code
+	# TODO either clean-prebuilt-code remove it
 	fix_makefiles
-#	prune_other_archs
 	
 	pushd plugins/org.apache.ant/lib >/dev/null
 	rm *.jar
@@ -142,6 +139,7 @@ src_unpack() {
 
 	# https://bugs.eclipse.org/bugs/show_bug.cgi?id=98707 
 	# https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=178726
+# TODO figure out why this doesn't apply
 #	pushd plugins/org.eclipse.compare >/dev/null
 #	epatch ${FILESDIR}/${P}-compare-create-api.patch # patch 33
 #	popd >/dev/null
@@ -164,10 +162,11 @@ src_unpack() {
 	# https://bugs.eclipse.org/bugs/show_bug.cgi?id=79592
 	# https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=168726
 	mkdir launchertmp
-	unzip -d launchertmp plugins/org.eclipse.platform/launchersrc.zip
+	unzip -d launchertmp \
+		plugins/org.eclipse.platform/launchersrc.zip >/dev/null || die "unzip failed"
 	pushd launchertmp >/dev/null
 	epatch ${FILESDIR}/${P}-launcher-link.patch # patch47
-	zip -9 -r ../launchersrc.zip *
+	zip -9 -r ../launchersrc.zip * >/dev/null || die "zip failed"
 	popd >/dev/null
 	mv launchersrc.zip plugins/org.eclipse.platform
 	rm -rf launchertmp
@@ -184,7 +183,7 @@ src_unpack() {
 	# https://www.redhat.com/archives/fedora-devel-java-list/2006-April/msg00048.html
 	pushd plugins/org.eclipse.pde.build >/dev/null
 	epatch ${FILESDIR}/${P}-pde.build-add-package-build.patch # patch53
-	# sed --in-place "s:@eclipse_base@:%{_datadir}/%{name}:" templates/package-build/build.properties
+	sed --in-place "s:@eclipse_base@:${ECLIPSE_DIR}:" templates/package-build/build.properties
 	popd >/dev/null
 
 	# https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=191536
@@ -192,6 +191,10 @@ src_unpack() {
 	pushd plugins/org.eclipse.swt/Eclipse\ SWT >/dev/null
 	epatch ${FILESDIR}/${P}-swt-rm-ON_TOP.patch # patch54
 	popd >/dev/null
+
+	# We need to disable junit4 and apt until GCJ can handle Java5 code
+	# FIXME for some reason junit isn't using java5...
+	epatch ${FILESDIR}/${P}-disable-junit4-apt.patch # patch55
 }
 
 src_compile() {
@@ -213,7 +216,6 @@ src_compile() {
 		-arch ${eclipsearch} \
 		-ws gtk \
 		-java5home ${java5home} || die "build failed"
-	cp eclipse/eclipse eclipse-gtk || die "Cannot find eclipse binary"
 }
 
 src_install() {
@@ -229,29 +231,15 @@ src_install() {
 	exeinto ${ECLIPSE_DIR}
 
 	debug-print "Installing eclipse-gtk binary"
-	doexe eclipse-gtk || die "Failed to install eclipse binary"
+	doexe eclipse || die "Failed to install eclipse binary"
 	# need to rename inf file to eclipse-gtk.ini, see bug #128128
 	newins eclipse.ini eclipse-gtk.ini
 
 	# Install startup script
 	exeinto /usr/bin
 	doexe ${FILESDIR}/eclipse-${SLOT}
-	doman ${FILESDIR}/eclipse.1
 
 	make_desktop_entry eclipse-${SLOT} "Eclipse ${PV}" "${ECLIPSE_DIR}/icon.xpm"
-
-	install-link-files
-
-	# eventually, we'll have a user writable extension location, so we'll
-	# comply with FHS 
-
-	#dodir /var/lib/eclipse-${SLOT}
-	#touch ${D}/var/lib/eclipse-${SLOT}/.eclipseextension
-	#fowners root:eclipse /var/lib/eclipse-${SLOT}
-	#fperms -R g+w /var/lib/eclipse-${SLOT}
-	fperms -R g+w ${ECLIPSE_DIR}
-	fowners -R root:eclipse ${ECLIPSE_DIR}
-	find ${D}${ECLIPSE_DIR} -type d -exec chmod g+s {} \;
 }
 
 # -----------------------------------------------------------------------------
@@ -263,22 +251,22 @@ fix_makefiles() {
 	local targets="make_swt make_awt make_atk"
 
 	if use gnome ; then
-		einfo "Building GNOME VFS support"
+		einfo "Enabling GNOME VFS support"
 		targets="${targets} make_gnome"
 	fi
 
 	if ! use nogecko-sdk ; then
-		einfo "Building Mozilla embed support"
+		einfo "Enabling embedded Mozilla support"
 		targets="${targets} make_mozilla"
 	fi
 
 	if use cairo ; then
-		einfo "Building CAIRO support"
+		einfo "Enabling CAIRO support"
 		targets="${targets} make_cairo"
 	fi
 
 	if use opengl ; then
-		einfo "Building OpenGL support"
+		einfo "Enabling OpenGL support"
 		targets="${targets} make_glx"
 	fi
 
@@ -348,27 +336,9 @@ setup-mozilla-opts() {
 	export GECKO_LIBS="-L${GECKO_SDK}/lib -lgtkembedmoz"
 }
 
-install_link_file() {
-	local path=${1}
-	local file=${2}
-
-	echo "path=${path}" > "${D}/${ECLIPSE_LINKS_DIR}/${file}"
-}
-
-install-link-files() {
-	dodir ${ECLIPSE_LINKS_DIR}
-	install_link_file /opt/eclipse-extensions-3 eclipse-binary-extensions-3.link
-	install_link_file /opt/eclipse-extensions-${SLOT} eclipse-binary-extensions-${SLOT}.link
-
-	install_link_file /usr/lib/eclipse-extensions-3 eclipse-extensions-3.link 
-	install_link_file /usr/lib/eclipse-extensions-${SLOT} eclipse-extensions-${SLOT}.link
-
-#	install_link_file /var/lib/eclipse-3 eclipse-var-3.link
-#	install_link_file /var/lib/eclipse-${SLOT} eclipse-var-${SLOT}.link
-}
-
 pkg_postinst() {
-	einfo "In order to use the Update Manager, add yourself to the 'eclipse' group"
+	einfo "Users can now install plugins via Update Manager without any"
+	einfo "tweaking."
 	echo
 	einfo "Eclipse plugin packages (ie eclipse-cdt) will likely go away in"
 	einfo "the near future until they can be properly packaged. Update Manager"

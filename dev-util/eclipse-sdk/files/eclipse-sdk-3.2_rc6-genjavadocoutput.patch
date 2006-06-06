@@ -1,0 +1,107 @@
+Index: buildDoc.xml
+===================================================================
+RCS file: /cvsroot/eclipse/org.eclipse.platform.doc.isv/buildDoc.xml,v
+retrieving revision 1.65
+diff -u -r1.65 buildDoc.xml
+--- plugins/org.eclipse.platform.doc.isv/buildDoc.xml	15 May 2006 14:47:50 -0000	1.65
++++ plugins/org.eclipse.platform.doc.isv/buildDoc.xml	1 Jun 2006 19:35:21 -0000
+@@ -110,7 +110,7 @@
+ 		<delete dir="reference/api"/>
+ 		<mkdir dir="reference/api"/>
+ 
+-		<exec dir="." executable="${javadoc}" output="doc.bin.log">
++		<exec dir="." executable="${javadoc}">
+ 			<arg line="@${basedir}/${optionsFile} -J-Xmx1000M" />
+ 		</exec>
+ 		
+Index: build.xml
+===================================================================
+RCS file: /cvsroot/eclipse/org.eclipse.help.webapp/build.xml,v
+retrieving revision 1.71
+diff -u -r1.71 build.xml
+--- plugins/org.eclipse.help.webapp/build.xml	16 Mar 2006 21:57:15 -0000	1.71
++++ plugins/org.eclipse.help.webapp/build.xml	1 Jun 2006 19:35:27 -0000
+@@ -182,8 +182,7 @@
+ 			classname="org.apache.jasper.JspC"
+ 			fork="true"
+ 			failonerror="false"
+-			classpathref="jasper.classpath"
+-			output="${temp.folder}/WEB-INF/lib/jsp.jar.bin${logExtension}">
++			classpathref="jasper.classpath">
+ 			<arg value="-v3" />
+ 			<arg value="-d" /><arg value="${temp.folder}/jsp.jar.src" />
+ 			<arg value="-die" />
+Index: eclipse/buildConfigs/sdk/srcBuild/build.xml
+===================================================================
+RCS file: /cvsroot/eclipse/org.eclipse.releng.eclipsebuilder/eclipse/buildConfigs/sdk/srcBuild/build.xml,v
+retrieving revision 1.9
+diff -u -r1.9 build.xml
+--- build.xml	11 May 2006 20:51:39 -0000	1.9
++++ build.xml	1 Jun 2006 19:35:27 -0000
+@@ -146,19 +146,19 @@
+ 		<property name="plugin.destination" value="${buildDirectory}/tmp/eclipse/plugins" />
+ 		<mkdir dir="${plugin.destination}" />
+ 		
+-		<java fork="true" jar="${buildDirectory}/eclipse/startup.jar" dir="${buildDirectory}/plugins/org.eclipse.platform.doc.isv" output="platform.doc.isv.txt">
++		<java fork="true" jar="${buildDirectory}/eclipse/startup.jar" dir="${buildDirectory}/plugins/org.eclipse.platform.doc.isv">
+ 			<arg line="-data ${buildDirectory}/workspace -application org.eclipse.ant.core.antRunner build.update.jar -Dplugin.destination=${plugin.destination}" />
+ 		</java>
+-		<java fork="true" jar="${buildDirectory}/eclipse/startup.jar" dir="${buildDirectory}/plugins/org.eclipse.platform.doc.user" output="platform.doc.user.txt">
++		<java fork="true" jar="${buildDirectory}/eclipse/startup.jar" dir="${buildDirectory}/plugins/org.eclipse.platform.doc.user">
+ 			<arg line="-data ${buildDirectory}/workspace -application org.eclipse.ant.core.antRunner build.update.jar -Dplugin.destination=${plugin.destination}" />
+ 		</java>
+-		<java fork="true" jar="${buildDirectory}/eclipse/startup.jar" dir="${buildDirectory}/plugins/org.eclipse.jdt.doc.isv" output="jdt.doc.isv.txt">
++		<java fork="true" jar="${buildDirectory}/eclipse/startup.jar" dir="${buildDirectory}/plugins/org.eclipse.jdt.doc.isv">
+ 			<arg line="-data ${buildDirectory}/workspace -application org.eclipse.ant.core.antRunner build.update.jar -Dplugin.destination=${plugin.destination}" />
+ 		</java>
+-		<java fork="true" jar="${buildDirectory}/eclipse/startup.jar" dir="${buildDirectory}/plugins/org.eclipse.jdt.doc.user" output="jdt.doc.user.txt">
++		<java fork="true" jar="${buildDirectory}/eclipse/startup.jar" dir="${buildDirectory}/plugins/org.eclipse.jdt.doc.user">
+ 			<arg line="-data ${buildDirectory}/workspace -application org.eclipse.ant.core.antRunner build.update.jar -Dplugin.destination=${plugin.destination}" />
+ 		</java>
+-		<java fork="true" jar="${buildDirectory}/eclipse/startup.jar" dir="${buildDirectory}/plugins/org.eclipse.pde.doc.user" output="pde.doc.user.txt">
++		<java fork="true" jar="${buildDirectory}/eclipse/startup.jar" dir="${buildDirectory}/plugins/org.eclipse.pde.doc.user">
+ 			<arg line="-data ${buildDirectory}/workspace -application org.eclipse.ant.core.antRunner build.update.jar -Dplugin.destination=${plugin.destination}" />
+ 		</java>
+ 
+Index: buildDoc.xml
+===================================================================
+RCS file: /cvsroot/eclipse/org.eclipse.jdt.doc.isv/buildDoc.xml,v
+retrieving revision 1.42
+diff -u -r1.42 buildDoc.xml
+--- plugins/org.eclipse.jdt.doc.isv/buildDoc.xml	27 Mar 2006 08:54:46 -0000	1.42
++++ plugins/org.eclipse.jdt.doc.isv/buildDoc.xml	1 Jun 2006 19:35:28 -0000
+@@ -72,7 +72,7 @@
+ 		<delete dir="reference/api"/>
+ 		<mkdir dir="reference/api"/>
+ 
+-		<exec dir="." executable="${javadoc}" output="doc.bin.log">
++		<exec dir="." executable="${javadoc}">
+ 			<arg line="@${basedir}/${optionsFile} -J-Xmx500M" />
+ 		</exec>
+ 		<antcall target="generateJdtAptJavadoc" />
+@@ -98,7 +98,7 @@
+ 		<delete dir="reference/apt" />
+ 		<mkdir dir="reference/apt" />
+ 
+-		<exec dir="." executable="${javadoc15}" output="jdtapt.doc.bin.log">
++		<exec dir="." executable="${javadoc15}">
+ 			<arg line="@${basedir}/${jdtaptoptionsFile} -J-Xmx500M" />
+ 		</exec>
+ 	</target>
+Index: buildDoc.xml
+===================================================================
+RCS file: /cvsroot/eclipse/org.eclipse.pde.doc.user/buildDoc.xml,v
+retrieving revision 1.12
+diff -u -r1.12 buildDoc.xml
+--- plugins/org.eclipse.pde.doc.user/buildDoc.xml	16 Feb 2006 15:51:36 -0000	1.12
++++ plugins/org.eclipse.pde.doc.user/buildDoc.xml	1 Jun 2006 19:35:29 -0000
+@@ -52,7 +52,7 @@
+ 		<delete dir="reference/api"/>
+ 		<mkdir dir="reference/api"/>
+ 
+-		<exec dir="." executable="${javadoc}" output="doc.bin.log">
++		<exec dir="." executable="${javadoc}">
+ 			<arg line="@${basedir}/${optionsFile} -J-Xmx1000M" />
+ 		</exec>
+ 	</target>
+

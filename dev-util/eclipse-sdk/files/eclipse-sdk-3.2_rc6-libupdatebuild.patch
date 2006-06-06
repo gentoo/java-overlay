@@ -1,0 +1,30 @@
+--- plugins/org.eclipse.update.core.linux/src/build.xml.orig	2005-02-07 14:16:05.353485675 -0500
++++ plugins/org.eclipse.update.core.linux/src/build.xml	2005-02-07 14:17:04.365259400 -0500
+@@ -47,7 +47,7 @@
+     <property name="header-path" value="${jdk-path}/../include"/>
+     <property name="header-linux-path" value="${header-path}/linux" />
+ 
+-	<echo message="gcc -o  ${library-file} -shared -I${src-path} -I${header-linux-path} ${library-file} -static -lc"/>
++	<echo message="gcc -o  ${library-file} -shared -I${src-path} -I${header-linux-path} -fPIC ${library-file}"/>
+ 
+     <apply executable="gcc" dest="${eclipse-home}/" parallel="false">
+       <arg value="-o"/>
+@@ -56,9 +56,8 @@
+       <arg value="-I${src-path}"/>
+       <arg value="-I${header-path}"/>      
+       <arg value="-I${header-linux-path}"/>  
++      <arg value="-fPIC"/>
+ 	  <srcfile/>
+-	  <arg value="-static"/>           
+-      <arg value="-lc"/>	  
+       <fileset dir="${src-path}" includes="*.c"/>
+       <mapper type="glob" from="*.c" to="*.o"/>
+     </apply>
+@@ -67,4 +66,4 @@
+   </target>
+   
+   
+-</project>
+\ No newline at end of file
++</project>
+

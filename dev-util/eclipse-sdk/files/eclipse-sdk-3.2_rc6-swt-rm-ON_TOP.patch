@@ -1,0 +1,29 @@
+Index: Eclipse SWT/gtk/org/eclipse/swt/widgets/Display.java
+===================================================================
+RCS file: /cvsroot/eclipse/org.eclipse.swt/Eclipse SWT/gtk/org/eclipse/swt/widgets/Display.java,v
+retrieving revision 1.218
+diff -u -r1.218 Display.java
+--- gtk/org/eclipse/swt/widgets/Display.java	22 Jun 2005 23:25:20 -0000	1.218
++++ gtk/org/eclipse/swt/widgets/Display.java	30 May 2006 17:33:39 -0000
+@@ -1057,20 +1053,8 @@
+ 			} while ((window = OS.gdk_window_get_parent (window)) != 0);
+ 		}
+ 	}
+-	Shell shell = null;
+-	if (control != null ) {
+-		shell = control.getShell ();
+-		if ((shell.style & SWT.ON_TOP) != 0) {
+-			OS.gtk_grab_add (shell.shellHandle);
+-		}
+-	}
+ 	OS.gtk_main_do_event (event);
+ 	if (dispatchEvents == null) putGdkEvents ();
+-	if (control != null ) {
+-		if (shell != null && !shell.isDisposed () && (shell.style & SWT.ON_TOP) != 0) {
+-			OS.gtk_grab_remove (shell.shellHandle);
+-		}
+-	}
+ 	return 0;
+ }
+ 
+

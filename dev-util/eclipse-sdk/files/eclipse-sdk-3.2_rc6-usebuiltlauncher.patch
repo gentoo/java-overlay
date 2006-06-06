@@ -1,0 +1,159 @@
+--- features/org.eclipse.platform/build.xml.orig	2006-06-01 15:45:39.000000000 -0400
++++ features/org.eclipse.platform/build.xml	2006-06-01 15:45:08.000000000 -0400
+@@ -394,6 +394,11 @@
+ 		<eclipse.idReplacer featureFilePath="${feature.base}/features/org.eclipse.platform_3.2.0.v20060525a-gszCg6CPhlzUdGe/feature.xml"  selfVersion="3.2.0.v20060525a-gszCg6CPhlzUdGe" featureIds="org.eclipse.rcp,3.2.0.v20060511-2000-wbi2Ul87V-MbMKc," pluginIds="com.jcraft.jsch,0.1.28,org.apache.ant,1.6.5,org.apache.lucene,1.4.103.v20060510a,org.eclipse.ant.core,3.1.100.v20060511,org.eclipse.compare,3.2.0.v20060525,org.eclipse.core.boot,3.1.100.v20060511,org.eclipse.core.filebuffers,3.2.0.v20060518-0800,org.eclipse.core.filesystem,1.0.0.v20060510,org.eclipse.core.resources,3.2.0.v20060512,org.eclipse.core.resources.compatibility,3.2.0.v20060510,org.eclipse.core.runtime.compatibility,3.1.100.v20060511,org.eclipse.osgi.services,3.1.100.v20060511,org.eclipse.osgi.util,3.1.100.v20060511,org.eclipse.core.variables,3.1.100.v20060517,org.eclipse.debug.core,3.2.0.v20060525,org.eclipse.debug.ui,3.2.0.v20060525a,org.eclipse.help.webapp,3.2.0.v20060510b,org.eclipse.help.base,3.2.0.v20060510a,org.eclipse.help.ui,3.2.0.v20060510b,org.eclipse.help.appserver,3.1.100.v20060510b,org.eclipse.ltk.core.refactoring,3.2.0.v20060526-0010,org.eclipse.ltk.ui.refactoring,3.2.0.v20060526-0010,org.eclipse.platform,3.2.0.v20060525,org.eclipse.platform.doc.user,3.2.0.v20060525,org.eclipse.search,3.2.0.v20060526-0010,org.eclipse.team.core,3.2.0.I200605181830,org.eclipse.team.cvs.core,3.2.0.I20060510,org.eclipse.team.cvs.ssh,3.2.0.I20060510,org.eclipse.team.cvs.ssh2,3.2.0.I20060510,org.eclipse.team.cvs.ui,3.2.0.I200605251705,org.eclipse.team.ui,3.2.0.I200605181830,org.eclipse.tomcat,4.1.130.v20060510a,org.eclipse.text,3.2.0.v20060518-0800,org.eclipse.jface.text,3.2.0.v20060518-0800,org.eclipse.ui.console,3.1.100.v20060518,org.eclipse.ui.presentations.r21,3.2.0.I20060511-2000,org.eclipse.ui.intro,3.2.0.v20060518,org.eclipse.ui.intro.universal,3.2.0.v20060510b,org.eclipse.ui.cheatsheets,3.2.0.v20060516,org.eclipse.ui.browser,3.2.0.v20060518,org.eclipse.ui.navigator,3.2.0.I20060526-0010,org.eclipse.ui.navigator.resources,3.2.0.I20060511-2000,org.eclipse.ui.workbench.texteditor,3.2.0.v20060526-0010,org.eclipse.ui.views,3.2.0.I20060511-2000,org.eclipse.ui.editors,3.2.0.v20060518-0800,org.eclipse.ui.forms,3.2.0.v20060510,org.eclipse.ui.externaltools,3.1.100.v20060511,org.eclipse.ui.ide,3.2.0.I20060519-0010,org.eclipse.update.core,3.2.0.v20060511,org.eclipse.update.scheduler,3.2.0.v20060511,org.eclipse.update.ui,3.2.0.v20060511,org.eclipse.ui.workbench.compatibility,3.2.0.I20060511-2000,org.eclipse.core.filesystem.hpux.ia64_32,1.0.0.v20060510,org.eclipse.core.filesystem.hpux.PA_RISC,1.0.0.v20060510,org.eclipse.core.filesystem.linux.x86,1.0.0.v20060510,org.eclipse.core.filesystem.linux.x86_64,1.0.0.v20060510,org.eclipse.core.filesystem.macosx,1.0.0.v20060502,org.eclipse.core.filesystem.qnx.x86,1.0.0.v20060510,org.eclipse.core.filesystem.win32.x86,1.0.0.v20060510,org.eclipse.core.resources.win32,3.2.0.v20060510,org.eclipse.ui.carbon,3.2.0.I20060519-0010,org.eclipse.ui.win32,3.2.0.I20060511-2000,org.eclipse.update.core.linux,3.2.0.v20060511,org.eclipse.update.core.win32,3.2.0.v20060511,org.eclipse.ui.views.properties.tabbed,3.2.0.I20060511-0800a,org.eclipse.core.runtime.compatibility.registry,3.2.0.v20060426,"/>
+ 		<antcall target="rootFiles${os}_${ws}_${arch}"/>
+ 	</target>
++	<target name="copybuiltlauncher" if="libsconfig">
++		<copy todir="${feature.base}/${os}.${ws}.${arch}/${collectingFolder}" failonerror="true" overwrite="true">
++			<fileset dir="${basedir}/../../launchertmp" includes="**"			/>
++		</copy>
++	</target>
+ 	<target name="rootFileswin32_win32_x86">
+ 		<mkdir dir="${feature.base}/win32.win32.x86/${collectingFolder}"/>
+ 		<copy todir="${feature.base}/win32.win32.x86/${collectingFolder}" failonerror="true" overwrite="true">
+@@ -402,6 +407,8 @@
+ 			<fileset dir="${basedir}/rootfiles" includes="**"			/>
+ 			<fileset dir="${basedir}/../../plugins/org.eclipse.platform" includes="startup.jar"			/>
+ 		</copy>
++		<!-- Copy the launcher that we built over the pre-built binary -->
++		<antcall target="copybuiltlauncher" />
+ 		<chmod perm="755" dir="${feature.base}/win32.win32.x86/${collectingFolder}" includes="eclipse" /> 
+ 	</target>
+ 	<target name="rootFilesmacosx_carbon_ppc">
+@@ -412,6 +419,8 @@
+ 			<fileset dir="${basedir}/rootfiles" includes="**"			/>
+ 			<fileset dir="${basedir}/../../plugins/org.eclipse.platform" includes="startup.jar"			/>
+ 		</copy>
++		<!-- Copy the launcher that we built over the pre-built binary -->
++		<antcall target="copybuiltlauncher" />
+ 		<chmod perm="755" dir="${feature.base}/macosx.carbon.ppc/${collectingFolder}" includes="eclipse" /> 
+ 		<chmod perm="755" dir="${feature.base}/macosx.carbon.ppc/${collectingFolder}" includes="Eclipse.app/Contents/MacOS/eclipse,Eclipse.app/Contents/MacOS/java_swt" /> 
+ 		<exec executable="ln" dir="${feature.base}/macosx.carbon.ppc/${collectingFolder}" os="Linux">
+@@ -429,6 +438,8 @@
+ 			<fileset dir="${basedir}/rootfiles" includes="**"			/>
+ 			<fileset dir="${basedir}/../../plugins/org.eclipse.platform" includes="startup.jar"			/>
+ 		</copy>
++		<!-- Copy the launcher that we built over the pre-built binary -->
++		<antcall target="copybuiltlauncher" />
+ 		<chmod perm="755" dir="${feature.base}/linux.gtk.x86/${collectingFolder}" includes="eclipse" /> 
+ 		<chmod perm="755" dir="${feature.base}/linux.gtk.x86/${collectingFolder}" includes="*.so*" /> 
+ 	</target>
+@@ -440,6 +451,8 @@
+ 			<fileset dir="${basedir}/rootfiles" includes="**"			/>
+ 			<fileset dir="${basedir}/../../plugins/org.eclipse.platform" includes="startup.jar"			/>
+ 		</copy>
++		<!-- Copy the launcher that we built over the pre-built binary -->
++		<antcall target="copybuiltlauncher" />
+ 		<chmod perm="755" dir="${feature.base}/linux.gtk.ppc/${collectingFolder}" includes="*.so*" /> 
+ 		<chmod perm="755" dir="${feature.base}/linux.gtk.ppc/${collectingFolder}" includes="eclipse" /> 
+ 	</target>
+@@ -451,6 +464,8 @@
+ 			<fileset dir="${basedir}/rootfiles" includes="**"			/>
+ 			<fileset dir="${basedir}/../../plugins/org.eclipse.platform" includes="startup.jar"			/>
+ 		</copy>
++		<!-- Copy the launcher that we built over the pre-built binary -->
++		<antcall target="copybuiltlauncher" />
+ 		<chmod perm="755" dir="${feature.base}/linux.gtk.ppc64/${collectingFolder}" includes="*.so*" /> 
+ 		<chmod perm="755" dir="${feature.base}/linux.gtk.ppc64/${collectingFolder}" includes="eclipse" /> 
+ 	</target>
+@@ -463,6 +478,8 @@
+ 			<fileset dir="${basedir}/rootfiles" includes="**"			/>
+ 			<fileset dir="${basedir}/../../plugins/org.eclipse.platform" includes="startup.jar"			/>
+ 		</copy>
++		<!-- Copy the launcher that we built over the pre-built binary -->
++		<antcall target="copybuiltlauncher" />
+ 		<chmod perm="755" dir="${feature.base}/linux.gtk.x86_64/${collectingFolder}" includes="eclipse" /> 
+ 		<chmod perm="755" dir="${feature.base}/linux.gtk.x86_64/${collectingFolder}" includes="*.so*" /> 
+ 	</target>
+@@ -474,6 +491,8 @@
+ 			<fileset dir="${basedir}/rootfiles" includes="**"			/>
+ 			<fileset dir="${basedir}/../../plugins/org.eclipse.platform" includes="startup.jar"			/>
+ 		</copy>
++		<!-- Copy the launcher that we built over the pre-built binary -->
++		<antcall target="copybuiltlauncher" />
+ 		<chmod perm="755" dir="${feature.base}/linux.gtk.ia64/${collectingFolder}" includes="eclipse" /> 
+ 	</target>
+ 	<target name="rootFileslinux_motif_x86">
+@@ -487,6 +506,8 @@
+ 			<fileset dir="${basedir}/rootfiles" includes="**"			/>
+ 			<fileset dir="${basedir}/../../plugins/org.eclipse.platform" includes="startup.jar"			/>
+ 		</copy>
++		<!-- Copy the launcher that we built over the pre-built binary -->
++		<antcall target="copybuiltlauncher" />
+ 		<chmod perm="755" dir="${feature.base}/linux.motif.x86/${collectingFolder}" includes="eclipse" /> 
+ 		<chmod perm="755" dir="${feature.base}/linux.motif.x86/${collectingFolder}" includes="*.so*" /> 
+ 	</target>
+@@ -498,6 +519,8 @@
+ 			<fileset dir="${basedir}/rootfiles" includes="**"			/>
+ 			<fileset dir="${basedir}/../../plugins/org.eclipse.platform" includes="startup.jar"			/>
+ 		</copy>
++		<!-- Copy the launcher that we built over the pre-built binary -->
++		<antcall target="copybuiltlauncher" />
+ 		<chmod perm="755" dir="${feature.base}/solaris.gtk.sparc/${collectingFolder}" includes="eclipse" /> 
+ 	</target>
+ 	<target name="rootFilessolaris_gtk_x86">
+@@ -508,6 +531,8 @@
+ 			<fileset dir="${basedir}/rootfiles" includes="**"			/>
+ 			<fileset dir="${basedir}/../../plugins/org.eclipse.platform" includes="startup.jar"			/>
+ 		</copy>
++		<!-- Copy the launcher that we built over the pre-built binary -->
++		<antcall target="copybuiltlauncher" />
+ 		<chmod perm="755" dir="${feature.base}/solaris.gtk.x86/${collectingFolder}" includes="eclipse" /> 
+ 	</target>
+ 	<target name="rootFilessolaris_motif_sparc">
+@@ -518,6 +543,8 @@
+ 			<fileset dir="${basedir}/rootfiles" includes="**"			/>
+ 			<fileset dir="${basedir}/../../plugins/org.eclipse.platform" includes="startup.jar"			/>
+ 		</copy>
++		<!-- Copy the launcher that we built over the pre-built binary -->
++		<antcall target="copybuiltlauncher" />
+ 		<chmod perm="755" dir="${feature.base}/solaris.motif.sparc/${collectingFolder}" includes="eclipse" /> 
+ 	</target>
+ 	<target name="rootFilesaix_motif_ppc">
+@@ -528,6 +555,8 @@
+ 			<fileset dir="${basedir}/rootfiles" includes="**"			/>
+ 			<fileset dir="${basedir}/../../plugins/org.eclipse.platform" includes="startup.jar"			/>
+ 		</copy>
++		<!-- Copy the launcher that we built over the pre-built binary -->
++		<antcall target="copybuiltlauncher" />
+ 		<chmod perm="755" dir="${feature.base}/aix.motif.ppc/${collectingFolder}" includes="eclipse" /> 
+ 	</target>
+ 	<target name="rootFileshpux_motif_PA_RISC">
+@@ -538,6 +567,8 @@
+ 			<fileset dir="${basedir}/rootfiles" includes="**"			/>
+ 			<fileset dir="${basedir}/../../plugins/org.eclipse.platform" includes="startup.jar"			/>
+ 		</copy>
++		<!-- Copy the launcher that we built over the pre-built binary -->
++		<antcall target="copybuiltlauncher" />
+ 		<chmod perm="755" dir="${feature.base}/hpux.motif.PA_RISC/${collectingFolder}" includes="eclipse" /> 
+ 	</target>
+ 	<target name="rootFileshpux_motif_ia64">
+@@ -548,6 +579,8 @@
+ 			<fileset dir="${basedir}/rootfiles" includes="**"			/>
+ 			<fileset dir="${basedir}/../../plugins/org.eclipse.platform" includes="startup.jar"			/>
+ 		</copy>
++		<!-- Copy the launcher that we built over the pre-built binary -->
++		<antcall target="copybuiltlauncher" />
+ 		<chmod perm="755" dir="${feature.base}/hpux.motif.ia64/${collectingFolder}" includes="eclipse" /> 
+ 	</target>
+ 	<target name="rootFileshpux_motif_ia64_32">
+@@ -558,6 +591,8 @@
+ 			<fileset dir="${basedir}/rootfiles" includes="**"			/>
+ 			<fileset dir="${basedir}/../../plugins/org.eclipse.platform" includes="startup.jar"			/>
+ 		</copy>
++		<!-- Copy the launcher that we built over the pre-built binary -->
++		<antcall target="copybuiltlauncher" />
+ 		<chmod perm="755" dir="${feature.base}/hpux.motif.ia64_32/${collectingFolder}" includes="eclipse" /> 
+ 	</target>
+ 	<target name="rootFilesqnx_photon_x86">
+@@ -568,6 +603,8 @@
+ 			<fileset dir="${basedir}/rootfiles" includes="**"			/>
+ 			<fileset dir="${basedir}/../../plugins/org.eclipse.platform" includes="startup.jar"			/>
+ 		</copy>
++		<!-- Copy the launcher that we built over the pre-built binary -->
++		<antcall target="copybuiltlauncher" />
+ 		<chmod perm="755" dir="${feature.base}/qnx.photon.x86/${collectingFolder}" includes="eclipse" /> 
+ 	</target>
+ 	<target name="rootFilesgroup_group_group">
+

@@ -1,0 +1,22 @@
+diff -r -u plugins/org.eclipse.help.base/src/org/eclipse/help/search/HelpIndexBuilder.java plugins/org.eclipse.help.base/src/org/eclipse/help/search/HelpIndexBuilder.java
+--- plugins/org.eclipse.help.base/src/org/eclipse/help/search/HelpIndexBuilder.java	2005-10-27 15:18:45.000000000 +0200
++++ plugins/org.eclipse.help.base/src/org/eclipse/help/search/HelpIndexBuilder.java	2005-10-27 15:30:57.000000000 +0200
+@@ -555,8 +555,15 @@
+ 				hrefs.add(href);
+ 		}
+ 		NodeList subtopics = topic.getElementsByTagName("topic"); //$NON-NLS-1$
+-		for (int i = 0; i < subtopics.getLength(); i++)
+-			add((Element) subtopics.item(i), hrefs);
++		for (int i = 0; i < subtopics.getLength(); i++) {
++			Element subtopic = (Element) subtopics.item(i);
++			href = getAttribute(subtopic, "href");
++			if (href != null && !href.equals("") && !href.startsWith("http://") && !href.startsWith("https://")) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
++				href = SearchIndex.getIndexableHref(href);
++				if (href != null)
++					hrefs.add(href);
++			}
++		}
+ 	}
+ 	
+ 	/*
+

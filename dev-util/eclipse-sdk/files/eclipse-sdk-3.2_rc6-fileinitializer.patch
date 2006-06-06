@@ -1,0 +1,498 @@
+Index: plugin.xml
+===================================================================
+RCS file: /cvsroot/eclipse/org.eclipse.core.runtime/plugin.xml,v
+retrieving revision 1.68
+diff -u -r1.68 plugin.xml
+--- plugin.xml	4 Mar 2005 22:18:54 -0000	1.68
++++ plugin.xml	7 Nov 2005 20:22:09 -0000
+@@ -6,4 +6,22 @@
+    <extension-point id="adapters" name="%adaptersName" schema="schema/adapters.exsd"/>
+    <extension-point id="preferences" name="%preferencesName" schema="schema/preferences.exsd"/>
+    <extension-point id="contentTypes" name="%contentTypesName" schema="schema/contentTypes.exsd"/>
++   <extension-point id="initializers" name="%initializersName" schema="schema/initializers.exsd"/>
++
++
++   <extension
++         id="initializer"
++         name="%initializerApp"
++         point="org.eclipse.core.runtime.applications">
++        <application>
++           <run class="org.eclipse.core.internal.runtime.Initializer"/>
++        </application>
++   </extension>
++   <extension id="fileInitializer"
++         point="org.eclipse.core.runtime.initializers">
++		<initializer>
++           <initialize class="org.eclipse.core.internal.runtime.FileInitializer"/>
++        </initializer>
++   </extension>
++ 
+ </plugin>
+Index: src/org/eclipse/core/internal/runtime/Messages.java
+===================================================================
+RCS file: /cvsroot/eclipse/org.eclipse.core.runtime/src/org/eclipse/core/internal/runtime/Messages.java,v
+retrieving revision 1.18
+diff -u -r1.18 Messages.java
+--- src/org/eclipse/core/internal/runtime/Messages.java	20 Oct 2005 18:31:04 -0000	1.18
++++ src/org/eclipse/core/internal/runtime/Messages.java	7 Nov 2005 20:22:09 -0000
+@@ -106,6 +106,14 @@
+ 	public static String plugin_instantiateClassError;
+ 	public static String plugin_loadClassError;
+ 
++	// initializer
++	public static String initializer_error;
++	
++	// file initializer
++	public static String fileInitializer_fileNotFound;
++	public static String fileInitializer_IOError;
++	public static String fileInitializer_missingFileName;
++	
+ 	static {
+ 		// load message values from bundle file
+ 		reloadMessages();
+@@ -114,4 +122,4 @@
+ 	public static void reloadMessages() {
+ 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+ 	}
+-}
+\ No newline at end of file
++}
+Index: src/org/eclipse/core/internal/runtime/messages.properties
+===================================================================
+RCS file: /cvsroot/eclipse/org.eclipse.core.runtime/src/org/eclipse/core/internal/runtime/messages.properties,v
+retrieving revision 1.106
+diff -u -r1.106 messages.properties
+--- src/org/eclipse/core/internal/runtime/messages.properties	20 Oct 2005 18:31:04 -0000	1.106
++++ src/org/eclipse/core/internal/runtime/messages.properties	7 Nov 2005 20:22:09 -0000
+@@ -54,6 +54,13 @@
+ url_resolveFragment = Unable to resolve fragment \"{0}\".
+ url_resolvePlugin = Unable to resolve plug-in \"{0}\".
+ 
++### Initializer
++initializer_error=There was a problem running the application {0}.
++
++### File Initiializer
++fileInitializer_fileNotFound={0}: The file {1} was not found.
++fileInitializer_IOError={0}: There was an error reading {1}.
++
+ ### Compatibility - parsing/resolving
+ parse_badPrereqOnFrag = Fragment \"{0}\" requires non-existent plug-in \"{1}\".  Fragment ignored.
+ parse_duplicateFragment = Duplicate fragment found with id \"{0}\" and version \"{1}\".
+Index: src/org/eclipse/core/runtime/Platform.java
+===================================================================
+RCS file: /cvsroot/eclipse/org.eclipse.core.runtime/src/org/eclipse/core/runtime/Platform.java,v
+retrieving revision 1.90
+diff -u -r1.90 Platform.java
+--- src/org/eclipse/core/runtime/Platform.java	26 Aug 2005 19:39:21 -0000	1.90
++++ src/org/eclipse/core/runtime/Platform.java	7 Nov 2005 20:22:09 -0000
+@@ -95,6 +95,15 @@
+ 	public static final String OPTION_STARTTIME = PI_RUNTIME + "/starttime"; //$NON-NLS-1$
+ 
+ 	/**
++	 * The simple identifier constant (value "<code>initializers</code>") of
++	 * the extension point of the Core Runtime plug-in where plug-ins declare
++	 * their the existence of initialization code.
++	 * 
++	 * @since 3.1
++	 */
++
++	public static final String PT_INITIALIZERS = "initializers"; //$NON-NLS-1$
++	/** 
+ 	 * Name of a preference for configuring the performance level for this system.
+ 	 *
+ 	 * <p>
+Index: schema/initializers.exsd
+===================================================================
+RCS file: schema/initializers.exsd
+diff -N schema/initializers.exsd
+--- /dev/null	1 Jan 1970 00:00:00 -0000
++++ schema/initializers.exsd	1 Jan 1970 00:00:00 -0000
+@@ -0,0 +1,138 @@
++<?xml version='1.0' encoding='UTF-8'?>
++<!-- Schema file written by PDE -->
++<schema targetNamespace="org.eclipse.core.runtime">
++<annotation>
++      <appInfo>
++         <meta.schema plugin="org.eclipse.core.runtime" id="initializers" name="Plug-in Initializers"/>
++      </appInfo>
++      <documentation>
++         Platform runtime supports plug-ins which would like to 
++be initialized. That is, plug-ins that needs to be initialized when
++the initialization application is being run should provide an extension
++to this extension-point.
++The initializers are run when the org.eclipse.core.runtime.initializer application
++is being run. The initializers are run in any order.
++      </documentation>
++   </annotation>
++
++   <element name="extension">
++      <complexType>
++         <sequence>
++            <element ref="initializer"/>
++         </sequence>
++         <attribute name="point" type="string" use="required">
++            <annotation>
++               <documentation>
++                  
++               </documentation>
++            </annotation>
++         </attribute>
++         <attribute name="id" type="string" use="required">
++            <annotation>
++               <documentation>
++                  
++               </documentation>
++            </annotation>
++         </attribute>
++         <attribute name="name" type="string">
++            <annotation>
++               <documentation>
++                  
++               </documentation>
++               <appInfo>
++                  <meta.attribute translatable="true"/>
++               </appInfo>
++            </annotation>
++         </attribute>
++      </complexType>
++   </element>
++
++   <element name="initializer">
++      <complexType>
++         <sequence>
++            <element ref="initialize"/>
++         </sequence>
++      </complexType>
++   </element>
++
++   <element name="initialize">
++      <complexType>
++         <sequence>
++            <element ref="initialize"/>
++         </sequence>
++         <attribute name="class" type="string" use="required">
++            <annotation>
++               <documentation>
++                  
++               </documentation>
++               <appInfo>
++                  <meta.attribute kind="java" basedOn="org.eclipse.core.runtime.IPlatformRunnable"/>
++               </appInfo>
++            </annotation>
++         </attribute>
++      </complexType>
++   </element>
++
++   <annotation>
++      <appInfo>
++         <meta.section type="since"/>
++      </appInfo>
++      <documentation>
++         3.1
++      </documentation>
++   </annotation>
++
++   <annotation>
++      <appInfo>
++         <meta.section type="examples"/>
++      </appInfo>
++      <documentation>
++         Following is an example of initializer declaration:
++&lt;p&gt;
++&lt;pre&gt;
++   &lt;extension id=&quot;myInitializer&quot; point=&quot;org.eclipse.core.runtime.initializers&quot;&gt;
++      &lt;initializer&gt;
++         &lt;initialize class=&quot;myInitializer.Doit&quot;/&gt;
++      &lt;/initializer&gt;
++   &lt;/extension&gt;
++&lt;/pre&gt;
++&lt;/p&gt;
++      </documentation>
++   </annotation>
++
++   <annotation>
++      <appInfo>
++         <meta.section type="apiInfo"/>
++      </appInfo>
++      <documentation>
++         The value of the class attribute must represent an 
++implementor of 
++&lt;samp&gt;org.eclipse.core.runtime.IPlatformRunnable&lt;/samp&gt;.
++      </documentation>
++   </annotation>
++
++   <annotation>
++      <appInfo>
++         <meta.section type="implementation"/>
++      </appInfo>
++      <documentation>
++         [Enter information about supplied implementation of this extension point.]
++      </documentation>
++   </annotation>
++
++   <annotation>
++      <appInfo>
++         <meta.section type="copyright"/>
++      </appInfo>
++      <documentation>
++         Copyright (c) 2005 IBM Corporation and others.&lt;br&gt;
++All rights reserved. This program and the accompanying materials are made 
++available under the terms of the Eclipse Public License v1.0 which 
++accompanies 
++this distribution, and is available at 
++&lt;a 
++href=&quot;http://www.eclipse.org/legal/epl-v10.html&quot;&gt;http://www.eclipse.org/legal/epl-v10.html&lt;/a&gt;
++      </documentation>
++   </annotation>
++
++</schema>
+Index: src/org/eclipse/core/internal/runtime/FileInitializer.java
+===================================================================
+RCS file: src/org/eclipse/core/internal/runtime/FileInitializer.java
+diff -N src/org/eclipse/core/internal/runtime/FileInitializer.java
+--- /dev/null	1 Jan 1970 00:00:00 -0000
++++ src/org/eclipse/core/internal/runtime/FileInitializer.java	1 Jan 1970 00:00:00 -0000
+@@ -0,0 +1,186 @@
++package org.eclipse.core.internal.runtime;
++
++import java.io.FileInputStream;
++import java.io.FileNotFoundException;
++import java.io.IOException;
++import java.net.URL;
++import java.util.Collections;
++import java.util.Enumeration;
++import java.util.Iterator;
++import java.util.LinkedList;
++import java.util.Properties;
++import java.util.Set;
++import java.util.regex.Pattern;
++
++import org.eclipse.core.runtime.IPlatformRunnable;
++import org.eclipse.core.runtime.IStatus;
++import org.eclipse.core.runtime.Path;
++import org.eclipse.core.runtime.Platform;
++import org.eclipse.core.runtime.Status;
++import org.eclipse.osgi.util.NLS;
++import org.osgi.framework.Bundle;
++
++/**
++ * <p>
++ * This application extracts files to their "localURL". The file patterns that you
++ * want to extract should be specified in a file in a properties format like this:
++ * 
++ * <pre>
++ * .* = *.so,about.html
++ * org.eclipse.team.core.cvs = *.html
++ * </pre>
++ * 
++ * This application should be run through the generic initializer mechanism and 
++ * not run directly.
++ * </p>
++ * 
++ * <p>
++ * To run this application, do something like:
++ * </p>
++ * 
++ * <p>
++ * <code>
++ * java -cp startup.jar org.eclipse.core.launcher.Main -application org.eclipse.core.runtime.initializer [-justThisArchOSWS] -fileInitializer &lt;fileWithFilePatternsToExtract&gt;
++ * </code>
++ * </p>
++ * 
++ * <p>
++ * <ul>
++ * <li> 
++ * Note: Only the files that are extracted will be printed to the console. If you
++ * want to debug things, use the -consolelog option in
++ * org.eclipse.core.launcher.Main
++ * </li>
++ * </ul>
++ * </p>
++ * 
++ * @see Initializer
++ * @see Platform#asLocalURL(URL)
++ * @since 3.1
++ */
++public class FileInitializer implements IPlatformRunnable {
++	
++	private LinkedList extractedFiles;
++	private boolean justThisArchOSWS;
++	
++	public Object run(Object args) throws Exception {
++		Properties bundleAndFilePatterns = getBundleAndFileNamePatterns((String[]) args);
++		Set bundlePatterns = bundleAndFilePatterns.keySet();
++		
++		// don't do anything if bundleAndFilePatterns is empty
++		if (bundleAndFilePatterns == null || bundleAndFilePatterns.size() == 0) {
++			return IPlatformRunnable.EXIT_OK;
++		}
++		
++		justThisArchOSWS = getJustThisArchOSWS((String[]) args);
++		
++		Bundle[] installedBundles = InternalPlatform.getDefault().getBundleContext().getBundles();
++		extractedFiles = new LinkedList();
++
++		// foreach(bundle pattern)
++		for (Iterator bundlePatternIter = bundlePatterns.iterator(); bundlePatternIter.hasNext();) {
++			Object bundlePattern = bundlePatternIter.next();
++			Object fileNamePattern = bundleAndFilePatterns.get(bundlePattern);
++			// foreach(filename pattern)
++			String[] fileNamePatterns = ((String) fileNamePattern).split(","); //$NON-NLS-1$
++			for (int i = 0; i < fileNamePatterns.length; i++) {
++				fileNamePatterns[i] = fileNamePatterns[i].trim();
++			}
++			// foreach(bundle)
++			for (int i = 0; i < installedBundles.length; i++) {
++				String bundleName = installedBundles[i].getSymbolicName();
++				// if(bundle matches pattern) check fileNamePattern(s)
++				if(Pattern.matches((String) bundlePattern, bundleName)) {
++					for (int j = 0; j < fileNamePatterns.length; j++) {
++						extractMatchingFilesFromBundle(fileNamePatterns[j], installedBundles[i]);
++					}
++				}
++			}
++		} // end for
++		return IPlatformRunnable.EXIT_OK;
++	}
++
++	private void extractMatchingFilesFromBundle(String fileNamePattern, Bundle bundle) throws IOException {
++		Enumeration e = bundle.findEntries("/", fileNamePattern, true); //$NON-NLS-1$
++
++		while(e != null && e.hasMoreElements()) {
++			URL fileURL = (URL) e.nextElement();
++			if (justThisArchOSWS) {
++				Path filePath = new Path(fileURL.getPath());
++				
++				String[] path = filePath.segments();
++				// check to see if the file should be extracted to the current os/arch
++				if (path.length == 4 && path[0].equals("os") && !(path[1].equals(Platform.getOS()) && path[2].equals(Platform.getOSArch()))) { //$NON-NLS-1$
++					continue;
++				}
++				// check to see if the file is should be extracted to the current ws
++				if (path.length == 3 && path[0].equals("ws") && !path[1].equals(Platform.getWS())) { //$NON-NLS-1$
++					continue;
++				}
++			}
++			
++			// the call to Platform.asLocalURL(URL) does the actual extraction
++			URL localURL = Platform.asLocalURL(fileURL);
++			if (localURL != null) {
++				String localURLPath = localURL.getPath();
++				
++				// only print the path if it hasn't been printed yet
++				int index = Collections.binarySearch(extractedFiles, localURLPath);
++				if (index < 0) {
++					extractedFiles.add(-(index + 1), localURLPath);
++					System.out.println("FileInitializer: " + localURLPath); //$NON-NLS-1$
++				}
++			}
++		}
++	}
++
++	private final String ARG_FILE = "-fileInitializer"; //$NON-NLS-1$
++	
++	private Properties getBundleAndFileNamePatterns(String[] argsArray) {
++		
++		for (int i = 0; i < argsArray.length; i++) {
++			if (argsArray[i].equalsIgnoreCase(ARG_FILE)) {
++
++				// the "file patterns" file was not specified
++				if (argsArray.length < i + 2) {
++					String msg = NLS.bind(Messages.fileInitializer_missingFileName, this.getClass().getName());
++					IStatus status = new Status(IStatus.ERROR, Platform.PI_RUNTIME, Platform.PLUGIN_ERROR, msg, null);
++					InternalPlatform.getDefault().log(status);
++					return null;
++				}
++				
++				try {
++					FileInputStream fin = new FileInputStream(argsArray[i + 1]);
++					Properties bundleAndFileNameProperties = new Properties();
++					bundleAndFileNameProperties.load(fin);
++					fin.close();
++					return bundleAndFileNameProperties;
++				} catch (FileNotFoundException e1) {
++					String msg = NLS.bind(Messages.fileInitializer_fileNotFound, this.getClass().getName(), argsArray[i + 1]);
++					IStatus status = new Status(IStatus.ERROR, Platform.PI_RUNTIME, Platform.PLUGIN_ERROR, msg, null);
++					InternalPlatform.getDefault().log(status);
++					return null;
++				} catch (IOException e) {
++					String msg = NLS.bind(Messages.fileInitializer_IOError, this.getClass().getName(), argsArray[i + 1]);
++					IStatus status = new Status(IStatus.ERROR, Platform.PI_RUNTIME, Platform.PLUGIN_ERROR, msg, e);
++					InternalPlatform.getDefault().log(status);
++					return null;
++				}
++			}
++		}
++		
++		// ARG_FILE wasn't found
++		return null;
++	}
++	
++	private final String ARG_JUSTTHISARCHOSWS = "-justThisArchOSWS"; //$NON-NLS-1$
++	
++	private boolean getJustThisArchOSWS(String[] argsArray) {
++		for (int i = 0; i < argsArray.length; i++) {
++			if (argsArray[i].equalsIgnoreCase(ARG_JUSTTHISARCHOSWS)) {
++				return true;
++			}
++		}
++		return false;
++	}
++}
+Index: src/org/eclipse/core/internal/runtime/Initializer.java
+===================================================================
+RCS file: src/org/eclipse/core/internal/runtime/Initializer.java
+diff -N src/org/eclipse/core/internal/runtime/Initializer.java
+--- /dev/null	1 Jan 1970 00:00:00 -0000
++++ src/org/eclipse/core/internal/runtime/Initializer.java	1 Jan 1970 00:00:00 -0000
+@@ -0,0 +1,49 @@
++/*******************************************************************************
++* Copyright (c) 2005 Red Hat, Inc. and others.
++* All rights reserved. This program and the accompanying materials
++* are made available under the terms of the Eclipse Public License v1.0
++* which accompanies this distribution, and is available at
++* http://www.eclipse.org/legal/epl-v10.html
++* 
++* Contributors:
++*     IBM  - Initial implementation
++*******************************************************************************/
++package org.eclipse.core.internal.runtime;
++
++import org.eclipse.core.runtime.CoreException;
++import org.eclipse.core.runtime.IConfigurationElement;
++import org.eclipse.core.runtime.IExtension;
++import org.eclipse.core.runtime.IExtensionPoint;
++import org.eclipse.core.runtime.IPlatformRunnable;
++import org.eclipse.core.runtime.IStatus;
++import org.eclipse.core.runtime.Platform;
++import org.eclipse.core.runtime.Status;
++import org.eclipse.osgi.util.NLS;
++
++public class Initializer implements IPlatformRunnable {
++
++	public Object run(Object args) throws Exception {
++		IExtensionPoint xpt = Platform.getExtensionRegistry().getExtensionPoint(Platform.PI_RUNTIME, Platform.PT_INITIALIZERS);
++		if (xpt == null)
++			return IPlatformRunnable.EXIT_OK;
++		
++		IExtension[] exts = xpt.getExtensions();
++		for (int i = 0; i < exts.length; i++) {
++			IConfigurationElement[] configs = exts[i].getConfigurationElements();
++			IPlatformRunnable initializer = null;
++			if (configs.length != 0) {
++				try {
++					initializer = (IPlatformRunnable) configs[0].createExecutableExtension("initialize"); //$NON-NLS-1$
++					initializer.run(args);
++				} catch(CoreException e) {
++					String msg = NLS.bind(Messages.initializer_error, exts[i].getExtensionPointUniqueIdentifier());
++					IStatus status = new Status(IStatus.ERROR, Platform.PI_RUNTIME, Platform.PLUGIN_ERROR, msg, e);
++					InternalPlatform.getDefault().log(status);
++					return null;
++				}
++			}
++		}
++		return IPlatformRunnable.EXIT_OK;
++	}
++
++}
+

@@ -1,0 +1,1076 @@
+### Eclipse Workspace Patch 1.0
+#P org.eclipse.compare
+Index: plugin.xml
+===================================================================
+RCS file: /home/eclipse/org.eclipse.compare/plugin.xml,v
+retrieving revision 1.59
+diff -u -r1.59 plugin.xml
+--- plugin.xml	12 Oct 2005 21:31:16 -0000	1.59
++++ plugin.xml	13 Feb 2006 22:00:22 -0000
+@@ -195,7 +195,7 @@
+          <action
+                label="%CompareWithPatchAction.label"
+                tooltip="%CompareWithPatchAction.tooltip"
+-               class="org.eclipse.compare.internal.patch.CompareWithPatchAction"
++               class="org.eclipse.compare.CompareWithPatchAction"
+                menubarPath="team.main/group1"
+                enablesFor="1"
+                id="compareWithPatch">
+Index: compare/org/eclipse/compare/internal/CompareEditor.java
+===================================================================
+RCS file: /home/eclipse/org.eclipse.compare/compare/org/eclipse/compare/internal/CompareEditor.java,v
+retrieving revision 1.30
+diff -u -r1.30 CompareEditor.java
+--- compare/org/eclipse/compare/internal/CompareEditor.java	6 Feb 2006 11:18:00 -0000	1.30
++++ compare/org/eclipse/compare/internal/CompareEditor.java	13 Feb 2006 22:00:22 -0000
+@@ -17,7 +17,6 @@
+ 
+ import org.eclipse.jface.dialogs.ErrorDialog;
+ import org.eclipse.jface.dialogs.MessageDialog;
+-import org.eclipse.jface.resource.ImageDescriptor;
+ import org.eclipse.jface.util.*;
+ import org.eclipse.jface.util.Assert;
+ 
+@@ -36,7 +35,7 @@
+  * A CompareEditor takes a ICompareEditorInput as input.
+  * Most functionality is delegated to the ICompareEditorInput.
+  */
+-public class CompareEditor extends EditorPart implements IReusableEditor, ISaveableModelSource, ISaveableModel {
++public class CompareEditor extends EditorPart implements IReusableEditor {
+ 	
+ 	/**
+ 	 * Internal property change listener for handling changes in the editor's input.
+@@ -258,15 +257,6 @@
+ 	 */
+ 	public boolean isDirty() {
+ 		IEditorInput input= getEditorInput();
+-		if (input instanceof ISaveableModelSource) {
+-			ISaveableModelSource sms = (ISaveableModelSource) input;
+-			ISaveableModel[] models = sms.getModels();
+-			for (int i = 0; i < models.length; i++) {
+-				ISaveableModel model = models[i];
+-				if (model.isDirty())
+-					return true;
+-			}
+-		}
+ 		if (input instanceof CompareEditorInput)
+ 			return ((CompareEditorInput)input).isSaveNeeded();
+ 		return false;
+@@ -278,50 +268,5 @@
+ 		if (old_value == null || new_value == null || !old_value.equals(new_value))
+ 			firePropertyChange(PROP_DIRTY);
+ 	}
+-
+-	/* (non-Javadoc)
+-	 * @see org.eclipse.ui.ISaveableModelSource#getModels()
+-	 */
+-	public ISaveableModel[] getModels() {
+-		IEditorInput input= getEditorInput();
+-		if (input instanceof ISaveableModelSource) {
+-			ISaveableModelSource source = (ISaveableModelSource) input;
+-			return source.getModels();
+-		}
+-		return new ISaveableModel[] { this };
+-	}
+-
+-	/* (non-Javadoc)
+-	 * @see org.eclipse.ui.ISaveableModelSource#getActiveModels()
+-	 */
+-	public ISaveableModel[] getActiveModels() {
+-		IEditorInput input= getEditorInput();
+-		if (input instanceof ISaveableModelSource) {
+-			ISaveableModelSource source = (ISaveableModelSource) input;
+-			return source.getActiveModels();
+-		}
+-		return new ISaveableModel[] { this };
+-	}
+-
+-	/* (non-Javadoc)
+-	 * @see org.eclipse.ui.ISaveableModel#getName()
+-	 */
+-	public String getName() {
+-		return getPartName();
+-	}
+-
+-	/* (non-Javadoc)
+-	 * @see org.eclipse.ui.ISaveableModel#getToolTipText()
+-	 */
+-	public String getToolTipText() {
+-		return getTitleToolTip();
+-	}
+-
+-	/* (non-Javadoc)
+-	 * @see org.eclipse.ui.ISaveableModel#getImageDescriptor()
+-	 */
+-	public ImageDescriptor getImageDescriptor() {
+-		return ImageDescriptor.createFromImage(getTitleImage());
+-	}
+ }
+ 
+Index: compare/org/eclipse/compare/internal/patch/PatchTargetPage.java
+===================================================================
+RCS file: /home/eclipse/org.eclipse.compare/compare/org/eclipse/compare/internal/patch/PatchTargetPage.java,v
+retrieving revision 1.2
+diff -u -r1.2 PatchTargetPage.java
+--- compare/org/eclipse/compare/internal/patch/PatchTargetPage.java	21 Oct 2005 19:51:59 -0000	1.2
++++ compare/org/eclipse/compare/internal/patch/PatchTargetPage.java	13 Feb 2006 22:00:22 -0000
+@@ -12,6 +12,7 @@
+ 
+ import java.text.MessageFormat;
+ 
++import org.eclipse.compare.PatchReader;
+ import org.eclipse.compare.internal.ICompareContextIds;
+ import org.eclipse.compare.internal.Utilities;
+ import org.eclipse.core.resources.IFile;
+@@ -101,15 +102,15 @@
+ 			InputPatchPage inputPage = (InputPatchPage) fPatchWizard.getPage(InputPatchPage.INPUTPATCHPAGE_NAME);
+ 			String source = ""; //$NON-NLS-1$
+ 			switch (inputPage.getInputMethod()) {
+-				case InputPatchPage.CLIPBOARD :
++				case PatchReader.CLIPBOARD :
+ 					source = PatchMessages.InputPatchPage_Clipboard_title;
+ 					break;
+ 
+-				case InputPatchPage.FILE :
++				case PatchReader.FILE :
+ 					source = PatchMessages.InputPatchPage_PatchFile_title;
+ 					break;
+ 
+-				case InputPatchPage.WORKSPACE :
++				case PatchReader.WORKSPACE :
+ 					source = PatchMessages.InputPatchPage_WorkspacePatch_title;
+ 					break;
+ 			}
+Index: compare/org/eclipse/compare/internal/patch/PatchWizard.java
+===================================================================
+RCS file: /home/eclipse/org.eclipse.compare/compare/org/eclipse/compare/internal/patch/PatchWizard.java,v
+retrieving revision 1.25
+diff -u -r1.25 PatchWizard.java
+--- compare/org/eclipse/compare/internal/patch/PatchWizard.java	21 Oct 2005 19:52:00 -0000	1.25
++++ compare/org/eclipse/compare/internal/patch/PatchWizard.java	13 Feb 2006 22:00:22 -0000
+@@ -10,8 +10,10 @@
+  *******************************************************************************/
+ package org.eclipse.compare.internal.patch;
+ 
++import java.io.IOException;
+ import java.lang.reflect.InvocationTargetException;
+ 
++import org.eclipse.compare.PatchReader;
+ import org.eclipse.compare.internal.CompareUIPlugin;
+ import org.eclipse.compare.internal.ExceptionHandler;
+ import org.eclipse.compare.internal.Utilities;
+@@ -23,14 +25,18 @@
+ import org.eclipse.jface.dialogs.IDialogSettings;
+ import org.eclipse.jface.viewers.ISelection;
+ import org.eclipse.jface.wizard.Wizard;
++import org.eclipse.swt.dnd.Clipboard;
++import org.eclipse.swt.widgets.Display;
+ import org.eclipse.ui.actions.WorkspaceModifyOperation;
+ 
+-/* package */class PatchWizard extends Wizard {
++/* package */public class PatchWizard extends Wizard {
+ 
+ 	// dialog store id constants
+-	private final static String DIALOG_SETTINGS_KEY= "PatchWizard"; //$NON-NLS-1$
++	public final static String DIALOG_SETTINGS_KEY= "PatchWizard"; //$NON-NLS-1$
+ 
+ 	private boolean fHasNewDialogSettings;
++	private int fPatchSource;
++	private String fPatchFilePath;
+ 	
+ 	private InputPatchPage fPatchWizardPage;
+ 
+@@ -39,24 +45,39 @@
+ 	/*
+ 	 * Creates a wizard for applying a patch file to the workspace.
+ 	 */
+-	/* package */PatchWizard(ISelection selection) {
+-
++	/* package */public PatchWizard(ISelection selection) {
++		init(selection, PatchReader.UNKNOWN);
++	}
++	
++	/*
++	 * Creates a wizard for applying a patch file to the workspace with the option of skipping the
++	 * patch input step.
++	 */
++	public PatchWizard(ISelection selection, int patchSource) {
++		init(selection, patchSource);
++	}
++	
++	private void init(ISelection selection, int patchSource) {
+ 		setDefaultPageImageDescriptor(CompareUIPlugin.getImageDescriptor("wizban/applypatch_wizban.gif")); //$NON-NLS-1$
+ 		setWindowTitle(PatchMessages.PatchWizard_title);
+ 
++		fPatchSource = patchSource;
++		
+ 		fPatcher= new WorkspacePatcher();
+ 		setTarget(Utilities.getFirstResource(selection));
+-
+-		IDialogSettings workbenchSettings= CompareUIPlugin.getDefault().getDialogSettings();
+-		IDialogSettings section= workbenchSettings.getSection(DIALOG_SETTINGS_KEY);
+-		if (section==null)
+-			fHasNewDialogSettings= true;
+-		else {
+-			fHasNewDialogSettings= false;
+-			setDialogSettings(section);
++		
++		if (patchSource == PatchReader.UNKNOWN) {
++			IDialogSettings workbenchSettings= CompareUIPlugin.getDefault().getDialogSettings();
++			IDialogSettings section= workbenchSettings.getSection(DIALOG_SETTINGS_KEY);
++			if (section==null)
++				fHasNewDialogSettings= true;
++			else {
++				fHasNewDialogSettings= false;
++				setDialogSettings(section);
++			}
+ 		}
+ 	}
+-
++	
+ 	WorkspacePatcher getPatcher() {
+ 		return fPatcher;
+ 	}
+@@ -74,8 +95,36 @@
+ 	 */
+ 	public void addPages() {
+ 		super.addPages();
+-		
+-		addPage(fPatchWizardPage= new InputPatchPage(this));
++		fPatchWizardPage = new InputPatchPage(this);
++
++		try {
++			switch (fPatchSource) {
++			case PatchReader.UNKNOWN:
++				addPage(fPatchWizardPage);
++				break;
++	
++			case PatchReader.CLIPBOARD:
++				Display display = this.getShell().getDisplay();
++				if (display != null) {
++					Clipboard clipboard = new Clipboard(display);
++					PatchReader.readPatchFromClipboard(clipboard, fPatcher);
++					clipboard.dispose();
++				}
++				break;
++				
++			case PatchReader.FILE:
++				PatchReader.readPatchFromFile(fPatchFilePath, fPatcher);
++				break;
++				
++			case PatchReader.WORKSPACE:
++				PatchReader.readPatchFromFile(fPatchFilePath, fPatcher);
++				break;
++			}
++		}
++		catch (IOException e) {
++			/* If we encounter an error reading a patch, add the input patch page */
++			addPage(fPatchWizardPage);
++		}
+ 		addPage(new PatchTargetPage(this));
+ 		addPage(new PreviewPatchPage(this));
+ 	}
+@@ -92,7 +141,9 @@
+ 	 */
+ 	public boolean performFinish() {
+ 		
+-		fPatcher.setName(fPatchWizardPage.getPatchName());
++		if (fPatchSource == PatchReader.UNKNOWN) {
++			fPatcher.setName(fPatchWizardPage.getPatchName());
++		}
+ 
+ 		try {
+ 			//Create scheduling rule based on the type of patch - single or workspace
+@@ -133,10 +184,17 @@
+ 			setDialogSettings(section);
+ 		}
+ 		
+-		fPatchWizardPage.saveWidgetValues();
++		if (fPatchSource == PatchReader.UNKNOWN) {
++			fPatchWizardPage.saveWidgetValues();
++		}
++		
+ 		//fPreviewPatchPage.saveWidgetValues();
+ 		
+ 		return true;
+ 	}
++
++	public void setPatchFilePath(String filePath) {
++		fPatchFilePath = filePath;
++	}
+ }
+ 
+Index: compare/org/eclipse/compare/internal/patch/CompareWithPatchAction.java
+===================================================================
+RCS file: compare/org/eclipse/compare/internal/patch/CompareWithPatchAction.java
+diff -N compare/org/eclipse/compare/internal/patch/CompareWithPatchAction.java
+--- compare/org/eclipse/compare/internal/patch/CompareWithPatchAction.java	21 Oct 2005 19:52:00 -0000	1.18
++++ /dev/null	1 Jan 1970 00:00:00 -0000
+@@ -1,174 +0,0 @@
+-/*******************************************************************************
+- * Copyright (c) 2000, 2004 IBM Corporation and others.
+- * All rights reserved. This program and the accompanying materials
+- * are made available under the terms of the Eclipse Public License v1.0
+- * which accompanies this distribution, and is available at
+- * http://www.eclipse.org/legal/epl-v10.html
+- *
+- * Contributors:
+- *     IBM Corporation - initial API and implementation
+- *******************************************************************************/
+-package org.eclipse.compare.internal.patch;
+-
+-import java.lang.reflect.InvocationTargetException;
+-import java.util.Arrays;
+-
+-import org.eclipse.compare.internal.BaseCompareAction;
+-import org.eclipse.compare.internal.ComparePreferencePage;
+-import org.eclipse.compare.internal.CompareUIPlugin;
+-import org.eclipse.compare.internal.ExceptionHandler;
+-import org.eclipse.compare.internal.ListContentProvider;
+-import org.eclipse.compare.internal.ListDialog;
+-import org.eclipse.compare.internal.Utilities;
+-import org.eclipse.core.resources.IWorkspace;
+-import org.eclipse.core.resources.IWorkspaceDescription;
+-import org.eclipse.core.resources.ResourcesPlugin;
+-import org.eclipse.core.runtime.CoreException;
+-import org.eclipse.core.runtime.IProgressMonitor;
+-import org.eclipse.core.runtime.SubProgressMonitor;
+-import org.eclipse.jface.dialogs.IDialogSettings;
+-import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+-import org.eclipse.jface.operation.IRunnableWithProgress;
+-import org.eclipse.jface.util.Assert;
+-import org.eclipse.jface.viewers.ILabelProvider;
+-import org.eclipse.jface.viewers.ISelection;
+-import org.eclipse.jface.viewers.LabelProvider;
+-import org.eclipse.jface.window.Window;
+-import org.eclipse.jface.wizard.IWizard;
+-import org.eclipse.jface.wizard.WizardDialog;
+-import org.eclipse.swt.SWT;
+-import org.eclipse.swt.events.SelectionAdapter;
+-import org.eclipse.swt.events.SelectionEvent;
+-import org.eclipse.swt.graphics.Image;
+-import org.eclipse.swt.widgets.Button;
+-import org.eclipse.swt.widgets.Composite;
+-import org.eclipse.swt.widgets.Control;
+-import org.eclipse.swt.widgets.Shell;
+-import org.eclipse.ui.IEditorPart;
+-
+-
+-public class CompareWithPatchAction extends BaseCompareAction {
+-
+-	static class PatchWizardDialog extends WizardDialog {
+-	
+-		private static final String PATCH_WIZARD_SETTINGS_SECTION = "PatchWizard"; //$NON-NLS-1$
+-
+-		PatchWizardDialog(Shell parent, IWizard wizard) {
+-			super(parent, wizard);
+-			
+-			setShellStyle(getShellStyle() | SWT.RESIZE);
+-			setMinimumPageSize(700, 500);
+-		}
+-		
+-		protected IDialogSettings getDialogBoundsSettings() {
+-	        IDialogSettings settings = CompareUIPlugin.getDefault().getDialogSettings();
+-	        IDialogSettings section = settings.getSection(PATCH_WIZARD_SETTINGS_SECTION);
+-	        if (section == null) {
+-	            section = settings.addNewSection(PATCH_WIZARD_SETTINGS_SECTION);
+-	        } 
+-	        return section;
+-		}
+-	}
+-	
+-	protected boolean isEnabled(ISelection selection) {
+-		return Utilities.getResources(selection).length == 1;
+-	}
+-		
+-	/* (non-Javadoc)
+-	 * @see org.eclipse.compare.internal.BaseCompareAction#run(org.eclipse.jface.viewers.ISelection)
+-	 */
+-	protected void run(ISelection selection) {
+-		PatchWizard wizard= new PatchWizard(selection);
+-		
+-		if (areAllEditorsSaved()) {
+-			PatchWizardDialog dialog= new PatchWizardDialog(CompareUIPlugin.getShell(), wizard);
+-			dialog.open();
+-		}
+-	}
+-
+-	private boolean areAllEditorsSaved(){
+-		if (CompareUIPlugin.getDirtyEditors().length == 0)
+-			return true;
+-		if (! saveAllDirtyEditors())
+-			return false;
+-		Shell shell= CompareUIPlugin.getShell();
+-		try {
+-			// Save isn't cancelable.
+-			IWorkspace workspace= ResourcesPlugin.getWorkspace();
+-			IWorkspaceDescription description= workspace.getDescription();
+-			boolean autoBuild= description.isAutoBuilding();
+-			description.setAutoBuilding(false);
+-			workspace.setDescription(description);
+-			try {
+-				new ProgressMonitorDialog(shell).run(false, false, createRunnable());
+-			} finally {
+-				description.setAutoBuilding(autoBuild);
+-				workspace.setDescription(description);
+-			}
+-			return true;
+-		} catch (InvocationTargetException e) {
+-			ExceptionHandler.handle(e, shell, PatchMessages.PatchAction_ExceptionTitle, PatchMessages.PatchAction_Exception);  
+-			return false;
+-		} catch (CoreException e) {
+-			ExceptionHandler.handle(e, shell, PatchMessages.PatchAction_ExceptionTitle, PatchMessages.PatchAction_Exception);  
+-			return false;			
+-		} catch (InterruptedException e) {
+-			Assert.isTrue(false); // Can't happen. Operation isn't cancelable.
+-			return false;
+-		}
+-	}
+-
+-	private IRunnableWithProgress createRunnable() {
+-		return new IRunnableWithProgress() {
+-			public void run(IProgressMonitor pm) {
+-				IEditorPart[] editorsToSave= CompareUIPlugin.getDirtyEditors();
+-				pm.beginTask(PatchMessages.PatchAction_SavingDirtyEditorsTask, editorsToSave.length); 
+-				for (int i= 0; i < editorsToSave.length; i++) {
+-					editorsToSave[i].doSave(new SubProgressMonitor(pm, 1));
+-					pm.worked(1);
+-				}
+-				pm.done();
+-			}
+-		};
+-	}
+-
+-	private boolean saveAllDirtyEditors() {
+-		if (ComparePreferencePage.getSaveAllEditors()) //must save everything
+-			return true;
+-		ListDialog dialog= new ListDialog(CompareUIPlugin.getShell()) {
+-			protected Control createDialogArea(Composite parent) {
+-				Composite result= (Composite) super.createDialogArea(parent);
+-				final Button check= new Button(result, SWT.CHECK);
+-				check.setText(PatchMessages.PatchAction_AlwaysSaveQuestion); 
+-				check.setSelection(ComparePreferencePage.getSaveAllEditors());
+-				check.addSelectionListener(
+-					new SelectionAdapter() {
+-						public void widgetSelected(SelectionEvent e) {
+-							ComparePreferencePage.setSaveAllEditors(check.getSelection());
+-						}
+-					}
+-				);
+-				applyDialogFont(result);
+-				return result;
+-			}
+-		};
+-		dialog.setTitle(PatchMessages.PatchAction_SaveAllQuestion); 
+-		dialog.setAddCancelButton(true);
+-		dialog.setLabelProvider(createDialogLabelProvider());
+-		dialog.setMessage(PatchMessages.PatchAction_SaveAllDescription); 
+-		dialog.setContentProvider(new ListContentProvider());
+-		dialog.setInput(Arrays.asList(CompareUIPlugin.getDirtyEditors()));
+-		return dialog.open() == Window.OK;
+-	}
+-
+-	private ILabelProvider createDialogLabelProvider() {
+-		return new LabelProvider() {
+-			public Image getImage(Object element) {
+-				return ((IEditorPart) element).getTitleImage();
+-			}
+-			public String getText(Object element) {
+-				return ((IEditorPart) element).getTitle();
+-			}
+-		};
+-	}
+-}
+Index: compare/org/eclipse/compare/internal/patch/InputPatchPage.java
+===================================================================
+RCS file: /home/eclipse/org.eclipse.compare/compare/org/eclipse/compare/internal/patch/InputPatchPage.java,v
+retrieving revision 1.28
+diff -u -r1.28 InputPatchPage.java
+--- compare/org/eclipse/compare/internal/patch/InputPatchPage.java	21 Oct 2005 19:51:59 -0000	1.28
++++ compare/org/eclipse/compare/internal/patch/InputPatchPage.java	13 Feb 2006 22:00:22 -0000
+@@ -19,6 +19,7 @@
+ import java.io.StringReader;
+ import java.text.MessageFormat;
+ 
++import org.eclipse.compare.PatchReader;
+ import org.eclipse.compare.internal.ICompareContextIds;
+ import org.eclipse.compare.internal.Utilities;
+ import org.eclipse.core.resources.IFile;
+@@ -72,11 +73,7 @@
+ 	private final static String STORE_PATCH_FILES_ID= PAGE_NAME+".PATCH_FILES"; //$NON-NLS-1$
+ 	private final static String STORE_INPUT_METHOD_ID= PAGE_NAME+".INPUT_METHOD"; //$NON-NLS-1$
+ 	private final static String STORE_WORKSPACE_PATH_ID= PAGE_NAME+".WORKSPACE_PATH"; //$NON-NLS-1$
+-	//patch input constants
+-	protected final static int CLIPBOARD= 1;
+-	protected final static int FILE= 2;
+-	protected final static int WORKSPACE= 3;
+-
++	
+ 	static final char SEPARATOR= System.getProperty("file.separator").charAt(0); //$NON-NLS-1$
+ 
+ 	private boolean fShowError= false;
+@@ -102,11 +99,11 @@
+ 			//Allow error messages if the selected input actually has something selected in it
+ 			fShowError=true;
+ 			switch(getInputMethod()){
+-				case FILE:
++				case PatchReader.FILE:
+ 				fShowError = (fPatchFileNameField.getText() != "");  //$NON-NLS-1$
+ 				break;
+ 			    
+-				case WORKSPACE:
++				case PatchReader.WORKSPACE:
+ 				fShowError = (!fTreeViewer.getSelection().isEmpty());
+ 				break;
+ 				
+@@ -131,7 +128,7 @@
+ 	}
+ 
+ 	/* package */ String getPatchName() {
+-		if (getInputMethod()==CLIPBOARD)
++		if (getInputMethod()==PatchReader.CLIPBOARD)
+ 			return PatchMessages.InputPatchPage_Clipboard;
+ 		return getPatchFilePath();
+ 	}
+@@ -176,25 +173,20 @@
+ 
+ 		String source= ""; //$NON-NLS-1$
+ 
+-		// Create a reader for the input
+-		Reader reader= null;
+ 		try {
+ 			int inputMethod= getInputMethod();
+-			if (inputMethod==CLIPBOARD) {
++			if (inputMethod==PatchReader.CLIPBOARD) {
+ 				Control c= getControl();
+ 				if (c != null) {
+ 					Clipboard clipboard= new Clipboard(c.getDisplay());
+-					Object o= clipboard.getContents(TextTransfer.getInstance());
+-					clipboard.dispose();
+-					if (o instanceof String)
+-						reader= new StringReader((String)o);
++					PatchReader.readPatchFromClipboard(clipboard, patcher);
+ 				}
+ 				source= PatchMessages.InputPatchPage_Clipboard_title;
+-			} else if (inputMethod==FILE) {
++			} else if (inputMethod==PatchReader.FILE) {
+ 				String patchFilePath= getPatchFilePath();
+ 				if (patchFilePath != null) {
+ 					try {
+-						reader= new FileReader(patchFilePath);
++						PatchReader.readPatchFromFile(patchFilePath, patcher);
+ 					} catch (FileNotFoundException ex) {
+ 						MessageDialog.openError(null,
+ 							PatchMessages.InputPatchPage_PatchErrorDialog_title,	
+@@ -202,13 +194,13 @@
+ 					}
+ 				}
+ 				source= PatchMessages.InputPatchPage_PatchFile_title;
+-			} else if (inputMethod==WORKSPACE) {
++			} else if (inputMethod==PatchReader.WORKSPACE) {
+ 				//Get the selected patch file (tree will only allow for one selection)
+ 				IResource[] resources= Utilities.getResources(fTreeViewer.getSelection());
+ 				IResource patchFile= resources[0];
+ 				if (patchFile!=null) {
+ 					try {
+-						reader= new FileReader(patchFile.getRawLocation().toFile());
++						PatchReader.readPatchFromFile(patchFile.getRawLocation(), patcher);
+ 					} catch (FileNotFoundException ex) {
+ 						MessageDialog.openError(null, PatchMessages.InputPatchPage_PatchErrorDialog_title, PatchMessages.InputPatchPage_PatchFileNotFound_message);
+ 					} catch (NullPointerException nex) {
+@@ -218,25 +210,10 @@
+ 				}
+ 				source= PatchMessages.InputPatchPage_WorkspacePatch_title;
+ 			}
+-			
+-			// parse the input
+-			if (reader != null) {
+-				try {
+-					patcher.parse(new BufferedReader(reader));
+-				} catch (IOException ex) {
+-					MessageDialog.openError(null,
+-						PatchMessages.InputPatchPage_PatchErrorDialog_title, 
+-						PatchMessages.InputPatchPage_ParseError_message); 
+-				}
+-			}
+-		} finally {
+-			if (reader != null) {
+-				try {
+-					reader.close();
+-				} catch (IOException x) {
+-					// silently ignored
+-				}
+-			}
++		} catch (IOException e) {
++			MessageDialog.openError(null,
++					PatchMessages.InputPatchPage_PatchErrorDialog_title, 
++					PatchMessages.InputPatchPage_ParseError_message); 
+ 		}
+ 		
+ 		Diff[] diffs= patcher.getDiffs();
+@@ -340,8 +317,8 @@
+ 				clearErrorMessage();
+ 				fShowError = (fPatchFileNameField.getText() != ""); //$NON-NLS-1$
+ 				int state= getInputMethod();
+-				setEnablePatchFile(state==FILE);
+-				setEnableWorkspacePatch(state==WORKSPACE);
++				setEnablePatchFile(state==PatchReader.FILE);
++				setEnableWorkspacePatch(state==PatchReader.WORKSPACE);
+ 				updateWidgetEnablements();
+ 			}
+ 		});
+@@ -374,8 +351,8 @@
+ 				//If there is anything typed in at all
+ 				fShowError = (!fTreeViewer.getSelection().isEmpty());
+ 				int state= getInputMethod();
+-				setEnablePatchFile(state==FILE);
+-				setEnableWorkspacePatch(state==WORKSPACE);
++				setEnablePatchFile(state==PatchReader.FILE);
++				setEnableWorkspacePatch(state==PatchReader.WORKSPACE);
+ 				updateWidgetEnablements();
+ 			}
+ 		});
+@@ -423,7 +400,7 @@
+ 
+ 		boolean gotPatch= false;
+ 		int inputMethod= getInputMethod();
+-		if (inputMethod==CLIPBOARD) {
++		if (inputMethod==PatchReader.CLIPBOARD) {
+ 			Control c= getControl();
+ 			if (c != null) {
+ 				Clipboard clipboard= new Clipboard(c.getDisplay());
+@@ -439,7 +416,7 @@
+ 					error= PatchMessages.InputPatchPage_NoTextInClipboard_message;					 
+ 			} else
+ 				error= PatchMessages.InputPatchPage_CouldNotReadClipboard_message;
+-		} else if (inputMethod==FILE) {
++		} else if (inputMethod==PatchReader.FILE) {
+ 			String path= fPatchFileNameField.getText();
+ 			if (path != null && path.length() > 0) {
+ 				File file= new File(path);
+@@ -449,7 +426,7 @@
+ 			} else {
+ 				error= PatchMessages.InputPatchPage_NoFileName_message; 
+ 			}
+-		} else if (inputMethod==WORKSPACE) {
++		} else if (inputMethod==PatchReader.WORKSPACE) {
+ 			//Get the selected patch file (tree will only allow for one selection)
+ 			IResource[] resources= Utilities.getResources(fTreeViewer.getSelection());
+ 			if (resources!=null&&resources.length>0) {
+@@ -567,7 +544,7 @@
+ 	 */
+ 	private void restoreWidgetValues() {
+ 
+-		int inputMethod= FILE;
++		int inputMethod= PatchReader.FILE;
+ 
+ 		IDialogSettings settings= getDialogSettings();
+ 		if (settings != null) {
+@@ -594,8 +571,8 @@
+ 			//if there is a valid patch on the clipboard. This will be done in adjustToCurrentTarget()
+ 			//so just set it to FILE now and, if there exists a patch on the clipboard, then clipboard
+ 			//will be selected automatically
+-			if (inputMethod == CLIPBOARD){
+-				inputMethod=FILE;
++			if (inputMethod == PatchReader.CLIPBOARD){
++				inputMethod=PatchReader.FILE;
+ 				fPatchFileNameField.deselectAll();
+ 			}
+ 			
+@@ -613,8 +590,8 @@
+ 				//check to see if the current input is set to workspace - if it is switch it
+ 				//back to clipboard since there is no corresponding element to go along with 
+ 				//the tree viewer
+-				if (inputMethod == WORKSPACE)
+-					inputMethod=FILE;
++				if (inputMethod == PatchReader.WORKSPACE)
++					inputMethod=PatchReader.FILE;
+ 			}
+ 		}
+ 
+@@ -682,7 +659,7 @@
+ 
+ 				if (isPatchFile(reader)) {
+ 					//Set choice to workspace
+-					setInputButtonState(WORKSPACE);
++					setInputButtonState(PatchReader.WORKSPACE);
+ 					if (fTreeViewer != null && patchTarget.exists()) {
+ 						fTreeViewer.expandToLevel(patchTarget, 0);
+ 						fTreeViewer.setSelection(new StructuredSelection(patchTarget));
+@@ -709,7 +686,7 @@
+ 					if (o instanceof String) {
+ 						reader = new StringReader((String) o);
+ 						if (isPatchFile(reader)) {
+-							setInputButtonState(CLIPBOARD);
++							setInputButtonState(PatchReader.CLIPBOARD);
+ 							return true;
+ 						}
+ 					}
+@@ -753,36 +730,36 @@
+ 	private void setInputButtonState(int state) {
+ 
+ 		switch (state) {
+-			case CLIPBOARD :
++			case PatchReader.CLIPBOARD :
+ 				fUseClipboardButton.setSelection(true);
+ 				fUsePatchFileButton.setSelection(false);
+ 				fUseWorkspaceButton.setSelection(false);
+ 				break;
+ 
+-			case FILE :
++			case PatchReader.FILE :
+ 				fUseClipboardButton.setSelection(false);
+ 				fUsePatchFileButton.setSelection(true);
+ 				fUseWorkspaceButton.setSelection(false);
+ 				break;
+ 
+-			case WORKSPACE :
++			case PatchReader.WORKSPACE :
+ 				fUseClipboardButton.setSelection(false);
+ 				fUsePatchFileButton.setSelection(false);
+ 				fUseWorkspaceButton.setSelection(true);
+ 				break;
+ 		}
+ 
+-		setEnablePatchFile(state==FILE);
+-		setEnableWorkspacePatch(state==WORKSPACE);
++		setEnablePatchFile(state==PatchReader.FILE);
++		setEnableWorkspacePatch(state==PatchReader.WORKSPACE);
+ 	}
+ 
+ 	protected int getInputMethod() {
+ 		if (fUseClipboardButton.getSelection())
+-			return CLIPBOARD;
++			return PatchReader.CLIPBOARD;
+ 		else if (fUsePatchFileButton.getSelection())
+-			return FILE;
++			return PatchReader.FILE;
+ 		else
+-			return WORKSPACE;
++			return PatchReader.WORKSPACE;
+ 	}
+ 
+ 	private String getPatchFilePath() {
+Index: compare/org/eclipse/compare/PatchReader.java
+===================================================================
+RCS file: compare/org/eclipse/compare/PatchReader.java
+diff -N compare/org/eclipse/compare/PatchReader.java
+--- /dev/null	1 Jan 1970 00:00:00 -0000
++++ compare/org/eclipse/compare/PatchReader.java	1 Jan 1970 00:00:00 -0000
+@@ -0,0 +1,109 @@
++package org.eclipse.compare;
++
++import java.io.BufferedReader;
++import java.io.FileNotFoundException;
++import java.io.FileReader;
++import java.io.IOException;
++import java.io.Reader;
++import java.io.StringReader;
++
++import org.eclipse.compare.internal.patch.WorkspacePatcher;
++import org.eclipse.core.runtime.IPath;
++import org.eclipse.swt.dnd.Clipboard;
++import org.eclipse.swt.dnd.TextTransfer;
++
++
++public class PatchReader {
++
++	//patch input constants
++	public final static int UNKNOWN = -1;
++	public final static int CLIPBOARD = 1;
++	public final static int FILE = 2;
++	public final static int WORKSPACE = 3;	
++	
++	/**
++	 * Populate the given patcher by reading a patch from the clipboard.
++	 * 
++	 * @param clipboard
++	 * @param patcher
++	 * @throws IOException 
++	 */
++	public static void readPatchFromClipboard(Clipboard clipboard, WorkspacePatcher patcher) 
++	throws IOException { 
++		
++		Reader reader = null;
++		try {		
++			if (clipboard != null) {
++				Object o= clipboard.getContents(TextTransfer.getInstance());
++				clipboard.dispose();
++				if (o instanceof String)
++					reader= new StringReader((String)o);
++			}
++			
++			// parse the input
++			if (reader != null) {
++				patcher.parse(new BufferedReader(reader));
++			}
++		} 
++		finally {
++			if (reader != null) {
++				reader.close();
++			}
++		}
++	}
++	
++	/**
++	 * Populate the given patcher by reading a patch from the file path.
++	 * 
++	 * @param filePath
++	 * @param patcher
++	 * @throws IOException 
++	 * @throws FileNotFoundException 
++	 */
++
++	public static void readPatchFromFile(String filePath, WorkspacePatcher patcher) 
++	throws IOException, FileNotFoundException {
++		Reader reader = null;
++		try {
++			reader = new FileReader(filePath);
++			
++			// parse the input
++			if (reader != null) {
++				patcher.parse(new BufferedReader(reader));
++			}
++		}
++		finally {
++			if (reader != null) {
++				reader.close();
++			}
++		}
++	}
++
++	/**
++	 * Populate the given patcher by reading a patch from the IPath.
++	 * 
++	 * @param path
++	 * @param patcher
++	 * @throws IOException 
++	 * @throws FileNotFoundException 
++	 * @throws NullPointerException 
++	 */
++	public static void readPatchFromFile(IPath path, WorkspacePatcher patcher) 
++	throws IOException, FileNotFoundException, NullPointerException {
++
++		Reader reader = null;
++		try {
++			reader = new FileReader(path.toFile());
++			
++			// parse the input
++			if (reader != null) {
++				patcher.parse(new BufferedReader(reader));
++			}
++		}
++		finally {
++			if (reader != null) {
++				reader.close();
++			}
++		}
++	}
++}
+Index: compare/org/eclipse/compare/CompareWithPatchAction.java
+===================================================================
+RCS file: compare/org/eclipse/compare/CompareWithPatchAction.java
+diff -N compare/org/eclipse/compare/CompareWithPatchAction.java
+--- /dev/null	1 Jan 1970 00:00:00 -0000
++++ compare/org/eclipse/compare/CompareWithPatchAction.java	1 Jan 1970 00:00:00 -0000
+@@ -0,0 +1,199 @@
++/*******************************************************************************
++ * Copyright (c) 2000, 2004 IBM Corporation and others.
++ * All rights reserved. This program and the accompanying materials
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * http://www.eclipse.org/legal/epl-v10.html
++ *
++ * Contributors:
++ *     IBM Corporation - initial API and implementation
++ *******************************************************************************/
++package org.eclipse.compare;
++
++import java.lang.reflect.InvocationTargetException;
++import java.util.Arrays;
++
++import org.eclipse.compare.internal.BaseCompareAction;
++import org.eclipse.compare.internal.ComparePreferencePage;
++import org.eclipse.compare.internal.CompareUIPlugin;
++import org.eclipse.compare.internal.ExceptionHandler;
++import org.eclipse.compare.internal.ListContentProvider;
++import org.eclipse.compare.internal.ListDialog;
++import org.eclipse.compare.internal.Utilities;
++import org.eclipse.compare.internal.patch.PatchMessages;
++import org.eclipse.compare.internal.patch.PatchWizard;
++import org.eclipse.core.resources.IWorkspace;
++import org.eclipse.core.resources.IWorkspaceDescription;
++import org.eclipse.core.resources.ResourcesPlugin;
++import org.eclipse.core.runtime.CoreException;
++import org.eclipse.core.runtime.IProgressMonitor;
++import org.eclipse.core.runtime.SubProgressMonitor;
++import org.eclipse.jface.dialogs.IDialogSettings;
++import org.eclipse.jface.dialogs.ProgressMonitorDialog;
++import org.eclipse.jface.operation.IRunnableWithProgress;
++import org.eclipse.jface.util.Assert;
++import org.eclipse.jface.viewers.ILabelProvider;
++import org.eclipse.jface.viewers.ISelection;
++import org.eclipse.jface.viewers.LabelProvider;
++import org.eclipse.jface.window.Window;
++import org.eclipse.jface.wizard.IWizard;
++import org.eclipse.jface.wizard.WizardDialog;
++import org.eclipse.swt.SWT;
++import org.eclipse.swt.events.SelectionAdapter;
++import org.eclipse.swt.events.SelectionEvent;
++import org.eclipse.swt.graphics.Image;
++import org.eclipse.swt.widgets.Button;
++import org.eclipse.swt.widgets.Composite;
++import org.eclipse.swt.widgets.Control;
++import org.eclipse.swt.widgets.Shell;
++import org.eclipse.ui.IEditorPart;
++
++
++public class CompareWithPatchAction extends BaseCompareAction {
++
++	private int patchSource = PatchReader.UNKNOWN;
++	private String filePath;
++	
++	static class PatchWizardDialog extends WizardDialog {
++	
++		private static final String PATCH_WIZARD_SETTINGS_SECTION = "PatchWizard"; //$NON-NLS-1$
++
++		PatchWizardDialog(Shell parent, IWizard wizard) {
++			super(parent, wizard);
++			
++			setShellStyle(getShellStyle() | SWT.RESIZE);
++			setMinimumPageSize(700, 500);
++		}
++		
++		protected IDialogSettings getDialogBoundsSettings() {
++	        IDialogSettings settings = CompareUIPlugin.getDefault().getDialogSettings();
++	        IDialogSettings section = settings.getSection(PATCH_WIZARD_SETTINGS_SECTION);
++	        if (section == null) {
++	            section = settings.addNewSection(PATCH_WIZARD_SETTINGS_SECTION);
++	        } 
++	        return section;
++		}
++	}
++	
++	protected boolean isEnabled(ISelection selection) {
++		return Utilities.getResources(selection).length == 1;
++	}
++		
++	/* (non-Javadoc)
++	 * @see org.eclipse.compare.internal.BaseCompareAction#run(org.eclipse.jface.viewers.ISelection)
++	 */
++	protected void run(ISelection selection) {
++		PatchWizard wizard = null;
++		wizard= new PatchWizard(selection, patchSource);
++		wizard.setPatchFilePath(filePath);
++		
++		if (areAllEditorsSaved()) {
++			PatchWizardDialog dialog= new PatchWizardDialog(CompareUIPlugin.getShell(), wizard);
++			dialog.open();
++		}
++	}
++
++	private boolean areAllEditorsSaved(){
++		if (CompareUIPlugin.getDirtyEditors().length == 0)
++			return true;
++		if (! saveAllDirtyEditors())
++			return false;
++		Shell shell= CompareUIPlugin.getShell();
++		try {
++			// Save isn't cancelable.
++			IWorkspace workspace= ResourcesPlugin.getWorkspace();
++			IWorkspaceDescription description= workspace.getDescription();
++			boolean autoBuild= description.isAutoBuilding();
++			description.setAutoBuilding(false);
++			workspace.setDescription(description);
++			try {
++				new ProgressMonitorDialog(shell).run(false, false, createRunnable());
++			} finally {
++				description.setAutoBuilding(autoBuild);
++				workspace.setDescription(description);
++			}
++			return true;
++		} catch (InvocationTargetException e) {
++			ExceptionHandler.handle(e, shell, PatchMessages.PatchAction_ExceptionTitle, PatchMessages.PatchAction_Exception);  
++			return false;
++		} catch (CoreException e) {
++			ExceptionHandler.handle(e, shell, PatchMessages.PatchAction_ExceptionTitle, PatchMessages.PatchAction_Exception);  
++			return false;			
++		} catch (InterruptedException e) {
++			Assert.isTrue(false); // Can't happen. Operation isn't cancelable.
++			return false;
++		}
++	}
++
++	private IRunnableWithProgress createRunnable() {
++		return new IRunnableWithProgress() {
++			public void run(IProgressMonitor pm) {
++				IEditorPart[] editorsToSave= CompareUIPlugin.getDirtyEditors();
++				pm.beginTask(PatchMessages.PatchAction_SavingDirtyEditorsTask, editorsToSave.length); 
++				for (int i= 0; i < editorsToSave.length; i++) {
++					editorsToSave[i].doSave(new SubProgressMonitor(pm, 1));
++					pm.worked(1);
++				}
++				pm.done();
++			}
++		};
++	}
++
++	private boolean saveAllDirtyEditors() {
++		if (ComparePreferencePage.getSaveAllEditors()) //must save everything
++			return true;
++		ListDialog dialog= new ListDialog(CompareUIPlugin.getShell()) {
++			protected Control createDialogArea(Composite parent) {
++				Composite result= (Composite) super.createDialogArea(parent);
++				final Button check= new Button(result, SWT.CHECK);
++				check.setText(PatchMessages.PatchAction_AlwaysSaveQuestion); 
++				check.setSelection(ComparePreferencePage.getSaveAllEditors());
++				check.addSelectionListener(
++					new SelectionAdapter() {
++						public void widgetSelected(SelectionEvent e) {
++							ComparePreferencePage.setSaveAllEditors(check.getSelection());
++						}
++					}
++				);
++				applyDialogFont(result);
++				return result;
++			}
++		};
++		dialog.setTitle(PatchMessages.PatchAction_SaveAllQuestion); 
++		dialog.setAddCancelButton(true);
++		dialog.setLabelProvider(createDialogLabelProvider());
++		dialog.setMessage(PatchMessages.PatchAction_SaveAllDescription); 
++		dialog.setContentProvider(new ListContentProvider());
++		dialog.setInput(Arrays.asList(CompareUIPlugin.getDirtyEditors()));
++		return dialog.open() == Window.OK;
++	}
++
++	private ILabelProvider createDialogLabelProvider() {
++		return new LabelProvider() {
++			public Image getImage(Object element) {
++				return ((IEditorPart) element).getTitleImage();
++			}
++			public String getText(Object element) {
++				return ((IEditorPart) element).getTitle();
++			}
++		};
++	}
++	
++	/**
++	 * Set the patch dialog settings to be used in the apply patch dialog.
++     *
++	 * @param source
++	 */
++	public void setPatchSource(int source) {
++		this.patchSource = source;
++	}
++	
++	/**
++	 * Set the file path to the patch.
++	 * 
++	 * @param filePath
++	 */
++	public void setPatchFilePath(String filePath) {
++		this.filePath = filePath;
++	}
++}
+
