@@ -1,0 +1,73 @@
+# ChangeLog for dev-java/javacc
+# Copyright 2000-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-java/javacc/ChangeLog,v 1.16 2006/01/22 05:08:34 nichoj Exp $
+
+*javacc-4.0 (22 Jan 2006)
+
+  22 Jan 2006; Joshua Nichols <nichoj@gentoo.org> +files/javacc-4.0,
+  +files/javacc.sh-4.0, +files/jjdoc-4.0, +files/jjtree-4.0,
+  +files/javacc-4.0-javadoc.patch, javacc-3.2-r3.ebuild, +javacc-4.0.ebuild:
+  Version bump (bug #118576).
+
+  29 Jun 2005; Thomas Matthijs <axxo@gentoo.org>
+  +files/javacc-3.2-javadoc.patch, javacc-3.2-r3.ebuild:
+  add patch from Josh Nichols <nichoj@alum.rpi.edu> to build api docs #97014
+
+  01 May 2005; Jan Brinkmann <luckyduck@gentoo.org> -javacc-3.2-r2.ebuild,
+  javacc-3.2-r3.ebuild:
+  stable on ppc, did some cosmetic changes. introduced support for the jikes,
+  the examples and the source useflag.
+
+  05 Feb 2005; Jan Brinkmann <luckyduck@gentoo.org> javacc-3.2-r3.ebuild:
+  stable on amd64
+
+  17 Oct 2004; Dylan Carlson <absinthe@gentoo.org> javacc-3.2-r2.ebuild,
+  javacc-3.2-r3.ebuild:
+  keywords ~amd64; closes #66603.
+
+  16 Oct 2004; Thomas Matthijs <axxo@gentoo.org> javacc-3.2-r2.ebuild,
+  javacc-3.2-r3.ebuild:
+  use java-pkg_dohtml instead of dohtml to also install the package-list in
+  case of api docs: #50740
+
+*javacc-3.2-r3 (05 Sep 2004)
+
+  05 Sep 2004; Thomas Matthijs <axxo@gentoo.org> +javacc-3.2-r3.ebuild:
+  remove /etc/env.d/22javacc if left over from previous ebuilds, causes
+  problems, see #61975
+
+  30 Aug 2004; Chris Aniszczyk <zx@gentoo.org> -javacc-3.2-r1.ebuild,
+  javacc-3.2-r2.ebuild:
+  Marking x86 & cleanup
+
+*javacc-3.2-r2 (19 Jun 2004)
+
+  19 Jun 2004; Karl Trygve Kalleberg <karltk@gentoo.org> javacc-3.2-r2.ebuild:
+  Fixed JAVACC_HOME and VERSION bug, #53829, thanks to Andy Daniels
+  <danielsa@uwstout.edu> for initial suggestions.
+
+  30 Apr 2004; Chris Aniszczyk <zx@gentoo.org> javacc-3.2.ebuild:
+  Clean up.
+
+  30 Apr 2004; Chris Aniszczyk <zx@gentoo.org> javacc-3.2-r1.ebuild:
+  Marking stable on x86
+
+  30 Apr 2004; Chris Aniszczyk <zx@gentoo.org> javacc-3.2-r1.ebuild,
+  files/javacc-3.2:
+  Bug fixes galore. Closes #48551 #48481
+
+  30 Mar 2004; David Holm <dholm@gentoo.org> javacc-3.2-r1.ebuild:
+  Added to ~ppc.
+
+*javacc-3.2-r1 (29 Mar 2004)
+
+  29 Mar 2004; Karl Trygve Kalleberg <karltk@gentoo.org> 
+  Rewrote to use the src tarball instead. Fixes #46135.
+
+*javacc-3.2 (29 Feb 2004)
+
+  29 Feb 2004; Chris Aniszczyk <zx@gentoo.org> javacc-3.2.ebuild,
+  metadata.xml:
+  Initial Import. Thanks to Dominik Diesch <dominik@dominik.homeunix.org> for
+  the initial ebuild. Closes #20419
+
