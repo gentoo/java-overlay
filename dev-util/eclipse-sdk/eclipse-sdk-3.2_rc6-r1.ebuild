@@ -23,8 +23,8 @@ COMMON_DEP="
 	!nogecko-sdk? ( net-libs/gecko-sdk )
 	gnome? ( =gnome-base/gnome-vfs-2* =gnome-base/libgnomeui-2* )
 	opengl? ( virtual/opengl )
-	>=dev-java/ant-core-1.6.2-r4
-	>=dev-java/ant-tasks-1.6.2
+	>=dev-java/ant-core-1.6.5
+	>=dev-java/ant-tasks-1.6.5
 	=dev-java/lucene-1*"
 
 RDEPEND=">=virtual/jre-1.4
