@@ -5,12 +5,13 @@
 inherit eutils java-pkg-2 flag-o-matic check-reqs
 
 MY_PV=${PV/_rc/RC}
-DATESTAMP=200605260010
+DATESTAMP=200606021317
 MY_A="eclipse-sourceBuild-srcIncluded-${MY_PV}.zip"
 DESCRIPTION="Eclipse Tools Platform"
 HOMEPAGE="http://www.eclipse.org/"
 #SRC_URI="http://ftp.osuosl.org/pub/eclipse/eclipse/downloads/drops/S-${MY_PV}-${DATESTAMP}/${MY_A}"
-SRC_URI="http://download.eclipse.org/eclipse/downloads/drops/S-${MY_PV}-${DATESTAMP}/${MY_A}"
+SRC_URI="http://download.eclipse.org/eclipse/downloads/drops/S-${MY_PV}-${DATESTAMP}/${MY_A}
+http://dev.gentoo.org/~nichoj/distfiles/${P}-patches.tar.bz2"
 IUSE="nogecko-sdk gnome cairo opengl"
 SLOT="3.2"
 LICENSE="EPL-1.0"
@@ -77,16 +78,7 @@ pkg_setup() {
 src_unpack() {
 	unpack ${A}
 
-	#   1: fix classpath (eclipse bug #128921)
-	#   2: fix building of native code filesystem library
-	#      - hard coded JAVA_HOME, use ebuild CFLAGS
-	#   3: fix building of native update code library
-	#      - remove hard coded x86 path
-	#      - some gcc versions refuse if both -static and -fPIC are used
-	#epatch ${FILESDIR}/${PN}-3.2_rc3-gentoo.patch
-
-	# TODO either clean-prebuilt-code remove it
-	fix_makefiles
+	fix-swt-targets
 	
 	pushd plugins/org.apache.ant/lib >/dev/null
 	rm *.jar
@@ -116,47 +108,47 @@ src_unpack() {
 	# https://bugs.eclipse.org/bugs/show_bug.cgi?id=86848
 	# GNU XML issue identified by Michael Koch
 	# patches 2, 4, 5
-	epatch ${FILESDIR}/${P}-build.patch
-	epatch ${FILESDIR}/${P}-libupdatebuild.patch
-	epatch ${FILESDIR}/${P}-libupdatebuild2.patch 
+	epatch ${WORKDIR}/${P}-build.patch
+	epatch ${WORKDIR}/${P}-libupdatebuild.patch
+	epatch ${WORKDIR}/${P}-libupdatebuild2.patch 
 
 	# Build swttools.jar
 	# https://bugs.eclipse.org/bugs/show_bug.cgi?id=90364
 	pushd plugins/org.eclipse.swt.gtk.linux.x86_64 >/dev/null
-	epatch ${FILESDIR}/${P}-swttools.patch # patch18
+	epatch ${WORKDIR}/${P}-swttools.patch # patch18
 	popd >/dev/null
 
 	# install location should automatically be added to homedir 
 	# if ECLIPSE_HOME is not writable
 	# https://bugs.eclipse.org/bugs/show_bug.cgi?id=90630
-	epatch ${FILESDIR}/${P}-updatehomedir.patch # patch22
+	epatch ${WORKDIR}/${P}-updatehomedir.patch # patch22
 
 	# .so files installed in a strange location
 	# https://bugs.eclipse.org/bugs/show_bug.cgi?id=90535
 	pushd plugins/org.eclipse.core.runtime >/dev/null
-	epatch ${FILESDIR}/${P}-fileinitializer.patch # patch24
+	epatch ${WORKDIR}/${P}-fileinitializer.patch # patch24
 	popd >/dev/null
 
 	# https://bugs.eclipse.org/bugs/show_bug.cgi?id=98707 
 	# https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=178726
 # TODO figure out why this doesn't apply
 #	pushd plugins/org.eclipse.compare >/dev/null
-#	epatch ${FILESDIR}/${P}-compare-create-api.patch # patch 33
+#	epatch ${WORKDIR}/${P}-compare-create-api.patch # patch 33
 #	popd >/dev/null
 
 	# JPackage []s in names of symlinks ...
 	# https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=162177
 	pushd plugins/org.eclipse.jdt.core >/dev/null
-	epatch ${FILESDIR}/${P}-bz162177.patch # patch34
+	epatch ${WORKDIR}/${P}-bz162177.patch # patch34
 	popd >/dev/null
 
-	epatch ${FILESDIR}/${P}-genjavadocoutput.patch # patch35
+	epatch ${WORKDIR}/${P}-genjavadocoutput.patch # patch35
 
 	# buildHelpIndex caused a OutOfMemoryException
 	# https://bugs.eclipse.org/bugs/show_bug.cgi?id=114001
-	epatch ${FILESDIR}/${P}-helpindexbuilder.patch # patch38
+	epatch ${WORKDIR}/${P}-helpindexbuilder.patch # patch38
 
-	epatch ${FILESDIR}/${P}-usebuiltlauncher.patch # patch40
+	epatch ${WORKDIR}/${P}-usebuiltlauncher.patch # patch40
 
 	# Eclipse launcher does not follow symlinks
 	# https://bugs.eclipse.org/bugs/show_bug.cgi?id=79592
@@ -165,36 +157,36 @@ src_unpack() {
 	unzip -d launchertmp \
 		plugins/org.eclipse.platform/launchersrc.zip >/dev/null || die "unzip failed"
 	pushd launchertmp >/dev/null
-	epatch ${FILESDIR}/${P}-launcher-link.patch # patch47
+	epatch ${WORKDIR}/${P}-launcher-link.patch # patch47
 	zip -9 -r ../launchersrc.zip * >/dev/null || die "zip failed"
 	popd >/dev/null
 	mv launchersrc.zip plugins/org.eclipse.platform
 	rm -rf launchertmp
 
 	pushd features/org.eclipse.platform.launchers >/dev/null
-	epatch ${FILESDIR}/${P}-launcher-link.patch # patch47
+	epatch ${WORKDIR}/${P}-launcher-link.patch # patch47
 	popd >/dev/null
 
 	# Don't attempt to link to Sun's javadocs
-	epatch ${FILESDIR}/${P}-javadoclinks.patch # patch48
+	epatch ${WORKDIR}/${P}-javadoclinks.patch # patch48
 
 	# generic releng plugins that can be used to build plugins
 	# see this thread for deails: 
 	# https://www.redhat.com/archives/fedora-devel-java-list/2006-April/msg00048.html
 	pushd plugins/org.eclipse.pde.build >/dev/null
-	epatch ${FILESDIR}/${P}-pde.build-add-package-build.patch # patch53
+	epatch ${WORKDIR}/${P}-pde.build-add-package-build.patch # patch53
 	sed --in-place "s:@eclipse_base@:${ECLIPSE_DIR}:" templates/package-build/build.properties
 	popd >/dev/null
 
 	# https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=191536
 	# https://bugs.eclipse.org/bugs/show_bug.cgi?id=142861
 	pushd plugins/org.eclipse.swt/Eclipse\ SWT >/dev/null
-	epatch ${FILESDIR}/${P}-swt-rm-ON_TOP.patch # patch54
+	epatch ${WORKDIR}/${P}-swt-rm-ON_TOP.patch # patch54
 	popd >/dev/null
 
 	# We need to disable junit4 and apt until GCJ can handle Java5 code
 	# FIXME for some reason junit isn't using java5...
-	epatch ${FILESDIR}/${P}-disable-junit4-apt.patch # patch55
+	epatch ${WORKDIR}/${P}-disable-junit4-apt.patch # patch55
 }
 
 src_compile() {
@@ -246,7 +238,7 @@ src_install() {
 #  Helper functions
 # -----------------------------------------------------------------------------
 
-fix_makefiles() {
+fix-swt-targets() {
 	# Select the set of native libraries to compile
 	local targets="make_swt make_awt make_atk"
 
@@ -273,17 +265,6 @@ fix_makefiles() {
 	sed -i "s/^all:.*/all: ${targets}/" \
 		"plugins/org.eclipse.swt/Eclipse SWT PI/gtk/library/make_linux.mak" \
 		|| die "Failed to tweak make_linux.mak"
-}
-
-prune_other_archs() {
-	pushd plugins
-	rm -rf *solaris* *hpux* *win32* *hpux* *macosx*
-	# TODO remove archs that aren't ours
-	popd
-}
-
-clean-prebuilt-code() {
-	find ${S} -type f \( -name '*.class' -o -name '*.so' -o -name '*.so.*' -o -name 'eclipse' \) | xargs rm -f
 }
 
 setup-jvm-opts() {
