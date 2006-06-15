@@ -19,8 +19,7 @@ RESTRICT="fetch"
 DEPEND=">=dev-java/sun-jaf-bin-1.0
 		>=sun-javamail-bin-1.3"
 RDEPEND="${DEPEND}
-		>=virtual/jdk-1.4.2
-		virtual/x11"
+		>=virtual/jdk-1.4.2"
 
 S=${WORKDIR}
 

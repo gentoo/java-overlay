@@ -1,4 +1,16 @@
-MD5 85152399cb46ad1a7dc1c891a7a630f2 files/digest-sun-j2me-bin-2.2 87
-MD5 5f5873ddf9e81f6c756aebbc3a95a991 files/digest-sun-j2me-bin-2.2-r1 177
-MD5 42da0bf81b927f8cb0ffa1e4d69b6ef3 sun-j2me-bin-2.2-r1.ebuild 2159
-MD5 f812b70f426dbc2b54371af8fb81f554 sun-j2me-bin-2.2.ebuild 2017
+DIST j2me_wireless_toolkit-2_2-linux-i386.bin 17637106 RMD160 2ab276d41a6e20476b51ec80279ef6fd0019de5b SHA1 fa9888ab2a7486be1b168e395e0aa40ca0103f14 SHA256 4480bea914a4537ea81a5a70c517f91aa5a567915f470e70e050c332bfdd4d34
+DIST j2me_wireless_toolkit-2_2-update_1-linux.zip 1521230 RMD160 418d3cb3e95c959bb0010022e32f976648a892e5 SHA1 d83a9b6a7c253633d37619b2796f4aa271bd57f0 SHA256 678db2b8bbd365fd5ff3457272ce123c6720d08b2fe8f2b256eeabb3d65da153
+EBUILD sun-j2me-bin-2.2-r1.ebuild 2145 RMD160 2f200af7486a5940ba3dbd8cdf4c72d4bbe20e85 SHA1 8e2ee108953f84fe8dfb0039a87e3950282db7fd SHA256 d58c7ca6cacfc04c8c4d91d3b4a1ab85599bb029e367c2c47c2f2c1fa64a01a0
+MD5 35cfa7d8577b0e4b4304e6ea30f30df1 sun-j2me-bin-2.2-r1.ebuild 2145
+RMD160 2f200af7486a5940ba3dbd8cdf4c72d4bbe20e85 sun-j2me-bin-2.2-r1.ebuild 2145
+SHA256 d58c7ca6cacfc04c8c4d91d3b4a1ab85599bb029e367c2c47c2f2c1fa64a01a0 sun-j2me-bin-2.2-r1.ebuild 2145
+EBUILD sun-j2me-bin-2.2.ebuild 2180 RMD160 bd3a0fc35da4a6b116922518cb305beeea58a500 SHA1 be034edfffd522f3b92563d724324197f03b3299 SHA256 3a3c9c09d2263a65b8891e2fc76fbf41f26d83af904562e52821aed3ff0759f7
+MD5 c1a94295aa34d8f90f4667d2e017cc2d sun-j2me-bin-2.2.ebuild 2180
+RMD160 bd3a0fc35da4a6b116922518cb305beeea58a500 sun-j2me-bin-2.2.ebuild 2180
+SHA256 3a3c9c09d2263a65b8891e2fc76fbf41f26d83af904562e52821aed3ff0759f7 sun-j2me-bin-2.2.ebuild 2180
+MD5 d982119b2e6d42951ca295fa800e919b files/digest-sun-j2me-bin-2.2 623
+RMD160 e9f25dc6f761a1dbedddc34a6dec16cf56a4c48b files/digest-sun-j2me-bin-2.2 623
+SHA256 3f99926c16b528b7d1a38fdf0859d6a89dcb95bddf8b332bf4be5b9087c6fc48 files/digest-sun-j2me-bin-2.2 623
+MD5 d982119b2e6d42951ca295fa800e919b files/digest-sun-j2me-bin-2.2-r1 623
+RMD160 e9f25dc6f761a1dbedddc34a6dec16cf56a4c48b files/digest-sun-j2me-bin-2.2-r1 623
+SHA256 3f99926c16b528b7d1a38fdf0859d6a89dcb95bddf8b332bf4be5b9087c6fc48 files/digest-sun-j2me-bin-2.2-r1 623
