@@ -221,11 +221,10 @@ src_install() {
 	mv ${D}/usr/lib/eclipse ${D}/${ECLIPSE_DIR}
 	insinto ${ECLIPSE_DIR}
 	exeinto ${ECLIPSE_DIR}
+	echo "-Djava.library.path=/usr/lib" >> ${D}/${ECLIPSE_DIR}/eclipse.ini
 
 	debug-print "Installing eclipse-gtk binary"
 	doexe eclipse || die "Failed to install eclipse binary"
-	# need to rename inf file to eclipse-gtk.ini, see bug #128128
-	newins eclipse.ini eclipse-gtk.ini
 
 	# Install startup script
 	exeinto /usr/bin
