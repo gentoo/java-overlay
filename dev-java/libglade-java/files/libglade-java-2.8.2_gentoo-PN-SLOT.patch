@@ -1,0 +1,35 @@
+diff -Nuar libglade-java-2.8.2-ORIG/configure.in libglade-java-2.8.2-EDIT/configure.in
+--- libglade-java-2.8.2-ORIG/configure.in	2004-11-01 23:11:40.000000000 +1100
++++ libglade-java-2.8.2-EDIT/configure.in	2004-11-08 22:35:46.538385619 +1100
+@@ -23,8 +23,8 @@
+ apiversion="2.8"
+ 
+ 
+-INSTALLED_CLASSPATH=\${prefix}/share/java/glade${apiversion}-${version}.jar 
+-INSTALLED_JNI_DIR=\${prefix}/lib/jni/
++INSTALLED_CLASSPATH=\${prefix}/share/${PN}-${SLOT}/lib/glade${apiversion}-${version}.jar 
++INSTALLED_JNI_DIR=\${prefix}/lib/
+ AC_SUBST(INSTALLED_CLASSPATH)
+ AC_SUBST(INSTALLED_JNI_DIR)
+ 
+@@ -33,7 +33,7 @@
+ 
+ JG_GTK_JAVA(2.4)
+ 
+-JG_GNOME_JAVA(2.7)
++JG_GNOME_JAVA(2.8)
+ 
+ JG_COMMON
+ 
+diff -Nuar libglade-java-2.8.2-ORIG/src/Makefile.in libglade-java-2.8.2-EDIT/src/Makefile.in
+--- libglade-java-2.8.2-ORIG/src/Makefile.in	2004-10-06 22:36:27.000000000 +1000
++++ libglade-java-2.8.2-EDIT/src/Makefile.in	2004-11-08 22:36:28.197995367 +1100
+@@ -15,7 +15,7 @@
+ # the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ #
+ 
+-CLASSPATH = @GTKJAR@:@GNOMEJAR@:@CLASSPATH@:java
++CLASSPATH = @GTKJAR@:@GNOMEJAR@:java
+ NATIVEGTKJAR = @NATIVEGTKJAR@
+ NATIVEGNOMEJAR = @NATIVEGNOMEJAR@
+ 

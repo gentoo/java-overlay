@@ -1,0 +1,42 @@
+diff -Nuar libgtk-java-2.4.6-ORIG/Makefile.in libgtk-java-2.4.6-EDIT/Makefile.in
+--- libgtk-java-2.4.6-ORIG/Makefile.in	2004-10-07 04:54:44.000000000 +1000
++++ libgtk-java-2.4.6-EDIT/Makefile.in	2004-11-08 16:39:29.876740128 +1100
+@@ -46,8 +46,8 @@
+ 	-for f in $(DOCUMENTS); do $(INSTALL) -m644 $$f $(DESTDIR)$(datadir)/doc/libgtk$(gtkapiversion)-java || exit 1; done;
+ 	-$(INSTALL) -d $(DESTDIR)$(libdir)/pkgconfig/
+ 	$(INSTALL) -m644 gtk2-java.pc $(DESTDIR)$(libdir)/pkgconfig/
+-	-$(INSTALL) -d $(DESTDIR)$(datadir)/libgtk-java/macros/
+-	$(INSTALL) -m644 macros/*.m4 $(DESTDIR)$(datadir)/libgtk-java/macros/
++	-$(INSTALL) -d $(DESTDIR)@INSTALLED_MACRO_DIR@
++	$(INSTALL) -m644 macros/*.m4 $(DESTDIR)@INSTALLED_MACRO_DIR@
+ 	$(MAKE) -C doc install
+ 
+ # install native (gcj compiled) libraries
+diff -Nuar libgtk-java-2.4.6-ORIG/configure.in libgtk-java-2.4.6-EDIT/configure.in
+--- libgtk-java-2.4.6-ORIG/configure.in	2004-11-01 23:04:59.000000000 +1100
++++ libgtk-java-2.4.6-EDIT/configure.in	2004-11-08 15:53:21.000000000 +1100
+@@ -23,9 +23,9 @@
+ gtkapiversion="2.4"
+ AC_SUBST(gtkapiversion)
+ 
+-INSTALLED_CLASSPATH=\${prefix}/share/java/gtk${gtkapiversion}-${gtkversion}.jar 
+-INSTALLED_JNI_DIR=\${prefix}/lib/jni/
+-INSTALLED_MACRO_DIR=\${prefix}/share/libgtk-java/macros/
++INSTALLED_CLASSPATH=\${prefix}/share/${PN}-${SLOT}/lib/gtk${gtkapiversion}-${gtkversion}.jar 
++INSTALLED_JNI_DIR=\${prefix}/lib/
++INSTALLED_MACRO_DIR=\${prefix}/share/${PN}-${SLOT}/macros/
+ AC_SUBST(INSTALLED_CLASSPATH)
+ AC_SUBST(INSTALLED_JNI_DIR)
+ AC_SUBST(INSTALLED_MACRO_DIR)
+diff -Nuar libgtk-java-2.4.6-ORIG/src/Makefile.in libgtk-java-2.4.6-EDIT/src/Makefile.in
+--- libgtk-java-2.4.6-ORIG/src/Makefile.in	2004-07-28 22:31:30.000000000 +1000
++++ libgtk-java-2.4.6-EDIT/src/Makefile.in	2004-11-08 15:03:09.000000000 +1100
+@@ -15,7 +15,7 @@
+ # the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
+ #
+ 
+-CLASSPATH = @CLASSPATH@:java:
++CLASSPATH = java
+ 
+ OBJECTS:= \
+ 	$(shell ls jni/*.c  | sort | sed -e 's=\.c=\.o=g')

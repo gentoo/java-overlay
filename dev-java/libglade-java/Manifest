@@ -1,0 +1,71 @@
+AUX libglade-java-2.10.0_fix-install-dir.patch 420 RMD160 5df52d97d3ec9e6e3bfecfa7b71381ec66941119 SHA1 1ab7391bbeaa71f4beb24b98fd6b71fefdc5e1a9 SHA256 b28c3496abf71549f08e104840d30875a9577958971124b4080a0891c61a38c4
+MD5 58cc911044f6335ee3e1fe338738e2b4 files/libglade-java-2.10.0_fix-install-dir.patch 420
+RMD160 5df52d97d3ec9e6e3bfecfa7b71381ec66941119 files/libglade-java-2.10.0_fix-install-dir.patch 420
+SHA256 b28c3496abf71549f08e104840d30875a9577958971124b4080a0891c61a38c4 files/libglade-java-2.10.0_fix-install-dir.patch 420
+AUX libglade-java-2.8.2_gentoo-PN-SLOT.patch 1190 RMD160 bca8ad5ebe5ad963e5c116b17b97d4582d518f94 SHA1 d9ad5d8187ee57d595b1d352cfc421cd5470f7f2 SHA256 7a8541865bca0357390c373f489376b130a7adec28943944ec511a94179dc379
+MD5 c068d53842b2d7d7efdca61acf5d72ca files/libglade-java-2.8.2_gentoo-PN-SLOT.patch 1190
+RMD160 bca8ad5ebe5ad963e5c116b17b97d4582d518f94 files/libglade-java-2.8.2_gentoo-PN-SLOT.patch 1190
+SHA256 7a8541865bca0357390c373f489376b130a7adec28943944ec511a94179dc379 files/libglade-java-2.8.2_gentoo-PN-SLOT.patch 1190
+AUX libglade-java-2.8.2_signal-connection-fix.patch 630 RMD160 3e0e9778ace4ac9d86b6a5b8016319be78f5fbb0 SHA1 e5050e7e9fe20a4fcb8bcb2211bab7da22840d73 SHA256 3fe96852f11bdc1b2f99d1a7296451de0afc5d63e18bfa38f1d19efeb27c0163
+MD5 7ac5fbc0483956edf0634e70b501ce1a files/libglade-java-2.8.2_signal-connection-fix.patch 630
+RMD160 3e0e9778ace4ac9d86b6a5b8016319be78f5fbb0 files/libglade-java-2.8.2_signal-connection-fix.patch 630
+SHA256 3fe96852f11bdc1b2f99d1a7296451de0afc5d63e18bfa38f1d19efeb27c0163 files/libglade-java-2.8.2_signal-connection-fix.patch 630
+AUX libglade-java-2.8.3.1_gentoo-PN-SLOT.patch 508 RMD160 5f916e205cfbd2c8cb11b18354a94e15b822d716 SHA1 3c813fed2335ea4a7dd6a3988680702f313d2867 SHA256 a1b14fb0357743ff35e8600e6e9180deaae807583a56f38360173fa036a86416
+MD5 7ca0226e8641ea6429ce47f0d1cc1bde files/libglade-java-2.8.3.1_gentoo-PN-SLOT.patch 508
+RMD160 5f916e205cfbd2c8cb11b18354a94e15b822d716 files/libglade-java-2.8.3.1_gentoo-PN-SLOT.patch 508
+SHA256 a1b14fb0357743ff35e8600e6e9180deaae807583a56f38360173fa036a86416 files/libglade-java-2.8.3.1_gentoo-PN-SLOT.patch 508
+DIST libglade-java-2.10.1.tar.bz2 251071
+DIST libglade-java-2.12.1.tar.gz 357731
+DIST libglade-java-2.12.2.tar.gz 357231 RMD160 2483e8dec463cfdd20aaaf7bb5f846f76892f88b SHA1 c21209bdd0fef00dbb38ac4cc8710c940cc64c25 SHA256 9e88ab20cf88b5bae80b14aee3c353317efec03163207776e26bec6b7164fcac
+DIST libglade-java-2.12.4.tar.gz 362479 RMD160 fa255d579a2200f965a5b6f3970afa7e4109c45f SHA1 3dd94c3085f8d0002f7166e59b26238e5c5d3bee SHA256 1b76da9dc16a3daed96526dba19af74b0b9bd6fe718ce836d01178e927dd57aa
+DIST libglade-java-2.8.3.1.tar.bz2 249745
+EBUILD libglade-java-2.10.1.ebuild 2808 RMD160 ae136355c38b278c3fb451192553cc5a51d65810 SHA1 9e31695d37eccf35949f062a8a9995d923cba79c SHA256 4af8fe5d54b2b169f3db1fee4f7d0df96c7704bbbc0b61032825dd3b14fdd925
+MD5 30c5218eed8bad631361d05b99348f79 libglade-java-2.10.1.ebuild 2808
+RMD160 ae136355c38b278c3fb451192553cc5a51d65810 libglade-java-2.10.1.ebuild 2808
+SHA256 4af8fe5d54b2b169f3db1fee4f7d0df96c7704bbbc0b61032825dd3b14fdd925 libglade-java-2.10.1.ebuild 2808
+EBUILD libglade-java-2.12.1.ebuild 1903 RMD160 b257ac0ce5af7f0c42269dfb64dda7196ac7725a SHA1 f13789500c4cee0370073caa34244f3cfe8b5473 SHA256 72fcc699c3eded0427d153ee4fbc00cf0936703a6958f16170a44ed67e20aad7
+MD5 33b3402a99af0733b451295b9a338d2f libglade-java-2.12.1.ebuild 1903
+RMD160 b257ac0ce5af7f0c42269dfb64dda7196ac7725a libglade-java-2.12.1.ebuild 1903
+SHA256 72fcc699c3eded0427d153ee4fbc00cf0936703a6958f16170a44ed67e20aad7 libglade-java-2.12.1.ebuild 1903
+EBUILD libglade-java-2.12.2-r1.ebuild 2155 RMD160 2ec62917528c15f56182defb68821a746946201d SHA1 b6406232f9a067035e1818b40a8b205ed37869a2 SHA256 6ced7de38a9470b13f36c8bdcccaaf58b6ab1301446c11eb1d726c6bc636b47b
+MD5 d403f4cf93f94513297276df637f7751 libglade-java-2.12.2-r1.ebuild 2155
+RMD160 2ec62917528c15f56182defb68821a746946201d libglade-java-2.12.2-r1.ebuild 2155
+SHA256 6ced7de38a9470b13f36c8bdcccaaf58b6ab1301446c11eb1d726c6bc636b47b libglade-java-2.12.2-r1.ebuild 2155
+EBUILD libglade-java-2.12.2.ebuild 1903 RMD160 a00077caa5e3e931fbcab5fb39cec72fa20bc2ad SHA1 6d97f3ca3ccc837be69f92416c2873fed2bc7375 SHA256 c459ba83b149e775ba2181173782596f1af0ca1a572228715639405db8b58994
+MD5 7c82b9d5f0474fc6b3d65e786747f25a libglade-java-2.12.2.ebuild 1903
+RMD160 a00077caa5e3e931fbcab5fb39cec72fa20bc2ad libglade-java-2.12.2.ebuild 1903
+SHA256 c459ba83b149e775ba2181173782596f1af0ca1a572228715639405db8b58994 libglade-java-2.12.2.ebuild 1903
+EBUILD libglade-java-2.12.4.ebuild 2217 RMD160 7e5b91484387ec28a8228ad4e3a93a6ced6b1130 SHA1 172018b7cfb78efe33433852e8d189bd4d17ffac SHA256 eeb509079a1edaa7dc2c039128587a7b32215247d0ce5b92279aee383793bdc6
+MD5 2bdfd1f07e7514589086b902654e3e5a libglade-java-2.12.4.ebuild 2217
+RMD160 7e5b91484387ec28a8228ad4e3a93a6ced6b1130 libglade-java-2.12.4.ebuild 2217
+SHA256 eeb509079a1edaa7dc2c039128587a7b32215247d0ce5b92279aee383793bdc6 libglade-java-2.12.4.ebuild 2217
+EBUILD libglade-java-2.8.3.1.ebuild 3261 RMD160 026f85e0fd8ecd765acf636fec740b45d94e42b7 SHA1 f1992488de297978fca1f8ac615b8fdcbd7a7b2f SHA256 708beb0f95d4645ddf00c5f5b4b1c78b9c5701336d2819d0893b16d2a3409cdb
+MD5 3d7aa8d97e0886161e0fb14447b73757 libglade-java-2.8.3.1.ebuild 3261
+RMD160 026f85e0fd8ecd765acf636fec740b45d94e42b7 libglade-java-2.8.3.1.ebuild 3261
+SHA256 708beb0f95d4645ddf00c5f5b4b1c78b9c5701336d2819d0893b16d2a3409cdb libglade-java-2.8.3.1.ebuild 3261
+MISC ChangeLog 3764 RMD160 faad37185d1800ef867917f8c4fb8485a52d0a4a SHA1 3bc6fe3bc74b1a2150a6c224495d7f6a2ffdea4e SHA256 7c1d34b331468ce487979cf0c7f0d4664baf842a8ee8215d48d7c582e049baca
+MD5 0e4dff3aaf71296362393d56549c7f6b ChangeLog 3764
+RMD160 faad37185d1800ef867917f8c4fb8485a52d0a4a ChangeLog 3764
+SHA256 7c1d34b331468ce487979cf0c7f0d4664baf842a8ee8215d48d7c582e049baca ChangeLog 3764
+MISC metadata.xml 1405 RMD160 e4c369c36add249f0423d677a9bf5be878c3ddef SHA1 f2c186a44beb1aea7c1b97cc04255c1084164677 SHA256 a3044c4ca968c160cd6cd0ec14cf3a52d31760cb208c9ee54b94184309ce934a
+MD5 84e24b210bedf1c21ac6137a4ed60f84 metadata.xml 1405
+RMD160 e4c369c36add249f0423d677a9bf5be878c3ddef metadata.xml 1405
+SHA256 a3044c4ca968c160cd6cd0ec14cf3a52d31760cb208c9ee54b94184309ce934a metadata.xml 1405
+MD5 8d9af0864cfab76e448283a6e5782821 files/digest-libglade-java-2.10.1 73
+RMD160 9f2d2aa4e1b458d19e90b6cf6ac3c52275452d98 files/digest-libglade-java-2.10.1 73
+SHA256 a17a30f03ab44409188a4cb05e2e122e8266b0b3627268d45d585589a1039570 files/digest-libglade-java-2.10.1 73
+MD5 0bd010436e9913218d2c611576460c73 files/digest-libglade-java-2.12.1 72
+RMD160 d980d4f898e8059ec04c0c5147fd88300ea721cd files/digest-libglade-java-2.12.1 72
+SHA256 7aecedd111bc583ee818ba22ff6707d5c541270cbe4f6c65fae0077ffc2d8fd1 files/digest-libglade-java-2.12.1 72
+MD5 5eb459e91f6e642961fea913581bf887 files/digest-libglade-java-2.12.2 262
+RMD160 9ed144c3e3f2cc6a0a0ae7579f87273fe305c481 files/digest-libglade-java-2.12.2 262
+SHA256 ce015e994e537369084b85dcf831f608a38c1decd5d08c27f350927e9e0450b3 files/digest-libglade-java-2.12.2 262
+MD5 5eb459e91f6e642961fea913581bf887 files/digest-libglade-java-2.12.2-r1 262
+RMD160 9ed144c3e3f2cc6a0a0ae7579f87273fe305c481 files/digest-libglade-java-2.12.2-r1 262
+SHA256 ce015e994e537369084b85dcf831f608a38c1decd5d08c27f350927e9e0450b3 files/digest-libglade-java-2.12.2-r1 262
+MD5 0ce29dde2c821837126872d12aa6b5cc files/digest-libglade-java-2.12.4 262
+RMD160 91303d2b64f42b3aa7c7f0601a9a5460b383b366 files/digest-libglade-java-2.12.4 262
+SHA256 ce21a4184e97392556f3ae9673a0e170a532b0564d286ad95777c27373c28ef4 files/digest-libglade-java-2.12.4 262
+MD5 76a4839bd8baf7f40b90050f11d17277 files/digest-libglade-java-2.8.3.1 74
+RMD160 d824f34d801cd371519275a2c3d662e7493d784b files/digest-libglade-java-2.8.3.1 74
+SHA256 ec3a1e0d2ea34191077453fe405bf78b1008c95c5e3c21c0578c23218d8bef90 files/digest-libglade-java-2.8.3.1 74

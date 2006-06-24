@@ -1,0 +1,59 @@
+AUX libgnome-java-2.10.0_fix-install-dir.patch 409 RMD160 e80171b517f430116b5e00505f0e61429ad7d969 SHA1 41390fe456193cf11e0ead61880a3c8083d51a1c SHA256 9eaf3990c22b2a47730609b391c2a3c0e375e3a4905d976da938433c73a0679f
+MD5 6ab1ec4f4e7665d6f1e73d04e5ffea0d files/libgnome-java-2.10.0_fix-install-dir.patch 409
+RMD160 e80171b517f430116b5e00505f0e61429ad7d969 files/libgnome-java-2.10.0_fix-install-dir.patch 409
+SHA256 9eaf3990c22b2a47730609b391c2a3c0e375e3a4905d976da938433c73a0679f files/libgnome-java-2.10.0_fix-install-dir.patch 409
+AUX libgnome-java-2.8.2_gentoo-PN-SLOT.patch 1310 RMD160 dba30204d12dc8927bbb06c92e52f6578a5016e3 SHA1 da4befbfc101b7b6954e52874cb4d17278fa8759 SHA256 1fe9b2057bae43a423f9c85c86bd63eed144e8ffa68fa46314c0c36cc0d655f1
+MD5 b5f8aad83ed35026438574e04a3122ac files/libgnome-java-2.8.2_gentoo-PN-SLOT.patch 1310
+RMD160 dba30204d12dc8927bbb06c92e52f6578a5016e3 files/libgnome-java-2.8.2_gentoo-PN-SLOT.patch 1310
+SHA256 1fe9b2057bae43a423f9c85c86bd63eed144e8ffa68fa46314c0c36cc0d655f1 files/libgnome-java-2.8.2_gentoo-PN-SLOT.patch 1310
+AUX libgnome-java-2.8.3.1_gentoo-PN-SLOT.patch 508 RMD160 b829747e70d87ef5fd72849936f87cb696668b8c SHA1 1c01b58082f017724d5a713bee291fa558f3f62f SHA256 f2968c6c85365728e455922d7967a9e3cb4960470653603121f9f9b62af5ffc7
+MD5 d8bbcf350e68bf0a42c37ecbef32c8dd files/libgnome-java-2.8.3.1_gentoo-PN-SLOT.patch 508
+RMD160 b829747e70d87ef5fd72849936f87cb696668b8c files/libgnome-java-2.8.3.1_gentoo-PN-SLOT.patch 508
+SHA256 f2968c6c85365728e455922d7967a9e3cb4960470653603121f9f9b62af5ffc7 files/libgnome-java-2.8.3.1_gentoo-PN-SLOT.patch 508
+DIST libgnome-java-2.10.1.tar.bz2 349490
+DIST libgnome-java-2.12.1.tar.gz 478475 RMD160 dbeeee7dbc09b6e7c3f78165c748bf0364faf23a SHA1 b493f1974a8c330a086d7a0915ee9f87b9eedde5 SHA256 4d0904b48eb45b6757275286de179b9a578cf71f49b1a156a47ebdfc8fabbbac
+DIST libgnome-java-2.12.3.tar.bz2 340034 RMD160 b4aacfadf3ccf576b4b6ccad083c2fc1f0ffdb22 SHA1 303792556a8585f1d10df1f62711a1e481f4e60c SHA256 da1ef28eb4df454cd8d61395ccc022ece5519bdeed2cc79f291e8aef4d3e862e
+DIST libgnome-java-2.8.3.1.tar.bz2 351818
+EBUILD libgnome-java-2.10.1.ebuild 2725 RMD160 9cbfbf2a59be86a789189e4cf7a0143597dccd10 SHA1 5d9b3883fa03ae586be8bc9ac86957da0bf40e92 SHA256 225750e4ade2063555eba9320c4c23a73831a81711361f942ea26ebf5d530c08
+MD5 677f2ff3ed6ec775266bf63bf1f2987d libgnome-java-2.10.1.ebuild 2725
+RMD160 9cbfbf2a59be86a789189e4cf7a0143597dccd10 libgnome-java-2.10.1.ebuild 2725
+SHA256 225750e4ade2063555eba9320c4c23a73831a81711361f942ea26ebf5d530c08 libgnome-java-2.10.1.ebuild 2725
+EBUILD libgnome-java-2.12.1-r1.ebuild 2139 RMD160 edafa8697116857e62b7fdd1774adfa11101130f SHA1 6d1bdc536033a93989b8a38373cb8b0f76f7db88 SHA256 df463c5329e8dd77eb33f89293d4d9fbb91fabc57cee6c4ac295ca6898960579
+MD5 e458bc3e749267ad92bf5fc2eb757288 libgnome-java-2.12.1-r1.ebuild 2139
+RMD160 edafa8697116857e62b7fdd1774adfa11101130f libgnome-java-2.12.1-r1.ebuild 2139
+SHA256 df463c5329e8dd77eb33f89293d4d9fbb91fabc57cee6c4ac295ca6898960579 libgnome-java-2.12.1-r1.ebuild 2139
+EBUILD libgnome-java-2.12.1.ebuild 1889 RMD160 7d675af6a1796504084437ca4b31c3814c80e4ae SHA1 88deb7f0126490d74a56381d59a11c6e0a6288e4 SHA256 4afdcdc37446b91829b7af8c2a2847a06c6c9a55d2ac3b2a9196ed640e06b4ae
+MD5 b229141f6f370a5f89d89d94f8f8a939 libgnome-java-2.12.1.ebuild 1889
+RMD160 7d675af6a1796504084437ca4b31c3814c80e4ae libgnome-java-2.12.1.ebuild 1889
+SHA256 4afdcdc37446b91829b7af8c2a2847a06c6c9a55d2ac3b2a9196ed640e06b4ae libgnome-java-2.12.1.ebuild 1889
+EBUILD libgnome-java-2.12.3.ebuild 2076 RMD160 f8ef4f4fa93f7356fc8c4a4e6d05710129534651 SHA1 308b4a78a78df6504372abca82b1f3f79b5123ec SHA256 ab1e904361e201429f6b1de186740d552ecade6b0245d356f3ef9308609f6cdb
+MD5 c82de980c9cad201f20149ac384c4c0b libgnome-java-2.12.3.ebuild 2076
+RMD160 f8ef4f4fa93f7356fc8c4a4e6d05710129534651 libgnome-java-2.12.3.ebuild 2076
+SHA256 ab1e904361e201429f6b1de186740d552ecade6b0245d356f3ef9308609f6cdb libgnome-java-2.12.3.ebuild 2076
+EBUILD libgnome-java-2.8.3.1.ebuild 3062 RMD160 e7d31be3289840910f9f023c0857ea8641501783 SHA1 cb523579608076ebbbe42e85fbc09ea0e6a3e915 SHA256 011a9895c256e930971b92a35a7d8df47be30f6cda234e023564836dc2f8f886
+MD5 acbe31cfb56cfba1a61ab0197a594370 libgnome-java-2.8.3.1.ebuild 3062
+RMD160 e7d31be3289840910f9f023c0857ea8641501783 libgnome-java-2.8.3.1.ebuild 3062
+SHA256 011a9895c256e930971b92a35a7d8df47be30f6cda234e023564836dc2f8f886 libgnome-java-2.8.3.1.ebuild 3062
+MISC ChangeLog 3347 RMD160 ed0d8315ee7f1917b568b6b167726ff6e68b7706 SHA1 02dc9e353f5c5fa01cc3dc58849be2d5918fa7b9 SHA256 974d259b6ce13ca84dea7c4f531d289ee4c111be58dec04db63c86d3cfb88609
+MD5 0465e292edea072b54d95b6d8e753f26 ChangeLog 3347
+RMD160 ed0d8315ee7f1917b568b6b167726ff6e68b7706 ChangeLog 3347
+SHA256 974d259b6ce13ca84dea7c4f531d289ee4c111be58dec04db63c86d3cfb88609 ChangeLog 3347
+MISC metadata.xml 1102 RMD160 cc274645cdc175d43196cd98b9082897b970ab66 SHA1 e2aeab5740db502d462bfa8266a5002d6436b6e5 SHA256 fd6fbb05867269ce3815259340783e515c765ac2d80e1e2180b74bddc91c9eaf
+MD5 fb1bed94b41f514c97fb402200db1eec metadata.xml 1102
+RMD160 cc274645cdc175d43196cd98b9082897b970ab66 metadata.xml 1102
+SHA256 fd6fbb05867269ce3815259340783e515c765ac2d80e1e2180b74bddc91c9eaf metadata.xml 1102
+MD5 55fb422ad6119794ac0805432ebdc410 files/digest-libgnome-java-2.10.1 73
+RMD160 8c260b286acf89e60fe24a25a8aa241fb81a19d4 files/digest-libgnome-java-2.10.1 73
+SHA256 69cdf934618c99dbfa295e35f886c1c83eaf1092f70fb9a574aa03c91c454e3b files/digest-libgnome-java-2.10.1 73
+MD5 9efabeeaf4057ac2b98eec30d2c3d707 files/digest-libgnome-java-2.12.1 262
+RMD160 54f4b1b60aee14ab14cc3baf49a903dfbab50d9d files/digest-libgnome-java-2.12.1 262
+SHA256 e6c3a6868a275eca348b2ceacf36d577d914e308995ed8bd65a2ce4c02f84b75 files/digest-libgnome-java-2.12.1 262
+MD5 9efabeeaf4057ac2b98eec30d2c3d707 files/digest-libgnome-java-2.12.1-r1 262
+RMD160 54f4b1b60aee14ab14cc3baf49a903dfbab50d9d files/digest-libgnome-java-2.12.1-r1 262
+SHA256 e6c3a6868a275eca348b2ceacf36d577d914e308995ed8bd65a2ce4c02f84b75 files/digest-libgnome-java-2.12.1-r1 262
+MD5 229f2f66c1286eb525addcbbabe35448 files/digest-libgnome-java-2.12.3 265
+RMD160 b657e152fe29ea4faf9eda05967ef85f548ad4ad files/digest-libgnome-java-2.12.3 265
+SHA256 f717b899159337b13990a5ae4b72be0f558c27c7b0380409cfc1bf6a68805cea files/digest-libgnome-java-2.12.3 265
+MD5 efea40cf1a5eb3c48001cde4ead5c123 files/digest-libgnome-java-2.8.3.1 74
+RMD160 13c772f2b838b17af4d5a194aca38aa4290fcc44 files/digest-libgnome-java-2.8.3.1 74
+SHA256 fa745fc9e3dcfde3bd25f9816e0aef152b2cc5e3b54c0b91dedd71841d2e3dee files/digest-libgnome-java-2.8.3.1 74

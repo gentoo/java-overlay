@@ -1,0 +1,20 @@
+diff -Nuar libgtk-java-2.4.6-orig/macros/am_path_gcj.m4 libgtk-java-2.4.6/macros/am_path_gcj.m4
+--- libgtk-java-2.4.6-orig/macros/am_path_gcj.m4	2004-11-07 15:35:08.296300000 +1100
++++ libgtk-java-2.4.6/macros/am_path_gcj.m4	2004-11-07 15:37:39.916147374 +1100
+@@ -96,14 +96,14 @@
+         GCJ_HOME=`which gcj | sed 's/\(.*\).bin.*gcj/\1/'`
+      fi
+ 
+-	cat << \EOF > Test.java
++	cat << EOF > Test.java
+ /* [#]line __oline__ "configure" */
+ public class Test {
+ 	public static void main(String[[]] args) {
+ 		System.out.println(System.getProperty("sun.boot.class.path"));
+ 	}
+ }
+-EOF	
++EOF
+ 	GCJ_JAR=`gcj -C Test.java && gij Test`
+ 	rm Test.java Test.class
+ 	if test x$GCJ_JAR == x ; then
