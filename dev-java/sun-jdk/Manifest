@@ -1,0 +1,13 @@
+AUX sun-jdk-1.6.env 925 RMD160 addfe5f88916dd01b36ed9ffbdb70edf45db7af7 SHA1 6cce3e81e6f23236d3b563ff8746bd4b144554d1 SHA256 1b8d64c945cbb6b6847a6cac6d7f3e17a1ea3c280aab5da1ea11a9aebcb57009
+MD5 6304b2fe34394d6214e48cbbe7389772 files/sun-jdk-1.6.env 925
+RMD160 addfe5f88916dd01b36ed9ffbdb70edf45db7af7 files/sun-jdk-1.6.env 925
+SHA256 1b8d64c945cbb6b6847a6cac6d7f3e17a1ea3c280aab5da1ea11a9aebcb57009 files/sun-jdk-1.6.env 925
+DIST jdk-6-rc-bin-b89-linux-amd64-22_jun_2006.bin 54682503 RMD160 93642a1f0b0e36e163d7ebf49cc0bb03442c99e6 SHA1 6ef3215541bf8ae9ac2fb82fcfbc853706a79ce5 SHA256 3deef4629094e2dec9f882a17c4f1188bdd4dc7b0b650b0b6c460c84ca4b793a
+DIST jdk-6-rc-bin-b89-linux-i586-22_jun_2006.bin 60995157 RMD160 c0e0e0831834b7f7fc9278c68058d25622a95984 SHA1 58b99920e5976e995dc676036b0b5ee55ae0aac7 SHA256 91e3fb3efcd38043323d292c1515166885ed45bc02348cf5c1241db6467b7f3e
+EBUILD sun-jdk-1.6.0.0_beta89.ebuild 4939 RMD160 2ece89b91fbdb5bacc9ae9de5eacffe6febaced9 SHA1 942b903037725c7ec2d26db7694fe451609dd1ec SHA256 2ff0afb8e2509e2c4ea95f987a556fd92304f4d5dc5de5fabccde1b097504128
+MD5 4eabe4abcd547882585de5f66dc3eebf sun-jdk-1.6.0.0_beta89.ebuild 4939
+RMD160 2ece89b91fbdb5bacc9ae9de5eacffe6febaced9 sun-jdk-1.6.0.0_beta89.ebuild 4939
+SHA256 2ff0afb8e2509e2c4ea95f987a556fd92304f4d5dc5de5fabccde1b097504128 sun-jdk-1.6.0.0_beta89.ebuild 4939
+MD5 ced6fe1c1464084f54ec17537f2d9520 files/digest-sun-jdk-1.6.0.0_beta89 635
+RMD160 f70197b5a0aeaba84cd1e560760e92c19c0eaa09 files/digest-sun-jdk-1.6.0.0_beta89 635
+SHA256 c50beb80e3a62e4bcd8f987e23eb3c14ff581b6459569330b3d8d240003a74ca files/digest-sun-jdk-1.6.0.0_beta89 635
