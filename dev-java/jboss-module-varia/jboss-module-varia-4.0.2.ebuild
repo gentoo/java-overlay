@@ -8,7 +8,7 @@ inherit jboss-4
 
 DESCRIPTION="Remoting module of JBoss Application Server"
 SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${ECLASS_URI}"
-IUSE="jikes"
+IUSE=""
 SLOT="4"
 KEYWORDS="~x86"
 
