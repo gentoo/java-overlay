@@ -200,7 +200,6 @@ src_install() {
 	sed -e s:SHUTDOWN:${randpw}: -i conf/{server,server-minimal}.xml
 
 	# copy over the directories	
-	#chmod -R 750 conf/*
 	chown -R tomcat:tomcat webapps/* conf/*
 	cp -pR conf/* ${D}/etc/${TOMCAT_NAME} || die "failed to copy conf"
 	cp -R bin common server shared ${D}/usr/share/${TOMCAT_NAME} || die "failed to copy"
@@ -220,9 +219,6 @@ src_install() {
 	dosym /var/log/${TOMCAT_NAME} ${CATALINA_BASE}/logs
 	dosym /var/tmp/${TOMCAT_NAME} ${CATALINA_BASE}/temp
 	dosym /var/run/${TOMCAT_NAME} ${CATALINA_BASE}/work
-
-#	cp ${FILESDIR}/${PV}/log4j.properties ${D}/etc/${TOMCAT_NAME}/
-#	chown tomcat:tomcat ${D}/etc/${TOMCAT_NAME}/log4j.properties
 
 	dodoc  ${S}/build/{RELEASE-NOTES,RUNNING.txt}
 	fperms 640 /etc/${TOMCAT_NAME}/tomcat-users.xml
