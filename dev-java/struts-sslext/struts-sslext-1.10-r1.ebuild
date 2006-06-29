@@ -32,7 +32,7 @@ ant_src_unpack() {
 
 	cd ${S}
 
-	cp ${FILESDIR}/build-${PVR}.xml build.xml
+	cp ${FILESDIR}/build-${PV}.xml build.xml
 	local classpath;
 	for dependency in struts-1.1 servletapi-2.4 commons-digester; do
 		local dependency_classpath=$(java-pkg_getjars ${dependency})
