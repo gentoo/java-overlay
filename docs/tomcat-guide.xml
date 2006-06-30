@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE guide SYSTEM "/dtd/guide.dtd">
+<guide link="/doc/en/tomcat_guide.xml" lang="en">
+  <title>Tomcat Guide</title>
+
+  <author title="Author">
+    <mail link="nichoj@gentoo.org">Joshua Nichols</mail>
+  </author>
+  <abstract>
+    This guide provides information on the layout, usage, and other things related to
+    Tomcat version 5.5.x and later on Gentoo Linux.
+  </abstract>
+
+  <!-- The content of this document is licensed under the CC-BY-SA license -->
+  <!-- See http://creativecommons.org/licenses/by-sa/2.5 -->
+  <license/>
+
+  <version>1.0</version>
+  <date>2006-06-28</date>
+
+  <chapter>
+    <title>Introduction</title>
+    <section>
+      <body>
+        <p>
+          Tomcat on Gentoo Linux is implemented a bit differently. This document should
+          provide some basic information on how Tomcat is different with regard to
+          Gentoo Linux. This document is based on Tomcat versions 5.5.x and later. Older
+          versions of Tomcat should not be used, unless an application requires it.
+        </p>
+        <p>
+          The biggest initial difference on Gentoo is Tomcat being spread out among
+          multiple directories. That is due to most all applications on Gentoo adhering to
+          FHS along with other Gentoo file location standards.
+        </p>
+        <p>
+          One the other major differences is that Tomcat is compiled from source on
+          Gentoo. Along with the latest versions of any dependencies and bundled libraries.
+          Which will also be compiled from source. Due to some of Tomcat's bundled
+          libraries and compile time dependencies. The amount of Java applications that
+          will need to be compiled from source is considerable.
+        </p>
+        <p>
+          These are not the only differences, but are the two main differences. The rest of
+          this document will go into more detail about those and other differences.
+        </p>
+        <p>
+          This document will not cover <uri link="http://java.sun.com/products/servlet/">
+          Java Servlet Specifications</uri>, nor general
+          <uri link="http://tomcat.apache.org/">Tomcat configuration</uri>.
+          This document assume the reader has a basic understanding of what a Java
+          Web Application is, consists of, and basics of how to configure a container for the
+          web application. Among the other things that are covered under the
+       <uri link="http://java.sun.com/products/servlet/">Java Servlet Specification</uri>.
+        </p>
+      </body>
+    </section>
+  </chapter>
+
+  <chapter>
+    <title>Layout</title>
+    <section>
+      <title>Standard Tomcat Layout</title>
+      <body>
+        <p>
+          The root directory of a typical Tomcat binary distribution is laid out as illustrated
+          in the following listing.
+        </p>
+        <pre caption="Standard Tomcat Root Directory Layout">
+/opt/tomcat-*/bin
+/opt/tomcat-*/common
+/opt/tomcat-*/conf
+/opt/tomcat-*/logs
+/opt/tomcat-*/server
+/opt/tomcat-*/shared
+/opt/tomcat-*/temp
+/opt/tomcat-*/webapps
+/opt/tomcat-*/work
+        </pre>
+      </body>
+    </section>
+
+    <section>
+      <title>Gentoo Tomcat Layout</title>
+      <body>
+        <p>
+          To fit in with FHS and Gentoo standards, Tomcat has been dissected and installed
+          into the following locations.
+        </p>
+        <pre caption="Gentoo Tomcat Layout">
+/etc/tomcat-*/conf
+/var/run/tomcat-*/work
+/var/tmp/tomcat-*/temp
+/var/lib/tomcat-*/webapps
+/var/log/tomcat-*/logs
+/usr/share/tomcat-*/bin
+/usr/share/tomcat-*/common
+/usr/share/tomcat-*/server
+/usr/share/tomcat-*/shared
+        </pre>
+      </body>
+    </section>
+
+    <section>
+      <title>Configuration Files</title>
+      <body>
+        <p>
+          In addition to simply moving the Tomcat <path>/conf</path> directory under
+         <path>/etc</path>. Their is a Gentoo specific Tomcat configuration file
+         <path>etc/conf.d/tomcat-*</path>. Which contains Tomcat variables that are
+         sourced during start or stop. These variables are as follows:
+        </p>
+        <dl>
+          <dd>
+            <ul>
+              <li>
+        	    JAVA_HOME this is set to <c>$(java-config --jdk-home)</c>, however this
+                variable exists to allow Tomcat to run with a VM other than the system vm
+              </li>
+              <li>
+        	    CATALINA_HOME this is typically set to <path>/usr/share/tomcat-*</path>
+              </li>
+              <li>
+        	    CATALINA_BASE this is typically set to <path>/var/lib/tomcat-*</path>
+              </li>
+              <li>
+        	    CATALINA_USER this is typically set to tomcat
+              </li>
+              <li>
+        	    CATALINA_LIBDIR this is typically set to
+                <path>/usr/share/tomcat-*/server/lib</path>
+              </li>
+              <li>
+        	    CLASSPATH this is typically set to <c>${CATALINA_LIBDIR}</c>
+              </li>
+              <li>
+        	    CATALINA_TMPDIR this is typically set to <path>/var/tmp/tomcat-*</path>
+              </li>
+              <li>
+        	    TOMCAT_START this is typically set to "start", alternatives being "debug", 
+                "start -security", "debug -security", or "jpda start"
+              </li>
+              <li>
+        	    TOMCAT_STOP this is typically set to "stop"
+              </li>
+              <li>
+        	    CATALINA_OPTS this is not set, but can be to pass options to Java or Tomcat
+              </li>
+            </ul>
+          </dd>
+        </dl>
+        <p>
+          Also installed into <path>/etc</path> is the Gentoo specific 
+          <path>/etc/init.d/tomcat-*</path> init script. Tomcat on Gentoo no longer uses
+          nor does it modify catalina.sh at all.
+        </p>
+      </body>
+    </section>
+
+    <section>
+      <title>Web Applications</title>
+      <body>
+        <p>
+          The directory /var/lib/tomcat-*/ contains a group of links as well as the webapps
+          directory which houses the actual J2EE web applications. This directory serves as
+          the hub and is referenced by Tomcat as the TOMCAT_BASE.
+        </p>
+        <pre caption="Gentoo Tomcat Base and webapp location">
+conf -> /etc/tomcat5/default
+logs -> /var/log/tomcat5/default
+temp -> /var/tmp/tomcat5/default
+webapps
+work -> /var/run/tomcat5/default
+        </pre>
+      </body>
+    </section>
+
+    <section>
+      <title>Run Time Files</title>
+      <body>
+        <p>
+          These directories hold logs, temp, and working files used by tomcat.
+        </p>
+        <dl>
+          <dd>
+            <ul>
+              <li>
+        	    <path>/var/tmp/tomcat-*</path> Tomcat's temporary directory
+              </li>
+              <li>
+        	    <path>/var/run/tomcat-*</path> Tomcat's working directory, where  JSPs
+                .java sources and resulting binaries are compiled and stored
+              </li>
+              <li>
+        	    <path>/var/log/tomcat-*</path> Tomcat's logging directory
+              </li>
+            </ul>
+          </dd>
+        </dl>
+      </body>
+    </section>
+  </chapter>
+
+  <chapter>
+    <title>Installation</title>
+    <section>
+      <title>Tomcat's Use Flags</title>
+      <body>
+        <p>
+          Tomcat's use flags are not any different from use flags for any package on
+          Gentoo. Most are self explanatory like doc, sources, and test. Documents, 
+          sources, and since it's Java, JUnit tests. The other two are a little different.
+        </p>
+        <p>
+          The puretls use flag effects the only optional compile time package at this time.
+          When used, Tomcat will be compiled using
+          <uri link="http://www.rtfm.com/puretls/">Claymore Systems's PureTLS</uri>
+          instead of the default of using
+          <uri link="http://java.sun.com/products/jsse/">Sun's JSSE</uri>.  This effects
+          which SSL library the resulting Tomcat binaries will be built against. The puretls
+          use flag is not widely used. At this time there are no official Tomcat binary
+          releases built against PureTLS. If you decide to enable the puretls use flag.
+          Please do not go complaining to the Tomcat community, unless it's related to
+          filing a bug, development, or improvement with regard to PureTLS. Please do not
+          expect much support from the Gentoo Java community on PureTLS with Tomcat
+          either. The Gentoo Java team is limited to upstream as well.
+        </p>
+        <p>
+          The examples use flag should be used for anyone new to Tomcat,
+          Java Web Application development, or just about anything beyond deploying
+          existing applications. When set, the examples use flag will tell the ebuild to
+          install the examples web application. Which contains the default, Tomcat is
+          running page along with Tomcat's web based documentation. Without the
+          examples useflag set, any request to <uri>http://127.0.0.1:8080</uri> will
+          result with a blank page. Which is desired if Tomcat is a dependency for other
+          wanted Java applications, where the examples will not be used. Most all can
+          safely ignore this use flag, unless you are starting out.
+        </p>
+      </body>
+    </section>
+
+    <section>
+      <title>Emerge  Tomcat</title>
+      <body>
+        <p>
+          Once you have the desired use flags set in <path>/etc/make.conf</path> it's
+          time to compile and install Tomcat. Tomcat as most all other Gentoo applications
+          installs by doing
+        </p>
+        <pre caption="Command to download, compile, and install Tomcat">
+emerge tomcat
+        </pre>
+        <warn>
+          Due to compiling Tomcat from source, as well as all of Tomcat's depenencies,
+          along with any and all bundled libraries, frameworks, and etc. The amount of
+          dependencies, packages that need to be compiled before Tomcat, is
+          considerable. Good news is, since it's Java, aside from download time, should
+          compile rather quickly even on older machines.
+        </warn>
+      </body>
+    </section>
+  </chapter>
+
+  <chapter>
+    <title>Usage</title>
+    <section>
+      <title>Configuring Tomcat</title>
+      <body>
+        <p>
+          Depending on what Tomcat will be used for one may or may not need to
+          configure Tomcat. If Tomcat is a dependency of another application, which is
+          installed in Tomcat's default webapps directory
+          <path>/var/lib/tomcat-*/webapps</path>. One might be able to simple start
+          Tomcat, and request the application via a browser or etc at
+          http://127.0.0.1:8080/.
+        </p>
+        <p>
+          For most others, developers, running more than one site under Tomcat, or etc.
+          will need to edit Tomcat's main configuration file
+          <path>/etc/tomcat-*/server.xml</path>. The syntax of that file, and
+          configuration of Tomcat is beyond the scope of this document. Please refer to
+          <uri link="http://tomcat.apache.org/">Tomcat documentation</uri>
+          for more information.
+        </p>
+      </body>
+    </section>
+
+    <section>
+      <title>Using a custom VM</title>
+      <body>
+        <p>
+          By default Tomcat will use the system VM controlled by <c>java-config</c> as
+          per the JAVA_HOME variable in <path>/etc/conf.d/tomcat-*</path>. One can
+          change that variable to any VM that is capable of running Tomcat. Then when
+          Tomcat is started it will use the specified VM.
+        </p>
+      </body>
+    </section>
+
+    <section>
+      <title>Starting/Stopping Tomcat</title>
+      <body>
+        <p>
+          Tomcat is started and stopped the same as any service on Gentoo.
+        </p>
+        <pre caption="Start Stop Restart Tomcat">
+/etc/init.d/tomcat-* start/stop/restart
+        </pre>
+      </body>
+    </section>
+
+    <section>
+      <title>Tomcat's Standard Web Applications</title>
+      <body>
+        <p>
+          By default we do not install Tomcat's examples web application. We do by default
+          install Tomcat's admin and manager applications. However per upstream
+          Tomcat policy, as username and password has to be configued. Prior to any
+          web access one will have to manually edit
+          <path>/etc/tomcat-*/tomcat-users.xml</path>
+        </p>
+        <pre caption="Admin and Manager Web Application URLs">
+<uri>http://127.0.0.1:8080/manager/html/</uri>
+<uri>http://127.0.0.1:8080/admin/</uri>
+        </pre>
+      </body>
+    </section>
+  </chapter>
+
+  <chapter>
+    <title>Future</title>
+    <section>
+      <title>Future possibilities for Tomcat on Gentoo</title>
+      <body>
+        <p>
+          These are some things that are either in consideration, the works, or would be
+          nice to have the abilities added to the Tomcat ebuild, or related to Tomcat on
+          Gentoo Linux.
+        </p>
+        <dl>
+          <dd>
+            <ul>
+              <li>
+        	    Gentoo Web Application integration support per
+              <uri link="http://www.gentoo.org/proj/en/glep/glep-0011.html">GLEP 11</uri>
+              </li>
+              <li>
+        	    Replace init script with one developed by a Tomcat developer
+   <uri>http://www.webdroid.org:8080/repo/viewcvs.cgi/tomcat-package/trunk/bin/</uri>
+              </li>
+              <li>
+                Documentation on Tomcat's connectors and using them to connect to
+                Apache on Gentoo Linux.
+              </li>
+            </ul>
+          </dd>
+        </dl>
+      </body>
+    </section>
+  </chapter>
+
+  <chapter>
+    <title>Problems</title>
+    <section>
+      <title>Where and who to report what to</title>
+      <body>
+        <p>
+          If you have problems, please stop and think if the problem is Gentoo related, or
+          Tomcat specific. If you are not sure, please start with the Gentoo Java
+          community and team. Which can be reached via the gentoo-java mailing list, or
+          #gentoo-java irc channel on freenode.net. Please file and report Gentoo related
+          bugs, feature enhancement requests, and etc to
+          <uri>http://bugs.gentoo.org/</uri>
+        </p>
+      </body>
+    </section>
+  </chapter>
+
+</guide>
