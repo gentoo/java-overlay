@@ -39,7 +39,7 @@ ant_src_unpack() {
 	# TODO update patch for 6.5.2
 	#epatch ${FILESDIR}/${P}-jikes.patch
 
-	cp ${FILESDIR}/build-${PVR}.xml build.xml
+	cp ${FILESDIR}/build-${PV}.xml build.xml
 
 	rm  *.jar
 	mkdir lib && cd lib
