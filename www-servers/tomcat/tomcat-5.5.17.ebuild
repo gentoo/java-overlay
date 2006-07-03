@@ -37,7 +37,7 @@ RDEPEND=">=virtual/jdk-1.4
            =dev-java/struts-1.2*
            =dev-java/gnu-jaf-1*
            >=dev-java/xerces-2.7.1
-                puretls? ( >=dev-java/puretls-0.9 )"
+           puretls? ( >=dev-java/puretls-0.9 )"
 DEPEND=">=virtual/jdk-1.4
 	${RDEPEND}
 	sys-apps/sed
@@ -230,57 +230,17 @@ pkg_postinst() {
 	chown root:root /etc/conf.d/${TOMCAT_NAME}
 
 	einfo
-	einfo " NOTICE!"
-	einfo " FILE LOCATIONS:"
-	einfo " 1.  Tomcat/Catalina home directory: ${TOMCAT_HOME}"
-	einfo "     Contains core binary jars and other data for Tomcat."
-	einfo " 2.  Tomcat/Catalina base directory: ${CATALINA_BASE}"
-	einfo "     Contains application data (webapps) and any run time data."
-	einfo " 3.  Runtime settings: /etc/conf.d/${TOMCAT_NAME}"
-	einfo "     Contains CLASSPATH and JAVA_HOME settings."
-	einfo " 4.  Configuration:  /etc/${TOMCAT_NAME}"
-	einfo " 5.  Logs:  /var/log/${TOMCAT_NAME}"
-	einfo
-	einfo
-	einfo " STARTING AND STOPPING TOMCAT:"
-	einfo "   /etc/init.d/${TOMCAT_NAME} start"
-	einfo "   /etc/init.d/${TOMCAT_NAME} stop"
-	einfo "   /etc/init.d/${TOMCAT_NAME} restart"
-	einfo
-	einfo
 	ewarn " This ebuild implements a new filesystem layout for tomcat"
-	ewarn " please read http://gentoo-wiki.com/Tomcat_Gentoo_ebuild for"
-	ewarn " more information!. (Note: Profiling has been removed)"
+	ewarn " please read http://www.gentoo.org/proj/en/java/tomcat-guide.xml"
+	ewarn " for more information!."
 	einfo
-	einfo " NETWORK CONFIGURATION:"
-	einfo " By default, Tomcat runs on port 8080.  You can change this"
-	einfo " value by editing /etc/${TOMCAT_NAME}/server.xml."
-	einfo
-	einfo " To test Tomcat while it's running, point your web browser to:"
-	einfo " http://localhost:8080/"
-	if ! use examples; then
-		ewarn
-		ewarn "You do not have the examples USE flag set, examples have NOT been installed."
-		ewarn "Going to http://localhost:8080/ and getting a blank page means Tomcat is"
-		ewarn "installed and answering requests on that port. Just no page to serve."
-		ewarn
-	fi
-	einfo
-	einfo " BUGS:"
 	einfo " Please file any bugs at http://bugs.gentoo.org/ or else it"
 	einfo " may not get seen.  Thank you."
 	einfo
 
-	einfo "${WEBAPPS_DIR}"
-	einfo "is now owned by tomcat:tomcat and has 750 as permissions."
-	einfo "This is needed to deploy WAR files from the manager webapp."
-	einfo "See bug 99704. If you are upgrading tomcat you need to manually"
-	einfo "change the permissions."
-
-	einfo ""
-	einfo "Run emerge --config =${PF}"
-	einfo "to configure Tomcat if you need to for example"
-	einfo "change the home directory of the Tomcat user."
+#	einfo "Run emerge --config =${PF}"
+#	einfo "to configure Tomcat if you need to for example"
+#	einfo "change the home directory of the Tomcat user."
 }
 
 #helpers
