@@ -24,35 +24,33 @@
 </form>
 <p class="chaphead"><span class="chapnum"><a name="doc_chap1">1. </a></span>Introduction</p>
         <p>
-          Tomcat on Gentoo Linux is implemented a bit differently. This document should
-          provide some basic information on how Tomcat is different with regard to
-          Gentoo Linux. This document is based on Tomcat versions 5.5.x and later. Older
-          versions of Tomcat should not be used, unless an application requires it.
+	  Some aspects of Tomcat on Gentoo are slightly different than how upstream handles it.
+
+          . This document aims to
+          provide some information on how it differs
+          . This document is based on Tomcat versions 5.5.x and later. Older
+          versions of Tomcat should not be used, as it is discouraged by upstream.
         </p>
         <p>
-          The biggest initial difference on Gentoo is Tomcat being spread out among
-          multiple directories. That is due to most all applications on Gentoo adhering to
-          FHS along with other Gentoo file location standards.
+          The biggest initial difference on Gentoo is Tomcat being spread across 
+          multiple directories. That is because applications on Gentoo strive to
+          comply FHS, in addition to Gentoo-specific standards. 
         </p>
         <p>
-          One the other major differences is that Tomcat is compiled from source on
-          Gentoo. Along with the latest versions of any dependencies and bundled libraries.
-          Which will also be compiled from source. Due to some of Tomcat's bundled
-          libraries and compile time dependencies. The amount of Java applications that
-          will need to be compiled from source is considerable.
+          Another major differences is that Tomcat is compiled from source,
+          along with the latest versions of any dependencies and bundled libraries,
+          which will also be compiled from source.  
         </p>
         <p>
-          These are not the only differences, but are the two main differences. The rest of
-          this document will go into more detail about those and other differences.
+	  There are a number of smaller details, which will be covered in detail soon.
         </p>
         <p>
           This document will not cover <a href="http://java.sun.com/products/servlet/">
           Java Servlet Specifications</a>, nor general
           <a href="http://tomcat.apache.org/">Tomcat configuration</a>.
-          This document assume the reader has a basic understanding of what a Java
+          This document assumes the reader has a basic understanding of what a Java
           Web Application is, consists of, and basics of how to configure a container for the
-          web application. Among the other things that are covered under the
-       <a href="http://java.sun.com/products/servlet/">Java Servlet Specification</a>.
+          web application. 
         </p>
       <p class="chaphead"><span class="chapnum"><a name="doc_chap2">2. </a></span>Layout</p>
 <p class="secthead"><a name="doc_chap2_sect1">Standard Tomcat Layout</a></p>
@@ -62,92 +60,91 @@
         </p>
         <a name="doc_chap2_pre1"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr><td bgcolor="#7a5ada"><p class="codetitle">Code Listing 2.1: Standard Tomcat Root Directory Layout</p></td></tr>
-<tr><td bgcolor="#ddddff"><pre>
-/opt/tomcat-*/bin
-/opt/tomcat-*/common
-/opt/tomcat-*/conf
-/opt/tomcat-*/logs
-/opt/tomcat-*/server
-/opt/tomcat-*/shared
-/opt/tomcat-*/temp
-/opt/tomcat-*/webapps
-/opt/tomcat-*/work
-        </pre></td></tr>
+<tr><td bgcolor="#ddddff"><pre>/opt/tomcat-*/bin
+/opt/tomcat-x.y.z/common
+/opt/tomcat-x.y.z/conf
+/opt/tomcat-x.y.z/logs
+/opt/tomcat-x.y.z/server
+/opt/tomcat-x.y.z/shared
+/opt/tomcat-x.y.z/temp
+/opt/tomcat-x.y.z/webapps
+/opt/tomcat-x.y.z/work</pre></td></tr>
 </table>
+      	<p>
+	  Of course, substitute the real version for x.y.z.
+	</p>
       <p class="secthead"><a name="doc_chap2_sect2">Gentoo Tomcat Layout</a></p>
         <p>
-          To fit in with FHS and Gentoo standards, Tomcat has been dissected and installed
-          into the following locations.
+          To comply with FHS and Gentoo standards, Tomcat has been dissected 
+	  and installed into the following locations.
         </p>
         <a name="doc_chap2_pre2"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr><td bgcolor="#7a5ada"><p class="codetitle">Code Listing 2.2: Gentoo Tomcat Layout</p></td></tr>
-<tr><td bgcolor="#ddddff"><pre>
-/etc/tomcat-*/conf
-/var/run/tomcat-*/work
-/var/tmp/tomcat-*/temp
-/var/lib/tomcat-*/webapps
-/var/log/tomcat-*/logs
-/usr/share/tomcat-*/bin
-/usr/share/tomcat-*/common
-/usr/share/tomcat-*/server
-/usr/share/tomcat-*/shared
-        </pre></td></tr>
+<tr><td bgcolor="#ddddff"><pre>/etc/tomcat-x.y.z/conf
+/var/run/tomcat-x.y.z/work
+/var/tmp/tomcat-x.y.z/temp
+/var/lib/tomcat-x.y.z/webapps
+/var/log/tomcat-x.y.z/logs
+/usr/share/tomcat-x.y.z/bin
+/usr/share/tomcat-x.y.z/common
+/usr/share/tomcat-x.y.z/server
+/usr/share/tomcat-x.y.z/shared</pre></td></tr>
 </table>
       <p class="secthead"><a name="doc_chap2_sect3">Configuration Files</a></p>
         <p>
           In addition to simply moving the Tomcat <span class="path">/conf</span> directory under
-         <span class="path">/etc</span>. Their is a Gentoo specific Tomcat configuration file
-         <span class="path">etc/conf.d/tomcat-*</span>. Which contains Tomcat variables that are
-         sourced during start or stop. These variables are as follows:
+         <span class="path">/etc</span>. There is a Gentoo-specific Tomcat configuration file
+         <span class="path">etc/conf.d/tomcat-x.y</span>, which contains Tomcat variables that are
+         sourced by <span class="path">/etc/init.d/tomcat-x.y</span>. These variables are:
         </p>
         <dl>
           <dd>
             <ul>
               <li>
-        	    JAVA_HOME this is set to <span class="code">$(java-config --jdk-home)</span>, however this
-                variable exists to allow Tomcat to run with a VM other than the system vm
+        	    JAVA_HOME: default is to be set to <span class="code">$(java-config --jdk-home) by default</span>, however this
+                variable allows Tomcat to run with a VM other than the system vm
               </li>
               <li>
-        	    CATALINA_HOME this is typically set to <span class="path">/usr/share/tomcat-*</span>
+        	    CATALINA_HOME: default is <span class="path">/usr/share/tomcat-x.y</span>
               </li>
               <li>
-        	    CATALINA_BASE this is typically set to <span class="path">/var/lib/tomcat-*</span>
+        	    CATALINA_BASE: default is <span class="path">/var/lib/tomcat-x.y</span>
               </li>
               <li>
-        	    CATALINA_USER this is typically set to tomcat
+        	    CATALINA_USER: default is tomcat
               </li>
               <li>
-        	    CATALINA_LIBDIR this is typically set to
-                <span class="path">/usr/share/tomcat-*/server/lib</span>
+        	    CATALINA_LIBDIR: default is typically 
+                <span class="path">/usr/share/tomcat-x.y/server/lib</span>
               </li>
               <li>
-        	    CLASSPATH this is typically set to <span class="code">${CATALINA_LIBDIR}</span>
+        	    CLASSPATH: default is <span class="code">${CATALINA_LIBDIR}</span>
               </li>
               <li>
-        	    CATALINA_TMPDIR this is typically set to <span class="path">/var/tmp/tomcat-*</span>
+        	    CATALINA_TMPDIR: default is <span class="path">/var/tmp/tomcat-*</span>
               </li>
               <li>
-        	    TOMCAT_START this is typically set to "start", alternatives being "debug", 
+        	    TOMCAT_START: default is "start", with alternatives being "debug", 
                 "start -security", "debug -security", or "jpda start"
               </li>
               <li>
-        	    TOMCAT_STOP this is typically set to "stop"
+        	    TOMCAT_STOP: default is "stop"
               </li>
               <li>
-        	    CATALINA_OPTS this is not set, but can be to pass options to Java or Tomcat
+        	    CATALINA_OPTS: not set by default , can be used to pass options to Java or Tomcat
               </li>
             </ul>
           </dd>
         </dl>
         <p>
-          Also installed into <span class="path">/etc</span> is the Gentoo specific 
-          <span class="path">/etc/init.d/tomcat-*</span> init script. Tomcat on Gentoo no longer uses
-          nor does it modify catalina.sh at all.
+	  The Gentoo init script is also installed into <span class="path">/etc</span>, at
+          <span class="path">/etc/init.d/tomcat-x.y</span> . Tomcat on Gentoo no longer uses
+          or modifies catalina.sh.
         </p>
       <p class="secthead"><a name="doc_chap2_sect4">Web Applications</a></p>
         <p>
-          The directory /var/lib/tomcat-*/ contains a group of links as well as the webapps
-          directory which houses the actual J2EE web applications. This directory serves as
+          The <span class="path">/var/lib/tomcat-x.y/</span> contains a symlinks to other Tomcat directories, and the <span class="path">webapps/</span>
+          directory where actual web applications go. This directory serves as
           the hub and is referenced by Tomcat as the TOMCAT_BASE.
         </p>
         <a name="doc_chap2_pre3"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
@@ -157,91 +154,89 @@ conf -&gt; /etc/tomcat5/default
 logs -&gt; /var/log/tomcat5/default
 temp -&gt; /var/tmp/tomcat5/default
 webapps
-work -&gt; /var/run/tomcat5/default
-        </pre></td></tr>
+work -&gt; /var/run/tomcat5/default</pre></td></tr>
 </table>
-      <p class="secthead"><a name="doc_chap2_sect5">Run Time Files</a></p>
+      <p class="secthead"><a name="doc_chap2_sect5">Runtime Files</a></p>
         <p>
-          These directories hold logs, temp, and working files used by tomcat.
+          These directories hold logs, temp, and working files used by Tomcat.
         </p>
         <dl>
           <dd>
             <ul>
               <li>
-        	    <span class="path">/var/tmp/tomcat-*</span> Tomcat's temporary directory
+        	    <span class="path">/var/tmp/tomcat-x.y</span> Tomcat's temporary directory
               </li>
               <li>
-        	    <span class="path">/var/run/tomcat-*</span> Tomcat's working directory, where  JSPs
-                .java sources and resulting binaries are compiled and stored
+        	    <span class="path">/var/run/tomcat-x.y</span> Tomcat's working directory,
+		    where  JSPs Java sources and resulting class files live
               </li>
               <li>
-        	    <span class="path">/var/log/tomcat-*</span> Tomcat's logging directory
+        	    <span class="path">/var/log/tomcat-x.y</span> Tomcat's logging directory
               </li>
             </ul>
           </dd>
         </dl>
       <p class="chaphead"><span class="chapnum"><a name="doc_chap3">3. </a></span>Installation</p>
-<p class="secthead"><a name="doc_chap3_sect1">Tomcat's Use Flags</a></p>
+<p class="secthead"><a name="doc_chap3_sect1">Tomcat's USE flags</a></p>
         <p>
-          Tomcat's use flags are not any different from use flags for any package on
-          Gentoo. Most are self explanatory like doc, sources, and test. Documents, 
-          sources, and since it's Java, JUnit tests. The other two are a little different.
+          Tomcat's USE flags are not any different from USE flags for any package on
+          Gentoo. Most are self-explanatory like doc, sources, and test. They are for documentation, 
+          sources, and running unit tests, correspondingly.
         </p>
 
         <p>
-          The examples use flag should be used for anyone new to Tomcat,
-          Java Web Application development, or just about anything beyond deploying
-          existing applications. When set, the examples use flag will tell the ebuild to
-          install the examples web application. Which contains the default, Tomcat is
-          running page along with Tomcat's web based documentation. Without the
-          examples useflag set, any request to <a href="http://127.0.0.1:8080">http://127.0.0.1:8080</a> will
-          result with a blank page. Which is desired if Tomcat is a dependency for other
-          wanted Java applications, where the examples will not be used. Most all can
-          safely ignore this use flag, unless you are starting out.
+          The examples USE flag should be used for anyone new to Tomcat,
+          Java Web Application development, or just about anything beyond 
+	  deploying existing applications. When set, the examples USE flag
+	  will install the example web applications, which includes the default
+	  'Tomcat is running', and web based documentation. Without the
+          examples USE flag set, any request to <a href="http://127.0.0.1:8080">http://127.0.0.1:8080</a>
+	  will result with a blank page. This would be desired if Tomcat is a 
+	  dependency for other wanted Java applications, where the examples
+	  will not be used. Most all can safely ignore this USE flag, unless you are starting out.
         </p>
-      <p class="secthead"><a name="doc_chap3_sect2">Emerge  Tomcat</a></p>
+      <p class="secthead"><a name="doc_chap3_sect2">Emerge Tomcat</a></p>
         <p>
-          Once you have the desired use flags set in <span class="path">/etc/make.conf</span> it's
-          time to compile and install Tomcat. Tomcat as most all other Gentoo applications
-          installs by doing
+          Once you have the desired USE flags set in <span class="path">/etc/make.conf</span>
+	  or <span class="path">/etc/portage/package.use</span> it's
+          time to actually install Tomcat. Tomcat, like every other package on Gentoo, is installed by doing:
         </p>
         <a name="doc_chap3_pre1"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr><td bgcolor="#7a5ada"><p class="codetitle">Code Listing 3.1: Command to download, compile, and install Tomcat</p></td></tr>
 <tr><td bgcolor="#ddddff"><pre>
-emerge tomcat
-        </pre></td></tr>
+emerge tomcat</pre></td></tr>
 </table>
         <table class="ncontent" width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td bgcolor="#ffbbbb"><p class="note"><b>Warning: </b>
-          Due to compiling Tomcat from source, as well as all of Tomcat's depenencies,
-          along with any and all bundled libraries, frameworks, and etc. The amount of
-          dependencies, packages that need to be compiled before Tomcat, is
-          considerable. Good news is, since it's Java, aside from download time, should
+          Because Tomcat is compiled from source, along with all its
+	  dependencies, a lot of packages may be pulled in at emerge time.
+          Good news is, since it's Java, aside from download time, should
           compile rather quickly even on older machines.
         </p></td></tr></table>
       <p class="chaphead"><span class="chapnum"><a name="doc_chap4">4. </a></span>Usage</p>
 <p class="secthead"><a name="doc_chap4_sect1">Configuring Tomcat</a></p>
         <p>
-          Depending on what Tomcat will be used for one may or may not need to
-          configure Tomcat. If Tomcat is a dependency of another application, which is
-          installed in Tomcat's default webapps directory
-          <span class="path">/var/lib/tomcat-*/webapps</span>. One might be able to simple start
+          Depending on what Tomcat will be used for, one may or may not need to
+          finely configure Tomcat. If Tomcat is just a dependency of another
+	  application, one might be able to simple start
           Tomcat, and request the application via a browser or etc at
           http://127.0.0.1:8080/.
         </p>
         <p>
-          For most others, developers, running more than one site under Tomcat, or etc.
-          will need to edit Tomcat's main configuration file
-          <span class="path">/etc/tomcat-*/server.xml</span>. The syntax of that file, and
-          configuration of Tomcat is beyond the scope of this document. Please refer to
+          For most others, particularly developers, running more than one site under Tomcat, or etc.  will need to edit Tomcat's main configuration file
+          <span class="path">/etc/tomcat-x.y.z/server.xml</span>. The syntax of that file,
+	  and configuration of Tomcat is beyond the scope of this document.
+	  Please refer to
           <a href="http://tomcat.apache.org/">Tomcat documentation</a>
           for more information.
         </p>
-      <p class="secthead"><a name="doc_chap4_sect2">Using a custom VM</a></p>
+      <p class="secthead"><a name="doc_chap4_sect2">Using a Specific VM</a></p>
         <p>
-          By default Tomcat will use the system VM controlled by <span class="code">java-config</span> as
-          per the JAVA_HOME variable in <span class="path">/etc/conf.d/tomcat-*</span>. One can
-          change that variable to any VM that is capable of running Tomcat. Then when
-          Tomcat is started it will use the specified VM.
+          By default, Tomcat will use the system VM controlled by
+	  <span class="code">java-config</span> as-per the JAVA_HOME variable in
+	  <span class="path">/etc/conf.d/tomcat-x.y.z</span>. One can
+          change that variable to point to any VM that is capable of
+	  running Tomcat. Then, when Tomcat is started, it will use the
+	  specified VM.
         </p>
       <p class="secthead"><a name="doc_chap4_sect3">Starting/Stopping Tomcat</a></p>
         <p>
@@ -250,30 +245,26 @@ emerge tomcat
         <a name="doc_chap4_pre1"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr><td bgcolor="#7a5ada"><p class="codetitle">Code Listing 4.1: Start Stop Restart Tomcat</p></td></tr>
 <tr><td bgcolor="#ddddff"><pre>
-/etc/init.d/tomcat-* start/stop/restart
-        </pre></td></tr>
+/etc/init.d/tomcat-x.y [ start | stop | restart ]</pre></td></tr>
 </table>
       <p class="secthead"><a name="doc_chap4_sect4">Tomcat's Standard Web Applications</a></p>
         <p>
-          By default we do not install Tomcat's examples web application. We do by default
-          install Tomcat's admin and manager applications. However per upstream
-          Tomcat policy, as username and password has to be configued. Prior to any
-          web access one will have to manually edit
-          <span class="path">/etc/tomcat-*/tomcat-users.xml</span>
+          By default we do not install Tomcat's examples web application. We
+	  do , however, install Tomcat's admin and manager applications.
+	  However per upstream Tomcat policy, no usernames or passwords are
+	  configured by default. <span class="path">/etc/tomcat-*/tomcat-users.xml</span>
+	  should be modified to add users
         </p>
         <a name="doc_chap4_pre2"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr><td bgcolor="#7a5ada"><p class="codetitle">Code Listing 4.2: Admin and Manager Web Application URLs</p></td></tr>
 <tr><td bgcolor="#ddddff"><pre>
 <a href="http://127.0.0.1:8080/manager/html/">http://127.0.0.1:8080/manager/html/</a>
-<a href="http://127.0.0.1:8080/admin/">http://127.0.0.1:8080/admin/</a>
-        </pre></td></tr>
+<a href="http://127.0.0.1:8080/admin/">http://127.0.0.1:8080/admin/</a></pre></td></tr>
 </table>
       <p class="chaphead"><span class="chapnum"><a name="doc_chap5">5. </a></span>Future</p>
 <p class="secthead"><a name="doc_chap5_sect1">Future possibilities for Tomcat on Gentoo</a></p>
         <p>
-          These are some things that are either in consideration, the works, or would be
-          nice to have the abilities added to the Tomcat ebuild, or related to Tomcat on
-          Gentoo Linux.
+          These are some features which are either in consideration, under contruction, or are only a dream:
         </p>
         <dl>
           <dd>
@@ -296,11 +287,12 @@ emerge tomcat
       <p class="chaphead"><span class="chapnum"><a name="doc_chap6">6. </a></span>Problems</p>
 <p class="secthead"><a name="doc_chap6_sect1">Where and who to report what to</a></p>
         <p>
-          If you have problems, please stop and think if the problem is Gentoo related, or
-          Tomcat specific. If you are not sure, please start with the Gentoo Java
-          community and team. Which can be reached via the gentoo-java mailing list, or
-          #gentoo-java irc channel on freenode.net. Please file and report Gentoo related
-          bugs, feature enhancement requests, and etc to
+          If you have problems, please stop and think if the problem is
+	  Gentoo related, or Tomcat specific. If you are not sure, please start
+	  with the Gentoo Java community and Team, which can be reached via
+	  the gentoo-java mailing list, or
+          #gentoo-java IRC channel on irc.freenode.net. Please file and
+	  report Gentoo related bugs, feature enhancement requests, and etc to
           <a href="http://bugs.gentoo.org/">http://bugs.gentoo.org/</a>
         </p>
       <br><p class="copyright">
@@ -328,8 +320,10 @@ emerge tomcat
     Tomcat version 5.5.x and later on Gentoo Linux.
   </p></td></tr>
 <tr><td align="left" class="topsep"><p class="alttext">
+    <b><a class="altlink" href="mailto:wlt@obsidian-studios.com">William L. Thomson Jr.</a></b>
+  <br><i>Author</i><br><br>
     <b><a class="altlink" href="mailto:nichoj@gentoo.org">Joshua Nichols</a></b>
-  <br><i>Author</i><br></p></td></tr>
+  <br><i>Editor</i><br></p></td></tr>
 <tr lang="en"><td align="center" class="topsep">
 <p class="alttext"><b>Donate</b> to support our development efforts.
         </p>
