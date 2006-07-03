@@ -36,13 +36,12 @@ RDEPEND=">=virtual/jdk-1.4
            ~dev-java/servletapi-2.4
            =dev-java/struts-1.2*
            =dev-java/gnu-jaf-1*
-           >=dev-java/xerces-2.7.1
-           puretls? ( >=dev-java/puretls-0.9 )"
+           >=dev-java/xerces-2.7.1"
 DEPEND=">=virtual/jdk-1.4
 	${RDEPEND}
 	sys-apps/sed
 	dev-java/ant"
-IUSE="doc examples puretls source test"
+IUSE="doc examples source test"
 
 S=${WORKDIR}/${MY_P}
 
