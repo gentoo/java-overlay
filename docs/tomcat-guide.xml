@@ -211,6 +211,7 @@ work -> /var/run/tomcat5/default
           Gentoo. Most are self explanatory like doc, sources, and test. Documents, 
           sources, and since it's Java, JUnit tests. The other two are a little different.
         </p>
+<!--
         <p>
           The puretls use flag effects the only optional compile time package at this time.
           When used, Tomcat will be compiled using
@@ -225,6 +226,7 @@ work -> /var/run/tomcat5/default
           expect much support from the Gentoo Java community on PureTLS with Tomcat
           either. The Gentoo Java team is limited to upstream as well.
         </p>
+-->
         <p>
           The examples use flag should be used for anyone new to Tomcat,
           Java Web Application development, or just about anything beyond deploying
