@@ -86,6 +86,9 @@ src_install() {
 	dodir /usr/bin
 	dosym ${BIN_DESTINATION}/ktoolbar /usr/bin/ktoolbar
 
-	java-pkg_regjar /opt/${P}/lib/*.jar
+	java-pkg_regjar \
+		/opt/${P}/lib/*.jar \
+		/opt/${P}/wtklib/kenv.zip \
+		/opt/${P}/wtklib/*.jar
 
 }
