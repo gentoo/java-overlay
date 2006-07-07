@@ -50,11 +50,9 @@ TOMCAT_NAME="${PN}-${SLOT}"
 WEBAPPS_DIR="/var/lib/${TOMCAT_NAME}/webapps"
 
 pkg_setup() {
-
 	# new user for tomcat
 	enewgroup tomcat
 	enewuser tomcat -1 -1 /dev/null tomcat
-
 }
 
 src_unpack() {
@@ -158,7 +156,7 @@ src_install() {
 
 	diropts -m0755
 
-	# we don't need dos scripts	
+	# we don't need dos scripts
 	rm -f bin/*.bat
 
 	# copy the manager and admin context's to the right position
@@ -194,11 +192,11 @@ src_install() {
 	java-pkg_jar-from struts-1.2 struts.jar
 	cd ${base}
 
-	# replace the default pw with a random one, see #92281 
+	# replace the default pw with a random one, see #92281
 	local randpw=$(echo ${RANDOM}|md5sum|cut -c 1-15)
 	sed -e s:SHUTDOWN:${randpw}: -i conf/{server,server-minimal}.xml
 
-	# copy over the directories	
+	# copy over the directories
 	chown -R tomcat:tomcat webapps/* conf/*
 	cp -pR conf/* ${D}/etc/${TOMCAT_NAME} || die "failed to copy conf"
 	cp -R bin common server shared ${D}/usr/share/${TOMCAT_NAME} || die "failed to copy"

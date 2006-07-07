@@ -20,7 +20,7 @@ init_env_vars() {
 	if [[ -n "${JSSE_HOME}" ]]; then
 		CLASSPATH="${CLASSPATH}:${JSSE_HOME}/lib/jcert.jar:${JSSE_HOME}/lib/jnet.jar:${JSSE_HOME}/lib/jsse.jar"
 	fi
-	CLASSPATH="${CLASSPATH}:${CATALINA_HOME}/bin/bootstrap.jar:$(java-config -p commons-logging)"
+	CLASSPATH="${CLASSPATH}:${CATALINA_HOME}/bin/bootstrap.jar:${CATALINA_HOME}/bin/commons-logging-api.jar"
 
 	OPTS_CP="${JAVA_OPTS} ${CATALINA_OPTS} \
 			 -Djava.endorsed.dirs=${CATALINA_HOME}/common/endorsed \
