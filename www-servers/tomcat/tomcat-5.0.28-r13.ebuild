@@ -1,49 +1,49 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/www-servers/tomcat/tomcat-5.0.28-r12.ebuild,v 1.4 2006/03/11 17:51:21 betelgeuse Exp $
 
 inherit eutils java-pkg
 
 DESCRIPTION="Apache Servlet-2.4/JSP-2.0 Container"
 
-MY_P="apache-${P}-src"
-SLOT="5.5"
-#SRC_URI="mirror://apache/tomcat-5/v${PV}/src/apache-${P}-src.tar.gz"
-SRC_URI="mirror://apache/${PN}/${PN}-5/v${PV}/src/${MY_P}.tar.gz"
-HOMEPAGE="http://jakarta.apache.org/tomcat"
-KEYWORDS="~amd64 ~x86"
+SLOT="${PV/.*}"
+SRC_URI="mirror://apache/tomcat/tomcat-${SLOT}/v${PV}/src/jakarta-${P}-src.tar.gz"
+HOMEPAGE="http://tomcat.apache.org/"
+KEYWORDS="~x86 ~amd64 -ppc64"
 LICENSE="Apache-2.0"
-
+#only one accepted revision of struts to force upgrading because of slot changes
 RDEPEND=">=virtual/jdk-1.4
-	   =dev-java/eclipse-ecj-3.1*
-           =dev-java/commons-beanutils-1.7*
-           >=dev-java/commons-collections-3.1
-           >=dev-java/commons-daemon-1.0.1
-           >=dev-java/commons-dbcp-1.2.1
-           >=dev-java/commons-digester-1.7
-           >=dev-java/commons-fileupload-1.0
-           >=dev-java/commons-httpclient-2.0
-           >=dev-java/commons-el-1.0
-           >=dev-java/commons-launcher-0.9
-           >=dev-java/commons-logging-1.0.4
-           >=dev-java/commons-modeler-1.1
-           >=dev-java/commons-pool-1.2
-           ~dev-java/jaxen-1.0
-           >=dev-java/junit-3.8.1
-           =dev-java/mx4j-3*
-           >=dev-java/log4j-1.2.9
-           >=dev-java/saxpath-1.0
-           ~dev-java/servletapi-2.4
-           =dev-java/struts-1.2*
-           =dev-java/gnu-jaf-1*
-           >=dev-java/xerces-2.7.1"
+	=dev-java/commons-beanutils-1.7*
+	>=dev-java/commons-collections-3.1
+	>=dev-java/commons-daemon-1.0
+	>=dev-java/commons-dbcp-1.2.1
+	>=dev-java/commons-digester-1.5
+	>=dev-java/commons-fileupload-1.0
+	=dev-java/commons-httpclient-2*
+	>=dev-java/commons-el-1.0
+	>=dev-java/commons-launcher-0.9
+	>=dev-java/commons-logging-1.0.4
+	>=dev-java/commons-modeler-1.1
+	>=dev-java/commons-pool-1.2
+	~dev-java/jaxen-1.0
+	>=dev-java/junit-3.8.1
+	dev-java/sun-jmx
+	>=dev-java/log4j-1.2.8
+	=dev-java/jakarta-regexp-1.3*
+	>=dev-java/saxpath-1.0
+	~dev-java/servletapi-2.4
+	=dev-java/struts-1.1-r4
+	dev-java/sun-jaf-bin
+	>=dev-java/xerces-2.6.2-r1
+	=dev-java/xml-commons-external-1.3*
+	jikes? ( dev-java/jikes )"
 DEPEND=">=virtual/jdk-1.4
 	${RDEPEND}
 	sys-apps/sed
 	dev-java/ant"
-IUSE="doc examples source test"
+IUSE="doc examples source test jikes"
 
-S=${WORKDIR}/${MY_P}
+S=${WORKDIR}/jakarta-${P}-src
 
 TOMCAT_HOME="/usr/share/${PN}-${SLOT}"
 TOMCAT_NAME="${PN}-${SLOT}"
@@ -60,32 +60,31 @@ src_unpack() {
 	cd ${S}
 
 	local PATCHES="
-		mainbuild-xml.patch
-		tomcatbuild-xml.patch
-		catalinabuild-xml.patch
-		jasperbuild-xml.patch
+		build.xml-01.patch
+		build.xml-02.patch
 	"
 	for patch in ${PATCHES}; do
 		epatch "${FILESDIR}/${PV}/${patch}"
 	done
 
+	use jikes && epatch ${FILESDIR}/${PV}/jikes.diff
+
 	# avoid packed jars :-)
-	mkdir -p ${S}/build/build/common
-	cd ${S}/build/build
+	mkdir -p ${S}/jakarta-tomcat-5/build/common
+	cd ${S}/jakarta-tomcat-5/build
 
 	mkdir ./bin && cd ./bin
 	java-pkg_jar-from commons-logging commons-logging-api.jar
-	java-pkg_jar-from mx4j-3.0 mx4j.jar jmx.jar
-	java-pkg_jar-from mx4j-3.0 mx4j-rjmx.jar jmx-remote.jar
+	java-pkg_jar-from sun-jmx jmxri.jar jmx.jar
 	java-pkg_jar-from commons-daemon
 
 	mkdir ../common/endorsed && cd ../common/endorsed
-	java-pkg_jar-from xerces-2 xml-apis.jar
+	java-pkg_jar-from xml-commons-external-1.3 xml-apis.jar
 	java-pkg_jar-from xerces-2 xercesImpl.jar
 
 	mkdir ../lib && cd ../lib
 	java-pkg_jar-from ant-core
-	java-pkg_jar-from commons-collections 
+	java-pkg_jar-from commons-collections
 	java-pkg_jar-from commons-dbcp
 	java-pkg_jar-from commons-el
 	java-pkg_jar-from commons-pool
@@ -96,12 +95,14 @@ src_unpack() {
 	java-pkg_jar-from commons-digester
 	java-pkg_jar-from commons-fileupload
 	java-pkg_jar-from commons-modeler
+	java-pkg_jar-from jakarta-regexp-1.3
 }
 
 src_compile(){
 	local antflags="-Dbase.path=${T}"
+	use jikes && antflags="${antflags} -Dbuild.compiler=jikes"
 
-	antflags="${antflags} -Dactivation.jar=$(java-config -p gnu-jaf-1)"
+	antflags="${antflags} -Dactivation.jar=$(java-config -p sun-jaf-bin)"
 	antflags="${antflags} -Dcommons-collections.jar=$(java-config -p commons-collections)"
 	antflags="${antflags} -Dcommons-daemon.jar=$(java-config -p commons-daemon)"
 	antflags="${antflags} -Dcommons-digester.jar=$(java-config -p commons-digester)"
@@ -113,31 +114,35 @@ src_compile(){
 	antflags="${antflags} -Dcommons-launcher.jar=$(java-config -p commons-launcher)"
 	antflags="${antflags} -Dcommons-modeler.jar=$(java-config -p commons-modeler)"
 	antflags="${antflags} -Djunit.jar=$(java-config -p junit)"
-	antflags="${antflags} -Djdt.jar=$(java-pkg_getjar eclipse-ecj-3.1 ecj.jar)"
 	antflags="${antflags} -Dlog4j.jar=$(java-config -p log4j)"
-	antflags="${antflags} -Dstruts.jar=$(java-pkg_getjar struts-1.2 struts.jar)"
+	antflags="${antflags} -Dregexp.jar=$(java-config -p jakarta-regexp-1.3)"
+	antflags="${antflags} -Dstruts.jar=$(java-pkg_getjar struts-1.1 struts.jar)"
 	antflags="${antflags} -Dcommons-beanutils.jar=$(java-pkg_getjar commons-beanutils-1.7 commons-beanutils.jar)"
 	antflags="${antflags} -Dcommons-logging.jar=$(java-pkg_getjar commons-logging commons-logging.jar)"
 	antflags="${antflags} -Dcommons-logging-api.jar=$(java-pkg_getjar commons-logging commons-logging-api.jar)"
-	antflags="${antflags} -Djaxen.jar=$(java-pkg_getjar jaxen jaxen-full.jar)"
-	antflags="${antflags} -Djmx.jar=$(java-pkg_getjar mx4j-3.0 mx4j.jar)"
-	antflags="${antflags} -Djmx-remote.jar=$(java-pkg_getjar mx4j-3.0 mx4j-rjmx.jar)"
+	antflags="${antflags} -Djaxen.jar=$(java-pkg_getjars jaxen)"
+	antflags="${antflags} -Djmx.jar=$(java-pkg_getjar sun-jmx jmxri.jar)"
+	antflags="${antflags} -Djmx-tools.jar=$(java-pkg_getjar sun-jmx jmxtools.jar)"
 	antflags="${antflags} -Dsaxpath.jar=$(java-pkg_getjar saxpath saxpath.jar)"
 	antflags="${antflags} -DxercesImpl.jar=$(java-pkg_getjar xerces-2 xercesImpl.jar)"
-	antflags="${antflags} -Dxml-apis.jar=$(java-pkg_getjar xerces-2 xml-apis.jar)"
-	antflags="${antflags} -Dstruts.home=/usr/share/struts"
-	antflags="${antflags} -Djasper.home=${S}/jasper"
+	antflags="${antflags} -Dxml-apis.jar=$(java-pkg_getjar xml-commons-external-1.3 xml-apis.jar)"
+	antflags="${antflags} -Dstruts.home=/usr/share/struts-1.1/"
 
 	ant ${antflags} || die "compile failed"
 
 }
 src_install() {
-	cd ${S}/build/build
+	cd ${S}/jakarta-tomcat-5/build
 
 	# init.d, env.d, conf.d
 	newinitd ${FILESDIR}/${PV}/tomcat.init ${TOMCAT_NAME}
 	newconfd ${FILESDIR}/${PV}/tomcat.conf ${TOMCAT_NAME}
 	newenvd ${FILESDIR}/${PV}/${PN}.env 21${PN}
+
+	if use jikes; then
+		sed -e "\cCATALINA_OPTScaCATALINA_OPTS=\"-Dbuild.compiler.emacs=true\"" \
+			-i ${D}/etc/conf.d/${TOMCAT_NAME}
+	fi
 
 	# create dir structure
 	diropts -m755 -o tomcat -g tomcat
@@ -161,9 +166,9 @@ src_install() {
 
 	# copy the manager and admin context's to the right position
 	mkdir -p conf/Catalina/localhost
-	cp ${S}/container/webapps/admin/admin.xml \
+	cp ${S}/jakarta-tomcat-catalina/webapps/admin/admin.xml \
 		conf/Catalina/localhost
-	cp ${S}/container/webapps/manager/manager.xml \
+	cp ${S}/jakarta-tomcat-catalina/webapps/manager/manager.xml \
 		conf/Catalina/localhost
 
 	# make the jars available via java-config -p and jar-from, etc
@@ -189,7 +194,7 @@ src_install() {
 	# replace a packed struts.jar
 	cd server/webapps/admin/WEB-INF/lib
 	rm -f struts.jar
-	java-pkg_jar-from struts-1.2 struts.jar
+	java-pkg_jar-from struts-1.1 struts.jar
 	cd ${base}
 
 	# replace the default pw with a random one, see #92281

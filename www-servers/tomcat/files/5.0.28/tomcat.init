@@ -1,0 +1,83 @@
+#!/sbin/runscript
+# Copyright 1999-2004 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: /var/cvsroot/gentoo-x86/www-servers/tomcat/files/5.0.28/tomcat.init,v 1.6 2005/11/14 20:17:58 betelgeuse Exp $
+
+init_env_vars() {
+	# Set some sane defaults
+	JPDA_TRANSPORT=${JPDA_TRANSPORT:="dt_socket"}
+	JPDA_ADDRESS=${JPDA_ADDRESS:="8000"}
+	JPDA_OPTS=${JPDA_OPTS="-Xdebug -Xrunjdwp:transport=${JPDA_TRANSPORT},address=${JPDA_ADDRESS},server=y,suspend=n"}
+
+	# Activate Logging
+	if [[ -r "${CATALINA_HOME}"/bin/tomcat-juli.jar ]]; then
+		JAVA_OPTS="${JAVA_OPTS} -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
+								-Djava.util.logging.config.file=/etc/tomcat-5.5/logging.properties"
+	fi
+
+	# Populate the classpath
+	CLASSPATH="${CLASSPATH}:$JAVA_HOME/lib/tools.jar"
+	if [[ -n "${JSSE_HOME}" ]]; then
+		CLASSPATH="${CLASSPATH}:${JSSE_HOME}/lib/jcert.jar:${JSSE_HOME}/lib/jnet.jar:${JSSE_HOME}/lib/jsse.jar"
+	fi
+	CLASSPATH="${CLASSPATH}:${CATALINA_HOME}/bin/bootstrap.jar:${CATALINA_HOME}/bin/commons-logging-api.jar"
+
+	OPTS_CP="${JAVA_OPTS} ${CATALINA_OPTS} \
+			 -Djava.endorsed.dirs=${CATALINA_HOME}/common/endorsed \
+			 -classpath ${CLASSPATH}"
+
+	CATALINA_ARGS="-Dcatalina.base=${CATALINA_BASE} \
+				   -Dcatalina.home=${CATALINA_HOME} \
+				   -Djava.io.tmpdir=${CATALINA_TMPDIR} \
+				   org.apache.catalina.startup.Bootstrap "
+}
+
+start-helper() {
+	local executor=${1}
+	shift
+	local arguments="--start --quiet --background --chuid tomcat:tomcat \
+		--make-pidfile --pidfile /var/run/tomcat.pid"
+	start-stop-daemon ${arguments} --exec ${executor} -- ${OPTS_CP} "$@" ${CATALINA_ARGS} ${TOMCAT_START}
+	return $?
+}
+
+depend() {
+	use dns logger net
+}
+
+start()	{
+	ebegin "Starting Tomcat"
+	init_env_vars
+	# Figure out what arguments to pass start-helper based on TOMCAT_START
+	if [[ "${TOMCAT_START}" == "debug" ]] ; then
+		start-helper $JAVA_HOME/bin/jdb \
+			-sourcepath ${CATALINA_HOME}/../../jakarta-tomcat-catalina/catalina/src/share
+	elif [[ "${TOMCAT_START}" == "debug -security" ]] ; then
+		start-helper $JAVA_HOME/bin/jdb \
+			-sourcepath ${CATALINA_HOME}/../../jakarta-tomcat-catalina/catalina/src/share \
+			-Djava.security.manager \
+			-Djava.security.policy=/etc/tomcat-5.5/conf/catalina.policy
+	elif [[ "${TOMCAT_START}" == "jpda start" ]] ; then
+		start-helper $JAVA_HOME/bin/java ${JPDA_OPTS}
+	elif [[ "${TOMCAT_START}" == "start" ]] ; then
+		start-helper $JAVA_HOME/bin/java
+	elif [[ "${TOMCAT_START}" == "start -security" ]] ; then
+		start-helper $JAVA_HOME/bin/java \
+			-Djava.security.manager \
+			-Djava.security.policy=/etc/tomcat-5.5/catalina.policy
+	else
+		eerror "Invalid TOMCAT_START variable value, or one is not set"
+		eerror "Please see /etc/conf.d/tomcat-5.5 for more information"
+		eend 1
+	fi
+	eend $?
+}
+
+stop()	{
+	ebegin "Stopping Tomcat"
+	init_env_vars
+	start-stop-daemon --stop --quiet \
+	       	--make-pidfile --pidfile /var/run/tomcat.pid \
+			--exec $JAVA_HOME/bin/java -- ${OPTS_CP} ${CATALINA_ARGS} stop
+	eend $?
+}

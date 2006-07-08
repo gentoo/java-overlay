@@ -20,11 +20,11 @@
  <!--
      <copy todir="${catalina.build}/common/lib" file="${servlet-api.jar}"/>
  -->
-+    <!--
++    <!-- -->
      <copy todir="${catalina.build}/common/lib"
             file="${tomcat-dbcp.jar}" />
 -
-+    -->
++    <!-- -->
      <!-- Configuration Files -->
      <copy todir="${catalina.build}/conf">
        <fileset dir="src/conf">
