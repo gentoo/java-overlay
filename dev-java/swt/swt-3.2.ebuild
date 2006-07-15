@@ -8,7 +8,7 @@ MY_DMF="R-3.2-200606291905"
 MY_VERSION="3.2"
 
 DESCRIPTION="GTK based SWT Library"
-HOMEPAGE="http://www.eclipse.org/"
+HOMEPAGE="http://www.eclipse.org/swt/"
 SRC_URI="x86? ( http://download.eclipse.org/downloads/drops/${MY_DMF}/swt-${MY_VERSION}-gtk-linux-x86.zip )
 		 amd64? ( http://download.eclipse.org/downloads/drops/${MY_DMF}/swt-${MY_VERSION}-gtk-linux-x86_64.zip )
 		 ppc? ( http://download.eclipse.org/downloads/drops/${MY_DMF}/swt-${MY_VERSION}-gtk-linux-ppc.zip )"
