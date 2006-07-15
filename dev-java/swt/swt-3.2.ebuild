@@ -17,7 +17,7 @@ SLOT="3"
 LICENSE="CPL-1.0 LGPL-2.1 MPL-1.1"
 KEYWORDS="~amd64 ~ppc ~x86"
 
-IUSE="accessibility cairo gnome seamonkey opengl"
+IUSE="accessibility cairo gnome seamonkey opengl source"
 COMMON=">=dev-libs/glib-2.6
 		>=x11-libs/gtk+-2.6.8
 		accessibility? ( >=dev-libs/atk-1.10.2 )
@@ -130,6 +130,8 @@ src_install() {
 	java-pkg_doso *.so
 
 	dohtml about.html
+
+	java-pkg_dosrc ${S}/org
 }
 
 pkg_postinst() {
