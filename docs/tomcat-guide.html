@@ -73,7 +73,7 @@
         </pre></td></tr>
 </table>
       	<table class="ncontent" width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td bgcolor="#bbffbb"><p class="note"><b>Note: </b>
-	      Substitute either 5.0 or 5.5 for x.y, with regard to Gentoo.
+	      Substitute either 5.0 or 5.5 for x.y
 	    </p></td></tr></table>
       <p class="secthead"><a name="doc_chap2_sect2">Gentoo Tomcat Layout</a></p>
         <p>
@@ -105,8 +105,8 @@
           <dd>
             <ul>
               <li>
-        	    JAVA_HOME: default is to be set to <span class="code">$(java-config --jdk-home) by default</span>, however this
-                variable allows Tomcat to run with a VM other than the system vm
+        	    JAVA_HOME: default is to be set to <span class="code">$(java-config --jdk-home)</span>. Changing this
+                variable allows Tomcat to run with a VM other than the system VM
               </li>
               <li>
         	    CATALINA_HOME: default is <span class="path">/usr/share/tomcat-x.y</span>
@@ -154,12 +154,12 @@
         <a name="doc_chap2_pre3"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr><td bgcolor="#7a5ada"><p class="codetitle">Code Listing 2.3: Gentoo Tomcat Base and webapp location</p></td></tr>
 <tr><td bgcolor="#ddddff"><pre>
-conf -&gt; /etc/tomcat5/default
-logs -&gt; /var/log/tomcat5/default
+conf -&gt; /etc/tomcat-x.y/default
+logs -&gt; /var/log/tomcat-x.y/default
 shared
-temp -&gt; /var/tmp/tomcat5/default
+temp -&gt; /var/tmp/tomcat-x.y/default
 webapps
-work -&gt; /var/run/tomcat5/default</pre></td></tr>
+work -&gt; /var/run/tomcat-x.y/default</pre></td></tr>
 </table>
       <p class="secthead"><a name="doc_chap2_sect5">Runtime Files</a></p>
         <p>
@@ -246,16 +246,16 @@ emerge tomcat</pre></td></tr>
       <p class="secthead"><a name="doc_chap4_sect3">Logging</a></p>
         <p>
           With 5.5.x Logging has changed a bit. Tomcat no longer uses log4j by default.
-          Applications can still use log4j, however the jars have to be linked in manually.
-          Log4j is not linked into Tomcat install by default, same as upstream. For more
+          Applications can still use log4j, however the jars have to be put onto the classpath manually.
+          Log4j is not used by a Tomcat install by default, same as upstream. For more
           information please refer to Tomcat's documentation on logging. Despite this
           change log4j is still a compile time dependency for now.
           <a href="http://jakarta.apache.org/commons/logging/tech.html">http://jakarta.apache.org/commons/logging/tech.html</a>
         </p>
         <table class="ncontent" width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td bgcolor="#ffbbbb"><p class="note"><b>Warning: </b>
          log4j.ar MUST be in the same directory as commons-logging.jar. The lowest 
-         classloader level they should be put in is common/lib. Recommended is
-         shared/lib or if web app specific. In that webapps lib directory.
+         classloader level they should be put in is common/lib. The recommended is
+         shared/lib, or in a specific webapp's WEB-INF/lib directory.
         </p></td></tr></table>
       <p class="secthead"><a name="doc_chap4_sect4">Starting/Stopping Tomcat</a></p>
         <p>
@@ -271,14 +271,14 @@ emerge tomcat</pre></td></tr>
           By default we do not install Tomcat's examples web application. We
 	  do , however, install Tomcat's admin and manager applications.
 	  However per upstream Tomcat policy, no usernames or passwords are
-	  configured by default. <span class="path">/etc/tomcat-*/tomcat-users.xml</span>
+	  configured by default. <span class="path">/etc/tomcat-x.y/tomcat-users.xml</span>
 	  should be modified to add users
         </p>
         <a name="doc_chap4_pre2"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr><td bgcolor="#7a5ada"><p class="codetitle">Code Listing 4.2: Admin and Manager Web Application URLs</p></td></tr>
 <tr><td bgcolor="#ddddff"><pre>
-<a href="http://127.0.0.1:8080/manager/html/">http://127.0.0.1:8080/manager/html/</a>
-<a href="http://127.0.0.1:8080/admin/">http://127.0.0.1:8080/admin/</a></pre></td></tr>
+http://127.0.0.1:8080/manager/html/
+http://127.0.0.1:8080/admin/</pre></td></tr>
 </table>
       <p class="secthead"><a name="doc_chap4_sect6">Missing Jar - naming-factory-dbcp.jar</a></p>
         <p>
@@ -289,8 +289,8 @@ emerge tomcat</pre></td></tr>
           appreciated.
         </p>
         <table class="ncontent" width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td bgcolor="#bbffbb"><p class="note"><b>Note: </b>
-          For the time being anyone who needs that jar. Please fetch from a binary release
-          of Tomcat 5.5.x. Just toss the jar into common/lib and you will be all set.
+          For the time being anyone who needs that jar should fetch it from a binary release
+          of Tomcat 5.5.x. Just place the jar into common/lib and you will be all set.
         </p></td></tr></table>
       <p class="chaphead"><span class="chapnum"><a name="doc_chap5">5. </a></span>Future</p>
 <p class="secthead"><a name="doc_chap5_sect1">Future possibilities for Tomcat on Gentoo</a></p>
@@ -310,7 +310,7 @@ emerge tomcat</pre></td></tr>
                 <a href="http://bugs.gentoo.org/show_bug.cgi?id=139215">http://bugs.gentoo.org/show_bug.cgi?id=139215</a>
               </li>
               <li>
-                Add use flag to control admin app compilation/installation. Since Tomcat 5.5.
+                Add USE flag to control admin app compilation/installation. Since Tomcat 5.5.
                 ship the admin webapp anymore by default. The admin webapp is what
                 causes struts to be a dependency. This use flag will make the struts
                 dependency
@@ -321,7 +321,7 @@ emerge tomcat</pre></td></tr>
               </li>
               <li>
         	    Replace init script with one developed by a Tomcat developer<br>
-   <a href="http://www.webdroid.org:8080/repo/viewcvs.cgi/tomcat-package/trunk/bin/">http://www.webdroid.org:8080/repo/viewcvs.cgi/tomcat-package/trunk/bin/</a>
+               <a href="http://www.webdroid.org:8080/repo/viewcvs.cgi/tomcat-package/trunk/bin/">http://www.webdroid.org:8080/repo/viewcvs.cgi/tomcat-package/trunk/bin/</a>
               </li>
               <li>
         	    Modify Tomcat init script or ebuild to use JSVC so Tomcat can run on 
@@ -370,7 +370,7 @@ emerge tomcat</pre></td></tr>
 <tr><td align="center" class="topsep"><p class="alttext">Updated July 16, 2006</p></td></tr>
 <tr><td align="left" class="topsep"><p class="alttext"><b>Summary: </b>
     This guide provides information on the layout, usage, and other things related to
-    Tomcat version 5.5.x and later on Gentoo Linux.
+    Tomcat version 5.0.28, 5.5.x and later on Gentoo Linux.
   </p></td></tr>
 <tr><td align="left" class="topsep"><p class="alttext">
     <b><a class="altlink" href="mailto:wlt@obsidian-studios.com">William L. Thomson Jr.</a></b>
