@@ -199,7 +199,7 @@ src_install() {
 	# copy over the directories
 	chown -R tomcat:tomcat webapps/* conf/*
 	cp -pR conf/* ${D}/etc/${TOMCAT_NAME} || die "failed to copy conf"
-	cp -R bin common server shared ${D}/usr/share/${TOMCAT_NAME} || die "failed to copy"
+	cp -R bin common server ${D}/usr/share/${TOMCAT_NAME} || die "failed to copy"
 
 	keepdir               ${WEBAPPS_DIR}
 	set_webapps_perms     ${D}/${WEBAPPS_DIR}
