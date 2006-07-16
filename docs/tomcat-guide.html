@@ -24,12 +24,12 @@
 </form>
 <p class="chaphead"><span class="chapnum"><a name="doc_chap1">1. </a></span>Introduction</p>
         <p>
-	  Some aspects of Tomcat on Gentoo are slightly different than how upstream handles it.
-
-          . This document aims to
-          provide some information on how it differs
-          . This document is based on Tomcat versions 5.5.x and later. Older
+	      Some aspects of Tomcat on Gentoo are slightly different than how upstream
+	      handles it. This document aims to provide some information on how it differs.
+          This document is based on Tomcat versions 5.0.28, 5.5.x and later. Older
           versions of Tomcat should not be used, as it is discouraged by upstream.
+          Which includes Tomcat 5.0.28. Only use that version if your application requires
+          it. Otherwise please use 5.5.x or later when released.
         </p>
         <p>
           The biggest initial difference on Gentoo is Tomcat being spread across 
@@ -60,19 +60,21 @@
         </p>
         <a name="doc_chap2_pre1"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr><td bgcolor="#7a5ada"><p class="codetitle">Code Listing 2.1: Standard Tomcat Root Directory Layout</p></td></tr>
-<tr><td bgcolor="#ddddff"><pre>/opt/tomcat-*/bin
-/opt/tomcat-x.y.z/common
-/opt/tomcat-x.y.z/conf
-/opt/tomcat-x.y.z/logs
-/opt/tomcat-x.y.z/server
-/opt/tomcat-x.y.z/shared
-/opt/tomcat-x.y.z/temp
-/opt/tomcat-x.y.z/webapps
-/opt/tomcat-x.y.z/work</pre></td></tr>
+<tr><td bgcolor="#ddddff"><pre>
+/opt/tomcat-x.y/bin
+/opt/tomcat-x.y/common
+/opt/tomcat-x.y/conf
+/opt/tomcat-x.y/logs
+/opt/tomcat-x.y/server
+/opt/tomcat-x.y/shared
+/opt/tomcat-x.y/temp
+/opt/tomcat-x.y/webapps
+/opt/tomcat-x.y/work
+        </pre></td></tr>
 </table>
-      	<p>
-	  Of course, substitute the real version for x.y.z.
-	</p>
+      	<table class="ncontent" width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td bgcolor="#bbffbb"><p class="note"><b>Note: </b>
+	      Substitute either 5.0 or 5.5 for x.y, with regard to Gentoo.
+	    </p></td></tr></table>
       <p class="secthead"><a name="doc_chap2_sect2">Gentoo Tomcat Layout</a></p>
         <p>
           To comply with FHS and Gentoo standards, Tomcat has been dissected 
@@ -80,15 +82,17 @@
         </p>
         <a name="doc_chap2_pre2"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr><td bgcolor="#7a5ada"><p class="codetitle">Code Listing 2.2: Gentoo Tomcat Layout</p></td></tr>
-<tr><td bgcolor="#ddddff"><pre>/etc/tomcat-x.y.z/conf
-/var/run/tomcat-x.y.z/work
-/var/tmp/tomcat-x.y.z/temp
-/var/lib/tomcat-x.y.z/webapps
-/var/log/tomcat-x.y.z/logs
-/usr/share/tomcat-x.y.z/bin
-/usr/share/tomcat-x.y.z/common
-/usr/share/tomcat-x.y.z/server
-/usr/share/tomcat-x.y.z/shared</pre></td></tr>
+<tr><td bgcolor="#ddddff"><pre>
+/usr/share/tomcat-x.y/bin
+/usr/share/tomcat-x.y/common
+/etc/tomcat-x.y
+/var/log/tomcat-x.y/logs
+/usr/share/tomcat-x.y/server
+/var/lib/tomcat-x.y/shared
+/var/tmp/tomcat-x.y
+/var/lib/tomcat-x.y/webapps
+/var/run/tomcat-x.y
+</pre></td></tr>
 </table>
       <p class="secthead"><a name="doc_chap2_sect3">Configuration Files</a></p>
         <p>
@@ -137,7 +141,7 @@
           </dd>
         </dl>
         <p>
-	  The Gentoo init script is also installed into <span class="path">/etc</span>, at
+	      The Gentoo init script is also installed into <span class="path">/etc</span>, at
           <span class="path">/etc/init.d/tomcat-x.y</span> . Tomcat on Gentoo no longer uses
           or modifies catalina.sh.
         </p>
@@ -152,6 +156,7 @@
 <tr><td bgcolor="#ddddff"><pre>
 conf -&gt; /etc/tomcat5/default
 logs -&gt; /var/log/tomcat5/default
+shared
 temp -&gt; /var/tmp/tomcat5/default
 webapps
 work -&gt; /var/run/tomcat5/default</pre></td></tr>
@@ -223,7 +228,7 @@ emerge tomcat</pre></td></tr>
         </p>
         <p>
           For most others, particularly developers, running more than one site under Tomcat, or etc.  will need to edit Tomcat's main configuration file
-          <span class="path">/etc/tomcat-x.y.z/server.xml</span>. The syntax of that file,
+          <span class="path">/etc/tomcat-x.y/server.xml</span>. The syntax of that file,
 	  and configuration of Tomcat is beyond the scope of this document.
 	  Please refer to
           <a href="http://tomcat.apache.org/">Tomcat documentation</a>
@@ -233,12 +238,26 @@ emerge tomcat</pre></td></tr>
         <p>
           By default, Tomcat will use the system VM controlled by
 	  <span class="code">java-config</span> as-per the JAVA_HOME variable in
-	  <span class="path">/etc/conf.d/tomcat-x.y.z</span>. One can
+	  <span class="path">/etc/conf.d/tomcat-x.y</span>. One can
           change that variable to point to any VM that is capable of
 	  running Tomcat. Then, when Tomcat is started, it will use the
 	  specified VM.
         </p>
-      <p class="secthead"><a name="doc_chap4_sect3">Starting/Stopping Tomcat</a></p>
+      <p class="secthead"><a name="doc_chap4_sect3">Logging</a></p>
+        <p>
+          With 5.5.x Logging has changed a bit. Tomcat no longer uses log4j by default.
+          Applications can still use log4j, however the jars have to be linked in manually.
+          Log4j is not linked into Tomcat install by default, same as upstream. For more
+          information please refer to Tomcat's documentation on logging. Despite this
+          change log4j is still a compile time dependency for now.
+          <a href="http://jakarta.apache.org/commons/logging/tech.html">http://jakarta.apache.org/commons/logging/tech.html</a>
+        </p>
+        <table class="ncontent" width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td bgcolor="#ffbbbb"><p class="note"><b>Warning: </b>
+         log4j.ar MUST be in the same directory as commons-logging.jar. The lowest 
+         classloader level they should be put in is common/lib. Recommended is
+         shared/lib or if web app specific. In that webapps lib directory.
+        </p></td></tr></table>
+      <p class="secthead"><a name="doc_chap4_sect4">Starting/Stopping Tomcat</a></p>
         <p>
           Tomcat is started and stopped the same as any service on Gentoo.
         </p>
@@ -247,7 +266,7 @@ emerge tomcat</pre></td></tr>
 <tr><td bgcolor="#ddddff"><pre>
 /etc/init.d/tomcat-x.y [ start | stop | restart ]</pre></td></tr>
 </table>
-      <p class="secthead"><a name="doc_chap4_sect4">Tomcat's Standard Web Applications</a></p>
+      <p class="secthead"><a name="doc_chap4_sect5">Tomcat's Standard Web Applications</a></p>
         <p>
           By default we do not install Tomcat's examples web application. We
 	  do , however, install Tomcat's admin and manager applications.
@@ -261,25 +280,59 @@ emerge tomcat</pre></td></tr>
 <a href="http://127.0.0.1:8080/manager/html/">http://127.0.0.1:8080/manager/html/</a>
 <a href="http://127.0.0.1:8080/admin/">http://127.0.0.1:8080/admin/</a></pre></td></tr>
 </table>
+      <p class="secthead"><a name="doc_chap4_sect6">Missing Jar - naming-factory-dbcp.jar</a></p>
+        <p>
+          Currently the naming-factory-dbcp.jar is not build by default. To build that jar
+          Tomcat robs .java source files from 3 other commons packages, collections, 
+          pool, and dbcp. There is no clean solution to compiling this jar at this time.
+          Suggestions, patches, or any assistance on compiling that jar is greatly 
+          appreciated.
+        </p>
+        <table class="ncontent" width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td bgcolor="#bbffbb"><p class="note"><b>Note: </b>
+          For the time being anyone who needs that jar. Please fetch from a binary release
+          of Tomcat 5.5.x. Just toss the jar into common/lib and you will be all set.
+        </p></td></tr></table>
       <p class="chaphead"><span class="chapnum"><a name="doc_chap5">5. </a></span>Future</p>
 <p class="secthead"><a name="doc_chap5_sect1">Future possibilities for Tomcat on Gentoo</a></p>
         <p>
-          These are some features which are either in consideration, under contruction, or are only a dream:
+          These are some features which are either in consideration, under development, 
+          or are only a dream. Ideally to be implemented in the order listed below.
         </p>
         <dl>
           <dd>
             <ul>
               <li>
-        	    Gentoo Web Application integration support per
-              <a href="http://www.gentoo.org/proj/en/glep/glep-0011.html">GLEP 11</a>
+                Migrate ebuild to generation 2 Java system to support compiling Tomcat with 
+                &gt;=1.5 JDK's. This has been deferred so a current version of Tomcat can be
+                added to arch/stable tree ASAP. Once Tomcat makes it out of ~arch, the
+                ebuild will be migrated to generation 2, and can be compiled with 1.5 jdk.
+                <br>
+                <a href="http://bugs.gentoo.org/show_bug.cgi?id=139215">http://bugs.gentoo.org/show_bug.cgi?id=139215</a>
               </li>
               <li>
-        	    Replace init script with one developed by a Tomcat developer
-   <a href="http://www.webdroid.org:8080/repo/viewcvs.cgi/tomcat-package/trunk/bin/">http://www.webdroid.org:8080/repo/viewcvs.cgi/tomcat-package/trunk/bin/</a>
+                Add use flag to control admin app compilation/installation. Since Tomcat 5.5.
+                ship the admin webapp anymore by default. The admin webapp is what
+                causes struts to be a dependency. This use flag will make the struts
+                dependency
               </li>
               <li>
                 Documentation on Tomcat's connectors and using them to connect to
                 Apache on Gentoo Linux.
+              </li>
+              <li>
+        	    Replace init script with one developed by a Tomcat developer<br>
+   <a href="http://www.webdroid.org:8080/repo/viewcvs.cgi/tomcat-package/trunk/bin/">http://www.webdroid.org:8080/repo/viewcvs.cgi/tomcat-package/trunk/bin/</a>
+              </li>
+              <li>
+        	    Modify Tomcat init script or ebuild to use JSVC so Tomcat can run on 
+        	    unprivileged ports. This might not happen, as in there are other ways to do
+        	    this. We are working with upstream on this but are far from an ideal solution.
+                <br>
+                <a href="http://bugs.gentoo.org/show_bug.cgi?id=75224">http://bugs.gentoo.org/show_bug.cgi?id=75224</a>
+              </li>
+              <li>
+        	    Gentoo Web Application integration support per
+              <a href="http://www.gentoo.org/proj/en/glep/glep-0011.html">GLEP 11</a>
               </li>
             </ul>
           </dd>
@@ -314,7 +367,7 @@ emerge tomcat</pre></td></tr>
 --><br>
 </td>
 <td width="1%" bgcolor="#dddaec" valign="top"><table border="0" cellspacing="4px" cellpadding="4px">
-<tr><td align="center" class="topsep"><p class="alttext">Updated July 2, 2006</p></td></tr>
+<tr><td align="center" class="topsep"><p class="alttext">Updated July 16, 2006</p></td></tr>
 <tr><td align="left" class="topsep"><p class="alttext"><b>Summary: </b>
     This guide provides information on the layout, usage, and other things related to
     Tomcat version 5.5.x and later on Gentoo Linux.
