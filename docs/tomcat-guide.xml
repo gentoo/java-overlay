@@ -18,7 +18,7 @@
   <!-- See http://creativecommons.org/licenses/by-sa/2.5 -->
   <license/>
 
-  <version>1.3</version>
+  <version>1.4</version>
   <date>2006-07-16</date>
 
   <chapter>
@@ -170,12 +170,12 @@
           the hub and is referenced by Tomcat as the TOMCAT_BASE.
         </p>
         <pre caption="Gentoo Tomcat Base and webapp location">
-conf -> /etc/tomcat-x.y/default
-logs -> /var/log/tomcat-x.y/default
+conf -> /etc/tomcat-x.y
+logs -> /var/log/tomcat-x.y
 shared
-temp -> /var/tmp/tomcat-x.y/default
+temp -> /var/tmp/tomcat-x.y
 webapps
-work -> /var/run/tomcat-x.y/default</pre>
+work -> /var/run/tomcat-x.y</pre>
       </body>
     </section>
 
