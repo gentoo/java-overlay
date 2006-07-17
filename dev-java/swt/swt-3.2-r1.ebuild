@@ -62,6 +62,12 @@ src_unpack() {
 
 	# Replace the build.xml to allow compilation without Eclipse tasks
 	cp ${FILESDIR}/build.xml ${S}/build.xml || die "Unable to update build.xml"
+
+	# Patch for GCC 4.x warnings
+	epatch ${FILESDIR}/${P}-gcc-4.x-warning-fix.patch
+	use amd64 \
+		&& epatch ${FILESDIR}/${P}-cairo-signedness-x64.patch \
+		|| epatch ${FILESDIR}/${P}-cairo-signedness.patch
 }
 
 src_compile() {
@@ -103,7 +109,9 @@ src_compile() {
 
 	if use seamonkey ; then
 		# TODO should this be using pkg-config?
-		export GECKO_INCLUDES=$(pkg-config seamonkey-gtkmozembed --cflags)
+		export GECKO_SDK="$(pkg-config seamonkey-xpcom --variable=libdir)"
+		export GECKO_INCLUDES="$(pkg-config seamonkey-gtkmozembed --cflags)"
+		export GECKO_LIBS="-L${GECKO_SDK} -lgtkembedmoz"
 
 		einfo "Building the Mozilla component"
 		emake -f make_linux.mak make_mozilla || die "Failed to build Browser support"
