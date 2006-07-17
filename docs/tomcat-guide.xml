@@ -361,7 +361,7 @@ http://127.0.0.1:8080/admin/</pre>
         </p>
         <note>
           For the time being anyone who needs that jar should fetch it from a binary release
-          of Tomcat 5.5.x. Just place the jar into common/lib and you will be all set.
+          of Tomcat 5.0.x or 5.5.x. Just place the jar into common/lib and you will be all set.
         </note>
       </body>
     </section>
