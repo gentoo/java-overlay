@@ -8,7 +8,7 @@ MY_PV=${PV/_beta*/}
 MY_PVL=${MY_PV%.*}_${MY_PV##*.}
 MY_PVA=${MY_PV//./_}
 BETA=${PV#*_beta}
-DATE=30_jun_2006
+DATE="13_jul_2006"
 MY_RPV=${MY_PV%.*}
 
 
@@ -28,10 +28,10 @@ DESCRIPTION="Sun's Java Development Kit"
 HOMEPAGE="https://mustang.dev.java.net"
 SRC_URI="x86? ( ${BASE_URL}/$x86file ) amd64? ( ${BASE_URL}/$amd64file )"
 SLOT="1.6"
-LICENSE="sun-bcla-java-vm"
+LICENSE="sun-prerelease"
 #KEYWORDS="~x86 -*"
 KEYWORDS="-*"
-RESTRICT="nostrip"
+RESTRICT="nostrip fetch"
 IUSE="doc nsplugin examples"
 
 JAVA_VM_NO_GENERATION1=true
@@ -52,6 +52,19 @@ PACKED_JARS="lib/tools.jar jre/lib/rt.jar jre/lib/jsse.jar jre/lib/charsets.jar 
 
 # this is needed for proper operating under a PaX kernel without activated grsecurity acl
 CHPAX_CONSERVATIVE_FLAGS="pemsv"
+
+pkg_nofetch() {
+	einfo "Please download:"
+	if use x86; then
+		einfo "${BASE_URL}${x86file}"
+	elif use amd64; then
+		einfo "${BASE_URL}${amd64file}"
+	fi
+	einfo "Then place it in ${DISTDIR}"
+
+	ewarn "By downloading and installing, you are agreeing to the terms"
+	ewarn "of Sun's prerelease license."
+}
 
 src_unpack() {
 	# Do a little voodoo to extract the distfile
