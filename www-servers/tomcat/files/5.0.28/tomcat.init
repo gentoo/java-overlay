@@ -10,10 +10,7 @@ init_env_vars() {
 	JPDA_OPTS=${JPDA_OPTS="-Xdebug -Xrunjdwp:transport=${JPDA_TRANSPORT},address=${JPDA_ADDRESS},server=y,suspend=n"}
 
 	# Activate Logging
-	if [[ -r "${CATALINA_HOME}"/bin/tomcat-juli.jar ]]; then
-		JAVA_OPTS="${JAVA_OPTS} -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
-								-Djava.util.logging.config.file=/etc/tomcat-5.5/logging.properties"
-	fi
+	CLASSPATH="${CLASSPATH}:${CATALINA_HOME}/bin/bootstrap.jar:${CATALINA_HOME}/bin/commons-logging-api.jar"
 
 	# Populate the classpath
 	CLASSPATH="${CLASSPATH}:$JAVA_HOME/lib/tools.jar"
