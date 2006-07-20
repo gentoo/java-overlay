@@ -53,7 +53,7 @@ start()	{
 		start-helper $JAVA_HOME/bin/jdb \
 			-sourcepath ${CATALINA_HOME}/../../jakarta-tomcat-catalina/catalina/src/share \
 			-Djava.security.manager \
-			-Djava.security.policy=/etc/tomcat-5.5/conf/catalina.policy
+			-Djava.security.policy=/etc/tomcat-5/conf/catalina.policy
 	elif [[ "${TOMCAT_START}" == "jpda start" ]] ; then
 		start-helper $JAVA_HOME/bin/java ${JPDA_OPTS}
 	elif [[ "${TOMCAT_START}" == "start" ]] ; then
@@ -61,10 +61,10 @@ start()	{
 	elif [[ "${TOMCAT_START}" == "start -security" ]] ; then
 		start-helper $JAVA_HOME/bin/java \
 			-Djava.security.manager \
-			-Djava.security.policy=/etc/tomcat-5.5/catalina.policy
+			-Djava.security.policy=/etc/tomcat-5/catalina.policy
 	else
 		eerror "Invalid TOMCAT_START variable value, or one is not set"
-		eerror "Please see /etc/conf.d/tomcat-5.5 for more information"
+		eerror "Please see /etc/conf.d/tomcat-5 for more information"
 		eend 1
 	fi
 	eend $?
