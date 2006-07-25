@@ -29,7 +29,7 @@ SLOT="3.0"
 KEYWORDS="x86 amd64"
 IUSE="doc examples source"
 
-ant_src_unpack() {
+src_unpack() {
 	unpack ${A}
 
 	cd ${S}/lib

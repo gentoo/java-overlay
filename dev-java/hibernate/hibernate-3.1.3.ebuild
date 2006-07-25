@@ -47,7 +47,7 @@ DEPEND="|| (
 
 S=${WORKDIR}/${PN}-${MY_PV}
 
-ant_src_unpack() {
+src_unpack() {
 	unpack ${A}
 	cd ${S}
 

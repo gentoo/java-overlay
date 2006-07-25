@@ -26,7 +26,7 @@ DEPEND=">=virtual/jdk-1.4
 
 S=${WORKDIR}/${PN}
 
-ant_src_unpack() {
+src_unpack() {
 	mkdir ${S}
 	cd ${S}
 	unpack ${A}

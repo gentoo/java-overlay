@@ -42,7 +42,7 @@ IUSE="doc source"
 
 S=${WORKDIR}/${PN}-${PV:0:3}
 
-ant_src_unpack() {
+src_unpack() {
 	unpack ${A}
 	cd ${S}
 	mv lib old-lib

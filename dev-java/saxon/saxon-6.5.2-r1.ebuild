@@ -31,7 +31,7 @@ DEPEND=">=virtual/jdk-1.3
 
 S="${WORKDIR}"
 
-ant_src_unpack() {
+src_unpack() {
 	unpack ${A}
 
 	unzip -qq source.zip -d src || die "failed to unpack"

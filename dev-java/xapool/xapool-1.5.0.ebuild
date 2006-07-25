@@ -30,7 +30,7 @@ RDEPEND=">=virtual/jre-1.4
 #	dev-java/jta
 S=${WORKDIR}/${MY_P}
 
-ant_src_unpack() {
+src_unpack() {
 	unpack ${A}
 	cd ${S}
 

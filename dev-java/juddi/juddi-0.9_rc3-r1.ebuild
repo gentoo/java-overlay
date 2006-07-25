@@ -43,7 +43,7 @@ COMMONS_POOL="commons-pool"
 LOG4J="log4j log4j.jar"
 WSDL4J="wsdl4j wsdl4j.jar"
 
-ant_src_unpack() {
+src_unpack() {
 	unpack ${A}
 	mkdir ${S}/lib
 

@@ -25,7 +25,7 @@ RDEPEND=">=virtual/jre-1.4
 	dev-java/monolog"
 S=${WORKDIR}/${MY_PN}
 
-ant_src_unpack() {
+src_unpack() {
 	unpack ${A}
 	cd ${S}
 

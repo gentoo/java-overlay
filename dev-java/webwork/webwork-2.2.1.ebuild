@@ -21,7 +21,7 @@ RDEPEND=">=virtual/jre-1.4"
 
 S="${WORKDIR}"
 
-ant_src_unpack() {
+src_unpack() {
 	unpack ${A}
 
 	ewarn "QA notice: using bundled jars!"

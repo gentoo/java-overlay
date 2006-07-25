@@ -23,7 +23,7 @@ RDEPEND=">=virtual/jre-1.3
 
 S=${WORKDIR}/Kilim${SLOT}
 
-ant_src_unpack() {
+src_unpack() {
 	unpack ${A}
 
 	cd ${S}

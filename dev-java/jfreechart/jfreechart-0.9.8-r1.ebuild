@@ -22,7 +22,7 @@ DEPEND=">=virtual/jdk-1.3
 	${COMMON_DEP}
 	dev-java/ant-core"
 
-ant_src_unpack() {
+src_unpack() {
 	unpack ${A}
 	cd ${S}
 	rm -f lib/* *.jar

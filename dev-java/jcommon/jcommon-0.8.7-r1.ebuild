@@ -16,7 +16,7 @@ DEPEND=">=virtual/jdk-1.3
 		dev-java/junit"
 RDEPEND=">=virtual/jdk-1.3"
 
-ant_src_unpack() {
+src_unpack() {
 	unpack ${A}
 	cd ${S}
 	rm *.jar

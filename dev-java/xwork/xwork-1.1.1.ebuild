@@ -29,7 +29,7 @@ RDEPEND="java5? ( >=virtual/jre-1.5 )
 S="${WORKDIR}"
 
 
-ant_src_unpack() {
+src_unpack() {
 	unpack ${A}
 	cd ${S}
 

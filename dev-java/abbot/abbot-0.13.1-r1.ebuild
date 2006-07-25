@@ -26,7 +26,7 @@ DEPEND=">=virtual/jdk-1.4
 RDEPEND=">=virtual/jre-1.4
 	${LDEPEND}"
 
-ant_src_unpack() {
+src_unpack() {
 	mkdir -p ${S}
 	cd ${S}
 	unzip -qq ${DISTDIR}/${A}

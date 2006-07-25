@@ -30,7 +30,7 @@ DEPEND=">=virtual/jdk-1.4
 
 S="${WORKDIR}"
 
-ant_src_unpack() {
+src_unpack() {
 	unpack ${A}
 }
 

@@ -24,7 +24,7 @@ RDEPEND=">=virtual/jre-1.4
 	dev-java/p6spy
 	=dev-java/velocity-1*"
 
-ant_src_unpack() {
+src_unpack() {
 	mkdir -p ${S}
 	cd ${S}
 	unpack ${A}

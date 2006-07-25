@@ -20,7 +20,7 @@ RDEPEND=">=virtual/jre-1.3
 	=dev-java/nanoxml-2.2*"
 S=${WORKDIR}/${PN}
 
-ant_src_unpack() {
+src_unpack() {
 	unpack ${A}
 	cd ${S}
 	

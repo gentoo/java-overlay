@@ -30,7 +30,7 @@ LOG4J="log4j log4j.jar"
 SERVLET="servletapi-2.3 servlet.jar"
 XMLSEC="xml-security-1.2 xmlsec.jar"
 
-ant_src_unpack() {
+src_unpack() {
 	unpack ${A}
 	
 	cd ${S}

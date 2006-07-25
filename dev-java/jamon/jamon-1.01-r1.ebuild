@@ -20,7 +20,7 @@ DEPEND=">=virtual/jdk-1.4
 RDEPEND=">=virtual/jre-1.4
 	~dev-java/servletapi-2.3"
 
-ant_src_unpack() {
+src_unpack() {
 	# The structure of the archive is really messy, so we have to clean it up a
 	# bit ourselves
 

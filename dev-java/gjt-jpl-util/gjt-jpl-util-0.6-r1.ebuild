@@ -24,7 +24,7 @@ RDEPEND=">=virtual/jre-1.4
 
 S=${WORKDIR}/${MY_PN}
 
-ant_src_unpack() {
+src_unpack() {
 	rpm_src_unpack
 	cd ${S}
 

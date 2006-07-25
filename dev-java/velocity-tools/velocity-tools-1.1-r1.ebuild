@@ -33,7 +33,7 @@ DEPEND=">=virtual/jdk-1.4
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"
 
-ant_src_unpack() {
+src_unpack() {
 	mkdir ${S}
 	cd ${S}
 	unpack ${A}

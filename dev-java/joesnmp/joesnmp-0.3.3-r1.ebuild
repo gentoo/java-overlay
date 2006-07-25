@@ -19,7 +19,7 @@ DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core"
 RDEPEND=">=virtual/jre-1.4"
 
-ant_src_unpack() {
+src_unpack() {
 	unpack ${A}
 	cd ${S}
 

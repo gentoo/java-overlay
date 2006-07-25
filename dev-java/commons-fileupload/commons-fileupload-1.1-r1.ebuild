@@ -20,7 +20,7 @@ KEYWORDS="-*"
 #KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 IUSE="doc source"
 
-ant_src_unpack() {
+src_unpack() {
 	unpack ${A}
 	cd ${S}
 	# Tweak build classpath and don't automatically run tests

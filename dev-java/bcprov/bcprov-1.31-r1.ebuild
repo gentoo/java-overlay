@@ -24,7 +24,7 @@ RDEPEND=">=virtual/jre-1.4"
 
 S=${WORKDIR}/${MY_P}
 
-ant_src_unpack() {
+src_unpack() {
 	unpack ${A}
 	cp ${FILESDIR}/build.xml ${S}
 }

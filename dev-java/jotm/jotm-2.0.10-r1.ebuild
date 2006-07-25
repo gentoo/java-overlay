@@ -32,7 +32,7 @@ RDEPEND=">=virtual/jre-1.3
 #	dev-java/sun-jts-bin
 #	dev-java/sun-j2ee-connector-bin"
 
-ant_src_unpack() {
+src_unpack() {
 	unpack ${A}
 	cd ${S}
 
