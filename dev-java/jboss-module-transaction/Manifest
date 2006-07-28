@@ -1,6 +1,11 @@
-MD5 2d9a6004ca5890d0ccc1d3a640bd9a11 files/digest-jboss-module-transaction-4.0.2 929
-RMD160 05c7fa087337814c2e87b0f0b7761781be229e52 files/digest-jboss-module-transaction-4.0.2 929
-SHA256 92cd177c4865d23f3ac423af74a48a311aaaf17cc0a0d83145af26d86c50d225 files/digest-jboss-module-transaction-4.0.2 929
+DIST jboss-4.0.2-gentoo-r2.data 7494 RMD160 4f903dcff34f88cda4c09b1e5d13b4879e1d7187 SHA1 ced55cacbabe349c7a54775873a9a5862bf88dca SHA256 f71dddf241e824315de57d9aeafb17ba4ae66667f49e91d9e1939cbafd41b584
+DIST jboss-module-transaction-4.0.2-gentoo.tar.bz2 31457 RMD160 cffa52aee01ca2fdb554dd3672390a2512d39823 SHA1 ddd551977db98a950de87916b14b029b3c3b9455 SHA256 2ec53511d6756d0d924c27f663e63305774acca453ca401280b3803c72cfc603
+DIST jboss-thirdparty-4.0.2-gentoo.tar.bz2 13586285 RMD160 d6792984c90ba414ccf4120034beaee2d0601e91 SHA1 4df51eb70495d45058602a54b451958298429bef SHA256 b1170a37fae39ded8275d777db146c93b320c179311786bee38fe978fd80e54f
+DIST jboss-tools-4.0.2-gentoo-r1.tar.bz2 4524270 RMD160 099c8b5ba83dfe484e455500223fe7e53eb26d5b SHA1 ee7cffa8f7e121b1c6cf9347c56b248d168ef776 SHA256 31d061470917632fc5e04408a02512c83842e18b7752e6c4b5fb63ed8c36d45a
+EBUILD jboss-module-transaction-4.0.2.ebuild 851 RMD160 3d1c56fc18d103416a8d1a4b741d8d30b32f0444 SHA1 6e0d0e6d8bc07c4bd63ec03270a96b900846f531 SHA256 90031598497d232df00ffebb827d4572069bf776eb8636bc7d5c6b13fefd49ea
 MD5 b3be6afa66259605ec067e94dcbe2f17 jboss-module-transaction-4.0.2.ebuild 851
 RMD160 3d1c56fc18d103416a8d1a4b741d8d30b32f0444 jboss-module-transaction-4.0.2.ebuild 851
 SHA256 90031598497d232df00ffebb827d4572069bf776eb8636bc7d5c6b13fefd49ea jboss-module-transaction-4.0.2.ebuild 851
+MD5 08118ff72e899e99b755eefe481dc18e files/digest-jboss-module-transaction-4.0.2 1153
+RMD160 dfdb1311ec26e9d7dee3414d5ef242c9ea0558af files/digest-jboss-module-transaction-4.0.2 1153
+SHA256 f7b9077cad51047e577e24f3407f71c9548fe0a902b4b29d9350a09aeb5db145 files/digest-jboss-module-transaction-4.0.2 1153
