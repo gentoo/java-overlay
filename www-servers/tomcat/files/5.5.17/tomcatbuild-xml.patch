@@ -46,7 +46,7 @@
 -      <param name="destdir" value="${base.path}"/>
 -    </antcall>
 -    <antcall target="build-jasper-compiler-jdt" />
-+    <antcall target="build-tomcat-dbcp" />
++    <!-- <antcall target="build-tomcat-dbcp" /> -->
 +    <!-- <antcall target="build-jasper-compiler-jdt" /> -->
    </target>
  

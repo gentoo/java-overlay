@@ -1,0 +1,28 @@
+--- apache-tomcat-5.5.17-src/servletapi/jsr152/build.xml	2006-07-29 14:13:41.000000000 -0400
++++ servletapi/jsr152/build.xml	2006-07-29 14:13:17.000000000 -0400
+@@ -119,6 +119,7 @@
+                 classpath="${jsp-anttask.jar}" />
+   </target>
+   
++  <!--
+   <target name="examples" depends="prepare,ant">
+ 
+     <copy todir="${jsp-api.build}/examples">
+@@ -221,7 +222,7 @@
+            basedir="${jsp-api.build}/examples" includes="**"/>
+ 
+   </target>
+-
++  -->
+ 
+   <!-- ===================== Distribution Files ========================= -->
+   <target name="jar" depends="compile"
+@@ -245,7 +246,7 @@
+ 
+   </target>
+ 
+-  <target name="dist" depends="compile,examples,javadoc,jar"
++  <target name="dist" depends="compile,javadoc,jar"
+    description="Create binary distribution">
+ 
+     <!-- Copy Javadocs -->

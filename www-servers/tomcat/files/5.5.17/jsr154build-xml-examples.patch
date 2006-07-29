@@ -1,0 +1,28 @@
+--- apache-tomcat-5.5.17-src/servletapi/jsr154/build.xml	2006-04-14 14:12:10.000000000 -0400
++++ servletapi/jsr154/build.xml	2006-07-29 14:41:05.000000000 -0400
+@@ -99,6 +99,7 @@
+ 
+ 
+   <!-- ======================== Build JavaDoc =========================== -->
++  <!--
+   <target name="examples" depends="prepare">
+ 
+     <copy todir="${servlet-api.build}/examples">
+@@ -119,7 +120,7 @@
+            basedir="${servlet-api.build}/examples" includes="**"/>
+ 
+   </target>
+-
++  -->
+ 
+   <!-- ===================== Distribution Files ========================= -->
+   <target name="jar" depends="compile"
+@@ -144,7 +145,7 @@
+ 
+   </target>
+ 
+-  <target name="dist" depends="compile,examples,javadoc,jar"
++  <target name="dist" depends="compile,javadoc,jar"
+           description="Create binary distribution">
+ 
+     <!-- Copy Javadocs -->
