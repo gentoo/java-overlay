@@ -159,6 +159,8 @@ src_install() {
 	keepdir ${CATALINA_BASE}/shared/lib
 	keepdir ${CATALINA_BASE}/shared/classes
 
+	keepdir /usr/share/${TOMCAT_NAME}/${CATALIA_HOME}/common/lib
+
 	dodir   /etc/${TOMCAT_NAME}
 	fperms  750 /etc/${TOMCAT_NAME}
 
