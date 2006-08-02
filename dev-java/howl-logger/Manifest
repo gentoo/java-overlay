@@ -1,8 +1,0 @@
-DIST howl-logger-0.1.9.tar.bz2 60392 RMD160 ee867eb6660af4dde8e6e004c0a44f6af3fe227d SHA256 923e7c89d23fd631dcd7965202bf6b7bf984defb0bc2899294eef1a8a1177d2b size 60392
-EBUILD howl-logger-0.1.9.ebuild 1132 RMD160 c5dd9dd4acd5da336330a6c908e89bfdf115ee1a SHA1 f540c71945056aca9f187c6e69672aa1b68de6ad SHA256 c5c03a9540e61c8aae62b40ea225d973dba3eedb26f0d970d2e7aa041b5e5029 size 1132
-MD5 f6b4c20b7baccffa28d62a58ef9ba6f3 howl-logger-0.1.9.ebuild 1132
-RMD160 c5dd9dd4acd5da336330a6c908e89bfdf115ee1a howl-logger-0.1.9.ebuild 1132
-SHA256 c5c03a9540e61c8aae62b40ea225d973dba3eedb26f0d970d2e7aa041b5e5029 howl-logger-0.1.9.ebuild 1132
-MD5 c94cd0350dc6d08817de8bcddfd0afbd files/digest-howl-logger-0.1.9 253
-RMD160 33974becddab9ccca42c2883bc14a08bc7b42ebd files/digest-howl-logger-0.1.9 253
-SHA256 4376d03dd1dea70e071c5d71fd4d4adfaf34aa14148654eb1fced837139ea33c files/digest-howl-logger-0.1.9 253

@@ -1,9 +1,0 @@
-DIST httpunit-1.6-metainf.tar.gz 18051 size 18051
-DIST httpunit-1.6.zip 3123138 size 3123138
-EBUILD httpunit-1.6.ebuild 1830 RMD160 235c6d01a640ab44a2c471950fc11cd143684afb SHA1 3b5d53037007fcacc547d166f89ca35b93e11940 SHA256 943f519eb5dcaf2158bed52b948f7ef8d5efc0587bf43d06c2bf2673ad6e5e5f size 1830
-MD5 bc9dc468eb34ae4e339dc4085004c5f7 httpunit-1.6.ebuild 1830
-RMD160 235c6d01a640ab44a2c471950fc11cd143684afb httpunit-1.6.ebuild 1830
-SHA256 943f519eb5dcaf2158bed52b948f7ef8d5efc0587bf43d06c2bf2673ad6e5e5f httpunit-1.6.ebuild 1830
-MD5 79ad2b4d8ef6e9af75c0821715d26df8 files/digest-httpunit-1.6 133
-RMD160 84a749117409e76e6189a2886d35c7eb77e67e19 files/digest-httpunit-1.6 133
-SHA256 493c5371e6d9662b8b274fb2ba0779dc5e548b3afc6297d4ac4074e49e8d5688 files/digest-httpunit-1.6 133
