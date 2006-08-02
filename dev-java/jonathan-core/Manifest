@@ -1,8 +1,0 @@
-DIST jonathan-core-4.1.tar.bz2 310228 RMD160 b298d87f9f1958ff0272a972663d5e092ee5b2ff SHA256 b6489b874b7d73794030212122f48afe73f57a062a5ca39ea4a3103dff4d67b2 size 310228
-EBUILD jonathan-core-4.1.ebuild 1599 RMD160 c98d694a120f8a92c30e83d4e56eeb705e6b8d3c SHA1 dbf638f21e40b743cae0ac1dc9af28aa704d4825 SHA256 f46f25a701b6dec4c23bc26aba288937abf225b1ba7660e97a89ae3a1015de5d size 1599
-MD5 f79e6a7df632675dbf3056c65f6de3f7 jonathan-core-4.1.ebuild 1599
-RMD160 c98d694a120f8a92c30e83d4e56eeb705e6b8d3c jonathan-core-4.1.ebuild 1599
-SHA256 f46f25a701b6dec4c23bc26aba288937abf225b1ba7660e97a89ae3a1015de5d jonathan-core-4.1.ebuild 1599
-MD5 cfbb34a21cce8c0c55de4d4af4bc41e7 files/digest-jonathan-core-4.1 256
-RMD160 9142d6d3820f8e4c54699a3084144988cf2bbb3e files/digest-jonathan-core-4.1 256
-SHA256 f57afb88846118338e1718cb730e7cb108aa60cfb270c1979af8ba43c4a2f395 files/digest-jonathan-core-4.1 256
