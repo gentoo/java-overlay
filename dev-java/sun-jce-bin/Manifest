@@ -1,8 +1,0 @@
-DIST jce_policy-1_5_0.zip 8826
-EBUILD sun-jce-bin-1.5.0.ebuild 1637 RMD160 9da09b1f9c3c12874a6d705dc5ba35d6521bbc46 SHA1 f7589d79c28dc95b8135d55fd6d832f88b7569ef SHA256 98a6bc76533351c2e5579edf5882209e6616aacb441021021ff13da777ca6265
-MD5 e1be2537a9f744bb5bb7c080775532bc sun-jce-bin-1.5.0.ebuild 1637
-RMD160 9da09b1f9c3c12874a6d705dc5ba35d6521bbc46 sun-jce-bin-1.5.0.ebuild 1637
-SHA256 98a6bc76533351c2e5579edf5882209e6616aacb441021021ff13da777ca6265 sun-jce-bin-1.5.0.ebuild 1637
-MD5 b32d6ccb64f9e0a175cd7a04b4acf3fe files/digest-sun-jce-bin-1.5.0 63
-RMD160 78c41ab5a44ff2725b0fc58c674f38239dc2b229 files/digest-sun-jce-bin-1.5.0 63
-SHA256 1d226caf4a78f47873f0e3eaabd79a5d2f4960aa78181ae7a5a7ab58d42096aa files/digest-sun-jce-bin-1.5.0 63
