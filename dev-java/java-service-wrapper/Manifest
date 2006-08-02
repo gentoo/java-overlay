@@ -1,0 +1,12 @@
+AUX java-service-wrapper-3.1.2-gentoo.patch 1138 RMD160 5eb8ed337ee75e23dcdb072cc90d838fb6841570 SHA1 e17c5dc061fcb947ac1f4655f89f29512a37719e SHA256 b01ecd38b33c93648699409af1e78f28660830e6d2bfbebc85e9ce609a8cc55d
+MD5 bb80ebd446c7c7c1e131d4e091b0bcb0 files/java-service-wrapper-3.1.2-gentoo.patch 1138
+RMD160 5eb8ed337ee75e23dcdb072cc90d838fb6841570 files/java-service-wrapper-3.1.2-gentoo.patch 1138
+SHA256 b01ecd38b33c93648699409af1e78f28660830e6d2bfbebc85e9ce609a8cc55d files/java-service-wrapper-3.1.2-gentoo.patch 1138
+DIST wrapper_3.1.2_src.tar.gz 3327596 RMD160 0ef057ee76b56e6d7111a847834759baad4e4af4 SHA1 b26430920bc2fb833410721c348b47e9b8b6eecb SHA256 8ba78e6e218a0574ab68590c1bc24785e6ac7956d2b91ea8fd060f4325d24300
+EBUILD java-service-wrapper-3.1.2-r1.ebuild 1210 RMD160 33fbb3c91f5f047071a9ea07e430596c7a669c55 SHA1 73835eaa3ea3838311c5e9f78dbc14d5874b351a SHA256 1924c17985d3ff3e7dec8e20949766f7d5f6bfad773491e4c9dcb2b45a9b9d14
+MD5 355316fffcab8ba168993186e2231b97 java-service-wrapper-3.1.2-r1.ebuild 1210
+RMD160 33fbb3c91f5f047071a9ea07e430596c7a669c55 java-service-wrapper-3.1.2-r1.ebuild 1210
+SHA256 1924c17985d3ff3e7dec8e20949766f7d5f6bfad773491e4c9dcb2b45a9b9d14 java-service-wrapper-3.1.2-r1.ebuild 1210
+MD5 62fdc2100c3888014e3ca090321f5687 files/digest-java-service-wrapper-3.1.2-r1 256
+RMD160 e698e5029104dba33b989122026af6c04f215679 files/digest-java-service-wrapper-3.1.2-r1 256
+SHA256 42078d9e9ab5b555794ff78ac64622de5af5b086dfd69b9480bcf99e234a3d62 files/digest-java-service-wrapper-3.1.2-r1 256
