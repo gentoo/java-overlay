@@ -1,3 +1,7 @@
-WARNING: This overlay nw contains only generation 1 ebuilds, that are not supported.
+WARNING: This overlay now contains only generation 1 ebuilds, that are not supported.
 
-For generation 2 ebuilds please see migration-packages overlay.
+For generation 2 ebuilds please see the migrated-java-experimental-overlay.
+
+Currently, packages are migrated to generation 2, moved to the migrated overlay
+and deleted from this one. Once this is done for all packages, the migrated
+overlay will be renamed back to java-experimental.
