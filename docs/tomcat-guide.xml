@@ -18,8 +18,8 @@
   <!-- See http://creativecommons.org/licenses/by-sa/2.5 -->
   <license/>
 
-  <version>1.4</version>
-  <date>2006-07-16</date>
+  <version>1.5</version>
+  <date>2006-08-03</date>
 
   <chapter>
     <title>Introduction</title>
@@ -79,7 +79,7 @@
 /opt/tomcat-x.y/work
         </pre>
       	<note>
-	      Substitute either 5.0 or 5.5 for x.y
+	      Substitute either 5 or 5.5 for x.y
 	    </note>
       </body>
     </section>
@@ -236,12 +236,8 @@ work -> /var/run/tomcat-x.y</pre>
           The examples USE flag should be used for anyone new to Tomcat,
           Java Web Application development, or just about anything beyond 
 	  deploying existing applications. When set, the examples USE flag
-	  will install the example web applications, which includes the default
-	  'Tomcat is running', and web based documentation. Without the
-          examples USE flag set, any request to <uri>http://127.0.0.1:8080</uri>
-	  will result with a blank page. This would be desired if Tomcat is a 
-	  dependency for other wanted Java applications, where the examples
-	  will not be used. Most all can safely ignore this USE flag, unless you are starting out.
+	  will install the example web applications. Most all can safely 
+          ignore this USE flag, unless you are starting out.
         </p>
       </body>
     </section>
@@ -262,6 +258,28 @@ emerge tomcat</pre>
           Good news is, since it's Java, aside from download time, should
           compile rather quickly even on older machines.
         </warn>
+        <p>
+          Here is a list of packages to be keyworded, added to /etc/portage/package.keywords
+          for anyone not running ~arch.
+        </p>
+        <pre caption="/etc/portage/package.keywords">
+dev-java/eclipse-ecj ~x86
+dev-java/java-config-wrapper ~x86
+dev-java/java-config ~x86
+dev-java/javatoolkit ~x86
+dev-java/commons-daemon ~x86
+dev-java/commons-digester ~x86
+dev-java/burlap ~x86
+dev-java/caucho-services ~x86
+dev-java/hessian ~x86
+dev-java/jessie ~x86
+dev-java/gnu-classpath-inetlib ~x86
+dev-java/gnu-javamail ~x86
+dev-java/mx4j ~x86
+dev-java/commons-validator ~x86
+dev-java/struts ~x86
+www-servers/tomcat ~x86
+        </pre>
       </body>
     </section>
   </chapter>
@@ -300,6 +318,11 @@ emerge tomcat</pre>
 	  running Tomcat. Then, when Tomcat is started, it will use the
 	  specified VM.
         </p>
+        <warn>
+          If using running 5.5.x under a 1.5 VM. Make sure to delete
+          the links to the 1.4 compatability libraries<br />
+          <c>rm /usr/share/tomcat-5.5/common/endorsed*</c>
+        </warn>
       </body>
     </section>
     
@@ -337,13 +360,14 @@ emerge tomcat</pre>
       <title>Tomcat's Standard Web Applications</title>
       <body>
         <p>
-          By default we do not install Tomcat's examples web application. We
-	  do , however, install Tomcat's admin and manager applications.
+          By default we do not install Tomcat's docs or examples web application.
+	  We do, however, install Tomcat's ROOT, admin, and manager applications.
 	  However per upstream Tomcat policy, no usernames or passwords are
 	  configured by default. <path>/etc/tomcat-x.y/tomcat-users.xml</path>
 	  should be modified to add users
         </p>
-        <pre caption="Admin and Manager Web Application URLs">
+        <pre caption="ROOT, Admin, and Manager Web Application URLs">
+http://127.0.0.1:8080/
 http://127.0.0.1:8080/manager/html/
 http://127.0.0.1:8080/admin/</pre>
       </body>

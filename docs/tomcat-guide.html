@@ -193,12 +193,8 @@ work -&gt; /var/run/tomcat-x.y</pre></td></tr>
           The examples USE flag should be used for anyone new to Tomcat,
           Java Web Application development, or just about anything beyond 
 	  deploying existing applications. When set, the examples USE flag
-	  will install the example web applications, which includes the default
-	  'Tomcat is running', and web based documentation. Without the
-          examples USE flag set, any request to <a href="http://127.0.0.1:8080">http://127.0.0.1:8080</a>
-	  will result with a blank page. This would be desired if Tomcat is a 
-	  dependency for other wanted Java applications, where the examples
-	  will not be used. Most all can safely ignore this USE flag, unless you are starting out.
+	  will install the example web applications. Most all can safely 
+          ignore this USE flag, unless you are starting out.
         </p>
       <p class="secthead"><a name="doc_chap3_sect2">Emerge Tomcat</a></p>
         <p>
@@ -217,6 +213,31 @@ emerge tomcat</pre></td></tr>
           Good news is, since it's Java, aside from download time, should
           compile rather quickly even on older machines.
         </p></td></tr></table>
+        <p>
+          Here is a list of packages to be keyworded, added to /etc/portage/package.keywords
+          for anyone not running ~arch.
+        </p>
+        <a name="doc_chap3_pre2"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Code Listing 3.2: /etc/portage/package.keywords</p></td></tr>
+<tr><td bgcolor="#ddddff"><pre>
+dev-java/eclipse-ecj ~x86
+dev-java/java-config-wrapper ~x86
+dev-java/java-config ~x86
+dev-java/javatoolkit ~x86
+dev-java/commons-daemon ~x86
+dev-java/commons-digester ~x86
+dev-java/burlap ~x86
+dev-java/caucho-services ~x86
+dev-java/hessian ~x86
+dev-java/jessie ~x86
+dev-java/gnu-classpath-inetlib ~x86
+dev-java/gnu-javamail ~x86
+dev-java/mx4j ~x86
+dev-java/commons-validator ~x86
+dev-java/struts ~x86
+www-servers/tomcat ~x86
+        </pre></td></tr>
+</table>
       <p class="chaphead"><span class="chapnum"><a name="doc_chap4">4. </a></span>Usage</p>
 <p class="secthead"><a name="doc_chap4_sect1">Configuring Tomcat</a></p>
         <p>
@@ -243,6 +264,11 @@ emerge tomcat</pre></td></tr>
 	  running Tomcat. Then, when Tomcat is started, it will use the
 	  specified VM.
         </p>
+        <table class="ncontent" width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td bgcolor="#ffbbbb"><p class="note"><b>Warning: </b>
+          If using running 5.5.x under a 1.5 VM. Make sure to delete
+          the links to the 1.4 compatability libraries<br>
+          <span class="code">rm /usr/share/tomcat-5.5/common/endorsed*</span>
+        </p></td></tr></table>
       <p class="secthead"><a name="doc_chap4_sect3">Logging</a></p>
         <p>
           With 5.5.x Logging has changed a bit. Tomcat no longer uses log4j by default.
@@ -268,15 +294,16 @@ emerge tomcat</pre></td></tr>
 </table>
       <p class="secthead"><a name="doc_chap4_sect5">Tomcat's Standard Web Applications</a></p>
         <p>
-          By default we do not install Tomcat's examples web application. We
-	  do , however, install Tomcat's admin and manager applications.
+          By default we do not install Tomcat's docs or examples web application.
+	  We do, however, install Tomcat's ROOT, admin, and manager applications.
 	  However per upstream Tomcat policy, no usernames or passwords are
 	  configured by default. <span class="path">/etc/tomcat-x.y/tomcat-users.xml</span>
 	  should be modified to add users
         </p>
         <a name="doc_chap4_pre2"></a><table class="ntable" width="100%" cellspacing="0" cellpadding="0" border="0">
-<tr><td bgcolor="#7a5ada"><p class="codetitle">Code Listing 4.2: Admin and Manager Web Application URLs</p></td></tr>
+<tr><td bgcolor="#7a5ada"><p class="codetitle">Code Listing 4.2: ROOT, Admin, and Manager Web Application URLs</p></td></tr>
 <tr><td bgcolor="#ddddff"><pre>
+http://127.0.0.1:8080/
 http://127.0.0.1:8080/manager/html/
 http://127.0.0.1:8080/admin/</pre></td></tr>
 </table>
@@ -367,7 +394,7 @@ http://127.0.0.1:8080/admin/</pre></td></tr>
 --><br>
 </td>
 <td width="1%" bgcolor="#dddaec" valign="top"><table border="0" cellspacing="4px" cellpadding="4px">
-<tr><td align="center" class="topsep"><p class="alttext">Updated July 16, 2006</p></td></tr>
+<tr><td align="center" class="topsep"><p class="alttext">Updated August 3, 2006</p></td></tr>
 <tr><td align="left" class="topsep"><p class="alttext"><b>Summary: </b>
     This guide provides information on the layout, usage, and other things related to
     Tomcat version 5.0.28, 5.5.x and later on Gentoo Linux.
