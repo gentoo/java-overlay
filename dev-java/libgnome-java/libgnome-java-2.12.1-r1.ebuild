@@ -34,6 +34,8 @@ RDEPEND=">=virtual/jre-1.4
 JARNAME="gnome${SLOT}.jar"
 
 pkg_setup() {
+	java-pkg_pkg_setup
+	
 	if use gcj ; then
 		if ! built_with_use sys-devel/gcc gcj ; then
 			ewarn
