@@ -16,7 +16,7 @@ init_env_vars() {
 	fi
 
 	# Populate the classpath
-	CLASSPATH="${CLASSPATH}:$JAVA_HOME/lib/tools.jar"
+	CLASSPATH="${CLASSPATH}:${CATALINA_HOME}/server/lib:$JAVA_HOME/lib/tools.jar"
 	if [[ -n "${JSSE_HOME}" ]]; then
 		CLASSPATH="${CLASSPATH}:${JSSE_HOME}/lib/jcert.jar:${JSSE_HOME}/lib/jnet.jar:${JSSE_HOME}/lib/jsse.jar"
 	fi
@@ -56,7 +56,7 @@ start()	{
 		start-helper $JAVA_HOME/bin/jdb \
 			-sourcepath ${CATALINA_HOME}/../../jakarta-tomcat-catalina/catalina/src/share \
 			-Djava.security.manager \
-			-Djava.security.policy=/etc/tomcat-5.5/conf/catalina.policy
+			-Djava.security.policy=/etc/tomcat-5.5/catalina.policy
 	elif [[ "${TOMCAT_START}" == "jpda start" ]] ; then
 		start-helper $JAVA_HOME/bin/java ${JPDA_OPTS}
 	elif [[ "${TOMCAT_START}" == "start" ]] ; then
