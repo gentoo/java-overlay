@@ -5,7 +5,7 @@
 # Must be before the gnome.org inherit
 GNOME_TARBALL_SUFFIX="gz"
 
-inherit java-pkg eutils gnome.org
+inherit java-pkg eutils gnome.org autotools
 
 DESCRIPTION="Java bindings for glib"
 HOMEPAGE="http://java-gnome.sourceforge.net/"
@@ -29,8 +29,6 @@ RDEPEND=">=virtual/jre-1.4
 		 ${DEPS}"
 
 pkg_setup() {
-	java-pkg_pkg_setup
-	
 	if use gcj ; then
 		if ! built_with_use sys-devel/gcc gcj ; then
 			ewarn
@@ -40,20 +38,6 @@ pkg_setup() {
 			die "No GCJ support found!"
 		fi
 	fi
-}
-
-src_unpack() {
-	unpack ${A}
-	cd ${S}
-
-	epatch ${FILESDIR}/aclocal_voodoo.patch
-	epatch ${FILESDIR}/${P}-am_path_gcj_m4.patch
-
-	# Oh the joys of patching the autotools stuff
-	aclocal -I macros || die "aclocal failed"
-	libtoolize --force --copy || die "libtoolize failed"
-	autoconf || die "autoconf failed"
-	automake || die "automake failed"
 }
 
 src_compile() {

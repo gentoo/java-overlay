@@ -10,7 +10,7 @@ inherit java-pkg eutils gnome.org
 DESCRIPTION="Java bindings for Glade"
 HOMEPAGE="http://java-gnome.sourceforge.net/"
 SLOT="2.12"
-SRC_URI="mirror://gnome/sources/${PN}/${SLOT}/${P}.tar.bz2"
+SRC_URI="mirror://gnome/sources/${PN}/${SLOT}/${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
 KEYWORDS="~amd64 ~ppc ~x86"
@@ -30,8 +30,6 @@ RDEPEND=">=virtual/jre-1.4
 JARNAME="gconf${SLOT}.jar"
 
 pkg_setup() {
-	java-pkg_pkg_setup
-	
 	if use gcj ; then
 		if ! built_with_use sys-devel/gcc gcj ; then
 			ewarn
@@ -42,17 +40,6 @@ pkg_setup() {
 		fi
 	fi
 }
-
-src_unpack() {
-	unpack ${A}
-	cd ${S}
-
-	libtoolize --force --copy || die "libtoolize failed"
-	aclocal || die "aclocal failed"
-	autoconf || die "autoconf failed"
-	automake || die "automake failed"
-}
-
 
 src_compile() {
 	econf \
