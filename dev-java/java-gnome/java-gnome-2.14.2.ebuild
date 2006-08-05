@@ -8,17 +8,17 @@ DESCRIPTION="A meta package for all the bindings libraries necessary to write GN
 HOMEPAGE="http://java-gnome.sourceforge.net/"
 DEPEND="!<dev-java/java-gnome-2.8
 	~dev-java/glib-java-0.2.6
-	>=dev-java/cairo-java-1.0.5
-	>=dev-java/libgtk-java-2.8.6
-	>=dev-java/libgnome-java-2.12.4
-	>=dev-java/libglade-java-2.12.5
-	>=dev-java/libgconf-java-2.12.4
-	doc? ( >=virtual/jdk-1.4 )"
+	~dev-java/cairo-java-1.0.5
+	~dev-java/libgtk-java-2.8.6
+	~dev-java/libgnome-java-2.12.4
+	~dev-java/libglade-java-2.12.5
+	~dev-java/libgconf-java-2.12.4
+	~dev-java/libvte-java-0.12.1"
 
 SLOT="2.12"
 LICENSE="as-is"
-KEYWORDS="~ppc ~amd64 ~x86"
-IUSE="doc"
+KEYWORDS="~amd64 ~ppc ~x86"
+IUSE=""
 
 pkg_setup() {
 
@@ -91,8 +91,5 @@ src_install() {
 
 	gconf_jar=`java-config -p libgconf-java-2.12`
 	ln -s $gconf_jar `basename $gconf_jar`
-
-
-	use doc || return
 }
 
