@@ -36,7 +36,8 @@ RDEPEND=">=virtual/jdk-1.4
            ~dev-java/servletapi-2.4
            =dev-java/struts-1.2*
            =dev-java/gnu-jaf-1*
-           >=dev-java/xerces-2.7.1"
+           >=dev-java/xerces-2.7.1
+	   =dev-java/xml-commons-external-1.3*"
 DEPEND=">=virtual/jdk-1.4
 	${RDEPEND}
 	sys-apps/sed
@@ -88,7 +89,7 @@ src_unpack() {
 	java-pkg_jar-from commons-daemon
 
 	mkdir ../common/endorsed && cd ../common/endorsed
-	java-pkg_jar-from xerces-2 xml-apis.jar
+	java-pkg_jar-from xml-commons-external-1.3 xml-apis.jar
 	java-pkg_jar-from xerces-2 xercesImpl.jar
 
 	mkdir ../lib && cd ../lib
@@ -132,7 +133,7 @@ src_compile(){
 	antflags="${antflags} -Djmx-remote.jar=$(java-pkg_getjar mx4j-3.0 mx4j-rjmx.jar)"
 	antflags="${antflags} -Dsaxpath.jar=$(java-pkg_getjar saxpath saxpath.jar)"
 	antflags="${antflags} -DxercesImpl.jar=$(java-pkg_getjar xerces-2 xercesImpl.jar)"
-	antflags="${antflags} -Dxml-apis.jar=$(java-pkg_getjar xerces-2 xml-apis.jar)"
+	antflags="${antflags} -Dxml-apis.jar=$(java-pkg_getjar xml-commons-external-1.3 xml-apis.jar)"
 	antflags="${antflags} -Dstruts.home=/usr/share/struts"
 	antflags="${antflags} -Djasper.home=${S}/jasper"
 
