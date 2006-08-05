@@ -50,7 +50,7 @@ TOMCAT_HOME="/usr/share/${PN}-${SLOT}"
 TOMCAT_NAME="${PN}-${SLOT}"
 WEBAPPS_DIR="/var/lib/${TOMCAT_NAME}/webapps"
 
-pkg_setup() {
+java-pkg_pkg_setup() {
 	# new user for tomcat
 	enewgroup tomcat
 	enewuser tomcat -1 -1 /dev/null tomcat
