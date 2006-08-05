@@ -46,7 +46,7 @@ java-gnome_pkg_setup() {
 }
 
 java-gnome_src_compile() {
-	JNI_INCLUDES=$(java-pkg_get-jni-includes) \
+	JNI_INCLUDES=$(java-pkg_get-jni-cflags) \
 	JAVAC="javac $(java-pkg_javac-args)" econf \
 		$(use_with doc javadocs) \
 		$(use_with gcj gcj-compile) \
