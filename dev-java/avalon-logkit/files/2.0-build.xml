@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project default="jar" name="avalon-logkit" basedir=".">
+   <property file="build.properties"/>
+   <property file="default.properties"/>
+   
+   <property name="libs" value="${basedir}/libs"/>
+   <property name="src" value="${basedir}/src/java"/>
+   <property name="target" value="${basedir}/target"/>
+   <property name="dist" value="${basedir}/dist"/>
+
+   <property name="jarfile" value="avalon-logkit.jar"/>
+   
+   <property name="javadoc" value="${dist}/docs"/>
+   <property name="packages" value="org.apache.log.*"/>
+
+   <target name="init">
+      <tstamp/>
+      <mkdir dir="${target}"/>
+      <mkdir dir="${dist}"/>
+      <mkdir dir="${javadoc}"/>
+   </target>
+
+   <target name="compile" depends="init">
+      <javac srcdir="${src}"
+             destdir="${target}"
+             deprecation="true"
+             excludes="**/package.html"
+             classpath="${classpath}"/>
+
+      <copy toDir="${target}">
+         <fileset dir="${src}">
+            <include name="**/*.dtd"/>
+            <include name="**/*.properties"/>
+            <include name="**/*.xinfo"/>
+            <include name="**/*.xtype"/>
+            <include name="**/*.xprofile"/>
+            <include name="**/*.xconfig"/>
+            <include name="**/*.xml"/>
+            <include name="**/*.xservice"/>
+         </fileset>
+      </copy>
+
+      <copy toDir="${target}">
+         <fileset dir=".">
+            <include name="block.xml"/>
+         </fileset>
+      </copy>
+   </target>
+
+   <target name="javadoc" depends="compile">
+      <javadoc sourcepath="${src}"
+               destdir="${javadoc}"
+               packagenames="${packages}"
+               classpath="${classpath}"
+               source="1.4"/>
+   </target>
+   
+   <target name="jar" depends="init,compile">
+      <jar jarfile="${dist}/${jarfile}"
+           excludes="**/package.html"
+           basedir="${target}"/>
+   </target>
+</project>

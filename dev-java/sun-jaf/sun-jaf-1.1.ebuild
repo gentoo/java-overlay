@@ -15,7 +15,8 @@ IUSE="doc source"
 
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
-	source? ( app-arch/zip )"
+	source? ( app-arch/zip )
+	!dev-java/sun-jaf-bin"
 RDEPEND=">=virtual/jre-1.4"
 S="${WORKDIR}/activation"
 

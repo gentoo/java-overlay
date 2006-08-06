@@ -1,0 +1,74 @@
+# ChangeLog for dev-java/avalon-logkit
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-java/avalon-logkit/ChangeLog,v 1.24 2006/07/22 21:29:53 nelchael Exp $
+
+  22 Jul 2006; Krzysiek Pawlik <nelchael@gentoo.org>
+  avalon-logkit-1.2-r1.ebuild, avalon-logkit-2.0-r1.ebuild:
+  ant_src_unpack -> src_unpack
+
+  02 Jul 2006; Joshua Nichols <nichoj@gentoo.org>
+  +avalon-logkit-1.2-r1.ebuild, +avalon-logkit-2.0-r1.ebuild:
+  Revision bumps to support new Java system.
+
+  05 Jan 2006; Petteri Räty <betelgeuse@gentoo.org>
+  avalon-logkit-1.2.ebuild:
+  Added junit.jar property to antflags to not rely on ant making junit.jar
+  available.
+
+  15 Oct 2005; Thomas Matthijs <axxo@gentoo.org> avalon-logkit-1.2.ebuild,
+  avalon-logkit-2.0.ebuild:
+  move dev-java/jms dev-java/sun-jms
+
+  17 Sep 2005; Petteri Räty <betelgeuse@gentoo.org>
+  avalon-logkit-1.2.ebuild, avalon-logkit-2.0.ebuild:
+  Changed dependencies because gnu-javamail is now slotted.
+
+  09 Jul 2005; Thomas Matthijs <axxo@gentoo.org> avalon-logkit-1.2.ebuild,
+  avalon-logkit-2.0.ebuild:
+  fix deps, and source useflag support, small cleanups
+
+  30 May 2005; Gustavo Zacarias <gustavoz@gentoo.org>
+  avalon-logkit-1.2.ebuild, avalon-logkit-2.0.ebuild:
+  Stable on sparc
+
+  18 May 2005; Markus Rothe <corsair@gentoo.org> avalon-logkit-1.2.ebuild,
+  avalon-logkit-2.0.ebuild:
+  Stable on ppc64
+
+  14 May 2005; Jan Brinkmann <luckyduck@gentoo.org>
+  avalon-logkit-1.2.ebuild, avalon-logkit-2.0.ebuild:
+  stable on amd64, x86 and ppc
+
+  04 Apr 2005; Jan Brinkmann <luckyduck@gentoo.org> avalon-logkit-1.2.ebuild,
+  avalon-logkit-2.0.ebuild:
+  added ~ppc to KEYWORDS, openjms excluded on ppc for the moment
+
+  26 Mar 2005; Gustavo Zacarias <gustavoz@gentoo.org>
+  avalon-logkit-2.0.ebuild:
+  Keyworded ~sparc wrt #84992
+
+  23 Mar 2005; Gustavo Zacarias <gustavoz@gentoo.org>
+  avalon-logkit-1.2.ebuild:
+  Keyworded ~sparc wrt #84992
+
+  22 Mar 2005; Jan Brinkmann <luckyduck@gentoo.org> avalon-logkit-2.0.ebuild:
+  corrected servletapi related problem, fixes #86197
+
+  13 Mar 2005; Markus Rothe <corsair@gentoo.org> avalon-logkit-1.2.ebuild,
+  avalon-logkit-2.0.ebuild:
+  Added ~ppc64 to KEYWORDS
+
+  13 Mar 2005; Jan Brinkmann <luckyduck@gentoo.org> avalon-logkit-1.2.ebuild,
+  avalon-logkit-2.0.ebuild:
+  added missing junit dependency, fixes #85088
+
+  22 Feb 2005; Sven Wegener <swegener@gentoo.org> avalon-logkit-1.2.ebuild:
+  Fixed invalid atoms in *DEPEND.
+
+*avalon-logkit-1.2 (22 Feb 2005)
+
+  22 Feb 2005; Jan Brinkmann <luckyduck@gentoo.org> +metadata.xml,
+  +files/2.0-build.xml, +avalon-logkit-1.2.ebuild, +avalon-logkit-2.0.ebuild:
+  Initial import, ebuilds contributed by Mark Wolfe <mwolfe@netspace.net.au> and
+  Saleem A. <compnerd@gentoo.org>. fixes #63284
+
