@@ -10,14 +10,14 @@ SRC_URI=""
 
 LICENSE=""
 SLOT="2"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="=virtual/jdk-1.4*
+DEPEND=">=virtual/jdk-1.4
 	dev-java/jikes
 	dev-java/eclipse-ecj
 	dev-java/ant-core"
-RDEPEND="=virtual/jre-1.4*"
+RDEPEND=">=virtual/jre-1.4"
 
 WORKDIR="${S}"
 
