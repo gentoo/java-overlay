@@ -8,7 +8,7 @@ MY_PV=${PV/_beta*/}
 MY_PVL=${MY_PV%.*}_${MY_PV##*.}
 MY_PVA=${MY_PV//./_}
 BETA=${PV#*_beta}
-DATE="13_jul_2006"
+DATE="03_aug_2006"
 MY_RPV=${MY_PV%.*}
 
 
@@ -29,8 +29,7 @@ HOMEPAGE="https://mustang.dev.java.net"
 SRC_URI="x86? ( ${BASE_URL}/$x86file ) amd64? ( ${BASE_URL}/$amd64file )"
 SLOT="1.6"
 LICENSE="sun-prerelease"
-#KEYWORDS="~x86 -*"
-KEYWORDS="-*"
+KEYWORDS="~amd64 ~x86"
 RESTRICT="nostrip fetch"
 IUSE="doc nsplugin examples"
 
