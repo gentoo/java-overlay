@@ -1,0 +1,52 @@
+diff -Naur eclipse-ecj-3.2/compilejdtcorewithjavac.xml eclipse-ecj-3.2-mod/compilejdtcorewithjavac.xml
+--- eclipse-ecj-3.2/compilejdtcorewithjavac.xml	2006-06-30 01:20:00.000000000 +0200
++++ eclipse-ecj-3.2-mod/compilejdtcorewithjavac.xml	2006-07-28 01:35:06.000000000 +0200
+@@ -6,7 +6,6 @@
+ 		<tstamp/>
+ 		<property name="srcdir" value="src" />
+ 		<property name="destdir" value="compiler" />
+-   	    <unzip src="${srcdir}/ecj.zip" dest="${srcdir}"/>
+ 	</target>
+ 
+ 	<target name="compile" depends="init">
+diff -Naur eclipse-ecj-3.2/compilejdtcore.xml eclipse-ecj-3.2-mod/compilejdtcore.xml
+--- eclipse-ecj-3.2/compilejdtcore.xml	2006-06-30 01:20:00.000000000 +0200
++++ eclipse-ecj-3.2-mod/compilejdtcore.xml	2006-07-29 03:22:07.000000000 +0200
+@@ -5,7 +5,9 @@
+ 	<target name="init">
+ 		<tstamp/>
+ 		<property name="destdir" value="compiler2" />
+-        <property name="srcdir" value="src" />
++		<property name="srcdir" value="src" />
++		<property name="distdir" value="dist" />
++		<property name="javadocdir" value="${distdir}/doc/api" />
+ 	</target>
+ 
+ 	<target name="compile" depends="init">
+@@ -13,6 +15,7 @@
+ 		<echo message="TARGET: ${destdir}" />
+ 		<delete dir="${destdir}"/>
+ 		<mkdir dir="${destdir}"/>
++		<mkdir dir="${distdir}"/>
+ 
+                 <condition property="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter">
+                         <available file="ecj.jar" />
+@@ -57,9 +60,17 @@
+                         </fileset>
+                         </copy>
+ 
+-                <jar jarfile="../ecj.jar">
++                <jar jarfile="${distdir}/ecj.jar">
+                         <fileset dir="${destdir}"/>
+                 </jar>
+ 
+ 	</target>
++	
++	<target name="javadoc" depends="init">
++	    <mkdir dir="${javadocdir}"/>
++	    <javadoc destdir="${javadocdir}">
++		<fileset dir="${srcdir}"/>
++	    </javadoc>
++	</target>
++	
+ </project>
