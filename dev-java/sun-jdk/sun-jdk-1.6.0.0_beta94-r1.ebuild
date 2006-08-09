@@ -43,8 +43,6 @@ DEPEND="
 RDEPEND="x86? ( sys-libs/lib-compat )
 	doc? ( =dev-java/java-sdk-docs-1.5.0* )"
 
-PROVIDE="virtual/jre
-	virtual/jdk"
 JAVA_PROVIDE="jdbc-stdext jdbc-rowset"
 
 PACKED_JARS="lib/tools.jar jre/lib/rt.jar jre/lib/jsse.jar jre/lib/charsets.jar jre/lib/ext/localedata.jar jre/lib/plugin.jar jre/lib/javaws.jar jre/lib/deploy.jar"
