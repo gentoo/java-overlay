@@ -26,7 +26,10 @@ S="${WORKDIR}/apache-ant-${PV}"
 src_unpack() {
 	unpack ${A}
 	cd ${S}
-
+	
+	# remove bundled xerces
+	rm lib/*.jar
+	
 	# Patch build.sh to die with non-zero exit code in case of errors.
 	# This patch may be useful for all ant versions.
 	epatch ${FILESDIR}/build.sh-exit-fix.patch
