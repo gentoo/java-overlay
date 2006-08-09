@@ -16,7 +16,7 @@ IUSE="doc source"
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	dev-java/sun-jaf
-	!dev-java/sun-javamail
+	!dev-java/sun-javamail-bin
 	source? ( app-arch/zip )"
 RDEPEND=">=virtual/jre-1.4"
 S="${WORKDIR}/mail"
