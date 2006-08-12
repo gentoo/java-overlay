@@ -22,17 +22,19 @@ IUSE="doc source"
 
 src_unpack() {
 	unpack ${A}
-	cd ${S}
+	cd "${S}"
 	# Tweak build classpath and don't automatically run tests
 	epatch "${FILESDIR}/${P}-gentoo.patch"
-	mkdir -p target/lib
-	cd target/lib
-	java-pkg_jar-from servletapi-2.3
-	java-pkg_jar-from commons-io-1
+	local libdir="target/lib"
+	mkdir -p ${libdir}/commons-io/jars -p  ${libdir}/javax.servlet/jars
+	cd ${libdir}/commons-io/jars
+	java-pkg_jar-from commons-io-1 commons-io.jar commons-io-1.1.jar
+	cd "${S}"/${libdir}/javax.servlet/jars
+	java-pkg_jar-from servletapi-2.3 servlet.jar servlet-api-2.3.jar
 }
 
 src_compile() {
-	eant jar -Dnoget=true $(use_doc)
+	eant -Dlibdir="${S}"/target/lib jar -Dnoget=true $(use_doc)
 }
 
 src_install() {
