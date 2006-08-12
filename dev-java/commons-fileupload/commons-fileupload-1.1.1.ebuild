@@ -28,9 +28,9 @@ src_unpack() {
 	local libdir="target/lib"
 	mkdir -p ${libdir}/commons-io/jars -p  ${libdir}/javax.servlet/jars
 	cd ${libdir}/commons-io/jars
-	java-pkg_jar-from commons-io-1 commons-io.jar commons-io-1.1.jar
+	java-pkg_jar-from commons-io-1
 	cd "${S}"/${libdir}/javax.servlet/jars
-	java-pkg_jar-from servletapi-2.3 servlet.jar servlet-api-2.3.jar
+	java-pkg_jar-from servletapi-2.3
 }
 
 src_compile() {
