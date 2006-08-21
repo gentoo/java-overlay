@@ -1,8 +1,8 @@
 DIST sun-javamail-1.4.tar.bz2 288541 RMD160 ea5a49c37314d13fd3975f66c7ad6f52e88bd00d SHA1 2aa4e91a0e82c2e2a709e1a73b30ad9b25f7e3bf SHA256 7c45efe65123f439a7d88e478c9fa8f3475c455aab9e7f1466b207d1e9bbbaee
-EBUILD sun-javamail-1.4.ebuild 929 RMD160 18d977ff2e5baa29facbd7121d4cb7b71b78dd55 SHA1 0269c0a72a69da9b8c3f469198041dc955da1965 SHA256 9d7d556ce649add773f02faf0ddfa662cdf5603436a045f5a01df928f0810fa6
-MD5 25fce13930a14256846b6c35e5470e76 sun-javamail-1.4.ebuild 929
-RMD160 18d977ff2e5baa29facbd7121d4cb7b71b78dd55 sun-javamail-1.4.ebuild 929
-SHA256 9d7d556ce649add773f02faf0ddfa662cdf5603436a045f5a01df928f0810fa6 sun-javamail-1.4.ebuild 929
+EBUILD sun-javamail-1.4.ebuild 984 RMD160 7ceb22dc477841a4e26d01bb4b1c60a88c9dbf45 SHA1 25c67dedf5a876d5c58d400fa509a190c8cf446c SHA256 b6c91b3d39f4a7a4ce5d0bbf30402dd7b9434910c34b619bfa901655541a3cd9
+MD5 99e46606892700fb83e1dab66dd4c99b sun-javamail-1.4.ebuild 984
+RMD160 7ceb22dc477841a4e26d01bb4b1c60a88c9dbf45 sun-javamail-1.4.ebuild 984
+SHA256 b6c91b3d39f4a7a4ce5d0bbf30402dd7b9434910c34b619bfa901655541a3cd9 sun-javamail-1.4.ebuild 984
 MD5 7bf64ef8496337b51002e9da3990bfb8 files/digest-sun-javamail-1.4 253
 RMD160 bacd9af7aa4bee21daedf2f9057a838f5ce83f79 files/digest-sun-javamail-1.4 253
 SHA256 809052fe62169f2c6de019e5c233fcb0bc823c28c22a33fc717df15009936023 files/digest-sun-javamail-1.4 253

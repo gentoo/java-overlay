@@ -20,6 +20,9 @@ DEPEND=">=virtual/jdk-1.5
 RDEPEND=">=virtual/jre-1.4"
 S="${WORKDIR}/mail"
 
+JAVA_PKG_WANT_SOURCE="1.4"
+JAVA_PKG_WANT_TARGET="1.4"
+
 src_unpack() {
 	unpack ${A}
 	cd ${S}
