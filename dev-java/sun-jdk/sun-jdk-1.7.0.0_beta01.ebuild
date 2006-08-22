@@ -8,14 +8,12 @@ MY_PV=${PV/_beta*/}
 MY_PVL=${MY_PV%.*}_${MY_PV##*.}
 MY_PVA=${MY_PV//./_}
 BETA=${PV#*_beta}
-DATE="18_aug_2006"
+DATE="21_jul_2006"
 MY_RPV=${MY_PV%.*}
 
-
-BASE_URL="http://download.java.net/jdk6/binaries/"
-x86file="jdk-6-rc-bin-b${BETA}-linux-i586-${DATE}.bin"
-amd64file="jdk-6-rc-bin-b${BETA}-linux-amd64-${DATE}.bin"
-
+BASE_URL="http://download.java.net/jdk7/binaries/"
+x86file="jdk-7-ea-bin-b${BETA}-linux-i586-${DATE}.bin"
+amd64file="jdk-7-ea-bin-b${BETA}-linux-amd64-${DATE}.bin"
 
 if use x86; then
 	At=${x86file}
@@ -25,10 +23,10 @@ fi
 
 S="${WORKDIR}/jdk${MY_RPV}"
 DESCRIPTION="Sun's Java Development Kit"
-HOMEPAGE="https://mustang.dev.java.net"
+HOMEPAGE="https://jdk7.dev.java.net/"
 SRC_URI="x86? ( ${BASE_URL}/$x86file ) amd64? ( ${BASE_URL}/$amd64file )"
-SLOT="1.6"
-LICENSE="sun-prerelease-jdk6"
+SLOT="1.7"
+LICENSE="sun-prerelease-jdk7"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="nostrip fetch"
 IUSE="doc nsplugin examples"
@@ -50,10 +48,10 @@ PACKED_JARS="lib/tools.jar jre/lib/rt.jar jre/lib/jsse.jar jre/lib/charsets.jar 
 # this is needed for proper operating under a PaX kernel without activated grsecurity acl
 CHPAX_CONSERVATIVE_FLAGS="pemsv"
 
-QA_TEXTRELS_x86="opt/sun-jdk-1.6.0.0_beta96/jre/lib/i386/server/libjvm.so
-	opt/sun-jdk-1.6.0.0_beta96/jre/lib/i386/client/libjvm.so
-	opt/sun-jdk-1.6.0.0_beta96/jre/lib/i386/motif21/libmawt.so
-	opt/sun-jdk-1.6.0.0_beta96/jre/lib/i386/libdeploy.so"
+QA_TEXTRELS_x86="opt/sun-jdk-1.7.0.0_beta96/jre/lib/i386/server/libjvm.so
+	opt/sun-jdk-1.7.0.0_beta96/jre/lib/i386/client/libjvm.so
+	opt/sun-jdk-1.7.0.0_beta96/jre/lib/i386/motif21/libmawt.so
+	opt/sun-jdk-1.7.0.0_beta96/jre/lib/i386/libdeploy.so"
 
 pkg_nofetch() {
 	einfo "Please download:"
@@ -140,9 +138,9 @@ src_install() {
 	sed -e "s/INSTALL_DIR\/JRE_NAME_VERSION/\/opt\/${P}\/jre/" \
 		-e "s/\(Name=Java\)/\1 Control Panel/" \
 		${D}/opt/${P}/jre/plugin/desktop/sun_java.desktop > \
-        ${T}/sun_java-${SLOT}.desktop
+		${T}/sun_java-${SLOT}.desktop
 
-    domenu ${T}/sun_java-${SLOT}.desktop
+	domenu ${T}/sun_java-${SLOT}.desktop
 
 	set_java_env
 }
@@ -177,7 +175,7 @@ pkg_postinst() {
 
 	echo
 	einfo " Be careful: ${P}'s Java compiler uses"
-	einfo " '-source 1.6' as default. This means that some keywords "
+	einfo " '-source 1.7' as default. This means that some keywords "
 	einfo " such as 'enum' are not valid identifiers any more in that mode,"
 	einfo " which can cause incompatibility with certain sources."
 	einfo " Additionally, some API changes may cause some breakages."
