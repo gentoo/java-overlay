@@ -48,10 +48,10 @@ PACKED_JARS="lib/tools.jar jre/lib/rt.jar jre/lib/jsse.jar jre/lib/charsets.jar 
 # this is needed for proper operating under a PaX kernel without activated grsecurity acl
 CHPAX_CONSERVATIVE_FLAGS="pemsv"
 
-QA_TEXTRELS_x86="opt/sun-jdk-1.7.0.0_beta96/jre/lib/i386/server/libjvm.so
-	opt/sun-jdk-1.7.0.0_beta96/jre/lib/i386/client/libjvm.so
-	opt/sun-jdk-1.7.0.0_beta96/jre/lib/i386/motif21/libmawt.so
-	opt/sun-jdk-1.7.0.0_beta96/jre/lib/i386/libdeploy.so"
+QA_TEXTRELS_x86="opt/${P}/jre/lib/i386/server/libjvm.so
+	opt/${P}/jre/lib/i386/client/libjvm.so
+	opt/${P}/jre/lib/i386/motif21/libmawt.so
+	opt/${P}/jre/lib/i386/libdeploy.so"
 
 pkg_nofetch() {
 	einfo "Please download:"
