@@ -1,0 +1,19 @@
+--- org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java	2006-08-22 10:18:03.000000000 +0200
++++ org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java	2006-08-22 10:20:10.000000000 +0200
+@@ -200,16 +200,6 @@
+       if(!Constants.isOSX) {
+         new MenuItem(fileMenu, SWT.SEPARATOR);
+ 
+-        MenuItem file_restart = new MenuItem(fileMenu, SWT.NULL);
+-        Messages.setLanguageText(file_restart, "MainWindow.menu.file.restart"); //$NON-NLS-1$
+-
+-        file_restart.addListener(SWT.Selection, new Listener() {
+-
+-        public void handleEvent(Event event) {
+-						UIFunctionsManagerSWT.getUIFunctionsSWT().dispose(true, false);
+-					}
+-				});
+-
+         final MenuItem file_exit = new MenuItem(fileMenu, SWT.NULL);
+         if(!COConfigurationManager.getBooleanParameter("Enable System Tray") || !COConfigurationManager.getBooleanParameter("Close To Tray")) {
+             KeyBindings.setAccelerator(file_exit, "MainWindow.menu.file.exit");
