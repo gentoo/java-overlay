@@ -19,7 +19,7 @@ RDEPEND=">=virtual/jdk-1.3"
 
 IUSE=""
 
-S="${WORKDIR}/${MY_P}"
+S="${WORKDIR}/maven-2.0.5-SNAPSHOT"
 
 MAVEN=${PN}-${SLOT}
 MAVEN_SHARE="/usr/share/${MAVEN}"
