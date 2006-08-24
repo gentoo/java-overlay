@@ -5,3 +5,7 @@
 #
 # NOTE: Please add your entry at the top!
 #
+
+# Joshua Nichols <nichoj@gentoo.org (23 Aug 2006)
+# Masked since, it's VERY early in development
+=dev-java/sun-jdk-1.7*

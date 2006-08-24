@@ -7,13 +7,13 @@ inherit java-vm-2 eutils
 MY_PV=${PV/_beta*/}
 MY_PVL=${MY_PV%.*}_${MY_PV##*.}
 MY_PVA=${MY_PV//./_}
-BETA=${PV#*_beta}
+ALPHA=${PV#*_alpha}
 DATE="21_jul_2006"
 MY_RPV=${MY_PV%.*}
 
 BASE_URL="http://download.java.net/jdk7/binaries/"
-x86file="jdk-7-ea-bin-b${BETA}-linux-i586-${DATE}.bin"
-amd64file="jdk-7-ea-bin-b${BETA}-linux-amd64-${DATE}.bin"
+x86file="jdk-7-ea-bin-b${ALPHA}-linux-i586-${DATE}.bin"
+amd64file="jdk-7-ea-bin-b${ALPHA}-linux-amd64-${DATE}.bin"
 
 if use x86; then
 	At=${x86file}

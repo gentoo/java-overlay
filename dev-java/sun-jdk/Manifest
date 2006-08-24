@@ -14,13 +14,13 @@ EBUILD sun-jdk-1.6.0.0_beta96.ebuild 5406 RMD160 ebe1a12f42be4aca2b5c9a70135eb26
 MD5 78893fec564a01acb644a3564c1d4a7c sun-jdk-1.6.0.0_beta96.ebuild 5406
 RMD160 ebe1a12f42be4aca2b5c9a70135eb269ec70b996 sun-jdk-1.6.0.0_beta96.ebuild 5406
 SHA256 f4c5ce9937e1b83acc994f71f7be790cc6300b88ee85a7e36f9cb82498c601c2 sun-jdk-1.6.0.0_beta96.ebuild 5406
-EBUILD sun-jdk-1.7.0.0_beta01.ebuild 5393 RMD160 3ddf53adbd8eda98632b1ea2302dc507efb02b0b SHA1 f8328f49d537ca0d722edea61b4121d5f04a9b99 SHA256 bc73b5779f8d6275293abd5c950634fceab2f5104b4ed80c6570a9dac4d25ba3
-MD5 63ff8c91c52d75bc0b90bceb4ababf09 sun-jdk-1.7.0.0_beta01.ebuild 5393
-RMD160 3ddf53adbd8eda98632b1ea2302dc507efb02b0b sun-jdk-1.7.0.0_beta01.ebuild 5393
-SHA256 bc73b5779f8d6275293abd5c950634fceab2f5104b4ed80c6570a9dac4d25ba3 sun-jdk-1.7.0.0_beta01.ebuild 5393
+EBUILD sun-jdk-1.7.0.0_alpha01.ebuild 5397 RMD160 baf02249385a127b78e64e95c2a02ad6a6aed0f3 SHA1 aaddf60db3fc155b0e9d1fd1409370214e272f06 SHA256 4f53a092a79b5f5cfd976bef13d3049736e47f60655852337d50e47b444fd0ec
+MD5 5a128dc83d81da0192e3ca206536fcf3 sun-jdk-1.7.0.0_alpha01.ebuild 5397
+RMD160 baf02249385a127b78e64e95c2a02ad6a6aed0f3 sun-jdk-1.7.0.0_alpha01.ebuild 5397
+SHA256 4f53a092a79b5f5cfd976bef13d3049736e47f60655852337d50e47b444fd0ec sun-jdk-1.7.0.0_alpha01.ebuild 5397
 MD5 f436db3831fbd076bcce6d6bb0e73bbe files/digest-sun-jdk-1.6.0.0_beta96 635
 RMD160 94b46b9ca75e7d4081d477215da7299f424955ff files/digest-sun-jdk-1.6.0.0_beta96 635
 SHA256 4cada70a9f38c72dd3eb85813977e303a3767dac0e23fafcba0796e7a5529c40 files/digest-sun-jdk-1.6.0.0_beta96 635
-MD5 6997b2e263aae69cf60722acd88c610c files/digest-sun-jdk-1.7.0.0_beta01 635
-RMD160 af1825e949d6a3e8978d3854c5151b26acff895d files/digest-sun-jdk-1.7.0.0_beta01 635
-SHA256 690481a7af47b65475997fbbfea959d54be2aa4e60cb089f48516c32ea6fd0f1 files/digest-sun-jdk-1.7.0.0_beta01 635
+MD5 6997b2e263aae69cf60722acd88c610c files/digest-sun-jdk-1.7.0.0_alpha01 635
+RMD160 af1825e949d6a3e8978d3854c5151b26acff895d files/digest-sun-jdk-1.7.0.0_alpha01 635
+SHA256 690481a7af47b65475997fbbfea959d54be2aa4e60cb089f48516c32ea6fd0f1 files/digest-sun-jdk-1.7.0.0_alpha01 635
