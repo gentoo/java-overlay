@@ -8,7 +8,7 @@ MY_PV=${PV/_beta*/}
 MY_PVL=${MY_PV%.*}_${MY_PV##*.}
 MY_PVA=${MY_PV//./_}
 BETA=${PV#*_beta}
-DATE="18_aug_2006"
+DATE="24_aug_2006"
 MY_RPV=${MY_PV%.*}
 
 
