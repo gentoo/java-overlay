@@ -4,9 +4,9 @@
 
 inherit java-pkg-2 java-ant-2 versionator
 
-MY_PV=$(replace_version_separator 1 '_' )
-MY_PV=$(replace_version_separator 2 '_' ${MY_PV})
+MY_PV=$(replace_all_version_separators '_' )
 MY_PV=$(replace_version_separator 3 '-' ${MY_PV})
+
 DESCRIPTION="Java(TM) Binding fot the OpenGL(TM) API"
 HOMEPAGE="https://jogl.dev.java.net"
 SRC_URI="http://download.java.net/media/jogl/builds/archive/jsr-231-beta5/${PN}-src-${MY_PV}.zip"
@@ -19,12 +19,12 @@ IUSE="cg doc"
 
 COMMON_DEPEND="cg? ( media-gfx/nvidia-cg-toolkit )"
 
-DEPEND=">=virtual/jdk-1.4*
+DEPEND=">=virtual/jdk-1.4
 		>=dev-java/ant-core-1.5*
 		dev-java/antlr
 		app-arch/unzip
 		${COMMON_DEPEND}"
-RDEPEND=">=virtual/jre-1.4*
+RDEPEND=">=virtual/jre-1.4
 		${COMMON_DEPEND}"
 
 #JAVA_PKG_NV_DEPEND="=virtual/jdk-1.5*"
