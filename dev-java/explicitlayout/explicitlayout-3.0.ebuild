@@ -4,8 +4,8 @@
 
 inherit java-pkg-2 java-ant-2 versionator
 
-MY_PV=$(replace_version_separator 1 '_')
-MY_PV=$(replace_version_separator 2 '_' ${MY_PV})
+MY_PV=$(replace_all_version_separators '_')
+#MY_PV=$(replace_version_separator 2 '_' ${MY_PV})
 DESCRIPTION="ExplicitLayout is a powerful layout manager for Java"
 HOMEPAGE="http://www.zookitec.com/explicitlayout.html"
 SRC_URI="http://www.zookitec.com/explicit_${MY_PV}.zip"
@@ -15,10 +15,10 @@ SLOT="3.0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 
-DEPEND=">=virtual/jdk-1.4*
+DEPEND=">=virtual/jdk-1.4
 		app-arch/unzip
 		>=dev-java/ant-core-1.5*"
-RDEPEND=">=virtual/jre-1.4*"
+RDEPEND=">=virtual/jre-1.4"
 
 S=${WORKDIR}
 
