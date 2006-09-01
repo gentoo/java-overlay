@@ -31,10 +31,8 @@ S="${WORKDIR}/${PN}"
 src_compile() {
 	cd make/
 	local antflags="-Dantlr.jar=$(java-pkg_getjars antlr)"
-	local docflags=""
 	use cg && antflags="${antflags} -Djogl.cg=1 -Dx11.cg.lib=/usr/lib"
-	use doc && docflags="$(use_doc) javadoc.dev.x11"
-	eant ${antflags} all ${docflags} || die "Failed to compile"
+	eant ${antflags} all $(use_doc javadoc.dev.x11)
 }
 
 src_install() {

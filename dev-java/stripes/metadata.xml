@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>java</herd>
+<maintainer>
+	<email>alistair at gmail.com</email>
+	<name>Alistair Bush</name>
+</maintainer>
+<longdescription lang="en">
+Stripes is a presentation framework for building web applications using the
+latest Java technologies.
+</longdescription>
+</pkgmetadata>
+

@@ -5,7 +5,7 @@
 inherit java-pkg-2 java-ant-2 versionator
 
 MY_PV=$(replace_all_version_separators '_')
-#MY_PV=$(replace_version_separator 2 '_' ${MY_PV})
+
 DESCRIPTION="ExplicitLayout is a powerful layout manager for Java"
 HOMEPAGE="http://www.zookitec.com/explicitlayout.html"
 SRC_URI="http://www.zookitec.com/explicit_${MY_PV}.zip"
@@ -24,7 +24,7 @@ S=${WORKDIR}
 
 src_unpack() {
 	unpack ${A}
-	cd ${WORKDIR}
+	cd ${S}
 	rm -r lib/* docs/*	
 }
 
