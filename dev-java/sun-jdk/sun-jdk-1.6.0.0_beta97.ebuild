@@ -33,9 +33,6 @@ KEYWORDS="~amd64 ~x86"
 RESTRICT="nostrip fetch"
 IUSE="doc nsplugin examples"
 
-JAVA_VM_NO_GENERATION1=true
-
-#
 DEPEND="
 	sys-apps/sed
 	doc? ( =dev-java/java-sdk-docs-1.5.0* )"
