@@ -6,12 +6,13 @@ inherit distutils
 
 DESCRIPTION="Jar Index tool"
 HOMEPAGE="http://www.gentoo.org/proj/en/java/"
-SRC_URI="http://gentooexperimental.org/~unlord/jindex-0.1.tar.bz2"
+SRC_URI="http://gentooexperimental.org/~unlord/${P}.tar.bz2"
 
 LICENSE="GLP-2"
 SLOT="0"
 KEYWORDS="~x86"
 IUSE=""
+RESTRICT="mirror"
 
 DEPEND="virtual/python
 	>=dev-python/sqlobject-0.6"
