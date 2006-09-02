@@ -1,0 +1,64 @@
+--- build.xml.orig	2006-09-02 22:49:33.000000000 +0200
++++ build.xml	2006-09-02 23:00:36.000000000 +0200
+@@ -38,6 +38,7 @@
+     <path id="test.class.path">
+         <pathelement location="${build.testclasses}"/>
+         <path refid="project.class.path"/>
++        <fileset dir="${basedir}/lib" includes="**/*.jar"/>
+     </path>
+     
+     <!-- =================================================================== -->
+@@ -207,14 +208,6 @@
+             <classpath refid="project.class.path"/>
+         </javac>
+ 
+-        <!-- compile everything under src/test -->
+-        <javac srcdir="${src.dir}/test" destdir="${build.testclasses}"
+-               deprecation="on"
+-               debug="on"
+-               optimize="on"
+-               target="1.2"> <!-- The 1.2 target is done so we work with older JVMs -->
+-            <classpath refid="test.class.path"/>
+-        </javac>
+ 
+         <!-- copy resource files to build directory -->
+         <copy todir="${build.classes}" > 
+@@ -231,6 +224,19 @@
+             </fileset> 
+         </copy>
+     </target>
++
++    <target name="compile-tests" depends="compile-java">
++        <!-- compile everything under src/test -->
++        <javac srcdir="${src.dir}/test" destdir="${build.testclasses}"
++               deprecation="on"
++               debug="on"
++               optimize="on"
++               target="1.2"> <!-- The 1.2 target is done so we work with older JVMs -->
++            <classpath refid="test.class.path"/>
++        </javac>
++    </target>
++
++
+     <target name="msvc-test" depends="convert,update-info" if="is.Windows">
+         <condition property="msvc.present">
+             <available file="${msvc.home}/VC98/BIN/VCVARS32.BAT"/>
+@@ -346,6 +352,9 @@
+              includes="**/*.class,**/*.properties"
+              excludes="**/test/*"
+              />
++    </target>
++	
++    <target name="jar-tests" depends="compile-tests">
+         <jar jarfile="${lib.dir}/wrappertest.jar"
+              basedir="${build.classes}"
+              includes="**/test/*"
+@@ -355,7 +364,7 @@
+     <!-- =================================================================== -->
+     <!-- Test Task                                                           -->
+     <!-- =================================================================== -->
+-    <target name="test" depends="jar" description="Runs unit tests">
++    <target name="test" depends="jar,jar-tests" description="Runs unit tests">
+         <mkdir dir="${build.tests}"/>
+         
+         <junit fork="true"
