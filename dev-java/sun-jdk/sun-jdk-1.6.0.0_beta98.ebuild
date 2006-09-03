@@ -8,7 +8,7 @@ MY_PV=${PV/_beta*/}
 MY_PVL=${MY_PV%.*}_${MY_PV##*.}
 MY_PVA=${MY_PV//./_}
 BETA=${PV#*_beta}
-DATE="24_aug_2006"
+DATE="01_sep_2006"
 MY_RPV=${MY_PV%.*}
 
 
@@ -137,9 +137,9 @@ src_install() {
 	sed -e "s/INSTALL_DIR\/JRE_NAME_VERSION/\/opt\/${P}\/jre/" \
 		-e "s/\(Name=Java\)/\1 Control Panel/" \
 		${D}/opt/${P}/jre/plugin/desktop/sun_java.desktop > \
-        ${T}/sun_java-${SLOT}.desktop
+		${T}/sun_java-${SLOT}.desktop
 
-    domenu ${T}/sun_java-${SLOT}.desktop
+	domenu ${T}/sun_java-${SLOT}.desktop
 
 	set_java_env
 }
