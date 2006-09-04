@@ -1,0 +1,133 @@
+--- /var/tmp/portage/taglibrarydoc-1.3/work/taglibrarydoc/build.xml	2006-08-27 23:12:32.000000000 +1200
++++ build.xml	2006-08-27 23:01:56.000000000 +1200
+@@ -1,6 +1,4 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-
+-<!-- 
++<?xml version="1.0" ?><!-- 
+   - <license>
+   - Copyright (c) 2003-2004, Sun Microsystems, Inc.
+   - All rights reserved.
+@@ -29,9 +27,7 @@
+   - NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+   - SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+   - </license>
+-  -->
+-
+-<project basedir="." default="dist" name="tlddoc">
++  --><project basedir="." default="dist" name="tlddoc">
+   <property file="build.properties"/>
+ 
+   <property name="product" value="taglibrarydoc-1_3"/>
+@@ -49,14 +45,14 @@
+     </fail>
+   </target>
+   
+-  <target name="prepare" depends="check_javacc">
++  <target depends="check_javacc" name="prepare">
+     <mkdir dir="${build}"/>
+     <mkdir dir="${build}/gensrc/com/sun/tlddoc/tagfileparser"/>
+     <mkdir dir="${build}/classes"/>
+     <mkdir dir="${dist}/${product}"/>
+   </target>
+ 
+-  <target name="grammar" depends="prepare">
++  <target depends="prepare" name="grammar">
+     <!-- 
+       - Current versions of Ant do not support JavaCC 3.2 yet, so
+       - invoke manually
+@@ -68,12 +64,11 @@
+             static="false" 
+             target="${src}/share/com/sun/tlddoc/tagfileparser/tag-file.jjt"/>
+     -->
+-    <java classname="jjtree" classpath="${JAVACC_HOME}/bin/lib/javacc.jar"
+-          fork="true">
+-      <arg line="-NODE_PACKAGE=com.sun.tlddoc.tagfileparser" />
+-      <arg line="-OUTPUT_DIRECTORY=${build}/gensrc/com/sun/tlddoc/tagfileparser" />
+-      <arg line="-STATIC=false" />
+-      <arg line="${src}/share/com/sun/tlddoc/tagfileparser/tag-file.jjt" />
++    <java classname="jjtree" classpath="${JAVACC_HOME}" fork="true">
++      <arg line="-NODE_PACKAGE=com.sun.tlddoc.tagfileparser"/>
++      <arg line="-OUTPUT_DIRECTORY=${build}/gensrc/com/sun/tlddoc/tagfileparser"/>
++      <arg line="-STATIC=false"/>
++      <arg line="${src}/share/com/sun/tlddoc/tagfileparser/tag-file.jjt"/>
+     </java>
+     
+     <!--
+@@ -83,16 +78,15 @@
+             target="${build}/gensrc/com/sun/tlddoc/tagfileparser/tag-file.jj"/>
+     -->
+     <!-- javacc -->
+-    <java classname="javacc" classpath="${JAVACC_HOME}/bin/lib/javacc.jar"
+-          fork="true">
+-      <arg line="-OUTPUT_DIRECTORY=${build}/gensrc/com/sun/tlddoc/tagfileparser" />
+-      <arg line="-STATIC=false" />
+-      <arg line="${build}/gensrc/com/sun/tlddoc/tagfileparser/tag-file.jj" />
++    <java classname="javacc" classpath="${JAVACC_HOME}" fork="true">
++      <arg line="-OUTPUT_DIRECTORY=${build}/gensrc/com/sun/tlddoc/tagfileparser"/>
++      <arg line="-STATIC=false"/>
++      <arg line="${build}/gensrc/com/sun/tlddoc/tagfileparser/tag-file.jj"/>
+     </java>
+   </target>
+ 
+-  <target name="compile" depends="grammar,prepare">
+-    <javac debug="true" destdir="${build}/classes">
++  <target depends="grammar,prepare" name="compile">
++    <javac debug="true" destdir="${build}/classes" source="1.4" target="1.4">
+       <src path="${build}/gensrc"/>
+       <src path="${src}/share"/>
+     </javac>
+@@ -105,30 +99,25 @@
+     </copy>
+   </target>
+ 
+-  <target name="dist" depends="compile">
+-    <jar basedir="${build}/classes" jarfile="${dist}/${product}/tlddoc.jar"
+-         manifest="${src}/manifest/manifest.mf">
++  <target depends="compile" name="dist">
++    <jar basedir="${build}/classes" jarfile="${dist}/${product}/tlddoc.jar" manifest="${src}/manifest/manifest.mf">
+        <fileset dir="${build}/classes">
+          <exclude name="**/.nbattrs"/>
+        </fileset>
+     </jar>
+     <copy todir="${dist}/${product}">
+       <fileset dir="${doc}">
+-        <include name="readme.html" />
+-        <include name="taglibrarydoc-icon.jpg" />
+-        <include name="taglibrarydoc-screenshot.gif" />
++        <include name="readme.html"/>
++        <include name="taglibrarydoc-icon.jpg"/>
++        <include name="taglibrarydoc-screenshot.gif"/>
+       </fileset>
+     </copy>
+-    <zip destfile="${dist}/${product}.zip" basedir="${dist}" 
+-	 includes="${product}/**"/>
++    <zip basedir="${dist}" destfile="${dist}/${product}.zip" includes="${product}/**"/>
+   </target>
+   
+-  <target name="test" depends="dist">
++  <target depends="dist" name="test">
+     <mkdir dir="${out}"/>
+-    <java dir="." 
+-          fork="true" 
+-          jar="${dist}/${product}/tlddoc.jar" 
+-          failonerror="true">
++    <java dir="." failonerror="true" fork="true" jar="${dist}/${product}/tlddoc.jar">
+       <arg line="-d ${out}"/>
+       <arg line="-doctitle &quot;Test Tag Libraries&quot;"/>
+       <arg line="-windowtitle &quot;Test Tag Libraries&quot;"/>
+@@ -158,12 +147,9 @@
+     </java>
+   </target>
+   
+-  <target name="debug" depends="dist">
++  <target depends="dist" name="debug">
+     <mkdir dir="${out}"/>
+-    <java dir="." 
+-          fork="true" 
+-          jar="${dist}/${product}/tlddoc.jar"
+-          failonerror="true">
++    <java dir="." failonerror="true" fork="true" jar="${dist}/${product}/tlddoc.jar">
+       <jvmarg line="-Xdebug"/>
+       <jvmarg line="-Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y"/>
+       <arg line="-d ${out}"/>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>java</herd>
+<maintainer>
+	<email>alistair.bush at gmail.com</email>
+	<name>Aistair Bush</name>
+</maintainer>
+<longdescription lang="en">
+Tag Library Documentation Generator is a utility for automatically generating
+javadoc-style documentation for JavaServer Pages(TM) Technology Tag Libraries.
+</longdescription>
+</pkgmetadata>
+
