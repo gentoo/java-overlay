@@ -42,8 +42,8 @@ src_install() {
 	cd ${S}
 
 	if use doc; then
-		mv javadoc_public javadoc
-		java-pkg_dohtml -r javadoc
+		mv javadoc_public api
+		java-pkg_dohtml -r api
 	fi
 	java-pkg_doso build/obj/*.so
 }
