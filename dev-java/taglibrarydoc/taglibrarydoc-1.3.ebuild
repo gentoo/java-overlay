@@ -6,7 +6,7 @@ inherit eutils java-pkg-2 java-ant-2
 
 DESCRIPTION="Utility for automatically generating javadoc-style documentation for JavaServer Pages Technology Tag Libraries"
 HOMEPAGE="https://taglibrarydoc.dev.java.net/"
-SRC_URI="http://localhost/~alistair/distfiles/${P}.tar.gz"
+SRC_URI="http://www.counties.co.nz/alistair/distfiles/${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
