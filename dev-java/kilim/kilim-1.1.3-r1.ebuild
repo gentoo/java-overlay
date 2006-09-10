@@ -17,7 +17,7 @@ IUSE="doc"
 DEPEND=">=virtual/jdk-1.3
 	dev-java/ant-core"
 RDEPEND=">=virtual/jre-1.3
-	=dev-java/nanoxml-2.2*"
+	dev-java/nanoxml"
 S=${WORKDIR}/${PN}
 
 src_unpack() {
@@ -26,7 +26,7 @@ src_unpack() {
 	
 	cd externals
 	rm *.jar
-	java-pkg_jar-from nanoxml-2.2 nanoxml-lite.jar
+	java-pkg_jar-from nanoxml nanoxml-lite.jar
 }
 
 src_compile() {
