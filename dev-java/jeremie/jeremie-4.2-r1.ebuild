@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg-2 java-ant-2
+inherit java-pkg-2 java-ant-2 eutils
 
 DESCRIPTION="Jeremie provides an RMI-like programming style."
 HOMEPAGE="http://jonathan.objectweb.org/"
@@ -23,20 +23,22 @@ RDEPEND=">=virtual/jre-1.4
 	=dev-java/jonathan-core-4*
 	=dev-java/kilim-2*
 	dev-java/monolog
-	=dev-java/nanoxml-2.2*"
+	dev-java/nanoxml*"
 
-S=${WORKDIR}/${PN}
+S="${WORKDIR}/${PN}"
 
 src_unpack() {
 	unpack ${A}
 	cd ${S}
+	epatch ${FILESDIR}/${P}-classpath.patch
 
 	cd externals
 	rm *.jar
 	java-pkg_jar-from jonathan-core-4
 	java-pkg_jar-from kilim-1 kilim.jar
 	java-pkg_jar-from monolog ow_monolog.jar
-	java-pkg_jar-from nanoxml-2.2 nanoxml-lite.jar nanoxml-lite-2.2.1.jar
+	java-pkg_jar-from nanoxml nanoxml-lite.jar nanoxml-lite-2.2.1.jar
+	java-pkg_jar-from ant-core ant.jar
 	
 	# the jar from my ow-util-ant-tasks seems to slightly not work
 	cd ../config

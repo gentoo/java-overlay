@@ -1,0 +1,14 @@
+diff -ru jeremie/build.xml jeremie-patched/build.xml
+--- jeremie/build.xml	2004-05-11 05:33:22.000000000 -0400
++++ jeremie-patched/build.xml	2006-09-10 10:41:09.000000000 -0400
+@@ -68,9 +68,7 @@
+ 
+     <path id="classpath">
+       <pathelement location="${out.build}"/>
+-      <pathelement path="${monolog.path}"/>
+-      <pathelement path="${kilim.path}"/>
+-      <pathelement path="${jonathan-core.path}"/>
++	  <fileset dir="externals" includes="*.jar"/>
+     </path>
+ 
+     <condition property="sys.is.unix">
