@@ -8,7 +8,7 @@ DESCRIPTION="J2EE module of JBoss Application Server"
 SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${ECLASS_URI}"
 HOMEPAGE="http://www.jboss.org"
 LICENSE="LGPL-2"
-IUSE="jikes"
+IUSE=""
 SLOT="4"
 KEYWORDS="~amd64 ~x86"
 
