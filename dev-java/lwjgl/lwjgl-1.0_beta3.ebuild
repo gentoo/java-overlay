@@ -27,6 +27,9 @@ CDEPEND="virtual/opengl
 		media-libs/openal
 		dev-java/jinput
 		dev-java/jutils
+		x11-libs/libXrandr
+		x11-libs/libXxf86vm
+		x11-libs/libXcursor
 		devil? ( media-libs/devil )"
 DEPEND=">=virtual/jdk-1.5
 		>=dev-java/ant-core-1.5
