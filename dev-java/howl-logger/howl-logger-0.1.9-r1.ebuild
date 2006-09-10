@@ -6,7 +6,7 @@ inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="HOWL is a logger implementation providing features required by the ObjectWeb JOTM project, with a public API that is generally usable by any Transaction Manager"
 HOMEPAGE="http://howl.objectweb.org/"
-SRC_URI="http://gentooexperimental.org/distfiles/${P}.tar.bz2"
+SRC_URI="http://dev.gentoo.org/~nichoj/distfiles/${P}.tar.bz2"
 # cvs -d:pserver:anonymous@cvs.forge.objectweb.org:/cvsroot/howl login
 # cvs -z3 -d:pserver:anonymous@cvs.forge.objectweb.org:/cvsroot/howl export -r HOWL_0_1_9 howl/logger
 # tar cjvf howl-logger-0.1.9.tar.bz2 howl
