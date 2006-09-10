@@ -11,7 +11,7 @@ HOMEPAGE="http://www.hibernate.org"
 LICENSE="LGPL-2"
 IUSE="doc"
 SLOT="3"
-KEYWORDS="~x86 ~amd64"
+KEYWORDS="~amd64 ~x86"
 
 COMMON_DEPEND="
 	=dev-java/asm-2*
@@ -54,7 +54,7 @@ src_unpack() {
 	cd lib
 	rm *.jar
 
-	local JAR_PACKAGES="asm-2 c3p0 commons-collections 
+	local JAR_PACKAGES="ant-core antlr asm-2 c3p0 commons-collections 
 		commons-logging dom4j-1 ehcache jaxen-1.1 jdbc2-stdext 
 		log4j oscache proxool swarmcache-1.0 xerces-2"
 	for PACKAGE in ${JAR_PACKAGES}; do
