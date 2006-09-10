@@ -34,8 +34,6 @@ DEPEND=">=virtual/jdk-1.5
 RDEPEND=">=virtual/jre-1.5
 		${CDEPEND}"
 
-S="${WORKDIR}/${P}"
-
 src_unpack() {
 	unpack ${A}
 	cd ${S}
@@ -65,4 +63,9 @@ src_install() {
 		cp linux/liblwjgl64.so linux/liblwjgl.so
 	fi
 	java-pkg_doso linux/liblwjgl.so
+	if use_doc; then
+		cd ${S}/doc
+		mv javadoc api
+		java-pkg_dohtml -r api
+	fi
 }
