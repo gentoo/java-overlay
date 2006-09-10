@@ -23,9 +23,9 @@ RDEPEND=">=virtual/jre-1.4
 	dev-java/commons-logging
 	=dev-java/howl-logger-0.1*
 	dev-java/log4j
-	dev-java/p6spy"
+	dev-java/p6spy
+	dev-java/jta"
 #	dev-java/sun-j2ee-connector-bin
-#	dev-java/jta
 # TODO fix for Java 1.6... has problems due to JDBC4
 JAVA_PKG_NV_DEPEND="=virtual/jdk-1.4* =virtual/jdk-1.5*"
 
@@ -47,7 +47,7 @@ src_unpack() {
 	java-pkg_jar-from log4j
 	java-pkg_jar-from p6spy
 	# don't seem to need these
-#	java-pkg_jar-from jta
+	java-pkg_jar-from jta
 #	java-pkg_jar-from sun-j2ee-connector-bin
 }
 
