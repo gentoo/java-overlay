@@ -15,15 +15,18 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND=">=virtual/jdk-1.4
-	dev-java/ant-core
-	jikes? ( dev-java/jikes )
-	app-arch/unzip"
-RDEPEND=">=virtual/jre-1.4
+COMMON_DEPEND="
 	dev-java/log4j
 	dev-java/p6spy
-	=dev-java/velocity-1*"
-
+	=dev-java/velocity-1*
+	dev-java/ant-core
+	dev-java/junit"
+	
+DEPEND=">=virtual/jdk-1.4
+	app-arch/unzip
+	${COMMON_DEPEND}"
+RDEPEND=">=virtual/jre-1.4
+	${COMMON_DEPEND}"
 src_unpack() {
 	mkdir -p ${S}
 	cd ${S}
@@ -32,7 +35,7 @@ src_unpack() {
 
 	cd externals
 	rm *.jar
-	java-pkg_jar-from log4j,p6spy,velocity
+	java-pkg_jar-from ant-core,log4j,junit,p6spy,velocity
 }
 
 # TODO report problem with JRE detection, as in, only detects 1.4 correctly
