@@ -50,6 +50,7 @@ src_unpack() {
 	cd lib
 	java-pkg_jar-from jboss-module-j2ee-4
 
+	java-pkg_jar-from ant-core ant.jar
 	java-pkg_jar-from cglib-2
 	java-pkg_jar-from commons-collections
 	java-pkg_jar-from commons-lang
