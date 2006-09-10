@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg-2 java-ant-2
+inherit base java-pkg-2 java-ant-2
 
 MY_PN=${PN##db-}
 MY_P=${MY_PN}-${PV}
@@ -16,12 +16,15 @@ KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 
 DEPEND="=virtual/jdk-1.4*
-	dev-java/ant"
+	dev-java/ant-core"
 RDEPEND="=virtual/jre-1.4*"
-S=${WORKDIR}/${MY_P}
+S="${WORKDIR}/${MY_P}"
+
+# allows you to disable testing
+PATCHES="${FILESDIR}/${P}-build.patch"
 
 src_compile() {
-	eant jar $(use_doc -Ddoc.dir=./docs/api javadoc-all)
+	eant jar $(use_doc -Ddoc.dir=./docs/api javadoc-all) -Dnotest=true
 }
 
 src_install() {

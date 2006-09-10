@@ -1,0 +1,54 @@
+diff -ru je-1.7.1/build.xml je-1.7.1-patched/build.xml
+--- je-1.7.1/build.xml	2004-12-22 09:11:20.000000000 -0500
++++ je-1.7.1-patched/build.xml	2006-09-10 02:34:27.000000000 -0400
+@@ -60,6 +60,7 @@
+     <property name="installdestdir" value="/usr/local"/>
+ 
+     <path id="class.path">
++		<fileset dir="lib" includes="*.jar"/>
+         <pathelement location="${destdir}"/>
+         <pathelement location="."/>
+     </path>
+@@ -235,14 +236,14 @@
+     <!-- Internal Use Only: JUnit run -->
+     <!-- ============================================================ -->
+ 
+-    <target name="init-unittest" depends="init">
++    <target name="init-unittest" depends="init" unless="notest">
+         <delete dir="${unittest.datadir}"/>
+         <delete dir="${unittest.reportsdir}"/>
+         <mkdir dir="${unittest.datadir}"/>
+         <mkdir dir="${unittest.reportsdir}"/>
+     </target>
+ 
+-    <target name="clean-unittest" depends="init-unittest">
++    <target name="clean-unittest" depends="init-unittest" unless="notest">
+         <delete dir="${unittest.destdir}"/>
+         <mkdir dir="${unittest.destdir}"/>
+         <delete dir="${unittest.testserialdir}"/>
+@@ -259,7 +260,7 @@
+         <mkdir dir="${rpcserver.destdir}"/>
+     </target>
+ 
+-    <target name="compile-unittest" depends="compile-src">
++    <target name="compile-unittest" depends="compile-src" unless="notest">
+       <javac destdir="${unittest.destdir}"
+              debug="${build.debug}"
+              includeAntRuntime="true"
+@@ -308,14 +309,14 @@
+          ant test                      (run all tests)
+      -->
+ 
+-    <target name="test" depends="compile,alltests,unittest"/>
++    <target name="test" depends="compile,alltests,unittest" unless="notest"/>
+     <description>The test target will compile, run unit tests, and eventually run hello world</description>
+ 
+     <target name="alltests">
+     <property name="alltests" value="true"/>
+     </target>
+ 
+-    <target name="unittest" depends="compile-unittest, init-unittest">
++    <target name="unittest" depends="compile-unittest, init-unittest" unless="notest">
+       <!-- Performs initialization needed before StoredClassCatalogTest is run
+            in the <batchtest> below. -->
+       <junit printsummary="false"
