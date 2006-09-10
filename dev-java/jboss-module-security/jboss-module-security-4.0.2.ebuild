@@ -6,7 +6,7 @@ inherit jboss-4
 
 DESCRIPTION="Security module of JBoss Application Server"
 SRC_URI="${BASE_URL}/${P}-gentoo.tar.bz2 ${ECLASS_URI}"
-IUSE="jikes"
+IUSE=""
 SLOT="4"
 KEYWORDS="~amd64 ~x86"
 
@@ -23,5 +23,13 @@ COMMON_DEPEND="dev-java/log4j
 	=dev-java/jboss-module-naming-${PV}*
 	=dev-java/jboss-module-server-${PV}*
 	=dev-java/jboss-module-jmx-${PV}*"
-DEPEND=">=virtual/jdk-1.4 ${COMMON_DEPEND}"
+# FIXME doesn't like 1.6
+DEPEND="|| ( =virtual/jdk-1.4* =virtual/jdk-1.5* ) ${COMMON_DEPEND}"
 RDEPEND=">=virtual/jre-1.4 ${COMMON_DEPEND}"
+
+pkg_setup() {
+	if has_version ">=dev-java/javacc-4.0"; then
+		die "${PN} breaks with javacc-4.0"
+	fi
+	java-pkg-2_pkg_setup
+}

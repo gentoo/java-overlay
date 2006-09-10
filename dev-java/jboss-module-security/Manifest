@@ -2,10 +2,10 @@ DIST jboss-4.0.2-gentoo-r2.data 7494 RMD160 4f903dcff34f88cda4c09b1e5d13b4879e1d
 DIST jboss-module-security-4.0.2-gentoo.tar.bz2 167674 RMD160 4f0ebf010496b11addd1d49da6ad1029b7d09bdd SHA1 455ff10df3353c6837f205ff25e3254aee59725c SHA256 68a5596ede90eb5d5f013d8e73ccada020d603ca7a3bf23730609db243d08f3c
 DIST jboss-thirdparty-4.0.2-gentoo.tar.bz2 13586285 RMD160 d6792984c90ba414ccf4120034beaee2d0601e91 SHA1 4df51eb70495d45058602a54b451958298429bef SHA256 b1170a37fae39ded8275d777db146c93b320c179311786bee38fe978fd80e54f
 DIST jboss-tools-4.0.2-gentoo-r1.tar.bz2 4524270 RMD160 099c8b5ba83dfe484e455500223fe7e53eb26d5b SHA1 ee7cffa8f7e121b1c6cf9347c56b248d168ef776 SHA256 31d061470917632fc5e04408a02512c83842e18b7752e6c4b5fb63ed8c36d45a
-EBUILD jboss-module-security-4.0.2.ebuild 817 RMD160 67e31371ad78825dacbca1fb0d4f1cb0e2b6378b SHA1 60b4ef09c27289fd4d7c7271a7c1571dc3ede185 SHA256 ce07d4cfdfed3538d495c9bae8bd60501846f3347c07471c86c7e0d88f0f71f6
-MD5 91ff081788fd3fe5a83187ad240f5dc0 jboss-module-security-4.0.2.ebuild 817
-RMD160 67e31371ad78825dacbca1fb0d4f1cb0e2b6378b jboss-module-security-4.0.2.ebuild 817
-SHA256 ce07d4cfdfed3538d495c9bae8bd60501846f3347c07471c86c7e0d88f0f71f6 jboss-module-security-4.0.2.ebuild 817
+EBUILD jboss-module-security-4.0.2.ebuild 988 RMD160 d9b8f3de98610396deb1cee9c61b7c0c467a7e44 SHA1 2bda4a3767373c3210115cd6a162e01462ed172c SHA256 06d4e1bf186a03b51b4b7d834cdf565cc7dbaddd2f7ecb2c48b4d08e06713fd7
+MD5 0c88b5b683d4492adf4f7320a3d6e100 jboss-module-security-4.0.2.ebuild 988
+RMD160 d9b8f3de98610396deb1cee9c61b7c0c467a7e44 jboss-module-security-4.0.2.ebuild 988
+SHA256 06d4e1bf186a03b51b4b7d834cdf565cc7dbaddd2f7ecb2c48b4d08e06713fd7 jboss-module-security-4.0.2.ebuild 988
 MD5 7cf99c4a29055755a44310075069efcf files/digest-jboss-module-security-4.0.2 1147
 RMD160 0361a46a3270522db74324b1e2562c1cc6d5a5e1 files/digest-jboss-module-security-4.0.2 1147
 SHA256 6148302c215bb63131768375b89b970300d5026a16601df1bfef8784ca6233f3 files/digest-jboss-module-security-4.0.2 1147
