@@ -7,10 +7,10 @@ inherit jboss-4
 DESCRIPTION="Common module of JBoss Application Server"
 SRC_URI="${BASE_URL}/${P}-gentoo-r1.tar.bz2 ${ECLASS_URI}"
 MY_A="${MY_A/${P}-gentoo/${P}-gentoo-r1}"
-IUSE="jikes"
+IUSE=""
 KEYWORDS="~amd64 ~x86"
 
-# uh, apparently this doesn't like newer xerces.
+# FIXME uh, apparently this doesn't like newer xerces.
 COMMON_DEPEND="=dev-java/bsf-2.3*
 	dev-java/xml-commons-resolver
 	dev-java/xalan
@@ -31,7 +31,7 @@ COMMON_DEPEND="=dev-java/bsf-2.3*
 	dev-java/concurrent-util
 	dev-java/log4j
 	=dev-java/dtdparser-1.21*"
-DEPEND=">=virtual/jdk-1.4
+DEPEND="=virtual/jdk-1.4*
 	dev-java/ant-core
 	dev-java/ant-tasks
 	dev-java/junit
