@@ -2,17 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg-2 java-ant-2 versionator eutils
-# svn export
-# https://svn.sourceforge.net/svnroot/java-game-lib/tags/lwjgl1.0beta3 lwjgl-1.0_beta3/
-# rm www/*
-# tar -cf lwjgl-1.0_beta3.tar lwjgl-1.0_beta3/ && gzip lwjgl-1.0_beta3.tar
+inherit java-pkg-2 java-ant-2 eutils
 
-# ogl/oal = required
-# <Mazon> fmod, devil = optional
-# <Mazon> jinput is req too
-#  Xrandr, Xxf86vm and Xcursor
-#  build requires apt within sun-jdk-1.5*
+# See for dev info
+# http://overlays.gentoo.org/proj/java/wiki/
+#	Java_Games_ProjectLightWeightJavaGameLibraryLWJGL
 MY_PV="$(delete_version_separator 2)"
 DESCRIPTION="The Lightweigth Java Game Library (LWJGL)"
 HOMEPAGE="http://www.lwjgl.org"
@@ -40,11 +34,10 @@ RDEPEND=">=virtual/jre-1.5
 src_unpack() {
 	unpack ${A}
 	cd ${S}
-	epatch ${FILESDIR}/fix-linux-build.patch #FIXED in next version :)
+	epatch ${FILESDIR}/fix-linux-build.patch
 	eant clean clean-generated
-	
-	#lets do some something that should be in done in ant
-	#mkdir bin
+
+	# libs is the final install path for jars and so's
 	rm -r libs/*
 	mkdir libs/linux
 	cd libs

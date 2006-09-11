@@ -34,13 +34,10 @@ src_unpack() {
 src_compile() {
 	cd make/
 	local antflags="-Dantlr.jar=$(java-pkg_getjars antlr) -Djoal.lib.dir=/usr"
-	use doc && docs="javadoc"
-	eant ${antflags} all $(use_doc javadoc) || die "Failed to compile"
+	eant -Dantlr.jar=$(java-pkg_getjars antlr) -Djoal.lib.dir=/usr all $(use_doc javadoc)
 }
 
 src_install() {
-	cd ${S}
-
 	if use doc; then
 		mv javadoc_public api
 		java-pkg_dohtml -r api
