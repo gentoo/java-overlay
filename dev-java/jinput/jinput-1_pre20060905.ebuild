@@ -15,7 +15,8 @@ IUSE=""
 
 DEPEND=">=virtual/jdk-1.4
 		dev-java/jutils
-		>=dev-java/ant-core-1.5*"
+		>=dev-java/ant-core-1.5*
+		dev-java/ant-tasks"
 RDEPEND=">=virtual/jre-1.4
 		${DEPEND}"
 
