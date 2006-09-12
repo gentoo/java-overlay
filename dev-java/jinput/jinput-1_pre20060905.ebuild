@@ -14,7 +14,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=">=virtual/jdk-1.4
-		dev-java/jutils"
+		dev-java/jutils
+		>=dev-java/ant-core-1.5*"
 RDEPEND=">=virtual/jre-1.4
 		${DEPEND}"
 
