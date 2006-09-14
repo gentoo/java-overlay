@@ -48,7 +48,7 @@ src_unpack() {
 }
 
 src_compile() {
-	eant -Djava.home=`java-config -o` generate-all all $(use_doc javadoc)
+	eant -Djava.home=${JAVA_HOME} generate-all all $(use_doc javadoc)
 }
 
 src_install() {
@@ -59,9 +59,11 @@ src_install() {
 		cp linux/liblwjgl64.so linux/liblwjgl.so
 	fi
 	java-pkg_doso linux/liblwjgl.so
-	if use_doc; then
-		cd ${S}/doc
-		mv javadoc api
-		java-pkg_dohtml -r api
-	fi
+	#if use_doc; then
+	#	cd ${S}/doc
+	#	mv javadoc api
+	#	java-pkg_dohtml -r api
+	#fi
+	cd ${S}
+	use_doc && java-pkg_dojavadoc doc/javadoc
 }

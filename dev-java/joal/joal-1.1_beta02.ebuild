@@ -38,10 +38,7 @@ src_compile() {
 }
 
 src_install() {
-	if use doc; then
-		mv javadoc_public api
-		java-pkg_dohtml -r api
-	fi
+	use_doc && java-pkg_dojavadoc javadoc_public
 	java-pkg_doso build/obj/*.so
 }
 
