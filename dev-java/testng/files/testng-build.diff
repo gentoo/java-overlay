@@ -1,0 +1,16 @@
+diff -aurp old/build.xml new/build.xml
+--- old/build.xml	2006-09-15 18:17:42.000000000 +0000
++++ new/build.xml	2006-09-15 18:18:32.000000000 +0000
+@@ -122,11 +122,7 @@
+     <echo message="                                 -- Compiling 1.5 sources --" />
+ 
+     <path id="compile2.cp">
+-      <fileset dir="${lib.dir}">
+-        <include name="junit.jar" />
+-        <include name="${qdox.jar}" />
+-        <include name="${beanshell.jar}" />
+-      </fileset>
++      <fileset dir="${lib.dir}" includes="*.jar"/>
+     </path>
+ 
+     <javac classpathref="compile2.cp"
