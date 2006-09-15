@@ -1,0 +1,9 @@
+# ChangeLog for net-irc/anope
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*testng-5.2 (15 Sep 2006)
+
+  15 Sep 2006; Bjarke Istrup Pedersen <gurligebis@gentoo.org> :
+  Initial import.
+
