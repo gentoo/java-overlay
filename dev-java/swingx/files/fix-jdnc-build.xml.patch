@@ -1,0 +1,2024 @@
+diff -Naur jdnc-0_7/jdnc_api/make/build.xml jdnc-0_7-new/jdnc_api/make/build.xml
+--- jdnc-0_7/jdnc_api/make/build.xml	2004-09-30 17:24:42.000000000 +0000
++++ jdnc-0_7-new/jdnc_api/make/build.xml	2006-09-15 21:07:36.000000000 +0000
+@@ -7,18 +7,155 @@
+     version: 1.0
+     ======================================================================-->
+ 
+-<!DOCTYPE project SYSTEM "../../make/shared.entities.txt">
++<!--<!DOCTYPE project SYSTEM "../../make/shared.entities.txt">-->
+ 
+ <project name="jdnc" default="build" basedir="..">
+     <description>Builds JDNC components</description>
+ 
+-    &properties;
+-    &paths;
+-
++    <!--&properties; -->
++		    
++		    <property environment="env"/>
++		    <property name="env.COMPUTERNAME" value="${env.HOSTNAME}"/>
++		    <property name="env.JAVA_HOME" value="${env.JAVA_HOME}"/>
++		    
++		    <property name="user.properties.file" location="${user.home}/.build.properties"/>
++		    
++		    <!-- Load properties from project properties file -->
++		    <property file="${basedir}/make/build.properties"/>
++		    
++		    <!-- Load properties from user properties file -->
++		    <property file="${user.properties.file}"/>
++		    
++		    <!-- ============================================================ -->
++		    <!-- Directory Mappings                                           -->
++		    <!-- ============================================================ -->
++		    
++		    <property name="root.dir" location="${basedir}"/>
++		    <property name="masterbuild.dir" location="${root.dir}/.."/>
++		    
++		    <!-- Load properties from master-build properties file -->
++		    <property file="${masterbuild.dir}/build.properties"/>
++		    
++		    <!-- Set the following only after all property files have been loaded -->
++		    <property name="masterdist.dir" location="${masterbuild.dir}/dist"/>
++		    <property name="masterdist.bin.dir" location="${masterdist.dir}/bin"/>
++		    <property name="masterdist.lib.dir" location="${masterdist.dir}/lib"/>
++		    <property name="masterdist.test.dir" location="${masterdist.dir}/test"/>
++		    
++		    <!-- sub-project locations -->
++		    <property name="swingx.dir" location="${masterbuild.dir}/swingx"/>
++		    <property name="jdnc-api.dir" location="${masterbuild.dir}/jdnc_api"/>
++		    <property name="jdnc-xml.dir" location="${masterbuild.dir}/jdnc_markup"/>
++		    
++		    <available file="${masterbuild.dir}/swingx" type="dir" property="swingx.present"/>
++		    <available file="${masterbuild.dir}/jdnc_api" type="dir" property="jdnc_api.present"/>
++		    <available file="${masterbuild.dir}/jdnc_markup" type="dir" property="jdnc_markup.present"/>
++		    
++		    <!-- sources directory -->
++		    <property name="src.dir" location="${root.dir}/src"/>
++		    <available property="src.java" type="dir" file="${src.dir}/java" value="${src.dir}/java"/>
++		    <available property="src.test" type="dir" file="${src.dir}/test" value="${src.dir}/test"/>
++		    <available property="src.demo" type="dir" file="${src.dir}/demo" value="${src.dir}/demo"/>
++		    
++		    <!-- lib directory  set lib.dir only if it exists -->
++		    <available file="${root.dir}/lib" type="dir" property="lib.dir" value="${root.dir}/lib"/>
++		    <condition property="lib.dir" value="${masterdist.lib.dir}">
++			    <not>
++				    <isset property="lib.dir"/>
++			    </not>
++		    </condition>
++		    
++		    <!-- check available tools -->
++		    <available classname="junit.framework.Test" property="junit.present"/>
++		    <available classname="net.sf.xframe.xsddoc.Task" property="xsddoc.present"/>
++		    
++		    <!-- build directory -->
++		    <property name="build.dir" location="build"/>
++		    <property name="build.javadoc" location="${build.dir}/javadoc"/>
++		    <property name="build.classes" location="${build.dir}/classes"/>
++		    <property name="build.test.classes" location="${build.dir}/test/classes"/>
++		    <property name="build.test.results" location="${build.dir}/test/results"/>
++		    <property name="build.demo.classes" location="${build.dir}/demo/classes"/>
++		    
++		    <!-- dist directory -->
++		    <property name="dist.dir" location="dist"/>
++		    <property name="dist.bin.dir" location="${dist.dir}/bin"/>
++		    
++		    <!-- docs directory -->
++		    <property name="docs.dir" location="docs"/>
++		    
++		    <!-- distribution file names -->
++		    <property name="dist.jar" value="${which.properties}.jar"/>
++		    <property name="test.jar" value="${which.properties}Test.jar"/>
++		    <property name="demo.jar" value="${which.properties}Demo.jar"/>
++		    
++		    <!-- java web start -->
++		    <condition property="javaws.dir" value="${java.home}/lib/">
++			    <equals arg1="${java.specification.version}" arg2="1.5"/>
++		    </condition>
++		    <condition property="javaws.dir"
++			       value="/Applications/Utilities/Java/Java Web Start.app/Contents/MacOS/">
++			    <os family="mac"/>
++		    </condition>
++		    <condition property="javaws.dir" value="${java.home}/javaws/">
++			    <not>
++				    <isset property="javaws.dir"/>
++			    </not>
++		    </condition>
++		    
++		    
++		    <!-- ============================================================ -->
++		    <!-- Compile Settings                                             -->
++		    <!-- ============================================================ -->
++		    
++		    <property name="build.debug" value="true"/>
++		    <property name="build.optimize" value="false"/>
++		    
++		    <!-- Testing settings -->
++		    
++		    <!-- test.package limits the unit tests to a specific package -->
++		    <condition property="test.package" value="**">
++			    <not>
++				    <isset property="test.package"/>
++			    </not>
++		    </condition>
++		    
++		    <!-- test.headless will set the value of the -Djava.awt.headless flag -->
++		    <condition property="test.headless" value="false">
++			    <not>
++				    <isset property="test.headless"/>
++			    </not>
++  </condition>
++  
++  
++  <!--  &paths;
++	-->
++  <path id="compile.classpath">
++	  <fileset dir="${javaws.dir}" includes="**/javaws*.jar"/>
++	  <fileset dir="${lib.dir}" includes="**/*.jar"/>
++	  <fileset dir="${masterdist.lib.dir}" includes="**/*.jar"/>
++	  <fileset dir="${masterdist.bin.dir}" includes="**/*.jar"/>
++  </path>
++  
++  <path id="test.classpath">
++	  <!-- Put the built classes at the head of the classpath -->
++	  <pathelement location="${build.classes}"/>
++	  <pathelement location="${build.test.classes}"/>
++	  <path refid="compile.classpath"/>
++	  <fileset dir="${masterdist.test.dir}" includes="**/*.jar"/>
++  </path>
++  
++  <path id="demo.classpath">
++	  <!-- Put the built classes at the head of the classpath -->
++	  <pathelement location="${build.classes}"/>
++	  <pathelement location="${build.demo.classes}"/>
++	  <path refid="compile.classpath"/>
++</path>
+     <!-- It is NOT enough to just define target entities in a dtd file.
+          The entities must also be referenced from this xml file. -->
+ 
+     <!-- Public targets -->
++    <!--
+     &all;
+     &build;
+     &clean;
+@@ -29,13 +166,219 @@
+     &run;
+     &demo;
+     &test;
+-
++	-->
++    
++    <target name="all" depends="echo, clean, fetch, build, test"
++	    description="Builds everything from scratch">
++    </target>
++    
++    <target name="build" depends="echo, -archive, -lib"
++	    description="Perform an incremental build">
++    </target>
++    
++    <target name="clean" description="Deletes the dist and build directorties">
++	    <delete dir="${build.dir}" quiet="true"/>
++	    <delete dir="${dist.dir}" quiet="true"/>
++    </target>
++    
++    <target name="-compile-demo" depends="-compile" if="src.demo">
++	    <mkdir dir="${build.demo.classes}"/>
++	    
++	    <javac srcdir="${src.demo}" destdir="${build.demo.classes}"
++		   classpathref="demo.classpath"
++		   source="1.5" deprecation="on"
++		   debug="${build.debug}" optimize="${build.optimize}"/>
++	    
++	    <echo message="now copying...${build.demo.classes}  ${src.demo}"/>
++	    <copy todir="${build.demo.classes}">
++		    <fileset dir="${src.demo}">	
++			    <include name="**/resources/**"/>
++		    </fileset>
++	    </copy>
++    </target>
++    
++    <target name="run-demo" depends="-compile-demo" if="src.demo"
++	    description="Run a demo class: -Ddemo.class=[class]">
++	    <java classname="${demo.class}" fork="true">
++		    <classpath>
++			    <path refid="demo.classpath"/>
++		    </classpath>
++	    </java>
++    </target>
++    
++    <target name="debug-demo" depends="-compile-demo" if="netbeans.home" 
++	    description="Debug a demo class in NetBeans: -Ddemo.class=[class]">
++	    <fail message="Property demo.class not set." unless="demo.class"/>
++	    <nbjpdastart name="${demo.class}" addressproperty="jpda.address" transport="dt_socket">
++		    <classpath>
++			    <path refid="demo.classpath"/>
++		    </classpath>
++	    </nbjpdastart>
++	    <java classname="${demo.class}" fork="true">
++		    <jvmarg value="-Xdebug"/>
++		    <jvmarg value="-Xnoagent"/>
++		    <jvmarg value="-Djava.compiler=none"/>
++		    <jvmarg value="-Xrunjdwp:transport=dt_socket,address=${jpda.address}"/>
++		    <classpath>
++			    <path refid="demo.classpath"/>
++		    </classpath>
++	    </java>
++    </target>
++    
++    <target name="deploy">
++    </target>
++    
++    <target name="echo" description="Prints the properties">
++	    <echo message="Building ${ant.project.name} on Java ${ant.java.version} with ${ant.version}"/>
++	    <echo message="ant.file = ${ant.file}"/>
++	    <echo message="ant.home = ${ant.home}"/>
++	    <echo message="env.JAVA_HOME = ${env.JAVA_HOME}"/>
++	    <echo message="which.properties = ${which.properties}"/>
++	    <echo message="basedir = ${basedir}"/>
++	    <echo message="root.dir = ${root.dir}"/>
++	    <echo message="masterbuild.dir = ${masterbuild.dir}"/>
++	    <echo message="masterdist.dir = ${masterdist.dir}"/>
++	    <echo message="src.dir = ${src.dir}"/>
++	    <echo message="build.dir = ${build.dir}"/>
++	    <echo message="build.classes = ${build.classes}"/>
++	    <echo message="build.javadoc = ${build.javadoc}"/>
++	    <echo message="dist.dir = ${dist.dir}"/>
++	    <echo message="lib.dir = ${lib.dir}"/>
++	    <echo message="javaws.dir = ${javaws.dir}"/>
++    </target>
++    
++    <target name="fetch">
++    </target>
++    
++    <target name="-lib" depends="-archive">
++	    <echo message="Copying files from ${dist.bin.dir} to ${masterdist.bin.dir}"/>
++	    <copy todir="${masterdist.bin.dir}" overwrite="true" preservelastmodified="true">
++		    <fileset dir="${dist.bin.dir}" excludes="*Test.jar"/>
++	    </copy>
++	    <copy todir="${masterdist.test.dir}" overwrite="true" preservelastmodified="true">
++		    <fileset dir="${dist.bin.dir}" includes="*Test.jar"/>
++	    </copy>
++	    <copy todir="${masterdist.lib.dir}" overwrite="true" preservelastmodified="true">
++		    <fileset dir="${lib.dir}" includes="*.jar"/>
++	    </copy>
++    </target>
++    
++    <target name="-prepare">
++	    <tstamp/>
++	    <mkdir dir="${build.classes}"/>
++	    <mkdir dir="${dist.bin.dir}"/>
++	    <mkdir dir="${masterdist.bin.dir}"/>
++    </target>
++    
++    <target name="-publish">
++    </target>
++    
++    <target name="release">
++    </target>
++    
++    <target name="run" depends="-archive" description="Run the main method of a class: -Drun.class=[class]">
++	    <java classname="${run.class}" fork="true">
++		    <classpath>
++			    <path refid="test.classpath"/>    
++		    </classpath>
++	    </java>
++    </target>
++    
++    
++    <target name="-compile-test" depends="-compile" if="src.test">
++	    <mkdir dir="${build.test.classes}"/>
++	    
++	    <javac srcdir="${src.test}" destdir="${build.test.classes}"
++		   classpathref="test.classpath"
++		   includes="${branch}" source="1.5" deprecation="on"
++		   debug="${build.debug}" optimize="${build.optimize}"/>
++	    <echo message="now copying...${build.test.classes}  ${src.test}"/>
++	    <copy todir="${build.test.classes}">
++		    <fileset dir="${src.test}">
++			    <include name="**/resources/**"/>
++		    </fileset>
++	    </copy>
++    </target>
++    
++    <target name="test" depends="-compile-test, -lib" if="src.test"
++	    description="Run a single, package or all unit tests: -Dtest.class=[class] | -Dtest.package=[package]">
++	    <mkdir dir="${build.test.results}"/>
++	    <junit fork="yes" haltonfailure="false" failureproperty="junit_test_failed">
++		    <sysproperty key="java.awt.headless" value="${test.headless}"/>
++		    <classpath>
++			    <path refid="test.classpath"/>
++		    </classpath>
++		    
++		    <formatter type="brief" usefile="false"/>
++		    
++		    <test name="${test.class}" if="test.class"/>
++		    
++		    <batchtest unless="test.class">
++			    <fileset dir="${src.test}">
++				    <include name="${test.package}/*Test.java"/>
++			    </fileset>
++		    </batchtest>
++		    
++		    <batchtest todir="${build.test.results}" if="test.reports">
++			    <formatter type="xml"/>
++			    <fileset dir="${src.test}">
++				    <include name="**/*Test.java"/>
++			    </fileset>
++		    </batchtest>
++		    
++	    </junit>
++	    <fail if="junit_test_failed" message="One or more JUnit tests failed"/>
++	    
++  </target>
++  
++  <target name="--archive-classes" depends="-compile">
++	  <jar jarfile="${dist.bin.dir}/${dist.jar}" basedir="${build.classes}"
++	       index="true" compress="true"/>
++  </target>
++  
++  <target name="--archive-test" depends="-compile-test" if="src.test">
++	  <jar jarfile="${dist.bin.dir}/${test.jar}" basedir="${build.test.classes}"
++	       compress="true"> 
++		  <manifest>
++			  <attribute name="Main-Class" value="${test.class}"/>
++		  </manifest>
++	  </jar>
++  </target>
++  
++  <target name="--archive-demo" depends="-compile-demo" if="src.demo">
++	  <jar jarfile="${dist.bin.dir}/${demo.jar}" basedir="${build.demo.classes}"
++	       compress="true"> 
++		  <manifest>
++			  <attribute name="Main-Class" value="${demo.class}"/>
++		  </manifest>
++	  </jar>
++  </target>
++  
++  <target name="-archive" depends="--archive-classes, --archive-test, --archive-demo">
++  </target>
++  
++  <target name="-compile" depends="-prepare">
++	  <javac srcdir="${src.java}" destdir="${build.classes}"
++		 classpathref="compile.classpath"
++		 includes="${branch}" source="1.5" deprecation="on"
++		 debug="${build.debug}" optimize="${build.optimize}"/>
++	  <echo message="now copying...${build.classes}  ${src.dir}"/>
++	  <copy todir="${build.classes}">
++		  <fileset dir="${src.java}">
++			  <include name="**/resources/**"/>
++		  </fileset>
++	  </copy>
++	  
++    </target>
+     <!-- Protected targets -->
++    <!--
+     &_archive;
+     &_compile;
+     &_lib;
+     &_prepare;
+     &_publish;
++    
++    -->
+ 
+ 
+   <!-- Generates beaninfo classes and a jar file -->
+diff -Naur jdnc-0_7/jdnc_api/make/build.xml~ jdnc-0_7-new/jdnc_api/make/build.xml~
+--- jdnc-0_7/jdnc_api/make/build.xml~	1970-01-01 00:00:00.000000000 +0000
++++ jdnc-0_7-new/jdnc_api/make/build.xml~	2006-09-15 20:48:17.000000000 +0000
+@@ -0,0 +1,403 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<!--======================================================================
++    jdnc build file
++
++    author: Ramesh Gupta
++    version: 1.0
++    ======================================================================-->
++
++<!--<!DOCTYPE project SYSTEM "../../make/shared.entities.txt">-->
++
++<project name="jdnc" default="build" basedir="..">
++    <description>Builds JDNC components</description>
++
++    <!--&properties; -->
++		    
++		    <property environment="env"/>
++		    <property name="env.COMPUTERNAME" value="${env.HOSTNAME}"/>
++		    <property name="env.JAVA_HOME" value="${env.JAVA_HOME}"/>
++		    
++		    <property name="user.properties.file" location="${user.home}/.build.properties"/>
++		    
++		    <!-- Load properties from project properties file -->
++		    <property file="${basedir}/make/build.properties"/>
++		    
++		    <!-- Load properties from user properties file -->
++		    <property file="${user.properties.file}"/>
++		    
++		    <!-- ============================================================ -->
++		    <!-- Directory Mappings                                           -->
++		    <!-- ============================================================ -->
++		    
++		    <property name="root.dir" location="${basedir}"/>
++		    <property name="masterbuild.dir" location="${root.dir}/.."/>
++		    
++		    <!-- Load properties from master-build properties file -->
++		    <property file="${masterbuild.dir}/build.properties"/>
++		    
++		    <!-- Set the following only after all property files have been loaded -->
++		    <property name="masterdist.dir" location="${masterbuild.dir}/dist"/>
++		    <property name="masterdist.bin.dir" location="${masterdist.dir}/bin"/>
++		    <property name="masterdist.lib.dir" location="${masterdist.dir}/lib"/>
++		    <property name="masterdist.test.dir" location="${masterdist.dir}/test"/>
++		    
++		    <!-- sub-project locations -->
++		    <property name="swingx.dir" location="${masterbuild.dir}/swingx"/>
++		    <property name="jdnc-api.dir" location="${masterbuild.dir}/jdnc_api"/>
++		    <property name="jdnc-xml.dir" location="${masterbuild.dir}/jdnc_markup"/>
++		    
++		    <available file="${masterbuild.dir}/swingx" type="dir" property="swingx.present"/>
++		    <available file="${masterbuild.dir}/jdnc_api" type="dir" property="jdnc_api.present"/>
++		    <available file="${masterbuild.dir}/jdnc_markup" type="dir" property="jdnc_markup.present"/>
++		    
++		    <!-- sources directory -->
++		    <property name="src.dir" location="${root.dir}/src"/>
++		    <available property="src.java" type="dir" file="${src.dir}/java" value="${src.dir}/java"/>
++		    <available property="src.test" type="dir" file="${src.dir}/test" value="${src.dir}/test"/>
++		    <available property="src.demo" type="dir" file="${src.dir}/demo" value="${src.dir}/demo"/>
++		    
++		    <!-- lib directory  set lib.dir only if it exists -->
++		    <available file="${root.dir}/lib" type="dir" property="lib.dir" value="${root.dir}/lib"/>
++		    <condition property="lib.dir" value="${masterdist.lib.dir}">
++			    <not>
++				    <isset property="lib.dir"/>
++			    </not>
++		    </condition>
++		    
++		    <!-- check available tools -->
++		    <available classname="junit.framework.Test" property="junit.present"/>
++		    <available classname="net.sf.xframe.xsddoc.Task" property="xsddoc.present"/>
++		    
++		    <!-- build directory -->
++		    <property name="build.dir" location="build"/>
++		    <property name="build.javadoc" location="${build.dir}/javadoc"/>
++		    <property name="build.classes" location="${build.dir}/classes"/>
++		    <property name="build.test.classes" location="${build.dir}/test/classes"/>
++		    <property name="build.test.results" location="${build.dir}/test/results"/>
++		    <property name="build.demo.classes" location="${build.dir}/demo/classes"/>
++		    
++		    <!-- dist directory -->
++		    <property name="dist.dir" location="dist"/>
++		    <property name="dist.bin.dir" location="${dist.dir}/bin"/>
++		    
++		    <!-- docs directory -->
++		    <property name="docs.dir" location="docs"/>
++		    
++		    <!-- distribution file names -->
++		    <property name="dist.jar" value="${which.properties}.jar"/>
++		    <property name="test.jar" value="${which.properties}Test.jar"/>
++		    <property name="demo.jar" value="${which.properties}Demo.jar"/>
++		    
++		    <!-- java web start -->
++		    <condition property="javaws.dir" value="${java.home}/lib/">
++			    <equals arg1="${java.specification.version}" arg2="1.5"/>
++		    </condition>
++		    <condition property="javaws.dir"
++			       value="/Applications/Utilities/Java/Java Web Start.app/Contents/MacOS/">
++			    <os family="mac"/>
++		    </condition>
++		    <condition property="javaws.dir" value="${java.home}/javaws/">
++			    <not>
++				    <isset property="javaws.dir"/>
++			    </not>
++		    </condition>
++		    
++		    
++		    <!-- ============================================================ -->
++		    <!-- Compile Settings                                             -->
++		    <!-- ============================================================ -->
++		    
++		    <property name="build.debug" value="true"/>
++		    <property name="build.optimize" value="false"/>
++		    
++		    <!-- Testing settings -->
++		    
++		    <!-- test.package limits the unit tests to a specific package -->
++		    <condition property="test.package" value="**">
++			    <not>
++				    <isset property="test.package"/>
++			    </not>
++		    </condition>
++		    
++		    <!-- test.headless will set the value of the -Djava.awt.headless flag -->
++		    <condition property="test.headless" value="false">
++			    <not>
++				    <isset property="test.headless"/>
++			    </not>
++  </condition>
++  
++  
++  <!--  &paths;
++	-->
++  <path id="compile.classpath">
++	  <fileset dir="${javaws.dir}" includes="**/javaws*.jar"/>
++	  <fileset dir="${lib.dir}" includes="**/*.jar"/>
++	  <fileset dir="${masterdist.lib.dir}" includes="**/*.jar"/>
++	  <fileset dir="${masterdist.bin.dir}" includes="**/*.jar"/>
++  </path>
++  
++  <path id="test.classpath">
++	  <!-- Put the built classes at the head of the classpath -->
++	  <pathelement location="${build.classes}"/>
++	  <pathelement location="${build.test.classes}"/>
++	  <path refid="compile.classpath"/>
++	  <fileset dir="${masterdist.test.dir}" includes="**/*.jar"/>
++  </path>
++  
++  <path id="demo.classpath">
++	  <!-- Put the built classes at the head of the classpath -->
++	  <pathelement location="${build.classes}"/>
++	  <pathelement location="${build.demo.classes}"/>
++	  <path refid="compile.classpath"/>
++</path>
++    <!-- It is NOT enough to just define target entities in a dtd file.
++         The entities must also be referenced from this xml file. -->
++
++    <!-- Public targets -->
++    <!--
++    &all;
++    &build;
++    &clean;
++    &deploy;
++    &echo;
++    &fetch;
++    &release;
++    &run;
++    &demo;
++    &test;
++	-->
++    
++    <target name="all" depends="echo, clean, fetch, build, test"
++	    description="Builds everything from scratch">
++    </target>
++    
++    <target name="build" depends="echo, -archive, -lib"
++	    description="Perform an incremental build">
++    </target>
++    
++    <target name="clean" description="Deletes the dist and build directorties">
++	    <delete dir="${build.dir}" quiet="true"/>
++	    <delete dir="${dist.dir}" quiet="true"/>
++    </target>
++    
++    <target name="-compile-demo" depends="-compile" if="src.demo">
++	    <mkdir dir="${build.demo.classes}"/>
++	    
++	    <javac srcdir="${src.demo}" destdir="${build.demo.classes}"
++		   classpathref="demo.classpath"
++		   source="1.5" deprecation="on"
++		   debug="${build.debug}" optimize="${build.optimize}"/>
++	    
++	    <echo message="now copying...${build.demo.classes}  ${src.demo}"/>
++	    <copy todir="${build.demo.classes}">
++		    <fileset dir="${src.demo}">	
++			    <include name="**/resources/**"/>
++		    </fileset>
++	    </copy>
++    </target>
++    
++    <target name="run-demo" depends="-compile-demo" if="src.demo"
++	    description="Run a demo class: -Ddemo.class=[class]">
++	    <java classname="${demo.class}" fork="true">
++		    <classpath>
++			    <path refid="demo.classpath"/>
++		    </classpath>
++	    </java>
++    </target>
++    
++    <target name="debug-demo" depends="-compile-demo" if="netbeans.home" 
++	    description="Debug a demo class in NetBeans: -Ddemo.class=[class]">
++	    <fail message="Property demo.class not set." unless="demo.class"/>
++	    <nbjpdastart name="${demo.class}" addressproperty="jpda.address" transport="dt_socket">
++		    <classpath>
++			    <path refid="demo.classpath"/>
++		    </classpath>
++	    </nbjpdastart>
++	    <java classname="${demo.class}" fork="true">
++		    <jvmarg value="-Xdebug"/>
++		    <jvmarg value="-Xnoagent"/>
++		    <jvmarg value="-Djava.compiler=none"/>
++		    <jvmarg value="-Xrunjdwp:transport=dt_socket,address=${jpda.address}"/>
++		    <classpath>
++			    <path refid="demo.classpath"/>
++		    </classpath>
++	    </java>
++    </target>
++    
++    <target name="deploy">
++    </target>
++    
++    <target name="echo" description="Prints the properties">
++	    <echo message="Building ${ant.project.name} on Java ${ant.java.version} with ${ant.version}"/>
++	    <echo message="ant.file = ${ant.file}"/>
++	    <echo message="ant.home = ${ant.home}"/>
++	    <echo message="env.JAVA_HOME = ${env.JAVA_HOME}"/>
++	    <echo message="which.properties = ${which.properties}"/>
++	    <echo message="basedir = ${basedir}"/>
++	    <echo message="root.dir = ${root.dir}"/>
++	    <echo message="masterbuild.dir = ${masterbuild.dir}"/>
++	    <echo message="masterdist.dir = ${masterdist.dir}"/>
++	    <echo message="src.dir = ${src.dir}"/>
++	    <echo message="build.dir = ${build.dir}"/>
++	    <echo message="build.classes = ${build.classes}"/>
++	    <echo message="build.javadoc = ${build.javadoc}"/>
++	    <echo message="dist.dir = ${dist.dir}"/>
++	    <echo message="lib.dir = ${lib.dir}"/>
++	    <echo message="javaws.dir = ${javaws.dir}"/>
++    </target>
++    
++    <target name="fetch">
++    </target>
++    
++    <target name="-lib" depends="-archive">
++	    <echo message="Copying files from ${dist.bin.dir} to ${masterdist.bin.dir}"/>
++	    <copy todir="${masterdist.bin.dir}" overwrite="true" preservelastmodified="true">
++		    <fileset dir="${dist.bin.dir}" excludes="*Test.jar"/>
++	    </copy>
++	    <copy todir="${masterdist.test.dir}" overwrite="true" preservelastmodified="true">
++		    <fileset dir="${dist.bin.dir}" includes="*Test.jar"/>
++	    </copy>
++	    <copy todir="${masterdist.lib.dir}" overwrite="true" preservelastmodified="true">
++		    <fileset dir="${lib.dir}" includes="*.jar"/>
++	    </copy>
++    </target>
++    
++    <target name="-prepare">
++	    <tstamp/>
++	    <mkdir dir="${build.classes}"/>
++	    <mkdir dir="${dist.bin.dir}"/>
++	    <mkdir dir="${masterdist.bin.dir}"/>
++    </target>
++    
++    <target name="-publish">
++    </target>
++    
++    <target name="release">
++    </target>
++    
++    <target name="run" depends="-archive" description="Run the main method of a class: -Drun.class=[class]">
++	    <java classname="${run.class}" fork="true">
++		    <classpath>
++			    <path refid="test.classpath"/>    
++		    </classpath>
++	    </java>
++    </target>
++    
++    
++    <target name="-compile-test" depends="-compile" if="src.test">
++	    <mkdir dir="${build.test.classes}"/>
++	    
++	    <javac srcdir="${src.test}" destdir="${build.test.classes}"
++		   classpathref="test.classpath"
++		   includes="${branch}" source="1.5" deprecation="on"
++		   debug="${build.debug}" optimize="${build.optimize}"/>
++	    <echo message="now copying...${build.test.classes}  ${src.test}"/>
++	    <copy todir="${build.test.classes}">
++		    <fileset dir="${src.test}">
++			    <include name="**/resources/**"/>
++		    </fileset>
++	    </copy>
++    </target>
++    
++    <target name="test" depends="-compile-test, -lib" if="src.test"
++	    description="Run a single, package or all unit tests: -Dtest.class=[class] | -Dtest.package=[package]">
++	    <mkdir dir="${build.test.results}"/>
++	    <junit fork="yes" haltonfailure="false" failureproperty="junit_test_failed">
++		    <sysproperty key="java.awt.headless" value="${test.headless}"/>
++		    <classpath>
++			    <path refid="test.classpath"/>
++		    </classpath>
++		    
++		    <formatter type="brief" usefile="false"/>
++		    
++		    <test name="${test.class}" if="test.class"/>
++		    
++		    <batchtest unless="test.class">
++			    <fileset dir="${src.test}">
++				    <include name="${test.package}/*Test.java"/>
++			    </fileset>
++		    </batchtest>
++		    
++		    <batchtest todir="${build.test.results}" if="test.reports">
++			    <formatter type="xml"/>
++			    <fileset dir="${src.test}">
++				    <include name="**/*Test.java"/>
++			    </fileset>
++		    </batchtest>
++		    
++	    </junit>
++	    <fail if="junit_test_failed" message="One or more JUnit tests failed"/>
++	    
++  </target>
++  
++  <target name="--archive-classes" depends="-compile">
++	  <jar jarfile="${dist.bin.dir}/${dist.jar}" basedir="${build.classes}"
++	       index="true" compress="true"/>
++  </target>
++  
++  <target name="--archive-test" depends="-compile-test" if="src.test">
++	  <jar jarfile="${dist.bin.dir}/${test.jar}" basedir="${build.test.classes}"
++	       compress="true"> 
++		  <manifest>
++			  <attribute name="Main-Class" value="${test.class}"/>
++		  </manifest>
++	  </jar>
++  </target>
++  
++  <target name="--archive-demo" depends="-compile-demo" if="src.demo">
++	  <jar jarfile="${dist.bin.dir}/${demo.jar}" basedir="${build.demo.classes}"
++	       compress="true"> 
++		  <manifest>
++			  <attribute name="Main-Class" value="${demo.class}"/>
++		  </manifest>
++	  </jar>
++  </target>
++  
++  <target name="-archive" depends="--archive-classes, --archive-test, --archive-demo">
++  </target>
++  
++  <target name="-compile" depends="-prepare">
++	  <javac srcdir="${src.java}" destdir="${build.classes}"
++		 classpathref="compile.classpath"
++		 includes="${branch}" source="1.5" deprecation="on"
++		 debug="${build.debug}" optimize="${build.optimize}"/>
++	  <echo message="now copying...${build.classes}  ${src.dir}"/>
++	  <copy todir="${build.classes}">
++		  <fileset dir="${src.java}">
++			  <include name="**/resources/**"/>
++		  </fileset>
++	  </copy>
++	  
++    </target>
++    <!-- Protected targets -->
++    <!--
++    &_archive;
++    &_compile;
++    &_lib;
++    &_prepare;
++    &_publish;
++    
++    -->
++
++
++  <!-- Generates beaninfo classes and a jar file -->
++  <target name="beaninfo" depends="-compile" description="Creates the design time (BeanInfo) classes">
++    <ant antfile="make/beaninfo.xml"/>
++    <antcall target="-lib"/>
++  </target>
++
++    <!--======================================================================
++        javadoc: build documentation
++        ======================================================================-->
++    <target name="javadoc" depends="-compile" description="Generate API documentation">
++        <ant antfile="${masterbuild.dir}/make/javadoc.xml" dir="." inheritAll="false">
++            <property name="javadoc.title" value="JDNC Components"/>
++            <property name="javadoc.src.dir" location="src/java;../swingx/src/java"/>
++            <property name="javadoc.excludes" value="org.jdesktop.jdnc.test.*"/>
++            <property name="javadoc.dest.dir" value="${build.javadoc}"/>
++            <reference refid="compile.classpath" torefid="javadoc.classpath"/>
++        </ant>
++    </target>
++
++</project>
+\ No newline at end of file
+diff -Naur jdnc-0_7/make/build.xml jdnc-0_7-new/make/build.xml
+--- jdnc-0_7/make/build.xml	2004-10-28 22:28:42.000000000 +0000
++++ jdnc-0_7-new/make/build.xml	2006-09-15 23:12:48.000000000 +0000
+@@ -7,7 +7,8 @@
+     version: 1.0
+     ======================================================================-->
+ 
+-<!DOCTYPE project SYSTEM "./master.entities.txt">
++<!--<!DOCTYPE project SYSTEM "./master.entities.txt">-->
++
+ 
+ <project name="Master" default="build-all" basedir="..">
+   <description>Master Build File</description>
+@@ -15,19 +16,221 @@
+   <!-- Define masterbuild.dir BEFORE loading &properties; -->
+   <property name="masterbuild.dir" location="${basedir}"/>
+ 
+-  &properties;
++<!--  &properties;
+   &paths;
+ 
++  -->
++<property environment="env"/>
++<property name="env.COMPUTERNAME" value="${env.HOSTNAME}"/>
++<property name="env.JAVA_HOME" value="${env.JAVA_HOME}"/>
++
++<property name="user.properties.file" location="${user.home}/.build.properties"/>
++
++<!-- Load properties from project properties file -->
++<property file="${basedir}/make/build.properties"/>
++
++<!-- Load properties from user properties file -->
++<property file="${user.properties.file}"/>
++
++<!-- ============================================================ -->
++<!-- Directory Mappings                                           -->
++<!-- ============================================================ -->
++
++<property name="root.dir" location="${basedir}"/>
++<property name="masterbuild.dir" location="${root.dir}/.."/>
++
++<!-- Load properties from master-build properties file -->
++<property file="${masterbuild.dir}/build.properties"/>
++
++<!-- Set the following only after all property files have been loaded -->
++<property name="masterdist.dir" location="${masterbuild.dir}/dist"/>
++<property name="masterdist.bin.dir" location="${masterdist.dir}/bin"/>
++<property name="masterdist.lib.dir" location="${masterdist.dir}/lib"/>
++<property name="masterdist.test.dir" location="${masterdist.dir}/test"/>
++
++<!-- sub-project locations -->
++<property name="swingx.dir" location="${masterbuild.dir}/swingx"/>
++<property name="jdnc-api.dir" location="${masterbuild.dir}/jdnc_api"/>
++<property name="jdnc-xml.dir" location="${masterbuild.dir}/jdnc_markup"/>
++
++<available file="${masterbuild.dir}/swingx" type="dir" property="swingx.present"/>
++<available file="${masterbuild.dir}/jdnc_api" type="dir" property="jdnc_api.present"/>
++<available file="${masterbuild.dir}/jdnc_markup" type="dir" property="jdnc_markup.present"/>
++
++<!-- sources directory -->
++<property name="src.dir" location="${root.dir}/src"/>
++<available property="src.java" type="dir" file="${src.dir}/java" value="${src.dir}/java"/>
++<available property="src.test" type="dir" file="${src.dir}/test" value="${src.dir}/test"/>
++<available property="src.demo" type="dir" file="${src.dir}/demo" value="${src.dir}/demo"/>
++
++<!-- lib directory  set lib.dir only if it exists -->
++<available file="${root.dir}/lib" type="dir" property="lib.dir" value="${root.dir}/lib"/>
++<condition property="lib.dir" value="${masterdist.lib.dir}">
++<not>
++<isset property="lib.dir"/>
++</not>
++</condition>
++
++<!-- check available tools -->
++<available classname="junit.framework.Test" property="junit.present"/>
++<available classname="net.sf.xframe.xsddoc.Task" property="xsddoc.present"/>
++
++<!-- build directory -->
++<property name="build.dir" location="build"/>
++<property name="build.javadoc" location="${build.dir}/javadoc"/>
++<property name="build.classes" location="${build.dir}/classes"/>
++<property name="build.test.classes" location="${build.dir}/test/classes"/>
++<property name="build.test.results" location="${build.dir}/test/results"/>
++<property name="build.demo.classes" location="${build.dir}/demo/classes"/>
++<!-- dist directory -->
++<property name="dist.dir" location="dist"/>
++<property name="dist.bin.dir" location="${dist.dir}/bin"/>
++<!-- docs directory -->
++<property name="docs.dir" location="docs"/>
++
++<!-- distribution file names -->
++<property name="dist.jar" value="${which.properties}.jar"/>
++<property name="test.jar" value="${which.properties}Test.jar"/>
++<property name="demo.jar" value="${which.properties}Demo.jar"/>
++<!-- java web start -->
++<condition property="javaws.dir" value="${java.home}/lib/">
++  <equals arg1="${java.specification.version}" arg2="1.5"/>
++  </condition>
++  <condition property="javaws.dir"
++    value="/Applications/Utilities/Java/Java Web Start.app/Contents/MacOS/">
++  <os family="mac"/>
++  </condition>
++  <condition property="javaws.dir" value="${java.home}/javaws/">
++     <not>
++	    <isset property="javaws.dir"/>
++     </not>
++  </condition>
++
++
++<!-- ============================================================ -->
++    <!-- Compile Settings                                             -->
++ <!-- ============================================================ -->
++
++ <property name="build.debug" value="true"/>
++ <property name="build.optimize" value="false"/>
++ <!-- Testing settings -->
++
++ <!-- test.package limits the unit tests to a specific package -->
++ <condition property="test.package" value="**">
++      <not>
++  <isset property="test.package"/>
++     </not>
++ </condition>
++
++<!-- test.headless will set the value of the -Djava.awt.headless flag -->
++<condition property="test.headless" value="false">
++      <not>
++    <isset property="test.headless"/>
++      </not>
++</condition>
++
++ <!-- if "test.reports" is set then all tests are exectuted and xml results
++       are placed in build/test/results -->
++
++<path id="compile.classpath">
++<fileset dir="${javaws.dir}" includes="**/javaws*.jar"/>
++<fileset dir="${lib.dir}" includes="**/*.jar"/>
++<fileset dir="${masterdist.lib.dir}" includes="**/*.jar"/>
++<fileset dir="${masterdist.bin.dir}" includes="**/*.jar"/>
++</path>
++
++<path id="test.classpath">
++<!-- Put the built classes at the head of the classpath -->
++<pathelement location="${build.classes}"/>
++<pathelement location="${build.test.classes}"/>
++<path refid="compile.classpath"/>
++<fileset dir="${masterdist.test.dir}" includes="**/*.jar"/>
++</path>
++
++<path id="demo.classpath">
++	<!-- Put the built classes at the head of the classpath -->
++	<pathelement location="${build.classes}"/>
++	<pathelement location="${build.demo.classes}"/>
++	<path refid="compile.classpath"/>
++</path>
++
+   <!-- It is NOT enough to just define target entities in a dtd file.
+   The entities must also be referenced from this xml file. -->
+ 
+   <!-- Public targets -->
++  <target name="all"
++	  description="Builds everything from scratch">
++	  <antcall target="${delegate}">
++		  <param name="target" value="all"/>
++	  </antcall>
++  </target>
++  
++  <target name="build"
++	  description="Performs an incremental build">
++	  <antcall target="${delegate}">
++		  <param name="target" value="build"/>
++	  </antcall>
++  </target>
++  
++  <target name="clean"
++	  description="Cleans all output directories">
++	  <antcall target="${delegate}">
++		  <param name="target" value="clean"/>
++	  </antcall>
++	  <delete dir="${dist.dir}" quiet="true"/>
++	  <delete dir="${build.dir}" quiet="true"/>
++  </target>
++  
++  <target name="deploy"
++	  description="Deploys executables and resources into the execution environment">
++	  <antcall target="${delegate}">
++		  <param name="target" value="deploy"/>
++	  </antcall>
++  </target>
++  
++  <target name="generateDocs"
++	  description="Generates documentation for the project">
++	  <antcall target="${delegate}">
++		  <param name="target" value="generateDocs"/>
++	  </antcall>
++	  <!-- copy generated docs to master docs directory (TBD) -->
++  </target>
++  
++  
++  
++  <target name="echo"
++	  description="Displays property values">
++	  <echo message="which.properties = ${which.properties}"/>
++	  <echo message="basedir = ${basedir}"/>
++	  <antcall target="build-all">
++		  <param name="target" value="echo"/>
++	  </antcall>
++  </target>
++  
++  <target name="fetch"
++	  description="Fetches source files from a repository">
++	  <antcall target="${delegate}">
++		  <param name="target" value="fetch"/>
++	  </antcall>
++  </target>
++   
++  <target name="test"
++	  description="Runs all the JUnit tests">
++	  <antcall target="${delegate}">
++		  <param name="target" value="test"/>
++	  </antcall>
++</target>
++  
++  
++  
++  <!--
+   &all;
+   &build;
+   &clean;
+   &echo;
+   &fetch;
+   &test;
++  -->
+ 
+   <!--======================================================================
+   build-all
+@@ -97,19 +300,7 @@
+ 
+ 
+   <!-- Does a clean rebuild for release. Turns off debug and turns on optimization -->
+-  <target name="release" depends="clean" description="Clean rebuild with optimization">
+-    <antcall target="build-all">
+-      <param name="build.debug" value="false"/>
+-      <param name="build.optimize" value="true"/>
+-      <param name="test.reports" value="true"/>
+-    </antcall>
+-    <!-- Create the build artifacts -->
+-    <ant dir="deployment" antfile="make/build.xml" target="bundle"
+-      inheritAll="false">
+-    </ant>
+-  </target>
+-
+-  <target name="test-report" description="Creates an html test report from unit test output">
++   <target name="test-report" description="Creates an html test report from unit test output">
+     <property name="report.dir" value="${basedir}/build/test-report"/>
+     <mkdir dir="${report.dir}"/>
+     <junitreport todir="${report.dir}">
+diff -Naur jdnc-0_7/make/build.xml~ jdnc-0_7-new/make/build.xml~
+--- jdnc-0_7/make/build.xml~	1970-01-01 00:00:00.000000000 +0000
++++ jdnc-0_7-new/make/build.xml~	2006-09-15 17:52:57.000000000 +0000
+@@ -0,0 +1,221 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<!--======================================================================
++    Master build file. Delegates all invocations to sub-projects as necessary.
++
++    author: Ramesh Gupta
++    version: 1.0
++    ======================================================================-->
++
++<!--<!DOCTYPE project SYSTEM "./master.entities.txt">-->
++
++
++<project name="Master" default="build-all" basedir="..">
++  <description>Master Build File</description>
++
++  <!-- Define masterbuild.dir BEFORE loading &properties; -->
++  <property name="masterbuild.dir" location="${basedir}"/>
++
++<!--  &properties;
++  &paths;
++
++  -->
++<path id="compile.classpath">
++	<fileset dir="${javaws.dir}" includes="**/javaws*.jar"/>
++	<fileset dir="${lib.dir}" includes="**/*.jar"/>
++	<fileset dir="${masterdist.lib.dir}" includes="**/*.jar"/>
++	<fileset dir="${masterdist.bin.dir}" includes="**/*.jar"/>
++</path>
++
++<path id="test.classpath">
++	<!-- Put the built classes at the head of the classpath -->
++	<pathelement location="${build.classes}"/>
++	<pathelement location="${build.test.classes}"/>
++	<path refid="compile.classpath"/>
++	<fileset dir="${masterdist.test.dir}" includes="**/*.jar"/>
++</path>
++
++<path id="demo.classpath">
++	<!-- Put the built classes at the head of the classpath -->
++	<pathelement location="${build.classes}"/>
++	<pathelement location="${build.demo.classes}"/>
++	<path refid="compile.classpath"/>
++</path>
++
++  <!-- It is NOT enough to just define target entities in a dtd file.
++  The entities must also be referenced from this xml file. -->
++
++  <!-- Public targets -->
++  <target name="all"
++	  description="Builds everything from scratch">
++	  <antcall target="${delegate}">
++		  <param name="target" value="all"/>
++	  </antcall>
++  </target>
++  
++  <target name="build"
++	  description="Performs an incremental build">
++	  <antcall target="${delegate}">
++		  <param name="target" value="build"/>
++	  </antcall>
++  </target>
++  
++  <target name="clean"
++	  description="Cleans all output directories">
++	  <antcall target="${delegate}">
++		  <param name="target" value="clean"/>
++	  </antcall>
++	  <delete dir="${dist.dir}" quiet="true"/>
++	  <delete dir="${build.dir}" quiet="true"/>
++  </target>
++  
++  <target name="deploy"
++	  description="Deploys executables and resources into the execution environment">
++	  <antcall target="${delegate}">
++		  <param name="target" value="deploy"/>
++	  </antcall>
++  </target>
++  
++  <target name="generateDocs"
++	  description="Generates documentation for the project">
++	  <antcall target="${delegate}">
++		  <param name="target" value="generateDocs"/>
++	  </antcall>
++	  <!-- copy generated docs to master docs directory (TBD) -->
++  </target>
++  
++  
++  
++  <target name="echo"
++	  description="Displays property values">
++	  <echo message="which.properties = ${which.properties}"/>
++	  <echo message="basedir = ${basedir}"/>
++	  <antcall target="build-all">
++		  <param name="target" value="echo"/>
++	  </antcall>
++  </target>
++  
++  <target name="fetch"
++	  description="Fetches source files from a repository">
++	  <antcall target="${delegate}">
++		  <param name="target" value="fetch"/>
++	  </antcall>
++  </target>
++  
++  <target name="release"
++	  description="Releases a build for external consumption">
++	  <antcall target="${delegate}">
++		  <param name="target" value="release"/>
++	  </antcall>
++  </target>
++  
++  <target name="test"
++	  description="Runs all the JUnit tests">
++	  <antcall target="${delegate}">
++		  <param name="target" value="test"/>
++	  </antcall>
++</target>
++  
++  
++  
++  <!--
++  &all;
++  &build;
++  &clean;
++  &echo;
++  &fetch;
++  &test;
++  -->
++
++  <!--======================================================================
++  build-all
++  ======================================================================-->
++  <target name="build-all"
++    depends="build-swingx, build-jdnc_api, build-jdnc_markup"
++    description="Default proxy target"/>
++
++  <!--======================================================================
++  build-swingx
++  ======================================================================-->
++  <target name="build-swingx" depends="-prepare"
++    description="Proxy target for swingx" if="swingx.present">
++    <ant dir="swingx" antfile="make/build.xml"
++      target="${target}" inheritAll="false"/>
++  </target>
++
++  <!--======================================================================
++  build-jdnc_api
++  ======================================================================-->
++  <target name="build-jdnc_api" depends="-prepare, build-swingx"
++    description="Proxy target for jdnc_api" if="jdnc_api.present">
++    <ant dir="jdnc_api" antfile="make/build.xml"
++      target="${target}" inheritAll="false"/>
++  </target>
++
++  <!--======================================================================
++  build-jdnc_markup
++  ======================================================================-->
++  <target name="build-jdnc_markup" depends="-prepare, build-jdnc_api"
++    description="Proxy target for object jdnc_markup" if="jdnc_markup.present">
++    <ant dir="jdnc_markup" antfile="make/build.xml"
++      target="${target}" inheritAll="false"/>
++  </target>
++
++  <!--======================================================================
++  clean-all
++  ======================================================================-->
++  <target name="clean-all" depends="clean"
++    description="Cleans everything, including local history files">
++    <delete>
++      <fileset dir="${basedir}"
++        includes="**/*~,**/*.jpgr.local,**/*.jpx.local"
++        defaultexcludes="false"/>
++    </delete>
++  </target>
++
++  <!--======================================================================
++  -prepare: make directories, and so on
++  ======================================================================-->
++  <target name="-prepare" depends="-check">
++    <tstamp/>
++    <mkdir dir="${masterdist.bin.dir}"/>
++    <mkdir dir="${masterdist.lib.dir}"/>
++    <mkdir dir="${masterdist.test.dir}"/>
++  </target>
++
++
++  <!--======================================================================
++  -check: Verify the environment see the README.txt for a description
++  of dependencies.
++  ======================================================================-->
++  <target name="-check">
++    <fail message="Missing JUnit classes. See README.txt"
++      unless="junit.present"/>
++  </target>
++
++
++  <!-- Does a clean rebuild for release. Turns off debug and turns on optimization -->
++  <target name="release" depends="clean" description="Clean rebuild with optimization">
++    <antcall target="build-all">
++      <param name="build.debug" value="false"/>
++      <param name="build.optimize" value="true"/>
++      <param name="test.reports" value="true"/>
++    </antcall>
++    <!-- Create the build artifacts -->
++    <ant dir="deployment" antfile="make/build.xml" target="bundle"
++      inheritAll="false">
++    </ant>
++  </target>
++
++  <target name="test-report" description="Creates an html test report from unit test output">
++    <property name="report.dir" value="${basedir}/build/test-report"/>
++    <mkdir dir="${report.dir}"/>
++    <junitreport todir="${report.dir}">
++      <fileset dir="${basedir}">
++        <include name="**/build/test/results/TEST-*.xml"/>
++      </fileset>
++      <report format="frames" todir="${report.dir}"/>
++    </junitreport>
++  </target>
++
++</project>
+diff -Naur jdnc-0_7/swingx/make/build.xml jdnc-0_7-new/swingx/make/build.xml
+--- jdnc-0_7/swingx/make/build.xml	2004-09-22 09:59:24.000000000 +0000
++++ jdnc-0_7-new/swingx/make/build.xml	2006-09-15 20:32:09.000000000 +0000
+@@ -7,20 +7,163 @@
+     version: 1.0
+     ======================================================================-->
+ 
+-<!DOCTYPE project SYSTEM "../../make/shared.entities.txt">
++<!--<!DOCTYPE project SYSTEM "../../make/shared.entities.txt">-->
+ 
+ <project name="swingx" default="build" basedir="..">
+   <description>Builds JFC Extension components</description>
+ 
+-  &properties;  <!-- Include xml fragment defining common properties -->
+-  &paths;
++  <!--&properties; --> <!-- Include xml fragment defining common properties -->
++  <!-- CAUTION: The order in which properties are defined IS VERY SIGNIFICANT! -->
++  
++  <property environment="env"/>
++  <property name="env.COMPUTERNAME" value="${env.HOSTNAME}"/>
++  <property name="env.JAVA_HOME" value="${env.JAVA_HOME}"/>
++  
++  <property name="user.properties.file" location="${user.home}/.build.properties"/>
++  
++  <!-- Load properties from project properties file -->
++  <property file="${basedir}/make/build.properties"/>
++  
++  <!-- Load properties from user properties file -->
++  <property file="${user.properties.file}"/>
++  
++  <!-- ============================================================ -->
++  <!-- Directory Mappings                                           -->
++  <!-- ============================================================ -->
++  
++  <property name="root.dir" location="${basedir}"/>
++  <property name="masterbuild.dir" location="${root.dir}/.."/>
++  
++  <!-- Load properties from master-build properties file -->
++  <property file="${masterbuild.dir}/build.properties"/>
++  
++  <!-- Set the following only after all property files have been loaded -->
++  <property name="masterdist.dir" location="${masterbuild.dir}/dist"/>
++  <property name="masterdist.bin.dir" location="${masterdist.dir}/bin"/>
++  <property name="masterdist.lib.dir" location="${masterdist.dir}/lib"/>
++  <property name="masterdist.test.dir" location="${masterdist.dir}/test"/>
++  
++  <!-- sub-project locations -->
++  <property name="swingx.dir" location="${masterbuild.dir}/swingx"/>
++  <property name="jdnc-api.dir" location="${masterbuild.dir}/jdnc_api"/>
++  <property name="jdnc-xml.dir" location="${masterbuild.dir}/jdnc_markup"/>
++  
++  <available file="${masterbuild.dir}/swingx" type="dir" property="swingx.present"/>
++  <available file="${masterbuild.dir}/jdnc_api" type="dir" property="jdnc_api.present"/>
++  <available file="${masterbuild.dir}/jdnc_markup" type="dir" property="jdnc_markup.present"/>
++  
++  <!-- sources directory -->
++  <property name="src.dir" location="${root.dir}/src"/>
++  <available property="src.java" type="dir" file="${src.dir}/java" value="${src.dir}/java"/>
++  <available property="src.test" type="dir" file="${src.dir}/test" value="${src.dir}/test"/>
++  <available property="src.demo" type="dir" file="${src.dir}/demo" value="${src.dir}/demo"/>
++  
++  <!-- lib directory  set lib.dir only if it exists -->
++  <available file="${root.dir}/lib" type="dir" property="lib.dir" value="${root.dir}/lib"/>
++  <condition property="lib.dir" value="${masterdist.lib.dir}">
++	  <not>
++		  <isset property="lib.dir"/>
++	  </not>
++  </condition>
++  
++  <!-- check available tools -->
++  <available classname="junit.framework.Test" property="junit.present"/>
++  <available classname="net.sf.xframe.xsddoc.Task" property="xsddoc.present"/>
++  
++  <!-- build directory -->
++  <property name="build.dir" location="build"/>
++  <property name="build.javadoc" location="${build.dir}/javadoc"/>
++  <property name="build.classes" location="${build.dir}/classes"/>
++  <property name="build.test.classes" location="${build.dir}/test/classes"/>
++  <property name="build.test.results" location="${build.dir}/test/results"/>
++  <property name="build.demo.classes" location="${build.dir}/demo/classes"/>
++  
++  <!-- dist directory -->
++  <property name="dist.dir" location="dist"/>
++  <property name="dist.bin.dir" location="${dist.dir}/bin"/>
++  
++  <!-- docs directory -->
++  <property name="docs.dir" location="docs"/>
++  
++  <!-- distribution file names -->
++  <property name="dist.jar" value="${which.properties}.jar"/>
++  <property name="test.jar" value="${which.properties}Test.jar"/>
++  <property name="demo.jar" value="${which.properties}Demo.jar"/>
++  
++  <!-- java web start -->
++  <condition property="javaws.dir" value="${java.home}/lib/">
++	  <equals arg1="${java.specification.version}" arg2="1.5"/>
++  </condition>
++  <condition property="javaws.dir"
++	     value="/Applications/Utilities/Java/Java Web Start.app/Contents/MacOS/">
++	  <os family="mac"/>
++  </condition>
++  <condition property="javaws.dir" value="${java.home}/javaws/">
++	  <not>
++		  <isset property="javaws.dir"/>
++	  </not>
++  </condition>
++  
++  
++  <!-- ============================================================ -->
++  <!-- Compile Settings                                             -->
++  <!-- ============================================================ -->
++  
++  <property name="build.debug" value="true"/>
++  <property name="build.optimize" value="false"/>
++  
++  <!-- Testing settings -->
++  
++  <!-- test.package limits the unit tests to a specific package -->
++  <condition property="test.package" value="**">
++	  <not>
++		  <isset property="test.package"/>
++	  </not>
++  </condition>
++  
++  <!-- test.headless will set the value of the -Djava.awt.headless flag -->
++  <condition property="test.headless" value="false">
++	  <not>
++		  <isset property="test.headless"/>
++	  </not>
++  </condition>
++  
++  <!-- if "test.reports" is set then all tests are exectuted and xml results
++     are placed in build/test/results -->
++  
+ 
++  <!--&paths; -->
++  <path id="compile.classpath">
++	  <fileset dir="${javaws.dir}" includes="**/javaws*.jar"/>
++	  <fileset dir="${lib.dir}" includes="**/*.jar"/>
++	  <fileset dir="${masterdist.lib.dir}" includes="**/*.jar"/>
++	  <fileset dir="${masterdist.bin.dir}" includes="**/*.jar"/>
++  </path>
++  
++  <path id="test.classpath">
++	  <!-- Put the built classes at the head of the classpath -->
++	  <pathelement location="${build.classes}"/>
++	  <pathelement location="${build.test.classes}"/>
++	  <path refid="compile.classpath"/>
++	  <fileset dir="${masterdist.test.dir}" includes="**/*.jar"/>
++  </path>
++  
++  <path id="demo.classpath">
++	  <!-- Put the built classes at the head of the classpath -->
++	  <pathelement location="${build.classes}"/>
++	  <pathelement location="${build.demo.classes}"/>
++	  <path refid="compile.classpath"/>
++</path>
++  
++  
+     <!-- It is NOT enough to just define target entities in a def file.
+          The entities must also be referenced from this xml file. -->
+ 
+     <!-- Public targets -->
++    <!--
+     &all;
+     &build;
++    
+     &clean;
+     &deploy;
+     &echo;
+@@ -28,14 +171,218 @@
+     &release;
+     &demo;
+     &run;
+-    &test;
+-
++    &test;-->
++    <target name="all" depends="echo, clean, fetch, build, test"
++	    description="Builds everything from scratch">
++    </target>
++    
++    <target name="build" depends="echo, -archive, -lib"
++	    description="Perform an incremental build">
++    </target>
++    
++    <target name="clean" description="Deletes the dist and build directorties">
++	    <delete dir="${build.dir}" quiet="true"/>
++	    <delete dir="${dist.dir}" quiet="true"/>
++    </target>
++    
++    <target name="-compile-demo" depends="-compile" if="src.demo">
++	    <mkdir dir="${build.demo.classes}"/>
++	    
++	    <javac srcdir="${src.demo}" destdir="${build.demo.classes}"
++		   classpathref="demo.classpath"
++		   source="1.5" deprecation="on"
++		   debug="${build.debug}" optimize="${build.optimize}"/>
++	    
++	    <echo message="now copying...${build.demo.classes}  ${src.demo}"/>
++	    <copy todir="${build.demo.classes}">
++		    <fileset dir="${src.demo}">	
++			    <include name="**/resources/**"/>
++		    </fileset>
++	    </copy>
++    </target>
++    
++    <target name="run-demo" depends="-compile-demo" if="src.demo"
++	    description="Run a demo class: -Ddemo.class=[class]">
++	    <java classname="${demo.class}" fork="true">
++		    <classpath>
++			    <path refid="demo.classpath"/>
++		    </classpath>
++	    </java>
++    </target>
++    
++    <target name="debug-demo" depends="-compile-demo" if="netbeans.home" 
++	    description="Debug a demo class in NetBeans: -Ddemo.class=[class]">
++	    <fail message="Property demo.class not set." unless="demo.class"/>
++	    <nbjpdastart name="${demo.class}" addressproperty="jpda.address" transport="dt_socket">
++		    <classpath>
++			    <path refid="demo.classpath"/>
++		    </classpath>
++	    </nbjpdastart>
++	    <java classname="${demo.class}" fork="true">
++		    <jvmarg value="-Xdebug"/>
++		    <jvmarg value="-Xnoagent"/>
++		    <jvmarg value="-Djava.compiler=none"/>
++		    <jvmarg value="-Xrunjdwp:transport=dt_socket,address=${jpda.address}"/>
++		    <classpath>
++			    <path refid="demo.classpath"/>
++		    </classpath>
++	    </java>
++  </target>
++  
++  <target name="deploy">
++    </target>
++    
++    <target name="echo" description="Prints the properties">
++	    <echo message="Building ${ant.project.name} on Java ${ant.java.version} with ${ant.version}"/>
++	    <echo message="ant.file = ${ant.file}"/>
++	    <echo message="ant.home = ${ant.home}"/>
++	    <echo message="env.JAVA_HOME = ${env.JAVA_HOME}"/>
++	    <echo message="which.properties = ${which.properties}"/>
++	    <echo message="basedir = ${basedir}"/>
++	    <echo message="root.dir = ${root.dir}"/>
++	    <echo message="masterbuild.dir = ${masterbuild.dir}"/>
++	    <echo message="masterdist.dir = ${masterdist.dir}"/>
++	    <echo message="src.dir = ${src.dir}"/>
++	    <echo message="build.dir = ${build.dir}"/>
++	    <echo message="build.classes = ${build.classes}"/>
++	    <echo message="build.javadoc = ${build.javadoc}"/>
++	    <echo message="dist.dir = ${dist.dir}"/>
++	    <echo message="lib.dir = ${lib.dir}"/>
++	    <echo message="javaws.dir = ${javaws.dir}"/>
++    </target>
++    
++    <target name="fetch">
++    </target>
++    
++    <target name="-lib" depends="-archive">
++	    <echo message="Copying files from ${dist.bin.dir} to ${masterdist.bin.dir}"/>
++	    <copy todir="${masterdist.bin.dir}" overwrite="true" preservelastmodified="true">
++		    <fileset dir="${dist.bin.dir}" excludes="*Test.jar"/>
++	    </copy>
++	    <copy todir="${masterdist.test.dir}" overwrite="true" preservelastmodified="true">
++		    <fileset dir="${dist.bin.dir}" includes="*Test.jar"/>
++	    </copy>
++	    <copy todir="${masterdist.lib.dir}" overwrite="true" preservelastmodified="true">
++		    <fileset dir="${lib.dir}" includes="*.jar"/>
++	    </copy>
++    </target>
++    
++    <target name="-prepare">
++	    <tstamp/>
++	    <mkdir dir="${build.classes}"/>
++	    <mkdir dir="${dist.bin.dir}"/>
++	    <mkdir dir="${masterdist.bin.dir}"/>
++    </target>
++    
++    <target name="-publish">
++    </target>
++    
++    <target name="release">
++    </target>
++    
++    <target name="run" depends="-archive" description="Run the main method of a class: -Drun.class=[class]">
++	    <java classname="${run.class}" fork="true">
++		    <classpath>
++			    <path refid="test.classpath"/>    
++		    </classpath>
++	    </java>
++  </target>
++  
++  
++  <target name="-compile-test" depends="-compile" if="src.test">
++	  <mkdir dir="${build.test.classes}"/>
++	  
++	  <javac srcdir="${src.test}" destdir="${build.test.classes}"
++		 classpathref="test.classpath"
++		 includes="${branch}" source="1.5" deprecation="on"
++		 debug="${build.debug}" optimize="${build.optimize}"/>
++	  <echo message="now copying...${build.test.classes}  ${src.test}"/>
++	  <copy todir="${build.test.classes}">
++		  <fileset dir="${src.test}">
++			  <include name="**/resources/**"/>
++		  </fileset>
++	  </copy>
++  </target>
++  
++  <target name="test" depends="-compile-test, -lib" if="src.test"
++	  description="Run a single, package or all unit tests: -Dtest.class=[class] | -Dtest.package=[package]">
++	  <mkdir dir="${build.test.results}"/>
++	  <junit fork="yes" haltonfailure="false" failureproperty="junit_test_failed">
++		  <sysproperty key="java.awt.headless" value="${test.headless}"/>
++		  <classpath>
++			  <path refid="test.classpath"/>
++		  </classpath>
++		  
++		  <formatter type="brief" usefile="false"/>
++		  
++		  <test name="${test.class}" if="test.class"/>
++		  
++		  <batchtest unless="test.class">
++			  <fileset dir="${src.test}">
++				  <include name="${test.package}/*Test.java"/>
++			  </fileset>
++		  </batchtest>
++		  
++		  <batchtest todir="${build.test.results}" if="test.reports">
++			  <formatter type="xml"/>
++			  <fileset dir="${src.test}">
++				  <include name="**/*Test.java"/>
++			  </fileset>
++		  </batchtest>
++		  
++	  </junit>
++	  <fail if="junit_test_failed" message="One or more JUnit tests failed"/>
++	  
++  </target>
++    
++    
+     <!-- Protected targets -->
+-    &_archive;
++  <!--  &_archive;
+     &_compile;
+     &_lib;
+     &_prepare;
+     &_publish;
++-->
++  
++  <target name="--archive-classes" depends="-compile">
++	  <jar jarfile="${dist.bin.dir}/${dist.jar}" basedir="${build.classes}"
++	       index="true" compress="true"/>
++  </target>
++  
++  <target name="--archive-test" depends="-compile-test" if="src.test">
++	  <jar jarfile="${dist.bin.dir}/${test.jar}" basedir="${build.test.classes}"
++	       compress="true"> 
++		  <manifest>
++			  <attribute name="Main-Class" value="${test.class}"/>
++		  </manifest>
++	  </jar>
++  </target>
++  
++  <target name="--archive-demo" depends="-compile-demo" if="src.demo">
++	  <jar jarfile="${dist.bin.dir}/${demo.jar}" basedir="${build.demo.classes}"
++	       compress="true"> 
++		  <manifest>
++			  <attribute name="Main-Class" value="${demo.class}"/>
++		  </manifest>
++	  </jar>
++  </target>
++  
++  <target name="-archive" depends="--archive-classes, --archive-test, --archive-demo">
++    </target>
++    
++    <target name="-compile" depends="-prepare">
++	    <javac srcdir="${src.java}" destdir="${build.classes}"
++		   classpathref="compile.classpath"
++		   includes="${branch}" source="1.5" deprecation="on"
++		   debug="${build.debug}" optimize="${build.optimize}"/>
++	    <echo message="now copying...${build.classes}  ${src.dir}"/>
++	    <copy todir="${build.classes}">
++		    <fileset dir="${src.java}">
++			    <include name="**/resources/**"/>
++		    </fileset>
++	    </copy>
++	    
++    </target>
+ 
+     <!--======================================================================
+         javadoc: build documentation
+diff -Naur jdnc-0_7/swingx/make/build.xml~ jdnc-0_7-new/swingx/make/build.xml~
+--- jdnc-0_7/swingx/make/build.xml~	1970-01-01 00:00:00.000000000 +0000
++++ jdnc-0_7-new/swingx/make/build.xml~	2006-09-15 20:31:57.000000000 +0000
+@@ -0,0 +1,354 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<!--======================================================================
++    swingx build file
++
++    author: Ramesh Gupta
++    version: 1.0
++    ======================================================================-->
++
++<!--<!DOCTYPE project SYSTEM "../../make/shared.entities.txt">-->
++
++<project name="swingx" default="build" basedir="..">
++  <description>Builds JFC Extension components</description>
++
++  <!--&properties; --> <!-- Include xml fragment defining common properties -->
++  <!-- CAUTION: The order in which properties are defined IS VERY SIGNIFICANT! -->
++  
++  <property environment="env"/>
++  <property name="env.COMPUTERNAME" value="${env.HOSTNAME}"/>
++  <property name="env.JAVA_HOME" value="${env.JAVA_HOME}"/>
++  
++  <property name="user.properties.file" location="${user.home}/.build.properties"/>
++  
++  <!-- Load properties from project properties file -->
++  <property file="${basedir}/make/build.properties"/>
++  
++  <!-- Load properties from user properties file -->
++  <property file="${user.properties.file}"/>
++  
++  <!-- ============================================================ -->
++  <!-- Directory Mappings                                           -->
++  <!-- ============================================================ -->
++  
++  <property name="root.dir" location="${basedir}"/>
++  <property name="masterbuild.dir" location="${root.dir}/.."/>
++  
++  <!-- Load properties from master-build properties file -->
++  <property file="${masterbuild.dir}/build.properties"/>
++  
++  <!-- Set the following only after all property files have been loaded -->
++  <property name="masterdist.dir" location="${masterbuild.dir}/dist"/>
++  <property name="masterdist.bin.dir" location="${masterdist.dir}/bin"/>
++  <property name="masterdist.lib.dir" location="${masterdist.dir}/lib"/>
++  <property name="masterdist.test.dir" location="${masterdist.dir}/test"/>
++  
++  <!-- sub-project locations -->
++  <property name="swingx.dir" location="${masterbuild.dir}/swingx"/>
++  <property name="jdnc-api.dir" location="${masterbuild.dir}/jdnc_api"/>
++  <property name="jdnc-xml.dir" location="${masterbuild.dir}/jdnc_markup"/>
++  
++  <available file="${masterbuild.dir}/swingx" type="dir" property="swingx.present"/>
++  <available file="${masterbuild.dir}/jdnc_api" type="dir" property="jdnc_api.present"/>
++  <available file="${masterbuild.dir}/jdnc_markup" type="dir" property="jdnc_markup.present"/>
++  
++  <!-- sources directory -->
++  <property name="src.dir" location="${root.dir}/src"/>
++  <available property="src.java" type="dir" file="${src.dir}/java" value="${src.dir}/java"/>
++  <available property="src.test" type="dir" file="${src.dir}/test" value="${src.dir}/test"/>
++  <available property="src.demo" type="dir" file="${src.dir}/demo" value="${src.dir}/demo"/>
++  
++  <!-- lib directory  set lib.dir only if it exists -->
++  <available file="${root.dir}/lib" type="dir" property="lib.dir" value="${root.dir}/lib"/>
++  <condition property="lib.dir" value="${masterdist.lib.dir}">
++	  <not>
++		  <isset property="lib.dir"/>
++	  </not>
++  </condition>
++  
++  <!-- check available tools -->
++  <available classname="junit.framework.Test" property="junit.present"/>
++  <available classname="net.sf.xframe.xsddoc.Task" property="xsddoc.present"/>
++  
++  <!-- build directory -->
++  <property name="build.dir" location="build"/>
++  <property name="build.javadoc" location="${build.dir}/javadoc"/>
++  <property name="build.classes" location="${build.dir}/classes"/>
++  <property name="build.test.classes" location="${build.dir}/test/classes"/>
++  <property name="build.test.results" location="${build.dir}/test/results"/>
++  <property name="build.demo.classes" location="${build.dir}/demo/classes"/>
++  
++  <!-- dist directory -->
++  <property name="dist.dir" location="dist"/>
++  <property name="dist.bin.dir" location="${dist.dir}/bin"/>
++  
++  <!-- docs directory -->
++  <property name="docs.dir" location="docs"/>
++  
++  <!-- distribution file names -->
++  <property name="dist.jar" value="${which.properties}.jar"/>
++  <property name="test.jar" value="${which.properties}Test.jar"/>
++  <property name="demo.jar" value="${which.properties}Demo.jar"/>
++  
++  <!-- java web start -->
++  <condition property="javaws.dir" value="${java.home}/lib/">
++	  <equals arg1="${java.specification.version}" arg2="1.5"/>
++  </condition>
++  <condition property="javaws.dir"
++	     value="/Applications/Utilities/Java/Java Web Start.app/Contents/MacOS/">
++	  <os family="mac"/>
++  </condition>
++  <condition property="javaws.dir" value="${java.home}/javaws/">
++	  <not>
++		  <isset property="javaws.dir"/>
++	  </not>
++  </condition>
++  
++  
++  <!-- ============================================================ -->
++  <!-- Compile Settings                                             -->
++  <!-- ============================================================ -->
++  
++  <property name="build.debug" value="true"/>
++  <property name="build.optimize" value="false"/>
++  
++  <!-- Testing settings -->
++  
++  <!-- test.package limits the unit tests to a specific package -->
++  <condition property="test.package" value="**">
++	  <not>
++		  <isset property="test.package"/>
++	  </not>
++  </condition>
++  
++  <!-- test.headless will set the value of the -Djava.awt.headless flag -->
++  <condition property="test.headless" value="false">
++	  <not>
++		  <isset property="test.headless"/>
++	  </not>
++  </condition>
++  
++  <!-- if "test.reports" is set then all tests are exectuted and xml results
++     are placed in build/test/results -->
++  
++
++  <!--&paths; -->
++  <path id="compile.classpath">
++	  <fileset dir="${javaws.dir}" includes="**/javaws*.jar"/>
++	  <fileset dir="${lib.dir}" includes="**/*.jar"/>
++	  <fileset dir="${masterdist.lib.dir}" includes="**/*.jar"/>
++	  <fileset dir="${masterdist.bin.dir}" includes="**/*.jar"/>
++  </path>
++  
++  <path id="test.classpath">
++	  <!-- Put the built classes at the head of the classpath -->
++	  <pathelement location="${build.classes}"/>
++	  <pathelement location="${build.test.classes}"/>
++	  <path refid="compile.classpath"/>
++	  <fileset dir="${masterdist.test.dir}" includes="**/*.jar"/>
++  </path>
++  
++  <path id="demo.classpath">
++	  <!-- Put the built classes at the head of the classpath -->
++	  <pathelement location="${build.classes}"/>
++	  <pathelement location="${build.demo.classes}"/>
++	  <path refid="compile.classpath"/>
++</path>
++  
++  
++    <!-- It is NOT enough to just define target entities in a def file.
++         The entities must also be referenced from this xml file. -->
++
++    <!-- Public targets -->
++    <!--
++    &all;
++    &build;
++    
++    &clean;
++    &deploy;
++    &echo;
++    &fetch;
++    &release;
++    &demo;
++    &run;
++    &test;-->
++    <target name="all" depends="echo, clean, fetch, build, test"
++	    description="Builds everything from scratch">
++    </target>
++    
++    <target name="build" depends="echo, -archive, -lib"
++	    description="Perform an incremental build">
++    </target>
++    
++    <target name="clean" description="Deletes the dist and build directorties">
++	    <delete dir="${build.dir}" quiet="true"/>
++	    <delete dir="${dist.dir}" quiet="true"/>
++    </target>
++    
++    <target name="-compile-demo" depends="-compile" if="src.demo">
++	    <mkdir dir="${build.demo.classes}"/>
++	    
++	    <javac srcdir="${src.demo}" destdir="${build.demo.classes}"
++		   classpathref="demo.classpath"
++		   source="1.5" deprecation="on"
++		   debug="${build.debug}" optimize="${build.optimize}"/>
++	    
++	    <echo message="now copying...${build.demo.classes}  ${src.demo}"/>
++	    <copy todir="${build.demo.classes}">
++		    <fileset dir="${src.demo}">	
++			    <include name="**/resources/**"/>
++		    </fileset>
++	    </copy>
++    </target>
++    
++    <target name="run-demo" depends="-compile-demo" if="src.demo"
++	    description="Run a demo class: -Ddemo.class=[class]">
++	    <java classname="${demo.class}" fork="true">
++		    <classpath>
++			    <path refid="demo.classpath"/>
++		    </classpath>
++	    </java>
++    </target>
++    
++    <target name="debug-demo" depends="-compile-demo" if="netbeans.home" 
++	    description="Debug a demo class in NetBeans: -Ddemo.class=[class]">
++	    <fail message="Property demo.class not set." unless="demo.class"/>
++	    <nbjpdastart name="${demo.class}" addressproperty="jpda.address" transport="dt_socket">
++		    <classpath>
++			    <path refid="demo.classpath"/>
++		    </classpath>
++	    </nbjpdastart>
++	    <java classname="${demo.class}" fork="true">
++		    <jvmarg value="-Xdebug"/>
++		    <jvmarg value="-Xnoagent"/>
++		    <jvmarg value="-Djava.compiler=none"/>
++		    <jvmarg value="-Xrunjdwp:transport=dt_socket,address=${jpda.address}"/>
++		    <classpath>
++			    <path refid="demo.classpath"/>
++		    </classpath>
++	    </java>
++  </target>
++  
++  <target name="deploy">
++    </target>
++    
++    <target name="echo" description="Prints the properties">
++	    <echo message="Building ${ant.project.name} on Java ${ant.java.version} with ${ant.version}"/>
++	    <echo message="ant.file = ${ant.file}"/>
++	    <echo message="ant.home = ${ant.home}"/>
++	    <echo message="env.JAVA_HOME = ${env.JAVA_HOME}"/>
++	    <echo message="which.properties = ${which.properties}"/>
++	    <echo message="basedir = ${basedir}"/>
++	    <echo message="root.dir = ${root.dir}"/>
++	    <echo message="masterbuild.dir = ${masterbuild.dir}"/>
++	    <echo message="masterdist.dir = ${masterdist.dir}"/>
++	    <echo message="src.dir = ${src.dir}"/>
++	    <echo message="build.dir = ${build.dir}"/>
++	    <echo message="build.classes = ${build.classes}"/>
++	    <echo message="build.javadoc = ${build.javadoc}"/>
++	    <echo message="dist.dir = ${dist.dir}"/>
++	    <echo message="lib.dir = ${lib.dir}"/>
++	    <echo message="javaws.dir = ${javaws.dir}"/>
++    </target>
++    
++    <target name="fetch">
++    </target>
++    
++    <target name="-lib" depends="-archive">
++	    <echo message="Copying files from ${dist.bin.dir} to ${masterdist.bin.dir}"/>
++	    <copy todir="${masterdist.bin.dir}" overwrite="true" preservelastmodified="true">
++		    <fileset dir="${dist.bin.dir}" excludes="*Test.jar"/>
++	    </copy>
++	    <copy todir="${masterdist.test.dir}" overwrite="true" preservelastmodified="true">
++		    <fileset dir="${dist.bin.dir}" includes="*Test.jar"/>
++	    </copy>
++	    <copy todir="${masterdist.lib.dir}" overwrite="true" preservelastmodified="true">
++		    <fileset dir="${lib.dir}" includes="*.jar"/>
++	    </copy>
++    </target>
++    
++    <target name="-prepare">
++	    <tstamp/>
++	    <mkdir dir="${build.classes}"/>
++	    <mkdir dir="${dist.bin.dir}"/>
++	    <mkdir dir="${masterdist.bin.dir}"/>
++    </target>
++    
++    <target name="-publish">
++    </target>
++    
++    <target name="release">
++    </target>
++    
++    <target name="run" depends="-archive" description="Run the main method of a class: -Drun.class=[class]">
++	    <java classname="${run.class}" fork="true">
++		    <classpath>
++			    <path refid="test.classpath"/>    
++		    </classpath>
++	    </java>
++  </target>
++    
++    
++    <!-- Protected targets -->
++  <!--  &_archive;
++    &_compile;
++    &_lib;
++    &_prepare;
++    &_publish;
++-->
++  
++  <target name="--archive-classes" depends="-compile">
++	  <jar jarfile="${dist.bin.dir}/${dist.jar}" basedir="${build.classes}"
++	       index="true" compress="true"/>
++  </target>
++  
++  <target name="--archive-test" depends="-compile-test" if="src.test">
++	  <jar jarfile="${dist.bin.dir}/${test.jar}" basedir="${build.test.classes}"
++	       compress="true"> 
++		  <manifest>
++			  <attribute name="Main-Class" value="${test.class}"/>
++		  </manifest>
++	  </jar>
++  </target>
++  
++  <target name="--archive-demo" depends="-compile-demo" if="src.demo">
++	  <jar jarfile="${dist.bin.dir}/${demo.jar}" basedir="${build.demo.classes}"
++	       compress="true"> 
++		  <manifest>
++			  <attribute name="Main-Class" value="${demo.class}"/>
++		  </manifest>
++	  </jar>
++  </target>
++  
++  <target name="-archive" depends="--archive-classes, --archive-test, --archive-demo">
++    </target>
++    
++    <target name="-compile" depends="-prepare">
++	    <javac srcdir="${src.java}" destdir="${build.classes}"
++		   classpathref="compile.classpath"
++		   includes="${branch}" source="1.5" deprecation="on"
++		   debug="${build.debug}" optimize="${build.optimize}"/>
++	    <echo message="now copying...${build.classes}  ${src.dir}"/>
++	    <copy todir="${build.classes}">
++		    <fileset dir="${src.java}">
++			    <include name="**/resources/**"/>
++		    </fileset>
++	    </copy>
++	    
++    </target>
++
++    <!--======================================================================
++        javadoc: build documentation
++        ======================================================================-->
++    <target name="javadoc" depends="-compile" description="Generate API documentation">
++        <ant antfile="${masterbuild.dir}/make/javadoc.xml" dir="." inheritAll="false">
++            <property name="javadoc.title" value="JFC Extensions"/>
++            <property name="javadoc.excludes" value="org.jdesktop.test.*"/>
++            <property name="javadoc.dest.dir" value="${build.javadoc}"/>
++            <reference refid="compile.classpath" torefid="javadoc.classpath"/>
++        </ant>
++    </target>
++
++</project>
++
++
