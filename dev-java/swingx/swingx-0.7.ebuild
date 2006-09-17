@@ -14,10 +14,10 @@ SLOT="0.7"
 KEYWORDS="-* ~x86"
 IUSE=""
 
+#dev-java/jnlp-bin
 DEPEND=">=virtual/jdk-1.5
 		app-arch/unzip
 		>=dev-java/ant-core-1.5
-		dev-java/jnlp-bin
 		dev-java/junit
 		dev-java/jlfgr"		
 RDEPEND=">=virtual/jre-1.5
