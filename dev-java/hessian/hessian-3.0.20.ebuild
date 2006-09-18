@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/hessian/hessian-3.0.8-r3.ebuild,v 1.2 2006/08/02 04:28:10 nichoj Exp $
 
-inherit java-pkg-2
+inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="The Hessian binary web service protocol makes web services usable without requiring a large framework, and without learning yet another alphabet soup of protocols."
 HOMEPAGE="http://www.caucho.com/hessian/"
@@ -25,8 +25,14 @@ DEPEND="=virtual/jdk-1.5*
 
 S=${WORKDIR}
 
+src_unpack() {
+	unpack ${A}
+	cp ${FILESDIR}/build-3.0.13.xml ${S}/build.xml \
+		|| die "copy build.xml failed!"
+}
+
 src_compile() {
-	eant jar $(use_doc) -f ${FILESDIR}/build-3.0.13.xml \
+	eant jar $(use_doc) \
 		-Dclasspath="$(java-pkg_getjars servletapi-2.3)" \
 		-Dsrc="." \
 		-Dproject.name="${PN}" \
