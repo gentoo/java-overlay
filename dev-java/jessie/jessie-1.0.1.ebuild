@@ -1,4 +1,4 @@
-# Copyright 1999-2004 Gentoo Foundation
+# Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -9,12 +9,12 @@ HOMEPAGE="http://www.nongnu.org/jessie"
 SRC_URI="http://syzygy.metastatic.org/jessie/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="-*"
 IUSE="doc ssl"
 #IUSE="doc jikes ssl"
 
 LDEPEND=">=dev-java/gnu-classpath-0.08_rc1
-	ssl? ( dev-java/gnu-crypto )"
+	ssl? ( >=dev-java/gnu-crypto-2.1 )"
 RDEPEND=">=virtual/jre-1.4
 	${LDEPEND}"
 DEPEND=">=virtual/jdk-1.4

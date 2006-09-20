@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/jessie
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  20 Sep 2006; Vlastimil Babka <caster@gentoo.org> jessie-1.0.1.ebuild:
+  Raise dependency on gnu-crypto to 2.1 because it won't build with lower.
+  Drop all keywords for now, because gnu-crypto-2.1 has them dropped too.
+
