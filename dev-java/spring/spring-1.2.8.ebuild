@@ -30,7 +30,7 @@ DEPEND="
 # TODO replace sun-jdbc-rowset-bin with free implementation?
 RDEPEND="
 	java5? ( 
-		=virtual/jre-1.5*
+		>=virtual/jre-1.5
 		=dev-java/hibernate-annotations-3.0*
 	)
 	!java5? ( || ( =virtual/jre-1.4* =virtual/jre-1.5* ) )
@@ -87,7 +87,18 @@ RDEPEND="
 #	dev-java/jta
 #	dev-java/jms
 #	dev-java/sun-qname-bin
-S=${WORKDIR}/${MY_P}
+S="${WORKDIR}/${MY_P}"
+
+# FIXME build.xml does autodetection of jdk version to figure out if
+# annotations should be used. This happens regardless of use java5. SHould
+# be able to control it with a property.
+# In the mean time, force specific depends to be used to determine which vm
+# to use.
+if use java5; then
+	JAVA_PKG_NV_DEPEND="=virtual/jdk-1.5*"
+else
+	JAVA_PKG_NV_DEPEND="=virtual/jdk-1.4*"
+fi
 
 ANTLR="antlr antlr.jar antlr-2.7.5H3.jar"
 AOPALLIANCE="aopalliance-1 aopalliance.jar"
