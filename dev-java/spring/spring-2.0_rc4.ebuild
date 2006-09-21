@@ -5,7 +5,7 @@
 inherit java-pkg-2 eutils
 
 MY_PN=${PN}-framework
-MY_PV=${PV/_pre/-m}
+MY_PV=${PV/_rc/-rc}
 MY_P=${MY_PN}-${MY_PV}
 DESCRIPTION="Spring is a layered Java/J2EE application framework, based on code published in Expert One-on-One J2EE Design and Development by Rod Johnson (Wrox, 2002)."
 HOMEPAGE="http://www.springframework.org/"
