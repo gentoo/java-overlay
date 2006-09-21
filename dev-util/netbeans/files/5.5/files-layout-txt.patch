@@ -1,0 +1,10 @@
+--- ide/golden/files-layout.txt	2006-05-09 04:48:57.000000000 -0400
++++ netbeans-src/nbbuild/build/generated/files-layout.txt	2006-09-21 01:15:04.000000000 -0400
+@@ -508,6 +508,7 @@
+ enterprise3/update_tracking/org-netbeans-modules-websvc-websvcapi.xml
+ harness/README
+ harness/build.xml
++harness/build.xml.orig
+ harness/common.xml
+ harness/config/Modules/org-netbeans-modules-apisupport-harness.xml
+ harness/etc/app.clusters

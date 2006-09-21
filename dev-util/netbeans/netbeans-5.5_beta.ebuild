@@ -153,7 +153,8 @@ src_unpack () {
 	fi
 
         cd ${S}
-        epatch ${FILESDIR}/${SLOT}/public-packages.patch
+        epatch ${FILESDIR}/${SLOT}/files-layout-txt.patch
+        epatch ${FILESDIR}/${SLOT}/public-packages-txt.patch
 
 	cd ${S}/nbbuild
 	# Disable the bundled Tomcat in favor of Portage installed version
@@ -172,7 +173,7 @@ src_compile() {
 
 	# Specify the build-nozip target otherwise it will build
 	# a zip file of the netbeans folder, which will copy directly.
-	ant ${antflags} || die "Compilation failed!"
+	eant ${antflags}
 
 	# Remove non-x86 Linux binaries
 	find ${BUILDDESTINATION} -type f \
