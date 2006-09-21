@@ -3,6 +3,9 @@
 # $Header: $
 
   21 Sep 2006; William L. Thomson Jr. <wltjr@gentoo.org> ChangeLog:
+  Corrected dep on 1.5 jdks only. Re-created startscript.sh
+
+  21 Sep 2006; William L. Thomson Jr. <wltjr@gentoo.org> ChangeLog:
   Re-created previous public-packages patch that was never put into svn for
   some reason. Also created another files-layout patch. For some odd reason a
   single build.xml file get's copied into a build.org, thus the files-layout
