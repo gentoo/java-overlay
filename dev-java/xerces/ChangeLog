@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/xerces
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  22 Sep 2006; Vlastimil Babka <caster@gentoo.org> -xerces-2.8.0-r2.ebuild,
+  +xerces-2.8.0-r3.ebuild:
+  Sync with portage tree version, i.e. no bundled xml-apis.jar.
+
