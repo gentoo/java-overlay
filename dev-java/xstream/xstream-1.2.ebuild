@@ -14,7 +14,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="doc examples java5 source"
 
 COMMON_DEPS="
-	=dev-java/commons-lang-2.0*
+	=dev-java/commons-lang-2.1*
 	=dev-java/cglib-2.1*
 	>=dev-java/dom4j-1.3
 	dev-java/jsr173
