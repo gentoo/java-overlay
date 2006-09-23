@@ -17,7 +17,7 @@ IUSE="source"
 
 # FIXME needs asm-2.2 I think -nichoj
 COMMON_DEPS="
-	=dev-java/asm-2*
+	=dev-java/asm-2.2*
 	>=dev-java/antlr-2.7.5
 	>=dev-java/xerces-2.4
 	>=dev-java/ant-core-1.6.5
@@ -39,6 +39,9 @@ S="${WORKDIR}/${MY_P}"
 src_unpack() {
 	unpack ${A}
 
+	cd ${S}
+	epatch ${FILESDIR}/${P}-compiler-exit-code.patch
+
 	mkdir -p ${S}/target/lib
 
 	cd ${S}/target/lib
@@ -46,7 +49,7 @@ src_unpack() {
 	java-pkg_jar-from xerces-2
 	java-pkg_jar-from ant-core ant.jar
 	java-pkg_jar-from antlr	
-	java-pkg_jar-from asm-2
+	java-pkg_jar-from asm-2.2
 	java-pkg_jar-from qdox-1.6
 	java-pkg_jar-from xstream
 	java-pkg_jar-from mockobjects 
@@ -68,7 +71,7 @@ src_compile() {
 	eant -Dnoget=true jar
 
 	cd src/main
-	java -classpath ../../target/${MY_P}.jar:$(java-pkg_getjars commons-cli-1,asm-2,antlr,junit,qdox-1.6) \
+	java -classpath ../../target/${MY_P}.jar:$(java-pkg_getjars commons-cli-1,asm-2.2,antlr,junit,qdox-1.6) \
 		org.codehaus.groovy.tools.FileSystemCompiler \
 		$(find -name *.groovy) || die "Failed to invoke groovyc" 
 
