@@ -1,2 +1,0 @@
-#!/bin/bash
-xsltproc -novalid guide.xsl tomcat-guide.xml > tomcat-guide.html
