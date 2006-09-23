@@ -24,7 +24,7 @@ src_unpack() {
 	unpack ${A}
 
 	cd ${S}
-	echo "objectweb.ant.tasks.path = $(java-pkg_getjar ant-owanttask ow_util_ant_tasks.jar)" >> build.properties
+	echo "objectweb.ant.tasks.path = $(java-pkg_getjar --build-only ant-owanttask ow_util_ant_tasks.jar)" >> build.properties
 }
 
 src_compile() {
