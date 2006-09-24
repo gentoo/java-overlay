@@ -1,0 +1,24 @@
+diff -Naur /home/keanu/tmp/poi/src/scratchpad/src/org/apache/poi/hdf/extractor/util/BTreeSet.java ./src/scratchpad/src/org/apache/poi/hdf/extractor/util/BTreeSet.java
+--- /home/keanu/tmp/poi/src/scratchpad/src/org/apache/poi/hdf/extractor/util/BTreeSet.java	2004-02-22 12:19:33.000000000 +0100
++++ ./src/scratchpad/src/org/apache/poi/hdf/extractor/util/BTreeSet.java	2004-07-22 16:32:49.563004792 +0200
+@@ -212,7 +212,7 @@
+     public static class Entry {
+ 
+         public Object element;
+-        public BTreeNode child;
++        public org.apache.poi.hdf.extractor.util.BTreeSet.BTreeNode child;
+     }
+ 
+ 
+diff -Naur /home/keanu/tmp/poi/src/scratchpad/src/org/apache/poi/hdf/model/util/BTreeSet.java ./src/scratchpad/src/org/apache/poi/hdf/model/util/BTreeSet.java
+--- /home/keanu/tmp/poi/src/scratchpad/src/org/apache/poi/hdf/model/util/BTreeSet.java	2004-02-22 12:19:35.000000000 +0100
++++ ./src/scratchpad/src/org/apache/poi/hdf/model/util/BTreeSet.java	2004-07-22 16:34:19.623313544 +0200
+@@ -294,7 +294,7 @@
+     {
+ 
+         public Object element;
+-        public BTreeNode child;
++        public org.apache.poi.hdf.model.util.BTreeSet.BTreeNode child;
+     }
+ 
+ 
