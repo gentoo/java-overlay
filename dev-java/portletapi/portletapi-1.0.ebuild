@@ -15,7 +15,7 @@ DEPEND=">=virtual/jdk-1.4
 RDEPEND=">=virtual/jre-1.4"
 LICENSE="Apache-2.0"
 SLOT="1"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc source"
 
 src_unpack() {
