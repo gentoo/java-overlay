@@ -38,6 +38,7 @@ src_compile() {
 }
 
 src_install() {
+	java-pkg_dojar build/joal.jar 
 	use_doc && java-pkg_dojavadoc javadoc_public
 	java-pkg_doso build/obj/*.so
 }
