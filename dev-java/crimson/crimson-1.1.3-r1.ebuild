@@ -16,7 +16,7 @@ IUSE="doc examples source"
 DEPEND="|| ( =virtual/jdk-1.3* =virtual/jdk-1.4* )
 	dev-java/ant-core
 	source? ( app-arch/zip )"
-RDEPEND=">virtual/jre-1.3"
+RDEPEND="|| ( =virtual/jre-1.3* =virtual/jre-1.4* )"
 
 src_compile() {
 	eant jars $(use_doc docs)
