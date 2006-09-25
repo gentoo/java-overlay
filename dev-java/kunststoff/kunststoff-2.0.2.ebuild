@@ -11,7 +11,7 @@ SRC_URI="http://www.incors.org/archive/kunststoff-2_0_2.zip"
 
 LICENSE="LGPL-2"
 SLOT="0"
-KEYWORDS="-*"
+KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND=">=virtual/jdk-1.4

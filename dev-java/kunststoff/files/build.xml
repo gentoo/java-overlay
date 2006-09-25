@@ -7,13 +7,7 @@
 	<property name="src" location="./src"/>
 	<property name="build" location="./build"/>
 	<property name="dist" location="./dist"/>
-	<property name="icons-src" location="src/com/incors/plaf/kunststoff/icons" />
-	<property name="themes-src" location="src/com/incors/plaf/kunststoff/themes" />
-
-	<property name="icons-build" location="build/com/incors/plat/kunststoff/icons" />
-	<property name="themes-build" location="build/com/incors/plat/kunststoff/themes" />
-
-
+	
 	<target name="init">
 		<tstamp/>
 		<mkdir dir="${build}"/>
@@ -29,8 +23,11 @@
 	<target name="dist" depends="compile"
 		description="generate the distribution" >
 	
-		<copy file="${themes-src}/*" todir="${themes-build}" />
-		<copy file="${icons-src}/*" todir="${icons-build}" />
+		<copy todir="build">
+			<fileset dir="src">
+				<exclude name="**/*.java"/>
+			</fileset>
+		</copy>
 		<mkdir dir="${dist}" />
 		<jar jarfile="${dist}/kunststoff.jar" basedir="${build}"/>
 	</target>
