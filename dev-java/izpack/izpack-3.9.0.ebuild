@@ -16,7 +16,9 @@ KEYWORDS="-*"
 IUSE=""
 
 CDEPEND=">dev-java/jgoodies-looks-1.2
-			"
+		dev-java/liquidlnf
+		=dev-java/jakarta-regexp-1.3*
+		dev-java/kunststoff"
 DEPEND=">=virtual/jdk-1.4
 		>dev-java-ant-core-1.5"
 RDEPEND=">=virtual/jre-1.4"
