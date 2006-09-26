@@ -23,11 +23,11 @@ S="${WORKDIR}"
 src_unpack() {
 	unpack ${A}
 	cp ${FILESDIR}/build.xml ./build.xml
-	#eant clean
+	eant clean
 }
 
 src_compile() {
-	eant dist
+	eant dist 
 }
 
 src_install() {
