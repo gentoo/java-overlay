@@ -1,0 +1,60 @@
+diff -Naur liquidlnf/build.xml liquidlnf-new/build.xml
+--- liquidlnf/build.xml	2006-09-12 16:34:50.000000000 +1200
++++ liquidlnf-new/build.xml	2006-09-26 07:51:58.000000000 +1200
+@@ -16,6 +16,7 @@
+     <property name="project.bin.test" value="bin/test"/>
+     <property name="project.bin" value="dist/bin"/>
+     <property name="project.lib" value="./lib"/>
++    <property name="project.test" value="false" />
+ 
+     <target name="run-check" depends="compile-test">
+         <java classname="test.Check" fork="true">
+@@ -57,14 +58,14 @@
+     </target>
+ 
+     <target depends="compile" name="compile-test">
+-        <javac classpath="${project.lib}/laf-plugin.jar" bootclasspath="${compile.bootclasspath}" debug="true" deprecation="false" target="${compile.target}" source="${compile.source}" description="Project compilation." destdir="${project.classes}" srcdir="${project.test}"/>
++        <javac classpath="${project.lib}/laf-plugin.jar" debug="true" deprecation="false" description="Project compilation." destdir="${project.classes}" srcdir="${project.test}"/>
+         <copy todir="${project.classes}">
+             <fileset dir="${project.test}" excludes="**/*.java,**/*.form,**/.nbattrs"/>
+         </copy>
+     </target>
+ 
+     <target depends="init" name="compile">
+-        <javac classpath="${project.lib}/laf-plugin.jar" bootclasspath="${compile.bootclasspath}" debug="${compile.debug}" deprecation="false" target="${compile.target}" source="${compile.source}" description="Project compilation." destdir="${project.classes}" srcdir="${project.src}" />
++        <javac classpath="${project.lib}/laf-plugin.jar" debug="${compile.debug}" deprecation="false" description="Project compilation." destdir="${project.classes}" srcdir="${project.src}" />
+         <copy todir="${project.classes}">
+             <fileset dir="${project.src}" excludes="**/*.java,**/*.form,**/.nbattrs"/>
+         </copy>
+@@ -72,7 +73,7 @@
+ 
+     <target depends="init,compile" description="Make jar file" name="jar">
+ 	<mkdir dir="${project.dist}"/>
+-        <unjar src="${project.lib}/laf-plugin.jar" dest="${project.classes}/"/>
++        <!--<unjar src="${project.lib}/laf-plugin.jar" dest="${project.classes}/"/>-->
+         <jar basedir="${project.classes}" compress="true" jarfile="${project.dist}/${jar.name}">
+             <exclude name="**/*.java"/>
+             <exclude name="**/*.form"/>
+@@ -92,18 +93,18 @@
+         </jar>
+     </target>
+     
+-    <target depends="jar" description="Install jar file" name="install">
++    <!--<target depends="jar" description="Install jar file" name="install">
+         <copy file="${project.dist}/${jar.name}" todir="${java.home}/lib/ext"/>
+-    </target>
++    </target>-->
+ 
+-    <target depends="install" description="Colour test" name="colour">
++    <!--<target depends="install" description="Colour test" name="colour">
+         <java classname="com.birosoft.liquid.util.Colors" fork="yes">
+             <classpath>
+                 <pathelement path="${project.classes}"/>
+                 <pathelement path="${basedir}"/>
+             </classpath>
+         </java>
+-    </target>
++    </target>-->
+ 
+     <target depends="clean" description="Create src.jar file" name="src.dist">
+         <tar basedir="." tarfile="${project.name}-${project.version}-src.tar">
