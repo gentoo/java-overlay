@@ -2,6 +2,13 @@
 # Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  28 Sep 2006; William L. Thomson Jr. <wltjr@gentoo.org> ChangeLog:
+  Removing 5.0 ebuild its broken, and all effort will go into furture releases
+  like 5.5, 6.0 and so on. Added change accidentally applied to 5.5_beta to
+  5.5_beta-r1 and removed the previous version. Added -* keyword to 5.5_beta2
+  since its borked atm. Thanks to cddl license stuff in build.xml files that
+  breaks xml parsers. Woot!
+
   21 Sep 2006; William L. Thomson Jr. <wltjr@gentoo.org> ChangeLog:
   Corrected dep on 1.5 jdks only. Re-created startscript.sh
 

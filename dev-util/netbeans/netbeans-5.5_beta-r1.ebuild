@@ -197,6 +197,10 @@ src_compile() {
 
 	rm -fr ./lib
 	rm -fr ./bin
+
+	# Set a initial default jdk
+	echo "netbeans_jdkhome=\"/etc/java-config-2/current-system-vm/\"" \
+		>> ${BUILDDESTINATION}/etc/netbeans.conf
 }
 
 src_install() {
