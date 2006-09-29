@@ -1,0 +1,45 @@
+<project basedir="." default="dist" name="XBeans">
+	<description>
+	Simple build file made by Alistair Bush for the xbeans project.
+	</description>
+
+	<property location="./source" name="src"/>
+	<property location="./build" name="build"/>
+	<property location="./dist" name="dist"/>
+	<property location="api" name="api"/>
+	<property value="xbeans" name="project.name"/> 
+
+	<target name="init">
+		<tstamp />
+		<mkdir dir="${build}"/>
+		<mkdir dir="${api}"/>
+	</target>
+
+	<target depends="init" description="Produce JavaDoc" name="javadoc">
+		<javadoc access="private" destdir="${api}">
+			<fileset dir="${src}" defaultexcludes="yes" includes="**/*.java" />
+		</javadoc>
+	</target>
+
+	<target depends="init" description="compile the source" name="compile">
+		<javac destdir="${build}" srcdir="${src}">
+		<include name="**/*.java"/>
+		</javac>
+	</target>
+
+	<target depends="compile" description="generate the distribution" name="dist">
+		<copy todir="build">
+			<fileset dir="source">
+				<exclude name="**/*.java"/>
+			</fileset>
+		</copy>
+		<mkdir dir="${dist}"/>
+		<jar basedir="${build}" jarfile="${dist}/${project.name}.jar"/>
+	</target>
+
+	<target description="Clean up" name="clean">
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+		<delete file="./*.jar"/>
+	</target>
+</project>

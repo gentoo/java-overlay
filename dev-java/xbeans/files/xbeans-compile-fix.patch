@@ -1,0 +1,39 @@
+diff -Naur Xbeans-r2.00/source/org/xbeans/parallelizer/ParallelizerBean.java Xbeans-r2.00-new/source/org/xbeans/parallelizer/ParallelizerBean.java
+--- source/org/xbeans/parallelizer/ParallelizerBean.java	2001-08-07 15:42:38.000000000 +1200
++++ source/org/xbeans/parallelizer/ParallelizerBean.java	2006-09-29 19:19:33.000000000 +1200
+@@ -58,7 +58,7 @@
+ 	 *  @param newDomListener
+ 	 */
+ 	public void setDOMListener(DOMListener newDomListener) {
+-		DOMListener = newDomListener;
++		DOMListeners = newDomListener;
+ 	}
+ 
+ 	/**
+@@ -66,7 +66,7 @@
+ 	 *  @return DOMListener
+ 	 */
+ 	public DOMListener getDOMListener() {
+-		return DOMListener;
++		return DOMListeners;
+ 	}
+ 
+ 	/**
+@@ -77,7 +77,7 @@
+ 	 */
+ 	public void documentReady(DOMEvent evt) throws XbeansException {
+ 
+-		if (DOMListener == null) {
++		if (DOMListeners == null) {
+ 			throw new XbeansException(
+ 				evt.getDocument().getNodeName(), "ParallelizerBean",
+ 				"next component not established",
+@@ -88,7 +88,7 @@
+ 
+ 		// Pass the document on to the next Xbean.  It is required that all
+ 		// source Xbeans call the next Xbean.
+-		DOMListener.documentReady(evt);
++		DOMListeners.documentReady(evt);
+ 	}
+ }
+ 
