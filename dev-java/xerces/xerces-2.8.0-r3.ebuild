@@ -8,7 +8,7 @@ DIST_PN="Xerces-J"
 SRC_PV="$(replace_all_version_separators _ )"
 DESCRIPTION="The next generation of high performance, fully compliant XML parsers in the Apache Xerces family"
 HOMEPAGE="http://xml.apache.org/xerces2-j/index.html"
-SRC_URI="mirror://apache/xml/${PN}-j/${DIST_PN}-src.${PV}.tar.gz"
+SRC_URI="http://archive.apache.org/dist/xml/${PN}-j/${DIST_PN}-src.${PV}.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="2"
