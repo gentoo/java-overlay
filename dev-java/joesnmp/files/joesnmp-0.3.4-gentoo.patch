@@ -1,0 +1,22 @@
+diff -ru joesnmp-0.3.3/build.xml joesnmp-0.3.3-patched/build.xml
+--- joesnmp-0.3.3/build.xml	2004-10-07 17:09:40.000000000 -0400
++++ joesnmp-0.3.3-patched/build.xml	2005-07-06 22:23:41.000000000 -0400
+@@ -134,4 +134,11 @@
+     </javac>
+ </target>
+ 
++<target name="javadoc">
++	<javadoc packagenames="joesnmp.*" destdir="docs/api">
++		<fileset dir="${src.dir}" includes="joesnmp/**"/>
++	</javadoc>
++
++</target>
++
+ </project>
+Only in joesnmp-0.3.3: output
+Only in joesnmp-0.3.3/tools/ant/lib: NetComponents.jar
+Only in joesnmp-0.3.3/tools/ant/lib: ant.jar
+Only in joesnmp-0.3.3/tools/ant/lib: optional.jar
+Only in joesnmp-0.3.3/tools/ant/lib: xercesImpl.jar
+Only in joesnmp-0.3.3/tools/ant/lib: xml-apis.jar
+Only in joesnmp-0.3.3-patched/tools: uneeded
