@@ -15,12 +15,26 @@ SLOT="0"
 KEYWORDS="-*"
 IUSE=""
 
-CDEPEND=">dev-java/jgoodies-looks-1.2
-		dev-java/liquidlnf
-		=dev-java/jakarta-regexp-1.3*
-		dev-java/kunststoff"
+
+#dev-java/liquidlnf
+#dev-java/kunststoff
+#dev-java/jgoodies-looka
+CDEPEND="=dev-java/jakarta-regexp-1.3*"
 DEPEND=">=virtual/jdk-1.4
-		>dev-java-ant-core-1.5"
-RDEPEND=">=virtual/jre-1.4"
+		>dev-java-ant-core-1.5
+		${CDEPEND}"
+RDEPEND=">=virtual/jre-1.4
+		${CDEPEND}"
 S=${WORKDIR}
 
+src_unpack() {
+	unpack ${A}
+	cd ${S}/lib
+	rm *.jar
+	java-pkg_jarfrom jakarta-regexp-1.3 jakarta-regexp.jar jakarta-regexp-1.3.jar
+}
+
+src_compile() {
+	cd src
+	eant
+}
