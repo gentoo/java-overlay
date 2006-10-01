@@ -1,12 +1,12 @@
+AUX build-0.2.xml 1546 RMD160 ebd507967b0bb2fabe2aac044ef60e3785189654 SHA1 68699e0269a51d6f4eba82e5b15bd485974d8084 SHA256 db486d24f063b5ec263d6da56b52dd2a7cae686cb9c347fb9702cc0d3dda7868
 MD5 c089b7d34f96c556a34bb8c402794023 files/build-0.2.xml 1546
 RMD160 ebd507967b0bb2fabe2aac044ef60e3785189654 files/build-0.2.xml 1546
 SHA256 db486d24f063b5ec263d6da56b52dd2a7cae686cb9c347fb9702cc0d3dda7868 files/build-0.2.xml 1546
-MD5 1df621a70498bda50cffaba986c04d51 files/digest-gjt-jpl-pattern-0.2 76
-RMD160 9003d564a0d7d7ecb924928f251776ee7ee51615 files/digest-gjt-jpl-pattern-0.2 76
-SHA256 eb030370e6279814eedb3f36c5d1f03cab3d13b565650fe173078c2747321958 files/digest-gjt-jpl-pattern-0.2 76
-MD5 31f43a6dcb9fdada02302017722003b8 files/digest-gjt-jpl-pattern-1 70
-RMD160 9c901558212bc0a86273662df2133317d355bad1 files/digest-gjt-jpl-pattern-1 70
-SHA256 917e5a439a940235428c516ccc990c7180acf2992dd15e1b53a1917d5859dda9 files/digest-gjt-jpl-pattern-1 70
-MD5 492d9611a4f1dda5ee588a86d01e1547 gjt-jpl-pattern-0.2.ebuild 1135
-RMD160 ee98dd9f5b246f951c26d790630c216ac60d7ff1 gjt-jpl-pattern-0.2.ebuild 1135
-SHA256 a264ebcbde5ecacb66d91e497b3aa90167b4e1baf89a827765682794591566c2 gjt-jpl-pattern-0.2.ebuild 1135
+DIST gjt-jpl-pattern-0.2-2jpp.src.rpm 43695 RMD160 ced7cf337881353beb7d4f0afdeb7def11b2364e SHA1 b1f2d0136c206129b8cd711ce944b5bf079469d7 SHA256 15e03b9f94c6a3332bcc47a90c51145a85ecb1038b8efa3eac84b7b77e4f0830
+EBUILD gjt-jpl-pattern-0.2-r1.ebuild 964 RMD160 1a56c3a9293e32da7e4971c39096ee4ca8207014 SHA1 7da35f3e8501d944d35b420c7d831e122ec32dff SHA256 a87e357a95efa7f2fd279e01954c0a2ee3600884d56ebb25ede4a54a8921fee8
+MD5 d3ce3e04dcb4394a7bbec4591cf92a48 gjt-jpl-pattern-0.2-r1.ebuild 964
+RMD160 1a56c3a9293e32da7e4971c39096ee4ca8207014 gjt-jpl-pattern-0.2-r1.ebuild 964
+SHA256 a87e357a95efa7f2fd279e01954c0a2ee3600884d56ebb25ede4a54a8921fee8 gjt-jpl-pattern-0.2-r1.ebuild 964
+MD5 765a4a0cf046dd64e8334169962b7678 files/digest-gjt-jpl-pattern-0.2-r1 274
+RMD160 38910e11af9c5e27aed34306c59a6ebd6360200e files/digest-gjt-jpl-pattern-0.2-r1 274
+SHA256 bd9d0968581b68b1ad8ec170a7239c8a3ed07a3d267fab2c0f89bd9775aa8fbb files/digest-gjt-jpl-pattern-0.2-r1 274
