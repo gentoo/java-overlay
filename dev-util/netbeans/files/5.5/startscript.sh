@@ -18,4 +18,4 @@ check_symlinks ${NBDIR}/ide7/modules/autoload/ext
 check_symlinks ${NBDIR}/enterprise3/config/TagLibraries/JSTL11
 check_symlinks ${NBDIR}/platform6/modules/ext
 
-${NBDIR}/bin/netbeans
+${NBDIR}/bin/netbeans "$@"
