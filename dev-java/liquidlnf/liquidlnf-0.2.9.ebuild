@@ -13,9 +13,12 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="source doc"
 
+CDEPEND="dev-java/laf-plugin"
 DEPEND=">=virtual/jdk-1.4
-		dev-java/ant-core"
-RDEPEND=">=virtual/jre-1.4"
+		dev-java/ant-core
+		${CDEPEND}"
+RDEPEND=">=virtual/jre-1.4
+		${CDEPEND}"
 
 S="${WORKDIR}"
 
