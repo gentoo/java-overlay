@@ -55,7 +55,7 @@ IUSE="debug doc"
 
 # NB 5.5 requires javahelp 2.0_03 not yet released :(
 RDEPEND="=virtual/jre-1.5*
-		  =dev-java/commons-logging-1.0*
+		  >=dev-java/commons-logging-1.0
 		   dev-java/commons-el
 		   dev-java/sun-jmx
 		  =dev-java/junit-3.8*
