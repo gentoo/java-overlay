@@ -1,0 +1,11 @@
+# ChangeLog for www-servers/axis
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  02 Oct 2006; Vlastimil Babka <caster@gentoo.org> +axis-1.4.ebuild,
+  +files/axis-1.4-build.xml.patch, +files/axis-1.4-path_refs.xml.patch,
+  +files/axis-1.4-targets.xml.patch, +files/axis-1.4-tools-build.xml.patch,
+  +files/build.properties:
+  Version bump, migrated to gen-2 eclasses, removed automagical dependency
+  checks.
+
