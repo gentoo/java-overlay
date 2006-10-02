@@ -40,7 +40,7 @@ src_compile() {
 }
 
 src_install() {
-	java-pkg_dojar addressing.jar
+	java-pkg_dojar target/addressing.jar
 	use doc && java-pkg_dohtml -r output/dist/doc/javadoc/user/*
 	use source && java-pkg_dosrc src/*
 }

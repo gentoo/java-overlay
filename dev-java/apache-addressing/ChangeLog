@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/apache-addressing
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  02 Oct 2006; Vlastimil Babka <caster@gentoo.org>
+  apache-addressing-1.0_pre20061001.ebuild:
+  Fixed dojar call.
+
