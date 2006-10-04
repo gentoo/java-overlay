@@ -1,0 +1,134 @@
+# ChangeLog for dev-java/libgtk-java
+# Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-java/libgtk-java/ChangeLog,v 1.18 2006/03/28 04:20:13 nichoj Exp $
+
+*libgtk-java-2.8.3-r1 (28 Mar 2006)
+
+  28 Mar 2006; <nichoj@gentoo.org> +libgtk-java-2.8.3-r1.ebuild:
+  Revision bump to address bug #125646 and #121254
+
+*libgtk-java-2.8.3 (08 Feb 2006)
+
+  08 Feb 2006; Saleem Abdulrasool <compnerd@gentoo.org>
+  +libgtk-java-2.8.3.ebuild:
+  Version bump from upstream
+
+  11 Jan 2006; Karl Trygve Kalleberg <karltk@gentoo.org>
+  libgtk-java-2.8.2.ebuild:
+  Updated to depend on cairo-java-1.0.2 and glib-java-0.2.2. Thanks to
+  rcjsuen, <remy.suen@gmail.com>.
+
+  30 Dec 2005; Saleem Abdulrasool <compnerd@gentoo.org>
+  libgtk-java-2.8.2.ebuild:
+  ~ppc keywording thanks to morfic
+
+*libgtk-java-2.8.2 (11 Dec 2005)
+
+  11 Dec 2005; Saleem Abdulrasool <compnerd@gentoo.org>
+  +libgtk-java-2.8.2.ebuild:
+  Version bump from upstream.  Added support for source useflag.
+
+  19 Nov 2005; Saleem Abdulrasool <compnerd@gentoo.org>
+  libgtk-java-2.8.1.ebuild:
+  Keywording ~amd64 with verification from AT (chutzpah)
+
+  15 Nov 2005; Saleem Abdulrasool <compnerd@gentoo.org>
+  libgtk-java-2.8.1.ebuild:
+  Fixing GCJ detection
+
+*libgtk-java-2.8.1 (12 Nov 2005)
+
+  12 Nov 2005; Saleem Abdulrasool <compnerd@gentoo.org>
+  +files/aclocal_voodoo.patch, metadata.xml, +libgtk-java-2.8.1.ebuild:
+  Version bumping with a mask
+
+  29 Jun 2005; Thomas Matthijs <axxo@gentoo.org>
+  -libgtk-java-2.4.6-r1.ebuild, -libgtk-java-2.4.6-r2.ebuild,
+  -libgtk-java-2.4.7.2.ebuild, libgtk-java-2.6.2-r1.ebuild:
+  remove older ebuilds + keyword x86
+
+*libgtk-java-2.6.2-r1 (01 May 2005)
+*libgtk-java-2.4.9 (01 May 2005)
+
+  01 May 2005; Karl Trygve Kalleberg <karltk@gentoo.org>
+  +libgtk-java-2.4.9.ebuild, +libgtk-java-2.6.2-r1.ebuild:
+  Added new upstream ebuilds by Andrew Cowie 
+  <andrew@operationaldynamics.com>, partial fix for #87978.
+
+  12 Mar 2005; Jan Brinkmann <luckyduck@gentoo.org>
+  libgtk-java-2.4.6-r2.ebuild:
+  added ~amd64 to KEYWORDS
+
+  12 Mar 2005; Jan Brinkmann <luckyduck@gentoo.org>
+  libgtk-java-2.4.8.1.ebuild:
+  added ~amd64 to KEYWORDS
+
+*libgtk-java-2.4.8.1 (02 Mar 2005)
+
+  02 Mar 2005; Karl Trygve Kalleberg <karltk@gentoo.org> metadata.xml,
+  +files/libgtk-java-2.4.8.1_find-jni.patch,
+  +files/libgtk-java-2.4.8.1_fix-TextBuffer.patch,
+  +files/libgtk-java-2.4.8.1_gentoo-PN-SLOT.patch,
+  +libgtk-java-2.4.8.1.ebuild:
+  New upstream release. Ebuild submitted by Andrew F. Cowie
+  <andrew@operationaldynamics.com>. Partial fix for #83366.
+
+* libgtk-java-2.4.7.2 (27 Dec 2004)
+
+  27 Dec 2004; Andrew Cowie <andrew@operationaldynamics.com> +libgtk-java-2.4.7.2.ebuild:
+  Upstream stable maintenance release. Note that 2.4.7 had a bug which
+  prevented it from building, and that 2.4.7.1 had its internal version numbers
+  wrong.
+
+* libgtk-java-2.4.6-r2 (24 Dec 2004)
+
+  24 Dec 2004; Andrew Cowie <andrew@operationaldynamics.com> +libgtk-java-2.4.6-r2.ebuild, 
+  -libgtk-java-2.4.6-r1.ebuild:
+  Version bump to ensure pickup of Thomas's patch.
+
+  29 Nov 2004; Thomas Matthijs <axxo@gentoo.org> +files/libgtk-java-2.4.6_find_jni.patch,
+  libgtk-java-2.4.6-r1.ebuild:
+  added a patch to set JAVA_INCLUDES when not using gcj, so it can find jni.h
+  & familiy, #72128
+
+* libgtk-java-2.4.6-r1 (15 Nov 2004)
+
+  15 Nov 2004; Andrew Cowie <andrew@operationaldynamics.com> +libgtk-java-2.4.6-r1.ebuild:
+  Dependency on docbook-sgml-utils discovered by karltk; investigation showed
+  it to be highly unnecessary and an artifact of some (currently) unused cruft
+  in the documentation. Fixed by patching the java-gnome autoconf macros to
+  remove the path check for docbook2html.
+
+* libgtk-java-2.4.6 (07 Nov 2004)
+
+  07 Nov 2004; Andrew Cowie <andrew@operationaldynamics.com>:
+  New ebuild. What used to be java-gnome is now multiplexed into various modular
+  subcomponents. Upstream CVS was all re-arranged, and now there is a release
+  tarball for each piece. This ebuild is the java binding around the core GTK
+  libraries (and is the only one of the new pieces which doesn't need the rest of
+  GNOME installed).
+
+  29 Nov 2004; Thomas Matthijs <axxo@gentoo.org>
+  +files/libgtk-java-2.4.6_find_jni.patch, libgtk-java-2.4.6-r1.ebuild:
+  added a patch to set JAVA_INCLUDES when not using gcj, so it can find jni.h
+  & familiy, #72128
+
+*libgtk-java-2.4.6-r1 (16 Nov 2004)
+
+  16 Nov 2004; Karl Trygve Kalleberg <karltk@gentoo.org> +metadata.xml,
+  +files/libgtk-java-2.4.6_gcj-autoconf-macro-fix.patch,
+  +files/libgtk-java-2.4.6_gentoo-PN-SLOT.patch,
+  +files/libgtk-java-2.4.6_install-doc.patch,
+  +files/libgtk-java-2.4.6_no-docbook-autoconf-macro.patch,
+  +libgtk-java-2.4.6-r1.ebuild:
+  Initial import into Portage. Ebuild and patches by Andrew Cowie
+  <andrew@operationaldynamics.com>. Fixes #70559.
+
+*libgtk-java-2.4.6 (07 Nov 2004)
+
+  07 Nov 2004; Andrew Cowie <andrew@operationaldynamics.com>:
+  New ebuild. What used to be java-gnome is now multiplexed into various modular
+  subcomponents. Upstream CVS was all re-arranged, and now there is a release
+  tarball for each piece. This ebuild is the java binding around the core GTK
+  libraries (and is the only one of the new pieces which doesn't need the rest of
+  GNOME installed).
