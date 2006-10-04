@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/microba
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  04 Oct 2006; Vlastimil Babka <caster@gentoo.org> +microba-0.4.2.ebuild:
+  Initial ebuild, based on contributed ebuild from Christian Faulhammer
+  <gentoo@faulhammer.org> in bug #122085.
+
