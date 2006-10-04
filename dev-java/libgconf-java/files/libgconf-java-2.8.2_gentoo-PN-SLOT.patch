@@ -1,0 +1,26 @@
+diff -Nuar libgconf-java-2.8.2-ORIG/configure.in libgconf-java-2.8.2-EDIT/configure.in
+--- libgconf-java-2.8.2-ORIG/configure.in	2004-11-01 23:11:40.000000000 +1100
++++ libgconf-java-2.8.2-EDIT/configure.in	2004-11-08 23:20:24.662823754 +1100
+@@ -21,8 +21,8 @@
+ version="2.8.2"
+ apiversion="2.8"
+ 
+-INSTALLED_CLASSPATH=\${prefix}/share/java/gconf${apiversion}-${version}.jar 
+-INSTALLED_JNI_DIR=\${prefix}/lib/jni/
++INSTALLED_CLASSPATH=\${prefix}/share/${PN}-${SLOT}/lib/gconf${apiversion}-${version}.jar 
++INSTALLED_JNI_DIR=\${prefix}/lib/
+ AC_SUBST(INSTALLED_CLASSPATH)
+ AC_SUBST(INSTALLED_JNI_DIR)
+ 
+diff -Nuar libgconf-java-2.8.2-ORIG/src/Makefile.in libgconf-java-2.8.2-EDIT/src/Makefile.in
+--- libgconf-java-2.8.2-ORIG/src/Makefile.in	2004-10-06 22:36:26.000000000 +1000
++++ libgconf-java-2.8.2-EDIT/src/Makefile.in	2004-11-08 23:20:39.829901027 +1100
+@@ -17,7 +17,7 @@
+ 
+ 
+ 
+-CLASSPATH = @GTKJAR@:@CLASSPATH@:java
++CLASSPATH = @GTKJAR@:java
+ NATIVEGTKJAR = @NATIVEGTKJAR@
+ 
+ OBJECTS:= \
