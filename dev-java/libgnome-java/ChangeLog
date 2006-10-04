@@ -1,0 +1,91 @@
+# ChangeLog for dev-java/libgnome-java
+# Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-java/libgnome-java/ChangeLog,v 1.16 2006/03/28 04:19:13 nichoj Exp $
+
+*libgnome-java-2.12.1-r1 (28 Mar 2006)
+
+  28 Mar 2006; <nichoj@gentoo.org> +libgnome-java-2.12.1-r1.ebuild:
+  Revision bump to address bug #125646 and #121254
+
+  30 Dec 2005; Saleem Abdulrasool <compnerd@gentoo.org>
+  libgnome-java-2.12.1.ebuild:
+  ~ppc love thanks to morfic
+
+  19 Nov 2005; Saleem Abdulrasool <compnerd@gentoo.org>
+  libgnome-java-2.12.1.ebuild:
+  Keywording ~amd64 with verification from AT (chutzpah)
+
+  15 Nov 2005; Saleem Abdulrasool <compnerd@gentoo.org>
+  libgnome-java-2.12.1.ebuild:
+  Fixing GCJ detection
+
+*libgnome-java-2.12.1 (12 Nov 2005)
+
+  12 Nov 2005; Saleem Abdulrasool <compnerd@gentoo.org> metadata.xml,
+  +libgnome-java-2.12.1.ebuild:
+  Version bump with mask
+
+  11 Sep 2005; Thomas Matthijs <axxo@gentoo.org>
+  libgnome-java-2.8.3.1.ebuild:
+  fix libgtk-java dependency #97429
+
+  29 Jun 2005; Thomas Matthijs <axxo@gentoo.org>
+  -libgnome-java-2.8.2.ebuild, -libgnome-java-2.8.2-r1.ebuild,
+  libgnome-java-2.8.3.1.ebuild:
+  remove older ebuilds + keyword x86
+
+*libgnome-java-2.10.1 (01 May 2005)
+
+  01 May 2005; Karl Trygve Kalleberg <karltk@gentoo.org>
+  +files/libgnome-java-2.10.0_fix-install-dir.patch,
+  +libgnome-java-2.10.1.ebuild:
+  Updates from Andrew Cowie <andrew@operationaldynamics.com>, partial fix for
+  #87978.
+
+  31 Mar 2005; Jan Brinkmann <luckyduck@gentoo.org>
+  libgnome-java-2.8.2-r1.ebuild, libgnome-java-2.8.2.ebuild,
+  libgnome-java-2.8.3.1.ebuild:
+  added missing libgnomecanvas dependency, fixes #72630
+
+  31 Mar 2005; Thomas Matthijs <axxo@gentoo.org>
+  libgnome-java-2.8.3.1.ebuild:
+  add include path's to jni.h
+
+  12 Mar 2005; Jan Brinkmann <luckyduck@gentoo.org>
+  libgnome-java-2.8.2-r1.ebuild:
+  updated libgtk-java dependency to fix #84342
+
+*libgnome-java-2.8.3.1 (12 Mar 2005)
+
+  12 Mar 2005; Jan Brinkmann <luckyduck@gentoo.org>
+  +files/libgnome-java-2.8.3.1_gentoo-PN-SLOT.patch,
+  libgnome-java-2.8.2-r1.ebuild, +libgnome-java-2.8.3.1.ebuild:
+  new upstream version, partially closes #83366. added ~amd64 to KEYWORDS.
+  ebuilds and patched contributed by Andrew Cowie
+  <andrew@operationaldynamics.com>.
+
+* libgnome-java-2.8.2-r1 (17 Nov 2004)
+
+  17 Nov 2004; Andrew Cowie <andrew@operationaldynamics.com> +libgnome-java-2.8.2-r1:
+  Added libgnomeui to DEPENDS
+
+* libgnome-java-2.8.2 (08 Nov 2004)
+
+  08 Nov 2004; Andrew Cowie <andrew@operationaldynamics.com>:
+  New ebuild. What used to be java-gnome is now multiplexed into various modular
+  subcomponents. Upstream CVS was all re-arranged, and now there is a release
+  tarball for each piece. This ebuild is the Java binding around the core GNOME
+  libraries.
+ 
+*libgnome-java-2.8.2 (22 Nov 2004)
+
+  22 Nov 2004; Karl Trygve Kalleberg <karltk@gentoo.org> +metadata.xml,
+  +files/libgnome-java-2.8.2_gentoo-PN-SLOT.patch,
+  +libgnome-java-2.8.2.ebuild:
+  Initial import. Fixes #70560.
+
+  08 Nov 2004; Andrew Cowie <andrew@operationaldynamics.com>:
+  New ebuild. What used to be java-gnome is now multiplexed into various modular
+  subcomponents. Upstream CVS was all re-arranged, and now there is a release
+  tarball for each piece. This ebuild is the Java binding around the core GNOME
+  libraries.

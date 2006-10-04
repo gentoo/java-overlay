@@ -1,0 +1,32 @@
+diff -Nuar libgnome-java-2.8.2-ORIG/configure.in libgnome-java-2.8.2-EDIT/configure.in
+--- libgnome-java-2.8.2-ORIG/configure.in	2004-11-01 23:11:40.000000000 +1100
++++ libgnome-java-2.8.2-EDIT/configure.in	2004-11-08 21:30:15.897947655 +1100
+@@ -21,13 +21,13 @@
+ version="2.8.2"
+ apiversion="2.8"
+ 
+-INSTALLED_CLASSPATH=\${prefix}/share/java/gnome${apiversion}-${version}.jar 
+-INSTALLED_JNI_DIR=\${prefix}/lib/jni/
++INSTALLED_CLASSPATH=\${prefix}/share/${PN}-${SLOT}/lib/gnome${apiversion}-${version}.jar 
++INSTALLED_JNI_DIR=\${prefix}/lib/
+ AC_SUBST(INSTALLED_CLASSPATH)
+ AC_SUBST(INSTALLED_JNI_DIR)
+ 
+ BUILDPLACE=`pwd`
+-INSTALLED_CLASSPATH_BUILDPLACE=$BUILDPLACE/lib//gnome${apiversion}-${version}.jar 
++INSTALLED_CLASSPATH_BUILDPLACE=$BUILDPLACE/lib/gnome${apiversion}-${version}.jar 
+ INSTALLED_JNI_DIR_BUILDPLACE=$BUILDPLACE/lib/
+ AC_SUBST(INSTALLED_CLASSPATH_BUILDPLACE)
+ AC_SUBST(INSTALLED_JNI_DIR_BUILDPLACE)
+diff -Nuar libgnome-java-2.8.2-ORIG/src/Makefile.in libgnome-java-2.8.2-EDIT/src/Makefile.in
+--- libgnome-java-2.8.2-ORIG/src/Makefile.in	2004-10-06 22:36:27.000000000 +1000
++++ libgnome-java-2.8.2-EDIT/src/Makefile.in	2004-11-08 21:26:58.241606791 +1100
+@@ -17,7 +17,7 @@
+ 
+ 
+ 
+-CLASSPATH = @GTKJAR@:@CLASSPATH@:java
++CLASSPATH = @GTKJAR@:java
+ NATIVEGTKJAR = @NATIVEGTKJAR@
+ 
+ OBJECTS:= \
