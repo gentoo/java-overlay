@@ -59,37 +59,3 @@ src_compile() {
 	#
 	return
 }
-
-src_install() {
-	einfo "creating symlinks for convenience and backwards compatability"
-
-	#
-	# This is just here for convenience and for legacy compatability.
-	#
-	# This isn't meant to be Java policy compliant. There is no
-	# package.env file for this ebuild because the individual libraries
-	# it depends on all have proper package.env (which this uses, in fact).
-	#
-
-	mkdir -p ${D}/usr/share/java-gnome/lib
-	cd ${D}/usr/share/java-gnome/lib
-
-	glib_jar=`java-config -p glib-java-0.2`
-	ln -s $glib_jar `basename $glib_jar`
-
-	cairo_jar=`java-config -p cairo-java-1.0`
-	ln -s $cairo_jar `basename $cairo_jar`
-
-	gtk_jar=`java-config -p libgtk-java-2.8`
-	ln -s $gtk_jar `basename $gtk_jar`
-
-	gnome_jar=`java-config -p libgnome-java-2.12`
-	ln -s $gnome_jar `basename $gnome_jar`
-
-	glade_jar=`java-config -p libglade-java-2.12`
-	ln -s $glade_jar `basename $glade_jar`
-
-	gconf_jar=`java-config -p libgconf-java-2.12`
-	ln -s $gconf_jar `basename $gconf_jar`
-}
-
