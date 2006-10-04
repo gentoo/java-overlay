@@ -2,96 +2,64 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/www-servers/jboss/jboss-3.2.5.ebuild,v 1.11 2006/09/20 11:29:31 caster Exp $
 
-inherit eutils java-pkg
+inherit eutils java-pkg-2
 
 MY_P="${P}.GA"
 
 DESCRIPTION="An open source, standards-compliant, J2EE-based application server implemented in 100% Pure Java."
-SRC_URI="mirror://sourceforge/jboss/${MY_P}-src.tar.gz"
+SRC_URI="mirror://sourceforge/jboss/${MY_P}.zip"
 RESTRICT="nomirror"
 HOMEPAGE="http://www.jboss.org"
 LICENSE="LGPL-2"
 IUSE=""
-SLOT="0"
-KEYWORDS="~amd64"
+SLOT="4"
+KEYWORDS="~amd64 -x86"
 
 RDEPEND=">=virtual/jdk-1.4"
 DEPEND="${RDEPEND}
-	app-arch/unzip
-	app-text/sgml-common
-	dev-java/ant-core"
+		app-arch/unzip"
 
-INSTALL_DIR=/usr/share/jboss
-
-S=${WORKDIR}/${MY_P}-src
-
-src_compile() {
-	[ -n ${JDK_HOME} ] || JDK_HOME=$(java-config --jdk-home)
-	export JAVA_HOME=${JDK_HOME}
-	cd build
-	# For more options on the "groups" parameter, see build/build.xml
-	sh build.sh -Dgroups=all || die
-#	sh build.sh || die
-}
+S=${WORKDIR}/${MY_P}
+INSTALL_DIR="/usr/share/${PN}-${SLOT}"
+VAR_INSTALL_DIR="/var/lib/${PN}-${SLOT}"
+TMP_INSTALL_DIR="/var/tmp/${PN}-${SLOT}"
+CACHE_INSTALL_DIR="/var/cache/${PN}-${SLOT}"
+LOG_INSTALL_DIR="/var/log/${PN}-${SLOT}"
 
 src_install() {
+	#create jboss directory
 	dodir ${INSTALL_DIR}
-	dodir ${INSTALL_DIR}/bin
-
-	for f in run.sh shutdown.sh run.jar shutdown.jar; do
-		cp build/output/${MY_P}/bin/${f} ${D}/${INSTALL_DIR}/bin || die "failed"
-	done
 
 	exeinto /etc/init.d
-	doexe ${FILESDIR}/${PV}/init.d/jboss
+	doexe ${FILESDIR}/${PV}/init.d/jboss-${SLOT}
 	dodir /etc/conf.d
-	cp ${FILESDIR}/${PV}/conf.d/jboss ${D}/etc/conf.d
+	cp ${FILESDIR}/${PV}/conf.d/jboss-${SLOT} ${D}/etc/conf.d
 	dodir /etc/env.d
-	cp ${FILESDIR}/${PV}/env.d/50jboss ${D}/etc/env.d
+	cp ${FILESDIR}/${PV}/env.d/50jboss-${SLOT} ${D}/etc/env.d
 	sed "s#@JBOSSPREFIX@#${INSTALL_DIR}#" \
-		<${FILESDIR}/${PV}/env.d/50jboss \
-		>${D}/etc/env.d/50jboss
-#	see NEWS.Gentoo
-#	echo 'CONFIG_PROTECT="/var/lib/jboss"' >>${D}/etc/env.d/50jboss
+		<${FILESDIR}/${PV}/env.d/50jboss-${SLOT} \
+		>${D}/etc/env.d/50jboss-${SLOT}
 
-	for i in build/output/${MY_P}/server \
-		build/output/${MY_P}/lib \
-		build/output/${MY_P}/client
-	do
-		cp -pPR $i ${D}/${INSTALL_DIR}/ || die "failed"
+	#copy directories into 
+	for f in bin client lib server copyright.txt; do
+		cp -r ${f} ${D}/${INSTALL_DIR} || die "Failed to copy directories"
 	done
 
-	dodir /var/lib/jboss
-	mv ${D}/${INSTALL_DIR}/server/{all,default,minimal} ${D}/var/lib/jboss
+	#set up /var/lib/jboss-${SLOT}
+	dodir ${VAR_INSTALL_DIR}
+	mv ${D}/${INSTALL_DIR}/server/{all,default,minimal} ${D}${VAR_INSTALL_DIR}
 	for server in all default minimal; do
-		cp ${FILESDIR}/${PV}/log4j.xml ${D}/var/lib/jboss/${server}/conf/ || die "failed"
+		cp ${FILESDIR}/${PV}/log4j.xml ${D}${VAR_INSTALL_DIR}/${server}/conf/ || die "failed"
 	done
 	rmdir ${D}/${INSTALL_DIR}/server
 
-	local classpath
-	classpath=$(find ${D}/${INSTALL_DIR}/client -type f -name \*.jar |sed "s,${D}/,,g")
-	classpath=$(echo ${classpath})
-	cat >${D}/usr/share/jboss/package.env <<EOF
-DESCRIPTION=Client side libraries for JBoss
-CLASSPATH=${classpath// /:}
-EOF
-
-	dodoc server/src/docs/LICENSE.txt \
-		${FILESDIR}/${PV}/README.Gentoo \
-		${FILESDIR}/${PV}/NEWS.Gentoo
-	cp -r build/output/${MY_P}/docs/examples ${D}/usr/share/doc/${PF}/
-
-	insinto /usr/share/sgml/jboss/
-	doins build/output/${MY_P}/docs/dtd/*
-	doins ${FILESDIR}/${PV}/catalog
-
-	keepdir /var/log/jboss
-	keepdir /var/tmp/jboss
-	keepdir /var/cache/jboss
+	keepdir ${LOG_INSTALL_DIR}
+	keepdir ${TMP_INSTALL_DIR}
+	keepdir ${CACHE_INSTALL_DIR}
 
 	# the following hack is included until we determine how to make
 	# Catalina believe it lives in /var/lib/jboss/$JBOSS_CONF.
-	dosym /var/lib/jboss /usr/share/jboss/server
+	dosym ${VAR_INSTALL_DIR} ${INSTALL_DIR}/server
 }
 
 without_error() {
@@ -105,16 +73,8 @@ pkg_postinst() {
 		die "Unable to add jboss user and jboss group."
 	fi
 
-	for dir in /var/log/jboss /var/tmp/jboss /var/cache/jboss /var/lib/jboss; do
+	for dir in ${INSTALL_DIR} ${VAR_INSTALL_DIR} ${LOG_INSTALL_DIR} ${TMP_INSTALL_DIR} ${CACHE_INSTALL_DIR}; do
 		chown -R jboss:jboss ${dir}
 		chmod o-rwx ${dir}
 	done
-
-	install-catalog --add /etc/sgml/jboss.cat /usr/share/sgml/jboss/catalog
-}
-
-pkg_prerm() {
-	if [ -e /etc/sgml/jboss.cat ]; then
-		install-catalog --remove /etc/sgml/jboss.cat /usr/share/sgml/jboss/catalog
-	fi
 }
