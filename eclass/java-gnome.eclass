@@ -4,7 +4,8 @@
 
 #
 # Original Author: Joshua Nichols <nichoj@gentoo.org>
-# Purpose:  Reduce repeated code betwen the java-gnome packages
+# Purpose:  Reduce repeated code between the java-gnome packages to
+# 			to facilitate ease of maintenance.
 #
 
 # Must be before the gnome.org inherit
@@ -13,7 +14,7 @@ inherit java-pkg-2 eutils gnome.org
 
 
 ECLASS="java-gnome"
-INHERITED="$INHERITED $ECLASS"
+INHERITED="${INHERITED} ${ECLASS}"
 
 HOMEPAGE="http://java-gnome.sourceforge.net/"
 LICENSE="LGPL-2.1"
@@ -24,6 +25,8 @@ DEPEND=">=virtual/jdk-1.4
 	source? ( app-arch/zip )
 	dev-util/pkgconfig"
 
+# Do some heuristics to figure out what bindings this package is for
+# This may be overriden when needed from each ebuild
 if [[ -z ${JAVA_GNOME_BINDINGS} ]]; then 
 	JAVA_GNOME_BINDINGS=${PN}
 	JAVA_GNOME_BINDINGS=${JAVA_GNOME_BINDINGS/-java/}
@@ -32,9 +35,17 @@ if [[ -z ${JAVA_GNOME_BINDINGS} ]]; then
 		JAVA_GNOME_BINDINGS=${JAVA_GNOME_BINDINGS/lib/}
 fi
 
-JAVA_GNOME_JARNAME="${JAVA_GNOME_BINDINGS}${SLOT}.jar"
+# Filename of the jar that will be built/installed
+if [[ ${SLOT} != "0" ]]; then
+	JAVA_GNOME_JARNAME="${JAVA_GNOME_BINDINGS}${SLOT}.jar"
+else
+	JAVA_GNOME_JARNAME="${JAVA_GNOME_BINDINGS}.jar"
+fi
+
+# Full path to installed jar 
 JAVA_GNOME_JARPATH="${JAVA_PKG_JARDEST}/${JARNAME}"
 
+# pkgconfig file for the package
 JAVA_GNOME_PC=${JAVA_GNOME_PC:="${JAVA_GNOME_BINDINGS}-java.pc"}
 
 # Override arguments to econf, by calling java-gnome_src_compile
@@ -53,12 +64,12 @@ java-gnome_src_compile() {
 		--with-jardir=${JAVA_PKG_JARDEST} \
 		"$@" || die "configure failed"
 
-	emake || die "compile failed"
+	emake || die "emake failed"
 
 	# Fix the broken pkgconfig file
 	sed -i \
-		-e "s:classpath.*$:classpath=\${prefix}/share/${PN}-${SLOT}/lib/${JAVA_GNOME_JARNAME}:" \
-		${S}/${JAVA_GNOME_PC} || die "sed failed"
+		-e "s:classpath.*$:classpath=\${prefix}/share/${JAVA_PKG_NAME}/lib/${JAVA_GNOME_JARNAME}:" \
+		${S}/${JAVA_GNOME_PC} || die "failed to tweak ${JAVA_NOME_PC}"
 }
 
 java-gnome_src_install() {
@@ -66,7 +77,7 @@ java-gnome_src_install() {
 
 	java-pkg_regjar ${JAVA_GNOME_JARPATH}
 	# Examples as documentation
-	use doc || rm -rf ${D}/usr/share/doc/${PF}/examples
+	! use doc && rm -rf ${D}/usr/share/doc/${PF}/examples
 
 	use source && java-pkg_dosrc ${S}/src/java/*
 }
