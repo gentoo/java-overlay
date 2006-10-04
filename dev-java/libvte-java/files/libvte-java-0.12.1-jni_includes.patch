@@ -1,0 +1,16 @@
+diff -ru libvte-java-0.12.1-orig/Makefile.in libvte-java-0.12.1/Makefile.in
+--- libvte-java-0.12.1-orig/Makefile.in	2006-08-05 02:34:10.000000000 -0400
++++ libvte-java-0.12.1/Makefile.in	2006-08-05 02:36:42.000000000 -0400
+@@ -107,10 +107,10 @@
+ DEFAULT_INCLUDES = -I. -I$(srcdir)
+ depcomp = $(SHELL) $(top_srcdir)/depcomp
+ am__depfiles_maybe = depfiles
+-COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
++COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(JNI_INCLUDES) $(AM_CPPFLAGS) \
+ 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+ LTCOMPILE = $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) \
+-	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
++	$(DEFAULT_INCLUDES) $(INCLUDES) $(JNI_INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+ 	$(AM_CFLAGS) $(CFLAGS)
+ CCLD = $(CC)
+ LINK = $(LIBTOOL) --tag=CC --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \

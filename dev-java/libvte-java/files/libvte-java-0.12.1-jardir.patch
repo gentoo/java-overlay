@@ -1,0 +1,12 @@
+diff -ru libvte-java-0.12.1-orig/Makefile.in libvte-java-0.12.1/Makefile.in
+--- libvte-java-0.12.1-orig/Makefile.in	2006-08-03 10:51:16.000000000 -0400
++++ libvte-java-0.12.1/Makefile.in	2006-08-05 13:46:44.000000000 -0400
+@@ -1104,7 +1104,7 @@
+ @BUILD_JAVADOC_TRUE@	touch doc-stamp
+ 
+ install-data-hook:
+-	cd $(DESTDIR)$(datadir)/java && \
++	cd $(DESTDIR)$(jardir) && \
+ 		mv -f vte$(apiversion).jar vte$(apiversion)-$(VERSION).jar && \
+ 		$(LN_S) vte$(apiversion)-$(VERSION).jar vte$(apiversion).jar
+ 
