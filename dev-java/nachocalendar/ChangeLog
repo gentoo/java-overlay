@@ -1,0 +1,9 @@
+# ChangeLog for dev-java/nachocalendar
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  05 Oct 2006; Vlastimil Babka <caster@gentoo.org>
+  +nachocalendar-0.23.ebuild:
+  Initial commit, created as dep for l2fprod-common, but not used there yet.
+  Somebody might find it useful anyway.
+
