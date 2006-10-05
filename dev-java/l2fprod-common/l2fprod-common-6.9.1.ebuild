@@ -28,6 +28,8 @@ src_unpack() {
 }
 
 src_compile() {
+	eant init
+	java-ant_bsfix_one build/build4components.xml
 	eant jar
 }
 

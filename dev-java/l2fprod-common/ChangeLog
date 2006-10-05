@@ -3,6 +3,10 @@
 # $Header: $
 
   05 Oct 2006; Vlastimil Babka <caster@gentoo.org>
+  l2fprod-common-6.9.1.ebuild:
+  Ensure proper bytecode with a little trick.
+
+  05 Oct 2006; Vlastimil Babka <caster@gentoo.org>
   +l2fprod-common-6.9.1.ebuild, +files/l2fprod-common-6.9.1-nodeps.patch:
   Initial commit for bug #143253.
 
