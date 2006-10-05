@@ -71,6 +71,7 @@ RDEPEND="=virtual/jre-1.5*
 		   dev-java/xml-commons
 		   dev-java/jakarta-jstl
 		 >=dev-java/xerces-2.8.0
+		 =dev-java/swing-layout-1*
 		   "
 DEPEND="${RDEPEND}
 		=virtual/jdk-1.5*
@@ -101,7 +102,7 @@ SERVLET24="servletapi-2.4 servlet-api.jar servlet-api-2.4.jar"
 STANDARD="jakarta-jstl standard.jar standard-1.1.2.jar"
 XERCES="xerces-2 xercesImpl.jar xerces-2.8.0.jar"
 XMLCOMMONS="xml-commons xml-apis.jar xml-commons-dom-ranges-1.0.b2.jar"
-
+SWINGLAYOUT="swing-layout-1 swing-layout.jar swing-layout-1.0.jar"
 #REGEXP="jakarta-regexp-1.3 jakarta-regexp.jar regexp-1.2.jar"
 
 S=${WORKDIR}/netbeans-src
@@ -313,6 +314,7 @@ function place_symlinks() {
 	java-pkg_jar-from ${COMMONS_LOGGING} || die
 	java-pkg_jar-from ${XMLCOMMONS} || die
 	java-pkg_jar-from ${PMD} || die
+	java-pkg_jar-from ${SWINGLAYOUT} || die
 
 	cd ${S}/httpserver/external/
 	hide servlet*.jar || die
@@ -372,8 +374,9 @@ function symlink_extjars() {
 	java-pkg_jar-from jakarta-jstl jstl.jar
 	java-pkg_jar-from jakarta-jstl standard.jar
 
-# Commented out till 2.0_03 is released
-#	cd ${1}/platform${IDE_VERSION}/modules/ext
+# Commented out JHALL till 2.0_03 is released
+	cd ${1}/platform${IDE_VERSION}/modules/ext
+	java-pkg_jar-from ${SWINGLAYOUT}
 #	java-pkg_jar-from ${JHALL}
 }
 

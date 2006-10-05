@@ -9,13 +9,13 @@ HOMEPAGE="http://www.xbeans.org"
 SRC_URI="mirror://sourceforge/xbeans/Xbeans-r${PV}.zip"
 
 LICENSE=""
-SLOT="0"
-KEYWORDS="-*"
+SLOT="2"
+KEYWORDS="~amd64"
 IUSE=""
 
 CDEPEND="dev-java/xalan
 		dev-java/xerces
-		dev-java/xml/commons"
+		dev-java/xml-commons"
 		#xsltc here
 DEPEND=">=virtual/jdk-1.4
 		app-arch/unzip

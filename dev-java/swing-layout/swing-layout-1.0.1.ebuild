@@ -9,7 +9,7 @@ HOMEPAGE="https://swing-layout.dev.java.net/"
 SRC_URI="https://swing-layout.dev.java.net/files/documents/2752/35842/${P}-src.zip"
 
 LICENSE="LGPL-2.1"
-SLOT="1.0"
+SLOT="1"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 
