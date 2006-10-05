@@ -1,0 +1,49 @@
+--- components.xml.orig	2006-09-02 12:44:46.000000000 +0200
++++ components.xml	2006-10-05 23:43:01.000000000 +0200
+@@ -108,6 +108,7 @@
+     </javadoc>
+   </component>
+ 
++  <!--
+   <component name="sheet"
+              mainclass="com.l2fprod.common.demo.Main">
+     <depend>shared</depend>
+@@ -130,6 +131,7 @@
+       <pathelement location="lib/nachocalendar.jar"/>
+     </classpath>
+   </component>
++  -->
+ 
+   <component name="tasks"
+ 	     mainclass="com.l2fprod.common.demo.Main">
+@@ -179,7 +181,7 @@
+       <include name="com/l2fprod/common/swing/tips/*.java"/>
+     </javadoc>
+   </component>
+-
++  <!--
+   <component name="springrcp">
+     <depend>tasks</depend>
+     <depend>directorychooser</depend>
+@@ -199,6 +201,7 @@
+       <include name="com/l2fprod/common/springrcp/*.java"/>
+     </javadoc>
+   </component>
++  -->
+             
+   <component name="all"
+              mainclass="com.l2fprod.common.demo.Main"
+@@ -208,11 +211,11 @@
+     <fileset dir="src/java/fontchooser" includes="**" excludes="**/*.gif,**/*.png,**/*.jpg"/>
+     <fileset dir="src/java/outlookbar" includes="**" excludes="**/*.gif,**/*.png,**/*.jpg"/>
+     <fileset dir="src/java/shared" includes="**" excludes="**/*.gif,**/*.png,**/*.jpg"/>
+-    <fileset dir="src/java/sheet" includes="**" excludes="**/*.gif,**/*.png,**/*.jpg"/>
++    <!--<fileset dir="src/java/sheet" includes="**" excludes="**/*.gif,**/*.png,**/*.jpg"/>-->
+     <fileset dir="src/java/tasks" includes="**" excludes="**/*.gif,**/*.png,**/*.jpg"/>
+     <fileset dir="src/java/totd" includes="**" excludes="**/*.gif,**/*.png,**/*.jpg"/>
+     <fileset dir="src/java/shared" includes="**/Version.java" excludes="**/*.gif,**/*.png,**/*.jpg"/>
+-    <fileset dir="src/java/springrcp" includes="**" excludes="**/*.gif,**/*.png,**/*.jpg"/>
++    <!--<fileset dir="src/java/springrcp" includes="**" excludes="**/*.gif,**/*.png,**/*.jpg"/>-->
+     <resources>
+       <fileset dir="src/java/buttonbar" includes="**/*.gif,**/*.png,**/*.properties"/>
+       <fileset dir="src/java/directorychooser" includes="**/*.gif,**/*.png,**/*.properties"/>

@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/l2fprod-common
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  05 Oct 2006; Vlastimil Babka <caster@gentoo.org>
+  +l2fprod-common-6.9.1.ebuild, +files/l2fprod-common-6.9.1-nodeps.patch:
+  Initial commit for bug #143253.
+
