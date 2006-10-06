@@ -75,6 +75,7 @@ pkg_postinst() {
 
 	for dir in ${INSTALL_DIR} ${VAR_INSTALL_DIR} ${LOG_INSTALL_DIR} ${TMP_INSTALL_DIR} ${CACHE_INSTALL_DIR}; do
 		chown -R jboss:jboss ${dir}
-		chmod o-rwx ${dir}
+		chmod o-w ${dir}
+		chmod o+rx ${dir}
 	done
 }
