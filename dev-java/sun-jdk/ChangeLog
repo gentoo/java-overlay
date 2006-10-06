@@ -2,6 +2,10 @@
 # Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  06 Oct 2006; Vlastimil Babka <caster@gentoo.org>
+  -sun-jdk-1.6.0.0_beta100.ebuild, +sun-jdk-1.6.0.0_beta101.ebuild:
+  New snapshot.
+
   17 Sep 2006; Vlastimil Babka <caster@gentoo.org>
   -sun-jdk-1.6.0.0_beta98.ebuild, +sun-jdk-1.6.0.0_beta99.ebuild:
   New 1.6 snapshot, this time bi-weekly.
