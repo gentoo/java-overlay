@@ -77,7 +77,7 @@ pkg_postinst() {
 	# add write access for jboss group so user can use netbeans to start jboss
 	chmod g+w ${VAR_INSTALL_DIR}/*
 
-        einfo
-        einfo " If you want to run jboss from netbeans, add you user to 'jboss' group."
-        einfo
+	einfo
+	einfo " If you want to run jboss from netbeans, add you user to 'jboss' group."
+	einfo
 }
