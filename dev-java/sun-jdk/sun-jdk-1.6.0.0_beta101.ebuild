@@ -30,7 +30,7 @@ SRC_URI="x86? ( ${BASE_URL}/$x86file ) amd64? ( ${BASE_URL}/$amd64file )"
 SLOT="1.6"
 LICENSE="sun-prerelease-jdk6"
 KEYWORDS="~amd64 ~x86"
-#RESTRICT="nostrip fetch"
+RESTRICT="nostrip fetch"
 IUSE="doc nsplugin examples"
 
 DEPEND="
