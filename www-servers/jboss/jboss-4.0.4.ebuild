@@ -34,11 +34,6 @@ src_install() {
 	doexe ${FILESDIR}/${PV}/init.d/jboss-${SLOT}
 	dodir /etc/conf.d
 	cp ${FILESDIR}/${PV}/conf.d/jboss-${SLOT} ${D}/etc/conf.d
-	dodir /etc/env.d
-	cp ${FILESDIR}/${PV}/env.d/50jboss-${SLOT} ${D}/etc/env.d
-	sed "s#@JBOSSPREFIX@#${INSTALL_DIR}#" \
-		<${FILESDIR}/${PV}/env.d/50jboss-${SLOT} \
-		>${D}/etc/env.d/50jboss-${SLOT}
 
 	#copy directories into 
 	for f in bin client lib server copyright.txt; do
@@ -73,9 +68,16 @@ pkg_postinst() {
 		die "Unable to add jboss user and jboss group."
 	fi
 
-	for dir in ${INSTALL_DIR} ${VAR_INSTALL_DIR} ${LOG_INSTALL_DIR} ${TMP_INSTALL_DIR} ${CACHE_INSTALL_DIR}; do
+	for dir in ${VAR_INSTALL_DIR} ${LOG_INSTALL_DIR} ${TMP_INSTALL_DIR} ${CACHE_INSTALL_DIR}; do
 		chown -R jboss:jboss ${dir}
 		chmod o-w ${dir}
 		chmod o+rx ${dir}
 	done
+
+	# add write access for jboss group so user can use netbeans to start jboss
+	chmod g+w ${VAR_INSTALL_DIR}/*
+
+        einfo
+        einfo " If you want to run jboss from netbeans, add you user to 'jboss' group."
+        einfo
 }

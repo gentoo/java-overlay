@@ -51,7 +51,7 @@ SERVER_SETTINGS="${SERVER_SETTINGS} -Djboss.server.data.dir=/var/cache/jboss-4"
 # default, minimal and all exist.  Our defaults are /var/lib/jboss to
 # be consistent with other servers such as PostgreSQL and Apache.
 
-SERVER_HOME="/var/lib/jboss-4"
+SERVER_HOME="/var/lib/jboss-4/"
 SERVER_SETTINGS="${SERVER_SETTINGS} -Djboss.server.base.url=file://${SERVER_HOME}"
 
 # Whether or not the server should exit the JVM on shutdown
@@ -76,10 +76,8 @@ JBOSS_BIND_ADDRESS="0.0.0.0"
 # We need to have JBOSS_HOME and JAVA_HOME set in order to start
 # jboss.
 
-[ -z "$JBOSS_HOME" ] \
-    && export JBOSS_HOME=`grep JBOSS4_HOME /etc/profile.env | sed -e "s;.*=;;" -e "s;';;g"`
-[ -z "$JAVA_HOME" ] \
-    && export JAVA_HOME=`java-config --jdk-home`
+JBOSS_HOME="/usr/share/jboss-4"
+[ -z "$JAVA_HOME" ] && export JAVA_HOME=`java-config --jdk-home`
 
 # Commands for starting and stopping the server
 
