@@ -61,11 +61,12 @@ without_error() {
 	$@ &>/dev/null || true
 }
 
-pkg_postinst() {
-	if ! enewgroup jboss || ! enewuser jboss -1 /bin/sh /dev/null jboss; then
-		die "Unable to add jboss user and jboss group."
-	fi
+pkg_setup() {
+	enewgroup jboss || die "Unable to create jboss group"
+	enewuser jboss -1 /bin/sh /dev/null jboss || die "Unable to create jboss user"
+}
 
+pkg_postinst() {
 	for dir in ${VAR_INSTALL_DIR} ${LOG_INSTALL_DIR} ${TMP_INSTALL_DIR} ${CACHE_INSTALL_DIR}; do
 		chown -R jboss:jboss ${dir}
 		chmod o-w ${dir}
@@ -76,6 +77,6 @@ pkg_postinst() {
 	chmod -R g+w ${VAR_INSTALL_DIR}/*
 
 	einfo
-	einfo " If you want to run jboss from netbeans, add you user to 'jboss' group."
+	einfo " If you want to run jboss from netbeans, add your user to 'jboss' group."
 	einfo
 }
