@@ -18,7 +18,7 @@ DEPEND="${DEPEND}
 	dev-java/buildmagic-tasks
 	dev-java/xml-commons-resolver
 	dev-java/xalan
-	=dev-java/xerces-2*
+	=dev-java/xerces-2.3*
 	dev-java/xdoclet"
 
 SLOT="4"
