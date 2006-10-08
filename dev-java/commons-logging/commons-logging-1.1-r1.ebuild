@@ -15,9 +15,11 @@ IUSE="avalon doc source"
 
 RDEPEND=">=virtual/jre-1.3
 	=dev-java/avalon-logkit-1.2*
-	dev-java/log4j
+	=dev-java/log4j-1.2*
 	=dev-java/servletapi-2.3*
 	avalon? ( =dev-java/avalon-framework-4.2* )"
+# ATTENTION: Add this when log4j-1.3 is out
+#	=dev-java/log4j-1.3*
 DEPEND=">=virtual/jdk-1.3
 	dev-java/ant-core
 	source? ( app-arch/zip )
@@ -30,7 +32,9 @@ src_unpack() {
 	cd ${S}
 	epatch ${FILESDIR}/${P}-gentoo.patch
 
-	echo "log4j.jar=$(java-pkg_getjars log4j)" > build.properties
+	echo "log4j12.jar=$(java-pkg_getjars log4j)" > build.properties
+	# ATTENTION: Add this when log4j-1.3 is out (check the SLOT)
+	#echo "log4j13.jar=$(java-pkg_getjars log4j-1.3)" > build.properties
 	echo "logkit.jar=$(java-pkg_getjars avalon-logkit-1.2)" >> build.properties
 	echo "servletapi.jar=$(java-pkg_getjars servletapi-2.3)" >> build.properties
 	use avalon && echo "avalon-framework.jar=$(java-pkg_getjars avalon-framework-4.2)" >> build.properties

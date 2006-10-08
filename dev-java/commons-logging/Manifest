@@ -3,10 +3,10 @@ MD5 1abc54e325d1d636bfb36830bf3fab97 files/commons-logging-1.1-gentoo.patch 927
 RMD160 7504a6f319f1ca894b218d9d30641c23904f310d files/commons-logging-1.1-gentoo.patch 927
 SHA256 c50883be252e835335c142a6f84e0d21a32403873802eee04a89241ad0c79498 files/commons-logging-1.1-gentoo.patch 927
 DIST commons-logging-1.1-src.tar.gz 173556 RMD160 5764ee09a541365adee55aded1a9ba8908deea0d SHA1 cbaf5c65979e6733b07b27b01af083965a55fbad SHA256 56aa7d3f2ab3d50798ce618d6dd60ed6814287f7cc25802d403cd3083238c5fa
-EBUILD commons-logging-1.1.ebuild 1653 RMD160 d425f40a26d94ab92b4550b1b17e40013b09c1e4 SHA1 118ed707f5258435f55380d6dbf548f794920f99 SHA256 0d4a0185528d6b66f61859ee9dfcfe9079a74a4752e23483e11efb7cb108c639
-MD5 97180ea341f369f6f3bbb13f942ee966 commons-logging-1.1.ebuild 1653
-RMD160 d425f40a26d94ab92b4550b1b17e40013b09c1e4 commons-logging-1.1.ebuild 1653
-SHA256 0d4a0185528d6b66f61859ee9dfcfe9079a74a4752e23483e11efb7cb108c639 commons-logging-1.1.ebuild 1653
-MD5 dbd98438b253a99ade9f91d18702be61 files/digest-commons-logging-1.1 271
-RMD160 9d76f4289df7607857eb75a355c863f71888e879 files/digest-commons-logging-1.1 271
-SHA256 1f084370bb15098b91eba2e71dca3522fea67307d4956040e3479d9eedda26ed files/digest-commons-logging-1.1 271
+EBUILD commons-logging-1.1-r1.ebuild 1860 RMD160 96c93964f4a24f1b9caf64196d3e13ead9c051e8 SHA1 584048ef862a420f2d67c1ce4ab0c92d07ce6e01 SHA256 5f6d20567cdfca7ed83c9df9998bde8382510f4ae6fa98bf0bccd81f53d02263
+MD5 bc7c5b1ac8c71cd06e787777d425c6ae commons-logging-1.1-r1.ebuild 1860
+RMD160 96c93964f4a24f1b9caf64196d3e13ead9c051e8 commons-logging-1.1-r1.ebuild 1860
+SHA256 5f6d20567cdfca7ed83c9df9998bde8382510f4ae6fa98bf0bccd81f53d02263 commons-logging-1.1-r1.ebuild 1860
+MD5 dbd98438b253a99ade9f91d18702be61 files/digest-commons-logging-1.1-r1 271
+RMD160 9d76f4289df7607857eb75a355c863f71888e879 files/digest-commons-logging-1.1-r1 271
+SHA256 1f084370bb15098b91eba2e71dca3522fea67307d4956040e3479d9eedda26ed files/digest-commons-logging-1.1-r1 271
