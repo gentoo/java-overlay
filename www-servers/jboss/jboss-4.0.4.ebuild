@@ -13,7 +13,7 @@ HOMEPAGE="http://www.jboss.org"
 LICENSE="LGPL-2"
 IUSE=""
 SLOT="4"
-KEYWORDS="~amd64 -x86"
+KEYWORDS="~amd64 ~x86"
 
 RDEPEND=">=virtual/jdk-1.4"
 DEPEND="${RDEPEND}
@@ -62,8 +62,6 @@ without_error() {
 }
 
 pkg_postinst() {
-	without_error userdel jboss
-	without_error groupdel jboss
 	if ! enewgroup jboss || ! enewuser jboss -1 /bin/sh /dev/null jboss; then
 		die "Unable to add jboss user and jboss group."
 	fi
@@ -75,7 +73,7 @@ pkg_postinst() {
 	done
 
 	# add write access for jboss group so user can use netbeans to start jboss
-	chmod g+w ${VAR_INSTALL_DIR}/*
+	chmod -R g+w ${VAR_INSTALL_DIR}/*
 
 	einfo
 	einfo " If you want to run jboss from netbeans, add you user to 'jboss' group."
