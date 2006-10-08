@@ -1,0 +1,19 @@
+*** build.xml	2006-09-08 15:38:20.000000000 +0200
+--- build.xml.2	2006-09-08 15:50:10.000000000 +0200
+***************
+*** 157,163 ****
+      </target>
+  
+  	<!-- make the jar -->
+!     <target name="jar" depends="clean,test">
+          <mkdir dir="${dist}"/>
+          <jar basedir="${build}" jarfile="${dist}/${jarname}">
+          	<exclude name="${testFiles}" />
+--- 157,163 ----
+      </target>
+  
+  	<!-- make the jar -->
+!     <target name="jar" depends="clean,compile-api">
+          <mkdir dir="${dist}"/>
+          <jar basedir="${build}" jarfile="${dist}/${jarname}">
+          	<exclude name="${testFiles}" />
