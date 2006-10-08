@@ -14,7 +14,7 @@ KEYWORDS="~amd64 ~x86"
 COMMON_DEPEND="=dev-java/bsf-2.3*
 	dev-java/xml-commons-resolver
 	dev-java/xalan
-	=dev-java/xerces-1.3*
+	=dev-java/xerces-2*
 	=dev-java/commons-beanutils-1.6*
 	dev-java/commons-codec
 	dev-java/commons-collections
