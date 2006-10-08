@@ -155,13 +155,15 @@ src_unpack () {
 
 	cd ${S}
 	epatch ${FILESDIR}/${SLOT}/files-layout-txt.patch
+	epatch ${FILESDIR}/${SLOT}/modules-txt.patch
+	epatch ${FILESDIR}/${SLOT}/deps-txt.patch
 	epatch ${FILESDIR}/${SLOT}/public-packages-txt.patch
 	epatch ${FILESDIR}/${SLOT}/mdr_extras_jdbcstorage_build.xml.patch
 	epatch ${FILESDIR}/${SLOT}/mdr_extras_mdrant_build.xml.patch
 
 	cd ${S}/nbbuild
 	# Disable the bundled Tomcat in favor of Portage installed version
-#	sed -i -e "s%tomcatint/tomcat5/bundled,%%g" *.properties
+	sed -i -e "s%tomcatint/tomcat5/bundled,%%g" *.properties
 
 	set_env
 	place_symlinks
@@ -330,7 +332,7 @@ function place_symlinks() {
 
 	cd ${S}/web/external
 #	hide servlet-*.jar jasper*.jar jsp*.jar jstl*.jar standard*.jar commons-el*.jar || die
-	hide servlet-*.jar  jsp*.jar jstl*.jar standard*.jar commons-el*.jar || die
+	hide servlet-*.jar  jstl*.jar standard*.jar commons-el*.jar || die
 	java-pkg_jar-from ${SERVLET23} || die
 	java-pkg_jar-from ${SERVLET24} || die 
 #	java-pkg_jar-from ${JASPERCOMPILER} || die
@@ -375,7 +377,7 @@ function symlink_extjars() {
 	java-pkg_jar-from jakarta-jstl standard.jar
 
 # Commented out JHALL till 2.0_03 is released
-	cd ${1}/platform${IDE_VERSION}/modules/ext
+	cd ${1}/platform${PLATFORM}/modules/ext
 	java-pkg_jar-from ${SWINGLAYOUT}
 #	java-pkg_jar-from ${JHALL}
 }
