@@ -9,7 +9,7 @@ DESCRIPTION="A java presentation framework for building web applications"
 HOMEPAGE="http://stripes.mc4j.org/confluence/display/stripes/Home"
 SRC_URI="mirror://sourceforge/stripes/${P}-src.zip"
 
-LICENSE=""
+LICENSE="Apache-2.0"
 SLOT="1.4"
 KEYWORDS="~amd64"
 IUSE="doc source"
