@@ -8,9 +8,9 @@ DESCRIPTION=""
 HOMEPAGE=""
 SRC_URI="http://download.java.net/javaee5/fcs_branch/promoted/source/glassfish-9_0-b48-src.zip"
 
-LICENSE=""
+LICENSE="cddl-1.0"
 SLOT="0"
-KEYWORDS="-amd64 -x86"
+KEYWORDS="~amd64 -x86"
 IUSE=""
 
 DEPEND=">=virtual/jdk-1.5
@@ -22,7 +22,7 @@ S="${WORKDIR}/glassfish"
 
 src_compile() {
 	
-	cd ${S}/persistence-api
+	cd ${S}/${MODULE}
 	eant all 
 }
 
