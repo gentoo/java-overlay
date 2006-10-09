@@ -16,7 +16,6 @@ IUSE="doc source"
 COMMON_DEP="=dev-java/servletapi-2.3*"
 RDEPEND=">=virtual/jre-1.5
 	${COMMON_DEP}"
-# FIXME doesn't like Java 1.5's XML APIs
 DEPEND="=virtual/jdk-1.5*
 	app-arch/unzip
 	source? ( app-arch/zip )
@@ -43,5 +42,5 @@ src_install() {
 	java-pkg_dojar dist/${PN}.jar
 
 	use doc && java-pkg_dohtml -r dist/doc/api
-	use source && java-pkg_dosrc src/com
+	use source && java-pkg_dosrc com
 }
