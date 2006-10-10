@@ -13,7 +13,7 @@ HOMEPAGE="http://www.jboss.org"
 LICENSE="LGPL-2"
 IUSE=""
 SLOT="4"
-KEYWORDS="-amd64 -x86"
+KEYWORDS="-amd64 ~x86"
 
 RDEPEND=">=virtual/jdk-1.4"
 DEPEND="${RDEPEND}
