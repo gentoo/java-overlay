@@ -38,11 +38,11 @@ src_install() {
 	dodir ${INSTALL_DIR}
 	keepdir ${TMP_INSTALL_DIR}
 	diropts -m775
-	keepdir ${RUN_INSTALL_DIR}
+	keepdir ${RUN_INSTALL_DIR} ${CACHE_INSTALL_DIR}
 	for PROFILE in all default minimal; do
 		diropts -m775
 		dodir ${VAR_INSTALL_DIR}/${PROFILE}/deploy
-		keepdir ${LOG_INSTALL_DIR}/${PROFILE} ${CACHE_INSTALL_DIR}/${PROFILE}
+		keepdir ${LOG_INSTALL_DIR}/${PROFILE}
 		diropts -m755
 		dodir ${CONF_INSTALL_DIR}/${PROFILE} ${VAR_INSTALL_DIR}/${PROFILE} ${VAR_INSTALL_DIR}/${PROFILE}/lib
 	done
@@ -81,7 +81,7 @@ src_install() {
 	# do symlinks
 	for PROFILE in all default minimal; do
 		dosym ${CONF_INSTALL_DIR}/${PROFILE} ${VAR_INSTALL_DIR}/${PROFILE}/conf
-		dosym ${CACHE_INSTALL_DIR}/${PROFILE} ${VAR_INSTALL_DIR}/${PROFILE}/data
+		dosym ${CACHE_INSTALL_DIR} ${VAR_INSTALL_DIR}/${PROFILE}/data
 		dosym ${LOG_INSTALL_DIR}/${PROFILE} ${VAR_INSTALL_DIR}/${PROFILE}/log
 		dosym ${TMP_INSTALL_DIR} ${VAR_INSTALL_DIR}/${PROFILE}/tmp
 		dosym ${RUN_INSTALL_DIR} ${VAR_INSTALL_DIR}/${PROFILE}/work
