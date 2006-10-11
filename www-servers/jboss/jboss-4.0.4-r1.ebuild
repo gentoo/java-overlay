@@ -31,20 +31,19 @@ RUN_INSTALL_DIR="/var/run/${PN}-${SLOT}"
 src_install() {
 	# copy startup stuff
 	doinitd ${FILESDIR}/${PV}/init.d/jboss-${SLOT}
-	doconfd ${FILESDIR}/${PV}/conf.d/jboss-${SLOT}
+	newconfd ${FILESDIR}/${PV}/conf.d/jboss-${SLOT}-r1 jboss-4
 
 	# create the directory structure
 	diropts -m755
 	dodir ${INSTALL_DIR}
-	keepdir ${TMP_INSTALL_DIR}
-	diropts -m775
-	keepdir ${RUN_INSTALL_DIR} ${CACHE_INSTALL_DIR}
 	for PROFILE in all default minimal; do
 		diropts -m775
 		dodir ${VAR_INSTALL_DIR}/${PROFILE}/deploy
-		keepdir ${LOG_INSTALL_DIR}/${PROFILE}
+		keepdir ${LOG_INSTALL_DIR}/${PROFILE} ${CACHE_INSTALL_DIR}/${PROFILE} \
+			${TMP_INSTALL_DIR}/${PROFILE} ${RUN_INSTALL_DIR}/${PROFILE}
 		diropts -m755
-		dodir ${CONF_INSTALL_DIR}/${PROFILE} ${VAR_INSTALL_DIR}/${PROFILE} ${VAR_INSTALL_DIR}/${PROFILE}/lib
+		dodir ${CONF_INSTALL_DIR}/${PROFILE} ${VAR_INSTALL_DIR}/${PROFILE} \
+			${VAR_INSTALL_DIR}/${PROFILE}/lib
 	done
 	keepdir ${VAR_INSTALL_DIR}/minimal/deploy
 
@@ -81,10 +80,10 @@ src_install() {
 	# do symlinks
 	for PROFILE in all default minimal; do
 		dosym ${CONF_INSTALL_DIR}/${PROFILE} ${VAR_INSTALL_DIR}/${PROFILE}/conf
-		dosym ${CACHE_INSTALL_DIR} ${VAR_INSTALL_DIR}/${PROFILE}/data
+		dosym ${CACHE_INSTALL_DIR}/${PROFILE} ${VAR_INSTALL_DIR}/${PROFILE}/data
 		dosym ${LOG_INSTALL_DIR}/${PROFILE} ${VAR_INSTALL_DIR}/${PROFILE}/log
-		dosym ${TMP_INSTALL_DIR} ${VAR_INSTALL_DIR}/${PROFILE}/tmp
-		dosym ${RUN_INSTALL_DIR} ${VAR_INSTALL_DIR}/${PROFILE}/work
+		dosym ${TMP_INSTALL_DIR}/${PROFILE} ${VAR_INSTALL_DIR}/${PROFILE}/tmp
+		dosym ${RUN_INSTALL_DIR}/${PROFILE} ${VAR_INSTALL_DIR}/${PROFILE}/work
 	done
 
 	# the following hack is included until we determine how to make
