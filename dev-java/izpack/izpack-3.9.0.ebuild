@@ -23,7 +23,7 @@ IUSE="doc source examples"
 CDEPEND="=dev-java/jakarta-regexp-1.3*"
 DEPEND=">=virtual/jdk-1.4
 		app-arch/zip
-		>dev-java-ant-core-1.5
+		>=dev-java/ant-core-1.5
 		${CDEPEND}"
 RDEPEND=">=virtual/jre-1.4
 		${CDEPEND}"
