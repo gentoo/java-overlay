@@ -1,0 +1,9 @@
+# ChangeLog for app-text/jabref
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  11 Oct 2006; Vlastimil Babka <caster@gentoo.org> +jabref-2.1.ebuild,
+  +files/jabref-2.1-classpath_cleanup.patch,
+  +files/jabref-2.1-fix_jarbundler.patch:
+  Version bump of jabref in portage for bug #122085.
+
