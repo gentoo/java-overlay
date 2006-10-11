@@ -12,10 +12,14 @@ LICENSE="BSD"
 KEYWORDS="~x86"
 SLOT="0"
 
+COMMON_DEPEND=">=dev-java/jgraph-5.9.2"
 DEPEND=">=virtual/jdk-1.4
+	dev-java/ant-core
 	app-arch/unzip
-	source? ( app-arch/zip )"
-RDEPEND=">=virtual/jre-1.4"
+	source? ( app-arch/zip )
+	${COMMON_DEPEND}"
+RDEPEND=">=virtual/jre-1.4
+	${COMMON_DEPEND}"
 
 IUSE="doc source"
 
@@ -25,11 +29,14 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}"
 	unzip -qq "redist/${P}-src.zip"
-	mkdir src
-	mv com src
+
+	rm lib-compiletime/*.jar
 	rm redist/*
 	# do not delete stuff after it's zipped
 	sed -i -e "/<delete/d" build.xml
+
+	cd lib-compiletime
+	java-pkg_jar-from jgraph jgraph.jar
 }
 
 src_compile() {
