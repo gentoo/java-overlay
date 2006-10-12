@@ -83,6 +83,7 @@ JBOSS_HOME="/usr/share/jboss-4"
 
 CMD_START="JAVA_OPTS=\"${SERVER_SETTINGS}\" ${JBOSS_HOME}/bin/run.sh -b ${JBOSS_BIND_ADDRESS} -c ${JBOSS_CONF}" 
 
-CMD_STOP="${JAVA_HOME}/bin/java -classpath ${JBOSS_HOME}/bin/shutdown.jar:${JBOSS_HOME}/lib/jboss-system.jar:`java-config --classpath=jboss` org.jboss.Shutdown -S"
+#CMD_STOP="${JAVA_HOME}/bin/java -classpath ${JBOSS_HOME}/bin/shutdown.jar:${JBOSS_HOME}/lib/jboss-system.jar:`java-config --classpath=jboss` org.jboss.Shutdown -S"
+CMD_STOP="${JAVA_HOME}/bin/java -classpath ${JBOSS_HOME}/bin/shutdown.jar:${JBOSS_HOME}/lib/jboss-system.jar org.jboss.Shutdown -S"
 
 SUBIT="su $JBOSS_USER -c "
