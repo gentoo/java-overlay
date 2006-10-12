@@ -19,7 +19,7 @@ RDEPEND=">=virtual/jre-1.4
 	>=dev-java/antlr-2.7.3
 	dev-java/jgoodies-forms
 	=dev-java/jgoodies-looks-2.0*
-	dev-java/microba"
+	>=dev-java/microba-0.4.3"
 
 DEPEND="${RDEPEND}
 	>=virtual/jdk-1.4
