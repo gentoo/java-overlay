@@ -13,23 +13,25 @@ DEPEND=">=virtual/jdk-1.3
 RDEPEND=">=virtual/jre-1.3
 		=dev-java/xerces-2*
 		dev-java/xalan"
-LICENSE="CyberNeko Software License-1.0"
+LICENSE="CyberNeko-1.0"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE="doc"
 
-# FIXME need patch for xerces-2.7
 src_unpack() {
 	unpack ${A}
 	cd ${S}
-#	epatch ${FILESDIR}/${PN}-0.9.4-build-html.xml.patch
-	echo "xerces.jar=$(java-config -p xerces-2)" > build.properties
-	echo "xalan.jar=$(java-config -p xalan)" >> build.properties
+	# fixes compile errors due to API changes of xerces
+	# TODO report upstream and fix properly instead of throwing
+	# UnsupportedOperationException
+	epatch ${FILESDIR}/${P}-xerces.patch
+	# TODO sanify classpath for building, and submit upstream
+	java-ant_rewrite-classpath build-html.xml
 }
 
 src_compile() {
-	local antflags="-buildfile build-html.xml clean jar"
-	eant ${antflags} $(use_doc doc)
+	eant -f build-html.xml clean jar $(use_doc doc) \
+		-Dgentoo.classpath=$(java-pkg_getjars xerces-2,xalan)
 }
 
 src_install() {
