@@ -34,10 +34,11 @@ RDEPEND=">=virtual/jre-1.4
 S="${WORKDIR}/${MY_P}"
 
 src_compile() {
+	mkdir classes
 	ejavac -d classes -sourcepath src/ \
 		-classpath $(java-config -p jgroups,jta,jboss-aop,commons-logging,jboss-module-system-4,concurrent-util,jboss-module-server-4,jboss-module-jmx-4,db-je,jboss-module-common-4,junit) \
 		$(find src/ -name *.java)
-	cp resources/* classes
+	cp src/resources/* classes
 	cd classes
 	jar -cf ../${PN}.jar *
 }
