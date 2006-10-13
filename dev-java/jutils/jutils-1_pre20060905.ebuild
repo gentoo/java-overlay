@@ -16,7 +16,7 @@ SRC_URI="http://www.counties.co.nz/alistair/distfiles/${P}.tar.gz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="source"
 
 DEPEND=">=virtual/jdk-1.4"
 RDEPEND=">=virtual/jre-1.4"
@@ -29,4 +29,5 @@ src_compile() {
 
 src_install() {
 	java-pkg_dojar ${WORKDIR}/jinput/coreAPI/lib/*.jar
+	use source && java-pkg_dosrc src/*
 }
