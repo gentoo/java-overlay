@@ -1,0 +1,1 @@
+CONFIG_PROTECT="/var/lib/jboss-4/all/deploy /var/lib/jboss-4/default/deploy /var/lib/jboss-4/minimal/deploy"
