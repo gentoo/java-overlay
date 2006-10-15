@@ -1,0 +1,36 @@
+diff -Naur jmock-1.1.0/build.xml jmock-1.1.0-new/build.xml
+--- jmock-1.1.0/build.xml	2006-08-27 11:40:58.000000000 +1200
++++ jmock-1.1.0-new/build.xml	2006-10-15 09:20:27.000000000 +1300
+@@ -14,9 +14,9 @@
+     <property name="build.dist.dir" value="${build.dir}/dist"/>
+     <property name="build.dist.bin.dir" value="${build.dist.dir}/jars"/>
+     <property name="build.dist.src.dir" value="${build.dist.dir}/distributions"/>
+-    <property name="timestamped.src.dir" value="jmock-${version.extract}"/>
++    <property name="timestamped.src.dir" value="jmock-src"/>
+     <property name="build.src.dir" value="${build.dir}/${timestamped.src.dir}"/>
+-    <property name="build.javadoc.subdir" value="javadoc-${version.extract}"/>
++    <property name="build.javadoc.subdir" value="javadoc"/>
+ 	<property name="build.javadoc.dir" value="${build.dir}/${build.javadoc.subdir}"/>
+     <property name="build.website.dir" value="website/output"/>
+ 
+@@ -27,16 +27,16 @@
+     <property name="core.src.dir" value="${core.dir}/src"/>
+     <property name="core.atest.dir" value="${core.dir}/acceptance-tests"/>
+     <property name="core.build.dir" value="build/core"/>
+-    <property name="core.jar" value="${build.dist.bin.dir}/jmock-${version.archive}.jar"/>
++    <property name="core.jar" value="${build.dist.bin.dir}/jmock.jar"/>
+ 
+     <property name="cglib.dir" value="${extensions.dir}/cglib"/>
+     <property name="cglib.src.dir" value="${cglib.dir}/src"/>
+     <property name="cglib.atest.dir" value="${cglib.dir}/acceptance-tests"/>
+     <property name="cglib.build.dir" value="build/cglib"/>
+-    <property name="cglib.jar" value="${build.dist.bin.dir}/jmock-cglib-${version.archive}.jar"/>
++    <property name="cglib.jar" value="${build.dist.bin.dir}/jmock-cglib.jar"/>
+ 
+-    <property name="src.zip" value="${build.dist.src.dir}/jmock-${version.archive}-src.zip"/>
+-    <property name="javadoc.zip" value="${build.dist.src.dir}/jmock-${version.archive}-javadoc.zip"/>
++    <property name="src.zip" value="${build.dist.src.dir}/jmock-src.zip"/>
++    <property name="javadoc.zip" value="${build.dist.src.dir}/jmock-javadoc.zip"/>
+ 
+     <property name="deploy.root.dir" value="/home/projects/jmock"/>
+     <property name="deploy.website.dir" value="${deploy.root.dir}/public_html"/>
