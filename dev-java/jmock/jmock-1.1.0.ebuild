@@ -8,7 +8,7 @@ DESCRIPTION="Library for testing Java code using mock objects."
 SRC_URI="http://www.${PN}.org/${P}-src.zip"
 HOMEPAGE="http://jmock.codehaus.org"
 LICENSE="BSD"
-SLOT="1.0"
+SLOT="1.1"
 KEYWORDS="~x86 ~amd64"
 IUSE="doc examples"
 
