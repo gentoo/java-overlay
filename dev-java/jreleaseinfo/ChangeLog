@@ -1,8 +1,0 @@
-# ChangeLog for dev-java/jreleaseinfo
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-  05 Oct 2006; Vlastimil Babka <caster@gentoo.org>
-  +jreleaseinfo-1.3.0.ebuild:
-  Initial commit as dependency of l2fprod-common.
-
