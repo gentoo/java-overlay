@@ -13,12 +13,11 @@ KEYWORDS="~x86 ~amd64"
 IUSE="doc examples"
 
 RDEPEND=">=virtual/jre-1.4
-	${RDEPEND}
 	=dev-java/cglib-2.0*"
 DEPEND=">=virtual/jdk-1.4
 	app-core/unzip
+	${RDEPEND}
 	dev-java/ant-core"
-
 src_unpack() {
 	unpack ${A}
 
