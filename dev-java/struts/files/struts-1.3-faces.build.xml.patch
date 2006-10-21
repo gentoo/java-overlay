@@ -1,0 +1,41 @@
+--- /dev/null	2000-10-22 01:01:00.000000000 +0200
++++ faces/build.xml	2006-10-21 23:12:19.000000000 +0200
+@@ -0,0 +1,38 @@
++<project name="struts-faces" default="jar" basedir=".">
++  <property name="build.dir" value="target"/>
++  <property name="build.output" value="${build.dir}/classes"/>
++  <property name="lib.dir" value="../lib"/>
++  <property name="struts.lib.dir" value="../strutslib"/>
++  <property name="build.final.name" value="struts-faces"/>
++  <path id="build.classpath">
++    <fileset dir="${lib.dir}">
++      <include name="**/*.jar"/>
++    </fileset>
++    <fileset dir="${struts.lib.dir}">
++      <include name="**/*.jar"/>
++    </fileset>
++  </path>
++  <target name="clean" description="Clean the output directory">
++    <delete dir="${build.dir}"/>
++  </target>
++  <target name="compile" description="Compile the code">
++    <mkdir dir="${build.output}"/>
++    <javac destdir="${build.output}" excludes="**/package.html" debug="true" deprecation="true" optimize="false">
++      <src>
++        <pathelement location="src/main/java"/>
++      </src>
++      <classpath refid="build.classpath"/>
++    </javac>
++    <copy todir="${build.output}">
++      <fileset dir="src/main/resources"/>
++    </copy>
++    <copy todir="${build.output}">
++      <fileset dir="src/main/java">
++        <include name="**/*.properties"/>
++      </fileset>
++    </copy>
++  </target>
++  <target name="jar" depends="compile" description="Clean the JAR">
++    <jar jarfile="${build.dir}/${build.final.name}.jar" basedir="${build.output}" excludes="**/package.html"/>
++  </target>
++</project>

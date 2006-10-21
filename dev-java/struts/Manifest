@@ -1,0 +1,40 @@
+AUX struts-1.3-core.build.xml.patch 1432 RMD160 b6a0673491bd8c47b62577f811e29a5c4cdd8aea SHA1 9bdbeaf597b5e6c88f244952ad2f4dcd72ed1bad SHA256 fa092c307d4561ae5cd87d708bf9c63d1565af57a8151070862611e00ac0918e
+MD5 c3072ca5131b832619f744a93f7d2330 files/struts-1.3-core.build.xml.patch 1432
+RMD160 b6a0673491bd8c47b62577f811e29a5c4cdd8aea files/struts-1.3-core.build.xml.patch 1432
+SHA256 fa092c307d4561ae5cd87d708bf9c63d1565af57a8151070862611e00ac0918e files/struts-1.3-core.build.xml.patch 1432
+AUX struts-1.3-el.build.xml.patch 1425 RMD160 8535b76dbac262cad4d1a621b3ed9d2f7faa6da6 SHA1 ae09d8d880c6e67ffa707751db3b0b19cbc097a7 SHA256 eda6721ba2dd4508508bf84030e6257fd06db1ae367803468d38714e1259d263
+MD5 83ee532c24b8a4a6482ddbf2107c2436 files/struts-1.3-el.build.xml.patch 1425
+RMD160 8535b76dbac262cad4d1a621b3ed9d2f7faa6da6 files/struts-1.3-el.build.xml.patch 1425
+SHA256 eda6721ba2dd4508508bf84030e6257fd06db1ae367803468d38714e1259d263 files/struts-1.3-el.build.xml.patch 1425
+AUX struts-1.3-extras.build.xml.patch 1584 RMD160 0c139efc87efcd07255bf4d81888a192f1adec21 SHA1 d19cb56e6f6c7262f4a92de3a8d58b8dc26c19f2 SHA256 c872832eb321f2109b3d70931e3696dadb93c230cd01d8c1b91c45ef72763588
+MD5 2cc270c125ebab80dd2d78694e90367a files/struts-1.3-extras.build.xml.patch 1584
+RMD160 0c139efc87efcd07255bf4d81888a192f1adec21 files/struts-1.3-extras.build.xml.patch 1584
+SHA256 c872832eb321f2109b3d70931e3696dadb93c230cd01d8c1b91c45ef72763588 files/struts-1.3-extras.build.xml.patch 1584
+AUX struts-1.3-faces.build.xml.patch 1581 RMD160 8ea668a98de799988b366890a66d8cc43d3bbbfc SHA1 22b74ed64af4e8a28136122f85dd0b8549cc1a63 SHA256 c167f6ba738bbe493f0d8ca11c32138f07da6b0debcead4aa96505aa9c692d85
+MD5 37a2169a847c1184d3b4a4a1a754d9a0 files/struts-1.3-faces.build.xml.patch 1581
+RMD160 8ea668a98de799988b366890a66d8cc43d3bbbfc files/struts-1.3-faces.build.xml.patch 1581
+SHA256 c167f6ba738bbe493f0d8ca11c32138f07da6b0debcead4aa96505aa9c692d85 files/struts-1.3-faces.build.xml.patch 1581
+AUX struts-1.3-javadoc.build.xml.patch 1690 RMD160 adc785e9466ac45f2490adf090cc827c26ad9d1c SHA1 a3c5d4b7086af8e1d77e41842e0fad0cb684a421 SHA256 d33e0c495caf71b3ad1232665ed58e3b3763d7275ad10af627ed45ac11e7fe79
+MD5 6661555c79cc01ddba02c65df6453ed4 files/struts-1.3-javadoc.build.xml.patch 1690
+RMD160 adc785e9466ac45f2490adf090cc827c26ad9d1c files/struts-1.3-javadoc.build.xml.patch 1690
+SHA256 d33e0c495caf71b3ad1232665ed58e3b3763d7275ad10af627ed45ac11e7fe79 files/struts-1.3-javadoc.build.xml.patch 1690
+AUX struts-1.3-scripting.build.xml.patch 1446 RMD160 aa527a718ff48cc3e508d327910a3f526552de92 SHA1 7b09ff3a941a01adce2ea003ddad1e45d7553aef SHA256 8d361d015fe550a4ecc42636ec7aed33145ab4791f17a1e93ae99dfbaaa133ad
+MD5 ebce227dc44c7658af52de0b3142e045 files/struts-1.3-scripting.build.xml.patch 1446
+RMD160 aa527a718ff48cc3e508d327910a3f526552de92 files/struts-1.3-scripting.build.xml.patch 1446
+SHA256 8d361d015fe550a4ecc42636ec7aed33145ab4791f17a1e93ae99dfbaaa133ad files/struts-1.3-scripting.build.xml.patch 1446
+AUX struts-1.3-taglib.build.xml.patch 1584 RMD160 0573f3c7b6365b42b46e28750048ba1d93e9bed3 SHA1 e792797d9906ce118f5d0495c8bac10911529fe7 SHA256 2fc90473e0362994aa6c2e7ceb5c8e250ffed3a5c8d048d07c6a23ae3e88276a
+MD5 699650e22f4f8369ca0c90e10e3d85ea files/struts-1.3-taglib.build.xml.patch 1584
+RMD160 0573f3c7b6365b42b46e28750048ba1d93e9bed3 files/struts-1.3-taglib.build.xml.patch 1584
+SHA256 2fc90473e0362994aa6c2e7ceb5c8e250ffed3a5c8d048d07c6a23ae3e88276a files/struts-1.3-taglib.build.xml.patch 1584
+AUX struts-1.3-tiles.build.xml.patch 1434 RMD160 9cf977ed1f6a7bc9bbee06f144d7565c760b4e0a SHA1 b95f8b00a81da1f026075d3269fef2dcf02ea95c SHA256 d56879f3061e618bcb49d7f80290d051abac6fff7001b8098a1bb64041d44220
+MD5 ec2ab47a18ac3487a869524a2fb49540 files/struts-1.3-tiles.build.xml.patch 1434
+RMD160 9cf977ed1f6a7bc9bbee06f144d7565c760b4e0a files/struts-1.3-tiles.build.xml.patch 1434
+SHA256 d56879f3061e618bcb49d7f80290d051abac6fff7001b8098a1bb64041d44220 files/struts-1.3-tiles.build.xml.patch 1434
+DIST struts-1.3.5-src.zip 6068314 RMD160 8e4f0794619344823c4546d66fb41e84dde348bf SHA1 e0f57f9491f3b51d965307d620348f1c5ebd3350 SHA256 61c9f49eec882f1ea9f5d610e212888eaca282561f76db5ff3bf8dd3bc1c20b4
+EBUILD struts-1.3.5.ebuild 2408 RMD160 1cb660a82e86159d59ba334f5f2cd222fd0ec774 SHA1 ec3bb6ec433c9f6fecce392521e43fa11b7caae6 SHA256 f5043f6368c69acf832707394297f596e56e84527437e44e1a5edbb64c79f719
+MD5 7fabf3989f248a51c453ebca1566cf49 struts-1.3.5.ebuild 2408
+RMD160 1cb660a82e86159d59ba334f5f2cd222fd0ec774 struts-1.3.5.ebuild 2408
+SHA256 f5043f6368c69acf832707394297f596e56e84527437e44e1a5edbb64c79f719 struts-1.3.5.ebuild 2408
+MD5 bde6ec4990cb18a0fc7f0d76561fcd69 files/digest-struts-1.3.5 244
+RMD160 3ed274b6e35bd017e4b8d33582d8d0ac5978f29a files/digest-struts-1.3.5 244
+SHA256 7324bd095a9c51a9c657fe70b413f8cc61849509703abc6b70d3772a9cb9b1de files/digest-struts-1.3.5 244
