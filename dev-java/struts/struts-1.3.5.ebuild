@@ -12,9 +12,6 @@ SLOT="1.3"
 IUSE="doc source"
 KEYWORDS="~amd64 ~ppc ~x86"
 
-STRUTS_MODULES="core taglib extras tiles scripting el faces"
-STRUTS_LIB="strutslib" #DO NOT CHANGE THIS: ITS HARDCODED INTO PATCHED BUILD.XML
-
 COMMON_DEP="
 	>=dev-java/antlr-2.7.2
 	=dev-java/commons-beanutils-1.7*
@@ -45,8 +42,6 @@ src_unpack() {
 	cd ${S}
 
 	mkdir lib
-	mkdir ${STRUTS_LIB}
-	mkdir docs
 
 	cd lib
 	java-pkg_jarfrom antlr
@@ -63,47 +58,24 @@ src_unpack() {
 	java-pkg_jarfrom jsfapi-1
 	cd ..
 
-	for module_name in `echo $STRUTS_MODULES`
-	do
-		epatch ${FILESDIR}/struts-1.3-${module_name}.build.xml.patch
-	done
-
-	epatch ${FILESDIR}/struts-1.3-javadoc.build.xml.patch
+	epatch ${FILESDIR}/struts-1.3.build.xml.patch
 }
 
 src_compile() {
-	for module_name in `echo $STRUTS_MODULES`
-	do
-		einfo "Compiling struts-${module_name}"
+	eant all-modules
 
-		cd ${module_name}
-
-		eant || die "Unable to compile struts-${module_name}"
-		cp target/struts-${module_name}.jar ../${STRUTS_LIB}
-
-		cd ..
-	done
-
-	if use doc; then
-		einfo "Building javadoc"
-		eant
-	fi
+	use doc && eant javadoc
 }
 
 src_install() {
-	cd ${STRUTS_LIB}
-	for jar in `ls`
+	for module_name in "core" "taglib" "extras" "tiles" "scripting" "el" "faces"
 	do
-		java-pkg_dojar ${jar}
+		java-pkg_dojar lib/struts-${module_name}.jar
+
+		use source && java-pkg_dosrc ${module_name}/src/main/java/*
 	done
-	cd ..
 
 	dodoc ../NOTICE.txt ../LICENSE.txt
 
-	use doc && java-pkg_dohtml -r docs/
-
-	for module_name in `echo $STRUTS_MODULES`
-	do
-		use source && java-pkg_dosrc ${module_name}/src/main/java/*
-	done
+	use doc && java-pkg_dohtml -r target/docs/
 }

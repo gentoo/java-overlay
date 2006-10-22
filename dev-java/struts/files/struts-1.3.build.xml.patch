@@ -1,0 +1,109 @@
+--- /dev/null	2000-10-22 01:01:00.000000000 +0200
++++ build.xml	2006-10-22 12:59:14.000000000 +0200
+@@ -0,0 +1,106 @@
++<?xml version="1.0" ?>
++	<project basedir="." default="all-modules" name="struts">
++	<property name="build.dir" value="target"/>
++	<property name="build.output" value="classes"/>
++	<property name="lib.dir" value="lib"/>
++	<property name="base.src.dir" value="src/main"/>
++
++	<target name="all-modules" description="Packages ALL MODULES">
++		<antcall target="compileWithProperties">
++			<param name="module.name" value="core"/>
++		</antcall>
++		<antcall target="compileWithProperties">
++			<param name="module.name" value="taglib"/>
++		</antcall>
++		<antcall target="compileWithProperties">
++			<param name="module.name" value="extras"/>
++		</antcall>
++		<antcall target="compileWithoutProperties">
++			<param name="module.name" value="tiles"/>
++		</antcall>
++		<antcall target="compileWithoutProperties">
++			<param name="module.name" value="scripting"/>
++		</antcall>
++		<antcall target="compileWithoutProperties">
++			<param name="module.name" value="el"/>
++		</antcall>
++		<antcall target="compileWithProperties">
++			<param name="module.name" value="faces"/>
++		</antcall>
++	</target>
++
++	<target description="Create component Javadoc documentation" name="javadoc">
++		<mkdir dir="${build.dir}/docs"/>
++		<javadoc author="true" bottom="Copyright (c) 2000-2006 Apache Software Foundation" destdir="${build.dir}/docs" doctitle="&lt;h1&gt;Struts (Version 1.3.5)&lt;/h1&gt;" packagenames="org.apache.*" private="true" source="1.4" version="true" windowtitle="Struts (Version 1.3.5)">
++			<classpath>
++				<fileset dir="${lib.dir}">
++					<include name="**/*.jar"/>
++				</fileset>
++			</classpath>
++			<fileset dir="core/${base.src.dir}/java">
++				<include name="**/*.java"/>
++			</fileset>
++			<fileset dir="taglib/${base.src.dir}/java">
++				<include name="**/*.java"/>
++			</fileset>
++			<fileset dir="extras/${base.src.dir}/java">
++				<include name="**/*.java"/>
++			</fileset>
++			<fileset dir="tiles/${base.src.dir}/java">
++				<include name="**/*.java"/>
++			</fileset>
++			<fileset dir="scripting/${base.src.dir}/java">
++				<include name="**/*.java"/>
++			</fileset>
++			<fileset dir="el/${base.src.dir}/java">
++				<include name="**/*.java"/>
++			</fileset>
++			<fileset dir="faces/${base.src.dir}/java">
++				<include name="**/*.java"/>
++			</fileset>
++		</javadoc>
++	</target>
++
++<!-- HELPER TARGETS -->
++
++	<target name="compileWithoutProperties" description="Packages a module: give it a -module.name- parameter">
++		<antcall target="compile">
++			<param name="module.name" value="${module.name}"/>
++		</antcall>
++		<antcall target="jar">
++			<param name="module.name" value="${module.name}"/>
++		</antcall>
++	</target>
++	<target name="compileWithProperties" description="Packages a module AND copy its properties files: give it a -module.name- parameter">
++		<antcall target="compile">
++			<param name="module.name" value="${module.name}"/>
++		</antcall>
++		<copy todir="${build.dir}/${module.name}/${build.output}">
++			<fileset dir="${module.name}/${base.src.dir}/java">
++				<include name="**/*.properties"/>
++			</fileset>
++		</copy>
++		<antcall target="jar">
++			<param name="module.name" value="${module.name}"/>
++		</antcall>
++	</target>
++	<target description="Generic COMPILE target: give it a -module.name- parameter" name="compile">
++		<mkdir dir="${build.dir}/${module.name}/${build.output}"/>
++		<javac debug="true" deprecation="true" destdir="${build.dir}/${module.name}/${build.output}" excludes="**/package.html" optimize="false" source="1.4" target="1.4">
++			<src>
++				<pathelement location="${module.name}/${base.src.dir}/java"/>
++			</src>
++			<classpath>
++				<fileset dir="${lib.dir}">
++					<include name="**/*.jar"/>
++				</fileset>
++			</classpath>
++		</javac>
++		<copy todir="${build.dir}/${module.name}/${build.output}">
++			<fileset dir="${module.name}/${base.src.dir}/resources"/>
++		</copy>
++	</target>
++	<target description="Generic JAR target: give it a -module.name- parameter" name="jar">
++		<jar basedir="${build.dir}/${module.name}/${build.output}" excludes="**/package.html" jarfile="${lib.dir}/struts-${module.name}.jar"/>
++	</target>
++</project>
