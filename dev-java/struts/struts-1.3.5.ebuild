@@ -62,9 +62,7 @@ src_unpack() {
 }
 
 src_compile() {
-	eant all-modules
-
-	use doc && eant javadoc
+	eant all-modules $(use_doc)
 }
 
 src_install() {
