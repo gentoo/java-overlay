@@ -13,7 +13,7 @@ SRC_URI="http://www.zookitec.com/explicit_${MY_PV}.zip"
 LICENSE="LGPL-2.1"
 SLOT="3.0"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc"
+IUSE="doc source"
 
 DEPEND=">=virtual/jdk-1.4
 		app-arch/unzip
@@ -35,4 +35,5 @@ src_compile() {
 src_install() {
 	java-pkg_dojar lib/explicit.jar
 	use doc && java-pkg_dohtml -r docs/api
+	use source && java-pkg_dosrc src/*
 }
