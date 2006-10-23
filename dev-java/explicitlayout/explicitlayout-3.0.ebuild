@@ -35,5 +35,5 @@ src_compile() {
 src_install() {
 	java-pkg_dojar lib/explicit.jar
 	use doc && java-pkg_dohtml -r docs/api
-	use source && java-pkg_dosrc src/*
+	use source && java-pkg_dosrc src
 }

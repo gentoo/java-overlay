@@ -10,7 +10,7 @@ SRC_URI="http://download.java.net/javaee5/fcs_branch/promoted/source/glassfish-9
 
 LICENSE="cddl-1.0"
 SLOT="0"
-KEYWORDS="~amd64 -x86"
+KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND=">=virtual/jdk-1.5
