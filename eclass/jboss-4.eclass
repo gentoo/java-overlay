@@ -184,8 +184,12 @@ jboss-4_src_compile() {
 	debug-print-function ${FUNCNAME} $*
 	
 	cd ${S}
-	local antflags="${ANT_TARGET:-jars}"
 
+	#local antflags="${ANT_TARGET:-jars}"
+	# 23/10/06 ali_bush:increase stack size used
+	local antflags="${ANT_TARGET:-jars}"
+	
+	export ANT_OPTS="${ANT_OPTS} -Xmx512m"
 	eant -lib $(java-pkg_getjars buildmagic-tasks) ${antflags}
 }
 
