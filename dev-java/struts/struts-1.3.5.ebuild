@@ -24,7 +24,8 @@ COMMON_DEP="
 	>=dev-java/commons-fileupload-1.1.1
 	=dev-java/servletapi-2.3*
 	=dev-java/bsf-2.3*
-	=dev-java/jsfapi-1*"
+	=dev-java/jsfapi-1*
+	>=dev-java/junit-3.8"
 
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEP}"
@@ -56,6 +57,7 @@ src_unpack() {
 	java-pkg_jarfrom servletapi-2.3
 	java-pkg_jarfrom bsf-2.3
 	java-pkg_jarfrom jsfapi-1
+	java-pkg_jarfrom junit
 	cd ..
 
 	epatch ${FILESDIR}/struts-1.3.build.xml.patch
