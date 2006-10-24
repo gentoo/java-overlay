@@ -48,11 +48,8 @@ src_unpack() {
 }
 
 src_compile() {
-	local antflags="-Dskip.download=true compile"
+	eant -Dskip.download=true compile $(use_doc)
 
-	use doc && antflags="${antflags} javadoc"
-
-	eant ${antflags} || die "build failed"
 	jar -cf ${PN}.jar -C target/classes/ . || die "could not create jar"
 }
 
