@@ -58,7 +58,7 @@ src_compile() {
 }
 
 src_test() {
-	eant ${SKIP_JAR_GET} test || die "At least one test failed"
+	eant ${SKIP_JAR_GET} test
 }
 
 src_install() {
