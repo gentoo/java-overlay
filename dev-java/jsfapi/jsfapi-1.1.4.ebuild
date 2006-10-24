@@ -7,6 +7,7 @@ inherit java-pkg-2
 JSF_P="jsf-1_1_01"
 DOC_A="${JSF_P}.zip"
 DOWNLOADSITE="http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&PartDetailId=jsf-1_1_01-fcs-oth-JPR&SiteId=JSC&TransactionId=noreg"
+JAVA_PKG_FILTER_COMPILER="jikes"
 
 MY_PN="myfaces-core"
 MY_P="${MY_PN}-${PV}"
@@ -52,7 +53,7 @@ src_compile() {
 	mkdir ${build_dir}
 
 	cd source
-	ejavac ${classpath} -nowarn -d ${build_dir} $(find javax/ -name "*.java") || die "Unable to build package"
+	ejavac ${classpath} -nowarn -d ${build_dir} $(find javax/ -name "*.java")
 
 	cd ..
 	jar cf ${PN}.jar -C build . || die "Unable to create jar"
