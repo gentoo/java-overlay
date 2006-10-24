@@ -7,6 +7,7 @@ inherit java-pkg-2
 MY_PN="${PN}-core"
 MY_P="${MY_PN}-${PV}"
 BIN_UNPACK_DIR="bin_unpack"
+JAVA_PKG_FILTER_COMPILER="jikes"
 
 DESCRIPTION="The first free open source Java Server Faces implementation"
 HOMEPAGE="http://myfaces.apache.org/"
@@ -53,7 +54,7 @@ src_compile() {
 	mkdir ${build_dir}
 
 	cd ${S}/source
-	ejavac ${classpath} -nowarn -d ${build_dir} $(find org/ -name "*.java") || die "Unable to build package"
+	ejavac ${classpath} -nowarn -d ${build_dir} $(find org/ -name "*.java")
 
 	cd ..
 	mkdir ${build_dir}/META-INF
