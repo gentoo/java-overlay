@@ -3,10 +3,10 @@ MD5 eeed3631a769bba8e3ba97e748f35fa8 files/validator-1.3.build.xml.patch 1399
 RMD160 141bd427e1c468de040e639f6ceebfa0dbbd5e92 files/validator-1.3.build.xml.patch 1399
 SHA256 93abf25e854cac7f0893d68c10fa6856cec5b4a6b0e8b1c9544b8a3d9447a844 files/validator-1.3.build.xml.patch 1399
 DIST commons-validator-1.3.0-src.tar.gz 172023 RMD160 1586a96b7cef0cbfaf168552124aa4ca179c7323 SHA1 90ceefdf45e934ab7ffcdbd0caa19c84eefa9eed SHA256 cd6cacbf0f610b60eb1855817fdac02185b4a3101d0752364c0ca0736711b0f7
-EBUILD commons-validator-1.3.0.ebuild 1888 RMD160 475f934fc2957719934fe56c6eeae6e322287249 SHA1 c649f152ded375b266062cdd58f3bf7a4bd40277 SHA256 5a93d1a44cbfc6d6dd4daeabb592e4c708431c03bdefbde5187eb2b7e0ae7b4e
-MD5 30893485233eaacb9ed0b19fcb4624c4 commons-validator-1.3.0.ebuild 1888
-RMD160 475f934fc2957719934fe56c6eeae6e322287249 commons-validator-1.3.0.ebuild 1888
-SHA256 5a93d1a44cbfc6d6dd4daeabb592e4c708431c03bdefbde5187eb2b7e0ae7b4e commons-validator-1.3.0.ebuild 1888
+EBUILD commons-validator-1.3.0.ebuild 1876 RMD160 63f2735848b5e2ee55bf110cc624d35a47526352 SHA1 fb41189a894b0b74bfc8acd4b867c18e0137ecb8 SHA256 61349e4e5d522032cb823d71fce94612340f71cd3d56a8ea968d7a5c2933a0b5
+MD5 322b7e4b8f5c937d7f162b74e5ff03a7 commons-validator-1.3.0.ebuild 1876
+RMD160 63f2735848b5e2ee55bf110cc624d35a47526352 commons-validator-1.3.0.ebuild 1876
+SHA256 61349e4e5d522032cb823d71fce94612340f71cd3d56a8ea968d7a5c2933a0b5 commons-validator-1.3.0.ebuild 1876
 MD5 ee925df194f5d343d676f761cef18892 files/digest-commons-validator-1.3.0 283
 RMD160 ba8faa96020a61bec72fcdb1db60d73bacdd021c files/digest-commons-validator-1.3.0 283
 SHA256 8bc6553fd03956131149c0f57582453e13bfe01ebe90aea538b8991f9513ca2e files/digest-commons-validator-1.3.0 283

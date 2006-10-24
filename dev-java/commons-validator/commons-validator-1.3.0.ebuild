@@ -56,9 +56,7 @@ src_compile() {
 src_install() {
 	java-pkg_dojar ${PN}.jar
 
-	if use doc; then
-		java-pkg_dohtml -r dist/docs/
-	fi
+	use doc && java-pkg_dohtml -r dist/docs/
 
 	if use examples; then
 		dodir /usr/share/doc/${PF}/examples
