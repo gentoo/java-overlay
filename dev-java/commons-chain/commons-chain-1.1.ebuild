@@ -51,6 +51,8 @@ src_unpack() {
 	java-pkg_jarfrom servletapi-2.3
 	java-pkg_jarfrom jsfapi-1
 	use test && java-pkg_jarfrom junit
+
+	java-pkg_ensure-test
 }
 
 src_compile() {
