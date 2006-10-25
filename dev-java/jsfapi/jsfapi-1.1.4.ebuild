@@ -29,7 +29,7 @@ COMMON_DEP="
 	=dev-java/jakarta-jstl-1.1*"
 
 DEPEND=">=virtual/jdk-1.4
-	doc? ( app-arch/zip )
+	doc? ( app-arch/unzip )
 	${COMMON_DEP}"
 
 RDEPEND=">=virtual/jre-1.4

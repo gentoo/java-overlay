@@ -33,7 +33,8 @@ RDEPEND=">=virtual/jre-1.4
 DEPEND=">=virtual/jdk-1.4
 	${RDEPEND}
 	>=dev-java/ant-1.6.0
-	app-arch/zip"
+	app-arch/zip
+	app-arch/unzip"
 
 S=${WORKDIR}/${P}/src
 

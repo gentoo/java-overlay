@@ -32,7 +32,7 @@ COMMON_DEP="
 	=dev-java/jsfapi-1*"
 
 DEPEND=">=virtual/jdk-1.4
-	app-arch/zip
+	app-arch/unzip
 	${COMMON_DEP}"
 
 RDEPEND=">=virtual/jre-1.4
