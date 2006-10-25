@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg-2
+inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="Commons-Math is a library of lightweight, self-contained mathematics and statistics components addressing the most common practical problems not immediately available in the Java programming language."
 HOMEPAGE="http://jakarta.apache.org/commons/math/"
