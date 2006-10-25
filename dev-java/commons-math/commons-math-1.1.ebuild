@@ -34,6 +34,8 @@ src_unpack() {
 	cd lib
 	java-pkg_jar-from commons-discovery || die "Could not link to discovery"
 	java-pkg_jar-from commons-logging || die "Could not link to commons-logging"
+
+	java-pkg_ensure-test
 }
 
 src_compile() {
@@ -41,8 +43,6 @@ src_compile() {
 }
 
 src_test() {
-	! use test && die "To run the tests, you need to enable the \"test\" use flag"
-
 	eant test
 }
 
