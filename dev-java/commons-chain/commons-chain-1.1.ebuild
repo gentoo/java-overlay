@@ -14,7 +14,6 @@ KEYWORDS="~x86 ~ppc ~amd64 ~ppc64"
 IUSE="doc source test"
 
 SKIP_JAR_GET="-Dnoget=true"
-TARGET_DIR="target"
 
 COMMON_DEP="
 	=dev-java/commons-beanutils-1.7*
@@ -39,10 +38,11 @@ src_unpack() {
 	unpack ${A}
 
 	cd ${S}
-	epatch ${FILESDIR}/skipTest.patch
+	sed -i 's/depends="compile,test"/depends="compile"/' \
+		build.xml || die "Failed to disable tests"
 
-	mkdir -p ${TARGET_DIR}/lib/
-	cd ${TARGET_DIR}/lib/
+	mkdir -p target/lib/
+	cd target/lib/
 
 	java-pkg_jarfrom commons-digester 
 	java-pkg_jarfrom commons-beanutils-1.7
@@ -64,7 +64,7 @@ src_test() {
 }
 
 src_install() {
-	java-pkg_newjar ${TARGET_DIR}/${P}.jar ${PN}.jar
+	java-pkg_newjar target/${P}.jar ${PN}.jar
 
 	use doc && java-pkg_dohtml -r dist/docs/
 	use source && java-pkg_dosrc src/java/
