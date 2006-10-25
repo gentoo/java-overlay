@@ -1,0 +1,68 @@
+--- build.xml.o	2006-10-25 21:43:18.000000000 +0200
++++ build.xml	2006-10-25 22:00:06.000000000 +0200
+@@ -14,7 +14,7 @@
+ 
+   <property name="defaulttargetdir" value="${basedir}/target">
+   </property>
+-  <property name="libdir" value="${user.home}/.maven/repository">
++  <property name="libdir" value="lib">
+   </property>
+   <property name="classesdir" value="${basedir}/target/classes">
+   </property>
+@@ -26,7 +26,7 @@
+   </property>
+   <property name="javadocdir" value="${basedir}/dist/docs/api">
+   </property>
+-  <property name="final.name" value="commons-math-1.1">
++  <property name="final.name" value="commons-math">
+   </property>
+   <property name="proxy.host" value="">
+   </property>
+@@ -37,10 +37,9 @@
+   <property name="proxy.password" value="">
+   </property>
+   <path id="build.classpath">
+-    <pathelement location="${libdir}/commons-logging/jars/commons-logging-1.0.3.jar">
+-    </pathelement>
+-    <pathelement location="${libdir}/commons-discovery/jars/commons-discovery-0.2.jar">
+-    </pathelement>
++    <fileset dir="${libdir}">
++      <include name="**/*.jar"/>
++    </fileset>
+   </path>
+   <target name="init" description="o Initializes some properties">
+     <mkdir dir="${libdir}">
+@@ -66,7 +65,7 @@
+       </and>
+     </condition>
+   </target>
+-  <target name="compile" description="o Compile the code" depends="get-deps">
++  <target name="compile" description="o Compile the code">
+     <mkdir dir="${classesdir}">
+     </mkdir>
+     <javac destdir="${classesdir}" deprecation="true" debug="true" optimize="false" excludes="**/package.html">
+@@ -86,7 +85,7 @@
+       </fileset>
+     </copy>
+   </target>
+-  <target name="jar" description="o Create the jar" depends="compile,test">
++  <target name="jar" description="o Create the jar" depends="compile">
+     <jar jarfile="${defaulttargetdir}/${final.name}.jar" excludes="**/package.html" basedir="${classesdir}">
+     </jar>
+   </target>
+@@ -167,7 +166,7 @@
+       </fileset>
+     </copy>
+   </target>
+-  <target name="javadoc" description="o Generate javadoc" depends="get-deps">
++  <target name="javadoc" description="o Generate javadoc">
+     <mkdir dir="${javadocdir}">
+     </mkdir>
+     <tstamp>
+@@ -230,4 +229,4 @@
+     <unjar dest="${maven.home}" src="${user.home}/maven-install-latest.jar">
+     </unjar>
+   </target>
+-</project>
+\ No newline at end of file
++</project>
