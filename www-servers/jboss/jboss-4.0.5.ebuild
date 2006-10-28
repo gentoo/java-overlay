@@ -28,6 +28,11 @@ CACHE_INSTALL_DIR="/var/cache/${PN}-${SLOT}"
 LOG_INSTALL_DIR="/var/log/${PN}-${SLOT}"
 RUN_INSTALL_DIR="/var/run/${PN}-${SLOT}"
 
+# NOTE: When you are updating CONFIG_PROTECT env.d file, you can use this script on your current install
+# run from /var/lib/jboss-${SLOT} to get list of files that should be config protected. We protect *.xml,
+# *.properties and *.tld files.
+# SLOT="4" TEST=`find /var/lib/jboss-${SLOT}/ -type f | grep -E -e "\.(xml|properties|tld)$"`; echo $TEST
+
 src_install() {
 	# copy startup stuff
 	doinitd ${FILESDIR}/${PV}/init.d/jboss-${SLOT}
