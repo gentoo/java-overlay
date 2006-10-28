@@ -48,15 +48,7 @@ start()	{
 	fi
 
 	init_vars
-#	start-stop-daemon --start --quiet --background --chuid ${JBOSS_USER}:${JBOSS_GROUP} \
-#		--make-pidfile --pidfile /var/run/jboss-4/${JBOSS_SERVER_NAME}/jboss-4.pid \
-#		--exec ${JAVA_HOME}/bin/java -- ${JAVA_OPTS} ${JBOSS_INT_OPTS} \
-#		-classpath ${JBOSS_STARTUP_CLASSPATH} org.jboss.Main
-	echo start-stop-daemon --start --verbose --chuid ${JBOSS_USER}:${JBOSS_GROUP} \
-		--make-pidfile --pidfile /var/run/jboss-4/${JBOSS_SERVER_NAME}/jboss-4.pid \
-		--exec ${JAVA_HOME}/bin/java -- ${JAVA_OPTS} ${JBOSS_INT_OPTS} \
-		-classpath ${JBOSS_STARTUP_CLASSPATH} org.jboss.Main
-	start-stop-daemon --start --verbose --chuid ${JBOSS_USER}:${JBOSS_GROUP} \
+	start-stop-daemon --start --quiet --background --chuid ${JBOSS_USER}:${JBOSS_GROUP} \
 		--make-pidfile --pidfile /var/run/jboss-4/${JBOSS_SERVER_NAME}/jboss-4.pid \
 		--exec ${JAVA_HOME}/bin/java -- ${JAVA_OPTS} ${JBOSS_INT_OPTS} \
 		-classpath ${JBOSS_STARTUP_CLASSPATH} org.jboss.Main
