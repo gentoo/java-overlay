@@ -108,6 +108,19 @@ pkg_postinst() {
 	chown -R jboss:jboss ${CACHE_INSTALL_DIR} ${LOG_INSTALL_DIR} ${TMP_INSTALL_DIR} ${RUN_INSTALL_DIR}
 
 	einfo
-	einfo " If you want to run jboss from netbeans, add your user to 'jboss' group."
+	einfo " If you want to run multiple instances of JBoss, you can do that this way:"
+	einfo " 1) symlink init script:"
+	einfo "    ln -s /etc/init.d/${PN}-${SLOT} /etc/init.d/${PN}-${SLOT}.foo"
+	einfo " 2) copy original config file:"
+	einfo "    cp /etc/conf.d/${PN}-${SLOT} /etc/conf.d/${PN}-${SLOT}.foo"
+	einfo " 3) edit the new config file so it uses another JBOSS_SERVER_NAME, eventually"
+	einfo "    create new server directories if you do not set one of the predefined"
+	einfo "    server names like default, all or minimal and set up the new JBoss"
+	einfo "    (you have to either bind new JBoss instance to another IP address or change"
+	einfo "    used ports so they do not conflict)"
+	einfo " 4) run the new JBoss instance:"
+	einfo "    /etc/init.d/${PN}-${SLOT}.foo start"
+	einfo
+	einfo " If you want to run JBoss from Netbeans, add your user to 'jboss' group."
 	einfo
 }
