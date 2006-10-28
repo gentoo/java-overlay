@@ -27,7 +27,7 @@ src_unpack() {
 }
 
 src_compile() {
-	eant dist 
+	eant dist
 }
 
 src_install() {

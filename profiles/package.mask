@@ -6,6 +6,13 @@
 # NOTE: Please add your entry at the top!
 #
 
+# Alistair Bush <ali_bush> (28 October 2006)
+# =www-server/jboss-4.0.4-r2 is being masked so that I can attempt at
+# building jboss as a monolithic package for testing
+
 # Joshua Nichols <nichoj@gentoo.org (23 Aug 2006)
 # Masked since, it's VERY early in development
 =dev-java/sun-jdk-1.7*
+
+=www-server/jboss-4.0.4-r2
+

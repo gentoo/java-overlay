@@ -1,6 +1,6 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/hibernate/hibernate-3.0_rc1.ebuild,v 1.4 2005/03/23 00:42:40 st_lim Exp $
+# $Header: $
 
 inherit java-pkg-2 java-ant-2 eutils
 
@@ -60,7 +60,7 @@ src_unpack() {
 	rm *.jar
 
 	local JAR_PACKAGES="c3p0 commons-collections javassist-3.3
-		commons-logging dom4j-1 ehcache jaxen-1.1 jdbc2-stdext 
+		commons-logging dom4j-1 ehcache jaxen-1.1 jdbc2-stdext
 		log4j oscache proxool swarmcache-1.0 xerces-2 jgroups"
 	for PACKAGE in ${JAR_PACKAGES}; do
 		java-pkg_jar-from ${PACKAGE}

@@ -25,7 +25,7 @@ S=${WORKDIR}
 src_unpack() {
 	unpack ${A}
 	cd ${S}
-	rm -r lib/* docs/*	
+	rm -r lib/* docs/*
 }
 
 src_compile() {
