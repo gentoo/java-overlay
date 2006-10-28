@@ -36,7 +36,7 @@ RUN_INSTALL_DIR="/var/run/${PN}-${SLOT}"
 src_install() {
 	# copy startup stuff
 	doinitd ${FILESDIR}/${PV}/init.d/jboss-${SLOT}
-	newconfd ${FILESDIR}/${PV}/conf.d/jboss-${SLOT}-r1 jboss-${SLOT}
+	newconfd ${FILESDIR}/${PV}/conf.d/jboss-${SLOT} jboss-${SLOT}
 	doenvd ${FILESDIR}/${PV}/env.d/50jboss-${SLOT}
 
 	# create the directory structure
