@@ -1,0 +1,88 @@
+# -*- mode: shell-script; mode: outline-minor; outline-regexp: "##+"; indent-tabs-mode: nil -*-
+
+## NOTES
+
+# This configuration file is based on the options enumerated in the
+# JBoss source code at:
+#
+# jboss-x.y.z-src/system/src/main/org/jboss/system/server/ServerConfig
+#
+# You may chose to add additional settings from there to this file.
+# We present a basic subset by default.
+
+## GENERAL SETTINGS
+
+# You can choose which configuration you want to run JBoss with.  The
+# default configuration is, you guessed it, 'default'. The Gentoo
+# JBoss installation ships with two other predefined configurations;
+# 'all' and 'minimal'. The configurations are located in
+# $JBOSS_HOME/server/
+
+# JBOSS_CONF="all"
+JBOSS_CONF="default"
+# JBOSS_CONF="minimal"
+
+# Console logging defaults to '/dev/null'. This env variable is
+# included for debugging purposes.  You might have to run add
+# $JBOSS_USER to the 'console' group to gain access to '/dev/console'.
+
+JBOSS_CONSOLE="/dev/null" 
+# JBOSS_CONSOLE="/dev/console"
+
+# The user JBoss will run as.
+
+JBOSS_USER="jboss"
+
+
+## SPECIFIC SETTINGS
+
+SERVER_SETTINGS=""
+
+# The directory JBoss will use for temporary file storage
+
+SERVER_SETTINGS="${SERVER_SETTINGS} -Djboss.server.temp.dir=/var/tmp/jboss-4"
+
+# The directory which JBoss will use for persistent data file storage
+
+SERVER_SETTINGS="${SERVER_SETTINGS} -Djboss.server.data.dir=/var/cache/jboss-4"
+
+# The base URL for calculating server home URLs.  In a stock JBoss
+# install, this would be <jboss_home>/server/ where sub-directories
+# default, minimal and all exist.  Our defaults are /var/lib/jboss to
+# be consistent with other servers such as PostgreSQL and Apache.
+
+SERVER_HOME="/var/lib/jboss-4/"
+SERVER_SETTINGS="${SERVER_SETTINGS} -Djboss.server.base.url=file://${SERVER_HOME}"
+
+# Whether or not the server should exit the JVM on shutdown
+
+SERVER_SETTINGS="${SERVER_SETTINGS} -Djboss.server.exitonshutdown=true"
+
+# Whether or not the server should shutdown synchronously (true) or
+# asynchronously (false).
+
+SERVER_SETTINGS="${SERVER_SETTINGS} -Djboss.server.blockingshutdown=true"
+
+# The address JBoss will bind services to.  (Note: JBoss 3.2.3 ignores
+# the JVM environment parameter in favour of the command line switch.)
+
+JBOSS_BIND_ADDRESS="0.0.0.0"
+
+## STARTUP/SHUTDOWN CONFIGURATION
+
+# Commands used in starting/stopping the server.  Normally you would
+# not need to change the following settings.
+
+# We need to have JBOSS_HOME and JAVA_HOME set in order to start
+# jboss.
+
+JBOSS_HOME="/usr/share/jboss-4"
+[ -z "$JAVA_HOME" ] && export JAVA_HOME=`java-config --jdk-home`
+
+# Commands for starting and stopping the server
+
+CMD_START="JAVA_OPTS=\"${SERVER_SETTINGS}\" ${JBOSS_HOME}/bin/run.sh -b ${JBOSS_BIND_ADDRESS} -c ${JBOSS_CONF}" 
+
+CMD_STOP="${JAVA_HOME}/bin/java -classpath ${JBOSS_HOME}/bin/shutdown.jar:${JBOSS_HOME}/lib/jboss-system.jar:`java-config --classpath=jboss` org.jboss.Shutdown -S"
+
+SUBIT="su $JBOSS_USER -c "
