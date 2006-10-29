@@ -15,6 +15,11 @@ IUSE=""
 SLOT="4"
 KEYWORDS="~amd64 ~x86"
 
+THIRDPARTY="=dev-java/antlr-2.7.6*
+			=dev-java/apache-addressing-1.0"
+
+
+
 RDEPEND=">=virtual/jdk-1.4"
 DEPEND="${RDEPEND}
 		app-arch/unzip"
@@ -27,6 +32,15 @@ TMP_INSTALL_DIR="/var/tmp/${PN}-${SLOT}"
 CACHE_INSTALL_DIR="/var/cache/${PN}-${SLOT}"
 LOG_INSTALL_DIR="/var/log/${PN}-${SLOT}"
 RUN_INSTALL_DIR="/var/run/${PN}-${SLOT}"
+
+src_unpack() {
+	unpack ${A}
+
+	fix_thirdparty
+}
+
+
+
 
 src_install() {
 	# copy startup stuff
@@ -105,4 +119,17 @@ pkg_postinst() {
 	einfo
 	einfo " If you want to run jboss from netbeans, add your user to 'jboss' group."
 	einfo
+}
+
+function fix_thirdparty() {
+	cd ${S}/thirdparty
+
+	fix_individual_dir antlr antlr-2.7.6
+}
+
+function fix_individual_dir() {
+	cd ${1}/lib
+	rm *.jar
+	java-pkg_jarfrom ${2} ${3} ${4}
+	cd ../..
 }

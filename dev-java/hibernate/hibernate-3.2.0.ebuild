@@ -80,12 +80,13 @@ src_unpack() {
 
 }
 src_compile() {
+	export ANT_OPTS="-Xmx1G"
 	eant jar -Ddist.dir=dist $(use_doc)
 }
 
 src_install() {
 	java-pkg_dojar build/*.jar
 	dodoc changelog.txt readme.txt
-	use doc && java-pkg_dohtml -r dist/doc/api doc/other doc/reference
+	use doc && java-pkg_dohtml -r build/doc/api doc/other doc/reference
 	use source && java-pkg_dosrc src/*
 }
