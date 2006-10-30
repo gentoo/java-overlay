@@ -20,7 +20,7 @@ SRC_URI="mirror://apache/myfaces/source/${MY_P}-src.tar.gz
 RESTRICT="fetch"
 LICENSE="Apache-2.0"
 SLOT="1"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 
 COMMON_DEP="
