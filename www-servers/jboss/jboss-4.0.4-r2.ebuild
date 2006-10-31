@@ -16,7 +16,13 @@ SLOT="4"
 KEYWORDS="~amd64 ~x86"
 
 THIRDPARTY="=dev-java/antlr-2.7.6*
-			=dev-java/apache-addressing-1.0"
+			=dev-java/apache-addressing-1.0*
+			=dev-java/avalon-framework-4.1.5*
+			=dev-java/avalon-logkit-1.2*
+			=dev-java/bcel-5.1*
+			=dev-java/commons-beanutils-1.6*
+			=dev-java/bsf-2.3.0*
+			=dev-java/commons-codec-1.3*"
 
 
 
@@ -33,14 +39,23 @@ CACHE_INSTALL_DIR="/var/cache/${PN}-${SLOT}"
 LOG_INSTALL_DIR="/var/log/${PN}-${SLOT}"
 RUN_INSTALL_DIR="/var/run/${PN}-${SLOT}"
 
+
+set_env() {
+	export ANT_OPTS="-Xmx1g"
+}
+
 src_unpack() {
 	unpack ${A}
 
 	fix_thirdparty
 }
 
+src_compile() {
+	set_env
 
-
+	cd build
+	eant
+}
 
 src_install() {
 	# copy startup stuff
@@ -122,9 +137,32 @@ pkg_postinst() {
 }
 
 function fix_thirdparty() {
+	einfo "Fix bundled thirdparty jars"
 	cd ${S}/thirdparty
 
-	fix_individual_dir antlr antlr-2.7.6
+	#We need to confirm #138236 ebuild is good and add to overlay/tree
+	#fix_individual_dir antlr antlr-2.7.6
+	
+	fix_individual_dir apache-addressing apache-addressing addressing.jar addressing-1.0.jar
+
+	fix_individual_dir apache-avalon avalon-framework-4.1
+
+	fix_individual_dir apache-avalon-logkit avalon-logkit-1.2
+
+	#fix_individual_dir apache-bcel bcel-5.1
+	
+	# Jboss Packages with 1.6.0 but attempting to use 1.6.1
+	fix_individual_dir apache-beanutils commons-beanutils-1.6
+
+	fix_individual_dir apache-bsf bsf-2.3
+	
+	# commons-codec should be 1.2 but only 1.3 in portage at present so
+	# attempting to that
+	fix_individual_dir apache-codec commons-codec commons-codec.jar commons-codec-1.2.jar
+
+	#fix_individual_dir 
+
+
 }
 
 function fix_individual_dir() {
