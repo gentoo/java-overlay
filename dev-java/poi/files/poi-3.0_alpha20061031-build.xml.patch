@@ -1,0 +1,50 @@
+--- build.xml.original	2006-10-31 22:51:15.000000000 +0100
++++ build.xml	2006-10-31 22:51:37.000000000 +0100
+@@ -269,15 +269,6 @@
+       srcdir="${main.src}">
+       <classpath refid="main.classpath"/>
+     </javac>
+-    <javac target="${jdk.version.class}" source="${jdk.version.source}"
+-      failonerror="true" destdir="${main.output.test.dir}" debug="on"
+-      fork="yes" srcdir="${main.src.test}">
+-      <classpath>
+-        <path refid="main.classpath"/>
+-        <pathelement location="${main.output.dir}"/>
+-        <pathelement location="${junit.jar1.dir}"/>
+-      </classpath>
+-    </javac>
+   </target>
+ 
+   <target name="compile-scratchpad" depends="init">
+@@ -286,15 +277,6 @@
+       fork="yes" srcdir="${scratchpad.src}">
+       <classpath refid="scratchpad.classpath"/>
+     </javac>
+-    <javac target="${jdk.version.class}" source="${jdk.version.source}"
+-      failonerror="true" destdir="${scratchpad.output.test.dir}" debug="on"
+-      fork="yes" srcdir="${scratchpad.src.test}">
+-      <classpath>
+-        <path refid="scratchpad.classpath"/>
+-        <pathelement location="${scratchpad.output.dir}"/>
+-        <pathelement location="${junit.jar1.dir}"/>
+-      </classpath>
+-    </javac>
+ 
+ 	<!-- Copy HSLF Resources over -->
+ 	<property name="hslf.data" value="org/apache/poi/hslf/data" />
+@@ -312,15 +294,6 @@
+       srcdir="${contrib.src}">
+       <classpath refid="contrib.classpath"/>
+     </javac>
+-    <javac target="${jdk.version.class}" source="${jdk.version.source}"
+-      failonerror="true" destdir="${contrib.output.test.dir}" debug="on"
+-      fork="yes" srcdir="${contrib.src.test}">
+-      <classpath>
+-        <path refid="contrib.classpath"/>
+-        <pathelement location="${contrib.output.dir}"/>
+-        <pathelement location="${junit.jar1.dir}"/>
+-      </classpath>
+-    </javac>
+   </target>
+ 
+   <target name="compile-examples" depends="init">
