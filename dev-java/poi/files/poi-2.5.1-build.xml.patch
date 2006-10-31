@@ -1,6 +1,22 @@
---- build.xml.original	2004-03-21 23:38:55.000000000 +0100
-+++ build.xml	2006-09-24 23:44:30.000000000 +0200
-@@ -145,6 +145,9 @@
+--- build.xml.original	2006-11-01 00:07:31.000000000 +0100
++++ build.xml	2006-11-01 00:09:26.000000000 +0100
+@@ -52,6 +52,7 @@
+     <property name="main.jar1.url" value="${repository}/commons-logging/jars/commons-logging-1.0.1.jar"/>
+     <property name="main.jar2.dir" value="${main.lib}/log4j-1.2.8.jar"/>
+     <property name="main.jar2.url" value="${repository}/log4j/jars/log4j-1.2.8.jar"/>
++    <property name="main.jar3.dir" value="${main.lib}/xalan.jar"/>
+     <property name="main.testokfile" value="build/main-testokfile.txt"/>
+     <property name="scratchpad.src" value="src/scratchpad/src"/>
+     <property name="scratchpad.src.test" value="src/scratchpad/testcases"/>
+@@ -95,6 +96,7 @@
+     <path id="main.classpath">
+         <pathelement location="${main.jar1.dir}"/>
+         <pathelement location="${main.jar2.dir}"/>
++        <pathelement location="${main.jar3.dir}"/>
+         <pathelement location="${main.resource1.dir}"/>
+     </path>
+ 
+@@ -145,6 +147,9 @@
          <copy file="forrest.properties" tofile="${build.site.src}/forrest.properties"/>
      </target>
  
@@ -10,7 +26,7 @@
      <target name="clean">
          <delete dir="build"/>
      </target>
-@@ -160,13 +163,24 @@
+@@ -160,13 +165,24 @@
                	<available file="${contrib.jar3.dir}"/>
                	<available file="${contrib.jar4.dir}"/>
                	<available file="${contrib.jar5.dir}"/>
@@ -36,7 +52,7 @@
      <target name="fetch-jars" unless="jars.present">
          <get src="${main.jar1.url}" dest="${main.jar1.dir}"/>
          <get src="${main.jar2.url}" dest="${main.jar2.dir}"/>
-@@ -178,6 +192,10 @@
+@@ -178,6 +194,10 @@
          <get src="${junit.jar1.url}" dest="${junit.jar1.dir}"/>
      </target>
  
@@ -47,7 +63,47 @@
      <target name="compile" depends="init,compile-main,compile-scratchpad,compile-contrib">
  
      </target>
-@@ -240,7 +258,7 @@
+@@ -189,39 +209,18 @@
+         <javac srcdir="${main.src}" destdir="${main.output.dir}" debug="on">
+             <classpath refid="main.classpath"/>
+         </javac>
+-        <javac srcdir="${main.src.test}" destdir="${main.output.test.dir}" debug="on">
+-            <classpath>
+-                <path refid="main.classpath"/>
+-                <pathelement location="${main.output.dir}"/>
+-                <pathelement location="${junit.jar1.dir}"/>
+-            </classpath>
+-        </javac>
+     </target>
+ 
+     <target name="compile-scratchpad" depends="init">
+         <javac srcdir="${scratchpad.src}" destdir="${scratchpad.output.dir}" debug="on">
+             <classpath refid="scratchpad.classpath"/>
+         </javac>
+-        <javac srcdir="${scratchpad.src.test}" destdir="${scratchpad.output.test.dir}" debug="on">
+-            <classpath>
+-                <path refid="scratchpad.classpath"/>
+-                <pathelement location="${scratchpad.output.dir}"/>
+-                <pathelement location="${junit.jar1.dir}"/>
+-            </classpath>
+-        </javac>
+     </target>
+ 
+     <target name="compile-contrib" depends="init">
+         <javac srcdir="${contrib.src}" destdir="${contrib.output.dir}" debug="on">
+             <classpath refid="contrib.classpath"/>
+         </javac>
+-        <javac srcdir="${contrib.src.test}" destdir="${contrib.output.test.dir}" debug="on">
+-            <classpath>
+-                <path refid="contrib.classpath"/>
+-                <pathelement location="${contrib.output.dir}"/>
+-                <pathelement location="${junit.jar1.dir}"/>
+-            </classpath>
+-        </javac>
+     </target>
+ 
+     <target name="test" depends="test-main,test-scratchpad,test-contrib"
+@@ -240,7 +239,7 @@
                  <pathelement location="${main.output.test.dir}"/>
                  <pathelement location="${junit.jar1.dir}"/>
           </path>
@@ -56,7 +112,7 @@
          <junit printsummary="yes" showoutput="true" filtertrace="no" fork="no"
              haltonfailure="${halt.on.test.failure}" failureproperty="main.test.failed">
              <classpath refid="test.classpath"/>
-@@ -260,7 +278,7 @@
+@@ -260,7 +259,7 @@
          <antcall target="-test-main-write-testfile"/>
      </target>
  
@@ -65,7 +121,7 @@
  	<junit printsummary="no" showoutput="true" filtertrace="no" haltonfailure="${halt.on.test.failure}" failureproperty="main.test.failed" >
              <classpath refid="test.classpath"/>
  	    <sysproperty key="HSSF.testdata.path" value="${main.src.test}/org/apache/poi/hssf/data"/>
-@@ -272,7 +290,7 @@
+@@ -272,7 +271,7 @@
  	</junit>
      </target>
  
@@ -74,7 +130,7 @@
  	<junit printsummary="no" showoutput="true" filtertrace="no" fork="yes" haltonfailure="${halt.on.test.failure}" failureproperty="main.test.failed" >
  	<jvmarg value="-Xdebug"/>
  	<jvmarg value="-Xrunjdwp:transport=dt_socket,address=5001,server=y,suspend=y"/>
-@@ -338,7 +356,7 @@
+@@ -338,7 +337,7 @@
          </uptodate>
      </target>
  
@@ -83,3 +139,48 @@
          <junit printsummary="yes" fork="no" haltonfailure="${halt.on.test.failure}">
              <classpath>
                  <path refid="contrib.classpath"/>
+@@ -514,6 +513,44 @@
+ 
+     </target>
+ 
++    <target name="javadoc" description="Creates javadoc">
++        <javadoc
++            destdir="${apidocs.report.dir}"
++            author="true"
++            version="true"
++            use="true"
++            verbose="false"
++            windowtitle="POI API">
++
++            <packageset dir="${main.src}" defaultexcludes="yes">
++                <include name="org/apache/poi/**"/>
++            </packageset>
++            <packageset dir="${scratchpad.src}" defaultexcludes="yes">
++                <include name="org/apache/poi/**"/>
++            </packageset>
++            <packageset dir="${contrib.src}" defaultexcludes="yes">
++                <include name="org/apache/poi/**"/>
++            </packageset>
++
++            <classpath>
++                <path refid="main.classpath"/>
++                <path refid="scratchpad.classpath"/>
++                <path refid="contrib.classpath"/>
++            </classpath>
++
++            <doctitle><![CDATA[<h1>POI Documentation</h1>]]></doctitle>
++            <bottom><![CDATA[<i>Copyright &#169; 2003 Apache Software Foundation.</i>]]></bottom>
++            <group title="HSSF" packages="org.apache.poi.hssf*"/>
++            <group title="HPSF" packages="org.apache.poi.hpsf*"/>
++            <group title="POIFS" packages="org.apache.poi.poifs*"/>
++            <group title="HDF" packages="org.apache.poi.hdf*"/>
++            <group title="Record Generator" packages="org.apache.poi.record*"/>
++            <group title="Utils" packages="org.apache.poi.util*"/>
++        </javadoc>
++
++
++    </target>
++
+     <!-- ================================== -->
+     <!--       Generate records                -->
+     <!-- ================================== -->

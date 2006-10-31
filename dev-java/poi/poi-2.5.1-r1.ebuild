@@ -20,6 +20,7 @@ RDEPEND=">=virtual/jre-1.2
 	>=dev-java/commons-collections-2.1
 	=dev-java/commons-lang-2.0*
 	>=dev-java/xerces-2.6
+	dev-java/xalan
 	>=dev-java/gnu-jaxp-1.0"
 DEPEND=">=virtual/jdk-1.2
 	${RDEPEND}
@@ -38,6 +39,7 @@ src_unpack() {
 	rm -f *.jar
 	java-pkg_jar-from commons-logging commons-logging.jar commons-logging-1.0.1.jar
 	java-pkg_jar-from log4j log4j.jar log4j-1.2.8.jar
+	java-pkg_jar-from xalan
 
 	cd ${S}/src/contrib/lib
 	rm -f *.jar
@@ -49,11 +51,11 @@ src_unpack() {
 }
 
 src_compile() {
-	eant jar
+	eant jar $(use_doc)
 }
 
 src_install() {
-	use doc && java-pkg_dohtml -r docs/*
+	use doc && java-pkg_dohtml -r build/tmp/site/build/site/*
 	use source && java-pkg_dosrc src/contrib/src/org src/java/org/ src/scratchpad/src/org
 
 	cd build/dist/
