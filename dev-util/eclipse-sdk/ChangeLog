@@ -1,0 +1,7 @@
+# ChangeLog for dev-util/eclipse-sdk
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  31 Oct 2006; Federico Fissore <federico@fsfe.org> ChangeLog:
+  Rewritten ebuild. Uses jars from dependecies. Whole fedora patchset applied
+
