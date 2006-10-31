@@ -4,26 +4,25 @@
 
 inherit java-pkg-2 java-ant-2
 
-DESCRIPTION=""
-HOMEPAGE=""
+DESCRIPTION="Glassfish implementation of persistence API"
+HOMEPAGE="https://glassfish.dev.java.net/"
 SRC_URI="http://download.java.net/javaee5/fcs_branch/promoted/source/glassfish-9_0-b48-src.zip"
 
 LICENSE="cddl-1.0"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=">=virtual/jdk-1.5
 		app-arch/unzip"
 RDEPEND=">=virtual/jre-1.5"
 
-MODULE="persistence-api" 
+MODULE="persistence-api"
 S="${WORKDIR}/glassfish"
 
 src_compile() {
-	
 	cd ${S}/${MODULE}
-	eant all 
+	eant all
 }
 
 src_install() {
