@@ -9,7 +9,7 @@ HOMEPAGE="http://ws.apache.org/ws-fx/addressing/"
 SRC_URI="http://dev.gentoo.org/~caster/distfiles/${P}.tar.bz2"
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc source"
 
 COMMON_DEPS=">=www-servers/axis-1.2.1
@@ -36,7 +36,7 @@ src_unpack() {
 }
 
 src_compile() {
-	eant jar $(use_doc jdoc)
+	eant jar $(use_doc javadoc)
 }
 
 src_install() {
