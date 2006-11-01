@@ -1,0 +1,7 @@
+# ChangeLog for dev-java/icu4j
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  01 Nov 2006; Federico Fissore <federico@fsfe.org> ChangeLog:
+  Version bump. Slotted 3.4 and 3.6. Changed homepage and SRC_URI
+
