@@ -2,6 +2,9 @@
 # Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  01 Nov 2006; Federico Fissore <federico@fsfe.org> ChangeLog:
+  Modified SRC_URI to get the right patches archive
+
   31 Oct 2006; Federico Fissore <federico@fsfe.org> ChangeLog:
   Rewritten ebuild. Uses jars from dependecies. Whole fedora patchset applied
 

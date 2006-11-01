@@ -10,7 +10,7 @@ MY_A="eclipse-sourceBuild-srcIncluded-${PV}.zip"
 DESCRIPTION="Eclipse Tools Platform"
 HOMEPAGE="http://www.eclipse.org/"
 SRC_URI="http://download.eclipse.org/eclipse/downloads/drops/R-${PV}-${DATESTAMP}/${MY_A}
-	mirror://gentoo/${P}-patches.tar.bz2"
+	mirror://gentoo/${P}-r1-patches.tar.bz2"
 IUSE="branding cairo gnome opengl seamonkey "
 SLOT="3.2"
 LICENSE="EPL-1.0"
