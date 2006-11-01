@@ -3,6 +3,9 @@
 # $Header: $
 
   01 Nov 2006; Federico Fissore <federico@fsfe.org> ChangeLog:
+  Added missing eclipse-ecj-3.2 dependency
+
+  01 Nov 2006; Federico Fissore <federico@fsfe.org> ChangeLog:
   Modified SRC_URI to get the right patches archive
 
   31 Oct 2006; Federico Fissore <federico@fsfe.org> ChangeLog:

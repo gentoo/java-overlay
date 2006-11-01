@@ -41,6 +41,7 @@ COMMON_DEP="
 	seamonkey? ( www-client/seamonkey )
 	gnome? ( =gnome-base/gnome-vfs-2* =gnome-base/libgnomeui-2* )
 	opengl? ( virtual/opengl )
+	=dev-java/eclipse-ecj-3.2*
 	"
 
 RDEPEND=">=virtual/jre-1.4
