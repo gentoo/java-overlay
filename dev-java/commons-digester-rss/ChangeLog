@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/commons-digester-rss
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  01 Nov 2006; Federico Fissore <federico@fsfe.org> ChangeLog:
+  Back to the old commons-digester. RSS jar is now built from this dedicated
+  package
+
