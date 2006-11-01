@@ -23,6 +23,7 @@ COMMON_DEP="
 	=dev-java/commons-beanutils-1.6*
 	dev-java/commons-collections
 	dev-java/commons-digester
+	dev-java/commons-digester-rss
 	dev-java/commons-dbcp
 	dev-java/commons-el
 	dev-java/commons-fileupload
@@ -99,7 +100,23 @@ src_unpack() {
 }
 
 src_compile() {
-	setup-jvm-opts
+	# Figure out correct boot classpath
+	# karltk: this should be handled by the java-pkg eclass in setup-vm
+	local bootclasspath=$(java-config --runtime)
+
+	# Correct awt .so path for ibm jdk
+	if [[ $(java-pkg_get-vm-vendor) == "ibm" ]] ; then
+		JAVA_LIB_DIR="$(java-config --jdk-home)/jre/bin"
+	else
+		# Sun derived JDKs (Blackdown, Sun)
+		JAVA_LIB_DIR="$(java-config --jdk-home)/jre/lib/${jvmarch}"
+	fi
+
+	if [[ ! -f ${JAVA_LIB_DIR}/libawt.so ]] ; then
+		die "Could not find libawt.so native library"
+	fi
+
+	export AWT_LIB_PATH=${JAVA_LIB_DIR}
 
 	einfo "Using bootclasspath ${bootclasspath}"
 	einfo "Using JVM library path ${JAVA_LIB_DIR}"
@@ -176,26 +193,6 @@ pkg_postinst() {
 #  Helper functions
 # -----------------------------------------------------------------------------
 
-setup-jvm-opts() {
-	# Figure out correct boot classpath
-	# karltk: this should be handled by the java-pkg eclass in setup-vm
-	local bootclasspath=$(java-config --runtime)
-
-	# Correct awt .so path for ibm jdk
-	if [[ $(java-pkg_get-vm-vendor) == "ibm" ]] ; then
-		JAVA_LIB_DIR="$(java-config --jdk-home)/jre/bin"
-	else
-		# Sun derived JDKs (Blackdown, Sun)
-		JAVA_LIB_DIR="$(java-config --jdk-home)/jre/lib/${jvmarch}"
-	fi
-
-	if [[ ! -f ${JAVA_LIB_DIR}/libawt.so ]] ; then
-		die "Could not find libawt.so native library"
-	fi
-
-	export AWT_LIB_PATH=${JAVA_LIB_DIR}
-}
-
 setup-mozilla-opts() {
 	export GECKO_SDK="/usr/$(get_libdir)/seamonkey"
 	# TODO should this be using pkg-config?
@@ -229,6 +226,7 @@ install-link-system-jars() {
 	java-pkg_jarfrom commons-collections
 	java-pkg_jarfrom commons-dbcp
 	java-pkg_jarfrom commons-digester
+	java-pkg_jarfrom commons-digester-rss
 	java-pkg_jarfrom commons-el
 	java-pkg_jarfrom commons-fileupload
 	java-pkg_jarfrom commons-launcher
@@ -463,6 +461,7 @@ patch-symlink-tomcat() {
 	java-pkg_jarfrom commons-collections
 	java-pkg_jarfrom commons-dbcp
 	java-pkg_jarfrom commons-digester
+	java-pkg_jarfrom commons-digester-rss
 	java-pkg_jarfrom commons-el
 	java-pkg_jarfrom commons-fileupload
 	java-pkg_jarfrom commons-launcher

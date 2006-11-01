@@ -3,6 +3,9 @@
 # $Header: $
 
   01 Nov 2006; Federico Fissore <federico@fsfe.org> ChangeLog:
+  digester-rss dependency changed
+
+  01 Nov 2006; Federico Fissore <federico@fsfe.org> ChangeLog:
   Added missing eclipse-ecj-3.2 dependency
 
   01 Nov 2006; Federico Fissore <federico@fsfe.org> ChangeLog:
