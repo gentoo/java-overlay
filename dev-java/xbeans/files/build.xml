@@ -23,7 +23,13 @@
 
 	<target depends="init" description="compile the source" name="compile">
 		<javac destdir="${build}" srcdir="${src}">
-		<include name="**/*.java"/>
+			<include name="**/*.java"/>
+			<classpath>
+				<fileset dir="${basedir}/lib">
+					<include name="*.jar">
+					</include>
+				</fileset>
+			</classpath>
 		</javac>
 	</target>
 

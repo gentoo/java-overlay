@@ -8,13 +8,13 @@ DESCRIPTION="Software component that takes XML as input and processes it in some
 HOMEPAGE="http://www.xbeans.org"
 SRC_URI="mirror://sourceforge/xbeans/Xbeans-r${PV}.zip"
 
-LICENSE=""
+LICENSE="MIT"
 SLOT="2"
-KEYWORDS="~amd64"
-IUSE=""
+KEYWORDS="~amd64 ~x86"
+IUSE="doc source"
 
 CDEPEND="dev-java/xalan
-		dev-java/xerces
+		=dev-java/xerces-2*
 		dev-java/xml-commons"
 		#xsltc here
 DEPEND=">=virtual/jdk-1.4
@@ -36,15 +36,16 @@ src_unpack() {
 	rm *.jar
 	java-pkg_jarfrom xml-commons xml-apis.jar
 	java-pkg_jarfrom xalan xalan.jar
-	java-pkg_jarfrom xerces-1.3
+	java-pkg_jarfrom xerces-2
 	#xsltc.jar needs to be added here
 }
 
 src_compile() {
-	eant dist javadoc
+	eant dist $(use_doc)
 }
 
 src_install() {
 	java-pkg_dojar dist/*.jar
-	java-pkg_dojavadoc api
+	use doc && java-pkg_dojavadoc api
+	use source && java-pkg_dosrc source/*
 }
