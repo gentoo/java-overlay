@@ -28,6 +28,7 @@ src_unpack() {
 
 	cd ${S}
 	epatch ${FILESDIR}/${P}-build.xml.patch
+	epatch ${FILESDIR}/${P}-src.patch
 
 	cd ${S}/lib
 	rm -f *.jar

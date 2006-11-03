@@ -1,0 +1,95 @@
+diff -ru poi.original/src/java/org/apache/poi/hssf/model/Workbook.java poi/src/java/org/apache/poi/hssf/model/Workbook.java
+--- poi.original/src/java/org/apache/poi/hssf/model/Workbook.java	2006-01-03 12:41:36.000000000 +0100
++++ poi/src/java/org/apache/poi/hssf/model/Workbook.java	2006-11-03 21:10:29.000000000 +0100
+@@ -103,6 +103,19 @@
+ 
+     private static POILogger   log = POILogFactory.getLogger(Workbook.class);
+ 
++  /**
++   * The date strings to look for
++   */
++  private static final String[] dateStrings = new String[]
++  {
++    "dd",
++    "mm",
++    "yy",
++    "hh",
++    "ss",
++    "m/",
++    "/d"
++  };
+     /**
+      * Creates new Workbook with no intitialization --useless right now
+      * @see #createWorkbook(List)
+@@ -2221,6 +2234,58 @@
+     {
+         return drawingManager;
+     }
++    
++    public FormatRecord getFormat(final short index) {
++        FormatRecord foundFormat = null;
++        Iterator iterator = formats.iterator();
++        while (iterator.hasNext()) {
++            final FormatRecord format = (FormatRecord) iterator.next();
++            if (format.getIndexCode() == index) {
++                foundFormat = format;
++                break;
++            }
++        }
++        return foundFormat;
++    }
+ 
+-}
++    public boolean isDateFormat(final short index) {
++        boolean isDate = false;
++        final FormatRecord format = getFormat(index);
++        if (format != null) {
++            switch(format.getIndexCode()) {
++                // Internal Date Formats as described on page 427 in
++                // Microsoft Excel Dev's Kit...
++                case 0x0e:
++                case 0x0f:
++                case 0x10:
++                case 0x11:
++                case 0x12:
++                case 0x13:
++                case 0x14:
++                case 0x15:
++                case 0x16:
++                case 0x2d:
++                case 0x2e:
++                case 0x2f:
++                    isDate = true;
++                    break;
+ 
++                default:
++                    break;
++            }
++
++            if (!isDate) {
++                final String formatString = format.getFormatString();
++                for (int i = 0; i < dateStrings.length; i++) {
++                    final String dateString = dateStrings[i];
++                    if (formatString.indexOf(dateString) != -1 ||
++                            formatString.indexOf(dateString.toUpperCase()) != -1) {
++                        isDate = true;
++                        break;
++                    }
++                }
++            }
++        }
++        return isDate;
++    }
++}
+diff -ru poi.original/src/java/org/apache/poi/hssf/usermodel/HSSFWorkbook.java poi/src/java/org/apache/poi/hssf/usermodel/HSSFWorkbook.java
+--- poi.original/src/java/org/apache/poi/hssf/usermodel/HSSFWorkbook.java	2006-07-27 16:15:11.000000000 +0200
++++ poi/src/java/org/apache/poi/hssf/usermodel/HSSFWorkbook.java	2006-11-03 21:09:50.000000000 +0100
+@@ -1279,4 +1279,8 @@
+         byte[] bytes = new byte[16];
+         return bytes;
+     }
++    
++    public boolean isDateFormat(final short index) {
++        return workbook.isDateFormat(index);
++    }
+ }
