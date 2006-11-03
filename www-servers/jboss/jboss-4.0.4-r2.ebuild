@@ -22,7 +22,17 @@ THIRDPARTY="=dev-java/antlr-2.7.6*
 			=dev-java/bcel-5.1*
 			=dev-java/commons-beanutils-1.6*
 			=dev-java/bsf-2.3.0*
-			=dev-java/commons-codec-1.3*"
+			=dev-java/commons-codec-1.3*
+			dev-java/commons-collections
+			dev-java/commons-digester
+			=dev-java/commons-discovery-0.2*
+			=dev-java/commons-fileupload-1.0*
+			dev-java/commons-httpclient
+			dev-java/commons-lang
+			dev-java/jaxme
+			dev-java/log4j
+			dev-java/commons-logging
+			dev-java/commons-modeler"
 
 
 
@@ -159,10 +169,41 @@ function fix_thirdparty() {
 	# commons-codec should be 1.2 but only 1.3 in portage at present so
 	# attempting to that
 	fix_individual_dir apache-codec commons-codec commons-codec.jar commons-codec-1.2.jar
+	
+	#Meant to be 2.- but trying latter versions
+	fix_individual_dir apache-collections commons-collections 
 
-	#fix_individual_dir 
+	fix_individual_dir apache-digester commons-digester
+	# and again :(
+	fix_individual_dir apache-digester commons-digester commons-digester.jar commons-digester-1.6.jar
 
+	fix_individual_dir apache-discovery commons-discovery
 
+	fix_individual_dir apache-fileupload commons-fileupload
+
+	fix_individual_dir apache-httpclient commons-httpclient
+
+	fix_individual_dir apache-jaxme jaxme jaxmexs.jar
+
+	fix_individual_dir apache-lang commons-lang
+
+	fix_individual_dir apache-log4j log4j
+
+	fix_individual_dir apache-logging commons-logging commons-logging.jar
+
+	fix_individual_dir apache-modeler commons-modeler
+
+	#fix_individual_dir apache-myfaces myfaces
+
+	fix_individual_dir apache-pool commons-pool
+
+	#apache-scout here
+
+	#apache-slide here
+
+	#tonmcat here.  lets fight the smaller battle for the moment
+
+	fix_individual_dir apache-velocity velocity velocity.jar
 }
 
 function fix_individual_dir() {
