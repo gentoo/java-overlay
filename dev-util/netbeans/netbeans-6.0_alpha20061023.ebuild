@@ -1,18 +1,11 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header$
 
 inherit eutils java-pkg-2 java-ant-2
 
 DESCRIPTION="NetBeans IDE for Java"
 HOMEPAGE="http://www.netbeans.org"
-
-# ant-mis is stuff we never use put instead of pactching we let the build process use this file
-# so adding the license just to be sure
-# The list of files in here is not complete but just some I listed.
-# Apache-1.1: webserver.jar
-# Apache-2.0: ant-misc-1.6.2.zip
-# as-is: docbook-xsl-1.65.1.zip, pmd-netbeans35-bin-0.91.zip
 
 MY_PV=$(get_version_component_range 1-2 ${PV})
 MY_PV=$(replace_version_separator 1 '_' ${MY_PV})
@@ -70,9 +63,21 @@ RDEPEND=">=virtual/jre-1.5
 	dev-java/commons-digester
 	dev-java/commons-validator
 	=dev-java/jakarta-oro-2.0*
+	dev-java/jsfapi
+	dev-java/jsr173
+	dev-java/jsr181
+	dev-java/jsr250
+	dev-java/relaxng-datatype
 	=dev-java/struts-1.3*
+	dev-java/sun-fastinfoset-bin
 	dev-java/sun-jaf
+	dev-java/sun-jaxp-bin
 	dev-java/sun-javamail
+	dev-java/sun-jaxb-bin
+	dev-java/sun-jaxrpc-bin
+	dev-java/sun-jaxws-bin
+	dev-java/sun-saaj-bin
+	dev-java/sun-sjsxp-bin
 	dev-java/xsdlib
 	${COMMON_DEPEND}"
 
@@ -258,7 +263,7 @@ function place_symlinks() {
 	einfo "Symlinking apisupport/external"
 	cd ${S}/apisupport/external
 	java-pkg_jar-from --build-only jdom-1.0
-	#jsearch-2.0_04 (no ebuild)
+	# MISSING: jsearch-2.0_04 (no ebuild)
 	java-pkg_jar-from --build-only rome rome.jar rome-fetcher-0.6.jar
 	java-pkg_jar-from --build-only rome rome.jar rome-0.6.jar
 
@@ -268,16 +273,16 @@ function place_symlinks() {
 
 	einfo "Symlinking db/external"
 	cd ${S}/db/external
-	#fake-jdbc40.jar (not found)
+	# MISSING: fake-jdbc40.jar (not found)
 
 	einfo "Symlinking httpserver/external"
 	cd ${S}/httpserver/external
 	java-pkg_jar-from servletapi-2.2 servlet.jar servlet-2.2.jar
-	#webserver.jar (something from tomcat)
+	# MISSING: webserver.jar (something from tomcat)
 
 	einfo "Symlinking java/external"
 	cd ${S}/java/external
-	#gjast.jar (no ebuild)
+	# MISSING: gjast.jar (no ebuild)
 
 	einfo "Symlinking junit/external"
 	cd ${S}/junit/external
@@ -301,7 +306,7 @@ function place_symlinks() {
 	java-pkg_jar-from commons-logging commons-logging.jar commons-logging-1.0.4.jar
 	java-pkg_jar-from jsch jsch.jar jsch-0.1.24.jar
 	java-pkg_jar-from --build-only pmd pmd.jar pmd-1.3.jar
-	#resolver-1_1_nb.jar (patched xml-commons-resolver)
+	# MISSING: resolver-1_1_nb.jar (patched xml-commons-resolver)
 	java-pkg_jar-from swing-layout-1 swing-layout.jar swing-layout-1.0.1.jar
 	java-pkg_jar-from --build-only xml-xmlbeans-1 xbean.jar xbean.jar
 	java-pkg_jar-from xerces-2 xercesImpl.jar xerces-2.8.0.jar
@@ -315,16 +320,16 @@ function place_symlinks() {
 	einfo "Symlinking nbbuild/external"
 	cd ${S}/nbbuild/external
 	java-pkg_jar-from javahelp-bin jhall.jar jhall-2.0_03.jar
-	#scrambler.jar (no ebuild)
+	# MISSING: scrambler.jar (no ebuild)
 
 	einfo "Symlinking serverplugins/external"
 	cd ${S}/serverplugins/external
-	#jmxremote.jar (not found)
+	# MISSING: jmxremote.jar (no ebuild)
 
 	einfo "Symlinking subversion/external"
 	cd ${S}/subversion/external
-	#ini4j.jar (no ebuild)
-	#svnClientAdapter.jar (not found)
+	# MISSING: ini4j.jar (no ebuild)
+	# MISSING: svnClientAdapter.jar (no ebuild)
 
 	einfo "Symlinking tasklist/external"
 	cd ${S}/tasklist/external
@@ -333,18 +338,18 @@ function place_symlinks() {
 	java-pkg_jar-from --build-only commons-cli-1
 	java-pkg_jar-from commons-collections
 	java-pkg_jar-from --build-only checkstyle
-	#ical4j.jar (no ebuild)
+	# MISSING: ical4j.jar (no ebuild)
 	java-pkg_jar-from --build-only jcalendar-1.2 jcalendar.jar jcalendar-1.3.0.jar
 	java-pkg_jar-from --build-only jtidy Tidy.jar Tidy-r7.jar
 
 	einfo "Symlinking web/external"
 	cd ${S}/web/external
 	java-pkg_jar-from --build-only commons-el
-	#glassfish-jspparser.jar (no ebuild)
-	#glassfish-logging.jar (no ebuild)
+	# MISSING: glassfish-jspparser.jar (no ebuild)
+	# MISSING: glassfish-logging.jar (no ebuild)
 	java-pkg_jar-from jakarta-jstl jstl.jar jstl-1.1.2.jar
 	java-pkg_jar-from --build-only servletapi-2.3 servlet.jar servlet-2.3.jar
-	#servlet2.5-jsp2.1-api.jar (no ebuild)
+	# MISSING: servlet2.5-jsp2.1-api.jar (no ebuild)
 	java-pkg_jar-from jakarta-jstl standard.jar standard-1.1.2.jar
 
 	einfo "Symlinking xml/external"
@@ -352,33 +357,33 @@ function place_symlinks() {
 	java-pkg_jar-from flute
 	java-pkg_jar-from --build-only commons-jxpath commons-jxpath.jar jxpath.jar
 	java-pkg_jar-from --build-only prefuse-2006
-	#resolver-1_1_nb.jar (patched xml-commons-resolver)
+	# MISSING: resolver-1_1_nb.jar (patched xml-commons-resolver)
 	java-pkg_jar-from sac
 }
 
 function symlink_extjars() {
 	einfo "Symlinking enterprise${ENTERPRISE}/modules/ext"
 	cd ${1}/enterprise${ENTERPRISE}/modules/ext
-	#appsrvbridge.jar
-	#glassfish-jspparser.jar (no ebuild)
-	#glassfish-logging.jar (no ebuild)
-	#jsp-parser-ext.jar
+	#appsrvbridge.jar (nb)
+	# MISSING: glassfish-jspparser.jar (no ebuild)
+	# MISSING: glassfish-logging.jar (no ebuild)
+	#jsp-parser-ext.jar (nb)
 	java-pkg_jar-from sun-j2ee-deployment-bin-1.1 sun-j2ee-deployment-bin.jar jsr88javax.jar
 	java-pkg_jar-from jakarta-jstl jstl.jar
-	#org-netbeans-modules-web-httpmonitor.jar
-	#persistence-tool-support.jar
-	#servlet2.5-jsp2.1-api.jar (no ebuild)
+	#org-netbeans-modules-web-httpmonitor.jar (nb)
+	# MISSING: persistence-tool-support.jar (no ebuild)
+	# MISSING: servlet2.5-jsp2.1-api.jar (no ebuild)
 	java-pkg_jar-from jakarta-jstl standard.jar
-	#websvcregistry.jar
+	#websvcregistry.jar (nb)
 
 	einfo "Symlinking enterprise${ENTERPRISE}/modules/ext/blueprints"
 	cd ${1}/enterprise${ENTERPRISE}/modules/ext/blueprints
-	#bp-ui-14.jar
-	#bp-ui-5.jar
+	# MISSING: bp-ui-14.jar (no ebuild)
+	# MISSING: bp-ui-5.jar (no ebuild)
 	java-pkg_jar-from commons-fileupload commons-fileupload.jar commons-fileupload-1.1.1.jar
 	java-pkg_jar-from commons-io-1 commons-io.jar commons-io-1.2.jar
 	java-pkg_jar-from commons-logging commons-logging.jar commons-logging-1.1.jar
-	#shale-remoting.jar (no ebuild)
+	# MISSING: shale-remoting.jar (no ebuild)
 
 	einfo "Symlinking enterprise${ENTERPRISE}/modules/ext/jsf"
 	cd ${1}/enterprise${ENTERPRISE}/modules/ext/jsf
@@ -386,8 +391,8 @@ function symlink_extjars() {
 	java-pkg_jar-from commons-collections
 	java-pkg_jar-from commons-digester
 	java-pkg_jar-from commons-logging
-	#jsf-api.jar (bad abuild)
-	#jsf-impl.jar (bad abuild)
+	java-pkg_jar-from jsfapi-1
+	# MISSING: jsf-impl.jar (no ebuild)
 
 	einfo "Symlinking enterprise${ENTERPRISE}/modules/ext/struts"
 	cd ${1}/enterprise${ENTERPRISE}/modules/ext/struts
@@ -408,8 +413,8 @@ function symlink_extjars() {
 	java-pkg_jar-from commons-logging commons-logging.jar commons-logging-1.0.4.jar
 	#ddl.jar (nb)
 	java-pkg_jar-from flute
-	#gjast.jar (no ebuild)
-	#ini4j.jar (no ebuild)
+	# MISSING: gjast.jar (no ebuild)
+	# MISSING: ini4j.jar (no ebuild)
 	#java-parser.jar (nb)
 	java-pkg_jar-from jmi-interface jmi.jar jmi.jar
 	#jmiutils.jar (nb)
@@ -419,48 +424,48 @@ function symlink_extjars() {
 	java-pkg_jar-from jmi-interface mof.jar mof.jar
 	#org-netbeans-modules-java-j2seplatform-probe.jar (nb)
 	#org-netbeans-tax.jar (nb)
-	#resolver-1_1_nb.jar (patched xml-commons-resolver)
+	# MISSING: resolver-1_1_nb.jar (patched xml-commons-resolver)
 	java-pkg_jar-from sac
 	java-pkg_jar-from servletapi-2.2 servlet.jar servlet-2.2.jar
-	#svnClientAdapter.jar (not found)
-	#webserver.jar (something from tomcat)
+	# MISSING: svnClientAdapter.jar (no ebuild)
+	# MISSING: webserver.jar (something from tomcat)
 	java-pkg_jar-from xerces-2 xercesImpl.jar xerces-2.8.0.jar
 	java-pkg_jar-from xml-commons xml-apis.jar xml-commons-dom-ranges-1.0.b2.jar
 
 	einfo "Symlinking ide${IDE_VERSION}/modules/ext/jaxrpc16"
 	cd ${1}/ide${IDE_VERSION}/modules/ext/jaxrpc16
 	java-pkg_jar-from sun-jaf
-	#FastInfoset.jar
-	#jaxp-api.jar
-	#jax-qname.jar
-	#jaxrpc-api.jar
-	#jaxrpc-impl.jar
-	#jaxrpc-spi.jar
-	#jsr173_api.jar
+	java-pkg_jar-from sun-fastinfoset-bin
+	java-pkg_jar-from sun-jaxp-bin
+	# MISSING: jax-qname.jar (not found)
+	java-pkg_jar-from sun-jaxrpc-bin jaxrpc-api.jar
+	java-pkg_jar-from sun-jaxrpc-bin jaxrpc-impl.jar
+	java-pkg_jar-from sun-jaxrpc-bin jaxrpc-spi.jar
+	java-pkg_jar-from jsr173 jsr173.jar jsr173_api.jar
 	java-pkg_jar-from sun-javamail
-	#relaxngDatatype.jar
-	#saaj-api.jar
-	#saaj-impl.jar
+	java-pkg_jar-from relaxng-datatype
+	java-pkg_jar-from sun-saaj-bin saaj-api.jar
+	java-pkg_jar-from sun-saaj-bin saaj-impl.jar
 	java-pkg_jar-from xsdlib
 
 	einfo "Symlinking ide${IDE_VERSION}/modules/ext/jaxws20"
 	cd ${1}/ide${IDE_VERSION}/modules/ext/jaxws20
 	java-pkg_jar-from sun-jaf
-	#FastInfoset.jar
-	#http.jar
-	#jaxb-api.jar
-	#jaxb-impl.jar
-	#jaxb-xjc.jar
-	#jaxws-api.jar
-	#jaxws-rt.jar
-	#jaxws-tools.jar
-	#jsr173_api.jar
-	#jsr181-api.jar
-	#jsr250-api.jar
-	#resolver.jar
-	#saaj-api.jar
-	#saaj-impl.jar
-	#sjsxp.jar
+	java-pkg_jar-from sun-fastinfoset-bin
+	# MISSING: http.jar (no ebuild)
+	java-pkg_jar-from sun-jaxb-bin jaxb-api.jar
+	java-pkg_jar-from sun-jaxb-bin jaxb-impl.jar
+	java-pkg_jar-from sun-jaxb-bin jaxb-xjc.jar
+	java-pkg_jar-from sun-jaxws-bin jaxws-api.jar
+	java-pkg_jar-from sun-jaxws-bin jaxws-rt.jar
+	java-pkg_jar-from sun-jaxws-bin jaxws-tools.jar
+	java-pkg_jar-from jsr173 jsr173.jar jsr173_api.jar
+	java-pkg_jar-from jsr181 jsr181.jar jsr181-api.jar
+	java-pkg_jar-from jsr250
+	#resolver.jar (nb)
+	java-pkg_jar-from sun-saaj-bin saaj-api.jar
+	java-pkg_jar-from sun-saaj-bin saaj-impl.jar
+	java-pkg_jar-from sun-sjsxp-bin
 
 	einfo "Symlinking platform${PLATFORM}/modules/ext"
 	cd ${1}/platform${PLATFORM}/modules/ext
