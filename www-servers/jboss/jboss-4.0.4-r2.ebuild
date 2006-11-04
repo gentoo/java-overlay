@@ -32,7 +32,20 @@ THIRDPARTY="=dev-java/antlr-2.7.6*
 			dev-java/jaxme
 			dev-java/log4j
 			dev-java/commons-logging
-			dev-java/commons-modeler"
+			dev-java/commons-modeler
+			>=dev-java/xalan-2.7.1
+			=dev-java/xerces-2.6.2*
+			dev-libs/xmlsec
+			dev-java/bsh
+			dev-java/cglib
+			dev-java/commons-el
+			dev-java/dom4j
+			dev-java/gjt-jpl-util
+			>=dev-java/java-getopt-1.0.10
+			=dev-java/hibernate-3.2*
+			=dev-java/hibernate-annotations-3.2*"
+
+			#=dev-java/hibernate-entitymanager-3.2*
 
 
 
@@ -150,7 +163,7 @@ function fix_thirdparty() {
 	einfo "Fix bundled thirdparty jars"
 	cd ${S}/thirdparty
 
-	#We need to confirm #138236 ebuild is good and add to overlay/tree
+	#TODO We need to confirm #138236 ebuild is good and add to overlay/tree
 	#fix_individual_dir antlr antlr-2.7.6
 	
 	fix_individual_dir apache-addressing apache-addressing addressing.jar addressing-1.0.jar
@@ -159,18 +172,18 @@ function fix_thirdparty() {
 
 	fix_individual_dir apache-avalon-logkit avalon-logkit-1.2
 
-	#fix_individual_dir apache-bcel bcel-5.1
+	#TODO fix_individual_dir apache-bcel bcel-5.1
 	
-	# Jboss Packages with 1.6.0 but attempting to use 1.6.1
+	#TODO? Jboss Packages with 1.6.0 but attempting to use 1.6.1
 	fix_individual_dir apache-beanutils commons-beanutils-1.6
 
 	fix_individual_dir apache-bsf bsf-2.3
 	
-	# commons-codec should be 1.2 but only 1.3 in portage at present so
+	# TODO? commons-codec should be 1.2 but only 1.3 in portage at present so
 	# attempting to that
 	fix_individual_dir apache-codec commons-codec commons-codec.jar commons-codec-1.2.jar
 	
-	#Meant to be 2.- but trying latter versions
+	#TODO Meant to be 2.- but trying latter versions
 	fix_individual_dir apache-collections commons-collections 
 
 	fix_individual_dir apache-digester commons-digester
@@ -187,23 +200,53 @@ function fix_thirdparty() {
 
 	fix_individual_dir apache-lang commons-lang
 
-	fix_individual_dir apache-log4j log4j
+	#TODO fix_individual_dir apache-log4j log4j
 
 	fix_individual_dir apache-logging commons-logging commons-logging.jar
 
 	fix_individual_dir apache-modeler commons-modeler
 
-	#fix_individual_dir apache-myfaces myfaces
+	#TODO fix_individual_dir apache-myfaces myfaces
 
 	fix_individual_dir apache-pool commons-pool
 
-	#apache-scout here
+	#TODO apache-scout here
 
-	#apache-slide here
 
-	#tonmcat here.  lets fight the smaller battle for the moment
+
+	#TODO apache-slide here
+
+	#TODO tomcat here.  lets fight the smaller battle for the moment
 
 	fix_individual_dir apache-velocity velocity velocity.jar
+
+	#TODO apache-wss4j here
+
+	fix_individual_dir apache-xalan xalan
+
+	fix_individual_dir apache-xerces xerces-2 xercesImpl.jar
+	fix_individual_dir apache-xerces xerces-2 resolver.jar
+	fix_individual_dir apache-xerces xerces-2 xml-apis.jar
+
+	#fix_individual_dir apache-xmlsec xmlsec
+
+	fix_individual_dir bsh bsh
+
+	fix_individual_dir cglib cglib-2 cglib.jar
+
+	fix_individual_dir commons-el commons-el
+
+	fix_individual_dir dom4j dom4j-1
+
+	fix_individual_dir gjt-jpl-util gjt-jpl-util
+
+	fix_individual_dir gnu-getopt java-getopt-1
+
+	fix_individual_dir hibernate hibernate-3 hibernate3.jar
+
+	fix_individual_dir hibernate-annotations hibernate-annotations-3.2
+
+	#fix_individual_dir hibernate-entitymanager hibernate-entitymanager-3.2
 }
 
 function fix_individual_dir() {
