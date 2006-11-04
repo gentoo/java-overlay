@@ -1,0 +1,18 @@
+Pouze v jakarta-cactus-src-1.7.2: build.properties
+diff -ru jakarta-cactus-src-1.7.2.original/framework/build.xml jakarta-cactus-src-1.7.2/framework/build.xml
+--- jakarta-cactus-src-1.7.2.original/framework/build.xml	2006-11-04 15:43:31.000000000 +0100
++++ jakarta-cactus-src-1.7.2/framework/build.xml	2006-11-04 17:52:08.000000000 +0100
+@@ -153,9 +153,11 @@
+       </and>
+     </condition>
+ 
++    <!--
+     <fail unless="properties.ok">One or more required dependencies could not
+ be resolved. Please check you build.properties file, and run Ant with the 
+ -verbose option for more details</fail>
++    -->
+ 
+   </target>
+ 
+Pouze v jakarta-cactus-src-1.7.2/framework: target-13
+Pouze v jakarta-cactus-src-1.7.2: lib
