@@ -24,7 +24,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="doc"
 
 COMMON_DEP="
-	=dev-java/commons-logging-1.0*
+	>=dev-java/commons-logging-1.0
 	=dev-java/servletapi-2.4*
 	=dev-java/jakarta-jstl-1.1*"
 
