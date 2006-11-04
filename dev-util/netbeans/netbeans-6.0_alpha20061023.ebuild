@@ -1,0 +1,472 @@
+# Copyright 1999-2006 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+inherit eutils java-pkg-2 java-ant-2
+
+DESCRIPTION="NetBeans IDE for Java"
+HOMEPAGE="http://www.netbeans.org"
+
+# ant-mis is stuff we never use put instead of pactching we let the build process use this file
+# so adding the license just to be sure
+# The list of files in here is not complete but just some I listed.
+# Apache-1.1: webserver.jar
+# Apache-2.0: ant-misc-1.6.2.zip
+# as-is: docbook-xsl-1.65.1.zip, pmd-netbeans35-bin-0.91.zip
+
+MY_PV=$(get_version_component_range 1-2 ${PV})
+MY_PV=$(replace_version_separator 1 '_' ${MY_PV})
+
+RELEASE="200610231800"
+BASELOCATION="http://us1.mirror.netbeans.org/download/${MY_PV/-//}/daily/${RELEASE}"
+MAINTARBALL="netbeans-${MY_PV}-daily-src-${RELEASE}-ide_sources-23_Oct_2006_1800.tar.bz2"
+JAVADOCTARBALL="netbeans-${MY_PV}-daily-docs-${RELEASE}-javadoc-23_Oct_2006_1800.tar.bz2"
+
+SRC_URI="${BASELOCATION}/${MAINTARBALL}
+	 doc? ( ${BASELOCATION}/${JAVADOCTARBALL} )"
+
+LICENSE="Apache-1.1 Apache-2.0 SPL W3C sun-bcla-j2eeeditor sun-bcla-javac sun-javac as-is docbook sun-resolver"
+SLOT="6.0"
+KEYWORDS="~amd64 ~x86"
+IUSE="debug doc"
+
+COMMON_DEPEND="
+	>=dev-java/antlr-2.7.1
+	=dev-java/commons-beanutils-1.7*
+	dev-java/commons-collections
+	>=dev-java/commons-logging-1.1
+	dev-java/flute
+	>=dev-java/jakarta-jstl-1.1.2
+	>=dev-java/javahelp-bin-2.0.02-r1
+	>=dev-java/jmi-interface-1.0-r1
+	>=dev-java/jsch-0.1.24
+	=dev-java/junit-3.8*
+	dev-java/sac
+	=dev-java/servletapi-2.2*
+	dev-java/sun-j2ee-deployment-bin
+	=dev-java/swing-layout-1*
+	>=dev-java/xerces-2.8.0
+	>=dev-java/xml-commons-1.0_beta2
+"
+DEPEND=">=virtual/jdk-1.5
+	>=dev-java/ant-core
+	dev-util/checkstyle
+	=dev-java/commons-cli-1*
+	dev-java/commons-el
+	dev-java/commons-jxpath
+	dev-java/glassfish-persistence
+	>=dev-java/jcalendar-1.3.0
+	>=dev-java/jdom-1.0
+	dev-java/jtidy
+	>=dev-util/pmd-1.3
+	dev-java/prefuse
+	>=dev-java/rome-0.6
+	=dev-java/servletapi-2.3*
+	dev-java/xml-xmlbeans
+	${COMMON_DEPEND}"
+RDEPEND=">=virtual/jre-1.5
+	>=dev-java/commons-fileupload-1.1.1
+	>=dev-java/commons-io-1.2
+	dev-java/commons-digester
+	dev-java/commons-validator
+	=dev-java/jakarta-oro-2.0*
+	=dev-java/struts-1.3*
+	dev-java/sun-jaf
+	dev-java/sun-javamail
+	dev-java/xsdlib
+	${COMMON_DEPEND}"
+
+TOMCATSLOT="5.5"
+S=${WORKDIR}/netbeans-src
+BUILDDESTINATION="${S}/nbbuild/netbeans"
+ENTERPRISE="4"
+IDE_VERSION="8"
+PLATFORM="7"
+MY_FDIR="${FILESDIR}/${SLOT}"
+DESTINATION="${ROOT}usr/share/netbeans-${SLOT}"
+
+antflags=""
+
+set_env() {
+
+	antflags=""
+
+	if use debug; then
+		antflags="${antflags} -Dbuild.compiler.debug=true"
+		antflags="${antflags} -Dbuild.compiler.deprecation=true"
+	else
+		antflags="${antflags} -Dbuild.compiler.deprecation=false"
+	fi
+
+	antflags="${antflags} -Dstop.when.broken.modules=true"
+
+	# -Xmx1g: Increase Java maximum heap size, otherwise ant will die with
+	#         an OutOfMemoryError while building.
+	# -Djava.awt.headless=true: Sun JDK doesnt like that very much, so
+	#                           lets pleasure them too ;-)
+	#
+	# We use the ANT_OPTS environment variable because other ways seem to
+	# fail.
+	#
+	export ANT_OPTS="${ANT_OPTS} -Xmx1g -Djava.awt.headless=true"
+
+}
+
+src_unpack () {
+	unpack ${MAINTARBALL}
+
+	if use doc; then
+		mkdir javadoc && cd javadoc
+		unpack ${JAVADOCTARBALL} || die "Unable to extract javadoc"
+		rm -f *.zip
+	fi
+
+	cd ${S}
+	epatch ${FILESDIR}/${SLOT}/${P}-gentoo.patch
+
+	cd ${S}/nbbuild
+	# Disable the bundled Tomcat in favor of Portage installed version
+	sed -i -e "s%tomcatint/tomcat5/bundled,%%g" *.properties
+
+	set_env
+	place_symlinks
+}
+
+src_compile() {
+
+	set_env
+
+	# The location of the main build.xml file
+	cd ${S}/nbbuild
+
+	# Specify the build-nozip target otherwise it will build
+	# a zip file of the netbeans folder, which will copy directly.
+	eant ${antflags} build-nozip
+
+	# Remove non-x86 Linux binaries
+	find ${BUILDDESTINATION} -type f \
+		-name "*.exe" -o \
+		-name "*.cmd" -o \
+		-name "*.bat" -o \
+		-name "*.dll"	  \
+		| xargs rm -f
+
+	# Removing external stuff. They are api docs from external libs.
+	cd ${BUILDDESTINATION}/ide${IDE_VERSION}/docs
+	rm -f *.zip
+
+	# The next directory seems to be empty
+	if ! rmdir doc 2> /dev/null; then
+		use doc || rm -fr ./doc
+	fi
+
+	# Use the system ant
+	cd ${BUILDDESTINATION}/ide${IDE_VERSION}/ant
+
+	rm -fr ./lib
+	rm -fr ./bin
+
+	# Set a initial default jdk
+	echo "netbeans_jdkhome=\"\$(java-config -O)\"" >> ${BUILDDESTINATION}/etc/netbeans.conf
+}
+
+src_install() {
+	insinto $DESTINATION
+
+	einfo "Installing the program..."
+	cd ${BUILDDESTINATION}
+	doins -r *
+
+	symlink_extjars ${D}/${DESTINATION}
+
+	fperms 755 \
+		   ${DESTINATION}/bin/netbeans \
+		   ${DESTINATION}/platform${PLATFORM}/lib/nbexec
+
+	# The wrapper wrapper :)
+	newbin ${MY_FDIR}/startscript.sh netbeans-${SLOT}
+
+	# Ant installation
+	local ANTDIR="${DESTINATION}/ide${IDE_VERSION}/ant"
+	cd ${D}/${ANTDIR}
+
+	dodir /usr/share/ant-core/lib
+	dosym /usr/share/ant-core/lib ${ANTDIR}/lib
+
+	dodir /usr/share/ant-core/bin
+	dosym /usr/share/ant-core/bin  ${ANTDIR}/bin
+
+	# Documentation
+	einfo "Installing Documentation..."
+
+	cd ${D}/${DESTINATION}
+
+	use doc && java-pkg_dohtml -r ${WORKDIR}/javadoc/*
+
+	dodoc build_info
+	dohtml CREDITS.html README.html netbeans.css
+
+	rm -f build_info CREDITS.html README.html netbeans.css
+
+	# Icons and shortcuts
+	einfo "Installing icons..."
+
+	dodir ${DESTINATION}/icons
+	insinto ${DESTINATION}/icons
+	doins ${S}/ide/branding/release/*png
+
+	for res in "16x16" "24x24" "32x32" "48x48" "128x128" ; do
+		dodir /usr/share/icons/hicolor/${res}/apps
+		dosym ${DESTINATION}/icons/netbeans.png /usr/share/icons/hicolor/${res}/apps/netbeans.png
+	done
+
+	make_desktop_entry netbeans-${SLOT} "Netbeans ${SLOT}" netbeans Development
+}
+
+pkg_postinst () {
+	einfo "Your tomcat directory might not have the right permissions."
+	einfo "Please make sure that normal users can read the directory: "
+	einfo "${ROOT}usr/share/tomcat-${TOMCATSLOT}                      "
+	einfo "                                                           "
+	einfo "The integrated Tomcat is not installed, but you can easily "
+	einfo "use the system Tomcat. See Netbeans documentation if you   "
+	einfo "don't know how to do that. The relevant settings are in the"
+	einfo "runtime window.                                            "
+}
+
+pkg_postrm() {
+#	einfo "Removing symlinks to jars from"
+#	einfo "${DESTINATION}"
+#	find ${DESTINATION} -type l | xargs rm -fr
+
+	if ! test -e /usr/bin/netbeans-${SLOT}; then
+		einfo "Because of the way Portage works at the moment"
+		einfo "symlinks to the system jars are left to:"
+		einfo "${DESTINATION}"
+		einfo "If you are uninstalling Netbeans you can safely"
+		einfo "remove everything in this directory"
+	fi
+}
+
+# Supporting functions for this ebuild
+
+function fix_manifest() {
+	sed -i "s%ext/${1}%$(java-pkg_getjar ${2} ${3})%" ${4}
+}
+
+function place_symlinks() {
+	einfo "Symlinking apisupport/external"
+	cd ${S}/apisupport/external
+	java-pkg_jar-from --build-only jdom-1.0
+	#jsearch-2.0_04 (no ebuild)
+	java-pkg_jar-from --build-only rome rome.jar rome-fetcher-0.6.jar
+	java-pkg_jar-from --build-only rome rome.jar rome-0.6.jar
+
+	einfo "Symlinking core/external"
+	cd ${S}/core/external
+	java-pkg_jar-from javahelp-bin jh.jar jh-2.0_04.jar
+
+	einfo "Symlinking db/external"
+	cd ${S}/db/external
+	#fake-jdbc40.jar (not found)
+
+	einfo "Symlinking httpserver/external"
+	cd ${S}/httpserver/external
+	java-pkg_jar-from servletapi-2.2 servlet.jar servlet-2.2.jar
+	#webserver.jar (something from tomcat)
+
+	einfo "Symlinking java/external"
+	cd ${S}/java/external
+	#gjast.jar (no ebuild)
+
+	einfo "Symlinking junit/external"
+	cd ${S}/junit/external
+	java-pkg_jar-from junit junit.jar junit-3.8.2.jar
+
+	einfo "Symlinking j2ee/external"
+	cd ${S}/j2ee/external
+	java-pkg_jar-from --build-only glassfish-persistence
+
+	einfo "Symlinking j2eeserver/external"
+	cd ${S}/j2eeserver/external
+	java-pkg_jar-from sun-j2ee-deployment-bin-1.1 sun-j2ee-deployment-bin.jar jsr88javax.jar
+
+	einfo "Symlinking lexer/external"
+	cd ${S}/lexer/external
+	java-pkg_jar-from antlr antlr.jar antlr-2.7.1.jar
+	java-pkg_jar-from antlr antlr.jar lexer-gen-antlr-2.7.1.jar
+
+	einfo "Symlinking libs/external"
+	cd ${S}/libs/external
+	java-pkg_jar-from commons-logging commons-logging.jar commons-logging-1.0.4.jar
+	java-pkg_jar-from jsch jsch.jar jsch-0.1.24.jar
+	java-pkg_jar-from --build-only pmd pmd.jar pmd-1.3.jar
+	#resolver-1_1_nb.jar (patched xml-commons-resolver)
+	java-pkg_jar-from swing-layout-1 swing-layout.jar swing-layout-1.0.1.jar
+	java-pkg_jar-from --build-only xml-xmlbeans-1 xbean.jar xbean.jar
+	java-pkg_jar-from xerces-2 xercesImpl.jar xerces-2.8.0.jar
+	java-pkg_jar-from xml-commons xml-apis.jar xml-commons-dom-ranges-1.0.b2.jar
+
+	einfo "Symlinking mdr/external"
+	cd ${S}/mdr/external
+	java-pkg_jar-from jmi-interface jmi.jar jmi.jar
+	java-pkg_jar-from jmi-interface mof.jar mof.jar
+
+	einfo "Symlinking nbbuild/external"
+	cd ${S}/nbbuild/external
+	java-pkg_jar-from javahelp-bin jhall.jar jhall-2.0_03.jar
+	#scrambler.jar (no ebuild)
+
+	einfo "Symlinking serverplugins/external"
+	cd ${S}/serverplugins/external
+	#jmxremote.jar (not found)
+
+	einfo "Symlinking subversion/external"
+	cd ${S}/subversion/external
+	#ini4j.jar (no ebuild)
+	#svnClientAdapter.jar (not found)
+
+	einfo "Symlinking tasklist/external"
+	cd ${S}/tasklist/external
+	java-pkg_jar-from antlr
+	java-pkg_jar-from commons-beanutils-1.7 commons-beanutils-core.jar
+	java-pkg_jar-from --build-only commons-cli-1
+	java-pkg_jar-from commons-collections
+	java-pkg_jar-from --build-only checkstyle
+	#ical4j.jar (no ebuild)
+	java-pkg_jar-from --build-only jcalendar-1.2 jcalendar.jar jcalendar-1.3.0.jar
+	java-pkg_jar-from --build-only jtidy Tidy.jar Tidy-r7.jar
+
+	einfo "Symlinking web/external"
+	cd ${S}/web/external
+	java-pkg_jar-from --build-only commons-el
+	#glassfish-jspparser.jar (no ebuild)
+	#glassfish-logging.jar (no ebuild)
+	java-pkg_jar-from jakarta-jstl jstl.jar jstl-1.1.2.jar
+	java-pkg_jar-from --build-only servletapi-2.3 servlet.jar servlet-2.3.jar
+	#servlet2.5-jsp2.1-api.jar (no ebuild)
+	java-pkg_jar-from jakarta-jstl standard.jar standard-1.1.2.jar
+
+	einfo "Symlinking xml/external"
+	cd ${S}/xml/external
+	java-pkg_jar-from flute
+	java-pkg_jar-from --build-only commons-jxpath commons-jxpath.jar jxpath.jar
+	java-pkg_jar-from --build-only prefuse-2006
+	#resolver-1_1_nb.jar (patched xml-commons-resolver)
+	java-pkg_jar-from sac
+}
+
+function symlink_extjars() {
+	einfo "Symlinking enterprise${ENTERPRISE}/modules/ext"
+	cd ${1}/enterprise${ENTERPRISE}/modules/ext
+	#appsrvbridge.jar
+	#glassfish-jspparser.jar (no ebuild)
+	#glassfish-logging.jar (no ebuild)
+	#jsp-parser-ext.jar
+	java-pkg_jar-from sun-j2ee-deployment-bin-1.1 sun-j2ee-deployment-bin.jar jsr88javax.jar
+	java-pkg_jar-from jakarta-jstl jstl.jar
+	#org-netbeans-modules-web-httpmonitor.jar
+	#persistence-tool-support.jar
+	#servlet2.5-jsp2.1-api.jar (no ebuild)
+	java-pkg_jar-from jakarta-jstl standard.jar
+	#websvcregistry.jar
+
+	einfo "Symlinking enterprise${ENTERPRISE}/modules/ext/blueprints"
+	cd ${1}/enterprise${ENTERPRISE}/modules/ext/blueprints
+	#bp-ui-14.jar
+	#bp-ui-5.jar
+	java-pkg_jar-from commons-fileupload commons-fileupload.jar commons-fileupload-1.1.1.jar
+	java-pkg_jar-from commons-io-1 commons-io.jar commons-io-1.2.jar
+	java-pkg_jar-from commons-logging commons-logging.jar commons-logging-1.1.jar
+	#shale-remoting.jar (no ebuild)
+
+	einfo "Symlinking enterprise${ENTERPRISE}/modules/ext/jsf"
+	cd ${1}/enterprise${ENTERPRISE}/modules/ext/jsf
+	java-pkg_jar-from commons-beanutils-1.7
+	java-pkg_jar-from commons-collections
+	java-pkg_jar-from commons-digester
+	java-pkg_jar-from commons-logging
+	#jsf-api.jar (bad abuild)
+	#jsf-impl.jar (bad abuild)
+
+	einfo "Symlinking enterprise${ENTERPRISE}/modules/ext/struts"
+	cd ${1}/enterprise${ENTERPRISE}/modules/ext/struts
+	java-pkg_jar-from antlr
+	java-pkg_jar-from commons-beanutils-1.7
+	java-pkg_jar-from commons-digester
+	java-pkg_jar-from commons-fileupload
+	java-pkg_jar-from commons-logging
+	java-pkg_jar-from commons-validator
+	java-pkg_jar-from jakarta-oro-2.0
+	# for struts we cannot follow the file name because struts-1.3 is split into several
+	# jars whereas netbeans has just struts.jar
+	java-pkg_jar-from struts-1.3
+
+	einfo "Symlinking ide${IDE_VERSION}/modules/ext"
+	cd ${1}/ide${IDE_VERSION}/modules/ext
+	#AbsoluteLayout.jar (nb)
+	java-pkg_jar-from commons-logging commons-logging.jar commons-logging-1.0.4.jar
+	#ddl.jar (nb)
+	java-pkg_jar-from flute
+	#gjast.jar (no ebuild)
+	#ini4j.jar (no ebuild)
+	#java-parser.jar (nb)
+	java-pkg_jar-from jmi-interface jmi.jar jmi.jar
+	#jmiutils.jar (nb)
+	java-pkg_jar-from jsch jsch.jar jsch-0.1.24.jar
+	java-pkg_jar-from junit junit.jar junit-3.8.2.jar
+	#mdr.jar (nb)
+	java-pkg_jar-from jmi-interface mof.jar mof.jar
+	#org-netbeans-modules-java-j2seplatform-probe.jar (nb)
+	#org-netbeans-tax.jar (nb)
+	#resolver-1_1_nb.jar (patched xml-commons-resolver)
+	java-pkg_jar-from sac
+	java-pkg_jar-from servletapi-2.2 servlet.jar servlet-2.2.jar
+	#svnClientAdapter.jar (not found)
+	#webserver.jar (something from tomcat)
+	java-pkg_jar-from xerces-2 xercesImpl.jar xerces-2.8.0.jar
+	java-pkg_jar-from xml-commons xml-apis.jar xml-commons-dom-ranges-1.0.b2.jar
+
+	einfo "Symlinking ide${IDE_VERSION}/modules/ext/jaxrpc16"
+	cd ${1}/ide${IDE_VERSION}/modules/ext/jaxrpc16
+	java-pkg_jar-from sun-jaf
+	#FastInfoset.jar
+	#jaxp-api.jar
+	#jax-qname.jar
+	#jaxrpc-api.jar
+	#jaxrpc-impl.jar
+	#jaxrpc-spi.jar
+	#jsr173_api.jar
+	java-pkg_jar-from sun-javamail
+	#relaxngDatatype.jar
+	#saaj-api.jar
+	#saaj-impl.jar
+	java-pkg_jar-from xsdlib
+
+	einfo "Symlinking ide${IDE_VERSION}/modules/ext/jaxws20"
+	cd ${1}/ide${IDE_VERSION}/modules/ext/jaxws20
+	java-pkg_jar-from sun-jaf
+	#FastInfoset.jar
+	#http.jar
+	#jaxb-api.jar
+	#jaxb-impl.jar
+	#jaxb-xjc.jar
+	#jaxws-api.jar
+	#jaxws-rt.jar
+	#jaxws-tools.jar
+	#jsr173_api.jar
+	#jsr181-api.jar
+	#jsr250-api.jar
+	#resolver.jar
+	#saaj-api.jar
+	#saaj-impl.jar
+	#sjsxp.jar
+
+	einfo "Symlinking platform${PLATFORM}/modules/ext"
+	cd ${1}/platform${PLATFORM}/modules/ext
+	java-pkg_jar-from javahelp-bin jhall.jar jhall-2.0_03.jar
+	java-pkg_jar-from javahelp-bin jh.jar jh-2.0_04.jar
+	java-pkg_jar-from swing-layout-1 swing-layout.jar swing-layout-1.0.1.jar
+	#updater.jar (nb)
+	#org-openide-text.jar (nb)
+}

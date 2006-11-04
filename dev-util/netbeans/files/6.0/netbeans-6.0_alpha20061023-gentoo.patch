@@ -1,0 +1,26 @@
+diff -ru netbeans-src.original/editor/demosrc/build.xml netbeans-src/editor/demosrc/build.xml
+--- netbeans-src.original/editor/demosrc/build.xml	2006-11-03 12:38:07.000000000 +0100
++++ netbeans-src/editor/demosrc/build.xml	2006-11-03 12:39:40.000000000 +0100
+@@ -42,9 +42,8 @@
+   <target name="jars" depends="compile">
+      <jar jarfile="${target_dir}/editor.jar"
+            basedir="base"
+-	   excludes="base/run.sh"
++	   excludes="base/run.sh,**/*.java,**/*.form"
+ 	   manifest="manifest.mf"
+-           excludes="**/*.java,**/*.form"
+            compress="false">
+      <fileset dir="../release/system" />
+      </jar>
+diff -ru netbeans-src.original/websvc/registry/extsrc/org/netbeans/modules/websvc/registry/nodes/WebServicesRootNode.java netbeans-src/websvc/registry/extsrc/org/netbeans/modules/websvc/registry/nodes/WebServicesRootNode.java
+--- netbeans-src.original/websvc/registry/extsrc/org/netbeans/modules/websvc/registry/nodes/WebServicesRootNode.java	2006-11-03 12:38:26.000000000 +0100
++++ netbeans-src/websvc/registry/extsrc/org/netbeans/modules/websvc/registry/nodes/WebServicesRootNode.java	2006-11-03 13:20:51.000000000 +0100
+@@ -69,5 +69,7 @@
+         return new HelpCtx("server_nav_web_svcs_node");
+     }
+     
+-
++    public  Node.Cookie getCookie (Class type) {
++        throw new UnsupportedOperationException("Method not implemented");
++    }
+ }
