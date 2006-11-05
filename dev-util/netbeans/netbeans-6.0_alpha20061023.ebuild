@@ -89,6 +89,7 @@ IDE_VERSION="8"
 PLATFORM="7"
 MY_FDIR="${FILESDIR}/${SLOT}"
 DESTINATION="${ROOT}usr/share/netbeans-${SLOT}"
+JAVA_PKG_BSFIX="off"
 
 antflags=""
 
@@ -261,7 +262,7 @@ function place_symlinks() {
 	einfo "Symlinking apisupport/external"
 	cd ${S}/apisupport/external
 	java-pkg_jar-from --build-only jdom-1.0
-	# MISSING: jsearch-2.0_04 (no ebuild)
+	java-pkg_jar-from --build-only javahelp-bin jsearch.jar jsearch-2.0_04.jar
 	java-pkg_jar-from --build-only rome rome.jar rome-fetcher-0.6.jar
 	java-pkg_jar-from --build-only rome rome.jar rome-0.6.jar
 
