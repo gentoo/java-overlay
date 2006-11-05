@@ -27,7 +27,7 @@ COMMON_DEP="
 	=dev-java/portletapi-1*
 	=dev-java/commons-lang-2.1*
 	>=dev-java/commons-digester-1.6*
-	=dev-java/commons-collections-3.1*
+	>=dev-java/commons-collections-3.1
 	>=dev-java/jakarta-jstl-1.1.0
 	=dev-java/jsfapi-1*"
 
