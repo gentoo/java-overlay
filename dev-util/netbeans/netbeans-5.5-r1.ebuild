@@ -1,6 +1,6 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/dev-util/netbeans/netbeans-5.5.ebuild,v 1.1 2006/11/04 10:01:54 wltjr Exp $
 
 inherit eutils java-pkg-2 java-ant-2
 
@@ -27,6 +27,8 @@ HOMEPAGE="http://www.netbeans.org"
 # This command should be run after ebuild <pkg> install in the image root
 # 'find . -name "*.jar" -type f | less'
 # Check the list to see that no packed jars get copied to the image
+# To list the contents
+# ( for zip in $(find -name "*.jar" -type f); do unzip -l $zip; done ) | less
 #
 # Remove the unset DISPLAY line from src_compile to get graphical license dialogs and pause before
 # unscramble
@@ -37,8 +39,10 @@ MY_PV=${MY_PV/./_}
 BASELOCATION="http://us1.mirror.netbeans.org/download/${MY_PV/-//}/fcs/200610171010"
 MAINTARBALL="netbeans-${MY_PV}-ide_sources.tar.bz2"
 JAVADOCTARBALL="netbeans-${MY_PV}-javadoc.tar.bz2"
+FILELAYOUTPATCH="netbeans-5.5-files-layout-txt.patch.bz2"
 
 SRC_URI="${BASELOCATION}/${MAINTARBALL}
+	mirror://gentoo/${FILELAYOUTPATCH}
 	 doc? ( ${BASELOCATION}/${JAVADOCTARBALL} )"
 
 LICENSE="Apache-1.1 Apache-2.0 SPL W3C sun-bcla-j2eeeditor sun-bcla-javac sun-javac as-is docbook sun-resolver"
@@ -53,7 +57,6 @@ IUSE="debug doc"
 #		 =dev-java/jaxen-1.1*
 #		  dev-java/jtidy
 
-# NB 5.5 requires javahelp 2.0_03 not yet released :(
 RDEPEND="=virtual/jre-1.5*
 		  >=dev-java/commons-logging-1.0
 		   dev-java/commons-el
@@ -72,6 +75,9 @@ RDEPEND="=virtual/jre-1.5*
 		   dev-java/jakarta-jstl
 		 >=dev-java/xerces-2.8.0
 		 =dev-java/swing-layout-1*
+		   dev-java/jsch 
+		   dev-java/jgoodies-forms
+		  =dev-java/gnu-jaf-1*
 		   "
 DEPEND="${RDEPEND}
 		=virtual/jdk-1.5*
@@ -87,9 +93,14 @@ TOMCATSLOT="5.5"
 COMMONS_LOGGING="commons-logging commons-logging.jar commons-logging-1.0.4.jar"
 #JASPERCOMPILER="tomcat-${TOMCATSLOT} jasper-compiler.jar jasper-compiler-5.5.9.jar"
 #JASPERRUNTIME="tomcat-${TOMCATSLOT} jasper-runtime.jar jasper-runtime-5.5.9.jar"
-JH="javahelp-bin jh.jar jh-2.0_02.jar"
-JHALL="javahelp-bin jhall.jar jhall-2.0_02.jar"
+ACTIVATION="gnu-jaf-1 activation.jar activation.jar"
+FORMS="jgoodies-forms forms.jar forms-1.0.5.jar"
+JAVAHELP_VERSION="2.0_03"
+JH="javahelp-bin jh.jar jh-${JAVAHELP_VERSION}.jar"
+JHALL="javahelp-bin jhall.jar jhall-${JAVAHELP_VERSION}.jar"
+JSEARCH="javahelp-bin jsearch.jar jsearch-${JAVAHELP_VERSION}.jar"
 JMI="jmi-interface jmi.jar jmi.jar"
+JSCH="jsch jsch.jar jsch-0.1.24.jar"
 JSPAPI="servletapi-2.4 jsp-api.jar jsp-api-2.0.jar"
 JSR="sun-j2ee-deployment-bin-1.1 sun-j2ee-deployment-bin.jar jsr88javax.jar"
 JSTL="jakarta-jstl jstl.jar	jstl-1.1.2.jar"
@@ -154,7 +165,9 @@ src_unpack () {
 	fi
 
 	cd ${S}
-	epatch ${FILESDIR}/${SLOT}/files-layout-txt.patch
+	unpack ${FILELAYOUTPATCH}
+
+	epatch netbeans-5.5-files-layout-txt.patch
 	epatch ${FILESDIR}/${SLOT}/modules-txt.patch
 	epatch ${FILESDIR}/${SLOT}/deps-txt.patch
 	epatch ${FILESDIR}/${SLOT}/public-packages-txt.patch
@@ -290,20 +303,17 @@ function fix_manifest() {
 function place_symlinks() {
 	einfo "Symlinking scrambled jars to system jars"
 
-# Commented out till 2.0_03 is released
-#	cd ${S}/core/external
-#	hide jh*.jar || die 
-#	java-pkg_jar-from ${JHALL}
+	cd ${S}/apisupport/external
+	java-pkg_jar-from ${JSEARCH}
 
 	cd ${S}/mdr/external/
 	hide jmi.jar mof.jar || die
 	java-pkg_jar-from ${JMI} || die
 	java-pkg_jar-from ${MOF} || die
 
-# Commented out till 2.0_03 is released
-#	cd ${S}/nbbuild/external
-#	hide jhall*.jar || die
-#	java-pkg_jar-from ${JHALL} || die
+	cd ${S}/nbbuild/external
+	hide jhall*.jar || die
+	java-pkg_jar-from ${JHALL} || die
 
 	cd ${S}/libs/external/
 	hide xerces*.jar commons-logging*.jar xml-commons*.jar pmd*.jar  || die
@@ -312,6 +322,8 @@ function place_symlinks() {
 	java-pkg_jar-from ${XMLCOMMONS} || die
 	java-pkg_jar-from ${PMD} || die
 	java-pkg_jar-from ${SWINGLAYOUT} || die
+	java-pkg_jar-from ${JSCH} || die
+	java-pkg_jar-from ${FORMS} || die
 
 	cd ${S}/httpserver/external/
 	hide servlet*.jar || die
@@ -329,7 +341,7 @@ function place_symlinks() {
 #	hide servlet-*.jar jasper*.jar jsp*.jar jstl*.jar standard*.jar commons-el*.jar || die
 	hide servlet-*.jar  jstl*.jar standard*.jar commons-el*.jar || die
 	java-pkg_jar-from ${SERVLET23} || die
-	java-pkg_jar-from ${SERVLET24} || die 
+	java-pkg_jar-from ${SERVLET24} || die
 #	java-pkg_jar-from ${JASPERCOMPILER} || die
 #	java-pkg_jar-from ${JASPERRUNTIME} || die
 	java-pkg_jar-from ${JSPAPI} || die
@@ -352,6 +364,7 @@ function symlink_extjars() {
 	java-pkg_jar-from flute
 	java-pkg_jar-from sac
 	java-pkg_jar-from ${JMI}
+	java-pkg_jar-from ${JCSH}
 	java-pkg_jar-from ${MOF}
 	java-pkg_jar-from ${JUNIT}
 
@@ -370,6 +383,9 @@ function symlink_extjars() {
 	java-pkg_jar-from ${JSPAPI}
 	java-pkg_jar-from jakarta-jstl jstl.jar
 	java-pkg_jar-from jakarta-jstl standard.jar
+
+	cd "${1}/modules/ext/jaxrpc16/ext/"
+	java-pkg_jar-from ${ACTIVATION}
 
 # Commented out JHALL till 2.0_03 is released
 	cd ${1}/platform${PLATFORM}/modules/ext
