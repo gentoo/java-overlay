@@ -261,10 +261,6 @@ src_install() {
 }
 
 pkg_postinst () {
-	einfo "Your tomcat directory might not have the right permissions."
-	einfo "Please make sure that normal users can read the directory: "
-	einfo "${ROOT}usr/share/tomcat-${TOMCATSLOT}                      "
-	einfo "                                                           "
 	einfo "The integrated Tomcat is not installed, but you can easily "
 	einfo "use the system Tomcat. See Netbeans documentation if you   "
 	einfo "don't know how to do that. The relevant settings are in the"
