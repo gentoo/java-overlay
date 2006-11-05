@@ -255,6 +255,8 @@ function fix_manifest() {
 	sed -i "s%ext/${1}%$(java-pkg_getjar ${2} ${3})%" ${4}
 }
 
+# This function is used before src_compile to replace the bundled
+# stuff used during compile. Stuff in here should be in $DEPEND
 function place_symlinks() {
 	einfo "Symlinking apisupport/external"
 	cd ${S}/apisupport/external
@@ -357,6 +359,9 @@ function place_symlinks() {
 	java-pkg_jar-from sac
 }
 
+# Because Netbeans uses copy to the jars to the destination directory, we need
+# to overwrite the jars in src_install with symlinks once again
+# --> stuff in here should be in $RDEPEND
 function symlink_extjars() {
 	einfo "Symlinking enterprise${ENTERPRISE}/modules/ext"
 	cd ${1}/enterprise${ENTERPRISE}/modules/ext
