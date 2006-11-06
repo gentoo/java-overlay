@@ -1,4 +1,4 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -16,7 +16,7 @@ IUSE="doc source"
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	app-arch/unzip
-	source? (app-arch/zip)"
+	source? ( app-arch/zip )"
 RDEPEND=">=virtual/jre-1.4"
 
 S="${WORKDIR}/${PN}"
