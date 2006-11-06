@@ -10,8 +10,8 @@ MY_A="eclipse-sourceBuild-srcIncluded-${PV}.zip"
 DESCRIPTION="Eclipse Tools Platform"
 HOMEPAGE="http://www.eclipse.org/"
 SRC_URI="http://download.eclipse.org/eclipse/downloads/drops/R-${PV}-${DATESTAMP}/${MY_A}
-	mirror://gentoo/${P}-r1-patches.tar.bz2"
-IUSE="branding cairo gnome opengl seamonkey "
+	http://www.fridrik.it/files/${P}-patches-fridrik.tar.bz2"
+IUSE="branding cairo gnome opengl seamonkey tomcat"
 SLOT="3.2"
 LICENSE="EPL-1.0"
 KEYWORDS="~amd64 ~ppc ~x86"
@@ -20,25 +20,27 @@ S="${WORKDIR}"
 
 COMMON_DEP="
 	>=dev-java/ant-1.6.5
-	=dev-java/commons-beanutils-1.6*
-	dev-java/commons-collections
-	dev-java/commons-digester
-	dev-java/commons-digester-rss
-	dev-java/commons-dbcp
-	dev-java/commons-el
-	dev-java/commons-fileupload
-	dev-java/commons-launcher
-	dev-java/commons-logging 
-	dev-java/commons-modeler 
-	dev-java/commons-pool
-	=dev-java/mx4j-2.1*
-	>=www-servers/tomcat-5.5.17
 	=dev-java/lucene-1*
-	=dev-java/jakarta-regexp-1.3*
 	>=dev-java/junit-3.8.1
-	>=dev-java/servletapi-2.4
-	>=x11-libs/cairo-1.0
 	>=x11-libs/gtk+-2.6
+	tomcat? (
+		>=www-servers/tomcat-5.5.17
+		=dev-java/mx4j-2.1*
+		=dev-java/commons-beanutils-1.6*
+		dev-java/commons-collections
+		dev-java/commons-dbcp
+		dev-java/commons-digester
+		dev-java/commons-digester-rss
+		dev-java/commons-el
+		dev-java/commons-fileupload
+		dev-java/commons-logging
+		dev-java/commons-modeler
+		dev-java/commons-pool
+		dev-java/commons-launcher
+		=dev-java/jakarta-regexp-1.3*
+		>=dev-java/servletapi-2.4
+		)
+	cairo? ( >=x11-libs/cairo-1.0 )
 	seamonkey? ( www-client/seamonkey )
 	gnome? ( =gnome-base/gnome-vfs-2* =gnome-base/libgnomeui-2* )
 	opengl? ( virtual/opengl )
@@ -48,15 +50,13 @@ COMMON_DEP="
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEP}"
 
-DEPEND="
-	${COMMON_DEP}
+DEPEND="${COMMON_DEP}
 	=virtual/jdk-1.4*
 	>=virtual/jdk-1.5
 	>=sys-apps/findutils-4.1.7
 	app-arch/unzip
 	app-arch/zip
-	app-text/dos2unix
-	"
+	app-text/dos2unix"
 
 # Force 1.4 to be used for building
 JAVA_PKG_NV_DEPEND="=virtual/jdk-1.4*"
@@ -120,10 +120,10 @@ src_compile() {
 
 	einfo "Using bootclasspath ${bootclasspath}"
 	einfo "Using JVM library path ${JAVA_LIB_DIR}"
-	
+
 	if use seamonkey ; then
 		einfo "Will compile embedded seamonkey support against www-client/seamonkey"
-		
+
 		setup-mozilla-opts
 	else
 		einfo "Not building embedded seamonkey support"
@@ -161,7 +161,7 @@ src_install() {
 	doexe ${FILESDIR}/eclipse-${SLOT}
 
 	make_desktop_entry eclipse-${SLOT} "Eclipse ${PV}" "${ECLIPSE_DIR}/icon.xpm"
-	
+
 	cd ${D}/${ECLIPSE_DIR}
 	echo "-Djava.library.path=/usr/lib" >> eclipse.ini
 
@@ -208,7 +208,7 @@ install-link-system-jars() {
 	java-pkg_jarfrom ant-tasks
 	popd > /dev/null
 	## END ANT ##
-	
+
 	## BEGIN LUCENE ##
 	pushd plugins/org.apache.lucene_*/ > /dev/null || die "pushd failed"
 	rm lucene-1.4.3.jar
@@ -216,38 +216,38 @@ install-link-system-jars() {
 	popd > /dev/null
 	## END LUCENE ##
 
-	## BEGIN TOMCAT ##
-	pushd plugins/org.eclipse.tomcat_* > /dev/null || die "pushd failed"
-	mkdir lib
-	pushd lib > /dev/null || die "pushd failed"
-	java-pkg_jarfrom tomcat-5.5
-	java-pkg_jarfrom mx4j-2.1
-	java-pkg_jarfrom commons-beanutils-1.6
-	java-pkg_jarfrom commons-collections
-	java-pkg_jarfrom commons-dbcp
-	java-pkg_jarfrom commons-digester
-	java-pkg_jarfrom commons-digester-rss
-	java-pkg_jarfrom commons-el
-	java-pkg_jarfrom commons-fileupload
-	java-pkg_jarfrom commons-launcher
-	java-pkg_jarfrom commons-logging
-	java-pkg_jarfrom commons-modeler
-	java-pkg_jarfrom commons-pool
-	java-pkg_jarfrom servletapi-2.4 servlet-api.jar servletapi5.jar
-	java-pkg_jarfrom servletapi-2.4 jsp-api.jar jspapi.jar
-	java-pkg_jarfrom jakarta-regexp-1.3
-	ln -s /usr/share/tomcat-5.5/bin/bootstrap.jar bootstrap.jar
-	popd > /dev/null
-	popd > /dev/null
-	## END TOMCAT ##
+	if use tomcat ; then
+		## BEGIN TOMCAT ##
+		pushd plugins/org.eclipse.tomcat_* > /dev/null || die "pushd failed"
+		mkdir lib
+		pushd lib > /dev/null || die "pushd failed"
+		java-pkg_jarfrom tomcat-5.5
+		java-pkg_jarfrom mx4j-2.1
+		java-pkg_jarfrom commons-beanutils-1.6
+		java-pkg_jarfrom commons-collections
+		java-pkg_jarfrom commons-dbcp
+		java-pkg_jarfrom commons-digester
+		java-pkg_jarfrom commons-digester-rss
+		java-pkg_jarfrom commons-el
+		java-pkg_jarfrom commons-fileupload
+		java-pkg_jarfrom commons-launcher
+		java-pkg_jarfrom commons-logging
+		java-pkg_jarfrom commons-modeler
+		java-pkg_jarfrom commons-pool
+		java-pkg_jarfrom servletapi-2.4 servlet-api.jar servletapi5.jar
+		java-pkg_jarfrom servletapi-2.4 jsp-api.jar jspapi.jar
+		java-pkg_jarfrom jakarta-regexp-1.3
+		ln -s /usr/share/tomcat-5.5/bin/bootstrap.jar bootstrap.jar
+		popd > /dev/null
+		popd > /dev/null
+		## END TOMCAT ##
+	fi
 }
 
 patch-local-cflags() {
-	# Build using O2
-	# https://bugs.eclipse.org/bugs/show_bug.cgi?id=71637
 	pushd plugins/org.eclipse.swt/Eclipse\ SWT\ PI/gtk/library >/dev/null || die "pushd failed"
 	# %patch0 -p0
-#	epatch ${WORKDIR}/${P}-gentoo-libswt-enableallandO2.patch
+	# GENTOO: instead of applying a patch, we'll sed the target file
 
 	sed -i "s/CFLAGS\ =\ -O\ -Wall/CFLAGS = ${CFLAGS}\ -Wall/" \
 		make_linux.mak \
@@ -284,70 +284,6 @@ patch-local-cflags() {
 		|| die "Failed to tweak make_linux.mak"
 
 	popd > /dev/null
-}
-
-patch-jni-libs() {
-	# Build JNI libs
-	# FIXME:  these should be built by upstream build method
-	# http://www.bagu.org/eclipse/plugin-source-drops.html
-	# https://bugs.eclipse.org/bugs/show_bug.cgi?id=71637
-	# https://bugs.eclipse.org/bugs/show_bug.cgi?id=86848
-	# GNU XML issue identified by Michael Koch
-	# %patch2 -p0
-	epatch ${WORKDIR}/${P}-build.patch
-	# %patch4 -p0
-	epatch ${WORKDIR}/${P}-libupdatebuild.patch
-	# %patch5 -p0
-	epatch ${WORKDIR}/${P}-libupdatebuild2.patch
-	# Build swttools.jar
-	# https://bugs.eclipse.org/bugs/show_bug.cgi?id=90364
-	pushd plugins/org.eclipse.swt.gtk.linux.x86_64 >/dev/null || die "pushd failed"
-	# %patch18 -p0
-	epatch ${WORKDIR}/${P}-swttools.patch
-	popd >/dev/null
-	# https://bugs.eclipse.org/bugs/show_bug.cgi?id=90630
-	# %patch22 -p0
-	epatch ${WORKDIR}/${P}-updatehomedir.patch
-	# https://bugs.eclipse.org/bugs/show_bug.cgi?id=90535
-	pushd plugins/org.eclipse.core.runtime >/dev/null || die "pushd failed"
-	# %patch24 -p0
-	epatch ${WORKDIR}/${P}-fileinitializer.patch
-	popd >/dev/null
-}
-
-patch-tomcat() {
-	# tomcat patches
-	# These patches need to go upstream
-	# https://bugs.eclipse.org/bugs/show_bug.cgi?id=98371
-	pushd plugins/org.eclipse.tomcat >/dev/null || die "pushd failed"
-	# %patch28 -p0
-	epatch ${WORKDIR}/${P}-tomcat55.patch
-	# %patch29 -p0
-	epatch ${WORKDIR}/${P}-tomcat55-build.patch
-	popd >/dev/null
-	sed --in-place "s/4.1.130/5.5.17/"                      \
-			features/org.eclipse.platform/build.xml \
-			plugins/org.eclipse.tomcat/build.xml    \
-			assemble.*.xml
-	pushd plugins/org.eclipse.help.webapp >/dev/null || die "pushd failed"
-	# %patch31 -p0
-	epatch ${WORKDIR}/${P}-webapp-tomcat55.patch
-	popd >/dev/null
-}
-
-patch-launcher() {
-	# Because the launcher source is zipped up, we need to unzip, patch, and re-pack
-	mkdir launchertmp
-	unzip -qq -d launchertmp plugins/org.eclipse.platform/launchersrc.zip >/dev/null || die "unzip failed"
-	# https://bugs.eclipse.org/bugs/show_bug.cgi?id=79592
-	# https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=168726
-	pushd launchertmp >/dev/null || die "pushd failed"
-	# %patch47 -p1
-	epatch ${WORKDIR}/${P}-launcher-link.patch
-	zip -q -9 -r ../launchersrc.zip * >/dev/null || die "zip failed"
-	popd >/dev/null
-	mv launchersrc.zip plugins/org.eclipse.platform
-	rm -rf launchertmp
 }
 
 patch-branding() {
@@ -418,7 +354,7 @@ patch-symlink-ant() {
 		ant-xalan1src.zip \
 		ant-xslp.jar \
 		ant-xslpsrc.zip
-	
+
 	java-pkg_jarfrom ant-core
 	java-pkg_jarfrom ant-tasks
 
@@ -480,10 +416,9 @@ patch-symlink-tomcat() {
 patch-symlink-lucene() {
 	pushd plugins/org.apache.lucene/ > /dev/null || die "pushd failed"
 
-	rm lucene-1.4.3.jar
-	# FIXME:  Remove this zip until we have a lucene-devel package containing it.
-	# https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=170343
-	rm lucene-1.4.3-src.zip
+	rm \
+		lucene-1.4.3.jar \
+		lucene-1.4.3-src.zip
 
 	java-pkg_jar-from lucene-1 lucene.jar lucene-1.4.3.jar
 
@@ -509,77 +444,90 @@ patch-symlink-jsch() {
 }
 
 patch-apply-all() {
-	# begin: patches/comments from fedora
+# begin: patches/comments from fedora
 
 	patch-local-cflags
 
-	patch-jni-libs
-	
-	patch-tomcat
+	# %patch2 -p0
+	epatch ${WORKDIR}/${P}-build.patch
+	# %patch4 -p0
+	epatch ${WORKDIR}/${P}-libupdatebuild.patch
+	# %patch5 -p0
+	epatch ${WORKDIR}/${P}-libupdatebuild2.patch
+	pushd plugins/org.eclipse.swt.gtk.linux.x86_64 >/dev/null || die "pushd failed"
+	# %patch18 -p0
+	epatch ${WORKDIR}/${P}-swttools.patch
+	popd >/dev/null
+	# %patch22 -p0
+	epatch ${WORKDIR}/${P}-updatehomedir.patch
 
-	# pushd plugins/org.eclipse.compare
-	# COMMENTED BY FEDORA %patch33 -p0
-	# popd
+	if use tomcat ; then
+		# tomcat patches
+		pushd plugins/org.eclipse.tomcat >/dev/null || die "pushd failed"
+		# %patch28 -p0
+		epatch ${WORKDIR}/${P}-tomcat55.patch
+		# %patch29 -p0
+		epatch ${WORKDIR}/${P}-tomcat55-build.patch
+		popd >/dev/null
+		sed --in-place "s/4.1.130/5.5.17/"                      \
+				features/org.eclipse.platform/build.xml \
+				plugins/org.eclipse.tomcat/build.xml    \
+				assemble.*.xml
+		pushd plugins/org.eclipse.help.webapp >/dev/null || die "pushd failed"
+		# %patch31 -p0
+		epatch ${WORKDIR}/${P}-webapp-tomcat55.patch
+		popd >/dev/null
+	fi
 
-	# JPackage s in names of symlinks ...
-	# https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=162177
 	pushd plugins/org.eclipse.jdt.core >/dev/null || die "pushd failed"
 	# %patch34 -p0
-	epatch ${WORKDIR}/${P}-bz162177.patch
-	# Use ecj for gcj
+	epatch ${WORKDIR}/${P}-ecj-square-bracket-classpath.patch
 	# %patch57 -p0
 	epatch ${WORKDIR}/${P}-ecj-gcj.patch
 	popd >/dev/null
-	# https://bugs.eclipse.org/bugs/show_bug.cgi?id=114001
 	# %patch38 -p0
 	epatch ${WORKDIR}/${P}-helpindexbuilder.patch
 	# %patch40 -p0
 	epatch ${WORKDIR}/${P}-usebuiltlauncher.patch
-	# COMMENTED BY FEDORA %patch43
 	pushd plugins/org.eclipse.swt/Eclipse\ SWT\ Mozilla/common/library >/dev/null || die "pushd failed"
-	# Build cairo native libs
 	# %patch46
-	epatch ${WORKDIR}/${P}-libswt-xpcomgcc4.patch
+	epatch ${WORKDIR}/${P}-libswt-xpcommgcc4.patch
 	popd >/dev/null
 
-	patch-launcher
+	# Because the launcher source is zipped up, we need to unzip, patch, and re-pack
+	# FIXME: figure out why we need to patch and sed twice and fix upstream
+	mkdir launchertmp
+	unzip -qq -d launchertmp plugins/org.eclipse.platform/launchersrc.zip
+	pushd launchertmp >/dev/null || die "pushd failed"
+	# %patch47 -p0
+	epatch ${WORKDIR}/${P}-launcher-set-install-dir-and-shared-config.patch
+	zip -q -9 -r ../launchersrc.zip *
+	popd >/dev/null
+	mv launchersrc.zip plugins/org.eclipse.platform
+	rm -rf launchertmp
 
 	pushd features/org.eclipse.platform.launchers >/dev/null || die "pushd failed"
 	# %patch47 -p1
-	epatch ${WORKDIR}/${P}-launcher-link.patch
+	epatch ${WORKDIR}/${P}-launcher-set-install-dir-and-shared-config.patch
 	popd >/dev/null
+
 	# Link against our system-installed javadocs
-	# Don't attempt to link to Sun's javadocs
 	# %patch48 -p0
 	epatch ${WORKDIR}/${P}-javadoclinks.patch
-
-# I THINK IT'S USELESS: no file has "/usr/share/"
-#	sed --in-place "s:/usr/share/:%{_datadir}/:g"           \
-#		plugins/org.eclipse.jdt.doc.isv/jdtOptions.txt  \
-#		plugins/org.eclipse.pde.doc.user/pdeOptions.txt \
-#		plugins/org.eclipse.pde.doc.user/pdeOptions     \
-#		plugins/org.eclipse.platform.doc.isv/platformOptions.txt
-	# Always generate debug info when building RPMs (Andrew Haley)
 	# %patch49 -p0
 	epatch ${WORKDIR}/${P}-ecj-rpmdebuginfo.patch
 
-	# generic releng plugins that can be used to build plugins
-	# see this thread for deails:
-	# https://www.redhat.com/archives/fedora-devel-java-list/2006-April/msg00048.html
 	pushd plugins/org.eclipse.pde.build >/dev/null || die "pushd failed"
 	# %patch53
 	epatch ${WORKDIR}/${P}-pde.build-add-package-build.patch
-	sed --in-place "s:@eclipse_base@:${S}:" templates/package-build/build.properties
+	sed --in-place "s:@eclipse_base@:PLEASE_DEFINE_ME:" templates/package-build/build.properties
 	popd >/dev/null
 
-	# https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=191536
-	# https://bugs.eclipse.org/bugs/show_bug.cgi?id=142861
 	pushd plugins/org.eclipse.swt/Eclipse\ SWT >/dev/null || die "pushd failed"
 	# %patch54
 	epatch ${WORKDIR}/${P}-swt-rm-ON_TOP.patch
 	popd >/dev/null
 
-	# We need to disable junit4 and apt until GCJ can handle Java5 code
 	# %patch55 -p0
 	epatch ${WORKDIR}/${P}-disable-junit4-apt.patch
 	rm plugins/org.junit4/junit-4.1.jar
@@ -588,15 +536,6 @@ patch-apply-all() {
 	pushd plugins/org.eclipse.swt >/dev/null || die "pushd failed"
 	mv "Eclipse SWT Mozilla" Eclipse_SWT_Mozilla
 	mv "Eclipse SWT PI" Eclipse_SWT_PI
-	# Build against firefox:
-	#  - fix swt profile include path
-	#  - don't compile the mozilla 1.7 / firefox profile library -- build it inline
-	#  - don't use symbols not in our firefox builds
-	# FIXME:  add reference(s) to discussion(s) and bug(s)
-	# Note:  I made this patch from within Eclipse and then did the following to
-	#        it due to spaces in the paths:
-	#  sed --in-place "s/Eclipse\ SWT\ Mozilla/Eclipse_SWT_Mozilla/g" eclipse-swt-firefox.patch
-	#  sed --in-place "s/Eclipse\ SWT\ PI/Eclipse_SWT_PI/g" eclipse-swt-firefox.patch
 	# %patch59
 	epatch ${WORKDIR}/${P}-swt-firefox.patch
 	mv Eclipse_SWT_Mozilla "Eclipse SWT Mozilla"
@@ -612,22 +551,23 @@ patch-apply-all() {
 	# FIXME check if this has been applied upstream
 	pushd plugins/org.eclipse.platform.doc.isv >/dev/null || die "pushd failed"
 	# %patch100 -p0
-	epatch ${WORKDIR}/customBuildCallbacks.xml-add-pre.gather.bin.parts.patch
+	epatch ${WORKDIR}/${P}-customBuildCallbacks.xml-app-pre.gather.bin.parts.patch
 	popd >/dev/null
 	pushd plugins/org.eclipse.platform.doc.user >/dev/null || die "pushd failed"
 	# %patch100 -p0
-	epatch ${WORKDIR}/customBuildCallbacks.xml-add-pre.gather.bin.parts.patch
+	epatch ${WORKDIR}/${P}-customBuildCallbacks.xml-app-pre.gather.bin.parts.patch
 	popd >/dev/null
 
 	patch-branding
 
-	# FIXME this should be patched upstream with a flag to turn on and off
+	# FIXME this should be patched upstream with a flag to turn on and off 
 	# all output should be directed to stdout
 	find -type f -name \*.xml -exec sed --in-place -r "s/output=\".*(txt|log).*\"//g" "{}" \;
 
 	# Remove existing .sos
 	find -name \*.so | xargs rm
 
+	# this is from gentoo
 	sed --in-place "s:JAVA_HOME = ~/vm/sun142:JAVA_HOME=$(java-config-1 -O):" \
 		plugins/org.eclipse.core.filesystem/natives/unix/linux/Makefile \
 		|| die "Failed to sed Makefile"
@@ -635,8 +575,10 @@ patch-apply-all() {
 	ebegin "Symlinking system jars"
 
 	patch-symlink-ant
-	
-	patch-symlink-tomcat
+
+	if use tomcat ; then
+		patch-symlink-tomcat
+	fi
 
 	patch-symlink-lucene
 
@@ -677,7 +619,7 @@ patch-apply-all() {
 		# there is only partial support for ppc64 in 3.2 so we have to remove this 
 		# partial support to get the replacemnt hack to work
 		find -name \*ppc64\* | xargs rm -r
-		
+
 		# remove remove ppc64 support from features/org.eclipse.platform.source/feature.xml
 		# replace ppc64 with a fake arch (ppc128) so we don't have duplicate ant targets
 		find -type f -name \*.xml -exec sed --in-place "s/\(rootFileslinux_gtk_\)ppc64/\1ppc128/g" "{}" \;
@@ -685,13 +627,13 @@ patch-apply-all() {
 		sed --in-place "s/,.\{38\}ppc64.*macosx/,org.eclipse.platform.source.macosx/g" features/org.eclipse.platform.source/build.xml
 		# replace final occurances with an existing arch
 		sed --in-place "s/ppc64/x86_64/g" features/org.eclipse.platform.source/build.xml
-		
+
 		# remove remove ppc64 support from features/org.eclipse.platform.source/feature.xml
 		mv features/org.eclipse.platform.source/feature.xml features/org.eclipse.platform.source/feature.xml.orig
-		grep -v ppc64 features/org.eclipse.platform.source/feature.xml.orig > features/org.eclipse.platform.source/feature.xml	
-		
+		grep -v ppc64 features/org.eclipse.platform.source/feature.xml.orig > features/org.eclipse.platform.source/feature.xml
+
 		# finally the replacement hack
-		for f in $(find -name \*ia64\* | grep -v motif | grep -v ia64_32); do 
+		for f in $(find -name \*ia64\* | grep -v motif | grep -v ia64_32); do
 		mv $f $(echo $f | sed "s/ia64/${ARCH}/")
 		done
 		find -type f -exec sed --in-place "s/ia64_32/@eye-eh-64_32@/g" "{}" \;
@@ -711,18 +653,9 @@ patch-apply-all() {
 
 	eend $?
 
-	# setup the jsch plugin build
-	#rm plugins/org.eclipse.team.cvs.ssh2/com.jcraft.jsch_*.jar
-	# FIXME remove version number, file a bug about this
-	#pushd baseLocation/plugins > /dev/null
-	# get the Manifest file
-	#unzip -qq -o -d com.jcraft.jsch_0.1.28.jar-build com.jcraft.jsch_*.jar -x com\*
-	#rm com.jcraft.jsch_*.jar
-	#popd > /dev/null
-
-#######################
-####################### TODO: ICU4J 3.4.5 IS NOT IN PORTAGE
-#######################
+### The ICU4J used by eclipse is the result of an ant task different from the 
+### one currently used by ebuild (in overlay). The called task is 
+### "eclipseProjects". What should we do about it? Create a different package?
 	# setup with the icu4j plugins for building
 #	pushd baseLocation/plugins > /dev/null || die "pushd failed"
 #	rm com.ibm.icu.base_3.4.5.jar \
@@ -750,14 +683,12 @@ patch-apply-all() {
 #	popd > /dev/null
 
 	# delete included jars
-	# FIXME: file a bug about these
-	rm plugins/org.eclipse.swt.win32.win32.x86/swt.jar \
+	rm \
+		plugins/org.eclipse.swt.win32.win32.x86/swt.jar \
 		plugins/org.eclipse.swt/extra_jars/exceptions.jar \
 		plugins/org.eclipse.swt.tools/swttools.jar \
 		features/org.eclipse.platform.launchers/bin/startup.jar
 
-#######################
-####################### TODO: DISABLED BECAUSE OF ICU4J AND JSCH
-#######################
+# for ebuild development only
 #	java-pkg_ensure-no-bundled-jars
 }
