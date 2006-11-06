@@ -1,0 +1,75 @@
+<project name="cewolf" default="jar" basedir=".">
+  <property name="maven.build.output" value="target/classes"/>
+  <property name="maven.build.directory" value="target"/>
+  <property name="maven.build.final.name" value="cewolf"/>
+  <property name="maven.test.reports" value="${maven.build.directory}/test-reports"/>
+  <property name="maven.test.output" value="target/test-classes"/>
+  <property name="cewolf.version" value="1.0"/>
+  <available classname="javax.imageio.ImageIO" property="ImageIO.present"/>
+  <path id="build.classpath">
+    <pathelement location="${basedir}/lib/batik-awt-util.jar"/>
+    <pathelement location="${basedir}/lib/batik-dom.jar"/>
+    <pathelement location="${basedir}/lib/batik-svggen.jar"/>
+    <pathelement location="${basedir}/lib/batik-util.jar"/>
+    <pathelement location="${basedir}/lib/batik-xml.jar"/>
+    <pathelement location="${basedir}/lib/commons-logging-api.jar"/>
+    <pathelement location="${basedir}/lib/commons-logging.jar"/>
+    <pathelement location="${basedir}/lib/crimson.jar"/>
+    <pathelement location="${basedir}/lib/gnujaxp.jar"/>
+    <pathelement location="${basedir}/lib/jcommon.jar"/>
+    <pathelement location="${basedir}/lib/jfreechart.jar"/>
+    <pathelement location="${basedir}/lib/jsp-api.jar"/>
+    <pathelement location="${basedir}/lib/junit.jar"/>
+    <pathelement location="${basedir}/lib/log4j.jar"/>
+    <pathelement location="${basedir}/lib/servlet-api.jar"/>
+  </path>
+  <target name="clean" description="Clean the output directory">
+    <delete dir="${maven.build.directory}"/>
+  </target>
+  <target name="compile" depends="" description="Compile the code">
+    <mkdir dir="${maven.build.output}"/>
+    <javac destdir="${maven.build.output}" excludes="**/package.html" debug="true" deprecation="true" optimize="false">
+      <src>
+        <pathelement location="src/main/java"/>
+      </src>
+      <classpath refid="build.classpath" />
+    </javac>
+    <copy todir="${maven.build.output}">
+      <fileset dir="src/main/resources"/>
+    </copy>
+  </target>
+  <target name="jar" depends="compile,test" description="Clean the JAR">
+    <jar jarfile="${maven.build.directory}/${maven.build.final.name}.jar" basedir="${maven.build.output}" excludes="**/package.html"/>
+  </target>
+  <target name="compile-tests" depends="junit-present, compile" description="Compile the test code" if="junit.present">
+    <mkdir dir="${maven.test.output}"/>
+  </target>
+  <target name="test" depends="junit-present, compile-tests" if="junit.present" description="Run the test cases"/>
+  <target name="test-junit-present">
+    <available classname="junit.framework.Test" property="junit.present"/>
+  </target>
+  <target name="junit-present" depends="test-junit-present" unless="junit.present">
+    <echo>================================= WARNING ================================</echo>
+    <echo> Junit isn&apos;t present in your $ANT_HOME/lib directory. Tests not executed. </echo>
+    <echo>==========================================================================</echo>
+  </target>
+  <target name="test-offline">
+    <condition property="maven.mode.offline">
+      <equals arg1="${build.sysclasspath}" arg2="only"/>
+    </condition>
+  </target>
+  <target name="javadoc" depends="">
+    <delete dir="${basedir}/javadoc" />
+    <mkdir dir="${basedir}/javadoc" />
+    <javadoc destdir="${basedir}/javadoc"
+         windowtitle="Cewolf Class Library (version ${cewolf.version})"
+         use="yes"
+         linksource="yes"
+         splitindex="yes">
+      <classpath refid="build.classpath" />
+      <packageset dir="${basedir}/src/main/java" defaultexcludes="yes">
+        <include name="de/laures/cewolf/**"/>
+      </packageset>
+    </javadoc>
+  </target>
+</project>
