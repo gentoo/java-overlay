@@ -3,10 +3,18 @@ MD5 0c7969250bc45b1abb84c5ff85bdfaf9 files/jasperreports-0.6.8-eclipse-3.1.patch
 RMD160 6b1614eee87b5da09015416436218d4bfdbfbb64 files/jasperreports-0.6.8-eclipse-3.1.patch 1228
 SHA256 50e2637fdc62f104ba193ce40e296ae79060f5325dada6f1b73226c390c79fcc files/jasperreports-0.6.8-eclipse-3.1.patch 1228
 DIST jasperreports-0.6.8-project.zip 19337868 RMD160 7b3f3f9e3ffa5ac4518540906abc42dbc8c7f541 SHA1 21ecb6b96dbbdb84a0a58d79ba6fd8fac0432958 SHA256 bb89380089f56f1805f813ce6301716231f26e307e826ce9809be936e8b604de
+DIST jasperreports-1.2.7-project.zip 32866949 RMD160 457e210ab54d5a5917af171bbb34b75438960c0f SHA1 c9c9d5de88c59da848761933797488c33fd45003 SHA256 36f37e1346bff564357cad1f752d5c0f7af99621d4d6d4faa1bb0121d1c279dd
 EBUILD jasperreports-0.6.8-r1.ebuild 2060 RMD160 a156a313650a11a70cd642426b2cbf983d5fc061 SHA1 debc1f30bfb2b48c03c9e6552e141de163d8c867 SHA256 59fde6beab82e4f68938fa541ae8e74930d6835df51279a31131ac5679c4876b
 MD5 329d11808c13ad4d94ef7085f75298c1 jasperreports-0.6.8-r1.ebuild 2060
 RMD160 a156a313650a11a70cd642426b2cbf983d5fc061 jasperreports-0.6.8-r1.ebuild 2060
 SHA256 59fde6beab82e4f68938fa541ae8e74930d6835df51279a31131ac5679c4876b jasperreports-0.6.8-r1.ebuild 2060
+EBUILD jasperreports-1.2.7.ebuild 2205 RMD160 e48e5c33fe72b0e9405c6a0fc943ab5073bca117 SHA1 1c6b6e4d70fe799fef21d67447918dd51a226e86 SHA256 b3759d8f68e00cbec384388830af2eaf2166db7e39581db02c86b2e4a4a956ba
+MD5 5052adfb407fd88279caa97e527fb4cd jasperreports-1.2.7.ebuild 2205
+RMD160 e48e5c33fe72b0e9405c6a0fc943ab5073bca117 jasperreports-1.2.7.ebuild 2205
+SHA256 b3759d8f68e00cbec384388830af2eaf2166db7e39581db02c86b2e4a4a956ba jasperreports-1.2.7.ebuild 2205
 MD5 f6075cc6a473db3e4acb73c80fac0579 files/digest-jasperreports-0.6.8-r1 280
 RMD160 5a68ee658f0fc992c104ebfedcc95bc309a9ef78 files/digest-jasperreports-0.6.8-r1 280
 SHA256 fbb46a8f0ace39c43dc9a9b9580c13395090bb26e0680edfe19739c6fcc1d1ee files/digest-jasperreports-0.6.8-r1 280
+MD5 a02964af5dc0e98c32281226ed5fa982 files/digest-jasperreports-1.2.7 280
+RMD160 71caaa6b2dcce998554ac9cb17106b9fad3e0fb1 files/digest-jasperreports-1.2.7 280
+SHA256 4ff377e7a94d7703245aa0fa57e9065180d008478dfda2e661149029cc1250cf files/digest-jasperreports-1.2.7 280
