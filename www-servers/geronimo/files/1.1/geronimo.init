@@ -1,0 +1,24 @@
+#!/sbin/runscript
+# Copyright 1999-2004 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: /var/cvsroot/gentoo-x86/www-servers/tomcat/files/5.5.17/tomcat.init,v 1.2 2006/07/07 20:08:51 nichoj Exp $
+
+
+depend() {
+        use logger dns
+        need net
+}
+
+start() {
+	einfo "Starting Geronimo:"
+	local executor="${JAVA_EXE}"
+	local args="${JAVA_OPTS} -jar ${GERONIMO_HOME}/bin/server.jar"
+	start-stop-daemon --start --quiet --background --chuid geronimo:geronimo --make-pidfile --pidfile /var/run/geronimo.pid --exec ${executor} -- ${args}
+	eend $?
+}
+
+stop() {
+	einfo "Stopping Geronimo"
+	start-stop-daemon --stop --quiet --make-pidfile --pidfile /var/run/geronimo.pid 
+	eend $?
+}
