@@ -192,7 +192,9 @@ src_install() {
 
 	# The wrapper wrapper :)
 	newbin ${MY_FDIR}/startscript.sh ${PN}-${SLOT}
-	newbin ${MY_FDIR}/ant.sh ${PN}-${SLOT}-ant
+
+	# Netbeans config utility
+	newbin ${MY_FDIR}/config.sh ${PN}-${SLOT}-config
 
 	# Ant installation
 	local ANTDIR="${DESTINATION}/ide${IDE_VERSION}/ant"
@@ -236,19 +238,13 @@ pkg_postinst () {
 	elog "use the system Tomcat. See Netbeans documentation if you    "
 	elog "don't know how to do that. The relevant settings are in the "
 	elog "runtime window.                                             "
-	elog ""
-	elog "When ant-1.7 is released, you will have to set up Netbeans  "
-	elog "for the new ant layout.                                     "
-	elog "In Netbeans Go to Tools -> Options -> Miscellaneous -> Ant, "
-	elog "click Manage Classpath and add jars for tasks that you use  "
-	elog "to the classpath.                                           "
-	elog "Or you can use 'emerge -s \"%@dev-java/ant-.*\"' to see what"
-	elog "ant tasks are available. To find the jar file from a task   "
-	elog "use 'java-config -p <package>'.                             "
-	elog "Or if you want all targets and its dependencies available,  "
-	elog "run '${PN}-${SLOT}-ant' as user you want to configure       "
-	elog "the Netbeans ant for. You can run this command anytime you  "
-	elog "want to update ant classpath.                               "
+	elog
+	elog "If you are upgrading from Netbeans 5.5 or you use both 5.5  "
+	elog "and 6.0 then you might find useful our configuration        "
+	elog "utility '${PN}-${SLOT}-config'. Run it without parameters   "
+	elog "to see what it can do for you. You might also need it if you"
+	elog "want to use ant-1.7 with Netbeans because default Netbeans  "
+	elog "configuration doesn't work with Gentoo ant-1.7.             "
 }
 
 pkg_postrm() {
