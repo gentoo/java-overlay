@@ -42,7 +42,8 @@ COMMON_DEPEND="
 	>=dev-java/xml-commons-1.0_beta2
 "
 DEPEND=">=virtual/jdk-1.5
-	>=dev-java/ant-core
+	dev-java/ant-core
+	dev-java/ant-tasks
 	dev-util/checkstyle
 	=dev-java/commons-cli-1*
 	dev-java/commons-el
@@ -190,7 +191,8 @@ src_install() {
 		   ${DESTINATION}/platform${PLATFORM}/lib/nbexec
 
 	# The wrapper wrapper :)
-	newbin ${MY_FDIR}/startscript.sh netbeans-${SLOT}
+	newbin ${MY_FDIR}/startscript.sh ${PN}-${SLOT}
+	newbin ${MY_FDIR}/ant.sh ${PN}-${SLOT}-ant
 
 	# Ant installation
 	local ANTDIR="${DESTINATION}/ide${IDE_VERSION}/ant"
@@ -230,10 +232,23 @@ src_install() {
 }
 
 pkg_postinst () {
-	einfo "The integrated Tomcat is not installed, but you can easily "
-	einfo "use the system Tomcat. See Netbeans documentation if you   "
-	einfo "don't know how to do that. The relevant settings are in the"
-	einfo "runtime window.                                            "
+	elog "The integrated Tomcat is not installed, but you can easily  "
+	elog "use the system Tomcat. See Netbeans documentation if you    "
+	elog "don't know how to do that. The relevant settings are in the "
+	elog "runtime window.                                             "
+	elog ""
+	elog "When ant-1.7 is released, you will have to set up Netbeans  "
+	elog "for the new ant layout.                                     "
+	elog "In Netbeans Go to Tools -> Options -> Miscellaneous -> Ant, "
+	elog "click Manage Classpath and add jars for tasks that you use  "
+	elog "to the classpath.                                           "
+	elog "Or you can use 'emerge -s \"%@dev-java/ant-.*\"' to see what"
+	elog "ant tasks are available. To find the jar file from a task   "
+	elog "use 'java-config -p <package>'.                             "
+	elog "Or if you want all targets and its dependencies available,  "
+	elog "run '${PN}-${SLOT}-ant' as user you want to configure       "
+	elog "the Netbeans ant for. You can run this command anytime you  "
+	elog "want to update ant classpath.                               "
 }
 
 pkg_postrm() {
