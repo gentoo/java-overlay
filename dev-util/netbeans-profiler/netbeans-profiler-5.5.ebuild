@@ -55,12 +55,12 @@ src_install() {
 }
 
 pkg_postinst () {
-	einfo "Updating Netbeans 5.5 configuration"
+	einfo "Updating Netbeans ${SLOT} configuration"
 	FILE="/usr/share/netbeans-${SLOT}/etc/netbeans.clusters"
 	if [ -z "$(grep profiler1 ${FILE})" ]; then
 		echo "profiler1" >> ${FILE}
 	fi
-	FILE="/usr/share/netbeans-${SLOT}/nb5.5/config/productid"
+	FILE="/usr/share/netbeans-${SLOT}/nb${SLOT}/config/productid"
 	if [ ! -f ${FILE} ]; then
 		echo NB_PROF > ${FILE}
 	elif [ -z "$(grep NB_PROF ${FILE})" ]; then
@@ -70,8 +70,8 @@ pkg_postinst () {
 }
 
 pkg_postrm() {
-	einfo "Updating Netbeans 5.5 configuration"
+	einfo "Updating Netbeans ${SLOT} configuration"
 	sed -i -e "s/profiler1//" /usr/share/netbeans-${SLOT}/etc/netbeans.clusters
-	sed -i -e "s/NB_PROF//" /usr/share/netbeans-${SLOT}/nb5.5/config/productid
+	sed -i -e "s/NB_PROF//" /usr/share/netbeans-${SLOT}/nb${SLOT}/config/productid
 	eend
 }
