@@ -11,18 +11,18 @@ SRC_URI="mirror://sourceforge/jboss/${MY_P}.tar.gz"
 RESTRICT="nomirror"
 HOMEPAGE="http://www.jboss.org"
 LICENSE="LGPL-2"
-IUSE=""
+IUSE="doc"
 SLOT="4"
 KEYWORDS="~amd64 ~x86"
 
-THIRDPARTY="=dev-java/antlr-2.7.6*
+THIRDPARTY=">=dev-java/antlr-2.7
 			=dev-java/apache-addressing-1.0*
 			=dev-java/avalon-framework-4.1.5*
 			=dev-java/avalon-logkit-1.2*
-			=dev-java/bcel-5.1*
+			>=dev-java/bcel-5.1
 			=dev-java/commons-beanutils-1.6*
 			=dev-java/bsf-2.3.0*
-			=dev-java/commons-codec-1.3*
+			>=dev-java/commons-codec-1.2
 			dev-java/commons-collections
 			dev-java/commons-digester
 			=dev-java/commons-discovery-0.2*
@@ -33,7 +33,8 @@ THIRDPARTY="=dev-java/antlr-2.7.6*
 			dev-java/log4j
 			dev-java/commons-logging
 			dev-java/commons-modeler
-			>=dev-java/xalan-2.7.1
+			>=dev-java/myfaces-1.1
+			>=dev-java/xalan-2.7
 			=dev-java/xerces-2.6.2*
 			dev-libs/xmlsec
 			dev-java/bsh
@@ -43,15 +44,23 @@ THIRDPARTY="=dev-java/antlr-2.7.6*
 			dev-java/gjt-jpl-util
 			>=dev-java/java-getopt-1.0.10
 			=dev-java/hibernate-3.2*
-			=dev-java/hibernate-annotations-3.2*"
+			=dev-java/hibernate-annotations-3.2*
+			dev-java/hsqldb
+			=dev-java/javassist-3.3
+			=dev-java/jaxen-1.1*
+			=dev-java/jcommon-0.9.7*
+			>=dev-java/jfreechart-0.9
+			>=dev-java/jgroups-2.2
+			>=dev-java/junit-3.8"
 
+			#javassist meant to be 3.2
 			#=dev-java/hibernate-entitymanager-3.2*
 
 
 
 RDEPEND=">=virtual/jdk-1.4"
-DEPEND="${RDEPEND}
-		app-arch/unzip"
+#DEPEND=${THIRDPARTY}
+DEPEND="=dev-java/javacc-3*"
 
 S=${WORKDIR}/${MY_P}
 INSTALL_DIR="/usr/share/${PN}-${SLOT}"
@@ -77,7 +86,11 @@ src_compile() {
 	set_env
 
 	cd build
-	eant
+	eant release
+}
+
+src_test() {
+	eant tests
 }
 
 src_install() {
@@ -172,7 +185,7 @@ function fix_thirdparty() {
 
 	fix_individual_dir apache-avalon-logkit avalon-logkit-1.2
 
-	#TODO fix_individual_dir apache-bcel bcel-5.1
+	fix_individual_dir apache-bcel bcel
 	
 	#TODO? Jboss Packages with 1.6.0 but attempting to use 1.6.1
 	fix_individual_dir apache-beanutils commons-beanutils-1.6
@@ -206,7 +219,7 @@ function fix_thirdparty() {
 
 	fix_individual_dir apache-modeler commons-modeler
 
-	#TODO fix_individual_dir apache-myfaces myfaces
+	fix_individual_dir apache-myfaces myfaces-1
 
 	fix_individual_dir apache-pool commons-pool
 
@@ -224,13 +237,13 @@ function fix_thirdparty() {
 
 	fix_individual_dir apache-xalan xalan
 
-	fix_individual_dir apache-xerces xerces-2 xercesImpl.jar
-	fix_individual_dir apache-xerces xerces-2 resolver.jar
-	fix_individual_dir apache-xerces xerces-2 xml-apis.jar
+	# fix_individual_dir apache-xerces xerces-2 xercesImpl.jar
+	# TODO fix_individual_dir apache-xerces xerces-2 resolver.jar
+	# TODO fix_individual_dir apache-xerces xerces-2 xml-apis.jar
 
-	#fix_individual_dir apache-xmlsec xmlsec
+	#TODO fix_individual_dir apache-xmlsec xmlsec
 
-	fix_individual_dir bsh bsh
+	#TODO fix_individual_dir beanshell bsh
 
 	fix_individual_dir cglib cglib-2 cglib.jar
 
@@ -238,15 +251,80 @@ function fix_thirdparty() {
 
 	fix_individual_dir dom4j dom4j-1
 
-	fix_individual_dir gjt-jpl-util gjt-jpl-util
+	#TODO fix_individual_dir gjt-jpl-util gjt-jpl-util
 
-	fix_individual_dir gnu-getopt java-getopt-1
+	#TODO fix_individual_dir gnu-getopt java-getopt-1
 
-	fix_individual_dir hibernate hibernate-3 hibernate3.jar
+	fix_individual_dir hibernate hibernate-3.2 hibernate3.jar
 
 	fix_individual_dir hibernate-annotations hibernate-annotations-3.2
 
-	#fix_individual_dir hibernate-entitymanager hibernate-entitymanager-3.2
+	#TODO fix_individual_dir hibernate-entitymanager hibernate-entitymanager-3.2
+
+	fix_individual_dir hsqldb hsqldb hsqldb.jar
+
+	#TODO ibm-wsdl4j?
+
+	#TODO jacorb
+
+	fix_individual_dir javassist javassist-3.3
+
+	fix_individual_dir jaxen jaxen-1.1 jaxen.jar
+
+	#cd jboss
+	#fix jboss directories
+	#TODO aop
+	#TODO backport-current
+	#TODO cache
+	#TODO jbossretro-rt
+	#TODO jbossws
+	#TODO jbossws14
+	#TODO jbossxb
+
+	#TODO jcommon
+	#TODO fix_individual_dir jfreechart jcommon jcommon-0.9.7.jar jcommon.jar
+	#TODO fix_individual_dir jfreechart jfreechart
+
+	fix_individual_dir jgroups jgroups jgroups-core.jar jgroups.jar
+
+	#TODO fix_individual_dir jgroups joesnmp-0.3
+
+	#TODO juddi
+
+	fix_individual_dir junit junit
+
+	#TODO junitejb
+	#TODO objectweb-joramtests
+	#fix_individual_dir odmg odmg odmg.jar odmg-3.0.jar
+
+	#TODO oswego-concurrent
+
+	#TODO qdox-1.4.1
+
+	#TODO quartz-1.5.2
+
+	#TODO sleepycat-1.5.2
+
+	fix_individual_dir sun-jaf sun-jaf
+
+	#TODO fix_individual_dir sun-javacc javacc
+
+	fix_individual_dir sun-javamail sun-javamail
+
+	fix_individual_dir sun-servlet servletapi-2.4
+
+	#TODO fix_individual_dir trove trove
+
+	#TODO wutka-dtdparser
+
+	#TODO fix_individual_dir xdoclet xdoclet
+
+	#TODO fix_individual_dir xml-sax
+	#TODO sax-ext.jar
+
+
+
+
 }
 
 function fix_individual_dir() {
