@@ -4,14 +4,16 @@
 
 inherit versionator
 
-MY_PV="$(replace_all_version_separators '_' ${PV})"
+SLOT="6.0"
+
+MY_PV="$(replace_all_version_separators '_' ${SLOT})"
+MY_PVDEV="$(replace_all_version_separators '' ${SLOT})dev"
 
 DESCRIPTION="NetBeans Profiler"
 HOMEPAGE="http://profiler.netbeans.org/"
-SRC_URI="http://us1.mirror.netbeans.org/download/${MY_PV}/fcs/200610171010/${PN}-${MY_PV}-linux.bin"
+SRC_URI="http://netbeans.org/download/${MY_PV}/m4/200610231500/profiler-${MY_PVDEV}-linux.bin"
 
 LICENSE="SPL"
-SLOT="5.5"
 KEYWORDS="~x86"
 IUSE=""
 
@@ -20,8 +22,8 @@ DEPEND="=dev-util/netbeans-${SLOT}*"
 
 src_unpack() {
 	# Walk-around: copy installer to working-directory
-	cp ${DISTDIR}/${PN}-${MY_PV}-linux.bin ${WORKDIR}/
-	chmod u+x ${WORKDIR}/${PN}-${MY_PV}-linux.bin
+	cp ${DISTDIR}/profiler-${MY_PVDEV}-linux.bin ${WORKDIR}/
+	chmod u+x ${WORKDIR}/profiler-${MY_PVDEV}-linux.bin
 
 	# allow the installer to write stupid files (illusion)
 	if [ "${LOGNAME}" = "root" ]; then
@@ -32,20 +34,20 @@ src_unpack() {
 
 	# execute installer
 	# We must change user HOME dir so the installer does not cause sandbox violation
-	${WORKDIR}/${PN}-${MY_PV}-linux.bin -silent
+	${WORKDIR}/profiler-${MY_PVDEV}-linux.bin -silent
 
 	# Walk-around: remove installer again
-	rm ${WORKDIR}/${PN}-${MY_PV}-linux.bin
+	rm ${WORKDIR}/profiler-${MY_PVDEV}-linux.bin
 
 	# remove unnecessary uninstall informations
-	rm -R _uninst
+	rm -R ${WORKDIR}/profiler1/_uninst
 }
 
 
 src_install() {
 	# install everything into netbeans subfolders
 	insinto /usr/share/netbeans-${SLOT}/profiler1
-	doins -r ${WORKDIR}/*
+	doins -r ${WORKDIR}/profiler1/*
 }
 
 pkg_postinst () {
