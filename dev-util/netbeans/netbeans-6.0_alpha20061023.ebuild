@@ -245,6 +245,9 @@ pkg_postinst () {
 	elog "to see what it can do for you. You might also need it if you"
 	elog "want to use ant-1.7 with Netbeans because default Netbeans  "
 	elog "configuration doesn't work with Gentoo ant-1.7.             "
+	elog
+        elog "If you are using some packages on top of Netbeans, you have"
+        elog "to re-emerge them now.                                     "
 }
 
 pkg_postrm() {

@@ -274,10 +274,13 @@ src_install() {
 }
 
 pkg_postinst () {
-	einfo "The integrated Tomcat is not installed, but you can easily "
-	einfo "use the system Tomcat. See Netbeans documentation if you   "
-	einfo "don't know how to do that. The relevant settings are in the"
-	einfo "runtime window.                                            "
+	elog "The integrated Tomcat is not installed, but you can easily "
+	elog "use the system Tomcat. See Netbeans documentation if you   "
+	elog "don't know how to do that. The relevant settings are in the"
+	elog "runtime window.                                            "
+	elog
+	elog "If you are using some packages on top of Netbeans, you have"
+	elog "to re-emerge them now.                                     "
 }
 
 pkg_postrm() {
