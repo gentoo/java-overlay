@@ -367,7 +367,7 @@ function symlink_extjars() {
 	java-pkg_jar-from flute
 	java-pkg_jar-from sac
 	java-pkg_jar-from ${JMI}
-	java-pkg_jar-from ${JCSH}
+	java-pkg_jar-from ${JSCH}
 	java-pkg_jar-from ${MOF}
 	java-pkg_jar-from ${JUNIT}
 
