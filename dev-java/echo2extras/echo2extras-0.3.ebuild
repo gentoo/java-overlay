@@ -15,6 +15,8 @@ SLOT="0"
 KEYWORDS="~ppc ~x86"
 IUSE="doc source"
 
+RESTRICT="fetch"
+
 COMMON_DEP="=dev-java/servletapi-2.4*
 	>=dev-java/echo2-2.1.0_beta5"
 

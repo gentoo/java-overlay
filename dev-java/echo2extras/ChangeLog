@@ -3,5 +3,8 @@
 # $Header: $
 
   11 Nov 2006; Federico Fissore <federico@fsfe.org> ChangeLog:
+  fixed fetch restriction
+
+  11 Nov 2006; Federico Fissore <federico@fsfe.org> ChangeLog:
   new package
 
