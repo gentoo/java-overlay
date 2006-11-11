@@ -39,7 +39,7 @@ DEPEND="
 	doc? ( =dev-java/java-sdk-docs-1.5.0* )"
 
 RDEPEND="
-	virtual/libstdc++-3.3
+	=virtual/libstdc++-3.3
 	X? (
 		x11-libs/libX11
 		x11-libs/libXext
