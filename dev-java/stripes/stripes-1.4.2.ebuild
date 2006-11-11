@@ -35,7 +35,7 @@ src_unpack() {
 	rm *.jar
 
 	#add new jars to file
-	java-pkg_jarfrom servletapi-2.4	
+	java-pkg_jarfrom servletapi-2.4
 	java-pkg_jarfrom cos
 	use doc && java-pkg_jarfrom taglibrarydoc
 	use doc && java-pkg_jarfrom sun-javamail-bin mail.jar
