@@ -246,14 +246,14 @@ pkg_postinst () {
 	elog "want to use ant-1.7 with Netbeans because default Netbeans  "
 	elog "configuration doesn't work with Gentoo ant-1.7.             "
 	elog
-        elog "If you are using some packages on top of Netbeans, you have"
-        elog "to re-emerge them now.                                     "
+	elog "If you are using some packages on top of Netbeans, you have"
+	elog "to re-emerge them now.                                     "
 }
 
 pkg_postrm() {
-#	einfo "Removing symlinks to jars from"
-#	einfo "${DESTINATION}"
-#	find ${DESTINATION} -type l | xargs rm -fr
+	#einfo "Removing symlinks to jars from"
+	#einfo "${DESTINATION}"
+	#find ${DESTINATION} -type l | xargs rm -fr
 
 	if ! test -e /usr/bin/netbeans-${SLOT}; then
 		einfo "Because of the way Portage works at the moment"

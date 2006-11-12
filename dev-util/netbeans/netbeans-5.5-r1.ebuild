@@ -39,10 +39,8 @@ MY_PV=${MY_PV/./_}
 BASELOCATION="http://us1.mirror.netbeans.org/download/${MY_PV/-//}/fcs/200610171010"
 MAINTARBALL="netbeans-${MY_PV}-ide_sources.tar.bz2"
 JAVADOCTARBALL="netbeans-${MY_PV}-javadoc.tar.bz2"
-FILELAYOUTPATCH="netbeans-5.5-files-layout-txt.patch.bz2"
 
 SRC_URI="${BASELOCATION}/${MAINTARBALL}
-	mirror://gentoo/${FILELAYOUTPATCH}
 	 doc? ( ${BASELOCATION}/${JAVADOCTARBALL} )"
 
 LICENSE="Apache-1.1 Apache-2.0 SPL W3C sun-bcla-j2eeeditor sun-bcla-javac sun-javac as-is docbook sun-resolver"
@@ -57,30 +55,30 @@ IUSE="debug doc"
 #		 =dev-java/jaxen-1.1*
 #		  dev-java/jtidy
 
-RDEPEND="=virtual/jre-1.5*
-		  >=dev-java/commons-logging-1.0
-		   dev-java/commons-el
-		   dev-java/sun-jmx
-		  =dev-java/junit-3.8*
-		  =dev-java/servletapi-2.2*
-		  =dev-java/servletapi-2.3*
-		  =dev-java/servletapi-2.4*
-		   dev-java/sac
-		   dev-java/flute
-		 >=dev-java/jmi-interface-1.0-r1
-		 >=dev-java/javahelp-bin-2.0.02-r1
-		  =www-servers/tomcat-5.5*
-		   dev-java/sun-j2ee-deployment-bin
-		   dev-java/xml-commons
-		   dev-java/jakarta-jstl
-		 >=dev-java/xerces-2.8.0
-		 =dev-java/swing-layout-1*
-		   dev-java/jsch 
-		   dev-java/jgoodies-forms
-		  =dev-java/gnu-jaf-1*
+RDEPEND=">=virtual/jre-1.5*
+		>=dev-java/commons-logging-1.0
+		dev-java/commons-el
+		dev-java/sun-jmx
+		=dev-java/junit-3.8*
+		=dev-java/servletapi-2.2*
+		=dev-java/servletapi-2.3*
+		=dev-java/servletapi-2.4*
+		dev-java/sac
+		dev-java/flute
+		>=dev-java/jmi-interface-1.0-r1
+		>=dev-java/javahelp-bin-2.0.02-r1
+		=www-servers/tomcat-5.5*
+		dev-java/sun-j2ee-deployment-bin
+		dev-java/xml-commons
+		dev-java/jakarta-jstl
+		>=dev-java/xerces-2.8.0
+		=dev-java/swing-layout-1*
+		dev-java/jsch
+		dev-java/jgoodies-forms
+		=dev-java/gnu-jaf-1*
 		   "
 DEPEND="${RDEPEND}
-		=virtual/jdk-1.5*
+		>=virtual/jdk-1.5*
 		>=dev-java/ant-1.6.2
 		  dev-util/pmd
 		  dev-libs/libxslt
@@ -123,6 +121,7 @@ IDE_VERSION="7"
 PLATFORM="6"
 MY_FDIR="${FILESDIR}/${SLOT}"
 DESTINATION="${ROOT}usr/share/netbeans-${SLOT}"
+JAVA_PKG_BSFIX="off"
 
 antflags=""
 
@@ -164,16 +163,6 @@ src_unpack () {
 		rm -f *.zip
 	fi
 
-	cd ${S}
-	unpack ${FILELAYOUTPATCH}
-
-	epatch netbeans-5.5-files-layout-txt.patch
-	epatch ${FILESDIR}/${SLOT}/modules-txt.patch
-	epatch ${FILESDIR}/${SLOT}/deps-txt.patch
-	epatch ${FILESDIR}/${SLOT}/public-packages-txt.patch
-	epatch ${FILESDIR}/${SLOT}/mdr_extras_jdbcstorage_build.xml.patch
-	epatch ${FILESDIR}/${SLOT}/mdr_extras_mdrant_build.xml.patch
-
 	cd ${S}/nbbuild
 	# Disable the bundled Tomcat in favor of Portage installed version
 	sed -i -e "s%tomcatint/tomcat5/bundled,%%g" *.properties
@@ -191,7 +180,7 @@ src_compile() {
 
 	# Specify the build-nozip target otherwise it will build
 	# a zip file of the netbeans folder, which will copy directly.
-	eant ${antflags}
+	eant ${antflags} build-nozip
 
 	# Remove non-x86 Linux binaries
 	find ${BUILDDESTINATION} -type f \
