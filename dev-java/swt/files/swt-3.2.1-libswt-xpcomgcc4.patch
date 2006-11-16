@@ -1,0 +1,102 @@
+diff -urN ../tmp-orig/swt-gtk-3.1/xpcom.cpp ./xpcom.cpp
+--- ../tmp-orig/swt-gtk-3.1/xpcom.cpp	2005-02-03 01:06:52.000000000 +0000
++++ ./xpcom.cpp	2005-09-10 08:22:37.000000000 +0000
+@@ -141,7 +141,7 @@
+ {
+ 	jint rc = 0;
+ 	XPCOM_NATIVE_ENTER(env, that, PR_1Malloc_FUNC);
+-	rc = (jint)PR_Malloc(arg0);
++	rc = (long)PR_Malloc(arg0);
+ 	XPCOM_NATIVE_EXIT(env, that, PR_1Malloc_FUNC);
+ 	return rc;
+ }
+@@ -1868,7 +1868,7 @@
+ {
+ 	jint rc = 0;
+ 	XPCOM_NATIVE_ENTER(env, that, nsEmbedCString_1get_FUNC);
+-	rc = (jint)((nsEmbedCString *)arg0)->get();
++	rc = (long)((nsEmbedCString *)arg0)->get();
+ 	XPCOM_NATIVE_EXIT(env, that, nsEmbedCString_1get_FUNC);
+ 	return rc;
+ }
+@@ -1880,7 +1880,7 @@
+ {
+ 	jint rc = 0;
+ 	XPCOM_NATIVE_ENTER(env, that, nsEmbedCString_1new___FUNC);
+-	rc = (jint)new nsEmbedCString();
++	rc = (long)new nsEmbedCString();
+ 	XPCOM_NATIVE_EXIT(env, that, nsEmbedCString_1new___FUNC);
+ 	return rc;
+ }
+@@ -1894,7 +1894,7 @@
+ 	jint rc = 0;
+ 	XPCOM_NATIVE_ENTER(env, that, nsEmbedCString_1new___3BI_FUNC);
+ 	if (arg0) if ((lparg0 = env->GetByteArrayElements(arg0, NULL)) == NULL) goto fail;
+-	rc = (jint)new nsEmbedCString((const char *)lparg0, arg1);
++	rc = (long)new nsEmbedCString((const char *)lparg0, arg1);
+ fail:
+ 	if (arg0 && lparg0) env->ReleaseByteArrayElements(arg0, lparg0, 0);
+ 	XPCOM_NATIVE_EXIT(env, that, nsEmbedCString_1new___3BI_FUNC);
+@@ -1908,7 +1908,7 @@
+ {
+ 	jint rc = 0;
+ 	XPCOM_NATIVE_ENTER(env, that, nsEmbedString_1Length_FUNC);
+-	rc = (jint)((nsEmbedString *)arg0)->Length();
++	rc = (long)((nsEmbedString *)arg0)->Length();
+ 	XPCOM_NATIVE_EXIT(env, that, nsEmbedString_1Length_FUNC);
+ 	return rc;
+ }
+@@ -1930,7 +1930,7 @@
+ {
+ 	jint rc = 0;
+ 	XPCOM_NATIVE_ENTER(env, that, nsEmbedString_1get_FUNC);
+-	rc = (jint)((nsEmbedString *)arg0)->get();
++	rc = (long)((nsEmbedString *)arg0)->get();
+ 	XPCOM_NATIVE_EXIT(env, that, nsEmbedString_1get_FUNC);
+ 	return rc;
+ }
+@@ -1942,7 +1942,7 @@
+ {
+ 	jint rc = 0;
+ 	XPCOM_NATIVE_ENTER(env, that, nsEmbedString_1new___FUNC);
+-	rc = (jint)new nsEmbedString();
++	rc = (long)new nsEmbedString();
+ 	XPCOM_NATIVE_EXIT(env, that, nsEmbedString_1new___FUNC);
+ 	return rc;
+ }
+@@ -1956,7 +1956,7 @@
+ 	jint rc = 0;
+ 	XPCOM_NATIVE_ENTER(env, that, nsEmbedString_1new___3C_FUNC);
+ 	if (arg0) if ((lparg0 = env->GetCharArrayElements(arg0, NULL)) == NULL) goto fail;
+-	rc = (jint)new nsEmbedString(lparg0);
++	rc = (long)new nsEmbedString(lparg0);
+ fail:
+ 	if (arg0 && lparg0) env->ReleaseCharArrayElements(arg0, lparg0, 0);
+ 	XPCOM_NATIVE_EXIT(env, that, nsEmbedString_1new___3C_FUNC);
+@@ -1970,7 +1970,7 @@
+ {
+ 	jboolean rc = 0;
+ 	XPCOM_NATIVE_ENTER(env, that, nsID_1Equals_FUNC);
+-	rc = (jboolean)((nsID *)arg0)->Equals(*(nsID *)arg1);
++	rc = (long)((nsID *)arg0)->Equals(*(nsID *)arg1);
+ 	XPCOM_NATIVE_EXIT(env, that, nsID_1Equals_FUNC);
+ 	return rc;
+ }
+@@ -1984,7 +1984,7 @@
+ 	jboolean rc = 0;
+ 	XPCOM_NATIVE_ENTER(env, that, nsID_1Parse_FUNC);
+ 	if (arg1) if ((lparg1 = env->GetStringUTFChars(arg1, NULL)) == NULL) goto fail;
+-	rc = (jboolean)((nsID *)arg0)->Parse((const char *)lparg1);
++	rc = (long)((nsID *)arg0)->Parse((const char *)lparg1);
+ fail:
+ 	if (arg1 && lparg1) env->ReleaseStringUTFChars(arg1, lparg1);
+ 	XPCOM_NATIVE_EXIT(env, that, nsID_1Parse_FUNC);
+@@ -2008,7 +2008,7 @@
+ {
+ 	jint rc = 0;
+ 	XPCOM_NATIVE_ENTER(env, that, nsID_1new_FUNC);
+-	rc = (jint)new nsID();
++	rc = (long)new nsID();
+ 	XPCOM_NATIVE_EXIT(env, that, nsID_1new_FUNC);
+ 	return rc;
+ }

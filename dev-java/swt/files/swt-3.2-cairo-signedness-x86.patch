@@ -1,0 +1,11 @@
+--- cairo.c	2006-07-16 19:16:27.000000000 -0500
++++ cairo.c	2006-07-16 19:18:15.000000000 -0500
+@@ -533,7 +533,7 @@
+ {
+ 	jint rc = 0;
+ 	Cairo_NATIVE_ENTER(env, that, cairo_1image_1surface_1create_1for_1data_FUNC);
+-	rc = (jint)cairo_image_surface_create_for_data((char *)arg0, arg1, arg2, arg3, arg4);
++	rc = (jint)cairo_image_surface_create_for_data((unsigned char *)arg0, arg1, arg2, arg3, arg4);
+ 	Cairo_NATIVE_EXIT(env, that, cairo_1image_1surface_1create_1for_1data_FUNC);
+ 	return rc;
+ }

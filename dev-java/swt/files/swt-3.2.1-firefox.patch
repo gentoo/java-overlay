@@ -1,0 +1,152 @@
+diff -u -r1.33.2.1 make_linux.mak
+--- make_linux.mak	26 Jul 2006 16:33:23 -0000	1.33.2.1
++++ make_linux.mak	29 Sep 2006 13:21:51 -0000
+@@ -202,7 +202,7 @@
+ #
+ # Mozilla lib
+ #
+-make_mozilla:$(MOZILLA_LIB) $(PROFILE14_LIB) $(PROFILE17_LIB) $(PROFILE18_LIB)
++make_mozilla:$(MOZILLA_LIB)
+ 
+ $(MOZILLA_LIB): $(MOZILLA_OBJECTS)
+ 	$(CXX) -o $(MOZILLA_LIB) $(MOZILLA_OBJECTS) $(MOZILLALIBS) ${GECKO_LIBS}
+@@ -220,22 +220,22 @@
+ 	$(CXX) $(MOZILLACFLAGS) ${GECKO_INCLUDES} -c xpcom_stats.cpp	
+ 
+ $(PROFILE14_OBJECTS): xpcom_profile.cpp
+-	$(CXX) -o $(PROFILE14_OBJECTS) $(MOZILLACFLAGS) ${PROFILE14_INCLUDES} -c xpcom_profile.cpp	
++	$(CXX) -o $(PROFILE14_OBJECTS) $(MOZILLACFLAGS) ${PROFILE14_INCLUDES} ${GECKO_INCLUDES} -c xpcom_profile.cpp	
+ 
+ $(PROFILE17_OBJECTS): xpcom_profile.cpp
+-	$(CXX) -o $(PROFILE17_OBJECTS) $(MOZILLACFLAGS) ${PROFILE17_INCLUDES} -c xpcom_profile.cpp	
++	$(CXX) -o $(PROFILE17_OBJECTS) $(MOZILLACFLAGS) ${PROFILE17_INCLUDES} ${GECKO_INCLUDES} -c xpcom_profile.cpp	
+ 
+ $(PROFILE18_OBJECTS): xpcom_profile.cpp
+-	$(CXX) -o $(PROFILE18_OBJECTS) $(MOZILLACFLAGS) ${PROFILE18_INCLUDES} -c xpcom_profile.cpp	
++	$(CXX) -o $(PROFILE18_OBJECTS) $(MOZILLACFLAGS) ${PROFILE18_INCLUDES} ${GECKO_INCLUDES} -c xpcom_profile.cpp	
+ 
+ $(PROFILE14_LIB): $(PROFILE14_OBJECTS)
+-	$(CXX) -o $(PROFILE14_LIB) $(PROFILE14_OBJECTS) $(MOZILLALIBS) ${PROFILE14_LIBS}
++	$(CXX) -o $(PROFILE14_LIB) $(PROFILE14_OBJECTS) $(MOZILLALIBS) ${PROFILE14_LIBS} ${GECKO_LIBS}
+ 
+ $(PROFILE17_LIB): $(PROFILE17_OBJECTS)
+-	$(CXX) -o $(PROFILE17_LIB) $(PROFILE17_OBJECTS) $(MOZILLALIBS) ${PROFILE17_LIBS}
++	$(CXX) -o $(PROFILE17_LIB) $(PROFILE17_OBJECTS) $(MOZILLALIBS) ${PROFILE17_LIBS} ${GECKO_LIBS}
+ 
+ $(PROFILE18_LIB): $(PROFILE18_OBJECTS)
+-	$(CXX) -o $(PROFILE18_LIB) $(PROFILE18_OBJECTS) $(MOZILLALIBS) ${PROFILE18_LIBS}
++	$(CXX) -o $(PROFILE18_LIB) $(PROFILE18_OBJECTS) $(MOZILLALIBS) ${PROFILE18_LIBS} ${GECKO_LIBS}
+ 
+ #
+ # GLX lib
+@@ -264,4 +264,4 @@
+ # Clean
+ #
+ clean:
+-	rm -f *.o *.so
++	rm -f *.o *.so
+\ No newline at end of file
+diff -u -r1.15.2.1 xpcom_stats.cpp
+--- xpcom_stats.cpp	26 Jul 2006 16:33:23 -0000	1.15.2.1
++++ xpcom_stats.cpp	29 Sep 2006 13:21:49 -0000
+@@ -31,15 +31,14 @@
+ 
+ #ifdef NATIVE_STATS
+ 
+-int XPCOM_nativeFunctionCount = 132;
+-int XPCOM_nativeFunctionCallCount[132];
++int XPCOM_nativeFunctionCount = 131;
++int XPCOM_nativeFunctionCallCount[131];
+ char * XPCOM_nativeFunctionNames[] = {
+ 	"Call",
+ 	"NS_1GetComponentManager",
+ 	"NS_1GetServiceManager",
+-	"NS_1InitEmbedding",
++	"NS_1InitXPCOM3_FUNC",
+ 	"NS_1NewLocalFile",
+-	"NS_1TermEmbedding",
+ 	"PR_1Free",
+ 	"PR_1Malloc",
+ 	"VtblCall__II",
+diff -u -r1.1.2.1 xpcom_profile.h
+--- xpcom_profile.h	26 Jul 2006 16:33:23 -0000	1.1.2.1
++++ xpcom_profile.h	29 Sep 2006 13:21:48 -0000
+@@ -32,7 +32,7 @@
+ #define NDEBUG
+ 
+ #include "nsCOMPtr.h"
+-#include "nsProfileDirServiceProvider.h"
++#include "profdirserviceprovider/nsProfileDirServiceProvider.h"
+ #include "xpcom_stats.h"
+ 
+ #endif /* INC_xpcom_profile_H */
+diff -u -r1.6.2.1 xpcom.h
+--- xpcom.h	26 Jul 2006 16:33:23 -0000	1.6.2.1
++++ xpcom.h	29 Sep 2006 13:21:48 -0000
+@@ -32,7 +32,6 @@
+ #define NDEBUG
+ 
+ #include "nsXPCOM.h"
+-#include "nsEmbedAPI.h"	
+ #include "nsEmbedString.h"
+ #include "nsIInputStream.h"
+ #include "nsISupportsUtils.h"
+diff -u -r1.29.2.1 xpcom.cpp
+--- xpcom.cpp	26 Jul 2006 16:33:23 -0000	1.29.2.1
++++ xpcom.cpp	29 Sep 2006 13:21:48 -0000
+@@ -85,14 +85,16 @@
+ }
+ #endif
+ 
+-#ifndef NO_NS_1InitEmbedding
+-JNIEXPORT jint JNICALL XPCOM_NATIVE(NS_1InitEmbedding)
+-	(JNIEnv *env, jclass that, jint arg0, jint arg1)
++#ifndef NO_NS_1InitXPCOM3
++JNIEXPORT jint JNICALL XPCOM_NATIVE(NS_1InitXPCOM3)
++	(JNIEnv *env, jclass that, jint arg0, jint arg1, jint arg2, jint arg3, jint arg4)
+ {
+ 	jint rc = 0;
+-	XPCOM_NATIVE_ENTER(env, that, NS_1InitEmbedding_FUNC);
+-	rc = (jint)NS_InitEmbedding((nsILocalFile *)arg0, (nsIDirectoryServiceProvider *)arg1);
+-	XPCOM_NATIVE_EXIT(env, that, NS_1InitEmbedding_FUNC);
++	XPCOM_NATIVE_ENTER(env, that, NS_1GetComponentRegistrar_FUNC);
++	rc = (jint)NS_InitXPCOM3((nsIServiceManager **)arg0, (nsIFile *)arg1,
++		(nsIDirectoryServiceProvider *)arg2, (nsStaticModuleInfo *)arg3,
++		(PRUint32) arg4);
++	XPCOM_NATIVE_EXIT(env, that, NS_1GetComponentRegistrar_FUNC);
+ 	return rc;
+ }
+ #endif
+@@ -113,18 +115,6 @@
+ }
+ #endif
+ 
+-#ifndef NO_NS_1TermEmbedding
+-JNIEXPORT jint JNICALL XPCOM_NATIVE(NS_1TermEmbedding)
+-	(JNIEnv *env, jclass that)
+-{
+-	jint rc = 0;
+-	XPCOM_NATIVE_ENTER(env, that, NS_1TermEmbedding_FUNC);
+-	rc = (jint)NS_TermEmbedding();
+-	XPCOM_NATIVE_EXIT(env, that, NS_1TermEmbedding_FUNC);
+-	return rc;
+-}
+-#endif
+-
+ #ifndef NO_PR_1Free
+ JNIEXPORT void JNICALL XPCOM_NATIVE(PR_1Free)
+ 	(JNIEnv *env, jclass that, jint arg0)
+diff -u -r1.14.2.1 xpcom_stats.h
+--- xpcom_stats.h	26 Jul 2006 16:33:23 -0000	1.14.2.1
++++ xpcom_stats.h	29 Sep 2006 13:21:49 -0000
+@@ -41,9 +41,8 @@
+ 	Call_FUNC,
+ 	NS_1GetComponentManager_FUNC,
+ 	NS_1GetServiceManager_FUNC,
+-	NS_1InitEmbedding_FUNC,
++	NS_1InitXPCOM3_FUNC,
+ 	NS_1NewLocalFile_FUNC,
+-	NS_1TermEmbedding_FUNC,
+ 	PR_1Free_FUNC,
+ 	PR_1Malloc_FUNC,
+ 	VtblCall__II_FUNC,
