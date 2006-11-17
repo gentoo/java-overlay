@@ -41,7 +41,7 @@ COMMON_DEP="
 	gnome? 	(
 		=gnome-base/gnome-vfs-2*
 		=gnome-base/libgnomeui-2*
-		)
+	)
 	opengl? ( virtual/opengl )
 	=dev-java/eclipse-ecj-3.2*"
 
@@ -160,12 +160,6 @@ src_install() {
 	make_desktop_entry eclipse-${SLOT} "Eclipse ${PV}" "${ECLIPSE_DIR}/icon.xpm"
 
 	cd ${D}/${ECLIPSE_DIR}
-	echo "-Djava.library.path=/usr/lib" >> eclipse.ini
-
-	pushd plugins/org.eclipse.platform_${SLOT}* > /dev/null || die "pushd failed"
-	sed -e "s/\(0=.*\)/\1 Gentoo/" < about.mappings > about.mappings.tmp
-	mv about.mappings.tmp about.mappings
-	popd > /dev/null
 
 	install-link-system-jars
 }
@@ -691,52 +685,10 @@ patch-apply-all() {
 
 #	eend $?
 
-#### JSCH AND ICU4J SYSTEM LINKING IS SKIPPED AND THE BUNDLED JARS ARE USED
-#### THIS IS DUE TO THE ECLIPSE NEED OF USING THEM AS PLUGIN AND THEREFORE TO
-#### TO REPACKAGE THEM IN A BIT DIFFERENT JAR.
-#### HOPEFULLY THIS WILL BE SOLVED WHEN WILL SET UP A WAY OF PACKAGING PLUGIN
-	# setup the jsch plugin build
-#	rm plugins/org.eclipse.team.cvs.ssh2/com.jcraft.jsch_*.jar
-	# FIXME remove version number, file a bug about this
-#	pushd baseLocation/plugins > /dev/null
-#	# get the Manifest file
-#	unzip -qq -o -d com.jcraft.jsch_0.1.28.jar-build com.jcraft.jsch_*.jar -x com\*
-#	rm com.jcraft.jsch_*.jar
-#	popd > /dev/null
-
-	# setup with the icu4j plugins for building
-#	pushd baseLocation/plugins > /dev/null || die "pushd failed"
-#	rm com.ibm.icu.base_3.4.5.jar \
-#		com.ibm.icu_3.4.5.jar \
-#		com.ibm.icu.base.source_3.4.5/src/com.ibm.icu.base_3.4.5/src.zip \
-#		com.ibm.icu.source_3.4.5/src/com.ibm.icu_3.4.5/src.zip
-#	mkdir -p icu4j-build-temp
-#	
-#	pushd icu4j-build-temp > /dev/null || die "pushd failed"
-#	unzip -qq %{SOURCE7} 
-#	sed --in-place "s/ .*bootclasspath=.*//g" build.xml
-#	ant eclipseProjects
-#	popd > /dev/null
-#	
-#	mkdir -p icu4j-build
-#	mv icu4j-build-temp/eclipseProjects/com.ibm.icu icu4j-build
-#	mv icu4j-build-temp/eclipseProjects/com.ibm.icu.base icu4j-build
-#	rm -r icu4j-build-temp
-#	
-#	# add build.xml patches
-#	pushd icu4j-build > /dev/null || die "pushd failed"
-#	epatch ${WORKDIR}/${P}-icu4j-build-files.patch
-#	popd  > /dev/null
-#
-#	popd > /dev/null
-
 	# delete included jars
 	# FIXME: file a bug about these
 	rm plugins/org.eclipse.swt.win32.win32.x86/swt.jar \
 		plugins/org.eclipse.swt/extra_jars/exceptions.jar \
 		plugins/org.eclipse.swt.tools/swttools.jar \
 		features/org.eclipse.platform.launchers/bin/startup.jar
-
-#### UNCOMMENT THIS TO SEE OWN MANY BUNDLED JARS HAVE BEEN LEFT
-#	java-pkg_ensure-no-bundled-jars
 }
