@@ -11,7 +11,3 @@
 dev-java/tapestry
 dev-java/hivemind
 
-
-# Joshua Nichols <nichoj@alum.rpi.edu> (05 Sept 2005)
-# Hessian 3.0.13 wants Java 1.5
->=dev-java/hessian-3.0.13
