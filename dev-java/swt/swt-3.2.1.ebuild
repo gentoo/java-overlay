@@ -6,7 +6,7 @@ inherit java-pkg-2 java-ant-2
 
 MY_DMF="R-3.2.1-200609210945"
 MY_VERSION="3.2.1"
-JAVA_PKG_DROP_COMPILER="jikes"
+JAVA_PKG_FILTER_COMPILER="jikes"
 
 DESCRIPTION="GTK based SWT Library"
 HOMEPAGE="http://www.eclipse.org/"
@@ -92,9 +92,6 @@ src_unpack() {
 }
 
 src_compile() {
-	# Drop jikes support as it seems to be unfriendly with SWT
-	java-pkg_filter-compiler jikes
-
 	# Identify the AWT path
 	# The IBM VMs and the GNU GCC implementations do not store the AWT libraries
 	# in the same location as the rest of the binary VMs.
@@ -113,7 +110,8 @@ src_compile() {
 	fi
 
 	# Fix the GTK+ Library path
-	export GTKLIBS="$(pkg-config --libs-only-L gtk+-2.0 gthread-2.0) -lgtk-x11-2.0 -lgthread-2.0 -L/usr/$(get_libdir)/X11 -lXtst"
+	export GTKLIBS="$(pkg-config --libs-only-L gtk+-2.0 gthread-2.0) \
+		-lgtk-x11-2.0 -lgthread-2.0 -L/usr/$(get_libdir)/X11 -lXtst"
 
 	# Fix the pointer size for AMD64
 	[[ ${ARCH} == 'amd64' ]] && export SWT_PTR_CFLAGS=-DSWT_PTR_SIZE_64
@@ -155,14 +153,14 @@ src_compile() {
 	fi
 
 	einfo "Building JNI libraries"
-	eant compile || die "Failed to compile JNI interfaces"
+	eant compile
 
 	einfo "Copying missing files"
 	cp ${S}/version.txt ${S}/build/version.txt
 	cp ${S}/src/org/eclipse/swt/internal/SWTMessages.properties ${S}/build/org/eclipse/swt/internal/
 
 	einfo "Packing JNI libraries"
-	eant jar || die "Failed to create JNI jar"
+	eant jar
 }
 
 src_install() {
