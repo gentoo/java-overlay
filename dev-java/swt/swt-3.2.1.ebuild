@@ -6,6 +6,7 @@ inherit java-pkg-2 java-ant-2
 
 MY_DMF="R-3.2.1-200609210945"
 MY_VERSION="3.2.1"
+JAVA_PKG_DROP_COMPILER="jikes"
 
 DESCRIPTION="GTK based SWT Library"
 HOMEPAGE="http://www.eclipse.org/"
