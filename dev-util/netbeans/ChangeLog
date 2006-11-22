@@ -2,6 +2,10 @@
 # Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  22 Nov 2006; Miroslav Šulc <miroslav.sulc@startnet.cz> ChangeLog:
+  Enhanced Netbeans configuration script so it can now auto-configure Netbeans
+  for Tomcat 5.5 and JBoss 4 servers
+
   12 Nov 2006; Miroslav Šulc <miroslav.sulc@startnet.cz> ChangeLog:
   optimized 5.5-r1 ebuild for merge speed, changed jdk and jre to >=1.5,
   removed patches; nb 6.0: removed some repoman warnings
