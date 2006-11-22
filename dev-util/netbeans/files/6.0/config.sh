@@ -99,6 +99,10 @@ config_tomcat55() {
 	PROPERTIES="tomcat.home=/usr/share/tomcat-5.5\ntomcat.password=password\ntomcat.url=http://localhost:8080\ntomcat.username=ide"
 	SERVER_PACKAGE="www-servers/tomcat-5.5"
 	config_server
+	einfo
+	einfo "You still need to add"
+	einfo "<user username=\"ide\" password=\"password\" roles=\"manager\"/>"
+	einfo "to /etc/tomcat-5.5/tomcat-users.xml to be able to deploy applications from Netbeans."
 }
 
 config_jboss4() {
