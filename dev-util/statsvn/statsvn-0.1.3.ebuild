@@ -10,7 +10,7 @@ SRC_URI="mirror://sourceforge/${PN}/${P}-source.zip"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~x86"
-IUSE="doc source"
+IUSE="doc source test"
 
 COMMON_DEPEND="
 	>=dev-java/jcommon-1.0.0
@@ -19,6 +19,7 @@ COMMON_DEPEND="
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	app-arch/zip
+	test? ( =dev-java/junit-3.8*)
 	${COMMON_DEPEND}"
 
 RDEPEND=">=virtual/jre-1.4
@@ -32,6 +33,7 @@ src_unpack() {
 	rm *.jar
 	java-pkg_jar-from jcommon-1.0 jcommon.jar jcommon-1.0.0.jar
 	java-pkg_jar-from jfreechart-1.0 jfreechart.jar jfreechart-1.0.1.jar
+	use test && java-pkg_jar-from junit
 }
 
 src_compile() {
@@ -43,6 +45,12 @@ src_install() {
 
 	use doc && java-pkg_dohtml -r doc/*
 	use source && java-pkg_dosrc src/*
+}
+
+src_test() {
+	ewarn "Note that the tests require you to be online."
+	epause
+	eant test
 }
 
 pkg_postinst() {
