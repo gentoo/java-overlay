@@ -29,6 +29,9 @@ RDEPEND=">=virtual/jre-1.4
 src_unpack() {
 	unpack ${A}
 
+	cd ${S}/tests-src/net/sf/statsvn/input
+	epatch ${FILESDIR}/${P}-test.patch
+
 	cd ${S}/lib
 	rm *.jar
 	java-pkg_jar-from jcommon-1.0 jcommon.jar jcommon-1.0.0.jar
@@ -42,6 +45,7 @@ src_compile() {
 
 src_install() {
 	java-pkg_dojar dist/${PN}.jar
+	java-pkg_dolauncher statsvn --jar ${PN}.jar
 
 	use doc && java-pkg_dohtml -r doc/*
 	use source && java-pkg_dosrc src/*
@@ -49,7 +53,6 @@ src_install() {
 
 src_test() {
 	ewarn "Note that the tests require you to be online."
-	epause
 	eant test
 }
 
