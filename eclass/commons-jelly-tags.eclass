@@ -49,7 +49,7 @@ COMMON_DEPS="dev-java/commons-jelly
 	dev-java/commons-lang
 	=dev-java/dom4j-1*
 	=dev-java/jaxen-1.1*
-	=dev-java/xerces-2*
+	>=dev-java/xerces-2.7
 	dev-java/junit"
 
 RDEPEND=">=virtual/jre-1.4
