@@ -27,14 +27,12 @@ src_unpack() {
 }
 
 src_compile() {
-	local antflags="-Dnoget=true jar"
-
 	eant -Dnoget=true jar $(use_doc)
 }
 
 src_install() {
 	java-pkg_newjar target/${P}.jar ${PN}.jar
 
-	use doc && java-pkg_dohtml -r docs/api
+	use doc && java-pkg_dojavadoc dist/docs/api
 	use source && java-pkg_dosrc src/java/*
 }
