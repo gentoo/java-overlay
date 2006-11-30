@@ -14,7 +14,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="doc source"
 
 CDEPEND="dev-java/xalan
-		=dev-java/xerces-2*
+		>=dev-java/xerces-2.7
 		dev-java/xml-commons"
 		#xsltc here
 DEPEND=">=virtual/jdk-1.4

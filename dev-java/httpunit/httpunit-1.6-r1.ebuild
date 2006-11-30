@@ -25,7 +25,7 @@ RDEPEND=">=virtual/jre-1.4
 	=dev-java/rhino-1.6*
 	dev-java/nekohtml
 	=dev-java/servletapi-2.3*
-	=dev-java/xerces-2*"
+	>=dev-java/xerces-2.7"
 
 TIDY="jtidy Tidy.jar"
 JS="rhino-1.6 js.jar"

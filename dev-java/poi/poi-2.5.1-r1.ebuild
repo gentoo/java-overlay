@@ -19,7 +19,7 @@ RDEPEND=">=virtual/jre-1.2
 	=dev-java/commons-beanutils-1.6*
 	>=dev-java/commons-collections-2.1
 	=dev-java/commons-lang-2.0*
-	>=dev-java/xerces-2.6
+	>=dev-java/xerces-2.7
 	dev-java/xalan
 	>=dev-java/gnu-jaxp-1.0"
 DEPEND=">=virtual/jdk-1.2

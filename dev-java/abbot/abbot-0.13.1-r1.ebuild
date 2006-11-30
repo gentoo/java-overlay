@@ -16,7 +16,7 @@ IUSE="doc"
 
 LDEPEND="dev-java/apple-java-extensions-bin
 		~dev-java/jdom-1.0_beta10
-		=dev-java/xerces-2*
+		>=dev-java/xerces-2.7
 		=dev-java/gnu-regexp-1*
 		dev-java/bsh"
 DEPEND=">=virtual/jdk-1.4

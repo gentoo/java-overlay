@@ -20,7 +20,7 @@ COMMON_DEPENDS=">=dev-java/commons-beanutils-1.7.0
 	>=dev-db/hsqldb-1.7.2.2
 	=dev-java/servletapi-2.3*
 	>=dev-java/xalan-2.7.0
-	>=dev-java/xerces-2.2.1
+	>=dev-java/xerces-2.7
 	>=dev-java/xml-commons-1.0_beta2"
 DEPEND=">=virtual/jdk-1.3
 	${COMMON_DEPENDS}

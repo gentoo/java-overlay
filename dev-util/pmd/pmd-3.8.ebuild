@@ -17,7 +17,7 @@ RDEPEND=">=virtual/jre-1.3
 	=dev-java/jaxen-1.0*
 	dev-java/saxpath
 	dev-java/xml-commons
-	>=dev-java/xerces-2.6
+	>=dev-java/xerces-2.7
 	=dev-java/jakarta-oro-2.0*
 	"
 DEPEND=">=virtual/jdk-1.3

@@ -54,7 +54,7 @@ RDEPEND="
 	=dev-java/servletapi-2.4*
 	dev-java/jakarta-jstl
 	dev-java/sun-jdbc-rowset-bin
-	=dev-java/xerces-2*
+	>=dev-java/xerces-2.7
 	=dev-java/commons-attributes-2*
 	=dev-java/commons-beanutils-1.7*
 	dev-java/commons-dbcp

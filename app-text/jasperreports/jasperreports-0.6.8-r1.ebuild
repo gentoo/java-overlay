@@ -22,7 +22,7 @@ COMMON_DEPEND="=dev-java/itext-1.3*
 	~dev-java/servletapi-2.3
 	>=dev-java/xalan-2.5.2
 	=dev-java/eclipse-ecj-3.1*
-	=dev-java/xerces-2*
+	>=dev-java/xerces-2.7
 	=dev-java/xml-commons-external-1.3*"
 DEPEND=">=virtual/jdk-1.4
 	>=app-arch/unzip-5.50

@@ -15,7 +15,7 @@ KEYWORDS="~amd64 ~ppc ~x86"
 IUSE="doc source"
 
 RDEPEND=">=virtual/jre-1.3
-	>=dev-java/xerces-2.6
+	>=dev-java/xerces-2.7
 	dev-java/xalan
 	dev-java/junit
 	dev-java/icu4j

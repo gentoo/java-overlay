@@ -31,7 +31,7 @@ COMMON_DEPEND="
 	=dev-java/jboss-module-j2ee-4.0*
 	=dev-java/jboss-module-jmx-4.0*
 	=dev-java/jboss-module-system-4.0*
-	=dev-java/xerces-2*"
+	>=dev-java/xerces-2.7"
 #	dev-java/jdbc2-stdext
 #	dev-java/jta
 RDEPEND=">=virtual/jre-1.4
