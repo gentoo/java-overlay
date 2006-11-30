@@ -1,6 +1,8 @@
-MD5 7183f893482c6a7c5586771182861b5b files/digest-xml-security-1.2.1 72
-RMD160 5dca25cfc9466da15a1617953c7e9e6d92e3d22f files/digest-xml-security-1.2.1 72
-SHA256 8fcb76f14e7c179dccca2a4c588de2ea65bdeb67771840ed683a354dfdbbc058 files/digest-xml-security-1.2.1 72
-MD5 a6923729b411bea01b7d0f9cb1c7ef9e xml-security-1.2.1.ebuild 2235
-RMD160 11c75b092bfb82d1849c23e31ca14e3de9cfbdf8 xml-security-1.2.1.ebuild 2235
-SHA256 248872cd677aecaa99475600893ee5cdab827343bd2cdb3134785a33f225cd2f xml-security-1.2.1.ebuild 2235
+DIST xml-security-src-1_2_1.zip 1445939 RMD160 05deb2ea7dc633d7c61c92bc37373c1d1ff44536 SHA1 820e3be2685889fcfa1ac0d995c4f848dba6582c SHA256 52146954584ab85679778a189a03c0f85012df4ec80da2b745f335503d567b6d
+EBUILD xml-security-1.2.1.ebuild 2237 RMD160 44a0624b14a81fa88f19ad2d86d8555f3b4f2c14 SHA1 3e665812c6b424b51eeb48a91b3b17716c3d4a0c SHA256 e474f8d8ea37edf86e95146e21ce83fe10eb00ea7c3b33489cd64b6d963f8044
+MD5 ce4cbdde1cb53f39a1b06acde2d03ef0 xml-security-1.2.1.ebuild 2237
+RMD160 44a0624b14a81fa88f19ad2d86d8555f3b4f2c14 xml-security-1.2.1.ebuild 2237
+SHA256 e474f8d8ea37edf86e95146e21ce83fe10eb00ea7c3b33489cd64b6d963f8044 xml-security-1.2.1.ebuild 2237
+MD5 48a969da933c5c4bd661f9125c19eec1 files/digest-xml-security-1.2.1 262
+RMD160 f9067f46c13bb8d4053713ca85bf54cfb1149121 files/digest-xml-security-1.2.1 262
+SHA256 dd45a9ff1e50043f0173dec662bff1fd395528b5e9e7ec38c68b0d596eb38b94 files/digest-xml-security-1.2.1 262

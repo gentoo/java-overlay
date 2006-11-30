@@ -27,7 +27,7 @@ RDEPEND=">=virtual/jre-1.4
 	dev-java/commons-logging
 	dev-java/log4j
 	dev-java/xalan
-	=dev-java/xerces-2*
+	>=dev-java/xerces-2.7
 	dev-java/bcprov
 	dev-java/junit"
 #	dev-java/ant-clover-bin"

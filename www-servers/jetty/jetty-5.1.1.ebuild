@@ -22,7 +22,7 @@ DEPEND="${RDEPEND}
 	junit? ( dev-java/junit )
 	extra? ( >=dev-java/log4j-1.2 )
 	extra? ( >=dev-java/sun-javamail-bin-1.3.1 )
-	>=dev-java/xerces-2.5"
+	>=dev-java/xerces-2.7"
 IUSE="doc extra jikes junit source"
 S="${WORKDIR}/${P}"
 

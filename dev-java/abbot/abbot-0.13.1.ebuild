@@ -15,7 +15,8 @@ IUSE="doc jikes"
 
 LDEPEND="dev-java/apple-java-extensions-bin
 		~dev-java/jdom-1.0_beta10
-		=dev-java/xerces-2*
+		=dev-java/xml-commons-external-1.3*
+		>=dev-java/xerces-2.7
 		=dev-java/gnu-regexp-1*
 		dev-java/bsh"
 DEPEND=">=virtual/jdk-1.4
@@ -38,7 +39,7 @@ src_unpack() {
 
 	java-pkg_jar-from apple-java-extensions-bin
 	java-pkg_jar-from jdom-1.0_beta10
-	java-pkg_jar-from xerces-2 xml-apis.jar
+	java-pkg_jar-from xml-commons-external-1.3 xml-apis.jar
 	java-pkg_jar-from xerces-2 xercesImpl.jar
 	java-pkg_jar-from bsh
 	java-pkg_jar-from junit

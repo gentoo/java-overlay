@@ -21,7 +21,7 @@ RDEPEND=">=virtual/jre-1.4
 	>=dev-java/commons-el-1.0
 	>=dev-java/commons-logging-1.0.4
 	=dev-java/mx4j-2.1*
-	=dev-java/xerces-2*
+	>=dev-java/xerces-2.7
 	=dev-java/xml-commons-external-1.3*
 	dev-java/jakarta-tomcat-jasper"
 #	extra? ( dev-java/gnu-activation

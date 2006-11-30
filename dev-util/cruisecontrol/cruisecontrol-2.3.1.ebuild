@@ -30,7 +30,7 @@ DEPEND=">=virtual/jdk-1.4
 	dev-java/sun-jaf-bin
 	dev-java/sun-javamail-bin
 	dev-java/xalan
-	=dev-java/xerces-2*
+	>=dev-java/xerces-2.7
 	"
 RDEPEND=">=virtual/jdk-1.4
 	dev-java/sun-jaf-bin

@@ -34,7 +34,7 @@ DEPEND=">=virtual/jdk-1.4
 	=dev-java/commons-jexl-1.0*
 	dev-java/commons-lang
 	dev-java/plexus-utils
-	=dev-java/xerces-2*
+	>=dev-java/xerces-2.7
 	dev-java/commons-graph
 	dev-java/commons-grant
 	=dev-java/commons-jelly-1*

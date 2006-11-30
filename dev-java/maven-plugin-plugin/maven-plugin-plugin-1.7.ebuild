@@ -19,7 +19,7 @@ RDEPEND="
 	~dev-java/jdom-1.0
 	dev-java/saxpath
 	=dev-java/jaxen-1.0*
-	=dev-java/xerces-2*
+	>=dev-java/xerces-2.7
 	dev-java/msv
 	dev-java/iso-relax
 	dev-java/relaxng-datatype

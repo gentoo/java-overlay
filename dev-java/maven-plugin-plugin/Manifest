@@ -1,6 +1,24 @@
+AUX build-1.5.2.xml 7833 RMD160 004697839c6820cef4d64fe752104a626b9adc9e SHA1 326bea34326efa056ed968bd88043e97f315a23e SHA256 8e40e31e20b25fee485197ca200ef5f9a8a370a507432f99d75336d6967b831e
 MD5 fd810716ae761ec5936cdfd9bd3845c4 files/build-1.5.2.xml 7833
+RMD160 004697839c6820cef4d64fe752104a626b9adc9e files/build-1.5.2.xml 7833
+SHA256 8e40e31e20b25fee485197ca200ef5f9a8a370a507432f99d75336d6967b831e files/build-1.5.2.xml 7833
+AUX build-1.7.xml 19238 RMD160 f195f79dd388110900a553c4f48291fe1885964d SHA1 ae8ce8bbadfb02551d9f3520d6daadc6fc2af42b SHA256 8e5b0767be0b4d054d34b25bdb0d7f7c8183bb9b4e96bd3111999f14cf8d9e93
 MD5 08be41d3b1a56fa62a1d75ac5b72a7c3 files/build-1.7.xml 19238
-MD5 a4fe7a625a29a0b42f9ca96b228601fe files/digest-maven-plugin-plugin-1.5.2 84
-MD5 ff3fad2ef9742b06d3103fe729b50b30 files/digest-maven-plugin-plugin-1.7 82
+RMD160 f195f79dd388110900a553c4f48291fe1885964d files/build-1.7.xml 19238
+SHA256 8e5b0767be0b4d054d34b25bdb0d7f7c8183bb9b4e96bd3111999f14cf8d9e93 files/build-1.7.xml 19238
+DIST maven-plugin-plugin-1.5.2-gentoo.tar.bz2 12166
+DIST maven-plugin-plugin-1.7-gentoo.tar.bz2 30329 RMD160 5dff39b01ba780106cd56c1a3d04a416ebfba9b5 SHA1 ba64c96356a85dc4c46d97fece933669d7af00a5 SHA256 41a1667c3609e32e9cb92c26b32c6600ffbc358e19b2b78a0b452a93db9b016a
+EBUILD maven-plugin-plugin-1.5.2.ebuild 639 RMD160 64d3e3bd72a3f727d9a57ebe4ec215e466b940b1 SHA1 a08dc78994a90e62516726e78cd04be79117490a SHA256 3178034432a1fd0491024d8262cec5c78ab3ee91dd656f578768339f31c40a50
 MD5 7e9d8479ef5a3ea8b76687ba6cdc5e15 maven-plugin-plugin-1.5.2.ebuild 639
-MD5 197019ada7078bffdd0d434e83d6029c maven-plugin-plugin-1.7.ebuild 1091
+RMD160 64d3e3bd72a3f727d9a57ebe4ec215e466b940b1 maven-plugin-plugin-1.5.2.ebuild 639
+SHA256 3178034432a1fd0491024d8262cec5c78ab3ee91dd656f578768339f31c40a50 maven-plugin-plugin-1.5.2.ebuild 639
+EBUILD maven-plugin-plugin-1.7.ebuild 1093 RMD160 1dbd5b66aa0c29013878ef2e01e77205856270e9 SHA1 bc508fbf912d89aa12f652b92747fbce98515fd7 SHA256 7588b988bb117dbd58239e28b95801290b0cd147757385d3d4959c37a4556f88
+MD5 b584c4077ad0f44cc984a132f5884c2a maven-plugin-plugin-1.7.ebuild 1093
+RMD160 1dbd5b66aa0c29013878ef2e01e77205856270e9 maven-plugin-plugin-1.7.ebuild 1093
+SHA256 7588b988bb117dbd58239e28b95801290b0cd147757385d3d4959c37a4556f88 maven-plugin-plugin-1.7.ebuild 1093
+MD5 a4fe7a625a29a0b42f9ca96b228601fe files/digest-maven-plugin-plugin-1.5.2 84
+RMD160 c404325f5aab0a9931a725ff7985f4b84cade66a files/digest-maven-plugin-plugin-1.5.2 84
+SHA256 950cc86ebeda02bca7aa792bcc8155ae9e6fbdb3319e762ea1fa97d4c408517a files/digest-maven-plugin-plugin-1.5.2 84
+MD5 eeed45ccf6193056abc20e4120dec4b9 files/digest-maven-plugin-plugin-1.7 292
+RMD160 91ffefca37195ba9e20b66a0992a490815024a81 files/digest-maven-plugin-plugin-1.7 292
+SHA256 e6c73475ce62dd6e4293eee4a80af3fe18758490efaa1c1ac5ad93c40575c3e8 files/digest-maven-plugin-plugin-1.7 292

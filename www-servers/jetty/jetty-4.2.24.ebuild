@@ -17,7 +17,7 @@ JETTY_NAME="${PN}${SLOT}"
 DEPEND=">=virtual/jdk-1.2
 		dev-java/ant-core
 		dev-java/sun-jmx
-		=dev-java/xerces-2*
+		>=dev-java/xerces-2.7
 "
 RDEPEND=">=virtual/jre-1.2
 "
