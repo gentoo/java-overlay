@@ -3,6 +3,9 @@
 # $Header: $
 
   01 Dec 2006; Miroslav Šulc <miroslav.sulc@startnet.cz> ChangeLog:
+  corrected repoman's complaints
+
+  01 Dec 2006; Miroslav Šulc <miroslav.sulc@startnet.cz> ChangeLog:
   corrected building of the jar
 
   01 Dec 2006; Miroslav Šulc <miroslav.sulc@startnet.cz> ChangeLog:

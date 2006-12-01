@@ -19,7 +19,7 @@ COMMON_DEPEND="
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
 	app-arch/zip
-	test? ( =dev-java/junit-3.8*)
+	test? ( =dev-java/junit-3.8* )
 	${COMMON_DEPEND}"
 
 RDEPEND=">=virtual/jre-1.4
