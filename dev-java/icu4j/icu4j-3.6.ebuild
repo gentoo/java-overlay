@@ -41,3 +41,7 @@ src_install() {
 	use doc && java-pkg_dohtml -r readme.html docs/*
 	use source && java-pkg_dosrc src/*
 }
+
+src_test() {
+	eant check
+}
