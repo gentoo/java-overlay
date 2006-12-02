@@ -6,7 +6,7 @@ JAVA_PKG_OPT_USE="examples"
 
 inherit java-pkg-opt-2 java-ant-2
 
-DESCRIPTION="Metaebuild for mx4j"
+DESCRIPTION="Metapackage for mx4j"
 HOMEPAGE="http://mx4j.sourceforge.net/"
 
 SRC_URI="mirror://sourceforge/${PN}/${P}-src.tar.gz
