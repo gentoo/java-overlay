@@ -6,7 +6,7 @@ JAVA_PKG_OPT_USE="examples"
 
 inherit java-pkg-opt-2 java-ant-2
 
-DESCRIPTION="Open Source implementation of the JMX and JMX Remote API (JSR 160) specifications"
+DESCRIPTION="Metaebuild for mx4j"
 HOMEPAGE="http://mx4j.sourceforge.net/"
 
 SRC_URI="mirror://sourceforge/${PN}/${P}-src.tar.gz
@@ -87,8 +87,6 @@ src_install() {
 	use source && java-pkg_dosrc examples/mx4j
 
 	if use doc; then
-		# Might not be initialized because we might not build any java code
-		java-pkg_init_paths_
 		local docdir="${WORKDIR}/binary/${P}/docs/"
 		java-pkg_dojavadoc "${docdir}/api"
 		java-pkg_dohtml -r "${docdir}/images"
@@ -99,6 +97,6 @@ src_install() {
 pkg_postinst() {
 	elog "As this is just a metapackage now, you need to use"
 	elog "the --with-dependencies command line option to java-config"
-	elog "if you want both tools and core, but I recommend just using"
+	elog "if you want both tools and core, but you can just use"
 	elog "java-config directly on -core and -tools."
 }
