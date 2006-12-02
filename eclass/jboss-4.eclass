@@ -4,10 +4,10 @@
 
 #
 # Original Author: nichoj
-# Purpose: 
+# Purpose:
 #
 
-inherit java-pkg-2 
+inherit java-pkg-2
 
 ECLASS="jboss-4"
 INHERITED="$INHERITED $ECLASS"
@@ -68,7 +68,6 @@ jboss-4_fix-dir() {
 	eval java_pkg_args=\$$temp # get the contents of temp
 	debug-print "value of ${temp}=${java_pkg_args}"
 
-	
 	local full_dir=${JBOSS_ROOT}/${relative_dir}
 	einfo "Fixing jars in ${full_dir}"
 
@@ -82,7 +81,7 @@ jboss-4_fix-dir() {
 # fix all the thirdparty libraries for this module
 jboss-4_fix-thirdparty() {
 	debug-print-function ${FUNCNAME} $*
-	
+
 	for dir in $(jboss-4_get-dirs-to-fix); do
 		jboss-4_fix-dir thirdparty/${dir}
 	done
@@ -166,7 +165,7 @@ jboss-4_fix-module() {
 # unpack source, then fix the shared build jars
 jboss-4_src_unpack() {
 	debug-print-function ${FUNCNAME} $*
-	
+
 	source ${DISTDIR}/${GENTOO_CONF}
 
 	# NOTE: don't use java-ant's src_unpack! it cases some funky issues with
@@ -182,20 +181,20 @@ jboss-4_src_unpack() {
 
 jboss-4_src_compile() {
 	debug-print-function ${FUNCNAME} $*
-	
+
 	cd ${S}
 
 	#local antflags="${ANT_TARGET:-jars}"
 	# 23/10/06 ali_bush:increase stack size used
 	local antflags="${ANT_TARGET:-jars}"
-	
+
 	export ANT_OPTS="${ANT_OPTS} -Xmx512m"
 	eant -lib $(java-pkg_getjars buildmagic-tasks) ${antflags}
 }
 
 jboss-4_src_install() {
 	debug-print-function ${FUNCNAME} $*
-	
+
 #	for jar in output/lib/*.jar; do
 #		if [ -d ${jar} ]; then
 #			einfo "Creating ${jar}"
@@ -294,7 +293,7 @@ jboss-4_dosar() {
 #jboss-4_fix-tools() {
 #	debug-print-function "Fixing jars in ${JBOSS_ROOT}/tools/lib"
 #	quiet_pushd ${JBOSS_ROOT}/tools/lib
-#	java-pkg_jar-from ${ANT_JAVAMAIL} 
+#	java-pkg_jar-from ${ANT_JAVAMAIL}
 #	java-pkg_jar-from ${ANT_JUNIT}
 #	java-pkg_jar-from ${ANT_LAUNCHER}
 #	java-pkg_jar-from ${ANT_NODEPS}
@@ -364,7 +363,7 @@ jboss-4_dosar() {
 #
 #jboss-4_fix-apache-jaxme() {
 #	# bug #94432
-#	quiet_pushd ${JBOSS_THIRDPARTY}/apache-jaxme 
+#	quiet_pushd ${JBOSS_THIRDPARTY}/apache-jaxme
 #	quiet_popd
 #}
 #
@@ -380,7 +379,7 @@ jboss-4_dosar() {
 #
 #jboss-4_fix-apache-myfaces() {
 #	# bug #94434
-#	quiet_pushd ${JBOSS_THIRDPARTY}/apache-myfaces/lib 
+#	quiet_pushd ${JBOSS_THIRDPARTY}/apache-myfaces/lib
 #	quiet_popd
 #}
 #
@@ -448,7 +447,7 @@ jboss-4_dosar() {
 #jboss-4_fix-apache-xmlsec() {
 #	# bug #94438
 #	einfo "Fixing jars in ${JBOSS_THIRDPARTY}/apache-xmlsec/lib"
-#	quiet_pushd ${JBOSS_THIRDPARTY}/apache-xmlsec/lib 
+#	quiet_pushd ${JBOSS_THIRDPARTY}/apache-xmlsec/lib
 #	java-pkg_jar-from ${XMLSEC}
 #	quiet_popd
 #}
@@ -463,7 +462,7 @@ jboss-4_dosar() {
 #jboss-4_fix-bouncycastle() {
 #	# bug #944346
 #	einfo "Fixing jars in ${JBOSS_THIRDPARTY}/bouncycastle/lib"
-#	quiet_pushd ${JBOSS_THIRDPARTY}/bouncycastle/lib 
+#	quiet_pushd ${JBOSS_THIRDPARTY}/bouncycastle/lib
 #	java-pkg_jar-from ${BCPROV} bcprov-jdk14-124.jar
 #	quiet_popd
 #}
@@ -485,7 +484,7 @@ jboss-4_dosar() {
 #
 #jboss-4_fix-eclipse-jdt() {
 #	# bug #80526
-#	quiet_pushd ${JBOSS_THIRDPARTY}/eclipse-jdt/lib 
+#	quiet_pushd ${JBOSS_THIRDPARTY}/eclipse-jdt/lib
 #	quiet_popd
 #}
 #
@@ -601,7 +600,7 @@ jboss-4_dosar() {
 #jboss-4_fix-opensaml() {
 #	# bug #94428
 #	einfo "Fixing jars in ${JBOSS_THIRDPARTY}/opensaml/lib"
-#	quiet_pushd ${JBOSS_THIRDPARTY}/opensaml/lib 
+#	quiet_pushd ${JBOSS_THIRDPARTY}/opensaml/lib
 #	java-pkg_jar-from ${OPENSAML}
 #	quiet_popd
 #}
@@ -614,7 +613,7 @@ jboss-4_dosar() {
 #
 #jboss-4_fix-oswego-concurrent() {
 #	einfo "Fixing jars in ${JBOSS_THIRDPARTY}/oswego-concurrent/lib"
-#	quiet_pushd ${JBOSS_THIRDPARTY}/oswego-concurrent/lib 
+#	quiet_pushd ${JBOSS_THIRDPARTY}/oswego-concurrent/lib
 #	java-pkg_jar-from ${CONCURRENT}
 #	quiet_popd
 #}
@@ -629,7 +628,7 @@ jboss-4_dosar() {
 #jboss-4_fix-sleepycat() {
 #	# bug #94430
 #	einfo "Fixing jars in ${JBOSS_THIRDPARTY}/sleepycat/lib"
-#	quiet_pushd ${JBOSS_THIRDPARTY}/sleepycat/lib 
+#	quiet_pushd ${JBOSS_THIRDPARTY}/sleepycat/lib
 #	java-pkg_jar-from ${JE}
 #	quiet_popd
 #}
@@ -692,7 +691,7 @@ jboss-4_dosar() {
 #jboss-4_fix-trove() {
 #	einfo "Fixing jars in ${JBOSS_THIRDPARTY}/trove/lib"
 #	quiet_pushd ${JBOSS_THIRDPARTY}/trove/lib
-#	java-pkg_jar-from ${TROVE} 
+#	java-pkg_jar-from ${TROVE}
 #	quiet_popd
 #}
 #
