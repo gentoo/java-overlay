@@ -21,7 +21,7 @@ SRC_URI="mirror://sourceforge/${MY_PN}/${MY_P}-src.tar.gz"
 
 # Optional jetty support can be enabled after jetty uses java-pkg_dojar to install jars
 
-RDEPEND="=dev-java/mx4j-${PV}*
+RDEPEND="
 	dev-java/bcel
 	dev-java/commons-logging
 	dev-java/log4j
