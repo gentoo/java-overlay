@@ -2,6 +2,10 @@
 # Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  02 Dec 2006; Petteri Räty <betelgeuse@gentoo.org> ChangeLog:
+  Adding sun-jdk-1.5.0.10.ebuild using pax-utils.eclass from bug #156135.
+  Can't commit to main because of bugs in the eclass.
+
   22 Nov 2006; Vlastimil Babka <caster@gentoo.org>
   -sun-jdk-1.6.0.0_beta102.ebuild, -sun-jdk-1.6.0.0_beta103.ebuild,
   -sun-jdk-1.7.0.0_alpha01.ebuild, +sun-jdk-1.7.0.0_alpha02.ebuild:
