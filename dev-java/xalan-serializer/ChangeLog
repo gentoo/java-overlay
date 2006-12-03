@@ -1,0 +1,9 @@
+# ChangeLog for dev-java/xalan-serializer
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  03 Dec 2006; Vlastimil Babka <caster@gentoo.org>
+  +xalan-serializer-2.7.0.ebuild:
+  Initial ebuild of separately built serializer.jar from xalan, to be shared
+  with xerces-2.9.0, bug #156258.
+
