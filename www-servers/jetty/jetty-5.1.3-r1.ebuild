@@ -2,21 +2,20 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils java-pkg
+inherit eutils java-pkg-2
 
 DESCRIPTION="A Lightweight Servlet Engine"
 
 SLOT="5"
 SRC_URI="mirror://sourceforge/jetty/${P}-all.zip"
 HOMEPAGE="http://www.mortbay.org/"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 LICENSE="Apache-1.1"
 
 DEPEND=" >=virtual/jdk-1.4
 	app-arch/unzip
 	>=dev-java/ant-1.6
-	junit? ( dev-java/junit )
-	jikes? ( dev-java/jikes )"
+	test? ( dev-java/junit )"
 RDEPEND=">=virtual/jre-1.4
 	>=dev-java/commons-el-1.0
 	>=dev-java/commons-logging-1.0.4
@@ -32,7 +31,7 @@ RDEPEND=">=virtual/jre-1.4
 
 # disabling extra until all dependencies are packaged
 #IUSE="doc extra jikes junit source"
-IUSE="doc jikes junit source" 
+IUSE="doc test source" 
 
 JETTY_NAME="${PN}-${SLOT}"
 JETTY_HOME="/opt/${JETTY_NAME}"
@@ -86,19 +85,17 @@ src_unpack() {
 }
 
 src_compile() {
-	einfo "Building main packages..."
-	local antflags="clean webapps"
-	use jikes && antflags="${antflags} -Dbuild.compiler=jikes"
-	use doc && antflags="${antflags} -Djavadoc=api javadoc"
-	use junit && antflags="${antflags} test"
-
-	ant ${antflags} prepare jars || die "Building main packages failed."
+	eant clean webapps prepare jars $(use_doc -Djavadoc=api javadoc)
 
 #	if use extra; then
 #		einfo "Building extra packages..."
 #		cd ${S}/extra
 #		ant ${antflags} do.plus do.loadbalancer do.ftp || die "Building extra packages failed."
 #	fi
+}
+
+src_test() {
+	eant test
 }
 
 pkg_preinst() {
