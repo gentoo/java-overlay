@@ -52,9 +52,6 @@ src_unpack() {
 		unpack "${P}.tar.gz"
 	fi
 
-	# registers these
-	java-pkg_getjars mx4j-core-3.0 > /dev/null
-	java-pkg_getjars mx4j-tools-3.0 > /dev/null
 	if use examples; then
 		cd "${S}/lib"
 		java-pkg_jar-from bcel bcel.jar
@@ -92,11 +89,18 @@ src_install() {
 		java-pkg_dohtml -r "${docdir}/images"
 		java-pkg_dohtml "${docdir}"/{*.html,*.css}
 	fi
+
+	# Recording jars to get the same behaviour as before
+	oldifs="${IFS}"
+	IFS=":"
+	java-pkg_getjars mx4j-core-3.0,mx4j-tools-3.0
+	for jar in $(java-pkg_getjars mx4j-core-3.0,mx4j-tools-3.0); do
+		java-pkg_regjar "${jar}"
+	done
+	IFS="${oldifs}"
 }
 
 pkg_postinst() {
-	elog "As this is just a metapackage now, you need to use"
-	elog "the --with-dependencies command line option to java-config"
-	elog "if you want both tools and core, but you can just use"
-	elog "java-config directly on -core and -tools."
+	elog "Although this package can be used directly with java-config,"
+	elog "ebuild developers should use mx4j-core and mx4j-tools directly."
 }
