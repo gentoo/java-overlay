@@ -1,2 +1,0 @@
-JETTY_HOME=/opt/jetty
-CONFIG_PROTECT=/opt/jetty/etc
