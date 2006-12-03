@@ -31,17 +31,17 @@ src_unpack() {
 }
 
 src_compile() {
-	eant jar $(use_doc)
+	eant -Dnoget=true jar $(use_doc)
 }
 
 src_install() {
-	java-pkg_newjar target/${P}.jar ${PN}.jar
+	java-pkg_newjar dist/${P}.jar ${PN}.jar
 	java-pkg_dolauncher apgdiff --jar ${PN}.jar
 
-	use doc && java-pkg_dohtml -r doc/*
+	use doc && java-pkg_dohtml -r dist/javadoc/*
 	use source && java-pkg_dosrc src/main/java/*
 }
 
 src_test() {
-	eant test
+	ANT_TASKS="ant-junit" eant -Dnoget=true test
 }
