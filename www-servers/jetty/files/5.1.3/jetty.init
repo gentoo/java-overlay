@@ -1,0 +1,36 @@
+#!/sbin/runscript
+# Copyright 1999-2005 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License, v2 or later
+# $Header: $
+
+JETTY_ENV="JAVA_HOME=${JAVA_HOME} JAVA_OPTIONS=\"${JAVA_OPTIONS}\""
+JETTY_ENV="${JETTY_ENV} JETTY_HOME=${JETTY_HOME} JETTY_CONSOLE=/var/log/jetty5/jetty5.log"
+JETTY_ENV="${JETTY_ENV} JETTY_PORT=${JETTY_PORT} JETTY_CONF=${JETTY_CONF} JETTY_RUN=${JETTY_HOME}/tmp"
+JETTY_ENV="${JETTY_ENV} CLASSPATH=${CLASSPATH}:${JETTY_ADD_CLASSPATH}"
+
+depend() {
+	need net
+	use dns logger postgresql mysql
+}
+
+start()	{
+	ebegin "Starting Jetty"
+	su - ${JETTY_USER} -c "${JETTY_ENV} ${JETTY_HOME}/bin/jetty.sh start"
+	eend $?
+}
+
+stop ()	{
+	ebegin "Stopping Jetty"
+	su - ${JETTY_USER} -c "${JETTY_ENV} ${JETTY_HOME}/bin/jetty.sh stop"
+	sleep 2
+	eend $?
+}
+
+svc_restart () {
+	ebegin "Restarting Jetty"
+	su - ${JETTY_USER} -c "${JETTY_ENV} ${JETTY_HOME}/bin/jetty.sh stop"
+	sleep 5
+	cd ${JETTY_HOME}
+	su - ${JETTY_USER} -c "${JETTY_ENV} ${JETTY_HOME}/bin/jetty.sh start"
+	eend $?
+}

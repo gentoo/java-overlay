@@ -1,0 +1,17 @@
+diff -ru jetty-4.2.24/bin/jetty.sh jetty-4.2.24-patched/bin/jetty.sh
+--- jetty-4.2.24/bin/jetty.sh	2005-05-13 02:25:21.000000000 -0400
++++ jetty-4.2.24-patched/bin/jetty.sh	2005-05-13 02:25:51.000000000 -0400
+@@ -422,11 +422,11 @@
+ #####################################################
+ if [ $JAVA_VERSION -lt 4 ]
+ then
+-   CP=$(ls $JETTY_HOME/ext/*.jar $JETTY_HOME/lib/*.jar | \
++   CP=$(ls $JETTY_HOME/lib/*.jar | \
+       egrep -v org.mortbay.jetty.jar | \
+       paste -s -d"$PATH_SEPARATOR" - )
+ else
+-   CP=$(ls $JETTY_HOME/ext/*.jar $JETTY_HOME/lib/*.jar | \
++   CP=$(ls $JETTY_HOME/lib/*.jar | \
+       egrep -v org.mortbay.jetty-jdk1.2.jar\|crimson.jar\|javax.xml.jaxp.jar | \
+       paste -s -d"$PATH_SEPARATOR" - )
+ fi
