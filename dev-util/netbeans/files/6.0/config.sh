@@ -34,16 +34,17 @@ function config_ant() {
 		USERDIR="${HOME}/.netbeans/dev"
 	fi
 
+	einfo "Updating file ${FILE}"
 	FILE="${USERDIR}/config/Preferences/org/apache/tools/ant/module.properties"
 	if [ ! -f ${FILE} ]; then
-		eerror "Cannot find ant configuration file ${FILE}"
-		return 1
+		mkdir -p `dirname ${FILE}`
+		echo "extraClasspath=$(java-config -dp ant-tasks | sed -e 's/:/\\:/g')" >> ${FILE} \
+			|| die "Ant classpath update failed"
+	else
+		sed -i -e "s/extraClasspath=.*//" ${FILE}
+		echo "extraClasspath=$(java-config -dp ant-tasks | sed -e 's/:/\\:/g')" >> ${FILE} \
+			|| die "Ant classpath update failed"
 	fi
-
-	einfo "Updating file ${FILE}"
-	sed -i -e "s/extraClasspath=.*//" ${FILE}
-	echo "extraClasspath=$(java-config -dp ant-tasks | sed -e 's/:/\\:/g')" >> ${FILE} \
-		|| die "Ant classpath update failed"
 
 	einfo
 	einfo "Ant configuration file has been updated"
