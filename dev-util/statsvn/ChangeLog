@@ -2,6 +2,9 @@
 # Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  03 Dec 2006; Miroslav Šulc <miroslav.sulc@startnet.cz> ChangeLog:
+  version bump + few corrections including launcher script
+
   24 Nov 2006; Miroslav Šulc <miroslav.sulc@startnet.cz> ChangeLog:
   Patched tests so they run in sandbox + added launcher
 

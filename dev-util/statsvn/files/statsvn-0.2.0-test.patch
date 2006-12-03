@@ -1,11 +1,11 @@
---- SvnLogfileParserTest.java.old	2006-11-24 19:55:42.000000000 +0100
-+++ SvnLogfileParserTest.java	2006-11-24 19:56:10.000000000 +0100
-@@ -21,7 +21,7 @@
+--- SvnLogfileParserTest.java.original	2006-12-03 05:36:39.000000000 +0100
++++ SvnLogfileParserTest.java	2006-12-03 05:37:05.000000000 +0100
+@@ -23,7 +23,7 @@
  	protected RepositoryFileManager repFileMan;
  
  	public void testJUCMNav1() throws EmptyRepositoryException, ConfigurationException, IOException, LogSyntaxException {
 -		final String args[] = { "-title", "jUCMNav", "-output-dir", sRoot + "stats", sRoot + "seg.jUCMNav.log", sRoot };
 +		final String args[] = { "-title", "jUCMNav", "-output-dir", sRoot + "stats", sRoot + "seg.jUCMNav.log", sRoot, "-cache-dir", sRoot };
- 		new CommandLineParser(args).parse();
+ 		new SvnCommandLineParser(args).parse();
  		repFileMan = new DummyRepositoryFileManager(ConfigurationOptions.getCheckedOutDirectory(), sRoot + "seg.jUCMNav.info", sRoot + "seg.jUCMNav.propget",
  				sRoot + "seg.jUCMNav.linecounts");
