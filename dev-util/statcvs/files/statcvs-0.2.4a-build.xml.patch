@@ -5,7 +5,7 @@
  	</target>
  	
 -	<target name="jar" depends="test">
-+	<target name="jar" depends="compile">
++	<target name="jar" depends="compile,copyfiles">
  		<!-- Creates an executable jar file for the project -->
 -		<unjar src="${lib}/${jfreechart.jar}" dest="${build}"/>
 -		<unjar src="${lib}/${jcommon.jar}" dest="${build}"/>

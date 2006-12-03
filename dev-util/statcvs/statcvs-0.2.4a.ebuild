@@ -45,7 +45,7 @@ src_compile() {
 
 src_install() {
 	java-pkg_dojar dist/${PN}.jar
-	java-pkg_dolauncher ${PN} --jar ${PN}.jar
+	java-pkg_dolauncher ${PN} --main net.sf.statcvs.Main
 
 	use doc && java-pkg_dohtml -r doc/*
 	use source && java-pkg_dosrc src/net
