@@ -2,6 +2,11 @@
 # Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  04 Dec 2006; Vlastimil Babka <caster@gentoo.org> -sun-jdk-1.5.0.10.ebuild,
+  -files/sun-jdk-1.5.env, -sun-jdk-1.7.0.0_alpha02.ebuild,
+  +sun-jdk-1.7.0.0_alpha03.ebuild:
+  Bump to new 1.7 snapshot. Remove 1.5.0.10 which is now in portage tree.
+
   02 Dec 2006; Petteri Räty <betelgeuse@gentoo.org> ChangeLog:
   Adding sun-jdk-1.5.0.10.ebuild using pax-utils.eclass from bug #156135.
   Can't commit to main because of bugs in the eclass.

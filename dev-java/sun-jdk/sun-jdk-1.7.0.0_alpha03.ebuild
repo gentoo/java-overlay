@@ -8,7 +8,7 @@ MY_PV=${PV/_beta*/}
 MY_PVL=${MY_PV%.*}_${MY_PV##*.}
 MY_PVA=${MY_PV//./_}
 ALPHA=${PV#*_alpha}
-DATE="08_nov_2006"
+DATE="30_nov_2006"
 MY_RPV=${MY_PV%.*}
 
 BASE_URL="http://download.java.net/jdk7/binaries/"
@@ -28,7 +28,7 @@ SRC_URI="x86? ( ${BASE_URL}/$x86file ) amd64? ( ${BASE_URL}/$amd64file )"
 SLOT="1.7"
 LICENSE="sun-prerelease-jdk7"
 KEYWORDS="~amd64 ~x86"
-#RESTRICT="nostrip fetch"
+RESTRICT="nostrip fetch"
 IUSE="doc nsplugin examples"
 
 DEPEND="
