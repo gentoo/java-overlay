@@ -2,6 +2,9 @@
 # Copyright 2002-2006 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  05 Dec 2006; William L. Thomson Jr. <wltjr@gentoo.org> ChangeLog:
+  Removed all 5.5.x stuff. It's in pretty good shape now and in portage.
+
   03 Dec 2006; Miroslav Šulc <miroslav.sulc@startnet.cz> ChangeLog:
   improved ant configuration part of config script - now it works even if the
   target dir doesn't exist
