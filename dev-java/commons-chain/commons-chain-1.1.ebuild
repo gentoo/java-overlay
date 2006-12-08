@@ -44,15 +44,13 @@ src_unpack() {
 	mkdir -p target/lib/
 	cd target/lib/
 
-	java-pkg_jarfrom commons-digester 
+	java-pkg_jarfrom commons-digester
 	java-pkg_jarfrom commons-beanutils-1.7
 	java-pkg_jarfrom commons-logging
 	java-pkg_jarfrom portletapi-1
 	java-pkg_jarfrom servletapi-2.3
 	java-pkg_jarfrom jsfapi-1
 	use test && java-pkg_jarfrom junit
-
-	java-pkg_ensure-test
 }
 
 src_compile() {

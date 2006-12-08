@@ -34,8 +34,6 @@ src_unpack() {
 	cd lib
 	java-pkg_jar-from commons-discovery || die "Could not link to discovery"
 	java-pkg_jar-from commons-logging || die "Could not link to commons-logging"
-
-	java-pkg_ensure-test
 }
 
 src_compile() {
