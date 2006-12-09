@@ -16,7 +16,7 @@ SRC_URI="mirror://apache/myfaces/source/${MY_P}-src.tar.gz
 
 LICENSE="Apache-2.0"
 SLOT="1"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 
 COMMON_DEP="
 	>=dev-java/commons-logging-1.0.4
