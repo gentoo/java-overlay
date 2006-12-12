@@ -1,0 +1,37 @@
+--- build.xml.original	2006-12-09 00:20:02.000000000 +0100
++++ build.xml	2006-12-09 17:08:35.000000000 +0100
+@@ -24,6 +24,8 @@
+   <property name="builddir" value="build" />
+   <property name="package" value="org/postgresql" />
+   <property name="debug" value="on" />
++  <property name="junit" value="true" />
++  <property name="junit.task" value="true" />
+ 
+   <!-- default build parameters are in build.properties, these may be
+        overridden by local configuration settings in build.local.properties
+@@ -63,8 +65,6 @@
+ 
+     <available property="datasourceclass" classname="javax.sql.DataSource"/>
+     <available property="ssl" classname="javax.net.ssl.SSLContext"/>
+-    <available property="junit" classname="junit.framework.Test"/>
+-    <available property="junit.task" classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask"/>
+ 
+     <condition property="datasource">
+       <isset property="datasourceclass" />
+@@ -386,7 +386,7 @@
+   <target name="testjar" depends="jar">
+     <fail message="JUnit could not be found in your classpath.  You must download and install it from http://junit.org to build and run the test suite." unless="junit" />
+     <mkdir dir="${builddir}/tests"/>
+-    <javac srcdir="${srcdir}" destdir="${builddir}/tests" debug="${debug}">
++    <javac classpath="${basedir}/lib/junit.jar" srcdir="${srcdir}" destdir="${builddir}/tests" debug="${debug}">
+       <include name="${package}/test/**" />
+ 
+       <exclude name="${package}/test/jdbc2/optional/**" unless="jdbc2optionaltests" />
+@@ -482,7 +482,6 @@
+      <param name="base.dir" expression="${builddir}/doc/"/>
+      <param name="use.id.as.filename" expression="1" />
+    </xslt>
+-   <delete file="${builddir}/doc/pgjdbc.html"/>
+   </target>
+ 
+   <!-- Blah. Can't reference an external XML catalog until Ant 1.6.

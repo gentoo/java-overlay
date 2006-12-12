@@ -1,0 +1,13 @@
+# ChangeLog for dev-java/jdbc-postgresql
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  12 Dec 2006; Miroslav Šulc <miroslav.sulc@startnet.cz>
+  +jdbc-postgresql-8.0_p318.ebuild,
+  +files/jdbc-postgresql-8.0_p318-build.xml.patch,
+  +jdbc-postgresql-8.1_p408.ebuild,
+  +files/jdbc-postgresql-8.1_p408-build.xml.patch,
+  +jdbc-postgresql-8.2_p504.ebuild,
+  +files/jdbc-postgresql-8.2_p504-build.xml.patch, +metadata.xml:
+  version bumps with improved ebuilds
+
