@@ -16,7 +16,7 @@ elif use amd64; then
 	At=${AMD64_AT}
 fi
 DESCRIPTION="Sun's J2SE Development Kit, version ${PV}"
-HOMEPAGE="http://java.sun.com/j2se/1.5.0/"
+HOMEPAGE="http://java.sun.com/javase/6/"
 SRC_URI="x86? ( http://download.java.net/dlj/binaries/${X86_AT} )
 		amd64? ( http://download.java.net/dlj/binaries/${AMD64_AT} )"
 SLOT="1.6"
@@ -25,11 +25,14 @@ KEYWORDS="-* ~amd64 ~x86"
 RESTRICT="nostrip"
 IUSE="X alsa doc examples jce nsplugin"
 
-QA_TEXTRELS_x86="opt/${P}/jre/lib/i386/motif21/libmawt.so opt/${P}/jre/lib/i386/libdeploy.so"
+QA_TEXTRELS_x86="opt/${P}/jre/lib/i386/motif21/libmawt.so
+	opt/${P}/jre/lib/i386/libdeploy.so
+	opt/${P}/jre/lib/i386/client/libjvm.so
+	opt/${P}/jre/lib/i386/server/libjvm.so"
 
 DEPEND="
-	doc? ( =dev-java/java-sdk-docs-1.5.0* )
-	jce? ( =dev-java/sun-jce-bin-1.5.0* )"
+	doc? ( =dev-java/java-sdk-docs-1.6.0* )
+	jce? ( =dev-java/sun-jce-bin-1.6.0* )"
 
 RDEPEND="
 	${DEPEND}
@@ -88,8 +91,8 @@ src_install() {
 		dodir /opt/${P}/jre/lib/security/strong-jce
 		mv ${D}/opt/${P}/jre/lib/security/US_export_policy.jar ${D}/opt/${P}/jre/lib/security/strong-jce
 		mv ${D}/opt/${P}/jre/lib/security/local_policy.jar ${D}/opt/${P}/jre/lib/security/strong-jce
-		dosym /opt/sun-jce-bin-1.5.0/jre/lib/security/unlimited-jce/US_export_policy.jar /opt/${P}/jre/lib/security/
-		dosym /opt/sun-jce-bin-1.5.0/jre/lib/security/unlimited-jce/local_policy.jar /opt/${P}/jre/lib/security/
+		dosym /opt/sun-jce-bin-1.6.0/jre/lib/security/unlimited-jce/US_export_policy.jar /opt/${P}/jre/lib/security/
+		dosym /opt/sun-jce-bin-1.6.0/jre/lib/security/unlimited-jce/local_policy.jar /opt/${P}/jre/lib/security/
 	fi
 
 	if use nsplugin; then
