@@ -2,6 +2,10 @@
 # Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  13 Dec 2006; Vlastimil Babka <caster@gentoo.org> -sun-jdk-1.6.0.ebuild,
+  -files/sun-jdk-1.6.env:
+  1.6 version moved to portage tree
+
   13 Dec 2006; Vlastimil Babka <caster@gentoo.org> sun-jdk-1.6.0.ebuild:
   Fixed jce/doc dependencies and QA_TEXTRELS_x86.
 
