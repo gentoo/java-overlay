@@ -1,0 +1,12 @@
+diff -u ptplot5.5.orig/bin/ptinvoke.in ptplot5.5/bin/ptinvoke.in
+--- ptplot5.5.orig/bin/ptinvoke.in      2006-12-13 21:12:34.881680653 +0100
++++ ptplot5.5/bin/ptinvoke.in   2006-12-13 21:12:51.871936947 +0100
+@@ -44,6 +44,7 @@
+ #### Generic stuff.
+ # Location of the Ptolemy II tree.  The bin directory should be found
+ # at $PTIIDEFAULT/bin
++CLASSPATH="${CLASSPATH}@CLASSPATHSEPARATOR@$(java-config -p ptplot)"
+ PTII_DEFAULT="@PTII_DEFAULT@"
+
+ # Check that PTII is set, and that we can find the proper sources
+

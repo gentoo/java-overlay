@@ -1,0 +1,10 @@
+# ChangeLog for dev-java/ptplot
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*ptplot-5.5 (13 Dec 2006)
+
+  13 Dec 2006; Sandro Bonazzola <sanchan@gentoo.org> +metadata.xml, +files/digest-ptplot-5.5,
+	+ptplot-5.5.ebuild, +ChangeLog, +Manifest:
+	Initial import, fix bug #102630.
+	Ebuild submitted by Aurélien Francillon <aurelien.francillon@inrialpes.fr>.

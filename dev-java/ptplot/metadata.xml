@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>no-herd</herd>
+<maintainer>
+	<email>sanchan@gentoo.org</email>
+	<name>Sandro Bonazzola</name>
+</maintainer>
+<longdescription>
+Ptplot is a set of two dimensional signal plotters components written in Java
+with the following properties:
+Embeddable in applets or applications.
+Auto-ranging.
+Automatic or manual labeling of axes.
+Automatic or manual tick marks.
+Logarithmic axes.
+Live, animated plots.
+Infinite zooming.
+Various plot styles: connected lines, scatter plot, bars, etc.
+Various point styles: none, dots, points, and unique marks.
+Multiple data sets and a legend.
+Color or black and white plotting.
+Error bars.
+Editable plots.
+PlotML, and XML language for specifying plots.
+Compatibility with pxgraph, an older plotting program.
+</longdescription>
+</pkgmetadata>
