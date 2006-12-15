@@ -17,7 +17,7 @@ MY_A="eclipse-sourceBuild-srcIncluded-${PV}.zip"
 DESCRIPTION="Eclipse Tools Platform"
 HOMEPAGE="http://www.eclipse.org/"
 SRC_URI="http://download.eclipse.org/eclipse/downloads/drops/R-${PV}-${DATESTAMP}/${MY_A}
-	mirror://gentoo/${P}-r1-patches.tar.bz2"
+	http://www.fridrik.it/files/${PF}-patches.tar.bz2"
 IUSE="branding cairo gnome opengl seamonkey tomcat"
 SLOT="3.2"
 LICENSE="EPL-1.0"
@@ -34,7 +34,9 @@ COMMON_DEP="
 		>=www-servers/tomcat-5.5.17
 	)
 	=dev-java/lucene-1*
-	>=dev-java/junit-3.8.1
+	=dev-java/junit-3*
+	=dev-java/junit-4*
+	dev-java/jsch
 	>=x11-libs/gtk+-2.6
 	cairo? ( >=x11-libs/cairo-1.0 )
 	seamonkey? ( www-client/seamonkey )
@@ -94,6 +96,11 @@ src_unpack() {
 	unpack ${A}
 
 	patch-apply-all
+
+	# no warnings
+	find ${S} -type f -name '*.xml' -exec 				\
+		sed -r -e "s/(\"compilerArg\" value=\")/\1-nowarn /g" 	\
+		-e "s/(-encoding ISO-8859-1)/\1 -nowarn/g" -i {} \;
 }
 
 src_compile() {
@@ -143,7 +150,8 @@ src_compile() {
 src_install() {
 	dodir /usr/lib
 
-	[[ -f result/linux-gtk-${eclipsearch}-sdk.tar.gz ]] || die "tar.gz bundle was not built properly!"
+	[[ -f result/linux-gtk-${eclipsearch}-sdk.tar.gz ]] \
+		|| die "tar.gz bundle was not built properly!"
 	tar zxf result/linux-gtk-${eclipsearch}-sdk.tar.gz -C ${D}/usr/lib \
 		|| die "Failed to extract the built package"
 
@@ -206,6 +214,11 @@ install-link-system-jars() {
 	java-pkg_jar-from lucene-1 lucene.jar lucene-1.4.3.jar
 	popd > /dev/null
 	## END LUCENE ##
+
+	pushd plugins/org.junit4_*/ >/dev/null
+	rm junit-4.1.jar
+	java-pkg_jar-from junit-4 junit.jar junit-4.1.jar
+	popd >/dev/null
 
 	if use tomcat; then
 		## BEGIN TOMCAT ##
@@ -280,7 +293,7 @@ patch-local-cflags() {
 
 patch-jni-libs() {
 	# %patch2 -p0
-	epatch ${WORKDIR}/${P}-build.patch
+	epatch ${WORKDIR}/${P}-build.gentoo.patch
 	# %patch4 -p0
 	epatch ${WORKDIR}/${P}-libupdatebuild.patch
 	# %patch5 -p0
@@ -348,63 +361,7 @@ patch-branding() {
 patch-symlink-ant() {
 	pushd plugins/org.apache.ant/lib/ > /dev/null || die "pushd failed"
 
-	rm \
-		ant-antlr.jar \
-		ant-antlrsrc.zip \
-		ant-apache-bcel.jar \
-		ant-apache-bcelsrc.zip \
-		ant-apache-bsf.jar \
-		ant-apache-bsfsrc.zip \
-		ant-apache-log4j.jar \
-		ant-apache-log4jsrc.zip \
-		ant-apache-oro.jar \
-		ant-apache-orosrc.zip \
-		ant-apache-regexp.jar \
-		ant-apache-regexpsrc.zip \
-		ant-apache-resolver.jar \
-		ant-apache-resolversrc.zip \
-		ant-commons-logging.jar \
-		ant-commons-loggingsrc.zip \
-		ant-commons-net.jar \
-		ant-commons-netsrc.zip \
-		ant-icontract.jar \
-		ant-icontractsrc.zip \
-		ant-jai.jar \
-		ant-jaisrc.zip \
-		ant.jar \
-		antsrc.zip \
-		ant-javamail.jar \
-		ant-javamailsrc.zip \
-		ant-jdepend.jar \
-		ant-jdependsrc.zip \
-		ant-jmf.jar \
-		ant-jmfsrc.zip \
-		ant-jsch.jar \
-		ant-jschsrc.zip \
-		ant-junit.jar \
-		ant-junitsrc.zip \
-		ant-launcher.jar \
-		ant-launchersrc.zip \
-		ant-netrexx.jar \
-		ant-netrexxsrc.zip \
-		ant-nodeps.jar \
-		ant-nodepssrc.zip \
-		ant-starteam.jar \
-		ant-starteamsrc.zip \
-		ant-stylebook.jar \
-		ant-stylebooksrc.zip \
-		ant-swing.jar \
-		ant-swingsrc.zip \
-		ant-trax.jar \
-		ant-traxsrc.zip \
-		ant-vaj.jar \
-		ant-vajsrc.zip \
-		ant-weblogic.jar \
-		ant-weblogicsrc.zip \
-		ant-xalan1.jar \
-		ant-xalan1src.zip \
-		ant-xslp.jar \
-		ant-xslpsrc.zip
+	rm *.jar *src.zip
 
 	java-pkg_jarfrom ant-core
 	java-pkg_jarfrom ant-tasks
@@ -415,29 +372,7 @@ patch-symlink-ant() {
 patch-symlink-tomcat() {
 	pushd plugins/org.eclipse.tomcat/ > /dev/null || die "pushd failed"
 
-	rm \
-		commons-beanutils.jar \
-		commons-collections.jar \
-		commons-digester.jar \
-		commons-logging-api.jar \
-		commons-modeler.jar \
-		jakarta-regexp-1.3.jar \
-		servlet.jar \
-		servlets-manager.jar \
-		naming-common.jar \
-		servlets-common.jar \
-		tomcat-http11.jar \
-		bootstrap.jar \
-		catalina.jar \
-		jasper-compiler.jar \
-		jasper-runtime.jar \
-		mx4j-jmx.jar \
-		naming-resources.jar \
-		naming-factory.jar \
-		servlets-default.jar \
-		servlets-invoker.jar \
-		tomcat-coyote.jar \
-		tomcat-util.jar
+	rm *.jar
 
 	mkdir lib
 	pushd lib/ > /dev/null || die "pushd failed"
@@ -467,8 +402,7 @@ patch-symlink-tomcat() {
 patch-symlink-lucene() {
 	pushd plugins/org.apache.lucene/ > /dev/null || die "pushd failed"
 
-	rm lucene-1.4.3.jar
-	rm lucene-1.4.3-src.zip
+	rm *.jar *src.zip
 
 	java-pkg_jar-from lucene-1 lucene.jar lucene-1.4.3.jar
 
@@ -479,6 +413,7 @@ patch-symlink-junit() {
 	pushd plugins/org.junit4 > /dev/null || die "pushd failed"
 
 	rm junit-4.1.jar
+	java-pkg_jar-from junit-4 junit.jar junit-4.1.jar
 
 	popd > /dev/null
 
@@ -539,7 +474,7 @@ patch-apply-all() {
 	popd >/dev/null
 
 	# %patch48 -p0
-	epatch ${WORKDIR}/${P}-javadoclinks.patch
+	epatch ${WORKDIR}/${P}-javadoclinks.gentoo.patch
 
 	# %patch49 -p0
 	epatch ${WORKDIR}/${P}-ecj-rpmdebuginfo.patch
@@ -557,9 +492,6 @@ patch-apply-all() {
 	# %patch54
 	epatch ${WORKDIR}/${P}-swt-rm-ON_TOP.patch
 	popd >/dev/null
-
-	# %patch55 -p0
-	epatch ${WORKDIR}/${P}-disable-junit4-apt.patch
 
 	pushd plugins/org.eclipse.swt >/dev/null || die "pushd failed"
 	mv "Eclipse SWT Mozilla" Eclipse_SWT_Mozilla
@@ -612,17 +544,11 @@ patch-apply-all() {
 		|| die "Failed to sed Makefile"
 
 	ebegin "Symlinking system jars"
-
-	patch-symlink-ant
-
-	use tomcat && patch-symlink-tomcat
-
-	patch-symlink-lucene
-
-	patch-symlink-junit
-
-	patch-symlink-jsch
-
+		patch-symlink-ant
+		use tomcat && patch-symlink-tomcat
+		patch-symlink-lucene
+		patch-symlink-junit
+		patch-symlink-jsch
 	eend $?
 
 	# FIXME: figure out what's going on with build.index on ppc64, s390x and i386   
@@ -671,19 +597,6 @@ patch-apply-all() {
 		find -type f -exec sed --in-place "s/ia64/${ARCH}/g" "{}" \;
 		find -type f -exec sed --in-place "s/@eye-eh-64_32@/ia64_32/g" "{}" \;
 	fi
-
-#### CHECK IF GCJ POLISHING IS REALLY NEEDED AS IT REQUIRES A LOT OF TIME
-#	ebegin "Polishing files (may take some time)"
-
-	# gjdoc can't handle Mac-encoded files
-	# http://gcc.gnu.org/bugzilla/show_bug.cgi?id=29167
-#	pushd plugins > /dev/null || die "pushd failed"
-#	for f in `find .. -name \*.java`; do
-#		file $f | grep "CR line" > /dev/null && mac2unix -q $f
-#	done
-#	popd > /dev/null
-
-#	eend $?
 
 	# delete included jars
 	# FIXME: file a bug about these
