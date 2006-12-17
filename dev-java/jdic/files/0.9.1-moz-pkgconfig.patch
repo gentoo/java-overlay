@@ -1,0 +1,39 @@
+Index: src/jdic/src/unix/native/mozilla/Makefile
+===================================================================
+RCS file: /cvs/jdic/src/jdic/src/unix/native/mozilla/Makefile,v
+retrieving revision 1.16
+diff -u -r1.16 Makefile
+--- src/jdic/src/unix/native/mozilla/Makefile	16 Nov 2006 09:42:22 -0000	1.16
++++ src/jdic/src/unix/native/mozilla/Makefile	17 Dec 2006 20:09:36 -0000
+@@ -47,8 +47,15 @@
+ # For Gecko SDK 1.6 or ealier, enable USING_GECKO_SDK_1_4. Or else, enable 
+ # USING_GECKO_SDK_1_7.
+ #
+-USING_GECKO_SDK_1_4 = 1
++#USING_GECKO_SDK_1_4 = 1
+ #USING_GECKO_SDK_1_7 = 1
++USING_GECKO_SDK_PKGCONFIG = 1
++
++ifdef USING_GECKO_SDK_PKGCONFIG
++MOZILLA_PKG_CONFIG ?= mozilla-gtkmozembed
++MOZILLA_DIST=$(shell pkg-config --variable=libdir $(MOZILLA_PKG_CONFIG))
++GECKO_SDK=$(shell pkg-config --variable=includedir $(MOZILLA_PKG_CONFIG))
++endif
+ 
+ # set gtk version
+ #
+@@ -170,6 +177,14 @@
+ 	-L$(GECKO_SDK)/lib -lxpcomglue_s \
+ 	-L$(GECKO_SDK)/bin -lxpcom -lnspr4 -lplds4 -lplc4 \
+ 	$(NULL)
++endif
++
++ifdef USING_GECKO_SDK_PKGCONFIG
++CPPFLAGS += $(shell pkg-config --cflags $(MOZILLA_PKG_CONFIG))
++CPPFLAGS += \
++        -DUSING_GECKO_SDK_1_7 \
++	-include $(GECKO_SDK)/mozilla-config.h
++LIBS += $(shell pkg-config --libs $(MOZILLA_PKG_CONFIG))
+ endif
+ 
+ ifeq ($(OS_ARCH), SunOS)
