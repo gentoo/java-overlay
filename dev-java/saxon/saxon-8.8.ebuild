@@ -15,9 +15,9 @@ KEYWORDS="~ppc ~x86"
 IUSE="doc source"
 
 COMMON_DEP="
-	dev-java/sun-jaf
 	dev-java/xom
-	~dev-java/jdom-1.0"
+	~dev-java/jdom-1.0
+	=dev-java/dom4j-1*"
 
 # Uses javax.xml.stream that is included
 # starting with 1.6. Could also integrate
