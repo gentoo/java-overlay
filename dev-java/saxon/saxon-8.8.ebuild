@@ -56,6 +56,7 @@ src_unpack() {
 
 src_install() {
 	java-pkg_dojar dist/*.jar
+	java-pkg_dolauncher ${PN}-transform --main net.sf.saxon.Transform
 
 	if use doc; then
 		java-pkg_dohtml -r doc/*
