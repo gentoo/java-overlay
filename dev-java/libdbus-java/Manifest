@@ -3,10 +3,10 @@ MD5 8770fcbe4b049e13a285f98348a1b3ff files/1.12-load-library.patch 671
 RMD160 84b39f6bc1dddd4eb627d436a278d7c1752e7264 files/1.12-load-library.patch 671
 SHA256 a8ae3ea1b2eb0a3a5a68083e3003640c77461bb929183f260bd3ebbe50ddaaa4 files/1.12-load-library.patch 671
 DIST libdbus-java-1.12.tar.gz 95969 RMD160 c96f85b75375277ef3d49122d1d336bbc517ef1d SHA1 42177bb4191f29eaab6e14aee02052abce7dc56b SHA256 f1faa780e70db4145b6273f326350a04c1ff6557fc2b006653539cba3e1f6a39
-EBUILD libdbus-java-1.12.ebuild 1502 RMD160 289e652ad71acc0b58f0e430fad3e119af6536da SHA1 4319ebc81fed6c74a8486b560c4aa94c7774005d SHA256 abd8ca38cfc0ca744e0ca113df1c9dfb3a36cd8dc2f70df31a23bec682dc5c21
-MD5 da1c6397321509e8ad191f9c07598b5d libdbus-java-1.12.ebuild 1502
-RMD160 289e652ad71acc0b58f0e430fad3e119af6536da libdbus-java-1.12.ebuild 1502
-SHA256 abd8ca38cfc0ca744e0ca113df1c9dfb3a36cd8dc2f70df31a23bec682dc5c21 libdbus-java-1.12.ebuild 1502
+EBUILD libdbus-java-1.12.ebuild 1495 RMD160 0d96e45ea86aa6fa5d3526184cf4d2d94c43fcb2 SHA1 4ef083d4418e09c9a04dcb5fb4f259f8aa00b0d5 SHA256 f63d185d3e632ec29fe69c0f5063c7839f6dc48ed5407fd45a31b566e4581ba2
+MD5 c28c773ff2021e5657113d0a6604aefe libdbus-java-1.12.ebuild 1495
+RMD160 0d96e45ea86aa6fa5d3526184cf4d2d94c43fcb2 libdbus-java-1.12.ebuild 1495
+SHA256 f63d185d3e632ec29fe69c0f5063c7839f6dc48ed5407fd45a31b566e4581ba2 libdbus-java-1.12.ebuild 1495
 MD5 cfe0187aaaf256d109b018d8a7e135af files/digest-libdbus-java-1.12 250
 RMD160 fb25943f8cd9764338e191a1a880e2dedee7dcd9 files/digest-libdbus-java-1.12 250
 SHA256 e787e6bbd31b57851cc7d94c7573417300008e8ff5fdb270c02222bea2713884 files/digest-libdbus-java-1.12 250

@@ -14,11 +14,12 @@ KEYWORDS="~x86"
 IUSE="doc source"
 
 RDEPEND=">=virtual/jre-1.5
-	 >=sys-apps/dbus-1.0"
+	 >=sys-apps/dbus-0.62"
 
 DEPEND=">=virtual/jdk-1.5
-	>=sys-apps/dbus-1.0
-	doc? ( app-text/docbook2X dev-tex/tex4ht )
+	>=sys-apps/dbus-0.62
+	app-text/docbook-sgml-utils
+	doc? ( dev-tex/tex4ht )
 	source? ( app-arch/zip )"
 
 PATCHES="${FILESDIR}/1.12-load-library.patch"
@@ -26,13 +27,13 @@ PATCHES="${FILESDIR}/1.12-load-library.patch"
 src_compile() {
 	append-flags -DDBUS_API_SUBJECT_TO_CHANGE=1
 	emake -j1 LDFLAGS="$(raw-ldflags)" JCFLAGS="$(java-pkg_javac-args)"
-	if use doc; then
-		for i in `ls *.sgml`; do
-			docbook2man $i || die;
-			mv DBUS-JAVA.1 $(echo $i | sed 's/sgml/1/g') || die;
-		done
-		emake doc
-	fi
+
+	for i in *.sgml; do
+		docbook2man $i || die;
+		mv DBUS-JAVA.1 $(echo $i | sed 's/sgml/1/g') || die;
+	done
+
+	use doc && emake doc
 }
 
 src_install() {
