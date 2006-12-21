@@ -26,7 +26,8 @@ PATCHES="${FILESDIR}/1.12-load-library.patch"
 
 src_compile() {
 	append-flags -DDBUS_API_SUBJECT_TO_CHANGE=1
-	emake -j1 LDFLAGS="$(raw-ldflags)" JCFLAGS="$(java-pkg_javac-args)"
+	emake -j1 LDFLAGS="$(raw-ldflags)" JCFLAGS="$(java-pkg_javac-args)" \
+		STRIP=echo
 
 	for i in *.sgml; do
 		docbook2man $i || die;
