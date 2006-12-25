@@ -1,0 +1,13 @@
+# ChangeLog for dev-java/poi
+# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  25 Dec 2006; Miroslav Šulc <miroslav.sulc@startnet.cz>
+  +poi-3.0_alpha3.ebuild, -poi-3.0_alpha20061031.ebuild,
+  -files/poi-3.0_alpha20061031-build.xml.patch,
+  -files/poi-3.0_alpha20061031-src.patch,
+  +files/poi-3.0_alpha3-build.xml.patch, +files/poi-3.0_alpha3-src.patch,
+  +metadata.xml:
+  alpha3 bumped + added support for tests (tests do not pass on alpha), older
+  alpha removed
+
