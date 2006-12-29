@@ -6,7 +6,7 @@ inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="An open source set of Atom/RSS Java utilities that make it easy to work in Java with most syndication formats"
 HOMEPAGE="https://rome.dev.java.net/"
-SRC_URI="http://rome.dev.java.net/files/documents/1764/30987/${P}-src.zip"
+SRC_URI="https://rome.dev.java.net/source/browse/*checkout*/rome/www/dist/${P}-src.zip"
 
 LICENSE="Apache-2.0"
 SLOT="0"
@@ -31,7 +31,7 @@ src_compile() {
 }
 
 src_install() {
-	java-pkg_newjar target/${P}.jar ${PN}.jar
+	java-pkg_newjar target/${P}.jar
 
 	use doc && java-pkg_dojavadoc dist/docs/api
 	use source && java-pkg_dosrc src/java/*
