@@ -13,6 +13,9 @@
 # Joshua Nichols <nichoj@gentoo.org (23 Aug 2006)
 # Masked since, it's VERY early in development
 =dev-java/sun-jdk-1.7*
+# Vlastimil Babka <caster@gentoo.org> (03 Jan 2006)
+# Masked snapshots of 1.6 update
+=dev-java/sun-jdk-1.6.0.1_alpha*
 
 =www-server/jboss-4.0.4-r2
 
