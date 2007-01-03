@@ -9,7 +9,7 @@ DESCRIPTION="Hibernate is a powerful, ultra-high performance object / relational
 SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 HOMEPAGE="http://www.hibernate.org"
 LICENSE="LGPL-2"
-IUSE="doc source"
+IUSE="doc jboss source"
 SLOT="3.1"
 KEYWORDS="~x86 ~amd64"
 
@@ -27,15 +27,20 @@ COMMON_DEPEND="
 	dev-java/oscache
 	dev-java/proxool
 	=dev-java/swarmcache-1*
-	=dev-java/jboss-module-cache-4.0*
-	=dev-java/jboss-module-common-4.0*
-	=dev-java/jboss-module-j2ee-4.0*
-	=dev-java/jboss-module-jmx-4.0*
-	=dev-java/jboss-module-system-4.0*
+	jboss? ( 
+		=dev-java/jboss-module-cache-4.0*
+		=dev-java/jboss-module-common-4.0*
+		=dev-java/jboss-module-j2ee-4.0*
+		=dev-java/jboss-module-jmx-4.0*
+		=dev-java/jboss-module-system-4.0*
+	)
+	!jboss? (
+		dev-java/jta
+		dev-java/sun-jacc-api
+	)
 	dev-java/jgroups
 	>=dev-java/xerces-2.7"
 #	dev-java/jdbc2-stdext
-#	dev-java/jta
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"
 # FIXME doesn't like  Java 1.6's JDBC API
@@ -46,11 +51,17 @@ DEPEND="|| (
 	>=dev-java/ant-core-1.5
 	${COMMON_DEPEND}"
 
-S=${WORKDIR}/${PN}-${MY_PV}
+S="${WORKDIR}/${PN}-${MY_PV}"
 
 src_unpack() {
 	unpack ${A}
 	cd ${S}
+
+	if ! use jboss; then
+		rm src/org/hibernate/cache/JndiBoundTreeCacheProvider.java \
+			src/org/hibernate/cache/TreeCache.java \
+			src/org/hibernate/cache/TreeCacheProvider.java
+	fi
 
 	cd lib
 	rm *.jar
@@ -63,11 +74,16 @@ src_unpack() {
 	done
 	java-pkg_jar-from cglib-2.1 cglib.jar
 
-	java-pkg_jar-from jboss-module-cache-4 jboss-cache.jar
-	java-pkg_jar-from jboss-module-common-4 jboss-common.jar
-	java-pkg_jar-from jboss-module-j2ee-4 jboss-j2ee.jar
-	java-pkg_jar-from jboss-module-jmx-4 jboss-jmx.jar
-	java-pkg_jar-from jboss-module-system-4 jboss-system.jar
+	if use jboss; then
+		java-pkg_jar-from jboss-module-cache-4 jboss-cache.jar
+		java-pkg_jar-from jboss-module-common-4 jboss-common.jar
+		java-pkg_jar-from jboss-module-j2ee-4 jboss-j2ee.jar
+		java-pkg_jar-from jboss-module-jmx-4 jboss-jmx.jar
+		java-pkg_jar-from jboss-module-system-4 jboss-system.jar
+	else
+		java-pkg_jar-from jta
+		java-pkg_jar-from sun-jacc-api
+	fi
 	java-pkg_jar-from ant-tasks ant-antlr.jar
 	java-pkg_jar-from antlr
 	java-pkg_jar-from ant-core ant.jar
