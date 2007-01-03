@@ -9,7 +9,7 @@ DESCRIPTION="Hibernate is a powerful, ultra-high performance object / relational
 SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 HOMEPAGE="http://www.hibernate.org"
 LICENSE="LGPL-2"
-IUSE="doc"
+IUSE="doc jboss"
 SLOT="3"
 KEYWORDS="~amd64 ~x86"
 
@@ -26,14 +26,17 @@ COMMON_DEPEND="
 	dev-java/oscache
 	dev-java/proxool
 	=dev-java/swarmcache-1*
-	=dev-java/jboss-module-cache-4.0*
-	=dev-java/jboss-module-common-4.0*
-	=dev-java/jboss-module-j2ee-4.0*
-	=dev-java/jboss-module-jmx-4.0*
-	=dev-java/jboss-module-system-4.0*
+	jboss? (
+		=dev-java/jboss-module-cache-4.0*
+		=dev-java/jboss-module-common-4.0*
+		=dev-java/jboss-module-j2ee-4.0*
+		=dev-java/jboss-module-jmx-4.0*
+		=dev-java/jboss-module-system-4.0*
+	)
+	dev-java/jta
+	dev-java/sun-jacc-api
 	>=dev-java/xerces-2.7"
 #	dev-java/jdbc2-stdext
-#	dev-java/jta
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"
 DEPEND=">=virtual/jdk-1.4
@@ -50,23 +53,31 @@ src_unpack() {
 
 	# get rid of the lame splash screen
 	epatch ${FILESDIR}/${P}-nosplash.patch
+
+	if ! use jboss; then
+		rm src/org/hibernate/cache/JndiBoundTreeCacheProvider.java \
+			src/org/hibernate/cache/TreeCache.java \
+			src/org/hibernate/cache/TreeCacheProvider.java
+	fi
 	
 	cd lib
 	rm *.jar
 
 	local JAR_PACKAGES="ant-core antlr asm-2 c3p0 commons-collections 
-		commons-logging dom4j-1 ehcache jaxen-1.1 jdbc2-stdext 
-		log4j oscache proxool swarmcache-1.0 xerces-2"
+		commons-logging dom4j-1 ehcache jaxen-1.1 jdbc2-stdext jta
+		log4j oscache proxool swarmcache-1.0 sun-jacc-api xerces-2"
 	for PACKAGE in ${JAR_PACKAGES}; do
 		java-pkg_jar-from ${PACKAGE}
 	done
 	java-pkg_jar-from cglib-2.1 cglib.jar
 
-	java-pkg_jar-from jboss-module-cache-4 jboss-cache.jar
-	java-pkg_jar-from jboss-module-common-4 jboss-common.jar
-	java-pkg_jar-from jboss-module-j2ee-4 jboss-j2ee.jar
-	java-pkg_jar-from jboss-module-jmx-4 jboss-jmx.jar
-	java-pkg_jar-from jboss-module-system-4 jboss-system.jar
+	if use jboss; then
+		java-pkg_jar-from jboss-module-cache-4 jboss-cache.jar
+		java-pkg_jar-from jboss-module-common-4 jboss-common.jar
+		java-pkg_jar-from jboss-module-j2ee-4 jboss-j2ee.jar
+		java-pkg_jar-from jboss-module-jmx-4 jboss-jmx.jar
+		java-pkg_jar-from jboss-module-system-4 jboss-system.jar
+	fi
 
 }
 src_compile() {
