@@ -1,19 +1,19 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/sun-jdk/sun-jdk-1.5.0.05.ebuild,v 1.2 2005/10/10 16:23:12 betelgeuse Exp $
 
 inherit java-vm-2 eutils
 
-MY_PV=${PV/_beta*/}
+MY_PV=${PV/_alpha*/}
 MY_PVL=${MY_PV%.*}_${MY_PV##*.}
 MY_PVA=${MY_PV//./_}
-ALPHA=${PV#*_alpha}
-DATE="30_nov_2006"
-MY_RPV=${MY_PV%.*}
+BETA=${PV#*_alpha}
+DATE="14_dec_2006"
+MY_RPV=${MY_PV%.*}_${BETA}
 
-BASE_URL="http://download.java.net/jdk7/binaries/"
-x86file="jdk-7-ea-bin-b${ALPHA}-linux-i586-${DATE}.bin"
-amd64file="jdk-7-ea-bin-b${ALPHA}-linux-amd64-${DATE}.bin"
+BASE_URL="http://www.java.net/download/jdk6/6u1/promoted/b${BETA}/binaries/"
+x86file="jdk-6u1-ea-bin-b${BETA}-linux-i586-${DATE}.bin"
+amd64file="jdk-6u1-ea-bin-b${BETA}-linux-amd64-${DATE}.bin"
 
 if use x86; then
 	At=${x86file}
@@ -23,24 +23,34 @@ fi
 
 S="${WORKDIR}/jdk${MY_RPV}"
 DESCRIPTION="Sun's Java Development Kit"
-HOMEPAGE="https://jdk7.dev.java.net/"
+HOMEPAGE="https://jdk6.dev.java.net/"
 SRC_URI="x86? ( ${BASE_URL}/$x86file ) amd64? ( ${BASE_URL}/$amd64file )"
-SLOT="1.7"
-LICENSE="sun-prerelease-jdk7"
+SLOT="1.6"
+LICENSE="sun-prerelease-jdk6"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="nostrip fetch"
-IUSE="doc nsplugin examples"
+# TODO: needs to remove libs that don't have satisfied deps
+IUSE="X alsa doc nsplugin examples"
 
 DEPEND="
 	sys-apps/sed
 	doc? ( =dev-java/java-sdk-docs-1.5.0* )"
 
-RDEPEND="x86? ( sys-libs/lib-compat )
+RDEPEND="
+	=virtual/libstdc++-3.3
+	X? (
+		x11-libs/libX11
+		x11-libs/libXext
+		x11-libs/libXi
+		x11-libs/libXp
+		x11-libs/libXtst
+	)
+	alsa? ( media-libs/alsa-lib )
 	doc? ( =dev-java/java-sdk-docs-1.5.0* )"
 
 JAVA_PROVIDE="jdbc-stdext jdbc-rowset"
 
-PACKED_JARS="lib/tools.jar jre/lib/rt.jar jre/lib/jsse.jar jre/lib/charsets.jar jre/lib/ext/localedata.jar jre/lib/plugin.jar jre/lib/javaws.jar jre/lib/deploy.jar"
+PACKED_JARS="jre/lib/rt.jar jre/lib/jsse.jar jre/lib/charsets.jar lib/tools.jar jre/lib/ext/localedata.jar jre/lib/plugin.jar jre/lib/javaws.jar jre/lib/deploy.jar"
 
 # this is needed for proper operating under a PaX kernel without activated grsecurity acl
 CHPAX_CONSERVATIVE_FLAGS="pemsv"
@@ -123,19 +133,17 @@ src_install() {
 		fi
 	fi
 
-	# create dir for system preferences
-	dodir /opt/${P}/jre/.systemPrefs
-	# Create files used as storage for system preferences.
-	touch ${D}/opt/${P}/jre/.systemPrefs/.system.lock
-	chmod 644 ${D}/opt/${P}/jre/.systemPrefs/.system.lock
-	touch ${D}/opt/${P}/jre/.systemPrefs/.systemRootModFile
-	chmod 644 ${D}/opt/${P}/jre/.systemPrefs/.systemRootModFile
-
 	# install control panel for Gnome/KDE
-	sed -e "s/INSTALL_DIR\/JRE_NAME_VERSION/\/opt\/${P}\/jre/" \
-		-e "s/\(Name=Java\)/\1 Control Panel/" \
-		${D}/opt/${P}/jre/plugin/desktop/sun_java.desktop > \
-		${T}/sun_java-${SLOT}.desktop
+	cat > ${T}/sun_java-${SLOT}.desktop <<-EOF
+		[Desktop Entry]
+		Name=Java Control Panel ${SLOT}
+		Comment=Java Control Panel
+		Exec=/opt/${P}/jre/bin/ControlPanel
+		Icon=/opt/${P}/jre/plugin/desktop/sun_java.png
+		Terminal=0
+		Type=Application
+		Categories=Application;Settings;
+	EOF
 
 	domenu ${T}/sun_java-${SLOT}.desktop
 
@@ -172,7 +180,7 @@ pkg_postinst() {
 
 	echo
 	einfo " Be careful: ${P}'s Java compiler uses"
-	einfo " '-source 1.7' as default. This means that some keywords "
+	einfo " '-source 1.6' as default. This means that some keywords "
 	einfo " such as 'enum' are not valid identifiers any more in that mode,"
 	einfo " which can cause incompatibility with certain sources."
 	einfo " Additionally, some API changes may cause some breakages."

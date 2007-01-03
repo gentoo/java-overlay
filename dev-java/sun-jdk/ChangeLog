@@ -1,6 +1,11 @@
 # ChangeLog for dev-java/sun-jdk
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  03 Jan 2007; Vlastimil Babka <caster@gentoo.org>
+  +sun-jdk-1.6.0.1_alpha01.ebuild, +files/sun-jdk-1.6.env,
+  -sun-jdk-1.7.0.0_alpha03.ebuild, +sun-jdk-1.7.0.0_alpha04.ebuild:
+  New 1.7 snapshot and also first snapshot of 1.6 update 1 (6u1).
 
   13 Dec 2006; Vlastimil Babka <caster@gentoo.org> -sun-jdk-1.6.0.ebuild,
   -files/sun-jdk-1.6.env:
