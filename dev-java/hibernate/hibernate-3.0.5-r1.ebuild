@@ -20,7 +20,7 @@ COMMON_DEPEND="
 	dev-java/commons-collections
 	dev-java/commons-logging
 	=dev-java/dom4j-1*
-	dev-java/ehcache
+	=dev-java/ehcache-1.1*
 	=dev-java/jaxen-1.1*
 	dev-java/log4j
 	dev-java/oscache

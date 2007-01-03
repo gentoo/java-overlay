@@ -17,7 +17,7 @@ COMMOND_DEPEND="
 		dev-java/commons-logging
 		dev-java/concurrent-util
 		>=dev-java/dom4j-1.5
-		dev-java/ehcache
+		=dev-java/ehcache-1.1*
 		dev-java/odmg
 		dev-java/c3p0
 		dev-java/commons-pool

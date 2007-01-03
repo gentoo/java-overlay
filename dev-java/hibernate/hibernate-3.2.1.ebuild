@@ -10,7 +10,7 @@ DESCRIPTION="Hibernate is a powerful, ultra-high performance object / relational
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}.ga.tar.gz"
 HOMEPAGE="http://www.hibernate.org"
 LICENSE="LGPL-2"
-IUSE="doc source"
+IUSE="doc jboss source"
 SLOT="3.2"
 KEYWORDS="~x86 ~amd64"
 
@@ -22,24 +22,25 @@ COMMON_DEPEND="
 	dev-java/commons-collections
 	dev-java/commons-logging
 	=dev-java/dom4j-1*
-	>=dev-java/ehcache-1.2
+	>=dev-java/ehcache-1.2.4
 	=dev-java/jaxen-1.1*
 	dev-java/log4j
 	dev-java/oscache
 	dev-java/proxool
 	=dev-java/swarmcache-1*
-	dev-java/jboss-cache
-	=dev-java/jboss-module-common-4.0*
-	=dev-java/jboss-module-j2ee-4.0*
-	=dev-java/jboss-module-jmx-4.0*
-	=dev-java/jboss-module-system-4.0*
+	jboss? (
+		dev-java/jboss-cache
+		=dev-java/jboss-module-common-4.0*
+		=dev-java/jboss-module-j2ee-4.0*
+		=dev-java/jboss-module-jmx-4.0*
+		=dev-java/jboss-module-system-4.0*
+	)
 	dev-java/jgroups
 	=dev-java/javassist-3.3*
 	>=dev-java/xerces-2.7
 	=dev-java/jdbc2-stdext-2*
 	dev-java/jta"
 #	dev-java/jdbc2-stdext
-#	dev-java/jta
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"
 # FIXME doesn't like  Java 1.6's JDBC API
@@ -56,22 +57,39 @@ src_unpack() {
 	unpack ${A}
 	cd ${S}
 
-	cd lib
+	if ! use jboss; then 
+		rm src/org/hibernate/cache/JndiBoundTreeCacheProvider.java \
+			src/org/hibernate/cache/OptimisticTreeCache.java \
+			src/org/hibernate/cache/OptimisticTreeCacheProvider.java \
+			src/org/hibernate/cache/TreeCache.java \
+			src/org/hibernate/cache/TreeCacheProvider.java || die "failed to remove jboss files"
+	fi
+
+
+	cd ${S}/lib
 	rm *.jar
 
 	local JAR_PACKAGES="c3p0 commons-collections javassist-3.3
-		commons-logging dom4j-1 ehcache jaxen-1.1 jdbc2-stdext
-		log4j oscache proxool swarmcache-1.0 xerces-2 jgroups"
+		commons-logging dom4j-1 ehcache-1.2 jaxen-1.1 jdbc2-stdext
+		log4j oscache proxool swarmcache-1.0 xerces-2 jgroups jta"
 	for PACKAGE in ${JAR_PACKAGES}; do
 		java-pkg_jar-from ${PACKAGE}
 	done
 	java-pkg_jar-from cglib-2.1 cglib.jar
 
-	java-pkg_jar-from jboss-cache jboss-cache.jar
-	java-pkg_jar-from jboss-module-common-4 jboss-common.jar
-	java-pkg_jar-from jboss-module-j2ee-4 jboss-j2ee.jar
-	java-pkg_jar-from jboss-module-jmx-4 jboss-jmx.jar
-	java-pkg_jar-from jboss-module-system-4 jboss-system.jar
+	if use jboss; then
+		java-pkg_jar-from jboss-cache jboss-cache.jar
+		java-pkg_jar-from jboss-module-common-4 jboss-common.jar
+		java-pkg_jar-from jboss-module-j2ee-4 jboss-j2ee.jar
+		java-pkg_jar-from jboss-module-jmx-4 jboss-jmx.jar
+		java-pkg_jar-from jboss-module-system-4 jboss-system.jar
+	else
+		# this is only the jacc api, just so we can get things compiled.
+		# the things that needs this likely wouldn't actually be used at runtime
+		# unless you're running in a container, like jboss
+		java-pkg_jar-from sun-jacc-api
+	fi
+
 	java-pkg_jar-from ant-tasks ant-antlr.jar
 	java-pkg_jar-from antlr
 	java-pkg_jar-from ant-core ant.jar
