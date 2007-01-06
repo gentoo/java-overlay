@@ -13,7 +13,9 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="doc"
 
-DEPEND=">=virtual/jdk-1.5"
+DEPEND=">=virtual/jdk-1.5
+		app-arch/unzip
+		dev-java/ant-core"
 RDEPEND=">=virtual/jre-1.5"
 
 S="${WORKDIR}"
