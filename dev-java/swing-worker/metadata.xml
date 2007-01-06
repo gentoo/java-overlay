@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>java</herd>
+<longdescription lang="en">
+swing-worker is a backport for java 1.5 of the swing threading libraries
+available within the sun 1.6 api.
+</longdescription>
+</pkgmetadata>
+
