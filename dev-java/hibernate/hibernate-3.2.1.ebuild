@@ -35,6 +35,7 @@ COMMON_DEPEND="
 		=dev-java/jboss-module-jmx-4.0*
 		=dev-java/jboss-module-system-4.0*
 	)
+	!jboss? ( dev-java/sun-jacc-api )
 	dev-java/jgroups
 	=dev-java/javassist-3.3*
 	>=dev-java/xerces-2.7
