@@ -18,12 +18,21 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=">=virtual/jdk-1.4
-	dev-java/ant-core"
+	dev-java/ant-core
+	dev-java/servletapi"
 RDEPEND=">=virtual/jre-1.4"
 
+src_unpack() {
+	unpack ${A}
+	cd ${S}
+	# we need to patch the build file since we don't want to update an
+	# existing jar-archive but build a new one (called jcc-api.jar)
+	epatch ${FILESDIR}/20070102-jcc-api.patch
+	java-pkg_jar-from servletapi-2.4 servlet-api.jar
+}
 
 src_compile() {
-	eant -Djavac.source=$(java-pkg_get-source) -Djavaee.jar=jcc-api.jar
+	eant -Djavaee.jar=servlet-api.jar
 }
 
 src_install() {
