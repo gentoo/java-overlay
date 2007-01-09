@@ -1,0 +1,24 @@
+--- jogl/make/build.xml-orig	2006-12-19 16:24:12.000000000 +0000
++++ jogl/make/build.xml	2006-12-19 16:24:40.000000000 +0000
+@@ -834,16 +834,16 @@
+       <!-- linker configuration -->
+  
+       <linker id="linker.cfg.linux" name="gcc">
+-        <syslibset dir="/usr/X11R6/lib" libs="GL, X11"/>
+-        <syslibset dir="/usr/X11R6/lib" libs="Xxf86vm" />
++        <syslibset dir="/usr/lib" libs="GL, X11"/>
++        <syslibset dir="/usr/lib" libs="Xxf86vm" />
+         <syslibset dir="${x11.cg.lib}" libs="Cg, CgGL" if="c.compiler.use-cglib"/>
+       </linker>
+ 
+       <linker id="linker.cfg.linux.drihack" name="gcc" />
+ 
+       <linker id="linker.cfg.linux.amd64" name="gcc">
+-        <syslibset dir="/usr/X11R6/lib64" libs="GL, X11"/>
+-        <syslibset dir="/usr/X11R6/lib64" libs="Xxf86vm" />
++        <syslibset dir="/usr/lib64" libs="GL, X11"/>
++        <syslibset dir="/usr/lib64" libs="Xxf86vm" />
+         <syslibset dir="${x11.cg.lib}" libs="Cg, CgGL" if="c.compiler.use-cglib"/>
+       </linker>
+ 
+

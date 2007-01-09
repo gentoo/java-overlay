@@ -1,0 +1,23 @@
+--- jogl/make/build.xml-orig	2007-01-09 22:30:49.000000000 +1300
++++ jogl/make/build.xml	2007-01-09 22:33:47.000000000 +1300
+@@ -696,17 +696,17 @@
+         <compilerarg value="-fPIC"/>
+       </compiler>
+ 
+-      <compiler id="compiler.cfg.solaris" name="suncc">
++      <compiler id="compiler.cfg.solaris" name="gcc">
+       </compiler>
+ 
+-      <compiler id="compiler.cfg.solarisSparcv9" name="suncc">
++      <compiler id="compiler.cfg.solarisSparcv9" name="gcc">
+         <compilerarg value="-fast"/>
+         <compilerarg value="-xchip=ultra"/>
+         <compilerarg value="-xarch=v9a"/>
+         <compilerarg value="-xcode=32"/>
+       </compiler>
+ 
+-      <compiler id="compiler.cfg.solarisAMD64" name="suncc">
++      <compiler id="compiler.cfg.solarisAMD64" name="gcc">
+         <compilerarg value="-fast"/>
+         <compilerarg value="-xchip=opteron"/>
+         <compilerarg value="-xarch=amd64"/>
