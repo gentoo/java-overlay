@@ -1,0 +1,65 @@
+diff -Naur jogl-old/make/build.xml jogl/make/build.xml
+--- jogl-old/make/build.xml	2006-07-28 15:13:42.000000000 +1200
++++ jogl/make/build.xml	2007-01-11 18:58:32.000000000 +1300
+@@ -740,17 +740,17 @@
+         <compilerarg value="-fPIC"/>
+       </compiler>
+ 
+-      <compiler id="compiler.cfg.solaris" name="suncc">
++      <compiler id="compiler.cfg.solaris" name="gcc">
+       </compiler>
+ 
+-      <compiler id="compiler.cfg.solarisSparcv9" name="suncc">
++      <compiler id="compiler.cfg.solarisSparcv9" name="gcc">
+         <compilerarg value="-fast" />
+         <compilerarg value="-xchip=ultra" />
+         <compilerarg value="-xarch=v9a" />
+         <compilerarg value="-xcode=32" />
+       </compiler>
+ 
+-      <compiler id="compiler.cfg.solarisAMD64" name="suncc">
++      <compiler id="compiler.cfg.solarisAMD64" name="gcc">
+         <compilerarg value="-fast" />
+         <compilerarg value="-xchip=opteron" />
+         <compilerarg value="-xarch=amd64" />
+@@ -847,34 +847,34 @@
+         <syslibset dir="${x11.cg.lib}" libs="Cg, CgGL" if="c.compiler.use-cglib"/>
+       </linker>
+ 
+-      <linker id="linker.cfg.solaris" name="suncc">
++      <linker id="linker.cfg.solaris" name="gcc">
+         <syslibset libs="GL, X11"/>
+       </linker>
+ 
+ 
+-      <linker id="linker.cfg.solaris.drihack" name="suncc" />
++      <linker id="linker.cfg.solaris.drihack" name="gcc" />
+ 
+-      <linker id="linker.cfg.solarisSparcv9" name="suncc">
++      <linker id="linker.cfg.solarisSparcv9" name="gcc">
+         <linkerarg value="-xarch=v9a" />
+         <syslibset dir="/usr/openwin/lib/sparcv9" libs="GL"/>
+         <syslibset dir="/usr/lib/sparcv9" libs="X11"/>
+       </linker>
+ 
+-      <linker id="linker.cfg.solarisAMD64" name="suncc">
++      <linker id="linker.cfg.solarisAMD64" name="gcc">
+         <linkerarg value="-xarch=amd64" />
+         <syslibset dir="/usr/lib/amd64" libs="GL"/>
+         <syslibset dir="/usr/lib/amd64" libs="X11"/>
+       </linker>
+ 
+ 
+-      <linker id="linker.cfg.solarisSparcv9.drihack" name="suncc" >
++      <linker id="linker.cfg.solarisSparcv9.drihack" name="gcc" >
+        <linkerarg value="-xarch=v9a" />
+        <syslibset dir="/usr/openwin/lib/sparcv9" libs="GL"/>
+        <syslibset dir="/usr/openwin/lib/sparcv9" libs="GLU"/>
+        <syslibset dir="/usr/lib/sparcv9" libs="X11"/>
+       </linker>
+ 
+-      <linker id="linker.cfg.solarisAMD64.drihack" name="suncc" >
++      <linker id="linker.cfg.solarisAMD64.drihack" name="gcc" >
+        <linkerarg value="-xarch=amd64" />
+         <syslibset dir="/usr/lib/amd64" libs="GL"/>
+         <syslibset dir="/usr/lib/amd64" libs="GLU"/>

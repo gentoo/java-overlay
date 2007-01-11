@@ -22,7 +22,7 @@ COMMON_DEPEND="virtual/opengl
 			   cg? ( media-gfx/nvidia-cg-toolkit )"
 
 DEPEND=">=virtual/jdk-1.4
-		>=dev-java/ant-core-1.5*
+		>=dev-java/ant-core-1.5
 		dev-java/ant-tasks
 		dev-java/antlr
 		app-arch/unzip
@@ -41,7 +41,7 @@ pkg_setup() {
 
 src_unpack() {
 	unpack ${A}
-	epatch "${FILESDIR}/${P}-libpath.patch"
+epatch "${FILESDIR}/${P}-fix-solaris-compiler.patch" "${FILESDIR}/${P}-libpath.patch"
 }
 
 src_compile() {
@@ -49,14 +49,16 @@ src_compile() {
 	local antflags="-Dantlr.jar=$(java-pkg_getjars antlr)"
 	use cg && antflags="${antflags} -Djogl.cg=1 -Dx11.cg.lib=/usr/lib"
 	# -Dbuild.sysclasspath=ignore fails with missing ant dependencies.
-	eant ${antflags} all $(use_doc javadoc.dev.x11)
+	
+	export ANT_OPTS="-Xmx1g"
+	eant ${antflags} all $(use_doc javadoc.dev.x11) $(use_doc javadoc)
 }
 
 src_install() {
 	if use doc; then
 		mv javadoc_public api
 		mv javadoc_jogl_dev dev_api
-		java-pkg_dohtml -r api dev-api
+		java-pkg_dohtml -r api dev_api
 	fi
 	java-pkg_doso build/obj/*.so
 	java-pkg_dojar build/*.jar
