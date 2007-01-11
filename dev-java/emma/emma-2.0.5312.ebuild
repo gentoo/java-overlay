@@ -27,6 +27,7 @@ src_install() {
 	java-pkg_dojar dist/${PN}.jar
 	java-pkg_jarinto /usr/share/ant-core/lib/
 	java-pkg_dojar dist/${PN}_ant.jar
+	java-pkg_dolauncher ${PN} --main emmarun
 	# One of these does not have java sources
 	use source && java-pkg_dosrc */*/com 2> /dev/null
 }
