@@ -7,7 +7,7 @@ inherit java-pkg-2 java-ant-2 versionator
 MY_PV="2007_01_09"
 DESCRIPTION="A collection of powerful, useful, and just plain fun Swing components."
 HOMEPAGE="http://swinglabs.org/index.jsp"
-SRC_URI="${PN}-${MY_PV}-src.zip"
+SRC_URI="http://www.counties.co.nz/alistair/distfiles/${PN}-${MY_PV}-src.zip"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
