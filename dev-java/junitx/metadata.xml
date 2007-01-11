@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>java</herd>
+
+	<longdescription lang="en">
+		Unit testing software always requires a testing framework.
+		Based on his Smalltalk experiences, Kent Beck developed JUnit
+		together with Erich Gamma. Nowadays it is one of the standard
+		frameworks with a lot of extension modules. JUnitX is one of
+		those modules, allowing to test private and protected Java
+		classes, methods and variables.
+	</longdescription>
+</pkgmetadata>
