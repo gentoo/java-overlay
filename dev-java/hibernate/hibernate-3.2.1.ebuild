@@ -43,11 +43,17 @@ COMMON_DEPEND="
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"
 # FIXME doesn't like  Java 1.6's JDBC API
+# FIXME currently ant-junit is included though tests support is not enabled, the reason
+# is there is a taskdef in global build.xml section that is always run and if ant-junit
+# is not on classpath then the build fails with split-ant
 DEPEND="|| (
 		=virtual/jdk-1.4*
 		=virtual/jdk-1.5*
 	)
 	dev-java/ant
+	>=dev-java/ant-antlr-1.5
+	>=dev-java/ant-swing-1.5
+	>=dev-java/ant-junit-1.5
 	${COMMON_DEPEND}"
 
 S="${WORKDIR}/${PN}-${SLOT}"
@@ -55,6 +61,8 @@ S="${WORKDIR}/${PN}-${SLOT}"
 src_unpack() {
 	unpack ${A}
 	cd ${S}
+
+	rm *.jar
 
 	if ! use jboss; then 
 		rm src/org/hibernate/cache/JndiBoundTreeCacheProvider.java \
@@ -98,7 +106,7 @@ src_unpack() {
 }
 src_compile() {
 	export ANT_OPTS="-Xmx1G"
-	eant jar -Ddist.dir=dist $(use_doc)
+	ANT_TASKS="ant-antlr ant-junit ant-swing" eant jar -Ddist.dir=dist $(use_doc)
 }
 
 src_install() {
