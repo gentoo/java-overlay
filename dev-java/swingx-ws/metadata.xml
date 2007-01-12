@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>java</herd>
+<longdescription lang="en">
+SwingX-WS contains a set of JavaBeans for interacting with web services. Initial
+beans include support for several Yahoo and Google webservices such as searching
+news, video, images, and financial data, as well as a generic tile based mapping
+component (as seen in the Aerith demo at JavaOne 2006), The SwingX-WS beans have
+been designed with graphical configuration in mind and work very well inside of
+a JavaBeans aware editor such as NetBeans.
+</longdescription>
+</pkgmetadata>
+
