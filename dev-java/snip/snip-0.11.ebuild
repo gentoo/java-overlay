@@ -11,30 +11,31 @@ SRC_URI="http://www.martiansoftware.com/lab/${PN}/${P}-src.tar.gz"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~x86"
-IUSE="doc"
+IUSE="doc source"
 
-# FIXME: get minimal version possible
-RDEPEND=">=virtual/jre-1.4"
-DEPEND=">=virtual/jdk-1.4 
-        >=dev-java/ant-core-1.5.4" # FIXME ant-core version
+COMMON_DEP=">=dev-java/ant-core-1.5.4"
+RDEPEND=">=virtual/jre-1.4
+	${COMMON_DEP}"
+DEPEND=">=virtual/jdk-1.4
+	${COMMON_DEP}"
 
 src_unpack() {
 	unpack ${A}
 
 	cd "${S}"
+	rm -v *.jar
 	epatch "${FILESDIR}/${P}-build.xml.patch"
+	java-ant_rewrite-classpath
+	eant clean
 
 }
 
-src_compile()
-{	
-	eant clean jar $(use_doc)
-}
+EANT_GENTOO_CLASSPATH="ant-core"
 
-src_install()
-{
+src_install() {
 	java-pkg_newjar dist/${P}.jar ${PN}.jar
 
-	use doc && java-pkg_dohtml -r javadoc
+	use doc && java-pkg_dojavadoc javadoc
+	use source && java-pkg_dosrc src/java/com
 }
 
