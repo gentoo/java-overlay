@@ -1,4 +1,4 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/hibernate/hibernate-3.0_rc1.ebuild,v 1.4 2005/03/23 00:42:40 st_lim Exp $
 
@@ -40,7 +40,6 @@ COMMON_DEPEND="
 	)
 	dev-java/jgroups
 	>=dev-java/xerces-2.7"
-#	dev-java/jdbc2-stdext
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"
 # FIXME doesn't like  Java 1.6's JDBC API
@@ -48,7 +47,7 @@ DEPEND="|| (
 		=virtual/jdk-1.4*
 		=virtual/jdk-1.5*
 	)
-	>=dev-java/ant-core-1.5
+	dev-java/ant
 	${COMMON_DEPEND}"
 
 S="${WORKDIR}/${PN}-${MY_PV}"
@@ -67,7 +66,7 @@ src_unpack() {
 	rm *.jar
 
 	local JAR_PACKAGES="asm-2 c3p0 commons-collections 
-		commons-logging dom4j-1 ehcache jaxen-1.1 jdbc2-stdext 
+		commons-logging dom4j-1 ehcache jaxen-1.1
 		log4j oscache proxool swarmcache-1.0 xerces-2 jgroups"
 	for PACKAGE in ${JAR_PACKAGES}; do
 		java-pkg_jar-from ${PACKAGE}

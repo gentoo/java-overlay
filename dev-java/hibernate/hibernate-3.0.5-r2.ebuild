@@ -1,4 +1,4 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/hibernate/hibernate-3.0_rc1.ebuild,v 1.4 2005/03/23 00:42:40 st_lim Exp $
 
@@ -36,11 +36,10 @@ COMMON_DEPEND="
 	dev-java/jta
 	dev-java/sun-jacc-api
 	>=dev-java/xerces-2.7"
-#	dev-java/jdbc2-stdext
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"
 DEPEND=">=virtual/jdk-1.4
-		>=dev-java/ant-core-1.5
+		dev-java/ant
 		${COMMON_DEPEND}"
 # TODO fix for Java 1.6... has problems due to JDBC4
 JAVA_PKG_NV_DEPEND="=virtual/jdk-1.4* =virtual/jdk-1.5*"
@@ -64,7 +63,7 @@ src_unpack() {
 	rm *.jar
 
 	local JAR_PACKAGES="ant-core antlr asm-2 c3p0 commons-collections 
-		commons-logging dom4j-1 ehcache jaxen-1.1 jdbc2-stdext jta
+		commons-logging dom4j-1 ehcache jaxen-1.1 jta
 		log4j oscache proxool swarmcache-1.0 sun-jacc-api xerces-2"
 	for PACKAGE in ${JAR_PACKAGES}; do
 		java-pkg_jar-from ${PACKAGE}

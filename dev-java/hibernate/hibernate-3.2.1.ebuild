@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -39,9 +39,7 @@ COMMON_DEPEND="
 	dev-java/jgroups
 	=dev-java/javassist-3.3*
 	>=dev-java/xerces-2.7
-	=dev-java/jdbc2-stdext-2*
 	dev-java/jta"
-#	dev-java/jdbc2-stdext
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"
 # FIXME doesn't like  Java 1.6's JDBC API
@@ -49,7 +47,7 @@ DEPEND="|| (
 		=virtual/jdk-1.4*
 		=virtual/jdk-1.5*
 	)
-	>=dev-java/ant-core-1.5
+	dev-java/ant
 	${COMMON_DEPEND}"
 
 S="${WORKDIR}/${PN}-${SLOT}"
@@ -71,7 +69,7 @@ src_unpack() {
 	rm *.jar
 
 	local JAR_PACKAGES="c3p0 commons-collections javassist-3.3
-		commons-logging dom4j-1 ehcache-1.2 jaxen-1.1 jdbc2-stdext
+		commons-logging dom4j-1 ehcache-1.2 jaxen-1.1
 		log4j oscache proxool swarmcache-1.0 xerces-2 jgroups jta"
 	for PACKAGE in ${JAR_PACKAGES}; do
 		java-pkg_jar-from ${PACKAGE}
