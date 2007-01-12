@@ -1,0 +1,9 @@
+# ChangeLog for dev-java/xerces
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  12 Jan 2007; Vlastimil Babka <caster@gentoo.org> +xerces-2.9.0.ebuild,
+  +files/xerces-2.9.0-gentoo.patch, +files/xerces-2.9.0-no_dom3.patch:
+  Version bump, bug #156258. Now using xalan-serializer for DOM Level 3
+  serialization as upstream recommends.
+
