@@ -1,0 +1,20 @@
+diff -ru rmock-2.0.0-rc-6/rmock-2.0.0-rc-6/build.xml rmock-2.0.0-rc-6-patched/rmock-2.0.0-rc-6/build.xml
+--- rmock-2.0.0-rc-6/rmock-2.0.0-rc-6/build.xml	2006-03-26 16:17:14.000000000 -0500
++++ rmock-2.0.0-rc-6-patched/rmock-2.0.0-rc-6/build.xml	2007-01-12 21:42:26.000000000 -0500
+@@ -82,7 +82,7 @@
+     <fail message="There were test failures.">
+     </fail>
+   </target>
+-  <target name="internal-test" if="Junit.present" depends="junit-present,compile-tests">
++  <target name="internal-test" if="Junit.present" depends="junit-present,compile-tests" unless="notest">
+     <mkdir dir="${testreportdir}">
+     </mkdir>
+     <junit dir="./" failureproperty="test.failure" printSummary="yes" fork="true" haltonerror="true">
+@@ -173,4 +173,4 @@
+     <unjar dest="${maven.home}" src="${user.home}/maven-install-latest.jar">
+     </unjar>
+   </target>
+-</project>
+\ No newline at end of file
++</project>
+Only in rmock-2.0.0-rc-6-patched/rmock-2.0.0-rc-6: target
