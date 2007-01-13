@@ -1,0 +1,18 @@
+--- build.xml.orig	2007-01-13 22:21:35.000000000 +0200
++++ build.xml	2007-01-13 22:22:11.000000000 +0200
+@@ -134,7 +134,7 @@
+     </property>
+     <property name="title" value="Excalibur Pool API 2.1 API">
+     </property>
+-    <javadoc use="true" private="true" destdir="${javadocdir}" author="true" version="true" sourcepath="src/java" packagenames="org.apache.excalibur.pool.*">
++    <javadoc use="true" private="true" destdir="${javadocdir}" author="true" version="true" sourcepath="src/java" packagenames="org.apache.avalon.excalibur.pool.*">
+       <classpath>
+         <path refid="build.classpath">
+         </path>
+@@ -155,4 +155,4 @@
+     <unjar dest="${maven.home}" src="${user.home}/maven-install-latest.jar">
+     </unjar>
+   </target>
+-</project>
+\ No newline at end of file
++</project>

@@ -1,0 +1,12 @@
+AUX 2.1-build.xml-javadoc.patch 801 RMD160 3f5682c3d82ff8789eac703273f9af6daaaf7509 SHA1 555227023aad289b87d1a3dcb3a8610c2288864c SHA256 d1e6ad87039aba61cfb8b751ce2f396ffd6aeccb404fb1b505cae2222cab4966
+MD5 237cadfd3e3aeb8250bb378ff8a5f3a2 files/2.1-build.xml-javadoc.patch 801
+RMD160 3f5682c3d82ff8789eac703273f9af6daaaf7509 files/2.1-build.xml-javadoc.patch 801
+SHA256 d1e6ad87039aba61cfb8b751ce2f396ffd6aeccb404fb1b505cae2222cab4966 files/2.1-build.xml-javadoc.patch 801
+DIST excalibur-pool-api-2.1-src.tar.gz 7914 RMD160 1b92f11b61d84c827aa3e00cdc10bd23f3f57ed5 SHA1 9c99cfbc877bd140272bb7dfbc39390ff2f1bee5 SHA256 4681bf6772fbe29e9c266372b2686e0de93fd9d0f7ea5a69a65bb2cbfecefa15
+EBUILD excalibur-pool-api-2.1.ebuild 920 RMD160 0a441d3aad444d487e7791d5ae9bc81ee7fd1929 SHA1 5c26048aa156e8e4e6ca44d4b6628ce46d068da4 SHA256 c07f9a2962da9e5d9e963eb19022cf14a4ca45ada4e4cb181db77ede7e816839
+MD5 19851add49e40f5b8ad89267616f34a0 excalibur-pool-api-2.1.ebuild 920
+RMD160 0a441d3aad444d487e7791d5ae9bc81ee7fd1929 excalibur-pool-api-2.1.ebuild 920
+SHA256 c07f9a2962da9e5d9e963eb19022cf14a4ca45ada4e4cb181db77ede7e816839 excalibur-pool-api-2.1.ebuild 920
+MD5 c514ca77150c60393987a9c7e5d730c7 files/digest-excalibur-pool-api-2.1 274
+RMD160 17576762c8139ac706d7a3d94cb7b6176afdd9f9 files/digest-excalibur-pool-api-2.1 274
+SHA256 5121c49f6818e20b6e14757262ec84008a6ec678b946ef142e1c67933dc5320d files/digest-excalibur-pool-api-2.1 274
