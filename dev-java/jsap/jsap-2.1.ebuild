@@ -10,7 +10,7 @@ MY_PN=JSAP
 MY_P=${MY_PN}-${PV}
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}-src.tar.gz"
 
-LICENSE="LGPL"
+LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~x86"
 IUSE="doc source"
