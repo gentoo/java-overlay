@@ -1,6 +1,10 @@
 # ChangeLog for dev-db/apgdiff
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  13 Jan 2007; Miroslav Šulc <fordfrog@gentoo.org>
+  -apgdiff-1.0.0_beta12.ebuild, +apgdiff-1.0.0_beta13.ebuild:
+  New revision bump.
 
   03 Dec 2006; Miroslav Šulc <miroslav.sulc@startnet.cz> ChangeLog:
   corrected so tests with junit4 are performed without problems

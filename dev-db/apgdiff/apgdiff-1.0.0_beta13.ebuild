@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -13,17 +13,15 @@ KEYWORDS="~x86"
 IUSE="doc source test"
 
 DEPEND=">=virtual/jdk-1.5
-	>=dev-java/ant-core-1.7.0_rc1
-	>=dev-java/ant-junit-1.7.0_rc1
+	>=dev-java/ant-core-1.7.0
+	>=dev-java/ant-junit-1.7.0
 	app-arch/zip
-	test? ( >=dev-java/junit-4.1* )"
+	test? ( >=dev-java/junit-4.1 )"
 
 RDEPEND=">=virtual/jre-1.5"
 
 src_unpack() {
 	unpack ${A}
-
-	cp ${FILESDIR}/${P}-build.xml ${S}/build.xml
 
 	mkdir ${S}/lib
 	cd ${S}/lib
