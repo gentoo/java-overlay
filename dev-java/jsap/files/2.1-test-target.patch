@@ -1,0 +1,11 @@
+--- build.xml.orig	2007-01-12 17:53:54.000000000 +0200
++++ build.xml	2007-01-12 17:54:11.000000000 +0200
+@@ -168,7 +168,7 @@
+     </target>
+ 
+ 	<!-- make the jar -->
+-    <target name="jar" depends="clean,test">
++    <target name="jar" depends="compile-api">
+         <mkdir dir="${dist}"/>
+         <jar basedir="${build}" jarfile="${dist}/${jarname}">
+         	<exclude name="${testFiles}" />
