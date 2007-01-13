@@ -34,6 +34,9 @@ src_unpack() {
 	cd "${S}"
 }
 
+EANT_BUILD_TARGET="
+EANT_DOC_TARGET="
+
 src_install() {
 	java-pkg_dojar
 	use doc && java-pkg_dojavadoc
