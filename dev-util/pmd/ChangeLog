@@ -1,0 +1,11 @@
+# ChangeLog for dev-util/pmd
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  14 Jan 2007; Miroslav Šulc <fordfrog@gentoo.org> +pmd-3.9.ebuild,
+  +files/pmd-3.9-build.xml.patch, +files/pmd-3.9-gentoo.patch,
+  +files/pmd-3.9-launcher-pre-commands:
+  Version bump, this version has some significant changes in deps, I also
+  added test use flag which currently fails, launchers are now created using
+  dolauncher.
+
