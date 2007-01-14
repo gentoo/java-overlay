@@ -1,0 +1,8 @@
+# ChangeLog for dev-util/netbeans-cnd
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  14 Jan 2007; Miroslav Šulc <fordfrog@gentoo.org>
+  +netbeans-cnd-5.5.ebuild:
+  Initial ebuild
+
