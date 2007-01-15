@@ -17,7 +17,7 @@ IUSE="doc source"
 
 DEPEND=">=virtual/jdk-1.4
 		app-arch/unzip
-		>=dev-java/ant-core-1.5*"
+		>dev-java/ant-core-1.5"
 RDEPEND=">=virtual/jre-1.4"
 
 S=${WORKDIR}
