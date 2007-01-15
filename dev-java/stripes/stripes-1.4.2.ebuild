@@ -20,7 +20,7 @@ CDEPEND=">=dev-java/commons-logging-1.0.4
 
 DEPEND=">=virtual/jdk-1.5
 		app-arch/unzip
-		>=dev-java/ant-core-1.5*
+		>=dev-java/ant-core-1.5
 		doc? ( dev-java/taglibrarydoc
 		dev-java/sun-javamail-bin )
 		${CDEPEND}"
