@@ -5,11 +5,10 @@
 inherit java-vm-2 eutils
 
 MY_PV=${PV/_alpha*/}
-MY_PVL=${MY_PV%.*}_${MY_PV##*.}
+MY_PVL=${MY_PV%.*}_0${MY_PV##*.}
 MY_PVA=${MY_PV//./_}
 BETA=${PV#*_alpha}
 DATE="12_jan_2007"
-MY_RPV=${MY_PV%.*}_${BETA}
 
 BASE_URL="http://www.java.net/download/jdk6/6u1/promoted/b${BETA}/binaries/"
 x86file="jdk-6u1-ea-bin-b${BETA}-linux-i586-${DATE}.bin"
@@ -21,7 +20,7 @@ elif use amd64; then
 	At=${amd64file}
 fi
 
-S="${WORKDIR}/jdk${MY_RPV}"
+S="${WORKDIR}/jdk${MY_PVL}"
 DESCRIPTION="Sun's Java Development Kit"
 HOMEPAGE="https://jdk6.dev.java.net/"
 SRC_URI="x86? ( ${BASE_URL}/$x86file ) amd64? ( ${BASE_URL}/$amd64file )"
