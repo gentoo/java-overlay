@@ -21,6 +21,7 @@ DEPEND="java5? ( =virtual/jdk-1.5* )
 RDEPEND="java5? ( =virtual/jdk-1.5* )
 	!java5? ( =virtual/jre-1.4* )"
 
+# NOTE: This is just workaround because setting ${S} in pkg_setup doesn't currently work
 if use java5 ; then
 	S="${WORKDIR}/${PN}-Java50-${PV}-src"
 else
