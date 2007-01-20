@@ -18,7 +18,10 @@ DEPEND=">=virtual/jdk-1.5
 		app-arch/unzip
 		dev-java/ant-core
 		>=dev-java/junit-4
-		>=dev-java/jmock-1.1.0"		
+		>=dev-java/jmock-1.1.0
+		dev-java/filters
+		>=dev-java/batik-1.6
+		dev-java/swing-worker"		
 RDEPEND=">=virtual/jre-1.5
 		>=dev-java/jmock-1.1.0"
 
