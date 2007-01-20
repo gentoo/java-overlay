@@ -1,0 +1,8 @@
+DIST excalibur-testcase-2.1-src.tar.gz 18653 RMD160 2a827c082eecad73d2a07da71bc827ad6c2918ad SHA1 9f6b734fe6be14adab729aafd153ba4e3979bc98 SHA256 958a027a389e1d60c5f30bf6bed9f18977dc9bb862b67bea751b0f17dff0ef82
+EBUILD excalibur-testcase-2.1.ebuild 626 RMD160 393c1d660a4c7c20911c86632baf8c36268c4caf SHA1 d2606546832c17f38cda0fd7c0f92250eca48465 SHA256 22eaa8a89cd9fbc5f05a936e2644e2e060a7846769f5dbbe9e854eebaa42415d
+MD5 9eac368a368884af7e0255035e73130f excalibur-testcase-2.1.ebuild 626
+RMD160 393c1d660a4c7c20911c86632baf8c36268c4caf excalibur-testcase-2.1.ebuild 626
+SHA256 22eaa8a89cd9fbc5f05a936e2644e2e060a7846769f5dbbe9e854eebaa42415d excalibur-testcase-2.1.ebuild 626
+MD5 7945b9a919f50da4ec9569da8f9b1fa6 files/digest-excalibur-testcase-2.1 277
+RMD160 26a3dc8cdd1c317292a040385b0f52bef9892b4f files/digest-excalibur-testcase-2.1 277
+SHA256 87c1ba3deb6e60ab46e612a6589d8d96e3cd80ed9dadc26023d0e49212320923 files/digest-excalibur-testcase-2.1 277
