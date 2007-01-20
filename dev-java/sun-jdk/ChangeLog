@@ -2,6 +2,10 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  19 Jan 2007; Petteri Räty <betelgeuse@gentoo.org>
+  -sun-jdk-1.7.0.0_alpha05.ebuild, +sun-jdk-1.7.0.0_alpha06.ebuild:
+  Bump to new snapshot.
+
   16 Jan 2007; Vlastimil Babka <caster@gentoo.org>
   sun-jdk-1.6.0.1_alpha02.ebuild:
   Fix unpack
