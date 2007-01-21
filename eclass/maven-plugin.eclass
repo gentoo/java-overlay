@@ -9,9 +9,6 @@
 
 inherit java-pkg base
 
-ECLASS="maven-plugin"
-INHERITED="$INHERITED $ECLASS"
-
 HOMEPAGE="http://maven.apache.org"
 SRC_URI="http://gentooexperimental.org/distfiles/${P}-gentoo.tar.bz2"
 LICENSE="Apache-2.0"

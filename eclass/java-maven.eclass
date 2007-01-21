@@ -4,13 +4,10 @@
 
 #
 # Original Author: nichoj
-# Purpose: 
+# Purpose:
 #
 
 inherit java-pkg java-utils base
-
-ECLASS="java-maven"
-INHERITED="$INHERITED $ECLASS"
 
 DEPEND="~dev-java/maven-gentoo-repo"
 
@@ -18,12 +15,12 @@ JAVA_MAVEN_VERSION=${JAVA_MAVEN_VERSION:=1}
 
 # This is safe to do, right?
 case "${JAVA_MAVEN_VERSION}" in
-	"1") 
+	"1")
 		JAVA_MAVEN_SYSTEM_HOME="/usr/share/maven"
 		JAVA_MAVEN_EXEC="${JAVA_MAVEN_SYSTEM_HOME}/bin/maven"
 		;;
-	"2") 
-		JAVA_MAVEN_SYSTEM_HOME="/usr/share/maven-bin-2" 
+	"2")
+		JAVA_MAVEN_SYSTEM_HOME="/usr/share/maven-bin-2"
 		JAVA_MAVEN_EXEC="${JAVA_MAVEN_SYSTEM_HOME}/bin/mvn"
 		;;
 esac

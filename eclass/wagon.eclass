@@ -4,12 +4,9 @@
 
 #
 # Original Author: nichoj
-# Purpose: 
+# Purpose:
 #
 inherit java-pkg
-
-ECLASS="wagon"
-INHERITED="$INHERITED $ECLASS"
 
 HOMEPAGE=""
 MY_PV="${PV/_alpha/-alpha-}"

@@ -31,9 +31,6 @@
 
 inherit java-pkg eutils base
 
-ECLASS="commons-jelly-tags"
-INHERITED="$INHERITED $ECLASS"
-
 DECRIPTION="An Executable XML Java Elements Framework"
 HOMEPAGE="http://jakarta.apache.org/commons/jelly/"
 SLOT=${SLOT:=${PV}}
@@ -118,7 +115,7 @@ commons-jelly-tags_src_install() {
 #		# could there be a better way?
 #		# basically, don't want there to be SNAPSHOT in the jar name
 #		local jarname=$(basename ${jar})
-#		jarname=${jarname%%-1*} # this is ugly... 
+#		jarname=${jarname%%-1*} # this is ugly...
 #		java-pkg_newjar ${jar} ${jarname}.jar
 #	done
 	java-pkg_dojar target/*.jar
