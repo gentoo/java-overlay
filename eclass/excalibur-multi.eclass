@@ -9,9 +9,6 @@
 
 inherit excalibur
 
-ECLASS="excalibur-multi"
-INHERITED="${INHERITED} ${ECLASS}"
-
 for module in ${EXCALIBUR_MODULES}; do
 	if [[ "${EXCALIBUR_MODULE_USES_PV}" == "false" ]]; then
 		SRC_URI="${SRC_URI}

@@ -7,9 +7,6 @@
 # Purpose: Provide unified framework for installing Netbeans 5.5 extra packs
 #
 
-ECLASS="netbeans-5.5-pack"
-INHERITED="$INHERITED $ECLASS"
-
 IUSE=""
 SLOT="5.5"
 

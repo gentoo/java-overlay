@@ -4,11 +4,8 @@
 
 #
 # Original Author: nichoj
-# Purpose: 
+# Purpose:
 #
-
-ECLASS="test-harness"
-INHERITED="$INHERITED $ECLASS"
 
 EXPORT_FUNCTIONS src_unpack src_install
 
@@ -42,10 +39,10 @@ run_tests() {
 display_log_if_failed() {
 	# Notify about failed checks
 	if [[ ${FAILED_CHECKS} != 0 ]]; then
-		eerror "Failed ${FAILED_CHECKS} test(s). Log as follows:"	
+		eerror "Failed ${FAILED_CHECKS} test(s). Log as follows:"
 		cat ${TEST_LOG}
 		eerror "End transmission."
-		return 
+		return
 	fi
 }
 

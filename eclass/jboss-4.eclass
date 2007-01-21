@@ -9,8 +9,6 @@
 
 inherit java-pkg-2
 
-ECLASS="jboss-4"
-INHERITED="$INHERITED $ECLASS"
 DEPEND="${DEPEND}
 	dev-java/ant-core
 	dev-java/ant-tasks

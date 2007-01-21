@@ -11,9 +11,6 @@ JAVA_PKG_IUSE="doc source"
 
 inherit java-pkg-2 java-ant-2
 
-ECLASS="excalibur"
-INHERITED="${INHERITED} ${ECLASS}"
-
 DESCRIPTION="${PN} from Apache Excalibur"
 HOMEPAGE="http://excalibur.apache.org/"
 
@@ -36,7 +33,7 @@ if _excalibur_test; then
 	IUSE="${IUSE} test"
 	DEPEND="
 		${DEPEND}
-		dev-java/junit 
+		dev-java/junit
 		dev-java/ant-tasks"
 fi
 
