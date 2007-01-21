@@ -39,7 +39,7 @@ EANT_BUILD_TARGET="package"
 #}
 
 src_install() {
-	java-pkg_newjar ./lib/${MY_P}.jar ${PV}.jar
+	java-pkg_newjar ./lib/${MY_P}.jar ${PN}.jar
 	mv docs/javadoc . || die
 	dohtml -r docs/*
 	use doc && java-pkg_dojavadoc javadoc/
