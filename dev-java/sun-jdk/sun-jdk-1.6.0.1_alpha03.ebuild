@@ -8,7 +8,7 @@ MY_PV=${PV/_alpha*/}
 MY_PVL=${MY_PV%.*}_0${MY_PV##*.}
 MY_PVA=${MY_PV//./_}
 BETA=${PV#*_alpha}
-DATE="12_jan_2007"
+DATE="19_jan_2007"
 
 BASE_URL="http://www.java.net/download/jdk6/6u1/promoted/b${BETA}/binaries/"
 x86file="jdk-6u1-ea-bin-b${BETA}-linux-i586-${DATE}.bin"
@@ -24,7 +24,7 @@ S="${WORKDIR}/jdk${MY_PVL}"
 DESCRIPTION="Sun's Java Development Kit"
 HOMEPAGE="https://jdk6.dev.java.net/"
 SRC_URI="x86? ( ${BASE_URL}/$x86file ) amd64? ( ${BASE_URL}/$amd64file )"
-SLOT="1.6"
+SLOT="1.6.0.1"
 LICENSE="sun-prerelease-jdk6"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="nostrip fetch"
