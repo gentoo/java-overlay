@@ -13,15 +13,18 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="doc source"
 
-DEPEND=">=virtual/jdk-1.5
-		>=dev-java/commons-logging-1.0.4
+CDEPEND=">=dev-java/commons-logging-1.0.4
 		>=dev-java/commons-discovery-0.2
 		>=www-servers/axis-1.2
 		>=dev-java/log4j-1.2.8
 		>=dev-java/sun-saaj-bin-1.3
 		>=dev-java/sun-jaxrpc-bin-1.1.3.01"
 RDEPEND=">=virtual/jre-1.5
-		${DEPEND}"
+		${CDEPEND}"
+DEPEND=">=virtual/jdk-1.5
+		${CDEPEND}
+		dev-java/ant-core
+		source? ( app-arch/zip )"
 
 S="${WORKDIR}/${PN}"
 
