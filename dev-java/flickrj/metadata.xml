@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>java</herd>
+<longdescription lang="en">
+Flickrj is Java API which wraps the REST-based Flickr API (information available
+at http://www.flickr.com/services/api/).
+</longdescription>
+</pkgmetadata>
+
