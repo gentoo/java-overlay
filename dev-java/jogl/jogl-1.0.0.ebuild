@@ -41,7 +41,7 @@ pkg_setup() {
 
 src_unpack() {
 	unpack ${A}
-epatch "${FILESDIR}/${P}-fix-solaris-compiler.patch" "${FILESDIR}/${P}-libpath.patch"
+	epatch "${FILESDIR}/${P}-fix-solaris-compiler.patch" "${FILESDIR}/${P}-libpath.patch"
 }
 
 src_compile() {
@@ -55,11 +55,12 @@ src_compile() {
 }
 
 src_install() {
-	if use doc; then
-		mv javadoc_public api
-		mv javadoc_jogl_dev dev_api
-		java-pkg_dohtml -r api dev_api
-	fi
+	#if use doc; then
+	#	mv javadoc_jogl_dev dev_api
+	#	java-pkg_dojavadoc javadoc_public
+	#	dohtml dev_api
+	#fi
+	use doc && java-pkg_dojavadoc javadoc_public
 	java-pkg_doso build/obj/*.so
 	java-pkg_dojar build/*.jar
 }
