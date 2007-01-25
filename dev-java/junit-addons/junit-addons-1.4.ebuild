@@ -56,7 +56,7 @@ src_compile() {
 
 src_install() {
 	java-pkg_newjar dist/${P}.jar
-	dodoc README WHATSNEW
+	dodoc README WHATSNEW || die
 	use doc && java-pkg_dojavadoc api
 	if use source; then
 		insinto "${JAVA_PKG_SOURCESPATH}"
