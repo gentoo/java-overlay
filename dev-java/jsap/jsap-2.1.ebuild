@@ -24,6 +24,7 @@ DEPEND="
 	>=virtual/jdk-1.4
 	${COMMON_DEP}
 	=dev-java/snip-0.11*
+	>=dev-java/ant-core-1.7.0
 	=dev-java/rundoc-0.11*"
 
 RDEPEND=">=virtual/jre-1.4
@@ -41,6 +42,7 @@ src_unpack() {
 	rm -v *.jar
 }
 
+EANT_ANT_TASKS="rundoc"
 EANT_GENTOO_CLASSPATH="junit,ant-core,xstream"
 
 src_test() {
