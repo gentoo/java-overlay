@@ -1,0 +1,7 @@
+# ChangeLog for dev-java/jdbm
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  26 Jan 2007; Vlastimil Babka <caster@gentoo.org> jdbm-1.0.ebuild:
+  Fix manifest version and src_install.
+

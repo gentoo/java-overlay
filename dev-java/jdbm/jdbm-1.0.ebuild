@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/jdbm/jdbm-0.12-r1.ebuild,v 1.1 2006/12/21 12:42:06 betelgeuse Exp $
 
@@ -29,17 +29,17 @@ src_unpack() {
 
 src_compile() {
 	cd "${S}/src"
-	java-pkg-2_src_compile
+	java-pkg-2_src_compile -Dversion="${PV}"
 }
 
 src_test() {
 	cd "${S}/src"
-	ANT_TASKS="ant-junit ant-trax" eant tests.run \
+	ANT_TASKS="ant-trax" eant tests.run \
 		-Dclasspath="$(java-pkg_getjars junit):./build/classes"
 }
 
 src_install() {
-	java-pkg_dojar dist/${PN}.jar
+	java-pkg_newjar dist/${P}.jar
 	use doc && java-pkg_dojavadoc build/doc/javadoc
 	use source && java-pkg_dosrc src/main/*
 }
