@@ -48,9 +48,9 @@ src_unpack(){
 
 }
 
-src_compile(){
-	eant jar $(use_doc javadoc)
-}
+#src_compile(){
+#	eant jar $(use_doc javadoc)
+#}
 
 src_install() {
 	java-pkg_dojar dist/${PN}.jar
