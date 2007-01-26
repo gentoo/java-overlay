@@ -27,16 +27,12 @@ src_unpack() {
 	epatch "${FILESDIR}/${P}-build.xml.patch"
 	java-ant_rewrite-classpath
 	eant clean
-
 }
 
 EANT_GENTOO_CLASSPATH="ant-core"
 
 src_install() {
 	java-pkg_newjar dist/${P}.jar ${PN}.jar
-	dodir /usr/share/ant-core/lib
-	dosym /usr/share/${PN}/lib/${PN}.jar /usr/share/ant-core/lib/${PN}.jar
-
 	use doc && java-pkg_dojavadoc javadoc
 	use source && java-pkg_dosrc src/java/com
 }
