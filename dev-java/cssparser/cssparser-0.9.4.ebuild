@@ -4,17 +4,18 @@
 
 inherit java-pkg-2 java-ant-2
 
-DESCRIPTION=""
-HOMEPAGE=""
+DESCRIPTION="The CSS Parser inputs Cascading Style Sheets Level 2 source text and outputs a Document Object Model Level 2 Style tree."
+HOMEPAGE="http://cssparser.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE=""
+IUSE="source"
 
 DEPEND=">=virtual/jdk-1.4
-		dev-java/ant-core"
+		dev-java/ant-core
+		source? ( app-arch/zip )"
 RDEPEND=">=virtual/jre-1.4"
 
 S="${WORKDIR}/${PN}"
@@ -27,10 +28,9 @@ src_unpack() {
 }
 
 #This says that it needs javacc,  where?
-src_compile() {
-	eant dist
-}
+EANT_BUILD_TARGET="dist"
 
 src_install() {
 	java-pkg_newjar ss_css2.jar
+	use source && java-pkg_dosrc src
 }
