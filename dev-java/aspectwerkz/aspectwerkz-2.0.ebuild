@@ -10,7 +10,9 @@ HOMEPAGE="http://aspectwerkz.codehaus.org"
 LICENSE="LGPL-2.1"
 SLOT="2"
 KEYWORDS="~x86 ~amd64 ~ppc"
-RDEPEND=">=virtual/jre-1.4
+RDEPEND=">=dev-java/java-config-2.0.31
+	!java5? ( >=virtual/jre-1.4 )
+	java5? ( >=virtual/jre-1.5 )
 	=dev-java/asm-1.5*
 	dev-java/bcel
 	dev-java/concurrent-util
@@ -20,12 +22,29 @@ RDEPEND=">=virtual/jre-1.4
 	>=dev-java/junitperf-1.9.1
 	dev-java/trove
 	=dev-java/qdox-20050104"
-DEPEND=">=virtual/jdk-1.4
+DEPEND="!java5? ( =virtual/jdk-1.4* )
+	java5? ( =virtual/jdk-1.5* )
 	${RDEPEND}
 	>=dev-java/ant-core-1.5
 	app-arch/unzip
 	source? ( app-arch/zip )"
-IUSE="source"
+IUSE="java5 source"
+
+pkg_setup() {
+	if use java5; then
+		JAVA_PKG_NV_DEPEND="=virtual/jdk-1.5*"
+
+		# We must specify source/target versions because currently
+		# it is not
+		# correctly picked up from NV_DEPEND for build.xml
+		# rewrite
+		JAVA_PKG_WANT_SOURCE="1.5"
+		JAVA_PKG_WANT_TARGET="1.5"
+	else
+		JAVA_PKG_NV_DEPEND="=virtual/jdk-1.4*"
+	fi
+	java-pkg-2_pkg_setup
+}
 
 
 src_unpack() {
