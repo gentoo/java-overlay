@@ -1,0 +1,54 @@
+--- build.xml-orig	2006-04-08 21:46:36.000000000 +1200
++++ build.xml	2007-01-25 19:15:41.000000000 +1300
+@@ -4,7 +4,7 @@
+ 	<property file="build.properties"/>
+ 	
+ 	<import file="src/java/build.xml"/>
+-	<import file="src/java-css/build.xml"/>
++	<!--<import file="src/java-css/build.xml"/>-->
+ 	<import file="src/swing/build.xml"/>
+ 	<import file="src/swt/build.xml"/>
+ 	<import file="src/test/build.xml"/>
+@@ -17,13 +17,13 @@
+ 		<mkdir dir="dist/fuse-${fuse.version}/demo"/>
+ 	</target>
+ 	
+-	<target name="build" depends="build-core,build-css,build-swing,build-swt,build-test,build-demo"/>
++	<target name="build" depends="build-core,build-swing,build-swt,build-test,build-demo"/>
+ 	
+ 	<target name="ensure-core-built" depends="build-core"/>
+ 	<target name="ensure-swing-built" depends="build-swing"/>
+ 	<target name="ensure-swt-built" depends="build-swt"/>
+ 	
+-	<target name="jar" depends="jar-core,jar-css,jar-swing,jar-swt"/>
++	<target name="jar" depends="jar-core,jar-swing,jar-swt"/>
+ 	
+ 	<target name="all" depends="test,jar,doc">
+ 		<copy todir="dist/fuse-${fuse.version}/src">
+@@ -98,7 +98,7 @@
+ 		<delete dir="dist/fuse-${fuse.version}"/>
+ 	</target>
+ 	
+-	<target name="css" depends="test,jar-css,javadoc-css">
++	<!--<target name="css" depends="test,jar-css,javadoc-css">
+ 		<copy todir="dist/fuse-${fuse.version}/src">
+ 			<fileset dir="src/java-css">
+ 				<include name="*/**"/>
+@@ -125,7 +125,7 @@
+ 		
+ 		<antcall target="clean-build"/>
+ 		<delete dir="dist/fuse-${fuse.version}"/>
+-	</target>
++	</target>-->
+ 	
+ 	<target name="swing" depends="test,jar-swing,javadoc-swing">
+ 		<copy todir="dist/fuse-${fuse.version}/src">
+@@ -332,4 +332,6 @@
+ 	<target name="clean-build">
+ 		<delete dir="build"/>
+ 	</target>
+-</project>
+\ No newline at end of file
++</project>
++
++
