@@ -9,13 +9,13 @@ reusable components used by Apache Batik and Apache FOP."
 HOMEPAGE="http://xmlgraphics.apache.org/commons/index.html"
 SRC_URI="mirror://apache/xmlgraphics/commons/source/${P}-src.tar.gz"
 
-LICENSE="Apache-2"
+LICENSE="Apache-2.0"
 SLOT="1"
 KEYWORDS="~amd64"
 IUSE="source doc"
 
 CDEPEND=">=dev-java/commons-io-1"
-DEPEND=">=virtual/jdk-1.4		
+DEPEND=">=virtual/jdk-1.4
 		source? ( app-arch/zip )
 		dev-java/ant-core
 		${CDEPEND}"
