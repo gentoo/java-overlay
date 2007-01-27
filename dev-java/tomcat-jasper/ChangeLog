@@ -1,0 +1,29 @@
+# ChangeLog for dev-java/jakarta-tomcat-jasper
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-java/jakarta-tomcat-jasper/ChangeLog,v 1.4 2006/11/30 15:42:32 caster Exp $
+
+  27 Jan 2007; William L. Thomson Jr. <wltjr@gentoo.org> ChangeLog:
+  Adding to overlay. Quite old, was not migrated, but has since been a bit.
+  It's only dep is jetty which resides in the same overlay. So till another
+  pacakge needs it. Or jetty get's into better shape. Going to leave out of
+  tree for now. Also changed package name.
+
+  30 Nov 2006; Vlastimil Babka <caster@gentoo.org>
+  jakarta-tomcat-jasper-2.ebuild:
+  Update xerces dep for upcoming 2.6 slotmove.
+
+  12 Dec 2005; Joshua Nichols <nichoj@gentoo.org>
+  jakarta-tomcat-jasper-2.ebuild:
+  Loosened xerces dependency (bug #115158).
+
+  25 May 2005; Jan Brinkmann <luckyduck@gentoo.org>
+  jakarta-tomcat-jasper-2.ebuild:
+  slotted correctly, updated description. fixes #93876
+
+*jakarta-tomcat-jasper-2 (16 May 2005)
+
+  16 May 2005; Jan Brinkmann <luckyduck@gentoo.org> +metadata.xml,
+  +jakarta-tomcat-jasper-2.ebuild:
+  Initial import, ebuild based on the contribution by Josh Nichols
+  <nichoj@alum.rpi.edu>. Fixes #92458
+
