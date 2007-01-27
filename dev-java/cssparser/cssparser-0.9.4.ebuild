@@ -11,7 +11,7 @@ SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="source"
+IUSE="source doc"
 
 DEPEND=">=virtual/jdk-1.4
 		dev-java/ant-core
@@ -24,6 +24,7 @@ src_unpack() {
 	unpack ${A}
 
 	cd ${S}
+	epatch ${FILESDIR}/${PN}.javadoc.patch
 	rm *.jar
 }
 
@@ -33,4 +34,5 @@ EANT_BUILD_TARGET="dist"
 src_install() {
 	java-pkg_newjar ss_css2.jar
 	use source && java-pkg_dosrc src
+	use doc && java-pkg_dojavadoc javadoc
 }
