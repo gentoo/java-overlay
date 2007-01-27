@@ -4,10 +4,12 @@
 
 inherit java-pkg-2 java-ant-2
 
-MY_PV="2007_01_09"
+MY_PV="2007_01_21"
 DESCRIPTION="A collection of powerful, useful, and just plain fun Swing components."
 HOMEPAGE="http://swinglabs.org/index.jsp"
 SRC_URI="http://www.counties.co.nz/alistair/distfiles/${PN}-${MY_PV}-src.zip"
+SRC_URI="http://javadesktop.org/swinglabs/build/weekly/week-04-2007-01-21/swingx-HEAD/${PN}-${MY_PV}-src.zip"
+
 
 LICENSE="LGPL-2.1"
 SLOT="0"
@@ -32,6 +34,8 @@ src_unpack(){
 	
 	rm -R *
 	mkdir optional
+	
+	#java-pkg_jar-from junit-4 junit.jar log4j-4.0.jar
 
 	#jmock-1.1.0 seems to be slotted in 1.0
 	java-pkg_jar-from jmock-1.0 jmock.jar jmock-1.1.0RC1.jar

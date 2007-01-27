@@ -2,10 +2,6 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 <herd>java</herd>
-<maintainer>
-<name>Alistair Bush</name>
-<email>alistair.bush @gmail.com</email>
-</maintainer>
 <longdescription lang="en">
 </longdescription>
 </pkgmetadata>
