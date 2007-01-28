@@ -26,7 +26,7 @@ RDEPEND=">=virtual/jre-1.5
 	>=dev-java/xerces-2.6.2
 	dev-java/commons-io
 	dev-java/commons-logging
-	>=dev-java/xmlgraphics-commons-1.1
+	>=dev-java/xmlgraphics-commons-1.0
 	=dev-java/servletapi-2.2*
 	"
 	
