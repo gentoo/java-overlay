@@ -16,7 +16,8 @@ SLOT="0"
 
 KEYWORDS="~amd64 ~x86"
 #IUSE="doc examples jai jimi mathml xmlunit"
-IUSE="doc examples source"
+IUSE="examples source"
+#removed doc as unable to get it to build (Outofmem errors)
 
 RDEPEND=">=virtual/jre-1.5
 	=dev-java/avalon-framework-4.2*
@@ -26,7 +27,8 @@ RDEPEND=">=virtual/jre-1.5
 	dev-java/commons-io
 	dev-java/commons-logging
 	>=dev-java/xmlgraphics-commons-1.1
-	=dev-java/servletapi-2.2*"
+	=dev-java/servletapi-2.2*
+	"
 	
 	
 	#mathml? ( dev-java/jeuclid )"
@@ -34,52 +36,43 @@ RDEPEND=">=virtual/jre-1.5
 	#jimi? ( dev-java/sun-jimi )
 	#xmlunit? ( dev-java/xmlunit )
 DEPEND=">=virtual/jdk-1.5
+	=dev-java/eclipse-ecj-3.2*
 	${RDEPEND}
 	>=dev-java/ant-1.5.4
 	source? ( app-arch/zip )
-	!dev-java/fop-bin"
+	!dev-java/fop-bin
+	dev-java/sun-jai-bin
+	dev-java/sun-jimi
+	dev-java/xmlunit"
 
 src_unpack() {
 	unpack ${A}
+	#epatch ${FILESDIR}/${P}-startscript.patch
 
 	cd ${S}/lib
-	#epatch ${FILESDIR}/${PV}-startscript.patch
-
 	local packages="avalon-framework-4.2 xalan xmlgraphics-commons-1 xerces-2
 	commons-io-1 servletapi-2.2 batik-1.6"
 
 	for package in ${packages}; do
 		java-pkg_jarfrom ${package}
 	done
-	#cd ${S}/lib
-	#mkdir ${S}/lib/b
-	#mv ${S}/lib/batik* ${S}/lib/b
-	#mv ${S}/lib/xmlgraphics* ${S}/lib/b
-	#rm -f *.jar
-	#mv ${S}/lib/b/* ${S}/lib
-	#java-pkg_jar-from avalon-framework-4.2
-	#java-pkg_jar-from xalan
-	#java-pkg_jar-from xerces-2
-	#java-pkg_jar-from commons-io-1
-	#java-pkg_jar-from servletapi-2.2
-	#if use jai; then
-	#	java-pkg_jar-from sun-jai-bin
-	#fi
+	java-pkg_jar-from sun-jai-bin
 	#if use jimi; then
-	#	java-pkg_jar-from sun-jimi
+		java-pkg_jar-from sun-jimi
 	#fi
 	#if use xmlunit; then
-	#	java-pkg_jar-from xmlunit-1
+		java-pkg_jar-from xmlunit-1
 	#fi
 	#if use mathml; then
 	#	cd ${S}/examples/mathml/lib
-	#	java-pkg_jar-from jeuclid
+#		java-pkg_jar-from jeuclid
 	#fi
 }
 
-ANT_OPTS="-Xmx512m"
+ANT_OPTS="-XX:MaxPermSize=512m"
 EANT_BUILD_TARGET="package"
-EANT_DOC_TARGET="javadocs"
+#EANT_DOC_TARGET="javadocs"
+#JAVA_PKG_FORCE_COMPILER="ecj-3.2"
 #EANT_EXTRA_ARGS="-Xmx512m"
 
 #src_compile() {
@@ -95,20 +88,22 @@ EANT_DOC_TARGET="javadocs"
 #}
 
 src_install() {
-	java-pkg_dojar lib/batik*.jar
-	java-pkg_dojar lib/xmlgraphics-commons*.jar
+	#java-pkg_dojar lib/batik*.jar
+	#java-pkg_dojar lib/xmlgraphics-commons*.jar
 
-	java-pkg_dojar build/${PN}.jar
-	if use mathml; then
-		java-pkg_dojar examples/mathml/build/mathml-fop.jar
-	fi
+	java-pkg_dojar build/*.jar
+	#if use mathml; then
+	#	java-pkg_dojar examples/mathml/build/mathml-fop.jar
+	#fi
 
-	dobin ${PN}
+	#doexe ${PN}
 
-	if use doc; then
-		dodoc CHANGES STATUS README
-		java-pkg_dohtml -r ReleaseNotes.html build/javadocs/*
-	fi
+	#for when the time is right
+	#if use doc; then
+	#	dodoc CHANGES STATUS README
+	#	dohtml ReleaseNotes.html 
+	#	java-pkg_dojavadoc build/javadocs/*
+	#fi
 
 	if use examples; then
 		dodir /usr/share/doc/${PF}/examples
