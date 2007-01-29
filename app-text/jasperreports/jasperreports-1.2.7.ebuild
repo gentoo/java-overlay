@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/app-text/jasperreports/jasperreports-1.0.1.ebuild,v 1.4 2006/07/22 21:28:44 dertobi123 Exp $
 
-inherit java-ant-2 java-pkg-2
+inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="JasperReports is a powerful report-generating tool."
 HOMEPAGE="http://jasperreports.sourceforge.net/"

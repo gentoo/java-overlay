@@ -8,10 +8,10 @@ EBUILD jasperreports-0.6.8-r1.ebuild 2062 RMD160 4c683fe48e12c271d981e38ff345f79
 MD5 f205f5e887f390606455141bf3385134 jasperreports-0.6.8-r1.ebuild 2062
 RMD160 4c683fe48e12c271d981e38ff345f7900cf6f7b7 jasperreports-0.6.8-r1.ebuild 2062
 SHA256 0cf71088ea31e17e90734dd2359d99394c4b0ec2542c31b9bcc5c033342bee17 jasperreports-0.6.8-r1.ebuild 2062
-EBUILD jasperreports-1.2.7.ebuild 2205 RMD160 e48e5c33fe72b0e9405c6a0fc943ab5073bca117 SHA1 1c6b6e4d70fe799fef21d67447918dd51a226e86 SHA256 b3759d8f68e00cbec384388830af2eaf2166db7e39581db02c86b2e4a4a956ba
-MD5 5052adfb407fd88279caa97e527fb4cd jasperreports-1.2.7.ebuild 2205
-RMD160 e48e5c33fe72b0e9405c6a0fc943ab5073bca117 jasperreports-1.2.7.ebuild 2205
-SHA256 b3759d8f68e00cbec384388830af2eaf2166db7e39581db02c86b2e4a4a956ba jasperreports-1.2.7.ebuild 2205
+EBUILD jasperreports-1.2.7.ebuild 2205 RMD160 c0b3901f20aeb83fb8e1fb9550388a1c99203508 SHA1 ac7382ecdef0a7ed1f22c9eef0adffeca6d6a31f SHA256 0b3440ed92f44bfb50062a7dd585fa643a60e594632696246347adf589dd6b14
+MD5 44b158a42a3bf3cdf5acd17a76e350e7 jasperreports-1.2.7.ebuild 2205
+RMD160 c0b3901f20aeb83fb8e1fb9550388a1c99203508 jasperreports-1.2.7.ebuild 2205
+SHA256 0b3440ed92f44bfb50062a7dd585fa643a60e594632696246347adf589dd6b14 jasperreports-1.2.7.ebuild 2205
 MD5 f6075cc6a473db3e4acb73c80fac0579 files/digest-jasperreports-0.6.8-r1 280
 RMD160 5a68ee658f0fc992c104ebfedcc95bc309a9ef78 files/digest-jasperreports-0.6.8-r1 280
 SHA256 fbb46a8f0ace39c43dc9a9b9580c13395090bb26e0680edfe19739c6fcc1d1ee files/digest-jasperreports-0.6.8-r1 280
