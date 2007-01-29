@@ -41,6 +41,5 @@ src_install(){
 	java-pkg_dojar build/${PN}.jar
 	use source && java-pkg_dosrc src
 	use doc && java-pkg_dojavadoc build/javadocs
-
-	java-pkg_verify-classes
 }
+
