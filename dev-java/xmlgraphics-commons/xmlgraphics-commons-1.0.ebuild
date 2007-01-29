@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg-2 java-utils-2
+inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="Apache XML Graphics Commons is a library that consists of several
 reusable components used by Apache Batik and Apache FOP."
@@ -11,7 +11,7 @@ SRC_URI="mirror://apache/xmlgraphics/commons/source/${P}-src.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="1"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE="source doc"
 
 CDEPEND=">=dev-java/commons-io-1"
