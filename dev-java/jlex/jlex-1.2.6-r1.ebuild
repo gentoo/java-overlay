@@ -12,7 +12,7 @@ LICENSE="jlex"
 SLOT="0"
 DEPEND=">=virtual/jdk-1.4"
 RDEPEND=">=virtual/jre-1.4"
-IUSE="doc"
+IUSE="doc source"
 
 src_compile() {
 	ejavac -nowarn Main.java
@@ -25,4 +25,5 @@ src_install() {
 	mkdir JLex && mv *.class JLex/
 	jar cf jlex.jar JLex/ || die "failed to jar"
 	java-pkg_dojar jlex.jar
+	use source && java-pkg_dosrc Main.java
 }
