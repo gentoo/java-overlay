@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-ant-2 java-pkg-2 versionator
+inherit java-pkg-2 java-ant-2 versionator
 
 MY_PV=$(replace_all_version_separators '_' )
 MY_PV=$(replace_version_separator 3 '-' ${MY_PV})
