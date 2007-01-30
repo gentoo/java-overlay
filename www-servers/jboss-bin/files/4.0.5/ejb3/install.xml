@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+
+<!-- ======================================================================= -->
+<!-- JBoss build file for EJB 3.0 activation                                 -->
+<!-- ======================================================================= -->
+
+<project name="JBoss" default="install" >
+	<!-- for <For> task -->
+	<taskdef resource="net/sf/antcontrib/antlib.xml">
+	  	<classpath>
+	      		<pathelement location="/usr/share/ant-contrib/lib/ant-contrib.jar"/>
+	        </classpath>
+	</taskdef>
+
+   	<property file="../local.properties"/>  
+   	<property environment="env"/>
+  	<property name="src.dir" value="${basedir}/src"/>
+   	<property name="jboss.home" value="${env.JBOSS_HOME}"/>   
+
+   <target name="install">
+	   <for  list="all,gentoo" param="profile">
+	   	<sequential>
+			<echo/>
+			<echo/>
+			<echo>Installing EJB3 in ${jboss.home}/server/@{profile}</echo>
+			<echo/>
+			<echo/>
+
+			<delete dir="${jboss.home}/server/@{profile}/deploy/jboss-aop.deployer"/>
+			<delete dir="${jboss.home}/server/@{profile}/deploy/jbossws14.sar"/>
+			<delete dir="${jboss.home}/server/@{profile}/deploy/jboss-aop-jdk50.deployer"/>
+			<delete dir="${jboss.home}/server/@{profile}/deploy/ejb3.deployer"/>
+			<delete file="${jboss.home}/client/jbossws14-client.jar"/>
+			<copy file="lib/jbossws-client.jar" todir="${jboss.home}/client"/>
+			<copy file="lib/hibernate-client.jar" todir="${jboss.home}/client"/>
+			<copy file="lib/jboss-ejb3-client.jar" todir="${jboss.home}/client"/>
+			<copy file="lib/ejb3.deployer/jboss-ejb3x.jar" todir="${jboss.home}/client"/>
+			<copy file="lib/ejb3.deployer/jboss-annotations-ejb3.jar" todir="${jboss.home}/client"/>
+			<copy file="lib/ejb3-persistence.jar" todir="${jboss.home}/server/@{profile}/lib"/>
+			<copy file="lib/ejb3-persistence.jar" todir="${jboss.home}/client"/>
+			<copy file="lib/hibernate-entitymanager.jar" todir="${jboss.home}/server/@{profile}/lib"/>
+			<copy file="lib/hibernate-annotations.jar" todir="${jboss.home}/server/@{profile}/lib"/>
+			<copy file="lib/hibernate3.jar" todir="${jboss.home}/server/@{profile}/lib"/>
+			<copy file="lib/javassist.jar" todir="${jboss.home}/server/@{profile}/lib"/>
+			<copy file="lib/quartz-all-1.5.2.jar" todir="${jboss.home}/server/@{profile}/lib"/>
+			<copy todir="${jboss.home}/server/@{profile}/deploy">
+				<fileset dir="lib">
+					<include name="ejb3.deployer/**"/>
+					<include name="jboss-aop-jdk50.deployer/**"/>
+					<include name="*.xml"/>
+					<include name="jbossws.sar"/>
+				</fileset>
+			</copy>
+			<copy file="lib/jms-ra.rar" todir="${jboss.home}/server/@{profile}/deploy/jms"/>
+			<copy file="lib/quartz-ra.rar" todir="${jboss.home}/server/@{profile}/deploy"/>
+
+			<!-- now we have to unjar and rejar jboss.jar to remove ejbjar and jboss schema files -->
+			<delete dir="tmp"/>
+			<mkdir  dir="tmp"/>
+			<unjar src="${jboss.home}/server/@{profile}/lib/jboss.jar"    dest="tmp"/>
+			<jar destfile="${jboss.home}/server/@{profile}/lib/jboss.jar" update="false">
+				<fileset dir="tmp">
+					<include name="**/*"/>
+					<exclude name="schema/ejb-jar_3_0.xsd"/>
+					<exclude name="schema/jboss_5_0.xsd"/>
+				</fileset>
+			</jar>
+			<delete dir="tmp"/>
+
+			<!-- now we have to unjar and rejar jboss.jar to remove ejbjar and jboss schema files -->
+			<delete dir="tmp"/>
+			<mkdir dir="tmp"/>
+			<unjar src="${jboss.home}/lib/endorsed/xml-apis.jar" dest="tmp"/>
+			<jar destfile="${jboss.home}/lib/endorsed/xml-apis.jar" update="false">
+				<fileset dir="tmp">
+					<include name="**/*"/>
+					<exclude name="javax/xml/namespace/*"/>
+				</fileset>
+			</jar>
+			<delete dir="tmp"/>
+		</sequential>
+	</for>
+   </target>
+</project>

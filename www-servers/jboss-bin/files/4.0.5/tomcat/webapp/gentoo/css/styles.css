@@ -1,0 +1,74 @@
+/* debug */
+/* i*/
+/* table {border: 1px solid black}
+ td {border: 1px dotted gray} 
+ div {border: 3px solid orange}
+ img, form {border: 1px dashed blue}
+ h1, h2, h3, h4, h5, h6, p {border: 1px solid yellow}
+ ul {border: 1px solid red}
+  li {border: 1px solid lightgreen} */
+/* */
+
+
+* {margin: 0; padding: 0;position:relative;}
+
+.body_c {margin-top:40px;height:80%;padding-left:15px;}
+
+.menu {
+	float:left;
+	width:300px;
+	clear:left;
+	font-size:9;
+	padding-top:10px;
+	margin-top:20px;
+}
+/* menu definition */
+.menu_title  p {text-align:center;font-size:14pt;}
+.menu_content ul {margin-bottom:10px;}
+.menu_content li {list-style:none;font-size:10pt;padding-left:15px;}
+
+.content  {margin-left:300px;}
+/*	    border: 3px solid blue;}*/
+.content_title {text-align:center;font-size:18pt;margin-bottom:40px;}
+
+.file {
+	padding:4px;margin-right:250px;margin-left:100px;padding-left:10px;margin-top:4px;
+	width:400px;
+	background-color: #ffafaf; border-bottom: 1px solid #888;
+}
+.code {
+	padding:10px;margin-right:250px;margin-left:100px;padding-left:10px;
+	border:1px solid #0E8605;	
+	background-color: #f9f9f9;
+}
+code {
+	color:#0E8605;	
+	font-weight: bold;
+}
+
+.helper_title  {
+	padding-left:10px;margin-top:20px;
+	font-weight: bold;
+}
+
+.helper_args   {
+	padding-left:20px;
+	font-weight: normal;
+	color:  #0E8605;
+}
+.helper_desc  {
+	font-weight: normal;
+	padding-left:35px;
+}
+
+
+.header { text-align:center;}
+
+.footer  { padding-bottom:20px; margin-bottom:5px;}
+
+h1 {text-align:center;}
+
+.spacer {clear:both;   /*}
+/*          border: 3px solid blue;}*/
+
+
