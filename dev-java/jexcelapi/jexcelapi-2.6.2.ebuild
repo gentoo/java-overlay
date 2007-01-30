@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/jexcelapi/jexcelapi-2.5.1.ebuild,v 1.5 2005/07/16 10:00:34 axxo Exp $
 
-inherit eutils java-ant-2 java-pkg-2
+inherit eutils java-pkg-2 java-ant-2
 
 MY_P="${P//-/_}"
 MY_P="${MY_P//./_}"
