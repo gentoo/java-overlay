@@ -4,9 +4,6 @@
 
 inherit eutils java-pkg-2 java-ant-2
 
-#ESVN_REPO_URI="http://svn.apache.org/repos/asf/xmlgraphics/fop/tags/fop-0_93/"
-#ESVN_PROJECT="fop-0_93"
-
 DESCRIPTION="Formatting Objects Processor is a print formatter driven by XSL"
 HOMEPAGE="http://xmlgraphics.apache.org/fop/"
 SRC_URI="mirror://apache/xmlgraphics/${PN}/${P}-src.tar.gz"
@@ -27,10 +24,7 @@ RDEPEND=">=virtual/jre-1.5
 	dev-java/commons-io
 	dev-java/commons-logging
 	>=dev-java/xmlgraphics-commons-1.0
-	=dev-java/servletapi-2.2*
-	"
-	
-	
+	=dev-java/servletapi-2.2*"
 	#mathml? ( dev-java/jeuclid )"
 	#jai? ( dev-java/sun-jai-bin )
 	#jimi? ( dev-java/sun-jimi )
@@ -73,19 +67,6 @@ ANT_OPTS="-XX:MaxPermSize=512m"
 EANT_BUILD_TARGET="package"
 #EANT_DOC_TARGET="javadocs"
 #JAVA_PKG_FORCE_COMPILER="ecj-3.2"
-#EANT_EXTRA_ARGS="-Xmx512m"
-
-#src_compile() {
-#	local antflags="package"
-#	if use doc; then
-#		antflags="${antflags} javadocs"
-#	fi
-#	ant ${antflags} || die "compile failed"
-#	if use mathml; then
-#		cd ${S}/examples/mathml
-#		ant || die "compele failed"
-#	fi
-#}
 
 src_install() {
 	#java-pkg_dojar lib/batik*.jar
