@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils java-ant-2 java-pkg-2
+inherit eutils java-pkg-2 java-ant-2
 
 DESCRIPTION="StatCVS generates HTML reports from CVS repository logs."
 HOMEPAGE="http://statcvs.sourceforge.net/"
