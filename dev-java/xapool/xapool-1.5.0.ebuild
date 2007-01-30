@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-ant-2 java-pkg-2 eutils
+inherit java-pkg-2 java-ant-2 eutils
 
 MY_P="${P}-src"
 DESCRIPTION="XAPool is an open source XA Pool !"
