@@ -83,10 +83,10 @@ src_install() {
 	doexe	 ${FILESDIR}/${PV}/bin/jboss-bin-4-profiles-creator.sh
 	# implement GLEP20: srvdir
 	addpredict ${SERVICES_DIR}
+	# make a "gentoo" profile with "default" one as a template
+	cp -rf server/default    server/gentoo
 	# add optionnal jboss EJB 3.0 implementation
 	if use ejb3;then
-		# make a "gentoo" profile with "all" one as a template
-		cp -rf server/default    server/gentoo
 		einfo "EJB 3.0 support  Activation"
 		cd ../$MY_EJB3
 		cp -rf ${FILESDIR}/${PV}/ejb3/install.xml .
@@ -101,9 +101,6 @@ src_install() {
 		for app in ${backported_apps};do
 			cp -rf server/all/deploy/${app}    server/gentoo/deploy
 		done
-	else
-		# make a "gentoo" profile with "default" one as a template
-		cp -rf server/default    server/gentoo
 	fi
 	# our nice little welcome app
 	cp -rf ${FILESDIR}/${PV}//tomcat/webapp/gentoo .
@@ -114,6 +111,15 @@ src_install() {
 	rm -f WEB-INF/jboss-web.xml
 	jar cf ../ROOT.war *
 	cd ..
+	# installing the tomcat configuration and the webapp
+	for PROFILE in all default gentoo ; do
+		rm -rf server/${PROFILE}/deploy/jbossweb-tomcat55.sar/ROOT.war
+		cp -rf gentoo.war  server/${PROFILE}/deploy/
+		cp -rf ROOT.war    server/${PROFILE}/deploy/jbossweb-tomcat55.sar/
+		# our tomcat configuration to point to our helper
+		cp -rf ${FILESDIR}/${PV}/tomcat/server.xml  server/${PROFILE}/deploy/jbossweb-tomcat55.sar/server.xml
+	done
+	rm -f gentoo.war ROOT.war
 		# installing profiles
 	for PROFILE in all default gentoo minimal; do
 		# create directory
@@ -171,15 +177,6 @@ src_install() {
 		# symlink the tomcat server.xml configuration file
 		dosym ${SERVICES_DIR}/${PROFILE}/deploy/jbossweb-tomcat55.sar/server.xml	${CONF_INSTALL_DIR}/${PROFILE}/
 	done
-	# installing the tomcat configuration and the webapp
-	for PROFILE in all default gentoo ; do
-		rm -rf ${CONF_INSTALL_DIR}/${PROFILE}/deploy/jbossweb-tomcat55.sar/ROOT.war
-		cp -rf gentoo.war  ${CONF_INSTALL_DIR}/${PROFILE}/deploy
-		cp -rf ROOT.war ${CONF_INSTALL_DIR}/${PROFILE}/deploy/jbossweb-tomcat55.sar/
-		# our tomcat configuration to point to our helper
-		cp -rf ${FILESDIR}/${PV}/tomcat/server.xml      ${CONF_INSTALL_DIR}/${PROFILE}/deploy/jbossweb-tomcat55.sar/server.xml
-	done
-	rm -f gentoo.war ROOT.war
 
 	# set some cp
 	if use ejb3;then
