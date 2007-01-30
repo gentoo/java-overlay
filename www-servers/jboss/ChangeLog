@@ -1,6 +1,9 @@
 # ChangeLog for www-servers/jboss
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  30 Jan 2007; kiorky kiorky@cryptelium.net +jboss-4.0.5-r1.ebuild:
+  www-servers/jboss backporting jboss-bin stuff and beginning writing
 
   04 Dec 2006; Miroslav Šulc <miroslav.sulc@startnet.cz>
   -files/digest-jboss-4.0.4-r2, +ChangeLog, Manifest:
