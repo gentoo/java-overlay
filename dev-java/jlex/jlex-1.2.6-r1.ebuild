@@ -10,8 +10,7 @@ HOMEPAGE="http://www.cs.princeton.edu/~appel/modern/java/JLex/"
 KEYWORDS="~x86 ~ppc ~amd64"
 LICENSE="jlex"
 SLOT="0"
-DEPEND=">=virtual/jdk-1.4
-	jikes? ( dev-java/jikes )"
+DEPEND=">=virtual/jdk-1.4"
 RDEPEND=">=virtual/jre-1.4"
 IUSE="doc"
 
