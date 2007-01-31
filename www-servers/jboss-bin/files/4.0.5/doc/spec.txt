@@ -20,6 +20,11 @@ subdir
         init script for jboss1 instance
 /etc/init.d/jboss.jbossn
         init script for jboss2 instance
+
+-------------------------------------------------------
+srvdir is either
+* /var/lib/JBOSSPNPV/hostname
+* /srv/hostname/JBOSSPNPV
 -------------------------------------------------------
 All these directory contains just JBoss "profiles"
 /srv/localhost/jboss:
