@@ -40,7 +40,7 @@ if use "srvdir" ; then
 	SERVICES_DIR="/srv/localhost/${PN}-${SLOT}"
 	FILESDIR_CONF_DIR="${FILESDIR}/${PV}/srvdir"
 else
-	SERVICES_DIR="/var/lib/${PN}-${SLOT}"
+	SERVICES_DIR="/var/lib/${PN}-${SLOT}/localhost"
 	FILESDIR_CONF_DIR="${FILESDIR}/${PV}/normal"
 fi
 
