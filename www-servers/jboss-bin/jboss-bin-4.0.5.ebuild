@@ -14,7 +14,7 @@ SRC_URI="mirror://sourceforge/jboss/${MY_P}.zip
 RESTRICT="nomirror"
 HOMEPAGE="http://www.jboss.org"
 LICENSE="LGPL-2"
-IUSE="doc ejb3 "
+IUSE="doc ejb3 srvdir"
 SLOT="4"
 KEYWORDS="~amd64 x86"
 
@@ -33,7 +33,16 @@ LOG_INSTALL_DIR="/var/log/${PN}-${SLOT}/localhost"
 RUN_INSTALL_DIR="/var/run/${PN}-${SLOT}/localhost"
 TMP_INSTALL_DIR="/var/tmp/${PN}-${SLOT}/localhost"
 CONF_INSTALL_DIR="/etc/${PN}-${SLOT}/localhost"
-SERVICES_DIR="/srv/localhost/${PN}-${SLOT}"
+FILESDIR_CONF_DIR=""
+
+#switching configuration files directory
+if use "srvdir" ; then
+	SERVICES_DIR="/srv/localhost/${PN}-${SLOT}"
+	FILESDIR_CONF_DIR="${FILESDIR}/${PV}/srvdir"
+else
+	SERVICES_DIR="/var/lib/${PN}-${SLOT}"
+	FILESDIR_CONF_DIR="${FILESDIR}/${PV}/normal"
+fi
 
 
 # NOTE: When you are updating CONFIG_PROTECT env.d file, you can use this script on your current install
@@ -70,17 +79,17 @@ src_install() {
 	doins -r client lib
 
 	# copy startup stuff
-	doinitd  ${FILESDIR}/${PV}/init.d/${PN}-${SLOT}
+	doinitd  ${FILESDIR_CONF_DIR}/init.d/${PN}-${SLOT}
 	# add multi instances support (here:localhost)
 	dosym /etc/init.d/${PN}-${SLOT} /etc/init.d/${PN}-${SLOT}.localhost
-	newconfd ${FILESDIR}/${PV}/conf.d/${PN}-${SLOT} ${PN}-${SLOT}
+	newconfd ${FILESDIR_CONF_DIR}/conf.d/${PN}-${SLOT} ${PN}-${SLOT}
 	# add multi instances support (here:localhost)
-	newconfd ${FILESDIR}/${PV}/conf.d/${PN}-${SLOT} ${PN}-${SLOT}.localhost
-	gunzip  -c ${FILESDIR}/${PV}/env.d/50${PN}-${SLOT}.gz>50${PN}-${SLOT}
+	newconfd ${FILESDIR_CONF_DIR}/conf.d/${PN}-${SLOT} ${PN}-${SLOT}.localhost
+	gunzip  -c ${FILESDIR_CONF_DIR}/env.d/50${PN}-${SLOT}.gz>50${PN}-${SLOT}
 	doenvd  50${PN}-${SLOT}
 	# jboss profiles creator binary
 	exeinto  /usr/bin
-	doexe	 ${FILESDIR}/${PV}/bin/jboss-bin-4-profiles-creator.sh
+	doexe	 ${FILESDIR_CONF_DIR}/bin/jboss-bin-4-profiles-creator.sh
 	# implement GLEP20: srvdir
 	addpredict ${SERVICES_DIR}
 	# make a "gentoo" profile with "default" one as a template
