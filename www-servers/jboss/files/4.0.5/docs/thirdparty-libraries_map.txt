@@ -1,0 +1,30 @@
+o:apache-addressing 		dev-java/apache-addressing  	<=~1.0_pre20061001
+o:apache-avalon     		dev-java/avalon-framework   	<=4.1.5
+o:apache-avalon-logkit		dev-java/avalon-logkit      	<=1.2-r2
+o:apache-bcel			dev-java/bcel			<=5.1-r3
+o:apache-beanutils		dev-java/commons-beanutils	<=1.7.0-r1
+apache-codec			dev-java/commons-codec		<=1.3 
+apache-collections		dev-java/commons-collections	<=3.1
+apache-discovery		dev-java/commons-digester	<=1.6-r1
+apache-discovery
+apache-fileupload
+apache-httpclient
+apache-jaxme
+apache-lang
+apache-logging
+apache-modeler
+apache-myfaces
+apache-pool
+apache-scout
+apache-slide
+apache-tomcat
+apache-wss4j
+apache-xalan
+apache-xerces
+apache-xmlsec
+
+
+p:need to be packaged
+o:in tree
+
+
