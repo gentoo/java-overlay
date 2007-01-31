@@ -23,8 +23,8 @@ subdir
 
 -------------------------------------------------------
 srvdir is either
-* /var/lib/JBOSSPNPV/hostname
-* /srv/hostname/JBOSSPNPV
+* /var/lib/JBOSSSLOT/hostname
+* /srv/hostname/JBOSSSLOT
 -------------------------------------------------------
 All these directory contains just JBoss "profiles"
 /srv/localhost/jboss:

@@ -62,7 +62,7 @@ start()	{
 
 	init_vars
 	start-stop-daemon --start  --background --chuid ${JBOSS_USER}:${JBOSS_GROUP}\
-		--make-pidfile --pidfile /var/run/${JBOSS_PN_PV}/${JBOSS_HOSTNAME}/${JBOSS_SERVER_NAME}_jboss-bin-4.pid \
+		--make-pidfile --pidfile /var/run/${JBOSS_SLOT}/${JBOSS_HOSTNAME}/${JBOSS_SERVER_NAME}_jboss-bin-4.pid \
 		--env JAVA_OPTIONS="${JAVA_OPTS} ${JBOSS_INT_OPTS} -classpath /opt/jboss-bin-4/bin/run.jar"\
 		--exec /opt/jboss-bin-4/bin/jboss-start.sh
 			
@@ -73,7 +73,7 @@ stop()	{
 	ebegin "Stopping JBoss"
 	init_vars
 	start-stop-daemon --stop --quiet --make-pidfile \
-		--pidfile /var/run/${JBOSS_PN_PV}/${JBOSS_HOSTNAME}/${JBOSS_SERVER_NAME}_jboss-bin-4.pid \
+		--pidfile /var/run/${JBOSS_SLOT}/${JBOSS_HOSTNAME}/${JBOSS_SERVER_NAME}_jboss-bin-4.pid \
 		--env JAVA_OPTIONS="${JAVA_OPTS} ${JBOSS_INT_OPTS} -classpath /opt/jboss-bin-4/bin/shutdown.jar"\
 		--exec /opt/jboss-bin-4/bin/jboss-stop.sh  
 	eend $?
