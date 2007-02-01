@@ -1,27 +1,65 @@
-o:apache-addressing 		dev-java/apache-addressing  	<=~1.0_pre20061001
-o:apache-avalon     		dev-java/avalon-framework   	<=4.1.5
-o:apache-avalon-logkit		dev-java/avalon-logkit      	<=1.2-r2
-o:apache-bcel			dev-java/bcel			<=5.1-r3
-o:apache-beanutils		dev-java/commons-beanutils	<=1.7.0-r1
-apache-codec			dev-java/commons-codec		<=1.3 
-apache-collections		dev-java/commons-collections	<=3.1
-apache-discovery		dev-java/commons-digester	<=1.6-r1
-apache-discovery
-apache-fileupload
-apache-httpclient
-apache-jaxme
-apache-lang
-apache-logging
-apache-modeler
-apache-myfaces
-apache-pool
-apache-scout
-apache-slide
-apache-tomcat
-apache-wss4j
-apache-xalan
-apache-xerces
-apache-xmlsec
+NAME			VERSION								NOTES
+--------------------------------------------------------------------------------------------------------------------------
+o:apache-addressing 	<=dev-java/apache-addressing-1.0_pre20061001
+o:apache-avalon     	<=dev-java/avalon-framework-4.1.5
+o:apache-avalon-logkit	<=dev-java/avalon-logkit-1.2-r2
+o:apache-bcel		<=dev-java/bcel-5.1-r3
+o:apache-beanutils	<=dev-java/commons-beanutils-1.7.0-r1
+o:apache-codec		<=dev-java/commons-codec-1.3 
+o:apache-collections	<=dev-java/commons-collections-3.1
+o:apache-digester	<=dev-java/commons-digester-1.6-r1
+o:apache-discovery	<=dev-java/commons-discovery-0.2-r2
+o:apache-fileupload	<=dev-java/commons-fileupload-1.1.1
+o:apache-httpclient	<=dev-java/commons-httpclient-2.0.2
+o:apache-jaxme		<=dev-java/jaxme-0.3.1
+o:apache-lang		<=dev-java/commons-lang-2.1
+o:apache-logging							specific stuff added by jboss
+o:apache-modeler	<=dev-java/commons-modeler-1.1-r3
+o:apache-myfaces	<=dev-java/myfaces-1.1.4	
+o:apache-pool		<=dev-java/commons-pool	1.1
+p:apache-scout								TODO: #94460
+o:apache-slide		<=dev-java/jakarta-slide-webdavclient-2.1
+o:apache-tomcat		<=www-servers/tomcat-5.5.20-r7 		
+o:apache-velocity							specific stuff added by jboss
+p:apache-wss4j								Seems to be CVS stuff
+o:apache-xalan		<=dev-java/xalan-2.7.0-r2
+o:apache-xerces		<=dev-java/xerces-2.7.1-r2
+o:apache-xmlsec		<=dev-java/xml-security-1.2.1  				
+p:beanshell		http://www.beanshell.org/ <=1.3.0
+o:cglib			<=dev-java/cglib-2.1.3
+o:commons-el		<=dev-java/commons-el-1.0
+o:dom4j			<=dev-java/dom4j-1.6.1-r2
+o:gjt-jpl-util		<=dev-java/gjt-jpl-util-1.0 	 		0.6 in tree must be updated
+o:gnu-getopt		<=dev-java/java-getopt-1.0.10
+o:hibernate		<=dev-java/hibernate				specific stuff added by jboss
+o:hibernate-annotations		<=dev-java/hibernate-annotations	specific stuff added by jboss
+p:hibernate-entitymanager	http://entitymanager.hibernate.org/ 	specific stuff added by jboss
+o:hsqldb		<=dev-db/hsqldb-1.8.0.2				0.7.3 in tree must be updated
+o:ibm-wsdl4j 		<=dev-java/wsdl4j-1.5.2				1.5.1-r1 in tree must be updated
+jacorb			<=dev-java/jacorb-2.2.4				2.2.3 in tree must be updated
+									specific stuff added by jboss
+o:javassist		<=dev-java/javassist-3.3			specific stuff added by jboss
+o:jaxen			<=dev-java/jaxen-1.1_beta11
+o:jfreechart		<=dev-java/jfreechart-0.9.21
+o:jgroups		<=dev-java/jgroups-2.2.7-r1
+o:joesnmp		<=dev-java/joesnmp-0.3.4
+p:juddi			<=dev-java/juddi-0.9				TODO bug #94441
+o:junit			<=dev-java/junit-3.8.1-r1
+p:junitejb		<1.4						TODO bug #94442
+p:objectweb-joramtests	<1.1						TODO
+o:odmg			<=dev-java/odmg-3.0
+p:oswego-concurrent	<1.3.4						TODO
+qdox			<=dev-java/qdox-1.4
+quartz			<=dev-java/quartz-1.5.2				1.5.1-r1 in portage, must be updated
+sleepycat		<=1.5.2						TODO
+sun-jaf			<=dev-java/sun-jaf-1.1
+sun-javacc		<=dev-java/javacc-3.2-r3
+sun-javamail		<=dev-java/sun-javamail-1.4
+sun-servlet		<=dev-java/servletapi-2.4-r5
+trove			<=dev-java/trove-1.0.2
+wutka-dtdparser		<=dev-java/dtdparser-1.21
+xdoclet			<=dev-java/xdoclet-1.2.3
+xml-sax			<=dev-java/sax-2.2.1
 
 
 p:need to be packaged
