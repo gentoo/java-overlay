@@ -49,17 +49,17 @@ p:junitejb		<1.4						TODO bug #94442
 p:objectweb-joramtests	<1.1						TODO
 o:odmg			<=dev-java/odmg-3.0
 p:oswego-concurrent	<1.3.4						TODO
-qdox			<=dev-java/qdox-1.4
-quartz			<=dev-java/quartz-1.5.2				1.5.1-r1 in portage, must be updated
-sleepycat		<=1.5.2						TODO
-sun-jaf			<=dev-java/sun-jaf-1.1
-sun-javacc		<=dev-java/javacc-3.2-r3
-sun-javamail		<=dev-java/sun-javamail-1.4
-sun-servlet		<=dev-java/servletapi-2.4-r5
-trove			<=dev-java/trove-1.0.2
-wutka-dtdparser		<=dev-java/dtdparser-1.21
-xdoclet			<=dev-java/xdoclet-1.2.3
-xml-sax			<=dev-java/sax-2.2.1
+o:qdox			<=dev-java/qdox-1.4
+o:quartz		<=dev-java/quartz-1.5.2				1.5.1-r1 in portage, must be updated
+p:sleepycat		<=1.5.2						TODO
+o:sun-jaf		<=dev-java/sun-jaf-1.1
+o:sun-javacc		<=dev-java/javacc-3.2-r3
+o:sun-javamail		<=dev-java/sun-javamail-1.4
+o:sun-servlet		<=dev-java/servletapi-2.4-r5
+o:trove			<=dev-java/trove-1.0.2
+o:wutka-dtdparser	<=dev-java/dtdparser-1.21
+o:xdoclet		<=dev-java/xdoclet-1.2.3
+o:xml-sax		<=dev-java/sax-2.2.1
 
 
 p:need to be packaged
