@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<project name="cryptix3" default="jar">
+	<!-- compiles the sources -->
+	<target name="compile">
+		<mkdir dir="build" />
+	
+		<javac srcdir="src" 
+			destdir="build"
+			source="1.4"
+			target="1.4">
+		</javac>
+	</target>
+
+	<!-- create the jar archive -->
+	<target name="jar" depends="compile">
+		<mkdir dir="lib" />
+		
+		<jar jarfile="lib/cryptix32.jar"
+			basedir="build">
+		</jar>
+	</target>
+
+	<target description="Produce JavaDoc" name="javadoc">
+		<mkdir dir="api" />
+		<javadoc destdir="api/">
+			<fileset dir="src" 
+			defaultexcludes="yes" 
+			includes="**/*.java" />
+		</javadoc>
+	</target>
+
+</project>

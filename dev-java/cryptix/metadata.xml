@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+
+<pkgmetadata>
+<herd>java</herd>
+
+<longdescription>
+
+The Cryptix ASN.1 Kit aims at facilitating the task programmers face in coding, 
+accessing and generating java-bound, both types and values, defined as ASN.1 
+constructs, or encoded as such.
+
+</longdescription>
+</pkgmetadata>

@@ -1,0 +1,17 @@
+# ChangeLog for dev-java/cryptix
+# Copyright 2000-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-java/cryptix/ChangeLog,v 1.3 2005/05/01 16:07:32 luckyduck Exp $
+
+  02 Feb 2007; Alistair Bush <alistair.bush@gmail.com>
+  +cryptix-3.2.0-r1.ebuild, +files/build.xml, +metadata.xml:
+  Migrated cryptix to generation 2.
+
+  01 May 2005; Jan Brinkmann <luckyduck@gentoo.org> cryptix-3.2.0.ebuild:
+  Added ~ppc to KEYWORDS, marked stable on amd64 and x86. introduced support
+  for the source useflag
+
+*cryptix-3.2.0 (04 Dec 2004)
+
+  04 Dec 2004; Karl Trygve Kalleberg <karltk@gentoo.org> cryptix-3.2.0.ebuild:
+  Initial import. Ebuild submitted by the magnanimous Jan Brinkmann 
+  <lucky@the-luckyduck.de>. Fixes #72946.
