@@ -29,8 +29,6 @@ src_unpack() {
 	cp "${FILESDIR}/build.xml" "."
 }
 
-EANT_BUILD_TARGET="jar"
-
 src_install() {
 	java-pkg_newjar lib/cryptix32.jar
 
