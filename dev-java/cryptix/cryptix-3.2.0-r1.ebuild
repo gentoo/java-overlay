@@ -3,7 +3,7 @@
 # $Header: /var/cvsroot/gentoo-x86/dev-java/cryptix/cryptix-3.2.0.ebuild,v 1.5 2005/07/15 17:31:24 axxo Exp $
 
 JAVA_PKG_IUSE="source doc"
-ANT_TASKS="ant-core"
+WANT_ANT_TASKS="ant-core"
 
 inherit java-pkg-2 java-ant-2
 
@@ -17,23 +17,22 @@ KEYWORDS="~x86 ~amd64 ~ppc"
 IUSE=""
 
 DEPEND=">=virtual/jdk-1.4
-	app-arch/unzip
-	source? ( app-arch/zip )"
+	app-arch/unzip"
 RDEPEND=">=virtual/jre-1.4"
 
 S=${WORKDIR}
 
 src_unpack() {
-	unpack ${A}
-	cd ${S}
+	unpack "${A}"
+	cd "${S}"
 
-	cp ${FILESDIR}/build.xml .
+	cp "${FILESDIR}/build.xml" "."
 }
 
 EANT_BUILD_TARGET="jar"
 
 src_install() {
-	java-pkg_dojar lib/cryptix32.jar
+	java-pkg_newjar lib/cryptix32.jar
 
 	use doc && java-pkg_dojavadoc api/
 	use source && java-pkg_dosrc src/*
