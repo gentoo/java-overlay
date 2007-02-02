@@ -1,0 +1,9 @@
+backport jboss-bin filesdir and begin to adapt it
+
+commit stuff done in jboss ebuild 
+
+add a control to ensure users don't even try to use it now
+
+correct copyrights's date
+
+
