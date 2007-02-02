@@ -1,0 +1,133 @@
+
+e ll keep in mind that jboss can use a "main directory"
+then it can use a profile specific subdir.
+In default bundle, all subdirs in /server are "profiles"
+-------------------------------------------------------
+All configuration files points to  a config to use
+The default is "default"
+/etc/conf.d/jboss
+        configuration for jboss instance
+/etc/conf.d/jboss1
+        configuration for jboss1 instance
+/etc/conf.d/jbossn
+        configuration for jboss2 instance
+-------------------------------------------------------
+All init scripts set their "/server" subdir to the adequat /srv/<fqdn>/jboss
+subdir
+/etc/init.d/jboss.localhost
+        init script for jboss instance
+/etc/init.d/jboss.jboss1
+        init script for jboss1 instance
+/etc/init.d/jboss.jbossn
+        init script for jboss2 instance
+
+-------------------------------------------------------
+srvdir is either
+* /var/lib/JBOSSSLOT/hostname
+* /srv/hostname/JBOSSSLOT
+-------------------------------------------------------
+All these directory contains just JBoss "profiles"
+/srv/localhost/jboss:
+ profile1 profil2
+        there go default things
+        or when not given vhost from the script
+/srv/vhost1/jboss:
+ jboss1.vhost1 jboss2.vhost1
+        if user wants to use a "vhost1"
+...
+/srv/vhostn/jboss:
+-------------------------------------------------------
+a typical profile dir:
+profile/
+conf:
+        configuration directory
+        NA: we create a symlink in /etc/jboss/vhost/profile
+            _TO_ this directory
+data:
+        symlink to /var/cache/jboss/vhost/profile
+        runtime dir
+deploy:
+        application directory
+	where we put war, ear and so on
+        NA: we create a symlink in /etc/jboss/vhost/profile for tomcat
+lib:
+        directory where additionnal jar and ressources go
+log:
+        symlink to /var/log/jboss/vhost/profile
+        log directory
+tmp:
+        symlink to /var/tmp/jboss/vhost/profile
+        tmp directory
+work:
+        symlink to /var/run/jboss/vhost/profile
+        state (pid) dirctory
+-------------------------------------------------------
+The manager script will do:
+        create
+                create a profile
+        delete
+                delete a profile
+        list
+                list the profiles in /srv/localhost
+                list the profiles in vhost if --vhost specified and is valid
+        help
+                print usage
+        Valid arguments are:
+                --profile=serverdir_template
+                        - Either the name of the template to use to create the new profile with --create
+                        - Either the name of the profile to delete with --delete
+                        - controls:
+                                * controls at creation:
+                                        profile template exists:
+                                                if fullpath or relative path:
+                                                        /conf /lib /deploy exist in the profile dir
+                                                if not a path:
+                                                        directory or symlick in vhost_dir exists with the profile name
+                                                        /conf /lib /deploy exist in the profile dir
+                                * controle at delete:
+                                        profile exists in vhost or in default_vhost if no --vhost
+                        - Default is 'gentoo'
+                --path=/path/to/profile_to_create      SCOPE:create"
+                        * don't use the leading / for a subdir of the vhost  specified  (default_vhost if null)
+                        * indicate the full location to other wanted location"
+                        * controls:
+                                * if vhost subdir:
+                                        another profile with same name doesnt exists
+                                * if full_path:
+                                        another profile with same name doesnt exists in vhost dir
+                                        we re not installing in forbidden directory (eg:/bin)
+                                        if relative path is given, transform it to full_path
+                --vhost=vhost
+                        - set the vhost
+                        - controls:
+                                * a directory with "vhost name" exists in $srvdir
+                        - Default is 'localhost'
+-------------------------------------------------------
+How to add a vhost and keep it running:
+	First of all, create the profile with the helper
+		jboss-4-bin-profiles-creator.sh create --profile=vhost1 --path=somewhere --vhost=vhost1.yourdomain.com
+	Second, edit the tomcat file to add a vhost see:
+		http://wiki.jboss.org/wiki/Wiki.jsp?page=VirtualHosts
+		for example:
+			         <Host name="vhost1.yourdomain.com"
+			            autoDeploy="true" deployOnStartup="true" deployXML="true">
+			            <Alias>vhost1.yourdomain.com</Alias>
+			            <Valve className="org.apache.catalina.valves.AccessLogValve"
+			               prefix="vhost1.yourdomain.com-" suffix=".log"
+			               pattern="common" directory="${jboss.server.home.dir}/log"/>
+			         </Host>
+	Third edit your webapp to be deploy on this vhost:
+		--> WEB-INF/jboss-web.xml
+			<jboss-web>
+			   <!-- Uncomment the security-domain to enable security. You will
+			      need to edit the htmladaptor login configuration to setup the
+			      login modules used to authentication users.
+			      <security-domain>java:/jaas/jmx-console</security-domain>
+			   -->
+			   <virtual-host>vhost1.yourdomain.com</virtual-host>
+			</jboss-web>
+	Four, deploy your stuff in
+		/srv/vhost1.yourdomain.com/jboss-PN/vhost1/deploy
+
+
+

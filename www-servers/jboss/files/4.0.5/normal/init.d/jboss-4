@@ -1,0 +1,80 @@
+#!/sbin/runscript
+# Copyright 1999-2004 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header$
+
+	
+depend() {
+	use dns logger net
+}
+
+
+init_vars() {
+
+	JBOSS_INT_OPTS="-Djboss.server.name=${JBOSS_SERVER_NAME}"
+	JBOSS_INT_OPTS="${JBOSS_INT_OPTS} -Djboss.home.dir=${JBOSS_HOME_DIR}"
+	JBOSS_INT_OPTS="${JBOSS_INT_OPTS} -Djboss.home.url=${JBOSS_HOME_URL}"
+	JBOSS_INT_OPTS="${JBOSS_INT_OPTS} -Djboss.lib.url=${JBOSS_LIB_URL}"
+	JBOSS_INT_OPTS="${JBOSS_INT_OPTS} -Djava.endorsed.dirs=${JBOSS_ENDORSED_DIRS}"
+	JBOSS_INT_OPTS="${JBOSS_INT_OPTS} -Djboss.server.base.dir=${JBOSS_SERVER_BASE_DIR}"
+	JBOSS_INT_OPTS="${JBOSS_INT_OPTS} -Djboss.server.base.url=${JBOSS_SERVER_BASE_URL}"
+	JBOSS_INT_OPTS="${JBOSS_INT_OPTS} -Djboss.server.home.dir=${JBOSS_SERVER_HOME_DIR}"
+	JBOSS_INT_OPTS="${JBOSS_INT_OPTS} -Djboss.server.home.url=${JBOSS_SERVER_HOME_URL}"
+	JBOSS_INT_OPTS="${JBOSS_INT_OPTS} -Djboss.server.config.url=${JBOSS_SERVER_CONFIG_URL}"
+	JBOSS_INT_OPTS="${JBOSS_INT_OPTS} -Djboss.server.root.deployment.filename=${JBOSS_SERVER_ROOT_DEPLOYMENT_FILENAME}"
+	JBOSS_INT_OPTS="${JBOSS_INT_OPTS} -Djboss.server.data.dir=${JBOSS_SERVER_DATA_DIR}"
+	JBOSS_INT_OPTS="${JBOSS_INT_OPTS} -Djboss.server.lib.url=${JBOSS_SERVER_LIB_URL}"
+	JBOSS_INT_OPTS="${JBOSS_INT_OPTS} -Djboss.server.log.dir=${JBOSS_SERVER_LOG_DIR}"
+	JBOSS_INT_OPTS="${JBOSS_INT_OPTS} -Djboss.server.temp.dir=${JBOSS_SERVER_TEMP_DIR}"
+	JBOSS_INT_OPTS="${JBOSS_INT_OPTS} -Djboss.bind.address=${JBOSS_BIND_ADDRESS}"
+	JBOSS_INT_OPTS="${JBOSS_INT_OPTS} -Djboss.server.exitonshutdown=${JBOSS_SERVER_EXIT_ON_SHUTDOWN}"
+	JBOSS_INT_OPTS="${JBOSS_INT_OPTS} -Djboss.server.blockingshutdown=${JBOSS_SERVER_BLOCKING_SHUTDOWN}"
+	JBOSS_INT_OPTS="${JBOSS_INT_OPTS} -Djboss.platform.mbeanserver=${JBOSS_PLATFORM_MBEAN_SERVER}"
+	JBOSS_INT_OPTS="${JBOSS_INT_OPTS} -Djboss.server.requirejbossurlstreamhandlerfactory=${JBOSS_SERVER_REQUIRE_JBOSS_URL_STREAM_HANDLER_FACTORY}"
+	if [ -n "${JBOSS_PATCH_URL}" ]; then
+		JBOSS_INT_OPTS="${JBOSS_INT_OPTS} -Djboss.patch.url=${JBOSS_PATCH_URL}"
+	fi
+	# additionnal classpath, must be last
+	#getting tools.jar
+	eval $(gjl  -p jboss-4  --get-vm);
+	jhome=$(java-config-2 --select-vm=$gjl_vm -O)
+	tools_jar="${jhome}/lib/tools.jar"
+	JBOSS_INT_OPTS="${JBOSS_INT_OPTS}  -classpath ${tools_jar}" 
+
+}
+
+start()	{
+	ebegin "Starting JBoss"
+
+	MAX_FD_LIMIT=`ulimit -H -n`
+	if [ $? -eq 0 ]; then
+		if [ "${JBOSS_FD_LIMIT}" = "maximum" ]; then
+			# use the system max
+			JBOSS_FD_LIMIT="${MAX_FD_LIMIT}"
+		fi
+		ulimit -n ${JBOSS_FD_LIMIT}
+		if [ $? -ne 0 ]; then
+			ewarn "Could not set maximum file descriptor limit: ${JBOSS_FD_LIMIT}"
+		fi
+	else
+		ewarn "Could not query system maximum file descriptor limit: ${MAX_FD_LIMIT}"
+	fi
+
+	init_vars
+	start-stop-daemon --start  --background --chuid ${JBOSS_USER}:${JBOSS_GROUP}\
+		--make-pidfile --pidfile /var/run/${JBOSS_SLOT}/${JBOSS_HOSTNAME}/${JBOSS_SERVER_NAME}_jboss-4.pid \
+		--env JAVA_OPTIONS="${JAVA_OPTS} ${JBOSS_INT_OPTS} -classpath /usr/share/jboss-4/bin/run.jar"\
+		--exec /usr/share/jboss-4/bin/jboss-start.sh
+			
+	eend $?
+}
+
+stop()	{	
+	ebegin "Stopping JBoss"
+	init_vars
+	start-stop-daemon --stop --quiet --make-pidfile \
+		--pidfile /var/run/${JBOSS_SLOT}/${JBOSS_HOSTNAME}/${JBOSS_SERVER_NAME}_jboss-4.pid \
+		--env JAVA_OPTIONS="${JAVA_OPTS} ${JBOSS_INT_OPTS} -classpath /opt/jboss-4/bin/shutdown.jar"\
+		--exec /usr/share/jboss-4/bin/jboss-stop.sh  
+	eend $?
+}

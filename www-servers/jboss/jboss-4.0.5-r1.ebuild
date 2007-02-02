@@ -48,8 +48,8 @@ fi
 # *.properties and *.tld files.
 # SLOT="4" TEST=`find /var/lib/jboss-${SLOT}/ -type f | grep -E -e "\.(xml|properties|tld)$"`; echo $TEST
 # by kiorky better:
-# echo "CONFIG_PROTECT=\"$(find /srv/localhost/jboss-bin-4/ -name "*xml" -or -name \
-#          "*properties" -or -name "*tld" |xargs echo -n)\"">>env.d/50jboss-bin-4   
+# echo "CONFIG_PROTECT=\"$(find /srv/localhost/jboss-4/ -name "*xml" -or -name \
+#          "*properties" -or -name "*tld" |xargs echo -n)\"">>env.d/50jboss-4   
 
 
 # NOTE: atm compiling with jboss compile system
@@ -97,7 +97,7 @@ src_install() {
 	doenvd  50${PN}-${SLOT}
 	# jboss profiles creator binary
 	exeinto  /usr/bin
-	doexe	 ${FILESDIR_CONF_DIR}/bin/jboss-bin-4-profiles-creator.sh
+	doexe	 ${FILESDIR_CONF_DIR}/bin/jboss-4-profiles-creator.sh
 	# implement GLEP20: srvdir
 	addpredict ${SERVICES_DIR}
 	# make a "gentoo" profile with "default" one as a template
