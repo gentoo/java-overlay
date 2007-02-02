@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Cbm-wsdl4jopyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -7,22 +7,24 @@ inherit eutils java-pkg-2
 MY_P="jboss-${PV}"
 MY_P="${MY_P}.GA-src"
 MY_EJB3="jboss-EJB-3.0_RC9_Patch_1"
+#thirdparties library 
+MY_WSDL4J="http://repository.jboss.com/ibm-wsdl4j/1.5.2jboss/src/wsdl4j-1_5_2.zip"
 
 DESCRIPTION="An open source, standards-compliant, J2EE-based application server implemented in 100% Pure Java."
 SRC_URI="mirror://sourceforge/jboss/${MY_P}.tar.gz
-		 ejb3? ( mirror://sourceforge/jboss/${MY_EJB3}.zip )"
+		 ejb3? ( mirror://sourceforge/jboss/${MY_EJB3}.zip )
+		 ${MY_WSDL4J}
+		 "
 RESTRICT="nomirror"
 HOMEPAGE="http://www.jboss.org"
 LICENSE="LGPL-2"
 IUSE="doc ejb3 srvdir"
 SLOT="4"
-KEYWORDS="~amd64 x86"
+KEYWORDS="~amd64 ~x86"
 
-if use ejb3;then
-	RDEPEND=">=virtual/jdk-1.5"
-else
-	RDEPEND=">=virtual/jdk-1.4"
-fi
+RDEPEND=" ejb3? ( >=virtual/jdk-1.5 )
+		  !ejb3? ( >=virtual/jdk-1.4 )
+		"
 
 DEPEND="${RDEPEND} app-arch/unzip dev-java/ant dev-java/ant-contrib"
 
@@ -72,8 +74,14 @@ fi
 #	* with compiled-at-merge-times ones (implies: install the jars(dojar)
 # 	* with original ones that we cannot have the source: i don't know, just insinto ?
 
+build_wsdl4j() {
+	einfo	"Buildling wsdl4j"
+}
+
 
 src_compile(){
+	build_wsdl4j
+	exit
 	cd ${WORKDIR}/${MY_P}/build
 	./build.sh
 }
