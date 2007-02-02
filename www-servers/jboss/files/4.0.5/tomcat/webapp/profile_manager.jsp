@@ -2,7 +2,7 @@
 
 	<h2>Abstract</h2> 
 	<p>In order to prevent you from the pain of creating a new jboss custom profile, we provide a simple helper wich can do a lot for you out of the box.</p>
-	<p class="code">  /usr/bin/jboss-bin-4-profiles-creator.sh: action [ACTION_OPTIONS]</p>
+	<p class="code">  /usr/bin/jboss-4-profiles-creator.sh: action [ACTION_OPTIONS]</p>
 	<p>  valid options are:</p>
 	<ul>
 		<li>delete</li>
@@ -32,13 +32,13 @@
 	<p> For create and delete, you must give the profile's name</p>
  
 	<p>Examples</p>
-	<p>/usr/bin/jboss-bin-4-profiles-creator.sh create --profile=gentoo --path=/opt/newprofile</p>
+	<p>/usr/bin/jboss-4-profiles-creator.sh create --profile=gentoo --path=/opt/newprofile</p>
         <p>A new profile will be created in /opt/newprofile using default_vhost/gentoo as a template</p>
     	<p>A symlick in /srvdir/defaultvhost/jbossversion/newprofile will be done</p>
-	<p>/usr/bin/jboss-bin-4-profiles-creator.sh create --profile=gentoo --path=newprofile</p>
+	<p>/usr/bin/jboss-4-profiles-creator.sh create --profile=gentoo --path=newprofile</p>
 	<p>A new profile will be created in default vhost using 
 		srvdir/defaultvhost/jbossversion/igentoo as a template</p>
-	<p>/usr/bin/jboss-bin-4-profiles-creator.sh --delete  --profile=gentoo
+	<p>/usr/bin/jboss-4-profiles-creator.sh --delete  --profile=gentoo
 	<p>the 'gentoo' profile in default vhost will be deleted</p>
  
 </div>

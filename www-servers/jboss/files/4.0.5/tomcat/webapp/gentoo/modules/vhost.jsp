@@ -40,7 +40,7 @@
 		<li>
 				<p>Four, deploy your stuff in your "JBOSS DATA DIR" </p>
 				<p>For example</p>
-				<p class="code">/srv/vhost1.yourdomain.com/jboss-bin-4/vhost1/deploy</p>
+				<p class="code">/srv/vhost1.yourdomain.com/jboss-4/vhost1/deploy</p>
 		</li>
 	</ul>
 </div>

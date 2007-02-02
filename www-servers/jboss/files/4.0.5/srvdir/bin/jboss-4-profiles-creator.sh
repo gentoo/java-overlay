@@ -6,7 +6,7 @@ source /etc/init.d/functions.sh
 
 debug="false"
 
-JBOSS_VERSION="jboss-bin-4"
+JBOSS_VERSION="jboss-4"
 jboss_path="/opt/${JBOSS_VERSION}"
 
 action="help"
@@ -282,12 +282,12 @@ keepdir() {
         local x
         if [ "$1" == "-R" ] || [ "$1" == "-r" ]; then
                 shift
-                find "$@" -type d -printf "%p/.keep_www-server_jboss-bin_4\n" |\
+                find "$@" -type d -printf "%p/.keep_www-server_jboss_4\n" |\
 			 tr "\n" "\0" | $XARGS -0 -n100 touch ||\
 			 die "Failed to recursive create .keep files"
         else
                 for x in "$@"; do
-                        touch "${x}/.keep_www-server_jboss-bin_4" ||\
+                        touch "${x}/.keep_www-server_jboss_4" ||\
 				die "Failed to create .keep in ${D}/${x}"
                 done
         fi
