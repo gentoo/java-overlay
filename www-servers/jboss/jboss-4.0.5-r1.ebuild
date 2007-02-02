@@ -52,8 +52,26 @@ fi
 #          "*properties" -or -name "*tld" |xargs echo -n)\"">>env.d/50jboss-4   
 
 
-# NOTE: atm compiling with jboss compile system
-# will progressivly add gentoo's way to do
+# NOTES: 
+# atm: Compiling with jboss compile system
+# Will progressivly add gentoo's way to do (eant)
+# In the first time, i have the idea to delete partially (see under)
+# the /thirdparty directory used by jboss to use jars
+# then reconstruct it either from better case to worse:
+#    * with ours jars (java-pkg_jarfrom)
+#    * with compiled-at-merge-times ones (just cp compiled_jar_path/*.jar destdir/ stuff :p)
+#    * with original ones if we cannot have the source (anyway this case is bad !!!)
+#
+# Indeed, I think this way, the maintenance will be easier as the jars path 
+# will not change and so we ll not to have to rewrite that much all
+# the jboss build.xml.
+#
+# In the second time, We will have to recontruct the jboss/lib and the
+# profiles/deploy and profiles/lib *.jars in the same way:
+#	* with ours jars (java-pkg_jarfrom)
+#	* with compiled-at-merge-times ones (implies: install the jars(dojar)
+# 	* with original ones that we cannot have the source: i don't know, just insinto ?
+
 
 src_compile(){
 	cd ${WORKDIR}/${MY_P}/build

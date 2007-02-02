@@ -22,10 +22,10 @@ AUX 4.0.5/doc/spec.txt 5752 RMD160 b6edbea7b576cc747885a45ca5120a8c4826bd94 SHA1
 MD5 42b1f12aa058d67858d52081e22952c8 files/4.0.5/doc/spec.txt 5752
 RMD160 b6edbea7b576cc747885a45ca5120a8c4826bd94 files/4.0.5/doc/spec.txt 5752
 SHA256 8ce4fd5e9de1ea9dfa5c5b7b1a7ecd45263938caf02da0b78a23342a0b2ebb94 files/4.0.5/doc/spec.txt 5752
-AUX 4.0.5/normal/bin/jboss-bin-4-profiles-creator.sh 13748 RMD160 6efd9bcea74e2acb694fb605e9262c4d6ecc6521 SHA1 75975fff83b10f7f52628e605e38aa6e89e2978a SHA256 5301ef3fcfca7582f8291feee348a67531847de301d5b2a68eb39bc1bca5e2a7
-MD5 d8b4a2173569b6615c13a0097bc70916 files/4.0.5/normal/bin/jboss-bin-4-profiles-creator.sh 13748
-RMD160 6efd9bcea74e2acb694fb605e9262c4d6ecc6521 files/4.0.5/normal/bin/jboss-bin-4-profiles-creator.sh 13748
-SHA256 5301ef3fcfca7582f8291feee348a67531847de301d5b2a68eb39bc1bca5e2a7 files/4.0.5/normal/bin/jboss-bin-4-profiles-creator.sh 13748
+AUX 4.0.5/normal/bin/jboss-4-profiles-creator.sh 13748 RMD160 6efd9bcea74e2acb694fb605e9262c4d6ecc6521 SHA1 75975fff83b10f7f52628e605e38aa6e89e2978a SHA256 5301ef3fcfca7582f8291feee348a67531847de301d5b2a68eb39bc1bca5e2a7
+MD5 d8b4a2173569b6615c13a0097bc70916 files/4.0.5/normal/bin/jboss-4-profiles-creator.sh 13748
+RMD160 6efd9bcea74e2acb694fb605e9262c4d6ecc6521 files/4.0.5/normal/bin/jboss-4-profiles-creator.sh 13748
+SHA256 5301ef3fcfca7582f8291feee348a67531847de301d5b2a68eb39bc1bca5e2a7 files/4.0.5/normal/bin/jboss-4-profiles-creator.sh 13748
 AUX 4.0.5/normal/conf.d/jboss-4 2725 RMD160 4274a3a643e130a4bac416989a712c65a8e705a0 SHA1 1ceceae6949998c55375cc2efdfcba929b072d4b SHA256 8680fdfe84229be5b33b0cd3799b56110a86ee4a381ee1151d2a16039415db4b
 MD5 e1b3f2d010ea7261782437187da44d49 files/4.0.5/normal/conf.d/jboss-4 2725
 RMD160 4274a3a643e130a4bac416989a712c65a8e705a0 files/4.0.5/normal/conf.d/jboss-4 2725
@@ -38,18 +38,18 @@ AUX 4.0.5/normal/init.d/jboss-4 3418 RMD160 4dbc8cbaf73cb4d1cd87c221220d2436adab
 MD5 d44fa152e16f1f5e2796b6bed628b190 files/4.0.5/normal/init.d/jboss-4 3418
 RMD160 4dbc8cbaf73cb4d1cd87c221220d2436adab460a files/4.0.5/normal/init.d/jboss-4 3418
 SHA256 b6d7f15f31ad1364d4ff3078fd0cfa940fc3f10fb4e3309abc515727abe79f6f files/4.0.5/normal/init.d/jboss-4 3418
-AUX 4.0.5/srvdir/bin/jboss-bin-4-profiles-creator.sh 13755 RMD160 44505aa16be4d1fea0f7ccf78102bc2dc75e4633 SHA1 9a40f0340b48bbce46596572a6cb4f05afecfe1e SHA256 9d5321bdb34893cf030e88d646e395b9578e57bdbe19aeddd023398bdcd17129
-MD5 f6543d56578cabd5278789fc7d7685d6 files/4.0.5/srvdir/bin/jboss-bin-4-profiles-creator.sh 13755
-RMD160 44505aa16be4d1fea0f7ccf78102bc2dc75e4633 files/4.0.5/srvdir/bin/jboss-bin-4-profiles-creator.sh 13755
-SHA256 9d5321bdb34893cf030e88d646e395b9578e57bdbe19aeddd023398bdcd17129 files/4.0.5/srvdir/bin/jboss-bin-4-profiles-creator.sh 13755
+AUX 4.0.5/srvdir/bin/jboss-4-profiles-creator.sh 13743 RMD160 cadcf2f177b8086f86ad62ba8b65be13654cec17 SHA1 919f0441b2edbd9d1315e32cc408f443590d526e SHA256 e06e1027064555a83b4d0b6b89f71d2fb7e3b1b11846169d24d38ce5803983f8
+MD5 f6999ac49818bd64345b20dd406dce2b files/4.0.5/srvdir/bin/jboss-4-profiles-creator.sh 13743
+RMD160 cadcf2f177b8086f86ad62ba8b65be13654cec17 files/4.0.5/srvdir/bin/jboss-4-profiles-creator.sh 13743
+SHA256 e06e1027064555a83b4d0b6b89f71d2fb7e3b1b11846169d24d38ce5803983f8 files/4.0.5/srvdir/bin/jboss-4-profiles-creator.sh 13743
 AUX 4.0.5/srvdir/conf.d/jboss-4 2721 RMD160 663fc50c2f8676d40e4e8afe28a8a05ba348ad47 SHA1 50cbe3174a5108e4b75edcd59d793e4650fcdc4e SHA256 d9f209e73f08ed0e6aeae4070be4bf102a83cb9053da967683d8d98b538db88a
 MD5 fc99c88605d12ed913b3df0271daaca4 files/4.0.5/srvdir/conf.d/jboss-4 2721
 RMD160 663fc50c2f8676d40e4e8afe28a8a05ba348ad47 files/4.0.5/srvdir/conf.d/jboss-4 2721
 SHA256 d9f209e73f08ed0e6aeae4070be4bf102a83cb9053da967683d8d98b538db88a files/4.0.5/srvdir/conf.d/jboss-4 2721
-AUX 4.0.5/srvdir/env.d/50jboss-bin-4.gz 1978 RMD160 dc2df1e79226b63473567f7202837f2de7f29c93 SHA1 b3265240a5076403f09f05619e4612e1c5738a40 SHA256 eb4ee6d00ab78602c9a5dba11dc7557c536df625d733e085ec18f6fbd4f5724e
-MD5 4b6e00e0da99e20ea9f4ded5c947b367 files/4.0.5/srvdir/env.d/50jboss-bin-4.gz 1978
-RMD160 dc2df1e79226b63473567f7202837f2de7f29c93 files/4.0.5/srvdir/env.d/50jboss-bin-4.gz 1978
-SHA256 eb4ee6d00ab78602c9a5dba11dc7557c536df625d733e085ec18f6fbd4f5724e files/4.0.5/srvdir/env.d/50jboss-bin-4.gz 1978
+AUX 4.0.5/srvdir/env.d/50jboss-4.gz 1978 RMD160 dc2df1e79226b63473567f7202837f2de7f29c93 SHA1 b3265240a5076403f09f05619e4612e1c5738a40 SHA256 eb4ee6d00ab78602c9a5dba11dc7557c536df625d733e085ec18f6fbd4f5724e
+MD5 4b6e00e0da99e20ea9f4ded5c947b367 files/4.0.5/srvdir/env.d/50jboss-4.gz 1978
+RMD160 dc2df1e79226b63473567f7202837f2de7f29c93 files/4.0.5/srvdir/env.d/50jboss-4.gz 1978
+SHA256 eb4ee6d00ab78602c9a5dba11dc7557c536df625d733e085ec18f6fbd4f5724e files/4.0.5/srvdir/env.d/50jboss-4.gz 1978
 AUX 4.0.5/srvdir/init.d/jboss-4 3424 RMD160 a103e6451184fe329a2b4807f18dbcc993d21175 SHA1 b929dfde8d5eb32207746e71b5d7791968becdc2 SHA256 c95a066c12d5ce92cd829daa47f71c40c2b7846b2c92ccaf1277d5b1d015ae1c
 MD5 15df00c2c5577a5fd7512fab64745631 files/4.0.5/srvdir/init.d/jboss-4 3424
 RMD160 a103e6451184fe329a2b4807f18dbcc993d21175 files/4.0.5/srvdir/init.d/jboss-4 3424
@@ -114,14 +114,14 @@ AUX 4.0.5/tomcat/webapp/gentoo/modules/main.jsp 179 RMD160 69a50e3511e845163e638
 MD5 5c8d521584382d4d8e5913160c75ad57 files/4.0.5/tomcat/webapp/gentoo/modules/main.jsp 179
 RMD160 69a50e3511e845163e638470bcdeee625280df84 files/4.0.5/tomcat/webapp/gentoo/modules/main.jsp 179
 SHA256 48b585da6f6dee70a399dab8215c3feafcdbc1e7fd1544881098ddf4024a0056 files/4.0.5/tomcat/webapp/gentoo/modules/main.jsp 179
-AUX 4.0.5/tomcat/webapp/gentoo/modules/profile_manager.jsp 2431 RMD160 3740d1999e54d9a575fea4afd6ae8f2a905bdb2b SHA1 ed00f458f243437a4858b558ede1133dd3832682 SHA256 83372f7f8d2618526b64c5f09c7de8ec87e93b8bbec7219fc9670995d1af7cce
-MD5 d39c992ee9784d8621fa6d52754eeca6 files/4.0.5/tomcat/webapp/gentoo/modules/profile_manager.jsp 2431
-RMD160 3740d1999e54d9a575fea4afd6ae8f2a905bdb2b files/4.0.5/tomcat/webapp/gentoo/modules/profile_manager.jsp 2431
-SHA256 83372f7f8d2618526b64c5f09c7de8ec87e93b8bbec7219fc9670995d1af7cce files/4.0.5/tomcat/webapp/gentoo/modules/profile_manager.jsp 2431
-AUX 4.0.5/tomcat/webapp/gentoo/modules/vhost.jsp 1561 RMD160 1732e38b79359fa116edafe3bfb502a6358a38a2 SHA1 2998794c5ca259de0f0b6bea29ef84e682a97d95 SHA256 d4150a2fa223f46ca7c742f16d11a35c459e5d9b09697160c0607047777fa5cd
-MD5 c18a88005c62ba93bbdd8a6249950089 files/4.0.5/tomcat/webapp/gentoo/modules/vhost.jsp 1561
-RMD160 1732e38b79359fa116edafe3bfb502a6358a38a2 files/4.0.5/tomcat/webapp/gentoo/modules/vhost.jsp 1561
-SHA256 d4150a2fa223f46ca7c742f16d11a35c459e5d9b09697160c0607047777fa5cd files/4.0.5/tomcat/webapp/gentoo/modules/vhost.jsp 1561
+AUX 4.0.5/tomcat/webapp/gentoo/modules/profile_manager.jsp 2415 RMD160 bd8565da9ec2e86532c01c7583117dd3a738c415 SHA1 90bf13b10e1ee56cdff64f1b82d28c35f5d926f6 SHA256 3e57130465fdd1c86a2e731ee5ed0a6004011bbaaaceedea03adaa64bd9162cc
+MD5 e0f17c346fa14df92894a10c961512e3 files/4.0.5/tomcat/webapp/gentoo/modules/profile_manager.jsp 2415
+RMD160 bd8565da9ec2e86532c01c7583117dd3a738c415 files/4.0.5/tomcat/webapp/gentoo/modules/profile_manager.jsp 2415
+SHA256 3e57130465fdd1c86a2e731ee5ed0a6004011bbaaaceedea03adaa64bd9162cc files/4.0.5/tomcat/webapp/gentoo/modules/profile_manager.jsp 2415
+AUX 4.0.5/tomcat/webapp/gentoo/modules/vhost.jsp 1557 RMD160 01dcc585a2c2dd3e6118caa6ef3008b1e041f4d3 SHA1 ff1aa83737b8e2c720c2fd1f7324f686dc342134 SHA256 ac2181a9f7c3e63271cf009805da3c75c92306f903deed5197c402aba6e15cd3
+MD5 a8629776918119f5e2fd8c470694ba15 files/4.0.5/tomcat/webapp/gentoo/modules/vhost.jsp 1557
+RMD160 01dcc585a2c2dd3e6118caa6ef3008b1e041f4d3 files/4.0.5/tomcat/webapp/gentoo/modules/vhost.jsp 1557
+SHA256 ac2181a9f7c3e63271cf009805da3c75c92306f903deed5197c402aba6e15cd3 files/4.0.5/tomcat/webapp/gentoo/modules/vhost.jsp 1557
 AUX 4.0.5/tomcat/webapp/gentoo/template/footer.jsp 488 RMD160 b575475cb9cd6d260354e47b241d9cdf87004b0b SHA1 13545daa3299be0d4721bcf4ffa01cacaf6589c0 SHA256 f48ab77aeb5644cd484ab51396d5aa958168f2105e92ac361029b6ef5f71311c
 MD5 80e678387dc318596f1fe2119eeab6dc files/4.0.5/tomcat/webapp/gentoo/template/footer.jsp 488
 RMD160 b575475cb9cd6d260354e47b241d9cdf87004b0b files/4.0.5/tomcat/webapp/gentoo/template/footer.jsp 488
@@ -134,10 +134,10 @@ AUX 4.0.5/tomcat/webapp/gentoo/template/menu.jsp 1190 RMD160 65129fc5b798d8b5ec4
 MD5 bad1de5ae1e6742edfc5d1bbe8b9225c files/4.0.5/tomcat/webapp/gentoo/template/menu.jsp 1190
 RMD160 65129fc5b798d8b5ec4a8e3d8e01bb88244e82ea files/4.0.5/tomcat/webapp/gentoo/template/menu.jsp 1190
 SHA256 f2ea02b7926e65ad38a7d521d00d8d7b66f2b9a5e91c741fbf08058da437a1c0 files/4.0.5/tomcat/webapp/gentoo/template/menu.jsp 1190
-AUX 4.0.5/tomcat/webapp/profile_manager.jsp 1817 RMD160 4c433da621876d56d41798148d9ab86790c6430b SHA1 3a775b76ac702773c8fd5a6130ca57d4122fc6a7 SHA256 85ed67c607900f44fa7f175f19c16469d75b15c1c04a5c8d53342d713bce05ed
-MD5 98d5e9d2dae09e82fb0a8ebee937cd12 files/4.0.5/tomcat/webapp/profile_manager.jsp 1817
-RMD160 4c433da621876d56d41798148d9ab86790c6430b files/4.0.5/tomcat/webapp/profile_manager.jsp 1817
-SHA256 85ed67c607900f44fa7f175f19c16469d75b15c1c04a5c8d53342d713bce05ed files/4.0.5/tomcat/webapp/profile_manager.jsp 1817
+AUX 4.0.5/tomcat/webapp/profile_manager.jsp 1801 RMD160 8ce5e41eb270d350a12bdfe26b6ceaf7cd97dc26 SHA1 e3f624492d453deebc0b8ec2c10a2513859922f7 SHA256 5eff2829a24b169a4ac5c6ca91ee7af1d3c41b0cc45baa1c9ffc1a9a7d6c107f
+MD5 75493bc7ed95f4315917e53232839288 files/4.0.5/tomcat/webapp/profile_manager.jsp 1801
+RMD160 8ce5e41eb270d350a12bdfe26b6ceaf7cd97dc26 files/4.0.5/tomcat/webapp/profile_manager.jsp 1801
+SHA256 5eff2829a24b169a4ac5c6ca91ee7af1d3c41b0cc45baa1c9ffc1a9a7d6c107f files/4.0.5/tomcat/webapp/profile_manager.jsp 1801
 DIST jboss-4.0.4.GA.zip 77400244 RMD160 6f8a26edf165cefd1c3d84311ca3be5fb09a6a75 SHA1 27698ca69c8c3b30470cb5397ba4728808481197 SHA256 e9939837d98c30b283f5ef655f611b4f00a2a2a607e1f7ce823479fe94403d72
 DIST jboss-4.0.5.GA-src.tar.gz 78808549 RMD160 6fc7b881a2ba97916b013362507d8436bac8a5fe SHA1 b0d0801ce6e42040f873017ba3c79ce010941106 SHA256 087aa32185d3867c993d3b318675dbb6c4ce71e410730d24e5d358e4206ae3d8
 DIST jboss-4.0.5.GA.zip 80866589 RMD160 9349152c4749f696edc49e14665301667aba4cfb SHA1 496a49547e3525c7f32b169126cdff13c2d8a04a SHA256 b81b7bba2657c4e1cb7cf7e3958eaffbe48ee0c5ebbe5782909745277a3b923f
@@ -150,10 +150,10 @@ EBUILD jboss-4.0.4.ebuild 2349 RMD160 728c65877139e8274841fbb11d3a7ace1ecba1ec S
 MD5 d45665fdd86dc073a2254454d6ced86f jboss-4.0.4.ebuild 2349
 RMD160 728c65877139e8274841fbb11d3a7ace1ecba1ec jboss-4.0.4.ebuild 2349
 SHA256 e9ea593cf95b7682c64517afbbac9d749860503e56563c0431b2d09bf8e556af jboss-4.0.4.ebuild 2349
-EBUILD jboss-4.0.5-r1.ebuild 9780 RMD160 891b1ea35ef5eff7058c17468da350d332a5109d SHA1 281780715b8b676eca71038539a8363933d71f92 SHA256 8cb6f1e3f09a280f61a3798fef4a69f1c836f004e20c2842b72ef67e4c0a5e89
-MD5 b303cba79cc416432a981f72c81b37c4 jboss-4.0.5-r1.ebuild 9780
-RMD160 891b1ea35ef5eff7058c17468da350d332a5109d jboss-4.0.5-r1.ebuild 9780
-SHA256 8cb6f1e3f09a280f61a3798fef4a69f1c836f004e20c2842b72ef67e4c0a5e89 jboss-4.0.5-r1.ebuild 9780
+EBUILD jboss-4.0.5-r1.ebuild 10688 RMD160 62d27876cdc1213264ab2623bce0852ace9e56bb SHA1 0518eb006b6daa0c6360c9661e487ec0c8815f93 SHA256 8dff7004e9f391a868cb89d7126cfaafe07e67189c380ae0972cf9d38ef377a5
+MD5 681b40e7423d4ae140526710768eee60 jboss-4.0.5-r1.ebuild 10688
+RMD160 62d27876cdc1213264ab2623bce0852ace9e56bb jboss-4.0.5-r1.ebuild 10688
+SHA256 8dff7004e9f391a868cb89d7126cfaafe07e67189c380ae0972cf9d38ef377a5 jboss-4.0.5-r1.ebuild 10688
 EBUILD jboss-4.0.5.ebuild 4670 RMD160 29904484129bfab97f1b2cf02caf792d768e6057 SHA1 eef09d6f3deaa41fd215546920822747c38ad86e SHA256 a1f8c91dbd596dcaffcc607135d6c1e3dfef7169e75ba3edf5d68637857fec66
 MD5 8b114f81e936c496dd37cbac259323d0 jboss-4.0.5.ebuild 4670
 RMD160 29904484129bfab97f1b2cf02caf792d768e6057 jboss-4.0.5.ebuild 4670
