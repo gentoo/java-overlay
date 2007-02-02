@@ -7,7 +7,7 @@
 
 # Keep it sorted.
 www-servers/jboss:ejb3 - Add EJB 3 support 
-www-servers/jboss:esrvdir - Add SRVDIR support
+www-servers/jboss:srvdir - Add SRVDIR support
 www-servers/jboss-bin:ejb3 - Add EJB 3 support 
 www-servers/jboss-bin:srvdir - Add SRVDIR support
 
