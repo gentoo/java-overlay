@@ -1,4 +1,4 @@
-# Cbm-wsdl4jopyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -7,14 +7,22 @@ inherit eutils java-pkg-2
 MY_P="jboss-${PV}"
 MY_P="${MY_P}.GA-src"
 MY_EJB3="jboss-EJB-3.0_RC9_Patch_1"
-#thirdparties library 
-MY_WSDL4J="http://repository.jboss.com/ibm-wsdl4j/1.5.2jboss/src/wsdl4j-1_5_2.zip"
+#thirdparty library 
 
+MY_WSDL4J_V="1.5.2"
+MY_WSDL4J_PN="wsdl4j"
+MY_WSDL4J="mirror://sourceforge/wsdl4j/${MY_WSDL4J_PN}-src-${MY_WSDL4J_V}.zip"
 DESCRIPTION="An open source, standards-compliant, J2EE-based application server implemented in 100% Pure Java."
-SRC_URI="mirror://sourceforge/jboss/${MY_P}.tar.gz
-		 ejb3? ( mirror://sourceforge/jboss/${MY_EJB3}.zip )
-		 ${MY_WSDL4J}
-		 "
+
+# for the tests i just take one thing at a time
+# ATTENTION: TO REMOVE
+#mkdir -p ${WORKDIR}/${MY_P}/thirdparty
+
+SRC_URI="mirror://sourceforge/jboss/${MY_P}.tar.gz"
+#	${MY_WSDL4J}
+#	ejb3? ( mirror://sourceforge/jboss/${MY_EJB3}.zip )
+#	"
+
 RESTRICT="nomirror"
 HOMEPAGE="http://www.jboss.org"
 LICENSE="LGPL-2"
@@ -22,13 +30,24 @@ IUSE="doc ejb3 srvdir"
 SLOT="4"
 KEYWORDS="~amd64 ~x86"
 
-RDEPEND=" ejb3? ( >=virtual/jdk-1.5 )
-		  !ejb3? ( >=virtual/jdk-1.4 )
+# jdk1.7 is not ready to use !
+RDEPEND="<virtual/jdk-1.7
+		ejb3?  ( >=virtual/jdk-1.5 )
+		!ejb3? ( >=virtual/jdk-1.4 )
 		"
 
-DEPEND="${RDEPEND} app-arch/unzip dev-java/ant dev-java/ant-contrib"
+DEPEND="${RDEPEND}
+		>=dev-java/sun-jaf-1.1
+		>=dev-java/sun-javamail-1.4
+		>=dev-java/servletapi-2.4-r5
+		>=dev-java/trove-1.0.2
+		>=dev-java/xdoclet-1.2.3
+		app-arch/unzip
+		dev-java/ant
+		dev-java/ant-contrib"
 
 S=${WORKDIR}/${MY_P}
+
 INSTALL_DIR="/opt/${PN}-${SLOT}"
 CACHE_INSTALL_DIR="/var/cache/${PN}-${SLOT}/localhost"
 LOG_INSTALL_DIR="/var/log/${PN}-${SLOT}/localhost"
@@ -45,6 +64,7 @@ else
 	SERVICES_DIR="/var/lib/${PN}-${SLOT}/localhost"
 	FILESDIR_CONF_DIR="${FILESDIR}/${PV}/normal"
 fi
+
 # NOTE: When you are updating CONFIG_PROTECT env.d file, you can use this script on your current install
 # run from /var/lib/jboss-${SLOT} to get list of files that should be config protected. We protect *.xml,
 # *.properties and *.tld files.
@@ -52,9 +72,7 @@ fi
 # by kiorky better:
 # echo "CONFIG_PROTECT=\"$(find /srv/localhost/jboss-4/ -name "*xml" -or -name \
 #          "*properties" -or -name "*tld" |xargs echo -n)\"">>env.d/50jboss-4   
-
-
-# NOTES: 
+# NOTE: 
 # atm: Compiling with jboss compile system
 # Will progressivly add gentoo's way to do (eant)
 # In the first time, i have the idea to delete partially (see under)
@@ -74,18 +92,136 @@ fi
 #	* with compiled-at-merge-times ones (implies: install the jars(dojar)
 # 	* with original ones that we cannot have the source: i don't know, just insinto ?
 
-build_wsdl4j() {
-	einfo	"Buildling wsdl4j"
+
+# ------------------------------------------------------------------------------
+# @function do_thirdparty_jar
+#
+# install jars builded from source in the thirdparty dependancies jboss's
+# repository
+# 
+# @param $1 (required) - the path to the jar to write 
+# @param $2 (required) - the repository subdir to install to 
+# ------------------------------------------------------------------------------
+thirdparty_do_jar() {
+	local DEST="${WORKDIR}/${MY_P}/thirdparty/$1/lib/"
+	if [[ ! -d ${DEST} ]]; then
+		 mkdir -p ${DEST} || die "do_thirdparty_jar: creation of the subdir $1 failed"
+	fi
+	einfo "Installing $2 in jboss thirdparty dependency: $1"
+	cp -f $2 ${DEST} || die "do_thirdparty_jar: copy of the jar $2 to the suddir failed"
 }
 
-
-src_compile(){
-	build_wsdl4j
-	exit
-	cd ${WORKDIR}/${MY_P}/build
-	./build.sh
+# ------------------------------------------------------------------------------
+# @function list_thirdparty_dep_jars
+#
+# list jars in the thirdparty dependancies jboss's  repository
+# 
+# @param $1 (required) - the path to the jar to write 
+# ------------------------------------------------------------------------------
+thirdparty_list_dep_jars() {
+	einfo "thirdparty_list_dep_jars: jars in $1:"
+	for i in ${S}/thirdparty/$1/lib/*;do
+		einfo "	$(basename $i)"
+	done;
 }
 
+# ------------------------------------------------------------------------------
+# @function thirdparty_build_wsdl4j
+#
+# build a thirdparty dep
+#
+# ------------------------------------------------------------------------------
+
+thirdparty_build_wsdl4j() {
+	einfo	"thirdparty_build_wsdl4j:"
+	cd ${WORKDIR}/${MY_WSDL4J_PN}-${MY_WSDL4J_V//./_}\
+		||die "thirdparty_build_wsdl4j:	_ cd "
+	epatch ${FILESDIR}/${PV}/thirdparties/wsdl4j/jboss_wsdl4j.patch
+	cp ${FILESDIR}/${PV}/thirdparties/wsdl4j/build.xml .
+	echo $GENTOO_VM
+	PORTAGE_QUIET=y eant || die "thirdparty_build_wsdl4j: failed"
+	for jar in build/lib/*.jar;do
+		thirdparty_do_jar ibm-wsdl4j $jar
+	done
+#	thirdparty_list_dep_jars ibm-wsdl4j
+}
+
+# ------------------------------------------------------------------------------
+# @function thirdparty_deps_build_mergetime_libs
+#
+# regroup jars to be built at merge time
+#
+# ------------------------------------------------------------------------------
+thirdparty_deps_build_mergetime_libs() {
+	einfo "Building thirdparties jboss specific dependencies"
+#	thirdparty_build_wsdl4j
+}
+
+# ------------------------------------------------------------------------------
+# @function thirdparty_deps_get_xdoclet
+#
+# bring back xdoclet jars
+#
+# ------------------------------------------------------------------------------
+thirdparty_deps_get_xdoclet() {
+	DEST="${S}/thirdparty/xdoclet/lib"
+	mkdir -p ${DEST}||die "thirdparty_deps_get_xdoclet mkdir dest"
+	cd ${DEST}||die "thirdparty_deps_get_xdoclet:failed change cwd"
+	for jar in ${S}/thirdparty.old/xdoclet/lib/*;do
+		jar=$(basename $jar)
+		jarn="$(basename $jar -jb4.jar).jar"
+		echo $jarn $jar
+		if [[ $jar == "xdoclet-xjavadoc-jb4.jar" ]];then
+			java-pkg_jar-from xjavadoc xjavadoc.jar $jar
+		else
+			java-pkg_jar-from xdoclet  $jarn $jar
+		fi
+	done
+}
+
+# ------------------------------------------------------------------------------
+# @function thirdparty_dep_get_jars
+#
+# bring back the  jars from the package given as parameter
+#
+# @param $1 (required) - name of the package to use
+# @param $2 (required) - name of the package to get jars from
+# @param $3 (optionnal) - slot
+# ------------------------------------------------------------------------------
+thirdparty_dep_get_jars() {
+	DEST="${S}/thirdparty/$1/lib"
+	mkdir -p ${DEST}||die "thirdparty_dep_get_jars mkdir ${DEST}"
+	cd ${DEST}||die "thirdparty_dep_get_jars: failed change cwd"
+	# FIXME: Slot stuff
+#	if [[ -n $3 ]]; then
+#		java-pkg_jar-from $2 slot $3
+#	else
+		java-pkg_jar-from $2
+#	fi
+}
+
+# ------------------------------------------------------------------------------
+# @function thirdparty_deps_get_jars
+#
+# regroup jars to be got from the system and put in the repository
+#
+# ------------------------------------------------------------------------------
+thirdparty_deps_get_jars() {
+	einfo "Populating jboss repository with our jars"
+#	thirdparty_deps_get_xdoclet
+#	thirdparty_dep_get_jars trove trove
+	# FIXME: improve with slots
+#	thirdparty_dep_get_jars sun-servlet servletapi-2.4
+#	thirdparty_dep_get_jars sun-javamail sun-javamail
+	thirdparty_dep_get_jars sun-jaf	sun-jaf
+}
+
+src_compile() {
+	cd ${S}
+#FOR TEST !!	mv thirdparty thirdparty.old || die "src_compile: mv to thirdparty.old failed"
+#	thirdparty_deps_build_mergetime_libs
+	thirdparty_deps_get_jars
+}
 
 src_install() {
 	#ensure users dont use it now
