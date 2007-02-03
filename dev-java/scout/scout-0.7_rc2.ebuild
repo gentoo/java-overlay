@@ -25,6 +25,7 @@ DEPEND=">=virtual/jdk-1.4
 		>=www-servers/axis-1.2_rc2
 		>=dev-java/commons-discovery-0.2-r2
 		>=dev-java/sun-javamail-1.4
+		dev-java/ant-junit
 "
 #"
 RDEPEND="${DEPEND} >=virtual/jre-1.4"
