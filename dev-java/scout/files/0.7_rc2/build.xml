@@ -8,15 +8,88 @@
 		<javac  destdir="build">
 			<classpath>
 				<pathelement path="jdom.jar"/>
+				<pathelement path="commons-logging-api.jar"/>
+				<pathelement path="commons-logging.jar"/>
 				<pathelement path="log4j.jar"/>
 				<pathelement path="juddi.jar"/>
+				<pathelement location="axis-ant.jar"/>
+				<pathelement location="axis.jar"/>
+				<pathelement location="jaxrpc.jar"/>
+				<pathelement location="saaj.jar"/>
 			</classpath>
 		  	<src path="modules/jaxr-api/src/java/"/>
 		  	<src path="modules/scout/src/java/"   />
 	    	</javac>
+
 	</target>
-	<target name="dist" depends="compile"  description="generate the distribution" >
+	<target name="jar" depends="compile"  description="generate the distribution" >
 		<mkdir dir="dist/lib"/>
 	    	<jar jarfile="dist/lib/${final.name}.jar" basedir="build"/>
 	</target>
+	<target name="test" depends="jar"  >
+		<mkdir dir="dist/test"/>
+		<mkdir dir="test"/>
+		<javac  destdir="test">
+			<classpath>
+				<pathelement path="jdom.jar"/>
+				<pathelement path="commons-logging-api.jar"/>
+				<pathelement path="commons-logging.jar"/>
+				<pathelement path="log4j.jar"/>
+				<pathelement path="juddi.jar"/>
+				<pathelement location="build"/>
+				<pathelement location="junit.jar"/>
+			</classpath>
+		  	<src path="modules/scout/src/test/"   />
+	    	</javac>
+		<junit printsummary="yes" haltonfailure="yes">
+			<classpath>
+				<pathelement path="jdom.jar"/>
+				<pathelement location="junit.jar"/>
+				<pathelement path="commons-logging-api.jar"/>
+				<pathelement path="commons-logging.jar"/>
+				<pathelement path="log4j.jar"/>
+				<pathelement path="juddi.jar"/>
+				<pathelement path="dist/lib/${final.name}.jar"/>
+				<pathelement path="test/"/>
+				<pathelement location="axis-ant.jar"/>
+				<pathelement location="axis.jar"/>
+				<pathelement location="jaxrpc.jar"/>
+				<pathelement location="saaj.jar"/>
+				<pathelement location="commons-discovery.jar"/>
+				<pathelement location="mail.jar"/>
+
+			</classpath>
+		  	<formatter type="plain"/>
+		  	<batchtest fork="yes" todir="dist/test">
+		    		<fileset dir="modules/scout/src/test/">
+		      			<include name="**/*Test*.java"/>
+		      			<exclude name="**/AllTests.java"/>
+		      			<exclude name="**/JaxrPublishOrgTest.java"/>
+					<exclude name="**/PublishConceptTest.java"/>
+					<exclude name="**/JAXRQueryTest.java"/>
+
+		    		</fileset>
+		  	</batchtest>
+		</junit>
+	</target>
+	<target name="javadoc" depends="compile">
+		<mkdir dir="dist/docs" />
+		<javadoc
+			destdir="dist/docs/"
+			author="true"
+			version="true"
+			use="true"
+			windowtitle="Scout javadoc">
+			<fileset dir="modules/scout/src" defaultexcludes="yes">
+				<include name="**/*.java"/>
+			</fileset>
+			<fileset dir="modules/jaxr-api/src" defaultexcludes="yes">
+				<include name="**/*.java"/>
+			</fileset>
+			<fileset dir="src" defaultexcludes="yes">
+				<include name="**/*.java"/>
+			</fileset>
+		</javadoc>
+	</target>
+	<target name="dist" depends="test,javadoc"  />
 </project>

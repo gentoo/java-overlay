@@ -2,7 +2,11 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
-  03 Feb 2007; <kiorky@gentoo.org> +files/0.7_rc2, +scout-0.7_rc2.ebuild,
+  03 Feb 2007; <kiorky@cryptelium.net> files/0.7_rc2/build.xml,
+  scout-0.7_rc2.ebuild:
+  #94460 dev-java/scout is ready for tests
+
+  03 Feb 2007; <kiorky@cryptelium.net> +files/0.7_rc2, +scout-0.7_rc2.ebuild,
   +files/0.7_rc2/build.xml:
   Add dev-java/scout:
   	Apache Scout is an implementation of the JSR 93 (JAXR).
