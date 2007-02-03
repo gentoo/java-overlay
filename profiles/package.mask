@@ -6,9 +6,6 @@
 # NOTE: Please add your entry at the top!
 #
 
-# kiorky kiorky@cryptelium.net
-# just backported stuff and began working on it, don't work yet
-=dev-java/scout-0.7_rc2
 
 # kiorky kiorky@cryptelium.net
 # just backported stuff and began working on it, don't work yet
