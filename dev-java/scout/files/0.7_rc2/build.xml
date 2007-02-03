@@ -1,5 +1,5 @@
 <project name="scout" default="dist" basedir=".">
-	<property name="final.name" value="scout-0.7rc2"/>
+	<property name="final.name" value="scout"/>
 	<target name="init">
 	<tstamp/>
 		<mkdir dir="build"/>
@@ -8,6 +8,8 @@
 		<javac  destdir="build">
 			<classpath>
 				<pathelement path="jdom.jar"/>
+				<pathelement path="log4j.jar"/>
+				<pathelement path="juddi.jar"/>
 			</classpath>
 		  	<src path="modules/jaxr-api/src/java/"/>
 		  	<src path="modules/scout/src/java/"   />
