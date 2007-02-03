@@ -3,7 +3,6 @@
 # $Header: /var/cvsroot/gentoo-x86/dev-java/colt/colt-1.2.0.ebuild,v 1.3 2006/10/05 15:17:03 gustavoz Exp $
 
 JAVA_PKG_IUSE="source doc"
-WANT_ANT_TASKS="ant-core"
 
 inherit java-pkg-2 java-ant-2 eutils
 
@@ -17,7 +16,6 @@ KEYWORDS="~amd64 ~ppc ~x86"
 
 DEPEND=">=virtual/jdk-1.4
 		>=dev-java/concurrent-util-1.3.4
-		>=dev-java/ant-core-1.7
 		app-arch/unzip"
 RDEPEND=">=virtual/jre-1.4
 		 >=dev-java/concurrent-util-1.3.4"
@@ -41,6 +39,7 @@ EANT_BUILD_TARGET="javac jar"
 src_install() {
 	java-pkg_dojar lib/${PN}.jar
 
-	dohtml README.html
+	dohtml README.html || die
 	use doc && java-pkg_dojavadoc doc/api
+	use source && java-pkg_dosrc src/*
 }
