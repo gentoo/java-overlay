@@ -31,7 +31,6 @@ src_unpack(){
 	unpack ${A}
 
 	# getting dependencies
-	cd ${S}|| die "src_compile: cannot cd to srcdir"
 	java-pkg_jar-from jdom-${JDOM_PV}
 	java-pkg_jar-from juddi
 	java-pkg_jar-from log4j
