@@ -7,7 +7,7 @@ JAVA_PKG_IUSE="source doc"
 inherit java-pkg-2 java-ant-2 eutils
 
 DESCRIPTION="Colt provides a set of Open Source Libraries for High Performance Scientific and Technical Computing in Java."
-SRC_URI="http://dsd.lbl.gov/~hoschek/colt-download/releases/${P}.zip"
+SRC_URI="http://dsd.lbl.gov/~hoschek/colt-download/releases/${P}.tar.gz"
 HOMEPAGE="http://www-itg.lbl.gov/~hoschek/colt/"
 LICENSE="colt"
 IUSE=""
@@ -15,8 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~ppc ~x86"
 
 DEPEND=">=virtual/jdk-1.4
-		>=dev-java/concurrent-util-1.3.4
-		app-arch/unzip"
+		>=dev-java/concurrent-util-1.3.4"
 RDEPEND=">=virtual/jre-1.4
 		 >=dev-java/concurrent-util-1.3.4"
 
