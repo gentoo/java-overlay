@@ -1,0 +1,20 @@
+<project name="scout" default="dist" basedir=".">
+	<property name="final.name" value="scout-0.7rc2"/>
+	<target name="init">
+	<tstamp/>
+		<mkdir dir="build"/>
+	</target>
+	<target name="compile" depends="init" description="compile the source " >
+		<javac  destdir="build">
+			<classpath>
+				<pathelement path="jdom.jar"/>
+			</classpath>
+		  	<src path="modules/jaxr-api/src/java/"/>
+		  	<src path="modules/scout/src/java/"   />
+	    	</javac>
+	</target>
+	<target name="dist" depends="compile"  description="generate the distribution" >
+		<mkdir dir="dist/lib"/>
+	    	<jar jarfile="dist/lib/${final.name}.jar" basedir="build"/>
+	</target>
+</project>
