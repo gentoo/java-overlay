@@ -25,10 +25,13 @@ DEPEND=">=virtual/jdk-1.4
 RDEPEND="${DEPEND} >=virtual/jre-1.4"
 S=${WORKDIR}/${PN}
 
+EANT_BUILD_TARGET="dist" 
+
 src_unpack(){
 	unpack ${A}
 
 	# getting dependencies
+	cd ${S}|| die "src_compile: cannot cd to srcdir"
 	java-pkg_jar-from jdom-${JDOM_PV}
 	java-pkg_jar-from juddi
 	java-pkg_jar-from log4j
@@ -36,10 +39,6 @@ src_unpack(){
 
 }
 
-src_compile() {
-	cd ${S}|| die "src_compile: cannot cd to srcdir"
-	EANT_BUILD_TARGET="dist" eant
-}
 
 
 
