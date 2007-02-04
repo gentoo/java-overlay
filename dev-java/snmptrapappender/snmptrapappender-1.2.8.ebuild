@@ -20,11 +20,11 @@ DEPEND=">=virtual/jdk-1.4
 		source? ( app-arch/zip )
 		dev-java/ant-tasks
 		app-arch/unzip
+		=dev-java/joesnmp-${JOESNMP_SLOT}*
+		>=dev-java/log4j-1.2.13
 		"
 RDEPEND="${DEPEND}
 		>=virtual/jre-1.4
-		=dev-java/joesnmp-${JOESNMP_SLOT}*
-		>=dev-java/log4j-1.2.13
 		"
 EANT_BUILD_TARGET="dist"
 S=${WORKDIR}/${MY_PN}_${PV//./_}
