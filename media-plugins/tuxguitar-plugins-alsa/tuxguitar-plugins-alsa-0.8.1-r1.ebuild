@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -12,7 +12,7 @@ SRC_URI="mirror://sourceforge/tuxguitar/${MY_PN}-${PV}-src.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 
 RDEPEND=">=virtual/jre-1.5
 	 	dev-java/swt
@@ -31,7 +31,6 @@ src_unpack() {
 
 	SWT_JAR_PATH=$(java-pkg_getjar swt-3 swt.jar)
 	TUXGUITAR_JAR_PATH=$(java-pkg_getjar tuxguitar TuxGuitar.jar)
-	
 
 	echo "swt.jar=${SWT_JAR_PATH}" > ${S}/build.properties
 	echo "tuxguitar.jar=${TUXGUITAR_JAR_PATH}" >> ${S}/build.properties

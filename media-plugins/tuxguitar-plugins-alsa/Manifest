@@ -1,8 +1,8 @@
 DIST TuxGuitar-alsa-0.8.1-src.tar.gz 9088 RMD160 b1d9b6900d81482f7bc899e9dd7df301966e64d0 SHA1 8935884f32f94911236eb273f2544a83925a66e1 SHA256 04c150eda7bc2312597f0e26a7b1a19851dd97347f701075938abc0809e5def9
-EBUILD tuxguitar-plugins-alsa-0.8.1-r1.ebuild 1411 RMD160 2818adf06259927a5b8d6dc6ced4aeaa1325f2e6 SHA1 2164ae5b2a5ba7e17c0df338ac630dc6e83fd3e9 SHA256 9381aa4c8b10dec88aa3b0fe25bf7a7847b26b1807b02786da9ffc8d9ef1cf10
-MD5 09608c2b66800f11c1cf612b7542266e tuxguitar-plugins-alsa-0.8.1-r1.ebuild 1411
-RMD160 2818adf06259927a5b8d6dc6ced4aeaa1325f2e6 tuxguitar-plugins-alsa-0.8.1-r1.ebuild 1411
-SHA256 9381aa4c8b10dec88aa3b0fe25bf7a7847b26b1807b02786da9ffc8d9ef1cf10 tuxguitar-plugins-alsa-0.8.1-r1.ebuild 1411
+EBUILD tuxguitar-plugins-alsa-0.8.1-r1.ebuild 1416 RMD160 76a496421451b7937e1724a2dffa85871289dce2 SHA1 4e69e3fc263244b517f52be8fa470c499897961b SHA256 e2226448e16bdf5ff697c53807f845d6a6ae4563a6401edec90104585b9e8ebb
+MD5 2b4d4b52dddc4d968470fdf50aa43cd2 tuxguitar-plugins-alsa-0.8.1-r1.ebuild 1416
+RMD160 76a496421451b7937e1724a2dffa85871289dce2 tuxguitar-plugins-alsa-0.8.1-r1.ebuild 1416
+SHA256 e2226448e16bdf5ff697c53807f845d6a6ae4563a6401edec90104585b9e8ebb tuxguitar-plugins-alsa-0.8.1-r1.ebuild 1416
 MD5 220e88b443b7403ec8c0e3df2c339976 files/digest-tuxguitar-plugins-alsa-0.8.1-r1 268
 RMD160 ff9a75207ba90cd9342f27ea4fecf92a042b0906 files/digest-tuxguitar-plugins-alsa-0.8.1-r1 268
 SHA256 ffac00a917c939cdb789a68e2475f960e7068098bd2a7ceb1afd63b2668d857a files/digest-tuxguitar-plugins-alsa-0.8.1-r1 268
