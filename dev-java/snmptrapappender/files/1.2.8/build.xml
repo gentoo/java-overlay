@@ -1,0 +1,41 @@
+<project name="snmptrapappender" default="dist" basedir=".">
+	<property name="final.name" value="snmpTrapAppender"/>
+	<target name="init">
+	<tstamp/>
+		<mkdir dir="build"/>
+	</target>
+	<target name="compile" depends="init" description="compile the source " >
+		<javac  destdir="build">
+			<classpath>
+				<pathelement path="log4j.jar"/>
+				<pathelement path="joesnmp.jar"/>
+				<pathelement path="../snmpv3tk/snmpdown/lib/snmpv3.jar"/>
+			</classpath>
+		  	<src path="src"/>
+	    	</javac>
+	</target>
+	<target name="jar" depends="compile"  description="generate the distribution" >
+		<mkdir dir="dist/lib"/>
+	    	<jar jarfile="dist/lib/${final.name}.jar" basedir="build"/>
+	</target>
+	<target name="javadoc" depends="compile">
+		<mkdir dir="dist/docs" />
+		<javadoc
+			destdir="dist/docs/"
+			author="true"
+			version="true"
+			use="true"
+			windowtitle="snmptrapappender javadoc">
+			<fileset dir="src" defaultexcludes="yes">
+				<include name="**/*.java"/>
+			</fileset>
+			<classpath>
+				<pathelement path="log4j.jar"/>
+				<pathelement path="joesnmp.jar"/>
+				<pathelement path="../snmpv3tk/snmpdown/lib/snmpv3.jar"/>
+			</classpath>
+
+		</javadoc>
+	</target>
+	<target name="dist" depends="jar,javadoc"  />
+</project>

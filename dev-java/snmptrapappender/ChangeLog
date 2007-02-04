@@ -1,0 +1,7 @@
+# ChangeLog for dev-java/snmptrapappender
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  04 Feb 2007; <kiorky@gentoo.org> ChangeLog:
+  Added for jboss's dependencies
+
