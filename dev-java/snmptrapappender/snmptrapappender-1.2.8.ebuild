@@ -47,7 +47,7 @@ src_unpack(){
 }
 
 src_install() {
-	java-pkg_newjar dist/lib/${MY_PN}_${PV//./_}.jar
+	java-pkg_newjar dist/lib/${MY_PN}.jar
 	use doc && java-pkg_dojavadoc dist/docs
 	use source && java-pkg_dosrc src
 }
