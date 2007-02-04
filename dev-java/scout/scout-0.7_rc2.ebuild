@@ -15,9 +15,9 @@ SLOT="0"
 KEYWORDS="~x86 "
 IUSE="doc source examples"
 
-JDOM_PV="1.0_beta9"
+JDOM_SLOT="1.0_beta9"
 DEPEND=">=virtual/jdk-1.4
-		>=dev-java/jdom-${JDOM_PV}
+		>=dev-java/jdom-${JDOM_SLOT}
 		>=dev-java/juddi-0.9_rc4
 		>=dev-java/log4j-1.2.13
 		>=dev-java/commons-logging-1.0.4-r1
@@ -25,9 +25,7 @@ DEPEND=">=virtual/jdk-1.4
 		>=www-servers/axis-1.2_rc2
 		>=dev-java/commons-discovery-0.2-r2
 		>=dev-java/sun-javamail-1.4
-		dev-java/ant-junit
 "
-#"
 RDEPEND="${DEPEND} >=virtual/jre-1.4"
 S=${WORKDIR}/${PN}
 
@@ -35,9 +33,9 @@ EANT_BUILD_TARGET="dist"
 
 src_unpack(){
 	unpack ${A}
-	cd ${S}
+	cd "${S}"
 	# getting  Dependencies
-	java-pkg_jar-from jdom-${JDOM_PV}
+	java-pkg_jar-from jdom-${JDOM_SLOT}
 	java-pkg_jar-from juddi
 	java-pkg_jar-from log4j
 	java-pkg_jar-from junit
