@@ -56,7 +56,7 @@ src_compile(){
 }
 
 src_install() {
-	java-pkg_newjar dist/lib/${PN}.jar
+	java-pkg_newjar ${PN}.jar
 	use doc && java-pkg_dojavadoc dist/docs
 	use source && java-pkg_dosrc modules/jaxr-api/src/java/
 	use source && java-pkg_dosrc    modules/scout/src/java/
