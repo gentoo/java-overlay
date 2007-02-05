@@ -29,24 +29,31 @@ DEPEND=">=virtual/jdk-1.4
 RDEPEND="${DEPEND} >=virtual/jre-1.4"
 S=${WORKDIR}/${PN}
 
-EANT_BUILD_TARGET="dist"
-
 src_unpack(){
 	unpack ${A}
 	cd "${S}"
 	# getting  Dependencies
-	java-pkg_jar-from jdom-${JDOM_SLOT}
-	java-pkg_jar-from juddi
-	java-pkg_jar-from log4j
-	java-pkg_jar-from junit
-	java-pkg_jar-from commons-logging
-	java-pkg_jar-from axis-1
-	java-pkg_jar-from commons-discovery
-	java-pkg_jar-from sun-javamail
-	cp -f ${FILESDIR}/${PV}/build.xml .||die "src_compile: cannot import ant build file"
+#	java-pkg_jar-from jdom-${JDOM_SLOT}
+#	java-pkg_jar-from juddi
+#	java-pkg_jar-from log4j
+#	java-pkg_jar-from junit
+#	java-pkg_jar-from commons-logging
+#	java-pkg_jar-from axis-1
+#	java-pkg_jar-from commons-discovery
+#	java-pkg_jar-from sun-javamail
+#	cp -f ${FILESDIR}/${PV}/build.xml .||die "src_compile: cannot import ant build file"
 
 }
 
+
+src_compile(){
+	local build_dir=${S}/build
+	local classpath="-classpath $(java-pkg_getjars jdom-${JDOM_SLOT},juddi,log4j,commons-logging,junit,axis-1,commons-discovery,sun-javamail):${build_dir}"
+	mkdir "${build_dir}"
+	ejavac ${classpath} -nowarn -d ${build_dir} $(find "modules/jaxr-api/src/java/" -name "*.java") \
+			$(find "modules/scout/src/java/" -name "*.java")
+	jar cf ${PN}.jar -C $(basename "${build_dir}") . || die "Unable to create jar"
+}
 
 src_install() {
 	java-pkg_newjar dist/lib/${PN}.jar

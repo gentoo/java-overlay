@@ -2,6 +2,9 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  05 Feb 2007; kiorky <kiorky@cryptelium.net> scout-0.7_rc2.ebuild:
+  Refactoring Ebuild to use ejavac/ejavadoc
+
   03 Feb 2007; <kiorky@cryptelium.net> files/0.7_rc2/build.xml,
   scout-0.7_rc2.ebuild:
   #94460 dev-java/scout is ready for tests
