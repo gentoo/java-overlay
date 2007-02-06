@@ -13,7 +13,7 @@ SLOT="0"
 
 KEYWORDS=""
 #IUSE="doc examples jai jimi mathml xmlunit"
-IUSE="examples source"
+IUSE="examples source jai jimi xmlunit"
 #removed doc as unable to get it to build (Outofmem errors)
 
 RDEPEND=">=virtual/jre-1.5
@@ -24,20 +24,15 @@ RDEPEND=">=virtual/jre-1.5
 	dev-java/commons-io
 	dev-java/commons-logging
 	>=dev-java/xmlgraphics-commons-1.0
-	=dev-java/servletapi-2.2*"
-	#mathml? ( dev-java/jeuclid )"
-	#jai? ( dev-java/sun-jai-bin )
-	#jimi? ( dev-java/sun-jimi )
-	#xmlunit? ( dev-java/xmlunit )
+	=dev-java/servletapi-2.2*
+	jai? ( dev-java/sun-jai-bin )
+	jimi? ( dev-java/sun-jimi )
+	xmlunit? ( dev-java/xmlunit )"
 DEPEND=">=virtual/jdk-1.5
 	=dev-java/eclipse-ecj-3.2*
 	${RDEPEND}
 	>=dev-java/ant-1.5.4
-	source? ( app-arch/zip )
-	!dev-java/fop-bin
-	dev-java/sun-jai-bin
-	dev-java/sun-jimi
-	dev-java/xmlunit"
+	source? ( app-arch/zip )"
 
 src_unpack() {
 	unpack ${A}
@@ -50,20 +45,12 @@ src_unpack() {
 	for package in ${packages}; do
 		java-pkg_jarfrom ${package}
 	done
-	java-pkg_jar-from sun-jai-bin
-	#if use jimi; then
-		java-pkg_jar-from sun-jimi
-	#fi
-	#if use xmlunit; then
-		java-pkg_jar-from xmlunit-1
-	#fi
-	#if use mathml; then
-	#	cd ${S}/examples/mathml/lib
-#		java-pkg_jar-from jeuclid
-	#fi
+	use jai && java-pkg_jar-from sun-jai-bin
+	use jimi && java-pkg_jar-from sun-jimi
+	use xmlunit && java-pkg_jar-from xmlunit-1
 }
 
-ANT_OPTS="-XX:MaxPermSize=512m"
+#ANT_OPTS="-XX:MaxPermSize=512m"
 EANT_BUILD_TARGET="package"
 #EANT_DOC_TARGET="javadocs"
 #JAVA_PKG_FORCE_COMPILER="ecj-3.2"
@@ -85,9 +72,13 @@ src_install() {
 	#	dohtml ReleaseNotes.html 
 	#	java-pkg_dojavadoc build/javadocs/*
 	#fi
+	
+	
 
 	if use examples; then
 		dodir /usr/share/doc/${PF}/examples
 		cp -pPR examples ${D}/usr/share/doc/${PF}/examples
 	fi
+
+
 }
