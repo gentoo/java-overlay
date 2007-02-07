@@ -14,16 +14,12 @@
 # Alistair Bush <ali_bush> (28 October 2006)
 # =www-server/jboss-4.0.4-r2 is being masked so that I can attempt at
 # building jboss as a monolithic package for testing
+=www-servers/jboss-4.0.4-r2
 
 # Joshua Nichols <nichoj@gentoo.org (23 Aug 2006)
 # Masked since, it's VERY early in development
 =dev-java/sun-jdk-1.7*
+
 # Vlastimil Babka <caster@gentoo.org> (03 Jan 2006)
 # Masked snapshots of 1.6 update
 =dev-java/sun-jdk-1.6.0.1_alpha*
-
-=www-servers/jboss-4.0.4-r2
-
-
-
-
