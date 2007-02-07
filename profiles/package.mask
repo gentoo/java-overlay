@@ -9,7 +9,7 @@
 
 # kiorky kiorky@cryptelium.net
 # just backported stuff and began working on it, don't work yet
-=www-server/jboss-4.0.5-r1
+=www-servers/jboss-4.0.5-r1
 
 # Alistair Bush <ali_bush> (28 October 2006)
 # =www-server/jboss-4.0.4-r2 is being masked so that I can attempt at
@@ -22,7 +22,7 @@
 # Masked snapshots of 1.6 update
 =dev-java/sun-jdk-1.6.0.1_alpha*
 
-=www-server/jboss-4.0.4-r2
+=www-servers/jboss-4.0.4-r2
 
 
 
