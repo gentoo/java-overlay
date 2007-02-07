@@ -4,9 +4,6 @@ SHA256 edf2e073ff98fd9d05efbb7edea2dcdf79c8cff34951825ed1e649f7e9c0cd88 build-to
 MD5 32cac8c6715ee7962afda3eae1ee63f2 myfaces-1.1.4.tar.gz 898719
 RMD160 b0cadc4172320a369d97b93184191be3c8455ac7 myfaces-1.1.4.tar.gz 898719
 SHA256 ddd2ccedcf8df3bff8b2fb716b859d3f38979a7035b14a4ddbc6060292229595 myfaces-1.1.4.tar.gz 898719
-MD5 6fdfc0cd29a954b5303e03995de1174e myfaces-core-1.1.4-src.tar.gz 287353
-RMD160 073564d4916da9e4ddb257d7ff70d541cc9733dd myfaces-core-1.1.4-src.tar.gz 287353
-SHA256 4b9a64e92dddeb565d14d34364281010c16f3919d0bead59fecc23c054741379 myfaces-core-1.1.4-src.tar.gz 287353
 MD5 4c84219cdbe18d59524e71e553cd5ad8 myfaces-shared-impl-2.0.3.tar.gz 399819
 RMD160 3f3f98da742b061fda414f1084040bbff5a7c1f2 myfaces-shared-impl-2.0.3.tar.gz 399819
 SHA256 4012485be63633b2015566888a366bdad857c613bae0c6b6b96d8d63f0cd4516 myfaces-shared-impl-2.0.3.tar.gz 399819
