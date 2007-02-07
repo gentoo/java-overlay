@@ -164,6 +164,6 @@ src_compile() {
 }
 
 src_install() {
-	java-pkg_dojar 	${WORKDIR}/dist/${PN}-$i/${PN}-impl.jar \
-					${WORKDIR}/dist/${PN}-$i/${PN}-api.jar
+	java-pkg_dojar 	${WORKDIR}/dist/${PN}-impl/${PN}-impl.jar \
+					${WORKDIR}/dist/${PN}-api/${PN}-api.jar
 }
