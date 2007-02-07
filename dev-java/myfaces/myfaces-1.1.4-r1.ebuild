@@ -54,6 +54,7 @@ src_unpack() {
 	cd ${S}/api || die "src_unpack: cant cd to ${S}"
 	# for ant (api part)
 	java-pkg_jar-from log4j
+	java-pkg_jar-from commons-collections
 	java-pkg_jar-from velocity
 	cp -f "${FILESDIR}/${PV}/build.xml" . || die "src_unpack: cp build.xml failed"
 }

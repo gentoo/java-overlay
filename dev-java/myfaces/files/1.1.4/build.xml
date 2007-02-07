@@ -10,6 +10,7 @@
 			<pathelement location="velocity-servlet.jar" />
 			<pathelement location="velocity-util.jar" />
 			<pathelement location="log4j.jar" />
+			<pathelement location="commons-collections.jar" />
 		</classpath>
         </taskdef>
         <generate basedir="src/main/java" destdir="src/main/java"
