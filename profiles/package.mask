@@ -6,6 +6,11 @@
 # NOTE: Please add your entry at the top!
 #
 
+#Alistair Bush alistair.bush@gmail.com (10 Feburary 2007)
+# Masked so that dev-db/octopus and dev-java/saxon can be updated
+# to depend on <fop-0.93.  This is required as fop
+# underwent a major redesign and breaks API.
+=dev-java/fop-0.93
 
 # kiorky kiorky@cryptelium.net
 # just backported stuff and began working on it, don't work yet
