@@ -208,7 +208,9 @@ src_install() {
 	doins copyright.txt
 	doins -r docs/*
 	# write access is set for jboss group so user can use netbeans to start jboss
-	# fix permissions
+	# create jboss user and fix permissions
+	enewgroup jboss || die "Unable to create jboss group"
+	enewuser jboss -1 /bin/sh ${SERVICES_DIR}  jboss || die "Unable to create jboss user"
 	local DIR=""
 	DIR="${D}/${INSTALL_DIR} ${D}/${LOG_INSTALL_DIR} ${D}/${TMP_INSTALL_DIR}
 	${D}/${CACHE_INSTALL_DIR} ${D}/${RUN_INSTALL_DIR} ${D}/${CONF_INSTALL_DIR}
@@ -218,10 +220,6 @@ src_install() {
 	chmod -R 755 ${D}/usr/share/${PN}-${SLOT}
 }
 
-pkg_setup() {
-	enewgroup jboss || die "Unable to create jboss group"
-	enewuser jboss -1 /bin/sh ${SERVICES_DIR}  jboss || die "Unable to create jboss user"
-}
 
 pkg_postinst() {
 	elog
