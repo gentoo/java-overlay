@@ -2,6 +2,11 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/jakarta-tomcat-jasper/ChangeLog,v 1.4 2006/11/30 15:42:32 caster Exp $
 
+  10 Feb 2007; kiorky <kiorky@cryptelium.net> tomcat-jasper-5.0.28.ebuild:
+  Correct ebuild to use a -1.4 jdk as it wont compile with >1.4
+  Correct year
+  Correct to use java-ant-2
+
   27 Jan 2007; William L. Thomson Jr. <wltjr@gentoo.org> ChangeLog:
   Adding to overlay. Quite old, was not migrated, but has since been a bit.
   It's only dep is jetty which resides in the same overlay. So till another

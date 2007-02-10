@@ -1,8 +1,8 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/jakarta-tomcat-jasper/jakarta-tomcat-jasper-2.ebuild,v 1.5 2006/11/30 15:42:32 caster Exp $
+# $Header: $
 
-inherit eutils java-pkg-2
+inherit eutils java-pkg-2 java-ant-2
 
 DESCRIPTION="Jasper 2 is the Tomcat JSP Engine"
 HOMEPAGE="http://jakarta.apache.org/tomcat"
@@ -13,7 +13,7 @@ SLOT="2"
 KEYWORDS="~x86 ~amd64"
 IUSE="doc source"
 
-RDEPEND=">=virtual/jdk-1.4
+DEPEND="=virtual/jdk-1.4*
 	=dev-java/servletapi-2.4*
 	=dev-java/xerces-1.3*
 	>=dev-java/xerces-2.7
@@ -22,11 +22,14 @@ RDEPEND=">=virtual/jdk-1.4
 	dev-java/commons-daemon
 	dev-java/commons-el
 	dev-java/commons-logging
-	dev-java/commons-launcher"
-DEPEND=">=virtual/jdk-1.4
-	${RDEPEND}
+	dev-java/commons-launcher
 	jikes? ( dev-java/jikes )
-	source? ( app-arch/zip )"
+	source? ( app-arch/zip )
+"
+
+RDEPEND="${DEPEND}
+	>=virtual/jdk-1.4
+"
 
 S=${WORKDIR}/jakarta-tomcat-${PV}-src/jakarta-tomcat-jasper/jasper2
 
