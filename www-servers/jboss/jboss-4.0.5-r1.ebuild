@@ -398,7 +398,6 @@ src_unpack() {
 	cd ${S}
 	mv thirdparty thirdparty.old || die "mv to thirdparty.old failed"
 	#	thirdparty_deps_build_mergetime_libs
-
 	thirdparty_deps_get_jars
 }
 
