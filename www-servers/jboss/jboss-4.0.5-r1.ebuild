@@ -2,22 +2,25 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils java-pkg-2
+inherit eutils java-pkg-2 java-utils-2 java-ant-2
 
 MY_P="jboss-${PV}"
 MY_P="${MY_P}.GA-src"
 MY_EJB3="jboss-EJB-3.0_RC9_Patch_1"
-#thirdparty library 
+#thirdparty library
 
 MY_WSDL4J_V="1.5.2"
 MY_WSDL4J_PN="wsdl4j"
 MY_WSDL4J="mirror://sourceforge/wsdl4j/${MY_WSDL4J_PN}-src-${MY_WSDL4J_V}.zip"
+MY_COMMONS_LOGGING_V="1.5.2"
+MY_COMMONS_LOGGING_PN="commons-logging"
+MY_COMMONS_LOGGING="mirror://sourceforge/wsdl4j/${MY_WSDL4J_PN}-src-${MY_WSDL4J_V}.zip"
+
 DESCRIPTION="An open source, standards-compliant, J2EE-based application server implemented in 100% Pure Java."
 
 # for the tests i just take one thing at a time
 # ATTENTION: TO REMOVE
 #mkdir -p ${WORKDIR}/${MY_P}/thirdparty
-
 SRC_URI="mirror://sourceforge/jboss/${MY_P}.tar.gz"
 #	${MY_WSDL4J}
 #	ejb3? ( mirror://sourceforge/jboss/${MY_EJB3}.zip )
@@ -28,23 +31,78 @@ HOMEPAGE="http://www.jboss.org"
 LICENSE="LGPL-2"
 IUSE="doc ejb3 srvdir"
 SLOT="4"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~x86"
 
+# preparing the slotted future
+COMMONS_HTTPCLIENT_SLOT="2.0.2"
+
+AVALON_FRAMEWORK_SLOT="4.1"
+AVALON_LOGKIT_SLOT="1.2"
+COMMONS_BEANUTILS_SLOT="1.7"
+MYFACES_SLOT="1"
+SERVLETAPI_SLOT="2.4"
+ECJ_SLOT="3.1"
+BSF_SLOT="2.3"
+XERCES_SLOT="2"
+XMLSEC_SLOT="1.3"
+CGLIB_SLOT="2.1"
+BSH_SLOT="1.3.0"
+GETOPT_SLOT="1"
 # jdk1.7 is not ready to use !
-RDEPEND="<virtual/jdk-1.7
+DEPEND="<virtual/jdk-1.7
+		app-arch/unzip
+		=dev-java/myfaces-${MYFACES_SLOT}*
+		dev-java/ant-contrib
+		dev-java/ant-tasks
 		ejb3?  ( >=virtual/jdk-1.5 )
 		!ejb3? ( >=virtual/jdk-1.4 )
-		"
-
-DEPEND="${RDEPEND}
+		>=dev-java/commons-fileupload-1.1.1
+		>=dev-java/commons-discovery-0.2-r2
+		>=dev-java/commons-codec-1.3
+		=dev-java/bsf-${BSF_SLOT}*
+		>=dev-java/commons-lang-2.1
+		dev-java/apache-addressing
+		dev-java/jaxme
+		=dev-java/commons-httpclient-${COMMONS_HTTPCLIENT_SLOT}*
+		=dev-java/avalon-framework-${AVALON_FRAMEWORK_SLOT}*
+		=dev-java/avalon-logkit-${AVALON_LOGKIT_SLOT}*
+		>=dev-java/bcel-5.1-r3
+		=dev-java/commons-beanutils-${COMMONS_BEANUTILS_SLOT}*
+		>=dev-java/scout-0.7_rc2
+		=dev-java/servletapi-${SERVLETAPI_SLOT}*
 		>=dev-java/sun-jaf-1.1
 		>=dev-java/sun-javamail-1.4
-		>=dev-java/servletapi-2.4-r5
 		>=dev-java/trove-1.0.2
 		>=dev-java/xdoclet-1.2.3
-		app-arch/unzip
-		dev-java/ant
-		dev-java/ant-contrib"
+		>=dev-java/commons-logging-1.0.4
+		>=dev-java/commons-collections-3.1
+		>=dev-java/commons-digester-1.6
+		>=dev-java/snmptrapappender-1.2.8
+		>=dev-java/jakarta-slide-webdavclient-2.1
+		>=dev-java/jakarta-jstl-1.1.2
+		>=dev-java/commons-pool-1.0.1
+		=www-servers/tomcat-5.5.20*
+		=dev-java/eclipse-ecj-${ECJ_SLOT}*
+		>=dev-java/xalan-2.7.0
+		=dev-java/xerces-2.7*
+		>=dev-java/antlr-2.7.6
+		=dev-java/xml-security-${XMLSEC_SLOT}*
+		>=dev-java/bsh-1.3.0
+		=dev-java/cglib-${CGLIB_SLOT}*
+		>=dev-java/commons-el-1.0
+		>=dev-java/dom4j-1.6.1
+		dev-java/gjt-jpl-util
+		dev-java/gjt-jpl-pattern
+		dev-java/xml-commons
+		=dev-java/java-getopt-${GETOPT_SLOT}*
+		>=dev-java/hibernate-3.2.1
+		"
+
+RDEPEND="
+		ejb3?  ( >=virtual/jdk-1.5 )
+		!ejb3? ( >=virtual/jdk-1.4 )
+		${DEPEND}
+		"
 
 S=${WORKDIR}/${MY_P}
 
@@ -71,8 +129,8 @@ fi
 # SLOT="4" TEST=`find /var/lib/jboss-${SLOT}/ -type f | grep -E -e "\.(xml|properties|tld)$"`; echo $TEST
 # by kiorky better:
 # echo "CONFIG_PROTECT=\"$(find /srv/localhost/jboss-4/ -name "*xml" -or -name \
-#          "*properties" -or -name "*tld" |xargs echo -n)\"">>env.d/50jboss-4   
-# NOTE: 
+#          "*properties" -or -name "*tld" |xargs echo -n)\"">>env.d/50jboss-4
+# NOTE:
 # atm: Compiling with jboss compile system
 # Will progressivly add gentoo's way to do (eant)
 # In the first time, i have the idea to delete partially (see under)
@@ -82,7 +140,7 @@ fi
 #    * with compiled-at-merge-times ones (just cp compiled_jar_path/*.jar destdir/ stuff :p)
 #    * with original ones if we cannot have the source (anyway this case is bad !!!)
 #
-# Indeed, I think this way, the maintenance will be easier as the jars path 
+# Indeed, I think this way, the maintenance will be easier as the jars path
 # will not change and so we ll not to have to rewrite that much all
 # the jboss build.xml.
 #
@@ -98,25 +156,25 @@ fi
 #
 # install jars builded from source in the thirdparty dependancies jboss's
 # repository
-# 
-# @param $1 (required) - the path to the jar to write 
-# @param $2 (required) - the repository subdir to install to 
+#
+# @param $1 (required) - the path to the jar to write
+# @param $2 (required) - the repository subdir to install to
 # ------------------------------------------------------------------------------
 thirdparty_do_jar() {
 	local DEST="${WORKDIR}/${MY_P}/thirdparty/$1/lib/"
 	if [[ ! -d ${DEST} ]]; then
-		 mkdir -p ${DEST} || die "do_thirdparty_jar: creation of the subdir $1 failed"
+		 mkdir -p ${DEST} || die "creation of the subdir $1 failed"
 	fi
 	einfo "Installing $2 in jboss thirdparty dependency: $1"
-	cp -f $2 ${DEST} || die "do_thirdparty_jar: copy of the jar $2 to the suddir failed"
+	cp -f $2 ${DEST} || die "copy of the jar $2 to the suddir failed"
 }
 
 # ------------------------------------------------------------------------------
 # @function list_thirdparty_dep_jars
 #
 # list jars in the thirdparty dependancies jboss's  repository
-# 
-# @param $1 (required) - the path to the jar to write 
+#
+# @param $1 (required) - the path to the jar to write
 # ------------------------------------------------------------------------------
 thirdparty_list_dep_jars() {
 	einfo "thirdparty_list_dep_jars: jars in $1:"
@@ -131,14 +189,32 @@ thirdparty_list_dep_jars() {
 # build a thirdparty dep
 #
 # ------------------------------------------------------------------------------
+thirdparty_build_commons_logging() {
+	einfo "thirdparty_build_commons_logging:"
+	cd ${WORKDIR}/${MY_WSDL4J_PN}-${MY_WSDL4J_V//./_}\
+		||die "cd failed "
+	epatch ${FILESDIR}/${PV}/thirdparties/wsdl4j/jboss_wsdl4j.patch
+	cp ${FILESDIR}/${PV}/thirdparties/wsdl4j/build.xml .
+	echo $GENTOO_VM
+	PORTAGE_QUIET=y eant
+	for jar in build/lib/*.jar;do
+		thirdparty_do_jar ibm-wsdl4j $jar
+	done
+#	thirdparty_list_dep_jars ibm-wsdl4j
+}
 
+# ------------------------------------------------------------------------------
+# @function thirdparty_build_wsdl4j
+#
+# build a thirdparty dep
+#
+# ------------------------------------------------------------------------------
 thirdparty_build_wsdl4j() {
 	einfo	"thirdparty_build_wsdl4j:"
 	cd ${WORKDIR}/${MY_WSDL4J_PN}-${MY_WSDL4J_V//./_}\
 		||die "thirdparty_build_wsdl4j:	_ cd "
 	epatch ${FILESDIR}/${PV}/thirdparties/wsdl4j/jboss_wsdl4j.patch
 	cp ${FILESDIR}/${PV}/thirdparties/wsdl4j/build.xml .
-	echo $GENTOO_VM
 	PORTAGE_QUIET=y eant || die "thirdparty_build_wsdl4j: failed"
 	for jar in build/lib/*.jar;do
 		thirdparty_do_jar ibm-wsdl4j $jar
@@ -147,7 +223,7 @@ thirdparty_build_wsdl4j() {
 }
 
 # ------------------------------------------------------------------------------
-# @function thirdparty_deps_build_mergetime_libs
+# @function thirdparty_deps_bukild_mergetime_libs
 #
 # regroup jars to be built at merge time
 #
@@ -155,6 +231,43 @@ thirdparty_build_wsdl4j() {
 thirdparty_deps_build_mergetime_libs() {
 	einfo "Building thirdparties jboss specific dependencies"
 #	thirdparty_build_wsdl4j
+}
+
+
+
+# ------------------------------------------------------------------------------
+# @function thirdparty_dep_get_jars
+#
+# bring back the  jars from the package given as parameter
+#
+# @param $1 (required)  - name of the package to use
+# @param $2 (required)  - name of the package to get jars from
+# @param --jar jar   (optionnal)                 - jar to retrieve
+# @param --rename jar-othername.jar (optionnnal) - name of the jar to rename to
+# ------------------------------------------------------------------------------
+thirdparty_dep_get_jars() {
+	local jar="" jarto="" from="" DEST="" slot=""
+
+	while [[ "${1}" == --* ]]; do
+		if [[ "${1}" = "--jar" ]]; then
+			jar="${2}"
+			shift
+		elif [[ "${1}" = "--rename" ]]; then
+			jarto="${2}"
+			shift
+		else
+				die "thirdparty_dep_get_jars called with unknown parameter:	${1}"
+		fi
+		shift
+	done
+	from="$1"
+	DEST="${S}/thirdparty/$2/lib"
+	mkdir -p ${DEST}||die "thirdparty_dep_get_jars mkdir ${DEST}"
+	cd ${DEST}||die "thirdparty_dep_get_jars: failed change cwd"
+	java-pkg_jar-from ${from} ${jar}
+	if [[ -n ${jarto} ]]; then
+		 mv ${jar} ${jarto}
+	fi
 }
 
 # ------------------------------------------------------------------------------
@@ -165,39 +278,31 @@ thirdparty_deps_build_mergetime_libs() {
 # ------------------------------------------------------------------------------
 thirdparty_deps_get_xdoclet() {
 	DEST="${S}/thirdparty/xdoclet/lib"
-	mkdir -p ${DEST}||die "thirdparty_deps_get_xdoclet mkdir dest"
-	cd ${DEST}||die "thirdparty_deps_get_xdoclet:failed change cwd"
+	mkdir -p ${DEST}||die "mkdir dest failed"
+	cd ${DEST}||die "failed change cwd"
 	for jar in ${S}/thirdparty.old/xdoclet/lib/*;do
 		jar=$(basename $jar)
 		jarn="$(basename $jar -jb4.jar).jar"
-		echo $jarn $jar
 		if [[ $jar == "xdoclet-xjavadoc-jb4.jar" ]];then
-			java-pkg_jar-from xjavadoc xjavadoc.jar $jar
+			thirdparty_dep_get_jars --jar xjavadoc.jar --rename $jar xdoclet xjavadoc
 		else
-			java-pkg_jar-from xdoclet  $jarn $jar
+			thirdparty_dep_get_jars --jar $jarn --rename $jar xdoclet xdoclet
 		fi
 	done
 }
 
 # ------------------------------------------------------------------------------
-# @function thirdparty_dep_get_jars
+# @function thirdparty_use_bundled_jars
 #
-# bring back the  jars from the package given as parameter
+# bring back jboss thirdparty shipped jars 
+# Please only use when there is not any way to get and compile the sources
 #
-# @param $1 (required) - name of the package to use
-# @param $2 (required) - name of the package to get jars from
-# @param $3 (optionnal) - slot
+# @param $1 which dependency to get
 # ------------------------------------------------------------------------------
-thirdparty_dep_get_jars() {
-	DEST="${S}/thirdparty/$1/lib"
-	mkdir -p ${DEST}||die "thirdparty_dep_get_jars mkdir ${DEST}"
-	cd ${DEST}||die "thirdparty_dep_get_jars: failed change cwd"
-	# FIXME: Slot stuff
-#	if [[ -n $3 ]]; then
-#		java-pkg_jar-from $2 slot $3
-#	else
-		java-pkg_jar-from $2
-#	fi
+thirdparty_use_bundled_jars() {
+	ewarn "Bad: using bundled jar for $1"
+	cp -rf "${S}/thirdparty.old/$1/" "${S}/thirdparty"\
+			|| die "cp $1 failed"
 }
 
 # ------------------------------------------------------------------------------
@@ -207,20 +312,98 @@ thirdparty_dep_get_jars() {
 #
 # ------------------------------------------------------------------------------
 thirdparty_deps_get_jars() {
+	local DEST="${WORKDIR}/${MY_P}/thirdparty/"
 	einfo "Populating jboss repository with our jars"
 #	thirdparty_deps_get_xdoclet
-#	thirdparty_dep_get_jars trove trove
-	# FIXME: improve with slots
-#	thirdparty_dep_get_jars sun-servlet servletapi-2.4
+	# Warning jboss use version="2.7.6.ga"
+#	thirdparty_dep_get_jars --jar antlr.jar --rename antlr-2.7.6.jar antlr antlr
+	# Warning jboss use version="cvsbuild-7-19"
+#	thirdparty_dep_get_jars	--jar addressing.jar --rename addressing-1.0.jar\
+#						 	apache-addressing  apache-addressing
+#	thirdparty_dep_get_jars avalon-framework-${AVALON_FRAMEWORK_SLOT} avalon-framework
+#	thirdparty_dep_get_jars avalon-logkit-${AVALON_LOGKIT_SLOT}   apache-avalon-logkit
+#	thirdparty_dep_get_jars bcel         apache-bcel
+#	thirdparty_dep_get_jars commons-beanutils-${COMMONS_BEANUTILS_SLOT}	apache-beanutils
+#	thirdparty_dep_get_jars bsf-${BSF_SLOT} apache-bsf
+#	thirdparty_dep_get_jars commons-codec apache-codec
+#	thirdparty_dep_get_jars commons-collections apache-collections
+	# Warning they have too identicals jars but named differently see SRCDIR/thirdparty/apache-digester/component-info.xml
+#	thirdparty_dep_get_jars --jar commons-digester.jar \
+#		--rename commons-digester-1.6.jar commons-digester apache-digester
+#	thirdparty_dep_get_jars commons-digester    apache-digester
+#	thirdparty_dep_get_jars commons-discovery   apache-discovery
+#	thirdparty_dep_get_jars commons-fileupload  apache-fileupload
+	# Warning dev-java/commons-httpclient-2.0.2 is in slot 0 atm !
+#	thirdparty_dep_get_jars commons-httpclient  apache-httpclient
+#	thirdparty_dep_get_jars jaxme               apache-jaxme
+#	thirdparty_dep_get_jars --jar commons-lang.jar --rename commons-lang-2.1.jar commons-lang apache-lang
+#	thirdparty_dep_get_jars --jar snmptrapappender.jar --rename snmpTrapAppender.jar  snmptrapappender apache-log4j
+#	thirdparty_dep_get_jars log4j apache-log4j
+#	# Waring see http://fisheye.jboss.org/browse/JBoss/apache/commons-logging
+#	thirdparty_use_bundled_jars apache-logging
+	# Warning they use a 1.1patch version, never heard or see anything about it ...
+#	thirdparty_use_bundled_jars apache-modeler
+	# Waring my faces : jstl-1.1.0.jar from
+	# http://www.apache.org/dyn/closer.cgi/myfaces/binaries/myfaces-core-1.1.4-bin.tar.gz
+#	thirdparty_dep_get_jars  myfaces-${MYFACES_SLOT} apache-myfaces
+#	thirdparty_dep_get_jars  jakarta-jstl            apache-myfaces
+#	thirdparty_dep_get_jars  commons-pool            apache-pool
+#	thirdparty_dep_get_jars scout        apache-scout
+	# Warning  need to be hardly tested as version is 2 in portage but jboss need 1.
+#	thirdparty_dep_get_jars --jar jakarta-slide-webdavlib.jar --rename webdavlib.jar \
+#			jakarta-slide-webdavclient apache-slide
+	# warning maybe will it good to test with tomcat6 later
+	# use a jasper-compiler-jdt.jar which seems to be ecj, but not identical to
+	# the one i use actually, so need to be hardly tested
+#	thirdparty_dep_get_jars tomcat-5.5 apache-tomcat
+#	ln -s /usr/share/tomcat-5.5/server/webapps/manager/WEB-INF/lib/catalina-manager.jar \
+#		${DEST}/apache-tomcat/lib || die "ln catalina-manager.jar failed"	
+#	thirdparty_dep_get_jars --jar ecj.jar --rename jasper-compiler-jdt.jar\
+#		eclipse-ecj-${ECJ_SLOT} apache-tomcat
+	# Warning see http://repository.jboss.com/apache-velocity/1.4jboss 
+	# was getting a 17 MO patch from the original one
+	# so i doubt that the good version to patch against ...
+#	thirdparty_use_bundled_jars apache-velocity
+	# Warning they use a cvs-7-19 version ....
+#	thirdparty_use_bundled_jars apache-wss4j
+	# Warning maybe will we need to repack the xalan jar
+	# http://repository.jboss.com/apache-xalan/j_2.7.0/readme.txt
+#	thirdparty_dep_get_jars xalan apache-xalan
+#	thirdparty_dep_get_jars xerces-${XERCES_SLOT} apache-xerces
+	thirdparty_dep_get_jars xml-commons apache-xerces
+#	thirdparty_dep_get_jars xml-security-${XMLSEC_SLOT} apache-xmlsec
+	# Warning Need to test with upper to 1.3.0 versions as it dont install in slot
+#	thirdparty_dep_get_jars --jar bsh.jar --rename bsh-${BSH_SLOT}.jar bsh beanshell
+	# Warning specifying nodep in their metadata
+#	thirdparty_dep_get_jars --jar cglib-nodep.jar --rename cglib.jar \
+#			cglib-${CGLIB_SLOT} cglib
+	thirdparty_dep_get_jars commons-el commons-el
+	thirdparty_dep_get_jars dom4j dom4j
+	# Warning they use a 1.0 version
+	thirdparty_dep_get_jars gjt-jpl-util    gjt-jpl-util
+	thirdparty_dep_get_jars gjt-jpl-pattern gjt-jpl-util
+	thirdparty_dep_get_jars --jar gnu.getopt.jar --rename getopt.jar \
+		java-getopt-${GETOPT_SLOT}  gnu-getopt
+	thirdparty_dep_get_jars  hibernate
+#	thirdparty_dep_get_jars trove        trove
+#	thirdparty_dep_get_jars servletapi-${SERVLETAPI_SLOT} sun-servlet
 #	thirdparty_dep_get_jars sun-javamail sun-javamail
-	thirdparty_dep_get_jars sun-jaf	sun-jaf
+#	thirdparty_dep_get_jars sun-jaf	     sun-jaf
+}
+
+src_unpack() {
+	unpack ${A}
+	#FOR TEST !!
+	echo ${S}
+	cd ${S}
+	mv thirdparty thirdparty.old || die "mv to thirdparty.old failed"
+	#	thirdparty_deps_build_mergetime_libs
+
+	thirdparty_deps_get_jars
 }
 
 src_compile() {
 	cd ${S}
-#FOR TEST !!	mv thirdparty thirdparty.old || die "src_compile: mv to thirdparty.old failed"
-#	thirdparty_deps_build_mergetime_libs
-	thirdparty_deps_get_jars
 }
 
 src_install() {
@@ -344,7 +527,7 @@ src_install() {
 		diropts -m755
 		insinto  ${SERVICES_DIR}/${PROFILE}/lib
 		doins -r server/${PROFILE}/lib/*
-		# do symlink		
+		# do symlink
 		dosym ${CACHE_INSTALL_DIR}/${PROFILE} ${SERVICES_DIR}/${PROFILE}/data
 		dosym   ${LOG_INSTALL_DIR}/${PROFILE} ${SERVICES_DIR}/${PROFILE}/log
 		dosym   ${TMP_INSTALL_DIR}/${PROFILE} ${SERVICES_DIR}/${PROFILE}/tmp
@@ -371,7 +554,7 @@ src_install() {
 	java-pkg_dolauncher jboss-stop.sh   --java_args  '${JAVA_OPTIONS}'\
 		--main org.jboss.Shutdown  -into ${INSTALL_DIR}
 
-	# documentation stuff	
+	# documentation stuff
 	insopts -m645
 	diropts -m755
 	insinto	"/usr/share/doc/${PF}/${DOCDESTTREE}"
@@ -388,7 +571,8 @@ src_install() {
 	chmod -R 755 ${D}/usr/share/${PN}-${SLOT}
 }
 
-pkg_setup() {
+pkg_preinst() {
+	# create jboss user
 	enewgroup jboss || die "Unable to create jboss group"
 	enewuser jboss -1 /bin/sh ${SERVICES_DIR}  jboss || die "Unable to create jboss user"
 }
