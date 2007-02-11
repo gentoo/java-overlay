@@ -1,0 +1,11 @@
+# ChangeLog for dev-java/scout
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  11 Feb 2007; kiorky <kiorky@cryptelium.net> +xml-security-1.3.0.ebuild,
+  +metadata.xml:
+  For #94438:
+  Migrate to new eclasses
+  Up to 1.3 version
+  Correct dependencies
+
