@@ -78,7 +78,7 @@ RDEPEND="
 	dev-java/velocity-tools
 	dev-java/xjavadoc
 	=dev-java/gnu-javamail-1*
-	=dev-java/mx4j-3.0*
+	=dev-java/mx4j-core-3.0*
 	=dev-java/jboss-module-j2ee-4.0*
 	dev-java/wsdl4j
 	dev-java/jdbc2-stdext
@@ -135,8 +135,8 @@ COMMONS_POOL="commons-pool commons-pool.jar"
 STANDARD="jakarta-jstl standard.jar"
 JAMON="jamon-1 jamon.jar JAMon.jar"
 JASPERREPORTS="jasperreports jasperreports.jar jaspereports-0.6.6.jar"
-MX4J="mx4j-3.0 mx4j.jar"
-MX4J_REMOTE="mx4j-3.0 mx4j-remote.jar"
+MX4J="mx4j-core-3.0 mx4j.jar"
+MX4J_REMOTE="mx4j-core-3.0 mx4j-remote.jar"
 JOTM="jotm-2.0 jotm.jar"
 XAPOOL="xapool-1.5 xapool.jar"
 JUNIT="junit junit.jar"
