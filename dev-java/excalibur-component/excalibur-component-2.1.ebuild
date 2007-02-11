@@ -13,7 +13,7 @@ KEYWORDS="~x86"
 
 DEPEND="
 	=dev-java/avalon-framework-4.2*
-	=dev-java/avalong-logkit-2.0*
+	=dev-java/avalon-logkit-2.0*
 	dev-java/excalibur-pool
 	dev-java/excalibur-instrument
 	dev-java/excalibur-logger
