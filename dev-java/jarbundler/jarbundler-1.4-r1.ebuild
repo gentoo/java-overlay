@@ -20,4 +20,5 @@ RDEPEND=">=virtual/jre-1.4
 
 src_install() {
 	java-pkg_newjar "bin/${P}.jar"
+	dodoc README.TXT
 }
