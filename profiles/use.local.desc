@@ -1,15 +1,14 @@
 # Copyright 1999-2007 Gentoo Foundation.
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $ 
+# $Header: $
 
 # This file contains descriptions of local USE flags, and the ebuilds which
 # contain them.
 
 # Keep it sorted.
-www-servers/jboss:ejb3 - Add EJB 3 support 
+www-servers/jboss:ejb3 - Add EJB 3 support
 www-servers/jboss:srvdir - Add SRVDIR support
-www-servers/jboss-bin:ejb3 - Add EJB 3 support 
+www-servers/jboss-bin:ejb3 - Add EJB 3 support
 www-servers/jboss-bin:srvdir - Add SRVDIR support
-
-
+dev-db/hsqldb:sqltools - Add data managment tools
 
