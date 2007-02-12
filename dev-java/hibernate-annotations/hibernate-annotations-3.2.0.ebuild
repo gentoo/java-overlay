@@ -52,7 +52,7 @@ src_unpack() {
 #	java-pkg_jar-from jboss-module-system-4 jboss-system.jar
 #   END DONNO
 
-	cd ${HIBERNATE_S}/lib
+	cd ${HIBERNATE_S}/lib || die "cd failed"
 	# start: pulled from hibernate ebuild
 	local JAR_PACKAGES="c3p0 commons-collections javassist-3.3
 		commons-logging dom4j-1 jaxen-1.1 jdbc2-stdext
@@ -67,9 +67,7 @@ src_unpack() {
 	java-pkg_jar-from ant-core ant.jar
 	java-pkg_jar-from asm-1.5 asm.jar
 	java-pkg_jar-from asm-1.5 asm-attrs.jar
-	# end: pulled from hibernate ebuild
 	java-pkg_jar-from hibernate-${SLOT}
-	cd ${S}/lib
 }
 
 src_compile() {
