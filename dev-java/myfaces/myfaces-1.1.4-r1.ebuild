@@ -15,9 +15,9 @@ MYFACES_SHARED_IMPL_PF="${MYFACES_SHARED_IMPL_PN}-${MYFACES_SHARED_IMPL_PV}"
 DESCRIPTION="The first free open source Java Server Faces implementation"
 HOMEPAGE="http://myfaces.apache.org/"
 SRC_URI="
-	http://dev.gentooexperimental.org/~dreeevil/${MYFACES_SHARED_IMPL_PF}.tar.gz
-	http://dev.gentooexperimental.org/~dreeevil/${PF//-${PR}/}.tar.gz
-	http://dev.gentooexperimental.org/~dreeevil/${BUILD_TOOLS_PF}.tar.gz
+	http://dev.gentooexperimental.org/~kiorky/${MYFACES_SHARED_IMPL_PF}.tar.gz
+	http://dev.gentooexperimental.org/~kiorky/${PF//-${PR}/}.tar.gz
+	http://dev.gentooexperimental.org/~kiorky/${BUILD_TOOLS_PF}.tar.gz
 "
 
 LICENSE="Apache-2.0"
