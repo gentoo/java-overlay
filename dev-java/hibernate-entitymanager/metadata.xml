@@ -2,15 +2,4 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 <herd>java</herd>
-<maintainer>
-<name>Alistair Bush</name>
-<email>alistair.bush at gmail.com</email>
-</maintainer>
-<longdescription lang="en">
-EJB3 standardizes the basic APIs and the metadata needed for any
-object/relational persistence mechanism. Hibernate EntityManager implements the
-programming interfaces, lifecycle rules and packaging archive support as defined
-by the EJB3 persistence specification.
-</longdescription>
 </pkgmetadata>
-
