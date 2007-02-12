@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -12,7 +12,7 @@ DESCRIPTION="Annotations support for Hibernate"
 HOMEPAGE="http://annotations.hibernate.org"
 SRC_URI="mirror://sourceforge/hibernate/${MY_P}.tar.gz mirror://sourceforge/hibernate/${HIBERNATE_P}.tar.gz"
 # http://prdownloads.sourceforge.net/hibernate/hibernate-annotations-3.1beta8.tar.gz?download
-LICENSE=""
+LICENSE="LGPL-2"
 SLOT="3.0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc"
@@ -31,8 +31,8 @@ src_unpack() {
 	cd ${HIBERNATE_S}/lib
 	# start: pulled from hibernate ebuild
 	rm *.jar
-	local JAR_PACKAGES="asm-2 c3p0 commons-collections 
-		commons-logging dom4j-1 ehcache jaxen-1.1 jdbc2-stdext 
+	local JAR_PACKAGES="asm-2 c3p0 commons-collections
+		commons-logging dom4j-1 ehcache jaxen-1.1 jdbc2-stdext
 		log4j oscache proxool swarmcache-1.0 xerces-2"
 	for PACKAGE in ${JAR_PACKAGES}; do
 		java-pkg_jar-from ${PACKAGE}
@@ -54,7 +54,7 @@ src_unpack() {
 }
 
 src_compile() {
-	eant -Djdk15.home=$(java-config --jdk) jar $(use_doc) 
+	eant -Djdk15.home=$(java-config --jdk) jar $(use_doc)
 }
 
 src_install() {
