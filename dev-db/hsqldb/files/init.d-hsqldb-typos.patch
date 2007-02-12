@@ -1,0 +1,24 @@
+--- files/hsqldb-1.7	2004-10-30 22:58:31.000000000 +0200
++++ files/hsqldb	2006-07-09 13:56:44.000000000 +0200
+@@ -1,10 +1,10 @@
+ #!/sbin/runscript
+ # Copyright 1999-2004 Gentoo Foundation
+ # Distributed under the terms of the GNU General Public License v2
+-# $Header: /var/cvsroot/gentoo-x86/dev-db/hsqldb/files/hsqldb,v 1.1 2004/10/30 20:58:31 axxo Exp $
++# $Header: $
+ 
+ depend() {
+-    use net
++	use net
+ }
+ 
+ start() {
+@@ -14,7 +14,7 @@
+ }
+ 
+ stop() {
+-	ebegin "Stopping HSQL Databse"
++	ebegin "Stopping HSQL Database"
+ 	hsqldb_enable=yes /var/lib/hsqldb/bin/hsqldb stop
+ 	eend $?
+ }

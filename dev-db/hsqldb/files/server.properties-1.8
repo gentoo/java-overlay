@@ -1,0 +1,107 @@
+# Hsqldb Server cfg file.
+# See the "UNIX Quick Start" and the "Advanced Topics" chapters
+# of the Hsqldb User Guide.
+
+# Warning #1
+# In Server mode the server.dbname.X is also required - it can be
+# empty, but (since the hsqldb-1.8.0) the line must be present.
+# Otherwise you may have problems with starting the server.
+# Warning #2
+# When running hsqldb in Server mode, for each additional database
+# the server.urlid.X entry must have a proper corresponding urlid
+# section in the 'sqltool.rc' file.
+# Otherwise you may have problems with shutting down the server.
+#
+# Note that each server can serve only up to 10 different
+# databases simultaneously (with consecutive {0-9} suffixes).
+
+
+# Default database
+# - files will be created in /var/lib/hsqldb/localhost/localhost.*
+# - url: "jdbc:hsqldb:hsql://localhost/"  (note the trailing slash!)
+server.database.0=file:localhost/localhost
+server.dbname.0=
+server.urlid.0=localhost
+
+
+# Global server settings, commented out with default values.
+
+# host
+#server.address=localhost
+# IP (alternative)
+#server.address=127.0.0.1
+
+# ports for hsql/hsqls protocols (hsqls uses TLS/SSL)
+#server.port=9001/544
+
+# Display progress and SQL queries (typically in /var/log/hsqldb.log)
+#server.silent=true
+
+# Display JDBC trace messages (typically in /var/log/hsqldb.log)
+#server.trace=false
+
+# Use TLS/SSL (secure) sockets
+#server.tls=false
+
+# Do not issue System.exit() when the database is closed
+#server.no_system_exit=false
+
+# Can open databases remotely
+#server.remote_open=false
+
+
+# Database definitions
+# ====================
+#
+# server.database.N=file:[/path/][dir/]prefix
+#   (required) Specifies storage method and location of database files.
+#
+#   .N     - number of database, {0-9}
+#   file:  - storage method (mem: is also available, see docs)
+#   /path/ - (optional) server home directory, default value specified
+#            by SERVER_HOME in /etc/conf.d/hsqldb, typically:
+#            /var/lib/hsqldb
+#   dir/   - (optional) subdirectory of SERVER_HOME, where all files
+#            of the database will reside
+#   prefix - base name of the database files created by the server,
+#            used with extensions like: <prefix>.properties,
+#            <prefix>.script, <prefix>.log, <prefix>.lck, etc.
+#  
+# server.dbname.N=alias
+#   (required since hsqldb-1.8.0) Specifies name of database.
+#
+#   .N     - number of database, {0-9}
+#   alias  - name of the database used when connecting to the server
+#
+#            exactly one alias can be empty - in this case it defines
+#            a default database, the one accessible via url:
+#            "jdbc:hsqldb:hsql://localhost/"
+#            (note the new-style trailing slash)
+#
+#            aliases have to be specified when connecting via url, ex:
+#            "jdbc:hsqldb:hsql://localhost/xdb"
+#
+# server.urlid.N=urlid
+#   (required) Specifies section in 'sqltool.rc' describing this database.
+#
+#   .N     - number of database, {0-9}
+#   urlid  - name of the section in 'sqltool.rc'
+#
+#            it is best to keep the same strings in "server.dbname.N" and
+#            "server.urlid.N" for consistency and easier reference
+
+
+# An example of additional database, using a short path
+# - files will be created in /var/lib/hsqldb/xdb/xdb.*
+# - url: "jdbc:hsqldb:hsql://localhost/xdb"
+#server.database.1=file:xdb/xdb
+#server.dbname.1=xdb
+#server.urlid.1=xdb
+
+# An example of additional database, using a full path,
+# a specific dir, and a specific prefix for database files
+# - files will be created in /var/lib/hsqldb/db2/newdb.*
+# - url: "jdbc:hsqldb:hsql://localhost/mydb"
+#server.database.2=file:/var/lib/hsqldb/db2/newdb
+#server.dbname.2=mydb
+#server.urlid.2=mydb

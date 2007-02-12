@@ -1,0 +1,10 @@
+# $Id sqltool.rc,v 1.11 2004/07/18 21:34:35 unsaved Exp $
+
+# This is a sample SqlTool configuration file, a.k.a. rc file.
+
+# This is for a hsqldb Server running with default settings on your local
+# computer (and for which you have not changed the password for "sa").
+urlid localhost
+url jdbc:hsqldb:hsql://localhost
+username sa
+password 
