@@ -20,8 +20,7 @@ DESCRIPTION="An open source, standards-compliant, J2EE-based application server 
 
 # for the tests i just take one thing at a time
 # ATTENTION: TO REMOVE
-#mkdir -p ${WORKDIR}/${MY_P}/thirdparty
-SRC_URI="mirror://sourceforge/jboss/${MY_P}.tar.gz"
+#SRC_URI="mirror://sourceforge/jboss/${MY_P}.tar.gz"
 #	${MY_WSDL4J}
 #	ejb3? ( mirror://sourceforge/jboss/${MY_EJB3}.zip )
 #	"
@@ -48,6 +47,9 @@ XMLSEC_SLOT="1.3"
 CGLIB_SLOT="2.1"
 BSH_SLOT="1.3.0"
 GETOPT_SLOT="1"
+HIBERNATE_SLOT="3.2"
+HIBERNATE_ANNOTATIONS_SLOT="3.2"
+HIBERNATE_ENT_MGR_SLOT="3.2"
 # jdk1.7 is not ready to use !
 DEPEND="<virtual/jdk-1.7
 		app-arch/unzip
@@ -95,7 +97,9 @@ DEPEND="<virtual/jdk-1.7
 		dev-java/gjt-jpl-pattern
 		dev-java/xml-commons
 		=dev-java/java-getopt-${GETOPT_SLOT}*
-		>=dev-java/hibernate-3.2.1
+		=dev-java/hibernate-${HIBERNATE_SLOT}*
+		=dev-java/hibernate-annotations-${HIBERNATE_ANNOTATIONS_SLOT}*
+		=dev-java/hibernate-entitymanager-${HIBERNATE_ENT_MGR_SLOT}*
 		"
 
 RDEPEND="
@@ -378,13 +382,20 @@ thirdparty_deps_get_jars() {
 #	thirdparty_dep_get_jars --jar cglib-nodep.jar --rename cglib.jar \
 #			cglib-${CGLIB_SLOT} cglib
 	thirdparty_dep_get_jars commons-el commons-el
-	thirdparty_dep_get_jars dom4j dom4j
+	thirdparty_dep_get_jars dom4j-1 dom4j
 	# Warning they use a 1.0 version
 	thirdparty_dep_get_jars gjt-jpl-util    gjt-jpl-util
 	thirdparty_dep_get_jars gjt-jpl-pattern gjt-jpl-util
 	thirdparty_dep_get_jars --jar gnu.getopt.jar --rename getopt.jar \
 		java-getopt-${GETOPT_SLOT}  gnu-getopt
-	thirdparty_dep_get_jars  hibernate
+	thirdparty_dep_get_jars hibernate-${HIBERNATE_SLOT} hibernate
+	thirdparty_dep_get_jars hibernate-annotations-${HIBERNATE_ANNOTATIONS_SLOT}\
+		hibernate-annotations
+	thirdparty_dep_get_jars hibernate-entitymanager-${HIBERNATE_ENT_MGR_SLOT}\
+		hibernate-entitymanager
+
+	#writing entity manager ebuild
+
 #	thirdparty_dep_get_jars trove        trove
 #	thirdparty_dep_get_jars servletapi-${SERVLETAPI_SLOT} sun-servlet
 #	thirdparty_dep_get_jars sun-javamail sun-javamail
@@ -392,11 +403,11 @@ thirdparty_deps_get_jars() {
 }
 
 src_unpack() {
-	unpack ${A}
+#	unpack ${A}
 	#FOR TEST !!
-	echo ${S}
-	cd ${S}
-	mv thirdparty thirdparty.old || die "mv to thirdparty.old failed"
+	mkdir -p "${S}/thirdparty"
+	cd ${S} || die "cd failed"
+#	mv thirdparty thirdparty.old || die "mv to thirdparty.old failed"
 	#	thirdparty_deps_build_mergetime_libs
 	thirdparty_deps_get_jars
 }
