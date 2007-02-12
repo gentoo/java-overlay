@@ -8,7 +8,7 @@ DESCRIPTION="Apache Scout is an implementation of the JSR 93 (JAXR)"
 HOMEPAGE="http://ws.apache.org/scout/index.html"
 # at least, it s on my box ! :)
 #SRC_URI="http://distfiles.cryptelium.net/gentoo/${PF}.tar.bz2"
-SRC_URI="http://dev.gentooexperimental.org/~dreeevil/${PF}.tar.bz2"
+SRC_URI="http://dev.gentooexperimental.org/~kiorky/${PF}.tar.bz2"
 
 LICENSE="Apache-2.0"
 SLOT="0"
