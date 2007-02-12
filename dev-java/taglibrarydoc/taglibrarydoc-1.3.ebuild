@@ -21,9 +21,9 @@ RDEPEND=">=virtual/jre-1.4"
 S="${WORKDIR}/${PN}"
 
 src_unpack() {
-	unpack ${A}
-	cd ${S}	
-	epatch ${FILESDIR}/build.xml.patch
+	unpack "${A}"
+	cd "${S}"	
+	epatch "${FILESDIR}/build.xml.patch"
 }
 
 src_compile() {
@@ -31,5 +31,7 @@ src_compile() {
 }
 
 src_install() {
-	java-pkg_dojar dist/${PN}-1_3/*.jar
+	java-pkg_dojar "dist/taglibrarydoc-1_3/tlddoc.jar"
+
+	java-pkg_dolauncher
 }
