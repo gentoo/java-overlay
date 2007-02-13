@@ -1,0 +1,41 @@
+--- wsdl4j-1_5_2_main/src/com/ibm/wsdl/xml/WSDLReaderImpl.java	2005-11-23 15:42:06.000000000 +0100
++++ wsdl4j-1_5_2_jboss/src/com/ibm/wsdl/xml/WSDLReaderImpl.java	2006-03-16 15:13:10.000000000 +0100
+@@ -51,6 +51,7 @@
+   protected String factoryImplName = null;
+   protected WSDLLocator loc = null;
+   protected WSDLFactory factory = null;
++   protected EntityResolver entityResolver = null;
+   
+   //Contains all schemas used by this wsdl, either in-line or nested 
+   //via wsdl imports or schema imports, includes or redefines
+@@ -2013,7 +2014,7 @@
+     }
+   }
+ 
+-  private static Document getDocument(InputSource inputSource,
++   private Document getDocument(InputSource inputSource,
+                                       String desc) throws WSDLException
+   {
+     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+@@ -2024,6 +2025,8 @@
+     try
+     {
+       DocumentBuilder builder = factory.newDocumentBuilder();
++         if(entityResolver!=null)
++            builder.setEntityResolver(entityResolver);
+       Document doc = builder.parse(inputSource);
+ 
+       return doc;
+@@ -2197,4 +2200,12 @@
+ 
+     return readWSDL(base, is);
+   }
++
++   public EntityResolver getEntityResolver() {
++      return entityResolver;
++   }
++
++   public void setEntityResolver(EntityResolver entityResolver) {
++      this.entityResolver = entityResolver;
++   }
+ }

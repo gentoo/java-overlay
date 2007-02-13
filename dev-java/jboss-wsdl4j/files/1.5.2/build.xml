@@ -1,0 +1,195 @@
+<?xml version="1.0"?>
+
+<!-- ===================================================================
+
+   Build file for WSDL4J
+
+Notes:
+   This is a build file for use with the Jakarta Ant build tool.
+
+Prerequisites:
+
+   jakarta-ant from http://jakarta.apache.org
+   A JAXP-compliant DOM parser.
+     - Xerces, from http://xml.apache.org, works fine.
+
+Optional additions:
+
+
+Build Instructions:
+   To build, run
+
+     java org.apache.tools.ant.Main <target>
+
+   in the directory where this file is located with the target you want.
+
+Main targets:
+
+ - compile  -> creates the "wsdl4j.jar" package in "./build/lib"
+ - javadocs -> creates the javadocs in "./build/javadocs"
+ - dist     -> creates the complete binary distribution
+ - srcdist  -> creates the complete src distribution
+ - clean    -> removes all the generated files and directories
+
+Author:
+  Matthew J. Duftler <duftler@us.ibm.com>
+
+==================================================================== -->
+
+<project default="compile" basedir=".">
+
+  <target name="init">
+    <property name="name" value="wsdl4j"/>
+    <property name="Name" value="WSDL4J"/>
+    <property name="wsdl4j.version" value="1.5.2"/>
+    <property name="wsdl4j.version.underscore" value="1_5_2"/>
+    <property name="jwsdl.version" value="1.1"/>
+    <property name="jwsdl.version.underscore" value="1_1"/>
+    <property name="qname.version" value="1.0"/>
+    <property name="year" value="2003,2005"/>
+
+    <property name="build.compiler" value="classic"/>
+    <property name="debug" value="off"/>
+
+    <property name="src.dir" value="./src"/>
+    <property name="docs.dir" value="./doc"/>
+
+    <property name="packages"
+              value="javax.*,
+                     com.ibm.wsdl.*"/>
+
+    <property name="build.file" value="build.xml"/>
+
+    <property name="build.dir" value="./build"/>
+    <property name="build.dest" value="./build/classes"/>
+    <property name="build.lib" value="./build/lib"/>
+    <property name="build.javadocs" value="./build/javadocs"/>
+
+    <property name="dist.dir.root" value="./dist"/>
+    <property name="dist.dir.name"
+              value="${name}-${wsdl4j.version.underscore}"/>
+    <property name="dist.dir"
+              value="${dist.dir.root}/${dist.dir.name}"/>
+    <property name="dist.bin.file"
+              value="${dist.dir.root}/${name}-bin-${wsdl4j.version}"/>
+    <property name="dist.src.file"
+              value="${dist.dir.root}/${name}-src-${wsdl4j.version}"/>
+
+    <property name="change.log.start.date" value="21 March 2003"/>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Prepares the build directory                                        -->
+  <!-- =================================================================== -->
+  <target name="prepare" depends="init">
+    <mkdir dir="${build.dir}"/>
+
+    <available property="junit.present" classname="junit.framework.TestCase"/>
+
+
+    <antcall target="checkDependencies"/>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Warn the user about missing resources                               -->
+  <!-- =================================================================== -->
+  <target name="checkJUnit" unless="junit.present">
+    <echo message="Warning: JUnit dependencies were not resolved."/>
+  </target>
+  <target name="checkDependencies">
+    <antcall target="checkJUnit"/>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Source files to be compiled                                         -->
+  <!-- =================================================================== -->
+  <patternset id="javac.source.files">
+    <include name="javax/wsdl/**/*.java"/>
+    <include name="javax/xml/**/*.java"/>
+    <include name="com/ibm/wsdl/**/*.java"/>
+  </patternset>
+
+  <!-- =================================================================== -->
+  <!-- Compiles the source directory                                       -->
+  <!-- =================================================================== -->
+  <target name="compile" depends="prepare">
+    <mkdir dir="${build.dest}"/>
+    <javac srcdir="${src.dir}" destdir="${build.dest}" debug="${debug}"
+    	deprecation="true"    
+    >
+      <patternset refid="javac.source.files"/>
+    </javac>
+
+    <mkdir dir="${build.lib}"/>
+    <jar jarfile="${build.lib}/${name}.jar" basedir="${build.dest}">
+      <exclude name="javax/xml/**"/>
+
+      <manifest>
+        <attribute name="Specification-Title" value="JWSDL"/>
+        <attribute name="Specification-Version" value="${jwsdl.version}"/>
+        <attribute name="Specification-Vendor"
+                   value="IBM (Java Community Process)"/>
+        <attribute name="Implementation-Title" value="WSDL4J"/>
+        <attribute name="Implementation-Version" value="${wsdl4j.version}"/>
+        <attribute name="Implementation-Vendor" value="IBM"/>
+      </manifest>
+    </jar>
+
+    <jar jarfile="${build.lib}/qname.jar" basedir="${build.dest}">
+      <include name="javax/xml/**/*.class"/>
+
+      <manifest>
+        <attribute name="Specification-Title" value="QName"/>
+        <attribute name="Specification-Version" value="${qname.version}"/>
+        <attribute name="Implementation-Title" value="WSDL4J"/>
+        <attribute name="Implementation-Version" value="${wsdl4j.version}"/>
+        <attribute name="Implementation-Vendor" value="IBM"/>
+      </manifest>
+    </jar>
+
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Creates the binary distribution                                     -->
+  <!-- =================================================================== -->
+  <target name="dist" depends="compile">
+    <delete dir="${dist.dir}"/>
+
+    <copy todir="${dist.dir}/lib">
+      <fileset dir="${build.lib}"/>
+    </copy>
+  </target>
+
+
+  <!-- =================================================================== -->
+  <!-- Cleans everything                                                   -->
+  <!-- =================================================================== -->
+  <target name="clean" depends="init">
+    <delete dir="${build.dir}"/>
+    <delete dir="${dist.dir.root}"/>
+  </target>
+
+  <!-- =================================================================== -->
+  <!-- Run's WSDL4J through the JWSDL TCK                                  -->
+  <!-- =================================================================== -->
+  <target name="test" depends="compile,checkJUnit,checkDependencies" if="junit.present">
+  	<mkdir dir="./test" />
+    <junit printsummary="on">
+      <sysproperty key="jwsdltck_home" value="./test"/>
+      <sysproperty key="javax.wsdl.factory.WSDLFactoryCandidate"
+                   value="com.ibm.wsdl.factory.WSDLFactoryImpl"/>
+
+      <classpath>
+        <pathelement location="${build.lib}/${name}.jar"/>
+        <pathelement location="${build.lib}/qname.jar"/>
+        <pathelement location="test/lib/jwsdltck.jar"/>
+      </classpath>
+
+      <formatter type="plain"/>
+
+      <test name="com.ibm.wsdl.tck.JWSDLTestSuite"
+            todir="./test"/>
+    </junit>
+  </target>
+
+</project>
