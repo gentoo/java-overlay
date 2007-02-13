@@ -29,7 +29,7 @@ RDEPEND=">=virtual/jre-1.4
 	dev-java/concurrent-util
 	=dev-java/avalon-logkit-2.0*
 	=dev-java/java-service-wrapper-3.1*
-	=dev-java/picocontainer-1.1*
+	>=dev-java/picocontainer-1.2
 	dev-java/log4j
 	dev-java/backport-util-concurrent"
 S="${WORKDIR}/${MY_P}"
