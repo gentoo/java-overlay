@@ -1,6 +1,10 @@
 # ChangeLog for dev-java/poi
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  13 Feb 2007; Vlastimil Babka <caster@gentoo.org> -poi-2.5.1-r1.ebuild,
+  -files/poi-2.5.1-build.xml.patch, -files/poi-2.5-jikes-fix.patch:
+  Remove 2.5.1-r1 which was added to main tree and improved a while ago.
 
   25 Dec 2006; Miroslav Šulc <miroslav.sulc@startnet.cz>
   +poi-3.0_alpha3.ebuild, -poi-3.0_alpha20061031.ebuild,
