@@ -2,6 +2,10 @@
 # Copyright 2000-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/picocontainer/ChangeLog,v 1.19 2006/08/01 12:22:41 nichoj Exp $
 
+  13 Feb 2007; kiorky <kiorky@cryptelium.net> +picocontainer-1.2.ebuild:
+  Bumped to version 1.2
+      see #166693 and #128398
+
   13 Feb 2007; kiorky <kiorky@cryptelium.net> ChangeLog:
   ChangeLog files Manifest metadata.xml picocontainer-1.0_beta4.ebuild
   picocontainer-1.1.ebuild picocontainer-1.1-r1.ebuild
