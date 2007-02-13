@@ -1,0 +1,14 @@
+# ChangeLog for dev-java/scout
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  13 Feb 2007; kiorky <kiorky@cryptelium.net> +jacorb-2.2.1.ebuild,
+  +files/jacorb-2.2.1-dist.patch, +jacorb-2.2.3.ebuild,
+  +files/jacorb-2.2.3-dist.patch, +jacorb-2.2.4.ebuild,
+  +files/jacorb-2.2.4-dist.patch:
+  Migrating to -2 eclasses for older than dev-java/jacorb-2.2.4
+  Add some die messages
+  Correct Typos / Dates
+  Bumping to version 2.2.4
+  see #143209
+
