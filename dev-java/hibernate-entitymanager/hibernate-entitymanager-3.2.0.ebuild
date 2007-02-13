@@ -25,6 +25,7 @@ RDEPEND=">=virtual/jre-1.5
 	dev-java/commons-logging
 	=dev-java/dom4j-1*
 	=dev-java/ehcache-1.2*
+	dev-java/jta
 	=dev-java/hibernate-${SLOT}*
 	=dev-java/javassist-3.3
 	=dev-java/jaxen-1.1*
@@ -36,6 +37,7 @@ RDEPEND=">=virtual/jre-1.5
 	dev-java/proxool
 	=dev-java/swarmcache-1*
 	=dev-java/xerces-2*
+	=dev-java/hibernate-annotations-${SLOT}*
 	"
 
 S="${WORKDIR}/${MY_P}"
@@ -47,7 +49,7 @@ src_unpack() {
 	cd ${HIBERNATE_S}/lib || die "cd failed"
 	# start: pulled from hibernate ebuild
 	local JAR_PACKAGES="c3p0 commons-collections javassist-3.3
-		commons-logging dom4j-1 jaxen-1.1 jdbc2-stdext
+		commons-logging dom4j-1 jaxen-1.1 jdbc2-stdext jta
 		log4j oscache proxool swarmcache-1.0 xerces-2 jgroups"
 	for PACKAGE in ${JAR_PACKAGES}; do
 		java-pkg_jar-from ${PACKAGE}
@@ -60,6 +62,7 @@ src_unpack() {
 	java-pkg_jar-from asm-1.5 asm.jar
 	java-pkg_jar-from asm-1.5 asm-attrs.jar
 	java-pkg_jar-from hibernate-${SLOT}
+	java-pkg_jar-from hibernate-annotations-${SLOT}
 }
 
 src_compile() {
@@ -68,6 +71,8 @@ src_compile() {
 
 src_install() {
 	java-pkg_dojar ${PN}.jar
+	# FIXME: dont use this bundle jar
+	java-pkg_dojar ${S}/lib/ejb3-persistence.jar
 
 	use doc && java-pkg_dohtml -r doc/api
 	use source && java-pkg_dosrc src/*
