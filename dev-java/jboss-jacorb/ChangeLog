@@ -1,0 +1,10 @@
+# ChangeLog for dev-java/scout
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  13 Feb 2007; kiorky <kiorky@cryptelium.net> +jboss-jacorb-2.2.4.ebuild,
+  +files/jboss-jacorb-2.2.4-dist.patch, +metadata.xml:
+  Added as it is a jboss dependency
+  Not the same than dist jacorb (some patches from JBoss)
+  see #166655
+
