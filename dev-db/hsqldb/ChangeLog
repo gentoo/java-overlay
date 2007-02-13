@@ -2,6 +2,13 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-db/hsqldb/ChangeLog,v 1.22 2007/01/09 15:34:06 caster Exp $
 
+  13 Feb 2007; Vlastimil Babka <caster@gentoo.org>
+  -hsqldb-1.7.3.1-r1.ebuild, -hsqldb-1.7.3.1-r2.ebuild,
+  -hsqldb-1.7.3.1-r3.ebuild, -files/init.d-hsqldb-typos.patch,
+  -files/server.properties, -files/server.properties-r1, -files/sqltool.rc,
+  -files/sqltool.rc-r1:
+  Remove 1.7.3.1 stuff that was just copied from main portage tree.
+
   12 Feb 2007; kiorky <kiorky@cryptelium.net> +files/sqltool.rc-1.8,
   +hsqldb-1.8.0.4.ebuild, +files/35hsqldb, +files/server.properties-1.8,
   +files/bundle-all-tools.patch, +files/hsqldb,
