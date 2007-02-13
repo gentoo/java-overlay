@@ -98,7 +98,7 @@ src_unpack() {
 }
 src_compile() {
 	export ANT_OPTS="-Xmx1G"
-	eant jar -Ddist.dir=dist $(use_doc)
+	eant jar -Dnosplash=true -Ddist.dir=dist $(use_doc)
 }
 
 src_install() {
