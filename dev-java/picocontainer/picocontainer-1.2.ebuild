@@ -44,7 +44,7 @@ src_install() {
 	local dist_dir=${S}/dist
 	mkdir -p ${dist_dir} || die "mkdir failed"
 
-	java-pkg_dojar ${dist_dir}/java/${PN}.jar
+	java-pkg_dojar ${dist_dir}/${PN}.jar
 
 	use source && java-pkg_dosrc src/java/org
 }
