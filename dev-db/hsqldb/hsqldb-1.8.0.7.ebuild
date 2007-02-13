@@ -15,13 +15,13 @@ SRC_URI="mirror://sourceforge/${PN}/${MY_P}.zip"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="sqltools"
+IUSE=""
 
 # doesn't like Java 1.6 due to JDBC changes
 CDEPEND="=dev-java/servletapi-2.3*"
 RDEPEND=">=virtual/jre-1.4
 	${CDEPEND}"
-DEPEND="|| ( =virtual/jdk-1.5* =virtual/jdk-1.4* )
+DEPEND="|| ( =virtual/jdk-1.4* =virtual/jdk-1.5* )
 	app-arch/unzip
 	${CDEPEND}"
 
@@ -45,15 +45,12 @@ src_unpack() {
 	java-pkg_jar-from --into lib servletapi-2.3
 
 	sed -i -r \
-		-e "s/etc\/sysconfig/etc\/conf.d/g" \
+		-e "s#etc/sysconfig#etc/conf.d#g" \
 		bin/hsqldb
 
 	eant -q -f "${EANT_BUILD_XML}" cleanall > /dev/null
 
 	epatch ${FILESDIR}/resolve-config-softlinks.patch
-	if use sqltools; then
-		epatch ${FILESDIR}/bundle-all-tools.patch
-	fi
 
 	mkdir conf
 	sed -e "s/^HSQLDB_JAR_PATH=.*$/HSQLDB_JAR_PATH=${HSQLDB_JAR//\//\\/}/g" \
@@ -67,7 +64,7 @@ src_unpack() {
 
 # EANT_BUILD_XML used also in src_unpack
 EANT_BUILD_XML="build/build.xml"
-EANT_BUILD_TARGET="jar jarclient jarsqltool"
+EANT_BUILD_TARGET="jar jarclient jarsqltool jarutil"
 EANT_DOC_TARGET="javadocdev"
 
 src_install() {

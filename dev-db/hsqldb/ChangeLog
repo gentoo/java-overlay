@@ -2,6 +2,10 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-db/hsqldb/ChangeLog,v 1.22 2007/01/09 15:34:06 caster Exp $
 
+  13 Feb 2007; Vlastimil Babka <caster@gentoo.org> hsqldb-1.8.0.7.ebuild:
+  Drop sqltools USE flag, install hsqldbutil.jar which should have the needed
+  classes.
+
   13 Feb 2007; Vlastimil Babka <caster@gentoo.org> +hsqldb-1.8.0.7.ebuild:
   Version bump, uses 1.4 or 1.5 JDK, some ebuild cleanups.
 
