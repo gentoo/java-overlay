@@ -18,6 +18,14 @@ DEPEND=">=virtual/jdk-1.4
 RDEPEND=">=virtual/jre-1.4
 		 dev-java/ant-core"
 
+src_unpack() {
+	unpack "${A}"
+	cd "${S}"
+	mkdir lib
+	cd lib
+	java-pkg_jarfrom ant-core ant.jar
+}
+
 src_install() {
 	java-pkg_newjar "bin/${P}.jar"
 	dodoc README.TXT
