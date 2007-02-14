@@ -6,7 +6,7 @@ inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="Quartz Scheduler from OpenSymphony"
 HOMEPAGE="http://www.opensymphony.com/quartz/"
-SRC_URI="https://${PN}.dev.java.net/files/documents/1267/22131/${P}.zip"
+SRC_URI="https://quartz.dev.java.net/files/documents/1267/30161/${P}.zip"
 
 LICENSE="Apache-2.0"
 SLOT="1.5"
@@ -28,7 +28,8 @@ DEPEND=">=virtual/jdk-1.4
 		dev-java/ant
 		app-arch/unzip"
 
-S="${WORKDIR}"
+S="${WORKDIR}/${P}"
+
 
 src_unpack() {
 	unpack ${A}
@@ -52,8 +53,7 @@ src_compile() {
 		antflags="${antflags} -Dlib.jboss.jar=/var/lib/jboss/default/lib/jboss.jar"
 	fi
 	use struts && CLASSPATH="$CLASSPATH:$(java-pkg_getjars struts-1.1)"
-
-	eant compile jar
+	eant ${antflags} compile jar
 }
 
 
