@@ -50,6 +50,10 @@ GETOPT_SLOT="1"
 HIBERNATE_SLOT="3.2"
 HIBERNATE_ANNOTATIONS_SLOT="3.2"
 HIBERNATE_ENT_MGR_SLOT="3.2"
+JACORB_SLOT="2.2"
+JAVASSIST_SLOT="3.3"
+JAXEN_SLOT="1.1"
+JOESNMP_SLOT="0.3"
 # jdk1.7 is not ready to use !
 DEPEND="<virtual/jdk-1.7
 		app-arch/unzip
@@ -100,6 +104,18 @@ DEPEND="<virtual/jdk-1.7
 		=dev-java/hibernate-${HIBERNATE_SLOT}*
 		=dev-java/hibernate-annotations-${HIBERNATE_ANNOTATIONS_SLOT}*
 		=dev-java/hibernate-entitymanager-${HIBERNATE_ENT_MGR_SLOT}*
+		>=dev-java/jboss-jacorb-${JACORB_SLOT}.4
+		>=dev-java/jacorb-${JACORB_SLOT}.4
+		>=dev-java/jboss-wsdl4j-1.5.2
+		=dev-java/javassist-${JAVASSIST_SLOT}*
+		=dev-java/jaxen-${JAXEN_SLOT}*
+		>=dev-java/jfreechart-0.9.21
+		>=dev-java/jcommon-0.9.7-r1
+		>=dev-java/jgroups-2.2.7-r1
+		=dev-java/joesnmp-${JOESNMP_SLOT}*
+		>=dev-java/juddi-0.9_rc4
+		=dev-java/junit-3.8*
+		>=dev-java/quartz-1.5.2
 		"
 
 RDEPEND="
@@ -188,45 +204,6 @@ thirdparty_list_dep_jars() {
 }
 
 # ------------------------------------------------------------------------------
-# @function thirdparty_build_wsdl4j
-#
-# build a thirdparty dep
-#
-# ------------------------------------------------------------------------------
-thirdparty_build_commons_logging() {
-	einfo "thirdparty_build_commons_logging:"
-	cd ${WORKDIR}/${MY_WSDL4J_PN}-${MY_WSDL4J_V//./_}\
-		||die "cd failed "
-	epatch ${FILESDIR}/${PV}/thirdparties/wsdl4j/jboss_wsdl4j.patch
-	cp ${FILESDIR}/${PV}/thirdparties/wsdl4j/build.xml .
-	echo $GENTOO_VM
-	PORTAGE_QUIET=y eant
-	for jar in build/lib/*.jar;do
-		thirdparty_do_jar ibm-wsdl4j $jar
-	done
-#	thirdparty_list_dep_jars ibm-wsdl4j
-}
-
-# ------------------------------------------------------------------------------
-# @function thirdparty_build_wsdl4j
-#
-# build a thirdparty dep
-#
-# ------------------------------------------------------------------------------
-thirdparty_build_wsdl4j() {
-	einfo	"thirdparty_build_wsdl4j:"
-	cd ${WORKDIR}/${MY_WSDL4J_PN}-${MY_WSDL4J_V//./_}\
-		||die "thirdparty_build_wsdl4j:	_ cd "
-	epatch ${FILESDIR}/${PV}/thirdparties/wsdl4j/jboss_wsdl4j.patch
-	cp ${FILESDIR}/${PV}/thirdparties/wsdl4j/build.xml .
-	PORTAGE_QUIET=y eant || die "thirdparty_build_wsdl4j: failed"
-	for jar in build/lib/*.jar;do
-		thirdparty_do_jar ibm-wsdl4j $jar
-	done
-#	thirdparty_list_dep_jars ibm-wsdl4j
-}
-
-# ------------------------------------------------------------------------------
 # @function thirdparty_deps_bukild_mergetime_libs
 #
 # regroup jars to be built at merge time
@@ -234,10 +211,7 @@ thirdparty_build_wsdl4j() {
 # ------------------------------------------------------------------------------
 thirdparty_deps_build_mergetime_libs() {
 	einfo "Building thirdparties jboss specific dependencies"
-#	thirdparty_build_wsdl4j
 }
-
-
 
 # ------------------------------------------------------------------------------
 # @function thirdparty_dep_get_jars
@@ -343,7 +317,7 @@ thirdparty_deps_get_jars() {
 #	thirdparty_dep_get_jars --jar commons-lang.jar --rename commons-lang-2.1.jar commons-lang apache-lang
 #	thirdparty_dep_get_jars --jar snmptrapappender.jar --rename snmpTrapAppender.jar  snmptrapappender apache-log4j
 #	thirdparty_dep_get_jars log4j apache-log4j
-#	# Waring see http://fisheye.jboss.org/browse/JBoss/apache/commons-logging
+#	# Warning see http://fisheye.jboss.org/browse/JBoss/apache/commons-logging
 #	thirdparty_use_bundled_jars apache-logging
 	# Warning they use a 1.1patch version, never heard or see anything about it ...
 #	thirdparty_use_bundled_jars apache-modeler
@@ -374,28 +348,49 @@ thirdparty_deps_get_jars() {
 	# http://repository.jboss.com/apache-xalan/j_2.7.0/readme.txt
 #	thirdparty_dep_get_jars xalan apache-xalan
 #	thirdparty_dep_get_jars xerces-${XERCES_SLOT} apache-xerces
-	thirdparty_dep_get_jars xml-commons apache-xerces
+#	thirdparty_dep_get_jars xml-commons apache-xerces
 #	thirdparty_dep_get_jars xml-security-${XMLSEC_SLOT} apache-xmlsec
 	# Warning Need to test with upper to 1.3.0 versions as it dont install in slot
 #	thirdparty_dep_get_jars --jar bsh.jar --rename bsh-${BSH_SLOT}.jar bsh beanshell
 	# Warning specifying nodep in their metadata
 #	thirdparty_dep_get_jars --jar cglib-nodep.jar --rename cglib.jar \
 #			cglib-${CGLIB_SLOT} cglib
-	thirdparty_dep_get_jars commons-el commons-el
-	thirdparty_dep_get_jars dom4j-1 dom4j
+#	thirdparty_dep_get_jars commons-el commons-el
+#	thirdparty_dep_get_jars dom4j-1 dom4j
 	# Warning they use a 1.0 version
-	thirdparty_dep_get_jars gjt-jpl-util    gjt-jpl-util
-	thirdparty_dep_get_jars gjt-jpl-pattern gjt-jpl-util
-	thirdparty_dep_get_jars --jar gnu.getopt.jar --rename getopt.jar \
-		java-getopt-${GETOPT_SLOT}  gnu-getopt
-	thirdparty_dep_get_jars hibernate-${HIBERNATE_SLOT} hibernate
-	thirdparty_dep_get_jars hibernate-annotations-${HIBERNATE_ANNOTATIONS_SLOT}\
-		hibernate-annotations
-	thirdparty_dep_get_jars hibernate-entitymanager-${HIBERNATE_ENT_MGR_SLOT}\
-		hibernate-entitymanager
-
-	#writing entity manager ebuild
-
+#	thirdparty_dep_get_jars gjt-jpl-util    gjt-jpl-util
+#	thirdparty_dep_get_jars gjt-jpl-pattern gjt-jpl-util
+#	thirdparty_dep_get_jars --jar gnu.getopt.jar --rename getopt.jar \
+#		java-getopt-${GETOPT_SLOT}  gnu-getopt
+#	thirdparty_dep_get_jars hibernate-${HIBERNATE_SLOT} hibernate
+	# Warning take the bin ones while we re not modularized (circular
+	# dependencies )
+#	thirdparty_dep_get_jars hibernate-annotations-bin-${HIBERNATE_ANNOTATIONS_SLOT}\
+#		hibernate-annotations
+#	thirdparty_dep_get_jars hibernate-entitymanager-bin-${HIBERNATE_ENT_MGR_SLOT}\
+#		hibernate-entitymanager
+	# jboss use the modified and non patched jacorb !
+	# *_g.jar are the originals
+#	thirdparty_dep_get_jars jacorb-${JACORB_SLOT} jacorb
+#	thirdparty_dep_get_jars jacorb-${JACORB_SLOT} jacorb
+#	for i in ${DEST}/jacorb/lib/*;do
+#		mv $i $(basename $i .jar)_g.jar;
+#	done
+#	thirdparty_dep_get_jars jboss-jacorb-${JACORB_SLOT} jacorb
+#	thirdparty_dep_get_jars jboss-jacorb-${JACORB_SLOT} jacorb
+	thirdparty_dep_get_jars jboss-wsdl4j ibm-wsdl4j
+	thirdparty_dep_get_jars javassist-${JAVASSIST_SLOT} javassist
+	thirdparty_dep_get_jars jaxen-${JAXEN_SLOT} jaxen
+	thirdparty_dep_get_jars jfreechart jfreechart
+	thirdparty_dep_get_jars jcommon jfreechart
+	# Warning they use SP1 !!!
+	thirdparty_dep_get_jars jgroups jgroups
+	thirdparty_dep_get_jars joesnmp-${JOESNMP_SLOT} joesnmp
+	thirdparty_dep_get_jars juddi juddi
+	thirdparty_dep_get_jars junit junit
+#	# Warning I dont find the source for 1.4
+	thirdparty_use_bundled_jars junitejb
+	thirdparty_dep_get_jars quartz-1.5 quartz
 #	thirdparty_dep_get_jars trove        trove
 #	thirdparty_dep_get_jars servletapi-${SERVLETAPI_SLOT} sun-servlet
 #	thirdparty_dep_get_jars sun-javamail sun-javamail
