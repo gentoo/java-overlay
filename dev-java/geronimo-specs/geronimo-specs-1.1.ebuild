@@ -78,7 +78,8 @@ src_compile(){
 src_install() {
 	local dist="${WORKDIR}/dist"
 	cd "${dist}" || die "cd failed"
-	java-pkg_newjar *.jar
+	for i in *jar;do
+		java-pkg_newjar "$i" "$i";done
 	for i in ${SPECS}; do
 		if use $i; then
 			use source && java-pkg_dosrc "${S}/geronimo-spec-$i-${PV}/src/main/java"
