@@ -2,12 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg-2 java-ant-2 versionator java-utils-2
+inherit java-pkg-2 java-ant-2 java-utils-2
 
 DESCRIPTION="Apache Scout is an implementation of the JSR 93 (JAXR)"
 HOMEPAGE="http://ws.apache.org/scout/index.html"
-# at least, it s on my box ! :)
-#SRC_URI="http://distfiles.cryptelium.net/gentoo/${PF}.tar.bz2"
 SRC_URI="http://dev.gentooexperimental.org/~kiorky/${PF}.tar.bz2"
 
 LICENSE="Apache-2.0"
@@ -26,14 +24,16 @@ DEPEND=">=virtual/jdk-1.4
 		>=dev-java/commons-discovery-0.2-r2
 		>=dev-java/sun-javamail-1.4
 "
+
 RDEPEND="${DEPEND} >=virtual/jre-1.4"
+
 S=${WORKDIR}/${PN}
 
 EANT_BUILD_TARGET="dist"
 
 src_unpack(){
 	unpack ${A}
-	cd "${S}"
+	cd "${S}" || die "cd failed"
 	# getting  Dependencies
 	java-pkg_jar-from jdom-${JDOM_SLOT}
 	java-pkg_jar-from juddi
@@ -43,19 +43,20 @@ src_unpack(){
 	java-pkg_jar-from axis-1
 	java-pkg_jar-from commons-discovery
 	java-pkg_jar-from sun-javamail
-	cp -f ${FILESDIR}/${PV}/build.xml .||die "src_compile: cannot import ant build file"
+	cp -f "${FILESDIR}/${PV}/build.xml" . \
+		|| die "src_compile: cannot import ant build file"
 
 }
 
 
 src_install() {
-	java-pkg_newjar dist/lib/${PN}.jar
+	java-pkg_newjar "dist/lib/${PN}.jar"
 	use doc && java-pkg_dojavadoc dist/docs
 	use source && java-pkg_dosrc modules/jaxr-api/src/java/
 	use source && java-pkg_dosrc    modules/scout/src/java/
 	if use examples; then
 			dodir /usr/share/doc/${PF}/examples
-			cp -r src/samples/* ${D}/usr/share/doc/${PF}/examples
+			cp -r src/samples/* "${D}/usr/share/doc/${PF}/examples"
 	fi
 }
 
