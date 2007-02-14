@@ -14,3 +14,22 @@ dev-db/hsqldb:sqltools - Add data managment tools
 dev-java/quartz:servlet-2.3 - Use the 2.3 servlet specification
 dev-java/quartz:servlet-2.4 - Use the 2.4 servlet specification
 
+dev-java/geronimo-specs:activation - Enable to install the 'activation' geronimo specification
+dev-java/geronimo-specs:commonj - Enable to install the 'commonj' geronimo specification
+dev-java/geronimo-specs:corba - Enable to install the 'corba' geronimo specification
+dev-java/geronimo-specs:corba-2.3 - Enable to install the 'corba-2.3' geronimo specification
+dev-java/geronimo-specs:corba-3.0 - Enable to install the 'corba-3.0' geronimo specification
+dev-java/geronimo-specs:ejb - Enable to install the 'ejb' geronimo specification
+dev-java/geronimo-specs:j2ee-connector - Enable to install the 'j2ee-connector' geronimo specification
+dev-java/geronimo-specs:j2ee-deployment - Enable to install the 'j2ee-deployment' geronimo specification
+dev-java/geronimo-specs:j2ee-jacc - Enable to install the 'j2ee-jacc' geronimo specification
+dev-java/geronimo-specs:j2ee-management - Enable to install the 'j2ee-management' geronimo specification
+dev-java/geronimo-specs:javamail - Enable to install the 'javamail' geronimo specification
+dev-java/geronimo-specs:jaxr - Enable to install the 'jaxr' geronimo specification
+dev-java/geronimo-specs:jaxrpc - Enable to install the 'jaxrpc' geronimo specification
+dev-java/geronimo-specs:jms - Enable to install the 'jms' geronimo specification
+dev-java/geronimo-specs:jsp - Enable to install the 'jsp' geronimo specification
+dev-java/geronimo-specs:jta - Enable to install the 'jta' geronimo specification
+dev-java/geronimo-specs:qname - Enable to install the 'qname' geronimo specification
+dev-java/geronimo-specs:saaj - Enable to install the 'saaj' geronimo specification
+dev-java/geronimo-specs:servlet - Enable to install the 'servlet' geronimo specification
