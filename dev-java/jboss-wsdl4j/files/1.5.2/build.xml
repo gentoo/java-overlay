@@ -110,6 +110,22 @@ Author:
   </patternset>
 
   <!-- =================================================================== -->
+  <!-- Creates the API documentation                                       -->
+  <!-- =================================================================== -->
+  <target name="javadocs" depends="prepare">
+    <mkdir dir="${build.javadocs}"/>
+    <javadoc packagenames="${packages}"
+             sourcepath="${src.dir}"
+             destdir="${build.javadocs}"
+             author="true"
+             version="true"
+             use="true"
+             windowtitle="${Name} API"
+             doctitle="${Name}"
+             bottom="Copyright &#169; ${year} IBM. All Rights Reserved."
+    />
+  </target>
+  <!-- =================================================================== -->
   <!-- Compiles the source directory                                       -->
   <!-- =================================================================== -->
   <target name="compile" depends="prepare">

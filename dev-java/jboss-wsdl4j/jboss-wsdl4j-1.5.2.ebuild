@@ -21,26 +21,22 @@ DEPEND=">=virtual/jdk-1.4
 	>=dev-java/ant-core-1.4
 	source? ( app-arch/zip )"
 RDEPEND=">=virtual/jre-1.4"
+
 S=${WORKDIR}/${MY_PN}-${MY_PV//./_}
+
+EANT_DOC_TARGET="javadocs"
+EANT_BUILD_TARGET="compile"
 
 src_unpack(){
 	unpack ${A}
-	cd ${S} || die "cd failed"
-	epatch ${FILESDIR}/${PV}/jboss_wsdl4j.patch
-	cp ${FILESDIR}/${PV}/build.xml . || die "cp failed"
-}
-
-
-src_compile() {
-	eant compile $(use_doc javadocs)
+	cd "${S}" || die "cd failed"
+	epatch "${FILESDIR}/${PV}/jboss_wsdl4j.patch"
+	cp "${FILESDIR}/${PV}/build.xml" . || die "cp failed"
 }
 
 src_install() {
 	java-pkg_dojar build/lib/*.jar
-
 	dohtml doc/*.html
-	dodoc doc/spec/*
-
 	use doc && java-pkg_dohtml -r build/javadocs/
 	use source && java-pkg_dosrc src/*
 }
