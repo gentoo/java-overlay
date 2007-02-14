@@ -11,4 +11,6 @@ www-servers/jboss:srvdir - Add SRVDIR support
 www-servers/jboss-bin:ejb3 - Add EJB 3 support
 www-servers/jboss-bin:srvdir - Add SRVDIR support
 dev-db/hsqldb:sqltools - Add data managment tools
+dev-java/quartz:servlet-2.3 - Use the 2.3 servlet specification
+dev-java/quartz:servlet-2.4 - Use the 2.4 servlet specification
 
