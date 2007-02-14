@@ -69,6 +69,9 @@ src_compile() {
 	local antflags="realclean all core_jacorb_jar jacorb_services_jar omg_services_jar \
 	security_jar"
 
+	# breaks with them, see #93396 comment #9
+	java-pkg_filter-compiler ecj-3.1 ecj-3.2
+
 	# Need to up maximum memory to avoid OutOfMemoryErrors
 	ANT_OPTS="${ANT_OPTS} -Xmx512m" \
 		eant ${antflags} $(use_doc doc)
