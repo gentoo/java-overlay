@@ -2,6 +2,10 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  14 Feb 2007; Vlastimil Babka <caster@gentoo.org> jacorb-2.2.4.ebuild,
+  files/jacorb-2.2.4-dist.patch:
+  Fix deps, small style tweaks.
+
   14 Feb 2007; Vlastimil Babka <caster@gentoo.org> -jacorb-2.2.1.ebuild,
   -files/jacorb-2.2.1-dist.patch, -jacorb-2.2.3.ebuild,
   -files/jacorb-2.2.3-dist.patch:

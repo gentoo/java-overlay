@@ -1,4 +1,4 @@
---- /usr/local/tmp/portage/dev-java/jacorb-2.2.4/work/JacORB-2.2.4/build.xml	2006-05-12 11:13:36.000000000 +0200
+--- build.xml	2006-05-12 11:13:36.000000000 +0200
 +++ build.xml	2007-02-13 13:26:07.928208588 +0100
 @@ -32,7 +32,7 @@
  
@@ -84,8 +84,8 @@
     </target>
  
  
---- /usr/local/tmp/portage/dev-java/jacorb-2.2.4/work/JacORB-2.2.4/etc/common.xml	2005-12-01 23:37:42.000000000 +0100
-+++ common.xml	2007-02-13 13:20:19.984340894 +0100
+--- etc/common.xml	2005-12-01 23:37:42.000000000 +0100
++++ etc/common.xml	2007-02-13 13:20:19.984340894 +0100
 @@ -7,6 +7,7 @@
  <target name="base-init" unless="BASE-INIT">
      <property name="dirs.base" value="${basedir}"/>
