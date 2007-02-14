@@ -1,6 +1,6 @@
 # Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/picocontainer/picocontainer-1.1-r1.ebuild,v 1.1 2006/08/01 12:22:41 nichoj Exp $
+# $Header: $ 
 
 inherit java-pkg-2
 
@@ -18,33 +18,15 @@ DEPEND=">=virtual/jdk-1.4
 	"
 S=${WORKDIR}/${P}/container
 
-src_unpack() {
-	unpack ${A}
-	cd ${S}
-}
-
 src_compile() {
-	local build_dir=${S}/build
-	local dist_dir=${S}/dist
-
+	local build_dir=${S}/build dist_dir=${S}/dist
 	mkdir -p ${dist_dir} ${build_dir}/java || die "mkdir failed"
-
 	ejavac -classpath ${classpath} -nowarn \
-		-d ${build_dir}/java $(find ${S}/src/java -name "*.java")\
-		|| die "compile	${PN} failed"
+		-d ${build_dir}/java $(find ${S}/src/java -name "*.java")
 	jar -cf ${dist_dir}/${PN}.jar -C ${build_dir}/java . || die "failed to create jar"
 }
 
-#src_test() {
-#	local antflags="-Dfinal.name=${PN} -Dnoget=true test"
-#	eant ${antflags}
-#}
-
 src_install() {
-	local dist_dir=${S}/dist
-	mkdir -p ${dist_dir} || die "mkdir failed"
-
-	java-pkg_dojar ${dist_dir}/${PN}.jar
-
+	java-pkg_dojar "${S}/dist/${PN}.jar"
 	use source && java-pkg_dosrc src/java/org
 }
