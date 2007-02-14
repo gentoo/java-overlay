@@ -1,0 +1,9 @@
+# ChangeLog for dev-java/scout
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  14 Feb 2007; kiorky <kiorky@cryptelium.net> 
+  +geronimo-specs-1.1.ebuild, +metadata.xml:
+  Added as it is a apache-derby dependency
+  See #166815
+
