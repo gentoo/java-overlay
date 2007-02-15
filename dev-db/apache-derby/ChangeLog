@@ -1,0 +1,7 @@
+# ChangeLog for dev-db/apache-derby
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  15 Feb 2007; kiorky <kiorky@cryptelium.net> ChangeLog:
+  Not finnished yet as i don't suceed in buildint it !
+
