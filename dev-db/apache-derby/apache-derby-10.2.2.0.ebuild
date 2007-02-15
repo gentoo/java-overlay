@@ -55,7 +55,7 @@ src_unpack(){
 	cd    "xslt4j-2_5_0" || die "cd xalan failed"
 	java-pkg_jar-from xalan
 	cd .. || die "cd return failed"
-	mv empty.jar.old empty.jar || die "re-mv failed"i
+	mv empty.jar.old empty.jar || die "re-mv failed"
 	cd "${S}" || die "cd failed"
 	for i in $(find ${S} -name build.xml);do
 		java-ant_rewrite-classpath "$i"
