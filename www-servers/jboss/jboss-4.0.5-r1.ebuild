@@ -54,6 +54,9 @@ JACORB_SLOT="2.2"
 JAVASSIST_SLOT="3.3"
 JAXEN_SLOT="1.1"
 JOESNMP_SLOT="0.3"
+QDOX_SLOT="1.4"
+JAVACC_SLOT="3.2"
+DTDPARSER_SLOT="1.21"
 # jdk1.7 is not ready to use !
 DEPEND="<virtual/jdk-1.7
 		app-arch/unzip
@@ -116,6 +119,11 @@ DEPEND="<virtual/jdk-1.7
 		>=dev-java/juddi-0.9_rc4
 		=dev-java/junit-3.8*
 		>=dev-java/quartz-1.5.2
+		>=dev-java/odmg-3.0
+		=dev-java/qdox-20050104*
+		>dev-java/javacc-3.2
+		=dev-java/dtdparser-${DTDPARSER_SLOT}*
+		>=dev-java/sax-2.2.1
 		"
 
 RDEPEND="
@@ -272,7 +280,7 @@ thirdparty_deps_get_xdoclet() {
 # ------------------------------------------------------------------------------
 # @function thirdparty_use_bundled_jars
 #
-# bring back jboss thirdparty shipped jars 
+# bring back jboss thirdparty shipped jars
 # Please only use when there is not any way to get and compile the sources
 #
 # @param $1 which dependency to get
@@ -335,10 +343,10 @@ thirdparty_deps_get_jars() {
 	# the one i use actually, so need to be hardly tested
 #	thirdparty_dep_get_jars tomcat-5.5 apache-tomcat
 #	ln -s /usr/share/tomcat-5.5/server/webapps/manager/WEB-INF/lib/catalina-manager.jar \
-#		${DEST}/apache-tomcat/lib || die "ln catalina-manager.jar failed"	
+#		${DEST}/apache-tomcat/lib || die "ln catalina-manager.jar failed"
 #	thirdparty_dep_get_jars --jar ecj.jar --rename jasper-compiler-jdt.jar\
 #		eclipse-ecj-${ECJ_SLOT} apache-tomcat
-	# Warning see http://repository.jboss.com/apache-velocity/1.4jboss 
+	# Warning see http://repository.jboss.com/apache-velocity/1.4jboss
 	# was getting a 17 MO patch from the original one
 	# so i doubt that the good version to patch against ...
 #	thirdparty_use_bundled_jars apache-velocity
@@ -390,7 +398,20 @@ thirdparty_deps_get_jars() {
 	thirdparty_dep_get_jars junit junit
 #	# Warning I dont find the source for 1.4
 	thirdparty_use_bundled_jars junitejb
+	thirdparty_dep_get_jars --jar odmg.jar --rename odmg-3.0.jar odmg odmg
+	# Warning they use 1.4 !
+	thirdparty_dep_get_jars qdox-${QDOX_SLOT} qdox
 	thirdparty_dep_get_jars quartz-1.5 quartz
+	thirdparty_dep_get_jars javacc sun-javacc
+	thirdparty_dep_get_jars dtdparser-${DTDPARSER_SLOT} wutka-dtdparser
+	# they have a -ext jar with just two classes in ext/
+	thirdparty_dep_get_jars --jar sax.jar --rename sax2.jar     sax xml-sax
+	thirdparty_dep_get_jars --jar sax.jar --rename sax2-ext.jar sax xml-sax
+
+
+
+
+
 #	thirdparty_dep_get_jars trove        trove
 #	thirdparty_dep_get_jars servletapi-${SERVLETAPI_SLOT} sun-servlet
 #	thirdparty_dep_get_jars sun-javamail sun-javamail
