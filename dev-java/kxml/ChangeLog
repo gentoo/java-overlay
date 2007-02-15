@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/kxml
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  15 Feb 2007; kiorky <kiorky@cryptelium.net> ChangeLog:
+  Added as it is a joram dependency
+  see #167104
+
