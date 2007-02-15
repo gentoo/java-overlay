@@ -9,7 +9,7 @@ for all Java platforms including the Java 2 Micro Edition (CLDC/MIDP/CDC)"
 HOMEPAGE="http://kxml.objectweb.org/"
 SRC_URI="http://dev.gentooexperimental.org/~kiorky/${P}.tar.bz2"
 
-LICENSE="Apache-2.0"
+LICENSE="Enhydra"
 SLOT="0"
 KEYWORDS="~x86 "
 IUSE="source ${SPECS}"
