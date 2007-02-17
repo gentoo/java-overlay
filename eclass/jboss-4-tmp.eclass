@@ -28,12 +28,15 @@ JBOSS_THIRDPARTY="${JBOSS_ROOT}/thirdparty"
 S="${JBOSS_ROOT}/${MODULE}"
 
 THIRDPARTY_P="jboss-thirdparty-${PV}-gentoo"
-TOOLS_P="jboss-tools-${PV}-gentoo-r1"
-GENTOO_CONF="jboss-${PVR}-gentoo-r2.data"
-BASE_URL="http://gentooexperimental.org/distfiles"
-ECLASS_URI="${BASE_URL}/${TOOLS_P}.tar.bz2 ${BASE_URL}/${THIRDPARTY_P}.tar.bz2
-http://gentooexperimental.org/distfiles/${GENTOO_CONF}"
-MY_A="${P}-gentoo.tar.bz2 ${TOOLS_P}.tar.bz2 ${THIRDPARTY_P}.tar.bz2"
+TOOLS_P="jboss-tools-${PV}"
+GENTOO_CONF="jboss-${PVR}.data"
+BASE_URL="http://dev.gentooexperimental.org/~kiorky/"
+BASE_URL_ORIG="http://gentooexperimental.org/distfiles"
+ECLASS_URI="${BASE_URL}/${TOOLS_P}.tar.bz2 
+			${BASE_URL}/${THIRDPARTY_P}.tar.bz2
+			${BASE_URL}/${GENTOO_CONF}
+			"
+MY_A="${P}.tar.bz2 ${THIRDPARTY_P}.tar.bz2"
 HOMEPAGE="http://www.jboss.org"
 LICENSE="LGPL-2"
 
@@ -48,7 +51,6 @@ quiet_popd() {
 }
 
 
-
 # TODO: add error checking
 jboss-4_fix-dir() {
 	debug-print-function ${FUNCNAME} $*
@@ -60,19 +62,33 @@ jboss-4_fix-dir() {
 	# relative_dir, with _ substituted for -, and suffixed with _pkgs
 	# The contents of said variable should be a comma separated list of
 	# packages, in the format java-config -p would like
+	# to rename a jar the separator will be space
+	# eg : to get 
+	#		* all jars from jarfoo 
+	#		* jarbar.jar from jarbar renamed in jarjar.jar	
+	#		* in thirdparty/foo/lib
+	#     thirdparty_foo_lib_pkgs="jarfoo,jarbar jarbar.jar jarjar.jar"
 	local temp=${relative_dir//\//_} # convert / to _
 	temp="${temp//-/_}_pkgs" # convert - to _
 	debug-print "variable name=${temp}"
 	eval java_pkg_args=\$$temp # get the contents of temp
-	debug-print "value of ${temp}=${java_pkg_args}"
+	echo $java_pkg_args
+	# take care about whitespaces in list
+	java_pkg_args=$(echo ${java_pkg_args}|\
+					sed -re "s/\s+/__/g" |\
+					sed	-re "s/,/ /g"     \
+					|| die "substitue failed")
+	ewarn	debug-print "value of ${temp}=${java_pkg_args}"
 
 	local full_dir=${JBOSS_ROOT}/${relative_dir}
 	einfo "Fixing jars in ${full_dir}"
 
-	mkdir -p ${full_dir}
+	mkdir -p "${full_dir}" || die "mkdir failed"
 
-	quiet_pushd ${full_dir}
-	java-pkg_jar-from ${java_pkg_args} || die "problem calling java-pkg_jar-from"
+	quiet_pushd "${full_dir}"
+	for i in $(echo "${java_pkg_args}"); do
+		java-pkg_jar-from "${i//__/ }"
+	done
 	quiet_popd
 }
 
@@ -164,14 +180,18 @@ jboss-4_fix-module() {
 jboss-4_src_unpack() {
 	debug-print-function ${FUNCNAME} $*
 
-	source ${DISTDIR}/${GENTOO_CONF}
+	source "${DISTDIR}/${GENTOO_CONF}" || die "source failed"
 
-	# NOTE: don't use java-ant's src_unpack! it cases some funky issues with
-	# buildmagic
+	# NOTE: don't use java-ant's src_unpack! 
+	# it cases some funky issues with buildmagic
 	unpack ${MY_A}
+	quiet_pushd "${S}"
+	unpack "${TOOLS_P}.tar.bz2"
+	quiet_popd
 
-	mkdir -p ${JBOSS_THIRDPARTY}/sun-servlet/lib # workaround because something
-												 # depends on this being around
+	# workaround because something depends on this being around
+	mkdir -p "${JBOSS_THIRDPARTY}/sun-servlet/lib" || die "mkdir failed"
+
 	jboss-4_fix-dir tools/lib
 	jboss-4_fix-thirdparty
 	jboss-4_fix-modules
