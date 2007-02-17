@@ -1,6 +1,15 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/fop/fop-0.20.5-r3.ebuild,v 1.10 2006/01/23 14:13:00 nichoj Exp $
+
+# TODO: currently JCE support depends on availability of JCE in JDK, that should be changed
+#       so the build is always exactly the same with the same use flags
+# TODO: hyphenation support doesn't seem to be built correctly
+# TODO: headless tests fails with java.awt.headless=true so maybe they should be fully disabled
+# TODO: if 'doc' use flag is used then build also extra docs ('docs' ant target), currently it cannot
+#       be built as it needs forrest which we do not have
+
+JAVA_PKG_IUSE="doc source"
 
 inherit eutils java-pkg-2 java-ant-2
 
@@ -11,29 +20,32 @@ SRC_URI="mirror://apache/xmlgraphics/${PN}/${P}-src.tar.gz"
 LICENSE="Apache-2.0"
 SLOT="0.93"
 
-KEYWORDS="~amd64"
-#IUSE="doc examples jai jimi mathml xmlunit"
-IUSE="examples source jai jimi xmlunit"
-#removed doc as unable to get it to build (Outofmem errors)
+KEYWORDS="~amd64 ~x86"
+IUSE="examples jai jimi test"
 
-RDEPEND=">=virtual/jre-1.4
-	=dev-java/avalon-framework-4.2*
-	dev-java/xalan
-	=dev-java/batik-1.6*
-	>=dev-java/xerces-2.6.2
+COMMON_DEPEND="
+	>=dev-java/avalon-framework-4.2
+	>=dev-java/batik-1.6
 	dev-java/commons-io
 	dev-java/commons-logging
+	=dev-java/servletapi-2.2*
+	dev-java/xalan
+	>=dev-java/xerces-2.7
 	dev-java/xml-commons
 	>=dev-java/xmlgraphics-commons-1.1
-	=dev-java/servletapi-2.2*
 	jai? ( dev-java/sun-jai-bin )
-	jimi? ( dev-java/sun-jimi )
-	xmlunit? ( dev-java/xmlunit )"
+	jimi? ( dev-java/sun-jimi )"
+
+RDEPEND=">=virtual/jre-1.4
+	${COMMON_DEPEND}"
+
 DEPEND=">=virtual/jdk-1.4
-	=dev-java/eclipse-ecj-3.2*
-	${RDEPEND}
+	${COMMON_DEPEND}
 	>=dev-java/ant-1.5.4
-	source? ( app-arch/zip )"
+	test? (
+		=dev-java/junit-3.8*
+		dev-java/xmlunit
+	)"
 
 src_unpack() {
 	unpack "${A}"
@@ -43,6 +55,7 @@ src_unpack() {
 	cd "${S}/lib"
 	rm *.jar
 
+	java-pkg_jarfrom ant-core ant.jar
 	java-pkg_jarfrom avalon-framework-4.2 avalon-framework.jar \
 		avalon-framework-4.2.0.jar
 	java-pkg_jarfrom batik-1.6 batik-all.jar batik-all-1.6.jar
@@ -57,44 +70,40 @@ src_unpack() {
 	java-pkg_jarfrom xmlgraphics-commons-1 xmlgraphics-commons.jar \
 		xmlgraphics-commons-1.1.jar
 
-
 	use jai && java-pkg_jar-from sun-jai-bin
 	use jimi && java-pkg_jar-from sun-jimi
-	use xmlunit && java-pkg_jar-from xmlunit-1
 }
 
-ANT_OPTS="-XX:MaxPermSize=512m"
 EANT_BUILD_TARGET="package"
-#EANT_DOC_TARGET="javadocs"
-JAVA_PKG_FORCE_COMPILER="ecj-3.2"
+EANT_DOC_TARGET="javadocs"
+
+src_test() {
+	if use test ; then
+		cd "${S}/lib"
+		java-pkg_jar-from xmlunit-1
+		java-pkg_jar-from junit
+		cd "${S}"
+	fi
+
+	ANT_OPTS="-Xmx1g -Djava.awt.headless=true" eant -Djunit.fork=off junit
+}
 
 src_install() {
-	
-	java-pkg_dojar build/*.jar
-	
-	# This could be useful once I figure out what 
-	# and where the mathml jar comesfrom
-	
-	#if use mathml; then
-	#	java-pkg_dojar examples/mathml/build/mathml-fop.jar
-	#fi
+	for JAR in fop-hyph.jar fop.jar fop-sandbox.jar; do
+		java-pkg_dojar build/${JAR}
+	done
 
-	#cd lib
-	#java-pkg_regjar *.jar
-	#cd "${S}"
-	
 	dobin fop
 
-	#for when the time is right
-	#if use doc; then
-	#	dodoc CHANGES STATUS README
-	#	dohtml ReleaseNotes.html 
-	#	java-pkg_dojavadoc build/javadocs/*
-	#fi
+	if use doc; then
+		dodoc NOTICE README
+		java-pkg_dojavadoc build/javadocs
+	fi
 
 	if use examples; then
 		dodir /usr/share/doc/${PF}/examples
 		cp -pPR examples ${D}/usr/share/doc/${PF}/examples
 	fi
-}
 
+	use source && java-pkg_dosrc src/java/org src/java-1.4/* src/sandbox/org
+}
