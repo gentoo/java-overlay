@@ -72,13 +72,12 @@ jboss-4_fix-dir() {
 	temp="${temp//-/_}_pkgs" # convert - to _
 	debug-print "variable name=${temp}"
 	eval java_pkg_args=\$$temp # get the contents of temp
-	echo $java_pkg_args
 	# take care about whitespaces in list
 	java_pkg_args=$(echo ${java_pkg_args}|\
 					sed -re "s/\s+/__/g" |\
 					sed	-re "s/,/ /g"     \
-					|| die "substitue failed")
-	ewarn	debug-print "value of ${temp}=${java_pkg_args}"
+					|| die "substitute failed")
+	debug-print "value of ${temp}=${java_pkg_args}"
 
 	local full_dir=${JBOSS_ROOT}/${relative_dir}
 	einfo "Fixing jars in ${full_dir}"
