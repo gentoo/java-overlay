@@ -10,9 +10,9 @@ HOMEPAGE="http://findbugs.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${P}-source.zip"
 
 LICENSE="LGPL-2.1"
-SLOT="0"
+SLOT="0.8"
 KEYWORDS="~x86 "
-IUSE="doc source"
+IUSE="source"
 
 RDEPEND="dev-java/apple-java-extensions-bin
 		=dev-java/dom4j-1.4
@@ -25,8 +25,7 @@ DEPEND=">=virtual/jdk-1.5
 		source? ( app-arch/zip )
 		${RDEPEND}"
 
-EANT_DOC_TARGET="apiJavadoc"
-EANT_BUILD_TARGET="jars build"
+EANT_BUILD_TARGET="build"
 EANT_GENTOO_CLASSPATH="ant-tasks,ant-core"
 
 src_unpack(){
@@ -51,6 +50,5 @@ src_unpack(){
 
 src_install() {
 	java-pkg_dojar "${S}"/lib/${PN}*.jar "${S}"/plugin/*.jar
-	use doc && java-pkg_dojavadoc "${S}/apiJavaDoc"
 	use source && java-pkg_dosrc "${S}/src"
 }
