@@ -4,6 +4,7 @@
 
 #
 # Original Author: nichoj
+# Additionnal changes: kiorky kiorky@cryptelium.net
 # Purpose:
 #
 
@@ -192,8 +193,8 @@ jboss-4_src_unpack() {
 	mkdir -p "${JBOSS_THIRDPARTY}/sun-servlet/lib" || die "mkdir failed"
 
 	jboss-4_fix-dir tools/lib
-	jboss-4_fix-thirdparty
-	jboss-4_fix-modules
+	#jboss-4_fix-thirdparty
+	#jboss-4_fix-modules
 }
 
 jboss-4_src_compile() {
