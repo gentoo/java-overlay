@@ -1,0 +1,11 @@
+--- /usr/local/tmp/portage/dev-java/dom4j-1.4/work/dom4j-1.4/src/java/org/dom4j/DocumentHelper.java	2003-04-07 22:51:30.000000000 +0200
++++ DocumentHelper.java	2007-02-18 01:41:48.239980207 +0100
+@@ -145,7 +145,7 @@
+       * to create
+       * @return a new <code>Pattern</code> instance
+       */
+-    public static Pattern createPattern(String xpathPattern) {
++    public static Pattern createPattern(String xpathPattern) throws org.jaxen.JaxenException {
+         return DocumentFactory.getInstance().createPattern(xpathPattern);
+     }
+     

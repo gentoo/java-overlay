@@ -1,0 +1,11 @@
+--- /usr/local/tmp/portage/dev-java/dom4j-1.4/work/dom4j-1.4/src/java/org/dom4j/tree/AbstractNode.java	2003-04-07 22:51:33.000000000 +0200
++++ AbstractNode.java	2007-02-18 01:40:00.442107153 +0100
+@@ -211,7 +211,7 @@
+         return getDocumentFactory().createXPathFilter(patternText);
+     }
+     
+-    public Pattern createPattern(String patternText) {
++    public Pattern createPattern(String patternText) throws org.jaxen.JaxenException {
+         return getDocumentFactory().createPattern(patternText);
+     }
+     
