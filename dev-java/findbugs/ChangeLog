@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/jrefactory
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  18 Feb 2007; kiorky <kiorky@cryptelium.net> ChangeLog:
+  Added as it is a jrefactory dependency
+  see #93232 and #167424
+
