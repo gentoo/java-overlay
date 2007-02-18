@@ -14,18 +14,18 @@ KEYWORDS="~x86 "
 IUSE="doc source examples"
 
 JDOM_SLOT="1.0_beta9"
-DEPEND=">=virtual/jdk-1.4
-		>=dev-java/jdom-${JDOM_SLOT}
+RDEPEND=">=dev-java/jdom-${JDOM_SLOT}
 		>=dev-java/juddi-0.9_rc4
 		>=dev-java/log4j-1.2.13
 		>=dev-java/commons-logging-1.0.4-r1
 		>=dev-java/junit-3.8.2
 		>=www-servers/axis-1.2_rc2
-		>=dev-java/commons-discovery-0.2-r2
 		>=dev-java/sun-javamail-1.4
-"
-
-RDEPEND="${DEPEND} >=virtual/jre-1.4"
+		>=dev-java/commons-discovery-0.2-r2
+		>=virtual/jre-1.4"
+DEPEND="${RDEPEND}
+		>=virtual/jdk-1.4
+		source? ( app-arch/zip )"
 
 S=${WORKDIR}/${PN}
 
@@ -48,16 +48,13 @@ src_unpack(){
 
 }
 
-
 src_install() {
 	java-pkg_newjar "dist/lib/${PN}.jar"
 	use doc && java-pkg_dojavadoc dist/docs
 	use source && java-pkg_dosrc modules/jaxr-api/src/java/
 	use source && java-pkg_dosrc    modules/scout/src/java/
 	if use examples; then
-			dodir /usr/share/doc/${PF}/examples
+			dodir "/usr/share/doc/${PF}/examples"
 			cp -r src/samples/* "${D}/usr/share/doc/${PF}/examples"
 	fi
 }
-
-
