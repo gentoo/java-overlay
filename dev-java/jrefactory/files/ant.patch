@@ -1,0 +1,53 @@
+--- tata/build.xml	2004-05-10 18:05:20.000000000 +0200
++++ build.xml	2007-02-18 12:55:50.820059714 +0100
+@@ -121,9 +121,6 @@
+      <pathelement path="${parent.dir}/jaxen-core-1.0-fcs.jar"/>   <!-- PMD -->
+      <pathelement path="${parent.dir}/ErrorList.jar"/>            <!-- jEdit plugin -->
+      <pathelement path="${parent.dir}/ProjectViewer.jar"/>        <!-- jEdit plugin -->
+-     <pathelement path="${parent.dir}/findbugsGUI.jar"/>          <!-- FindBugs -->
+-     <pathelement path="${parent.dir}/findbugs.jar"/>             <!-- FindBugs -->
+-     <pathelement path="${parent.dir}/dom4j-full.jar"/>           <!-- FindBugs -->
+      <pathelement path="${jars.dir}/ant.jar"/>
+      <pathelement path="${jars.dir}/jedit.jar"/>
+      <pathelement path="${jars.dir}/xmlParserAPIs-2.0.2.jar"/>    <!-- PMD -->
+@@ -489,8 +487,9 @@
+ 	      <include name="**/ide/netbeans/*.jarContent" />
+       </fileset>
+     </jar>
+-     <zip zipfile="${build.lib}/${name}.jar" >
+-         <zipfileset src="${build.lib}/${name}_x.jar"/>
++    <mkdir dir="${build.lib}" /> 
++    <!--     <zip zipfile="${build.lib}/${name}.jar" >-->
++	     <!--         <zipfileset src="${build.lib}/${name}_x.jar"/>
+          <zipfileset src="${jars.dir}/coreplugin.jar" >
+              <exclude name="META-INF/MANIFEST.MF"/>
+          </zipfileset>
+@@ -502,7 +501,7 @@
+          </zipfileset>
+          <zipfileset src="${jars.dir}/findbugsGUI.jar" >
+              <exclude name="META-INF/MANIFEST.MF"/>
+-         </zipfileset>
++     </zipfileset>-->
+ <!--
+          <zipfileset src="${jars.dir}/jaxen-core-1.0-fcs.jar" >
+              <exclude name="META-INF/MANIFEST.MF"/>
+@@ -511,15 +510,17 @@
+              <exclude name="META-INF/MANIFEST.MF"/>
+          </zipfileset>
+ -->
+-         <zipfileset src="${jars.dir}/bcel.jar" >
++<!--    <zipfileset src="${jars.dir}/bcel.jar" >
+              <exclude name="META-INF/MANIFEST.MF"/>
+          </zipfileset>
++   -->
+ <!--
+          <zipfileset src="${jars.dir}/xalan.jar" >
+              <exclude name="META-INF/MANIFEST.MF"/>
+          </zipfileset>
+ -->
+-      </zip>
++<!--      </zip>-->
++	<echo message="Use gentoo ClassPath !"/>
+   </target>
+ 
+ 
