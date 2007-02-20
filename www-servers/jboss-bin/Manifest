@@ -26,10 +26,10 @@ AUX 4.0.5/srvdir/bin/jboss-bin-4-profiles-creator.sh 13755 RMD160 44505aa16be4d1
 MD5 f6543d56578cabd5278789fc7d7685d6 files/4.0.5/srvdir/bin/jboss-bin-4-profiles-creator.sh 13755
 RMD160 44505aa16be4d1fea0f7ccf78102bc2dc75e4633 files/4.0.5/srvdir/bin/jboss-bin-4-profiles-creator.sh 13755
 SHA256 9d5321bdb34893cf030e88d646e395b9578e57bdbe19aeddd023398bdcd17129 files/4.0.5/srvdir/bin/jboss-bin-4-profiles-creator.sh 13755
-AUX 4.0.5/srvdir/conf.d/jboss-bin-4 2726 RMD160 e07eecc3d640066de25b7f7d9df57abcf1cc2262 SHA1 5ca674f5671a86df51a3dfa384b63eb7663ea891 SHA256 721cdb9ccf895163a712b050a0c0482991bf340b12d877ec778b90347342e015
-MD5 0b00e8aa50549c82a6433e98e3f3112d files/4.0.5/srvdir/conf.d/jboss-bin-4 2726
-RMD160 e07eecc3d640066de25b7f7d9df57abcf1cc2262 files/4.0.5/srvdir/conf.d/jboss-bin-4 2726
-SHA256 721cdb9ccf895163a712b050a0c0482991bf340b12d877ec778b90347342e015 files/4.0.5/srvdir/conf.d/jboss-bin-4 2726
+AUX 4.0.5/srvdir/conf.d/jboss-bin-4 2752 RMD160 58a6cff48bbcdedfb4a17aac02850dfb6f137dce SHA1 5e0bebc8adbe7e7e097240fa1c1b1211be2f4372 SHA256 fefb41d72963a32d9dfe6bd40465fe8d8f8fdaef3723184f6ae32ddfabfa5a4e
+MD5 6577244f51587f8b237ea283e3eb86b8 files/4.0.5/srvdir/conf.d/jboss-bin-4 2752
+RMD160 58a6cff48bbcdedfb4a17aac02850dfb6f137dce files/4.0.5/srvdir/conf.d/jboss-bin-4 2752
+SHA256 fefb41d72963a32d9dfe6bd40465fe8d8f8fdaef3723184f6ae32ddfabfa5a4e files/4.0.5/srvdir/conf.d/jboss-bin-4 2752
 AUX 4.0.5/srvdir/env.d/50jboss-bin-4.gz 1978 RMD160 dc2df1e79226b63473567f7202837f2de7f29c93 SHA1 b3265240a5076403f09f05619e4612e1c5738a40 SHA256 eb4ee6d00ab78602c9a5dba11dc7557c536df625d733e085ec18f6fbd4f5724e
 MD5 4b6e00e0da99e20ea9f4ded5c947b367 files/4.0.5/srvdir/env.d/50jboss-bin-4.gz 1978
 RMD160 dc2df1e79226b63473567f7202837f2de7f29c93 files/4.0.5/srvdir/env.d/50jboss-bin-4.gz 1978

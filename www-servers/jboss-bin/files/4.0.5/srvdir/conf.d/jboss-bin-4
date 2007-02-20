@@ -8,7 +8,7 @@ JBOSS_USER="jboss"
 # JBoss group (change at your own risk)
 JBOSS_GROUP="jboss"
 # GLEP20: where is the services directory
-SRVDIR="/srv/"
+SRVDIR="/srv"
 # which version of jboss this config file belongs to
 JBOSS_PN_SLOT="jboss-bin-4"
 # Java options (copied from ${JBOSS_HOME_DIR}/bin/run.conf) - use "-server" only if Java supports it
@@ -39,7 +39,7 @@ JBOSS_SERVER_CONFIG_URL="${JBOSS_SERVER_HOME_URL}/conf/"
 JBOSS_SERVER_DATA_DIR="/var/cache/${JBOSS_PN_SLOT}/${JBOSS_HOSTNAME}/${JBOSS_SERVER_NAME}"
 JBOSS_SERVER_LIB_URL="${JBOSS_SERVER_HOME_URL}/lib"
 JBOSS_SERVER_LOG_DIR="/var/log/${JBOSS_PN_SLOT}/${JBOSS_HOSTNAME}/${JBOSS_SERVER_NAME}"
-JBOSS_SERVER_ROOT_DEPLOYMENT_FILENAME="jboss-service.xml"
+JBOSS_SERVER_ROOT_DEPLOYMENT_FILENAME="${JBOSS_SERVER_CONFIG_URL}/jboss-service.xml"
 JBOSS_SERVER_TEMP_DIR="/var/tmp/${JBOSS_PN_SLOT}/${JBOSS_HOSTNAME}/${JBOSS_SERVER_NAME}"
 JBOSS_PATCH_URL=""
 JBOSS_BIND_ADDRESS="0.0.0.0"
