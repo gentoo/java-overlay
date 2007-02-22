@@ -2,7 +2,7 @@ AUX jboss-module-4.0.2-gentoo.patch 21810 RMD160 a5768dd95b0f64e8142a6ae48e7b3f4
 MD5 97197036c0ac1eef441be061cd92a347 files/jboss-module-4.0.2-gentoo.patch 21810
 RMD160 a5768dd95b0f64e8142a6ae48e7b3f45ba1f71f4 files/jboss-module-4.0.2-gentoo.patch 21810
 SHA256 6188e7b6c29b0623d60146ad458f8de0c0d8f031d626c03e98b5aa2684ac449f files/jboss-module-4.0.2-gentoo.patch 21810
-DIST jboss-4.0.2-gentoo-r2.data 7494 RMD160 4f903dcff34f88cda4c09b1e5d13b4879e1d7187 SHA1 ced55cacbabe349c7a54775873a9a5862bf88dca SHA256 f71dddf241e824315de57d9aeafb17ba4ae66667f49e91d9e1939cbafd41b584
+DIST jboss-4.0.2-gentoo-r3.data 7498 RMD160 446b951987e42b41c20415d1c8a922101c5a0236 SHA1 9ab2d8ea6417ec74f386459cb006ad4dd1b93dd2 SHA256 b261c1d94d1a746e740feb490fe4a2592e88c5dcc264075e9f0d036ddc6baa11
 DIST jboss-module-common-4.0.2-gentoo-r1.tar.bz2 169217 RMD160 091ce7b9eb0eaf40a3821e27e8f1694a3684df01 SHA1 ef562f2891f484c009b64418f6fa35f684a58087 SHA256 72932cb5c007e7d55dc01f4f4d77982218e49a8f700402cb30c7be3191ec1a3c
 DIST jboss-thirdparty-4.0.2-gentoo.tar.bz2 13586285 RMD160 d6792984c90ba414ccf4120034beaee2d0601e91 SHA1 4df51eb70495d45058602a54b451958298429bef SHA256 b1170a37fae39ded8275d777db146c93b320c179311786bee38fe978fd80e54f
 DIST jboss-tools-4.0.2-gentoo-r1.tar.bz2 4524270 RMD160 099c8b5ba83dfe484e455500223fe7e53eb26d5b SHA1 ee7cffa8f7e121b1c6cf9347c56b248d168ef776 SHA256 31d061470917632fc5e04408a02512c83842e18b7752e6c4b5fb63ed8c36d45a
@@ -10,6 +10,6 @@ EBUILD jboss-module-common-4.0.2.ebuild 1069 RMD160 9f59da739e923506b52b2c7774f5
 MD5 e5331c7bfaa740c012f70d83c67a2021 jboss-module-common-4.0.2.ebuild 1069
 RMD160 9f59da739e923506b52b2c7774f52304874c9cf0 jboss-module-common-4.0.2.ebuild 1069
 SHA256 d40950ea1ed966abcafc6d486fa53df842fda163eeae98d0da392c6d46aad3bf jboss-module-common-4.0.2.ebuild 1069
-MD5 72aebd0a15746eb8746f621798af1f6f files/digest-jboss-module-common-4.0.2 1150
-RMD160 ebdc0d05a1a65be69ec2029dc7d41d38e73a36ef files/digest-jboss-module-common-4.0.2 1150
-SHA256 b1b2c0e7bf1303b2533510da9b24600e9d7c1eebe7b83ac6054b0a47fc43eabd files/digest-jboss-module-common-4.0.2 1150
+MD5 947da95903b2e566606fe29131324c61 files/digest-jboss-module-common-4.0.2 1150
+RMD160 9cc6d533800fa0be79ede3b80e2df9f66f92e1c6 files/digest-jboss-module-common-4.0.2 1150
+SHA256 57d52c55d35cab0476758676e42996ff29346177bcb242a2c2c66a05a3958a1d files/digest-jboss-module-common-4.0.2 1150

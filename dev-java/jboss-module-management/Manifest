@@ -1,4 +1,4 @@
-DIST jboss-4.0.2-gentoo-r2.data 7494 RMD160 4f903dcff34f88cda4c09b1e5d13b4879e1d7187 SHA1 ced55cacbabe349c7a54775873a9a5862bf88dca SHA256 f71dddf241e824315de57d9aeafb17ba4ae66667f49e91d9e1939cbafd41b584
+DIST jboss-4.0.2-gentoo-r3.data 7498 RMD160 446b951987e42b41c20415d1c8a922101c5a0236 SHA1 9ab2d8ea6417ec74f386459cb006ad4dd1b93dd2 SHA256 b261c1d94d1a746e740feb490fe4a2592e88c5dcc264075e9f0d036ddc6baa11
 DIST jboss-module-management-4.0.2-gentoo.tar.bz2 51727 RMD160 46797c5cad64a86fca9a7ffab722b167504abe71 SHA1 70f39b5f37ca80840c8ccb9a18cb46d904b06299 SHA256 6294d19d6a2aca85727f5c2af363beba1cbc15742b12cb1ac08612f94b69d9d7
 DIST jboss-thirdparty-4.0.2-gentoo.tar.bz2 13586285 RMD160 d6792984c90ba414ccf4120034beaee2d0601e91 SHA1 4df51eb70495d45058602a54b451958298429bef SHA256 b1170a37fae39ded8275d777db146c93b320c179311786bee38fe978fd80e54f
 DIST jboss-tools-4.0.2-gentoo-r1.tar.bz2 4524270 RMD160 099c8b5ba83dfe484e455500223fe7e53eb26d5b SHA1 ee7cffa8f7e121b1c6cf9347c56b248d168ef776 SHA256 31d061470917632fc5e04408a02512c83842e18b7752e6c4b5fb63ed8c36d45a
@@ -6,6 +6,6 @@ EBUILD jboss-module-management-4.0.2.ebuild 942 RMD160 aa1b971f157b2acd26dd93b05
 MD5 fa0fc335988dda4cac390a74c738fd23 jboss-module-management-4.0.2.ebuild 942
 RMD160 aa1b971f157b2acd26dd93b05092ff6abb99d086 jboss-module-management-4.0.2.ebuild 942
 SHA256 f419e150f17dbfdc51d97cfa75fd428b8efdc023e8f29803ba3067b0392fda35 jboss-module-management-4.0.2.ebuild 942
-MD5 3c6dc9260d51e962bdcdf695f7986abc files/digest-jboss-module-management-4.0.2 1150
-RMD160 ab924afc2e6e8825a1d06ec30b98baf264b53d01 files/digest-jboss-module-management-4.0.2 1150
-SHA256 4d181b12859bfdda30fbece8a480bf80533f4333b58fbfb385493b9de1563edd files/digest-jboss-module-management-4.0.2 1150
+MD5 9eb3b3e93ca63278e2b7eebf0d173c85 files/digest-jboss-module-management-4.0.2 1150
+RMD160 30450e5d2940f48e1e09d4638016d7352822a919 files/digest-jboss-module-management-4.0.2 1150
+SHA256 f129e2bd0d90c5881afa5069aa9fc2c3cc40c697b1617dd01e81d6773b4ffb2b files/digest-jboss-module-management-4.0.2 1150

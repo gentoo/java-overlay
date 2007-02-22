@@ -1,4 +1,4 @@
-DIST jboss-4.0.2-gentoo-r2.data 7494 RMD160 4f903dcff34f88cda4c09b1e5d13b4879e1d7187 SHA1 ced55cacbabe349c7a54775873a9a5862bf88dca SHA256 f71dddf241e824315de57d9aeafb17ba4ae66667f49e91d9e1939cbafd41b584
+DIST jboss-4.0.2-gentoo-r3.data 7498 RMD160 446b951987e42b41c20415d1c8a922101c5a0236 SHA1 9ab2d8ea6417ec74f386459cb006ad4dd1b93dd2 SHA256 b261c1d94d1a746e740feb490fe4a2592e88c5dcc264075e9f0d036ddc6baa11
 DIST jboss-module-console-4.0.2-gentoo.tar.bz2 118248 RMD160 f5bd3a3571c7fd7501022f1e166c2c166bc912f2 SHA1 cc8813f164bfe23bc9a708abb35551a7aeb887fe SHA256 8848d4ce5b9006ac425c0c67a2b17c8b2eb486064dd8c90b8a4ee80ffd97b8c5
 DIST jboss-thirdparty-4.0.2-gentoo.tar.bz2 13586285 RMD160 d6792984c90ba414ccf4120034beaee2d0601e91 SHA1 4df51eb70495d45058602a54b451958298429bef SHA256 b1170a37fae39ded8275d777db146c93b320c179311786bee38fe978fd80e54f
 DIST jboss-tools-4.0.2-gentoo-r1.tar.bz2 4524270 RMD160 099c8b5ba83dfe484e455500223fe7e53eb26d5b SHA1 ee7cffa8f7e121b1c6cf9347c56b248d168ef776 SHA256 31d061470917632fc5e04408a02512c83842e18b7752e6c4b5fb63ed8c36d45a
@@ -6,6 +6,6 @@ EBUILD jboss-module-console-4.0.2.ebuild 1090 RMD160 4b2a7663d9b10c91e420aa082e1
 MD5 cb925a9d5855fac3e7876b57338d113b jboss-module-console-4.0.2.ebuild 1090
 RMD160 4b2a7663d9b10c91e420aa082e10c9dd4063c220 jboss-module-console-4.0.2.ebuild 1090
 SHA256 ef94c9b21b470a5e2f81890b3dd7b6fcb4b7532a4abb7d9c353126ff759d69dc jboss-module-console-4.0.2.ebuild 1090
-MD5 5274754152585b3d38761441f3770e25 files/digest-jboss-module-console-4.0.2 1144
-RMD160 e4c48c2eb6cd51e02536e20a0a7a1bb7546ecb75 files/digest-jboss-module-console-4.0.2 1144
-SHA256 90d1f197d4344eae7dd0efc00fdddcc4522bd3ae477e6573a043500d3647a5ae files/digest-jboss-module-console-4.0.2 1144
+MD5 3dea5ab662bef2e2edcdca0ac1e46db4 files/digest-jboss-module-console-4.0.2 1144
+RMD160 17a8609d7945d0398b63a929877e84a1433e9aa0 files/digest-jboss-module-console-4.0.2 1144
+SHA256 6607b753e60eec346d4fb7c3e0fe7599270944d1ad50a10e6ca263aa3cdc2e5b files/digest-jboss-module-console-4.0.2 1144

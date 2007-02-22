@@ -1,4 +1,4 @@
-DIST jboss-4.0.2-gentoo-r2.data 7494 RMD160 4f903dcff34f88cda4c09b1e5d13b4879e1d7187 SHA1 ced55cacbabe349c7a54775873a9a5862bf88dca SHA256 f71dddf241e824315de57d9aeafb17ba4ae66667f49e91d9e1939cbafd41b584
+DIST jboss-4.0.2-gentoo-r3.data 7498 RMD160 446b951987e42b41c20415d1c8a922101c5a0236 SHA1 9ab2d8ea6417ec74f386459cb006ad4dd1b93dd2 SHA256 b261c1d94d1a746e740feb490fe4a2592e88c5dcc264075e9f0d036ddc6baa11
 DIST jboss-module-connector-4.0.2-gentoo.tar.bz2 123635 RMD160 931ac833b1a1df8f83389a854bb2769b8a9b8994 SHA1 1c253f1854b599e5855ff8f8f12f6c6957cbebca SHA256 72b1dc5706e7532d8e8729a8abbfc95c7e19b5a9ec4bf51528bea4081ce8e1a0
 DIST jboss-thirdparty-4.0.2-gentoo.tar.bz2 13586285 RMD160 d6792984c90ba414ccf4120034beaee2d0601e91 SHA1 4df51eb70495d45058602a54b451958298429bef SHA256 b1170a37fae39ded8275d777db146c93b320c179311786bee38fe978fd80e54f
 DIST jboss-tools-4.0.2-gentoo-r1.tar.bz2 4524270 RMD160 099c8b5ba83dfe484e455500223fe7e53eb26d5b SHA1 ee7cffa8f7e121b1c6cf9347c56b248d168ef776 SHA256 31d061470917632fc5e04408a02512c83842e18b7752e6c4b5fb63ed8c36d45a
@@ -6,6 +6,6 @@ EBUILD jboss-module-connector-4.0.2.ebuild 1123 RMD160 21266cc612632a3f1d323d4ab
 MD5 2b810983b35f8d7b000b480472aa1258 jboss-module-connector-4.0.2.ebuild 1123
 RMD160 21266cc612632a3f1d323d4ab4ddbc3f12c0e38c jboss-module-connector-4.0.2.ebuild 1123
 SHA256 15b0f293496f03c79cf4b68a75657f5f3f791d045c435e493239f8c2b8173616 jboss-module-connector-4.0.2.ebuild 1123
-MD5 0054f4e6297fe67b37b1f8ffbbd95601 files/digest-jboss-module-connector-4.0.2 1150
-RMD160 a0283dca60a06bd1f8c330d15d75d5fa52867b4b files/digest-jboss-module-connector-4.0.2 1150
-SHA256 40beca7d98afec0e5fdeda9a7e617a540cc1a52cd8aaa28fd22dd0b8eecbafaa files/digest-jboss-module-connector-4.0.2 1150
+MD5 ece76ee6c23753e0138e2842f38508f4 files/digest-jboss-module-connector-4.0.2 1150
+RMD160 79baaa52c48b2d0cfbe6cc353b78fa4d0f5c2973 files/digest-jboss-module-connector-4.0.2 1150
+SHA256 3fc54eeca713f9473efb439faaa49f575fe35aad61b5106e599f6ba99ee3bde2 files/digest-jboss-module-connector-4.0.2 1150

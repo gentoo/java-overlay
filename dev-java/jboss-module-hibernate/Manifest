@@ -1,9 +1,11 @@
-MD5 7e893c0d95a6a4d32f96f072e30ebe69 files/digest-jboss-module-hibernate-4.0.2 927
-RMD160 e46342f1e9934e1c2bdfe686e8bcc33a4e4eee56 files/digest-jboss-module-hibernate-4.0.2 927
-SHA256 a4710784b830ebf27f0bc08d211f5e77cfcfc65b7370d5887cccb7aaf29caa88 files/digest-jboss-module-hibernate-4.0.2 927
-MD5 f878c4a307d00aefd5876a94dafb7a5e files/digest-jboss-module-tomcat-4.0.2 311
-RMD160 401f9aaf5dd0b6ee22fcbf0119a8eed9e486e2a5 files/digest-jboss-module-tomcat-4.0.2 311
-SHA256 2ade4ee1676dc72e3978f319a991d5e377fa35a7a44a0c1e1a10bfb0345db404 files/digest-jboss-module-tomcat-4.0.2 311
+DIST jboss-4.0.2-gentoo-r3.data 7498 RMD160 446b951987e42b41c20415d1c8a922101c5a0236 SHA1 9ab2d8ea6417ec74f386459cb006ad4dd1b93dd2 SHA256 b261c1d94d1a746e740feb490fe4a2592e88c5dcc264075e9f0d036ddc6baa11
+DIST jboss-module-hibernate-4.0.2-gentoo.tar.bz2 14942 RMD160 12c0a1f386c0ce241bbff1fc5fbb207730d4c66d SHA1 17bc576bda4e34406eb2525318219f4190cecd72 SHA256 235a4e2c4d3448e82fa0f36ea607f0489cd9e1d2666527839e01de31b49ef104
+DIST jboss-thirdparty-4.0.2-gentoo.tar.bz2 13586285 RMD160 d6792984c90ba414ccf4120034beaee2d0601e91 SHA1 4df51eb70495d45058602a54b451958298429bef SHA256 b1170a37fae39ded8275d777db146c93b320c179311786bee38fe978fd80e54f
+DIST jboss-tools-4.0.2-gentoo-r1.tar.bz2 4524270 RMD160 099c8b5ba83dfe484e455500223fe7e53eb26d5b SHA1 ee7cffa8f7e121b1c6cf9347c56b248d168ef776 SHA256 31d061470917632fc5e04408a02512c83842e18b7752e6c4b5fb63ed8c36d45a
+EBUILD jboss-module-hibernate-4.0.2.ebuild 1294 RMD160 20b61315bc5a670eda580ddb5bb2bbeaf282b723 SHA1 493eb63ac5488329f3593dd48ff0f67d4e93825a SHA256 b8d5682bc35f0239345e00621ce1a9dd483942c8fb3b8620d4f3b516dd4ef2d0
 MD5 7d50e18de480a8adcd90b92dbb3e07f6 jboss-module-hibernate-4.0.2.ebuild 1294
 RMD160 20b61315bc5a670eda580ddb5bb2bbeaf282b723 jboss-module-hibernate-4.0.2.ebuild 1294
 SHA256 b8d5682bc35f0239345e00621ce1a9dd483942c8fb3b8620d4f3b516dd4ef2d0 jboss-module-hibernate-4.0.2.ebuild 1294
+MD5 cb9186b1576a1381265913148f3ea442 files/digest-jboss-module-hibernate-4.0.2 1147
+RMD160 6254a7d6246857b18f59e8d5a4f480e12bb733c5 files/digest-jboss-module-hibernate-4.0.2 1147
+SHA256 ebb6ec0a94b306ff76fa864679da3c494c2db1c82c354c653671c5cc9774a06f files/digest-jboss-module-hibernate-4.0.2 1147

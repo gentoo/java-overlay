@@ -29,10 +29,10 @@ S="${JBOSS_ROOT}/${MODULE}"
 
 THIRDPARTY_P="jboss-thirdparty-${PV}-gentoo"
 TOOLS_P="jboss-tools-${PV}-gentoo-r1"
-GENTOO_CONF="jboss-${PVR}-gentoo-r2.data"
+GENTOO_CONF="jboss-${PVR}-gentoo-r3.data"
 BASE_URL="http://gentooexperimental.org/distfiles"
 ECLASS_URI="${BASE_URL}/${TOOLS_P}.tar.bz2 ${BASE_URL}/${THIRDPARTY_P}.tar.bz2
-http://gentooexperimental.org/distfiles/${GENTOO_CONF}"
+http://dev.gentoo.org/~nichoj/distfiles/${GENTOO_CONF}"
 MY_A="${P}-gentoo.tar.bz2 ${TOOLS_P}.tar.bz2 ${THIRDPARTY_P}.tar.bz2"
 HOMEPAGE="http://www.jboss.org"
 LICENSE="LGPL-2"

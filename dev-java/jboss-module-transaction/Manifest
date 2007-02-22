@@ -1,4 +1,4 @@
-DIST jboss-4.0.2-gentoo-r2.data 7494 RMD160 4f903dcff34f88cda4c09b1e5d13b4879e1d7187 SHA1 ced55cacbabe349c7a54775873a9a5862bf88dca SHA256 f71dddf241e824315de57d9aeafb17ba4ae66667f49e91d9e1939cbafd41b584
+DIST jboss-4.0.2-gentoo-r3.data 7498 RMD160 446b951987e42b41c20415d1c8a922101c5a0236 SHA1 9ab2d8ea6417ec74f386459cb006ad4dd1b93dd2 SHA256 b261c1d94d1a746e740feb490fe4a2592e88c5dcc264075e9f0d036ddc6baa11
 DIST jboss-module-transaction-4.0.2-gentoo.tar.bz2 31457 RMD160 cffa52aee01ca2fdb554dd3672390a2512d39823 SHA1 ddd551977db98a950de87916b14b029b3c3b9455 SHA256 2ec53511d6756d0d924c27f663e63305774acca453ca401280b3803c72cfc603
 DIST jboss-thirdparty-4.0.2-gentoo.tar.bz2 13586285 RMD160 d6792984c90ba414ccf4120034beaee2d0601e91 SHA1 4df51eb70495d45058602a54b451958298429bef SHA256 b1170a37fae39ded8275d777db146c93b320c179311786bee38fe978fd80e54f
 DIST jboss-tools-4.0.2-gentoo-r1.tar.bz2 4524270 RMD160 099c8b5ba83dfe484e455500223fe7e53eb26d5b SHA1 ee7cffa8f7e121b1c6cf9347c56b248d168ef776 SHA256 31d061470917632fc5e04408a02512c83842e18b7752e6c4b5fb63ed8c36d45a
@@ -6,6 +6,6 @@ EBUILD jboss-module-transaction-4.0.2.ebuild 846 RMD160 5ad7557b03f076aed0d2ec60
 MD5 0dbe86926eefd4339a6130f61dbcdf4d jboss-module-transaction-4.0.2.ebuild 846
 RMD160 5ad7557b03f076aed0d2ec60414b1a824dc246dc jboss-module-transaction-4.0.2.ebuild 846
 SHA256 776440d4a6833beae69e46111ad94690b2c28456a86ea097485b4f4170fdeedd jboss-module-transaction-4.0.2.ebuild 846
-MD5 08118ff72e899e99b755eefe481dc18e files/digest-jboss-module-transaction-4.0.2 1153
-RMD160 dfdb1311ec26e9d7dee3414d5ef242c9ea0558af files/digest-jboss-module-transaction-4.0.2 1153
-SHA256 f7b9077cad51047e577e24f3407f71c9548fe0a902b4b29d9350a09aeb5db145 files/digest-jboss-module-transaction-4.0.2 1153
+MD5 4685cd82b05363627db69854863e6ab6 files/digest-jboss-module-transaction-4.0.2 1153
+RMD160 74102b349588c297a4b5c9dda4852ba4f6b4140b files/digest-jboss-module-transaction-4.0.2 1153
+SHA256 15cadca83285fa3fd6f3be8489d919b53dd7634de1608490a01c1ebdb441e1d4 files/digest-jboss-module-transaction-4.0.2 1153
