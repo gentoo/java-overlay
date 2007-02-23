@@ -10,34 +10,34 @@ AUX 4.0.5/normal/bin/jboss-bin-4-profiles-creator.sh 13760 RMD160 7ce067f9a2597f
 MD5 be0c57a0f421917cb7cb9c0637cfc44f files/4.0.5/normal/bin/jboss-bin-4-profiles-creator.sh 13760
 RMD160 7ce067f9a2597f507fb80b639f25e21e480bd84f files/4.0.5/normal/bin/jboss-bin-4-profiles-creator.sh 13760
 SHA256 78ebb4bdfc112cef5d3e5a0b4511416f0be6d7e6299dd75f67594728a0d97aa7 files/4.0.5/normal/bin/jboss-bin-4-profiles-creator.sh 13760
-AUX 4.0.5/normal/conf.d/jboss-bin-4 2729 RMD160 6e6790519654d7738da3ec82921d6ab37c5c27af SHA1 a47f410ccab74a0db46f6c6bd56e31af3fffba93 SHA256 a54445ea26e9eba1a6538c04f6277dc5af7b50b02f31ba4ed1d55a01151e04d1
-MD5 08c80bb9331e44fe3947773a1d5d6ebc files/4.0.5/normal/conf.d/jboss-bin-4 2729
-RMD160 6e6790519654d7738da3ec82921d6ab37c5c27af files/4.0.5/normal/conf.d/jboss-bin-4 2729
-SHA256 a54445ea26e9eba1a6538c04f6277dc5af7b50b02f31ba4ed1d55a01151e04d1 files/4.0.5/normal/conf.d/jboss-bin-4 2729
+AUX 4.0.5/normal/conf.d/jboss-bin-4 2729 RMD160 69ea3ff7e8958ae0956dc9eaf6df1d2b6098e51c SHA1 b87e1eb1459ca923f0ed4d3de1c459a95af448d3 SHA256 394923cfcd06abf914352ad85e1ff6e9c38134322b889418f19e5359087ab5c3
+MD5 19cca5e4d35d866f15b4b4a63849dae6 files/4.0.5/normal/conf.d/jboss-bin-4 2729
+RMD160 69ea3ff7e8958ae0956dc9eaf6df1d2b6098e51c files/4.0.5/normal/conf.d/jboss-bin-4 2729
+SHA256 394923cfcd06abf914352ad85e1ff6e9c38134322b889418f19e5359087ab5c3 files/4.0.5/normal/conf.d/jboss-bin-4 2729
 AUX 4.0.5/normal/env.d/50jboss-bin-4.gz 1978 RMD160 dc2df1e79226b63473567f7202837f2de7f29c93 SHA1 b3265240a5076403f09f05619e4612e1c5738a40 SHA256 eb4ee6d00ab78602c9a5dba11dc7557c536df625d733e085ec18f6fbd4f5724e
 MD5 4b6e00e0da99e20ea9f4ded5c947b367 files/4.0.5/normal/env.d/50jboss-bin-4.gz 1978
 RMD160 dc2df1e79226b63473567f7202837f2de7f29c93 files/4.0.5/normal/env.d/50jboss-bin-4.gz 1978
 SHA256 eb4ee6d00ab78602c9a5dba11dc7557c536df625d733e085ec18f6fbd4f5724e files/4.0.5/normal/env.d/50jboss-bin-4.gz 1978
-AUX 4.0.5/normal/init.d/jboss-bin-4 3443 RMD160 9796c4231012a9d83cca3dd00705862ba9fddb05 SHA1 74eb5cd90b06fd86f9d06afbec3f1ae921953886 SHA256 cdf8034c2592e3efec3b66059c7ed19706ca2e332c0b085072a10100c8cc9786
-MD5 832b6947605344a6357bec6fe435c191 files/4.0.5/normal/init.d/jboss-bin-4 3443
-RMD160 9796c4231012a9d83cca3dd00705862ba9fddb05 files/4.0.5/normal/init.d/jboss-bin-4 3443
-SHA256 cdf8034c2592e3efec3b66059c7ed19706ca2e332c0b085072a10100c8cc9786 files/4.0.5/normal/init.d/jboss-bin-4 3443
+AUX 4.0.5/normal/init.d/jboss-bin-4 3444 RMD160 e7750ecbb24a891b3aa02a3e7b95a22e69f37abb SHA1 0905e6f6f8680e08f93fb49395bcae7062fefc1b SHA256 2116b272e10a35fb5a4844fa057a494add65f24121654e92467a00a2aa719b52
+MD5 6cf183ef83ce1f9dd9c5ba7b0b3aaf62 files/4.0.5/normal/init.d/jboss-bin-4 3444
+RMD160 e7750ecbb24a891b3aa02a3e7b95a22e69f37abb files/4.0.5/normal/init.d/jboss-bin-4 3444
+SHA256 2116b272e10a35fb5a4844fa057a494add65f24121654e92467a00a2aa719b52 files/4.0.5/normal/init.d/jboss-bin-4 3444
 AUX 4.0.5/srvdir/bin/jboss-bin-4-profiles-creator.sh 13755 RMD160 44505aa16be4d1fea0f7ccf78102bc2dc75e4633 SHA1 9a40f0340b48bbce46596572a6cb4f05afecfe1e SHA256 9d5321bdb34893cf030e88d646e395b9578e57bdbe19aeddd023398bdcd17129
 MD5 f6543d56578cabd5278789fc7d7685d6 files/4.0.5/srvdir/bin/jboss-bin-4-profiles-creator.sh 13755
 RMD160 44505aa16be4d1fea0f7ccf78102bc2dc75e4633 files/4.0.5/srvdir/bin/jboss-bin-4-profiles-creator.sh 13755
 SHA256 9d5321bdb34893cf030e88d646e395b9578e57bdbe19aeddd023398bdcd17129 files/4.0.5/srvdir/bin/jboss-bin-4-profiles-creator.sh 13755
-AUX 4.0.5/srvdir/conf.d/jboss-bin-4 2725 RMD160 4fda160402cac1b31c6fd29a207987478f8837b7 SHA1 6cb0e94573df7abfa089c35a97e501ca30c004cc SHA256 e0364416f1f7b5cbce139665c6d354c2e6b474aef6322d724d9e19d6a084b54a
-MD5 de6a68d614d6ea8f23fec656095ba0dc files/4.0.5/srvdir/conf.d/jboss-bin-4 2725
-RMD160 4fda160402cac1b31c6fd29a207987478f8837b7 files/4.0.5/srvdir/conf.d/jboss-bin-4 2725
-SHA256 e0364416f1f7b5cbce139665c6d354c2e6b474aef6322d724d9e19d6a084b54a files/4.0.5/srvdir/conf.d/jboss-bin-4 2725
+AUX 4.0.5/srvdir/conf.d/jboss-bin-4 2725 RMD160 6b061d577f8d5b6d51be5294ee7fb16dd130531d SHA1 f589ad84d117d1069f23695290d2da1a2031e749 SHA256 5d537350cb7ac5c10664ae1f9688c85fcbf023288cd1b9eb0c426fc9c4a79b78
+MD5 ca872d900f1f7d4dcd030155544c511a files/4.0.5/srvdir/conf.d/jboss-bin-4 2725
+RMD160 6b061d577f8d5b6d51be5294ee7fb16dd130531d files/4.0.5/srvdir/conf.d/jboss-bin-4 2725
+SHA256 5d537350cb7ac5c10664ae1f9688c85fcbf023288cd1b9eb0c426fc9c4a79b78 files/4.0.5/srvdir/conf.d/jboss-bin-4 2725
 AUX 4.0.5/srvdir/env.d/50jboss-bin-4.gz 1978 RMD160 dc2df1e79226b63473567f7202837f2de7f29c93 SHA1 b3265240a5076403f09f05619e4612e1c5738a40 SHA256 eb4ee6d00ab78602c9a5dba11dc7557c536df625d733e085ec18f6fbd4f5724e
 MD5 4b6e00e0da99e20ea9f4ded5c947b367 files/4.0.5/srvdir/env.d/50jboss-bin-4.gz 1978
 RMD160 dc2df1e79226b63473567f7202837f2de7f29c93 files/4.0.5/srvdir/env.d/50jboss-bin-4.gz 1978
 SHA256 eb4ee6d00ab78602c9a5dba11dc7557c536df625d733e085ec18f6fbd4f5724e files/4.0.5/srvdir/env.d/50jboss-bin-4.gz 1978
-AUX 4.0.5/srvdir/init.d/jboss-bin-4 3446 RMD160 6375421f52b8e295839acd43062863024b394ab7 SHA1 8ae0efc91b6b0af88f5ffbafb65a01308c5a276b SHA256 888cc7ab0fdf9fe72ec7d0c135cd3ddca26aea446e2d9fcb0fe5d5beb924240e
-MD5 5222c13d4f358f4e900f4ffe9f4acae4 files/4.0.5/srvdir/init.d/jboss-bin-4 3446
-RMD160 6375421f52b8e295839acd43062863024b394ab7 files/4.0.5/srvdir/init.d/jboss-bin-4 3446
-SHA256 888cc7ab0fdf9fe72ec7d0c135cd3ddca26aea446e2d9fcb0fe5d5beb924240e files/4.0.5/srvdir/init.d/jboss-bin-4 3446
+AUX 4.0.5/srvdir/init.d/jboss-bin-4 3444 RMD160 e7750ecbb24a891b3aa02a3e7b95a22e69f37abb SHA1 0905e6f6f8680e08f93fb49395bcae7062fefc1b SHA256 2116b272e10a35fb5a4844fa057a494add65f24121654e92467a00a2aa719b52
+MD5 6cf183ef83ce1f9dd9c5ba7b0b3aaf62 files/4.0.5/srvdir/init.d/jboss-bin-4 3444
+RMD160 e7750ecbb24a891b3aa02a3e7b95a22e69f37abb files/4.0.5/srvdir/init.d/jboss-bin-4 3444
+SHA256 2116b272e10a35fb5a4844fa057a494add65f24121654e92467a00a2aa719b52 files/4.0.5/srvdir/init.d/jboss-bin-4 3444
 AUX 4.0.5/tomcat/server.xml 8195 RMD160 5b7a9aa6368797d0f386fd5a7988046e975e299f SHA1 a52a1b5468c2422ca7596a9ea0d12f5bb6c86e93 SHA256 af9a017d7e09adcc8e58fed8a169fd5dd4b3546ed1dc304f26c3e1bb17a991a8
 MD5 9779932f8d954e9c3cfc5859c70a79d8 files/4.0.5/tomcat/server.xml 8195
 RMD160 5b7a9aa6368797d0f386fd5a7988046e975e299f files/4.0.5/tomcat/server.xml 8195
