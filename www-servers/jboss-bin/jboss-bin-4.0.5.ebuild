@@ -17,12 +17,8 @@ LICENSE="LGPL-2"
 IUSE="doc ejb3 srvdir"
 SLOT="4"
 KEYWORDS="~amd64 x86"
-
-if use ejb3;then
-	RDEPEND=">=virtual/jdk-1.5"
-else
-	RDEPEND=">=virtual/jdk-1.4"
-fi
+RDEPEND="ejb3? ( >=virtual/jdk-1.5 )
+		!ejb3? ( >=virtual/jdk-1.4 )"
 
 DEPEND="${RDEPEND} app-arch/unzip dev-java/ant dev-java/ant-contrib"
 
@@ -51,7 +47,7 @@ fi
 # SLOT="4" TEST=`find /var/lib/jboss-${SLOT}/ -type f | grep -E -e "\.(xml|properties|tld)$"`; echo $TEST
 # by kiorky better:
 # echo "CONFIG_PROTECT=\"$(find /srv/localhost/jboss-bin-4/ -name "*xml" -or -name \
-#          "*properties" -or -name "*tld" |xargs echo -n)\"">>env.d/50jboss-bin-4   
+#          "*properties" -or -name "*tld" |xargs echo -n)\"">>env.d/50jboss-bin-4
 
 # NOTE: using now GLEP20 as default
 
@@ -174,7 +170,7 @@ src_install() {
 		diropts -m755
 		insinto  ${SERVICES_DIR}/${PROFILE}/lib
 		doins -r server/${PROFILE}/lib/*
-		# do symlink		
+		# do symlink
 		dosym ${CACHE_INSTALL_DIR}/${PROFILE} ${SERVICES_DIR}/${PROFILE}/data
 		dosym   ${LOG_INSTALL_DIR}/${PROFILE} ${SERVICES_DIR}/${PROFILE}/log
 		dosym   ${TMP_INSTALL_DIR}/${PROFILE} ${SERVICES_DIR}/${PROFILE}/tmp
@@ -201,7 +197,7 @@ src_install() {
 	java-pkg_dolauncher jboss-stop.sh   --java_args  '${JAVA_OPTIONS}'\
 		--main org.jboss.Shutdown  -into ${INSTALL_DIR}
 
-	# documentation stuff	
+	# documentation stuff
 	insopts -m645
 	diropts -m755
 	insinto	"/usr/share/doc/${PF}/${DOCDESTTREE}"
