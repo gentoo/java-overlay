@@ -10,7 +10,7 @@ JBOSS_GROUP="jboss"
 # which version of jboss this config file belongs to
 JBOSS_PN_SLOT="jboss-bin-4"
 # GLEP20: where is the services directory
-SRVDIR="/var/lib/${JBOSS_PN_SLOT}"
+SRVDIR="/var/lib"
 # Java options (copied from ${JBOSS_HOME_DIR}/bin/run.conf) - use "-server" only if Java supports it
 JAVA_OPTS="-server -Xms128m -Xmx512m -Dsun.rmi.dgc.client.gcInterval=3600000 -Dsun.rmi.dgc.server.gcInterval=3600000"
 # Sample JPDA settings for remote socket debuging
@@ -31,7 +31,7 @@ JBOSS_HOME_URL="file:${JBOSS_HOME_DIR}"
 JBOSS_LIB_DIR="${JBOSS_HOME_DIR}/lib"
 JBOSS_LIB_URL="file:${JBOSS_LIB_DIR}"
 JBOSS_ENDORSED_DIRS="${JBOSS_HOME_DIR}/lib/endorsed"
-JBOSS_SERVER_BASE_DIR="${SRVDIR}/${JBOSS_HOSTNAME}"
+JBOSS_SERVER_BASE_DIR="${SRVDIR}/${JBOSS_PN_SLOT}/${JBOSS_HOSTNAME}"
 JBOSS_SERVER_BASE_URL="file:${JBOSS_SERVER_BASE_DIR}"
 JBOSS_SERVER_HOME_DIR="${JBOSS_SERVER_BASE_DIR}/${JBOSS_SERVER_NAME}"
 JBOSS_SERVER_HOME_URL="file:${JBOSS_SERVER_HOME_DIR}"
