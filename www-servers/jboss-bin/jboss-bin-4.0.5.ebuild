@@ -205,10 +205,13 @@ src_install() {
 	doins -r docs/*
 	# write access is set for jboss group so user can use netbeans to start jboss
 	# fix permissions
-	local DIR=""
-	DIR="${D}/${INSTALL_DIR} ${D}/${LOG_INSTALL_DIR} ${D}/${TMP_INSTALL_DIR}
-	${D}/${CACHE_INSTALL_DIR} ${D}/${RUN_INSTALL_DIR} ${D}/${CONF_INSTALL_DIR}
-	${D}/${SERVICES_DIR} "
+	local DIR="" srvdir=""
+	use srvdir 	&& srvdir="${D}/${SERVICES_DIR}" \
+				|| srvdir="${D}/${SERVICES_DIR}/.."
+	# NOTE: installing in "PN-SL/localhos"t , .. mean set for "PN-SL/"
+	DIR="${D}/${INSTALL_DIR} ${D}/${LOG_INSTALL_DIR}/.. ${D}/${TMP_INSTALL_DIR}/..
+	${D}/${CACHE_INSTALL_DIR}/.. ${D}/${RUN_INSTALL_DIR}/..	${D}/${CONF_INSTALL_DIR}/..
+	${srvdir}"
 	chmod -R 765  ${DIR}
 	chown -R jboss:jboss ${DIR}
 	chmod -R 755 ${D}/usr/share/${PN}-${SLOT}
