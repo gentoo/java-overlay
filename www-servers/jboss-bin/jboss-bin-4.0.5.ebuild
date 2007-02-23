@@ -225,34 +225,34 @@ src_install() {
 	insinto	"/usr/share/doc/${PF}/${DOCDESTTREE}"
 	doins copyright.txt
 	doins -r docs/*
+#	# write access is set for jboss group so user can use netbeans to start jboss
+#	# fix permissions
+#	local DIR="" srvdir=""
+#	use srvdir 	&& srvdir="${SERVICES_DIR}" \
+#				|| srvdir="${SERVICES_BASE_DIR}"
+#	# NOTE: installing in "PN-SL/localhos"t , .. mean set for "PN-SL/"
+#	DIR="${D}/${INSTALL_DIR} ${D}/${LOG_INSTALL_DIR} ${D}/${TMP_INSTALL_DIR}"
+#	DIR="${DIR} ${D}/${CACHE_INSTALL_DIR} ${D}/${RUN_INSTALL_DIR}"
+#	DIR="${DIR} ${D}/${CONF_INSTALL_DIR} ${D}/${srvdir}"
+#	chmod -R 755 "/usr/share/${PN}-${SLOT}" || die chmod failed
+#	chmod -R 765 ${DIR} || die "chmod  failed"
+#	chown -R jboss:jboss ${DIR} || die "chown failed"
+
+}
+
+pkg_postinst() {
 	# write access is set for jboss group so user can use netbeans to start jboss
 	# fix permissions
 	local DIR="" srvdir=""
 	use srvdir 	&& srvdir="${SERVICES_DIR}" \
 				|| srvdir="${SERVICES_BASE_DIR}"
 	# NOTE: installing in "PN-SL/localhos"t , .. mean set for "PN-SL/"
-	DIR="${D}/${INSTALL_DIR} ${D}/${LOG_INSTALL_DIR} ${D}/${TMP_INSTALL_DIR}"
-	DIR="${DIR} ${D}/${CACHE_INSTALL_DIR} ${D}/${RUN_INSTALL_DIR}"
-	DIR="${DIR} ${D}/${CONF_INSTALL_DIR} ${D}/${srvdir}"
+	DIR="/${INSTALL_DIR} /${LOG_INSTALL_DIR} /${TMP_INSTALL_DIR}"
+	DIR="${DIR} /${CACHE_INSTALL_DIR} /${RUN_INSTALL_DIR}"
+	DIR="${DIR} /${CONF_INSTALL_DIR} /${srvdir}"
 	chmod -R 755 "/usr/share/${PN}-${SLOT}" || die chmod failed
 	chmod -R 765 ${DIR} || die "chmod  failed"
 	chown -R jboss:jboss ${DIR} || die "chown failed"
-
-}
-
-pkg_postinst() {
-	# write access is set for jboss group so user can use netbeans to start jboss
-#	# fix permissions
-#	local DIR="" srvdir=""
-#	use srvdir 	&& srvdir="${SERVICES_DIR}" \
-#				|| srvdir="${SERVICES_BASE_DIR}"
-#	# NOTE: installing in "PN-SL/localhos"t , .. mean set for "PN-SL/"
-#	DIR="/${INSTALL_DIR} /${LOG_INSTALL_DIR} /${TMP_INSTALL_DIR}"
-#	DIR="${DIR} /${CACHE_INSTALL_DIR} /${RUN_INSTALL_DIR}"
-#	DIR="${DIR} /${CONF_INSTALL_DIR} /${srvdir}"
-#	chmod -R 755 "/usr/share/${PN}-${SLOT}" || die chmod failed
-#	chmod -R 765 ${DIR} || die "chmod  failed"
-#	chown -R jboss:jboss ${DIR} || die "chown failed"
 
 
 	elog
