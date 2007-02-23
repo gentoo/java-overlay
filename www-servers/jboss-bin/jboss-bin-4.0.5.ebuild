@@ -24,19 +24,21 @@ DEPEND="${RDEPEND} app-arch/unzip dev-java/ant dev-java/ant-contrib"
 
 S=${WORKDIR}/${MY_P}
 INSTALL_DIR="/opt/${PN}-${SLOT}"
-CACHE_INSTALL_DIR="/var/cache/${PN}-${SLOT}/localhost"
-LOG_INSTALL_DIR="/var/log/${PN}-${SLOT}/localhost"
-RUN_INSTALL_DIR="/var/run/${PN}-${SLOT}/localhost"
-TMP_INSTALL_DIR="/var/tmp/${PN}-${SLOT}/localhost"
-CONF_INSTALL_DIR="/etc/${PN}-${SLOT}/localhost"
+DEFAULT_VHOST="localhost"
+CACHE_INSTALL_DIR="/var/cache/${PN}-${SLOT}"
+LOG_INSTALL_DIR="/var/log/${PN}-${SLOT}"
+RUN_INSTALL_DIR="/var/run/${PN}-${SLOT}"
+TMP_INSTALL_DIR="/var/tmp/${PN}-${SLOT}"
+CONF_INSTALL_DIR="/etc/${PN}-${SLOT}"
 FILESDIR_CONF_DIR=""
 
 #switching configuration files directory
 if use "srvdir" ; then
-	SERVICES_DIR="/srv/localhost/${PN}-${SLOT}"
+	SERVICES_DIR="/srv/${DEFAULT_VHOST}/${PN}-${SLOT}"
 	FILESDIR_CONF_DIR="${FILESDIR}/${PV}/srvdir"
 else
-	SERVICES_DIR="/var/lib/${PN}-${SLOT}/localhost"
+	SERVICES_BASE_DIR="/var/lib/${PN}-${SLOT}"
+	SERVICES_DIR="${SERVICES_BASE_DIR}/${DEFAULT_VHOST}"
 	FILESDIR_CONF_DIR="${FILESDIR}/${PV}/normal"
 fi
 
@@ -51,99 +53,113 @@ fi
 
 # NOTE: using now GLEP20 as default
 
+pkg_setup() {
+	# create jboss user/group
+	enewgroup jboss || die "Unable to create jboss group"
+	enewuser jboss -1 /bin/sh ${SERVICES_DIR}  jboss \
+		|| die	"Unable to create jboss user"
+}
+
 
 src_install() {
 	# jboss core stuff
 	# create the directory structure and copy the files
 	diropts -m755
-	dodir ${INSTALL_DIR}        \
-		  ${INSTALL_DIR}/bin    \
-		  ${INSTALL_DIR}/client \
-	      ${INSTALL_DIR}/lib    \
-		  ${SERVICES_DIR} \
-		  ${CACHE_INSTALL_DIR}  \
-		  ${CONF_INSTALL_DIR}   \
-		  ${LOG_INSTALL_DIR}    \
-		  ${RUN_INSTALL_DIR} ${TMP_INSTALL_DIR}
+	dodir "${INSTALL_DIR}"        \
+		  "${INSTALL_DIR}/bin"    \
+		  "${INSTALL_DIR}/client" \
+	      "${INSTALL_DIR}/lib"    \
+		  "${SERVICES_DIR}/${DEFAULT_VHOST}" \
+		  "${CACHE_INSTALL_DIR}/${DEFAULT_VHOST}"  \
+		  "${CONF_INSTALL_DIR}/${DEFAULT_VHOST}"   \
+		  "${LOG_INSTALL_DIR}/${DEFAULT_VHOST}"    \
+		  "${RUN_INSTALL_DIR}/${DEFAULT_VHOST}"    \
+		  "${TMP_INSTALL_DIR}/${DEFAULT_VHOST}"
 	insopts -m645
 	diropts -m755
-	insinto ${INSTALL_DIR}/bin
+	insinto "${INSTALL_DIR}/bin"
 	doins -r bin/*.conf bin/*.jar
-	exeinto ${INSTALL_DIR}/bin
+	exeinto "${INSTALL_DIR}/bin"
 	doexe bin/*.sh
-	insinto ${INSTALL_DIR}
+	insinto "${INSTALL_DIR}"
 	doins -r client lib
 
 	# copy startup stuff
-	doinitd  ${FILESDIR_CONF_DIR}/init.d/${PN}-${SLOT}
+	doinitd  "${FILESDIR_CONF_DIR}/init.d/${PN}-${SLOT}"
 	# add multi instances support (here:localhost)
-	dosym /etc/init.d/${PN}-${SLOT} /etc/init.d/${PN}-${SLOT}.localhost
-	newconfd ${FILESDIR_CONF_DIR}/conf.d/${PN}-${SLOT} ${PN}-${SLOT}
+	dosym "/etc/init.d/${PN}-${SLOT}" \
+			"/etc/init.d/${PN}-${SLOT}.${DEFAULT_VHOST}"
+	newconfd "${FILESDIR_CONF_DIR}/conf.d/${PN}-${SLOT}" \
+			"${PN}-${SLOT}"
 	# add multi instances support (here:localhost)
-	newconfd ${FILESDIR_CONF_DIR}/conf.d/${PN}-${SLOT} ${PN}-${SLOT}.localhost
-	gunzip  -c ${FILESDIR_CONF_DIR}/env.d/50${PN}-${SLOT}.gz>50${PN}-${SLOT}
-	doenvd  50${PN}-${SLOT}
+	newconfd "${FILESDIR_CONF_DIR}/conf.d/${PN}-${SLOT}" \
+			"${PN}-${SLOT}.${DEFAULT_VHOST}"
+	gunzip  -c "${FILESDIR_CONF_DIR}/env.d/50${PN}-${SLOT}.gz">50${PN}-${SLOT}
+	doenvd  "50${PN}-${SLOT}"
 	# jboss profiles creator binary
 	exeinto  /usr/bin
-	doexe	 ${FILESDIR_CONF_DIR}/bin/jboss-bin-4-profiles-creator.sh
+	doexe	 "${FILESDIR_CONF_DIR}/bin/jboss-bin-4-profiles-creator.sh"
 	# implement GLEP20: srvdir
-	addpredict ${SERVICES_DIR}
+	addpredict "${SERVICES_DIR}"
 	# make a "gentoo" profile with "default" one as a template
 	cp -rf server/default    server/gentoo
 	# add optionnal jboss EJB 3.0 implementation
 	if use ejb3;then
 		einfo "EJB 3.0 support  Activation"
-		cd ../$MY_EJB3
-		cp -rf ${FILESDIR}/${PV}/ejb3/install.xml .
+		cd "../$MY_EJB3" || die "cd failed"
+		cp -rf "${FILESDIR}/${PV}/ejb3/install.xml" . || die "cp failed"
 		JBOSS_HOME="../${MY_P}" ant -f install.xml || die "EJB3 Patch failed"
 		einfo "EJB3 installed"
-		cd ../${MY_P}
+		cd "../${MY_P}" || die "cd failed"
 		local backported_jars="jgroups.jar jboss-cache.jar"
 		for jar in ${backported_jars};do
-			cp -rf server/all/lib/${jar}    server/gentoo/lib
+			cp -rf "server/all/lib/${jar}"    server/gentoo/lib || die "cp failed"
 		done
 		local backported_apps="jbossws.sar"
 		for app in ${backported_apps};do
-			cp -rf server/all/deploy/${app}    server/gentoo/deploy
+			cp -rf "server/all/deploy/${app}"    server/gentoo/deploy || die "cp failed"
 		done
 	fi
 	# our nice little welcome app
-	cp -rf ${FILESDIR}/${PV}//tomcat/webapp/gentoo .
-	cd gentoo
+	cp -rf "${FILESDIR}/${PV}/tomcat/webapp/gentoo" . || die "cp failed"
+	cd gentoo || die "cd failed"
 	#for /gentoo-doc context
-	jar cf ../gentoo.war *
+	jar cf ../gentoo.war * || die "jar failed"
 	# for root context
-	rm -f WEB-INF/jboss-web.xml
-	jar cf ../ROOT.war *
-	cd ..
+	rm -f WEB-INF/jboss-web.xml || die "rm failed"
+	jar cf ../ROOT.war * || die "jar failed"
+	cd .. || die "cd failed"
 	# installing the tomcat configuration and the webapp
 	for PROFILE in all default gentoo ; do
-		rm -rf server/${PROFILE}/deploy/jbossweb-tomcat55.sar/ROOT.war
-		cp -rf gentoo.war  server/${PROFILE}/deploy/
-		cp -rf ROOT.war    server/${PROFILE}/deploy/jbossweb-tomcat55.sar/
+		rm -rf "server/${PROFILE}/deploy/jbossweb-tomcat55.sar/ROOT.war" || die "rm failed"
+		cp -rf gentoo.war "server/${PROFILE}/deploy/" || die "cp failed"
+		cp -rf ROOT.war    "server/${PROFILE}/deploy/jbossweb-tomcat55.sar/" || die "cp failed"
 		# our tomcat configuration to point to our helper
-		cp -rf ${FILESDIR}/${PV}/tomcat/server.xml  server/${PROFILE}/deploy/jbossweb-tomcat55.sar/server.xml
+		cp -rf "${FILESDIR}/${PV}/tomcat/server.xml" \
+			"server/${PROFILE}/deploy/jbossweb-tomcat55.sar/server.xml"\
+			|| die "cp failed"
 	done
-	rm -f gentoo.war ROOT.war
+	rm -f gentoo.war ROOT.war || die "rm failed"
 		# installing profiles
 	for PROFILE in all default gentoo minimal; do
 		# create directory
 		diropts -m775
-		dodir ${SERVICES_DIR}/${PROFILE}/conf   \
-		      ${SERVICES_DIR}/${PROFILE}/deploy ${SERVICES_DIR}/${PROFILE}/lib
+		dodir "${SERVICES_DIR}/${PROFILE}/conf"   \
+		      "${SERVICES_DIR}/${PROFILE}/deploy" \
+			  "${SERVICES_DIR}/${PROFILE}/lib"
 		# keep stuff
-		keepdir     ${CACHE_INSTALL_DIR}/${PROFILE} \
-					${CONF_INSTALL_DIR}/${PROFILE}	\
-					${LOG_INSTALL_DIR}/${PROFILE}	\
-					${TMP_INSTALL_DIR}/${PROFILE}   \
-					${RUN_INSTALL_DIR}/${PROFILE}
+		keepdir     "${CACHE_INSTALL_DIR}/${DEFAULT_VHOST}/${PROFILE}" \
+					"${CONF_INSTALL_DIR}/${DEFAULT_VHOST}/${PROFILE}"  \
+					"${LOG_INSTALL_DIR}/${DEFAULT_VHOST}/${PROFILE}"	 \
+					"${TMP_INSTALL_DIR}/${DEFAULT_VHOST}/${PROFILE}"   \
+					"${RUN_INSTALL_DIR}/${DEFAULT_VHOST}/${PROFILE}"
 		if [[ ${PROFILE} != "minimal" ]]; then
 			insopts -m665
 			diropts -m775
-			insinto  ${SERVICES_DIR}/${PROFILE}/deploy
+			insinto  "${SERVICES_DIR}/${PROFILE}/deploy"
 			doins -r server/${PROFILE}/deploy/*
 		else
-			dodir  ${SERVICES_DIR}/${PROFILE}/deploy
+			dodir  "${SERVICES_DIR}/${DEFAULT_VHOST}/${PROFILE}/deploy"
 		fi
 		# singleton is just on "all" profile
 		local clustering="false"
@@ -154,48 +170,54 @@ src_install() {
 			ewarn "Activating clustering support for profile: ${PROFILE}"
 			insopts -m665
 			diropts -m775
-			dodir    ${SERVICES_DIR}/${PROFILE}/deploy-hasingleton
-			insinto  ${SERVICES_DIR}/${PROFILE}/deploy-hasingleton
+			dodir    "${SERVICES_DIR}/${PROFILE}/deploy-hasingleton"
+			insinto  "${SERVICES_DIR}/${PROFILE}/deploy-hasingleton"
 			doins -r server/all/deploy-hasingleton
-			dodir    ${SERVICES_DIR}/${PROFILE}/farm
-			insinto  ${SERVICES_DIR}/${PROFILE}/farm
+			dodir    "${SERVICES_DIR}/${PROFILE}/farm"
+			insinto  "${SERVICES_DIR}/${PROFILE}/farm"
 			doins -r server/all/farm
 		fi
 		# copy files
 		insopts -m664
 		diropts -m772
-		insinto  ${SERVICES_DIR}/${PROFILE}/conf
+		insinto  "${SERVICES_DIR}/${PROFILE}/conf"
 		doins -r server/${PROFILE}/conf/*
 		insopts -m644
 		diropts -m755
-		insinto  ${SERVICES_DIR}/${PROFILE}/lib
+		insinto  "${SERVICES_DIR}/${PROFILE}/lib"
 		doins -r server/${PROFILE}/lib/*
 		# do symlink
-		dosym ${CACHE_INSTALL_DIR}/${PROFILE} ${SERVICES_DIR}/${PROFILE}/data
-		dosym   ${LOG_INSTALL_DIR}/${PROFILE} ${SERVICES_DIR}/${PROFILE}/log
-		dosym   ${TMP_INSTALL_DIR}/${PROFILE} ${SERVICES_DIR}/${PROFILE}/tmp
-		dosym   ${RUN_INSTALL_DIR}/${PROFILE} ${SERVICES_DIR}/${PROFILE}/work
+		dosym "${CACHE_INSTALL_DIR}/${DEFAULT_VHOST}/${PROFILE}" \
+				"${SERVICES_DIR}/${PROFILE}/data"
+		dosym  "${LOG_INSTALL_DIR}/${DEFAULT_VHOST}/${PROFILE}"  \
+				"${SERVICES_DIR}/${PROFILE}/log"
+		dosym  "${TMP_INSTALL_DIR}/${DEFAULT_VHOST}/${PROFILE}"  \
+				"${SERVICES_DIR}/${PROFILE}/tmp"
+		dosym  "${RUN_INSTALL_DIR}/${DEFAULT_VHOST}/${PROFILE}"  \
+				"${SERVICES_DIR}/${PROFILE}/work"
 		# for conf file, doing the contrary is trickier
 		# keeping the conf file with the whole installation but
 		# putting a symlink to /etc/ for easy configuration
-		dosym ${SERVICES_DIR}/${PROFILE}/conf ${CONF_INSTALL_DIR}/${PROFILE}/conf
+		dosym "${SERVICES_DIR}/${PROFILE}/conf"\
+				"${CONF_INSTALL_DIR}/${DEFAULT_VHOST}/${PROFILE}/conf"
 		# symlink the tomcat server.xml configuration file
-		dosym ${SERVICES_DIR}/${PROFILE}/deploy/jbossweb-tomcat55.sar/server.xml	${CONF_INSTALL_DIR}/${PROFILE}/
+		dosym "${SERVICES_DIR}/${PROFILE}/deploy/jbossweb-tomcat55.sar/server.xml" \
+				"${CONF_INSTALL_DIR}/${DEFAULT_VHOST}/${PROFILE}"
 	done
 
 	# set some cp
 	if use ejb3;then
-		java-pkg_regjar ${D}/${INSTALL_DIR}/client/activation.jar
-		java-pkg_regjar ${D}/${SERVICES_DIR}/all/lib/jboss-cache.jar
-		java-pkg_regjar ${D}/${SERVICES_DIR}/all/lib/jgroups.jar
+		java-pkg_regjar "${D}/${INSTALL_DIR}/client/activation.jar"
+		java-pkg_regjar "${D}/${SERVICES_DIR}/all/lib/jboss-cache.jar"
+		java-pkg_regjar "${D}/${SERVICES_DIR}/all/lib/jgroups.jar"
 	fi
 	# register runners
 	java-pkg_regjar	${D}/${INSTALL_DIR}/bin/*.jar
 	#do launch helper scripts which set the good VM to use
 	java-pkg_dolauncher jboss-start.sh  --java_args  '${JAVA_OPTIONS}'\
-		--main org.jboss.Main      -into ${INSTALL_DIR}
+		--main org.jboss.Main      -into "${INSTALL_DIR}"
 	java-pkg_dolauncher jboss-stop.sh   --java_args  '${JAVA_OPTIONS}'\
-		--main org.jboss.Shutdown  -into ${INSTALL_DIR}
+		--main org.jboss.Shutdown  -into "${INSTALL_DIR}"
 
 	# documentation stuff
 	insopts -m645
@@ -204,32 +226,27 @@ src_install() {
 	doins copyright.txt
 	doins -r docs/*
 	# write access is set for jboss group so user can use netbeans to start jboss
-	# fix permissions
-	local DIR="" srvdir=""
-	use srvdir 	&& srvdir="${D}/${SERVICES_DIR}" \
-				|| srvdir="${D}/${SERVICES_DIR}/.."
-	# NOTE: installing in "PN-SL/localhos"t , .. mean set for "PN-SL/"
-	DIR="${D}/${INSTALL_DIR} ${D}/${LOG_INSTALL_DIR}/.. ${D}/${TMP_INSTALL_DIR}/..
-	${D}/${CACHE_INSTALL_DIR}/.. ${D}/${RUN_INSTALL_DIR}/..	${D}/${CONF_INSTALL_DIR}/..
-	${srvdir}"
-	chmod -R 765  ${DIR}
-	chown -R jboss:jboss ${DIR}
-	chmod -R 755 ${D}/usr/share/${PN}-${SLOT}
-}
+	}
 
 
-pkg_preinst() {
-	# create jboss user/group
-	enewgroup jboss || die "Unable to create jboss group"
-	enewuser jboss -1 /bin/sh ${SERVICES_DIR}  jboss \
-		|| die	"Unable to create jboss user"
-}
 
 pkg_postinst() {
+	# fix permissions
+	local DIR="" srvdir=""
+	use srvdir 	&& srvdir="${SERVICES_DIR}" \
+				|| srvdir="${SERVICES_BASE_DIR}"
+	# NOTE: installing in "PN-SL/localhos"t , .. mean set for "PN-SL/"
+	DIR="/${INSTALL_DIR} /${LOG_INSTALL_DIR} /${TMP_INSTALL_DIR}"
+	DIR="${DIR} /${CACHE_INSTALL_DIR} /${RUN_INSTALL_DIR}"
+	DIR="${DIR} /${CONF_INSTALL_DIR} /${srvdir}"
+	chmod -R 755 "/usr/share/${PN}-${SLOT}" || die chmod failed
+	chmod -R 765 ${DIR} || die "chmod  failed"
+	chown -R jboss:jboss ${DIR} || die "chown failed"
+
 	elog
 	elog "Multi Instance Usage"
 	elog " If you want to run multiple instances of JBoss, you can do that this way:"
-	elog " 1) sylink init script:"
+	elog " 1) Symlink init script:"
 	elog "    ln -s /etc/init.d/${PN}-${SLOT} /etc/init.d/${PN}-${SLOT}.foo"
 	elog " 2) Copy original config file:"
 	elog "    cp /etc/conf.d/${PN}-${SLOT} /etc/conf.d/${PN}-${SLOT}.foo"
@@ -238,7 +255,7 @@ pkg_postinst() {
 	elog "		You have to either:"
 	elog "			Bind new JBoss instance to another IP address or change"
 	elog "			Change the  used ports in tiomcat configuration so they do not be in conflict)"
-	elog " 4) run the new JBoss instance:"
+	elog " 4) Run the new JBoss instance:"
 	elog "		/etc/init.d/${PN}-${SLOT}.vhost start (eg vhost=localhost"
 	elog "		-> ${PN}-${SLOT}.localhost"
 	elog
