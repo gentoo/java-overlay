@@ -16,6 +16,10 @@
 # just backported stuff and began working on it, don't work yet
 =www-servers/jboss-4.0.5-r1
 
+# kiorky kiorky@cryptelium.net
+# This stuff is old and unusable, use jboss-bin in the mean-time
+www-servers/jboss
+
 # Alistair Bush <ali_bush> (28 October 2006)
 # =www-server/jboss-4.0.4-r2 is being masked so that I can attempt at
 # building jboss as a monolithic package for testing
