@@ -226,9 +226,7 @@ src_install() {
 	doins copyright.txt
 	doins -r docs/*
 	# write access is set for jboss group so user can use netbeans to start jboss
-	}
-
-
+}
 
 pkg_postinst() {
 	# fix permissions
@@ -242,6 +240,7 @@ pkg_postinst() {
 	chmod -R 755 "/usr/share/${PN}-${SLOT}" || die chmod failed
 	chmod -R 765 ${DIR} || die "chmod  failed"
 	chown -R jboss:jboss ${DIR} || die "chown failed"
+
 
 	elog
 	elog "Multi Instance Usage"
