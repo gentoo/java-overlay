@@ -11,7 +11,7 @@ SRC_URI="mirror://sourceforge/${PN}/${P}-source.zip"
 LICENSE="as-is"
 SLOT="0"
 KEYWORDS="~x86 "
-IUSE="doc source examples"
+IUSE="doc source"
 
 DEPEND=">=virtual/jdk-1.5
 		app-arch/unzip
