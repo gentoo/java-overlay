@@ -28,13 +28,12 @@ JBOSS_ROOT="${WORKDIR}/${PN%%-*}-${PV}-src"
 JBOSS_THIRDPARTY="${JBOSS_ROOT}/thirdparty"
 S="${JBOSS_ROOT}/${MODULE}"
 
-THIRDPARTY_P="jboss-thirdparty-${PV}-gentoo"
+THIRDPARTY_P="jboss-thirdparty-${PV}"
 TOOLS_P="jboss-tools-${PV}"
 GENTOO_CONF="jboss-${PVR}.data"
 BASE_URL="http://dev.gentooexperimental.org/~kiorky/"
 BASE_URL_ORIG="http://gentooexperimental.org/distfiles"
-ECLASS_URI="${BASE_URL}/${TOOLS_P}.tar.bz2 
-			${BASE_URL}/${THIRDPARTY_P}.tar.bz2
+ECLASS_URI="${BASE_URL}/${TOOLS_P}.tar.bz2 ${BASE_URL}/${THIRDPARTY_P}.tar.bz2
 			${BASE_URL}/${GENTOO_CONF}
 			"
 MY_A="${P}.tar.bz2 ${THIRDPARTY_P}.tar.bz2"
@@ -64,9 +63,9 @@ jboss-4_fix-dir() {
 	# The contents of said variable should be a comma separated list of
 	# packages, in the format java-config -p would like
 	# to rename a jar the separator will be space
-	# eg : to get 
-	#		* all jars from jarfoo 
-	#		* jarbar.jar from jarbar renamed in jarjar.jar	
+	# eg : to get
+	#		* all jars from jarfoo
+	#		* jarbar.jar from jarbar renamed in jarjar.jar
 	#		* in thirdparty/foo/lib
 	#     thirdparty_foo_lib_pkgs="jarfoo,jarbar jarbar.jar jarjar.jar"
 	local temp=${relative_dir//\//_} # convert / to _
@@ -74,7 +73,13 @@ jboss-4_fix-dir() {
 	debug-print "variable name=${temp}"
 	eval java_pkg_args=\$$temp # get the contents of temp
 	# take care about whitespaces in list
+	echo ${java_pkg_args}
+	# remove spaces before beginning or after comma
+	# so we can do multilines in the mapping file
+	# then replace all " " by __ and the "," by " " 
+	# for the for statement
 	java_pkg_args=$(echo ${java_pkg_args}|\
+					sed -re "s/(^|,)\s*/\1/g"  |\
 					sed -re "s/\s+/__/g" |\
 					sed	-re "s/,/ /g"     \
 					|| die "substitute failed")
@@ -87,7 +92,9 @@ jboss-4_fix-dir() {
 
 	quiet_pushd "${full_dir}"
 	for i in $(echo "${java_pkg_args}"); do
+		echo $i
 		java-pkg_jar-from "${i//__/ }"
+		echo java-pkg_jar-from "${i//__/ }"
 	done
 	quiet_popd
 }
@@ -182,13 +189,14 @@ jboss-4_src_unpack() {
 
 	source "${DISTDIR}/${GENTOO_CONF}" || die "source failed"
 
-	# NOTE: don't use java-ant's src_unpack! 
+	# NOTE: don't use java-ant's src_unpack!
 	# it cases some funky issues with buildmagic
 	unpack ${MY_A}
-	quiet_pushd "${S}"
-	unpack "${TOOLS_P}.tar.bz2"
-	quiet_popd
+	
+	cd "${S}" || die "cd failed"
 
+	unpack "${TOOLS_P}.tar.bz2"
+		
 	# workaround because something depends on this being around
 	mkdir -p "${JBOSS_THIRDPARTY}/sun-servlet/lib" || die "mkdir failed"
 
