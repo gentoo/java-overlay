@@ -2,6 +2,10 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  24 Feb 2007; kiorky <kiorky@cryptelium.net> +neethi-2.0.ebuild:
+  Bumped / Slotted to 2.0 as it is the lastest version
+  But the twice are often used
+
   24 Feb 2007; kiorky <kiorky@cryptelium.net> +neethy-1.0.1.ebuild,
   +metadata.xml:
   Added as a wss4j dependancy
