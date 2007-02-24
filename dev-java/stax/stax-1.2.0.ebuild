@@ -23,7 +23,7 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}"
 
 EANT_DOC_TARGET="javadoc"
-EANT_BUILD_TARGET="compile"
+EANT_BUILD_TARGET="ri_bin_dist"
 
 src_unpack(){
 	unpack ${A}
@@ -36,10 +36,12 @@ src_unpack(){
 
 src_install() {
 	java-pkg_newjar ${S}/build/stax-api-${PV}.jar stax-api.jar
+	java-pkg_newjar ${S}/build/stax-${PV}-dev.jar stax-dev.jar
+
 	if use doc; then
 			dodoc ${S}/ASF2.0.txt
 			java-pkg_dohtml *.html
-			java-pkg_dojavadoc docs
+			java-pkg_dojavadoc "${S}/build/javadoc"
 	fi
 	use source && java-pkg_dosrc src
 }
