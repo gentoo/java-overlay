@@ -39,7 +39,7 @@ src_install() {
 	if use doc; then
 			dodoc ${S}/ASF2.0.txt
 			java-pkg_dohtml *.html
-			java-pkg_dohtml -r docs/
+			java-pkg_dojavadoc docs
 	fi
 	use source && java-pkg_dosrc src
 }
