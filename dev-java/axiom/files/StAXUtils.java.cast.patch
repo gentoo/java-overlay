@@ -1,0 +1,13 @@
+--- axiom/axiom-1.1.1/modules/axiom-api/src/main/java/org/apache/axiom/om/util/StAXUtils.java	2007-02-24 18:27:30.000000000 +0100
++++ StAXUtils.java	2007-02-24 19:53:41.670396863 +0100
+@@ -94,7 +94,9 @@
+         if (!xmlOutputFactoryPool.empty()) {
+             return (XMLOutputFactory) xmlOutputFactoryPool.pop();
+         }
+-        return XMLOutputFactory.newInstance("javax.xml.stream.XMLOutputFactory", StAXUtils.class.getClassLoader());
++        
++	javax.xml.stream.XMLOutputFactory a = XMLOutputFactory.newInstance("javax.xml.stream.XMLOutputFactory", StAXUtils.class.getClassLoader());
++	return a;
+     }
+ 
+     /**

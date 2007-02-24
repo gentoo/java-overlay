@@ -1,0 +1,9 @@
+# ChangeLog for dev-java/axiom
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  24 Feb 2007; kiorky <kiorky@cryptelium.net> +axiom-1.1.1.ebuild,
+  +files/StAXUtils.java.cast.patch, +files/build.xml, +metadata.xml:
+  Added as a dependency of neethy
+  See #168254
+

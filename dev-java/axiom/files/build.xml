@@ -1,0 +1,26 @@
+<project default="jar" basedir=".">
+	<property name="final.name" value="axiom"/>
+	<target name="init">
+	<tstamp/>
+		<mkdir dir="build"/>
+		<mkdir dir="dist"/>
+		<mkdir dir="dist/lib"/>
+		<mkdir dir="dist/docs"/>
+	</target>
+	<target name="compile" depends="init" description="compile the source " >
+		<javac  destdir="build">
+			<src path="modules/" />
+		</javac>
+	</target>
+	<target name="jar" depends="compile"  description="generate the distribution" >
+		<mkdir dir="dist/lib"/>
+	    	<jar jarfile="dist/lib/${final.name}.jar" basedir="build"/>
+	</target>
+	<target name="javadoc" depends="init">
+		<javadoc destdir="dist/docs/" author="true" version="true" use="true">
+			<fileset dir="modules" defaultexcludes="yes">
+				<include name="**/*.java"/>
+			</fileset>
+		</javadoc>
+	</target>
+</project>
