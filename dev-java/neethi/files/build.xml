@@ -1,5 +1,5 @@
 <project default="jar" basedir=".">
-	<property name="final.name" value="neethy"/>
+	<property name="final.name" value="neethi"/>
 	<target name="init">
 	<tstamp/>
 		<mkdir dir="build"/>
