@@ -8,7 +8,7 @@ DESCRIPTION="an Open Source Security Assertion Markup Language implementation"
 HOMEPAGE="http://www.opensaml.org/"
 SRC_URI="http://shibboleth.internet2.edu/downloads/archive/${PN}-java-${PV}.tar.gz"
 
-LICENSE="Apache 2.0"
+LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~x86"
 IUSE="doc"
