@@ -9,7 +9,7 @@ inherit eutils java-pkg-2 java-ant-2
 DESCRIPTION="A pure Java Subversion client library"
 HOMEPAGE="http://svnkit.com/"
 SRC_URI="http://www.svnkit.com/org.tmatesoft.svn_${PV}.src.zip"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 SLOT="0"
 LICENSE=""
 IUSE="test"

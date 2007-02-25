@@ -2,6 +2,9 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  25 Feb 2007; William L. Thomson Jr. <wltjr@gentoo.org> ChangeLog:
+  Added ~amd64, ebuild is missing a license
+
   25 Feb 2007; Miroslav Šulc <fordfrog@gentoo.org> +sequence-1.1.1.ebuild,
   +files/sequence-1.1.1-build.xml, +metadata.xml:
   New ebuild. I didn't find the original sources (if there are any other than
