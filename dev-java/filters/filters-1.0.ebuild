@@ -8,7 +8,7 @@ DESCRIPTION="Java Image Processing Classes"
 HOMEPAGE="http://www.jhlabs.com/ip/filters/"
 SRC_URI="http://www.jhlabs.com/ip/${PN}/Filters.zip"
 
-LICENSE="Apache-2"
+LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
@@ -18,12 +18,7 @@ DEPEND=">=virtual/jdk-1.4
 		dev-java/ant-core"
 RDEPEND=">=virtual/jre-1.4"
 
-
-S=${WORKDIR}
-
-src_compile() {
-	eant jar
-}
+S="${WORKDIR}"
 
 src_install() {
 	java-pkg_newjar ./dist/Filters.jar

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>java</herd>
+<longdescription lang="en">
+This package is a collection of Image filters that are useful in applications
+such as games where images have to be generated on the fly.
+</longdescription>
+</pkgmetadata>
+
