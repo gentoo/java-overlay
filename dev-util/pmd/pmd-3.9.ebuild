@@ -18,12 +18,12 @@ COMMON_DEPEND="
 	dev-java/backport-util-concurrent
 	>=dev-java/jaxen-1.1_beta10"
 
-RDEPEND=">=virtual/jre-1.4
+RDEPEND=">=virtual/jre-1.5
 	${COMMON_DEPEND}"
 
 # NOTE: they include regression tests in the main jar so junit is needed on the cp even for src_compile
 
-DEPEND=">=virtual/jdk-1.4
+DEPEND=">=virtual/jdk-1.5
 	app-arch/unzip
 	dev-java/ant
 	=dev-java/junit-3.8*
