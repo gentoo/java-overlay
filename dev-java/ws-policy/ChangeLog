@@ -1,0 +1,9 @@
+# ChangeLog for dev-java/ws-policy
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  25 Feb 2007; kiorky <kiorky@cryptelium.net> +ws-policy-1.0.1.ebuild,
+  +files/build.xml, +metadata.xml:
+  Adding as a wss4j dependency
+  See #168285
+
