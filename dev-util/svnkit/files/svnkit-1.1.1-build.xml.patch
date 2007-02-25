@@ -1,0 +1,111 @@
+--- build.xml.original	2007-02-25 16:39:32.000000000 +0100
++++ build.xml	2007-02-25 18:20:56.000000000 +0100
+@@ -24,21 +24,13 @@
+ 
+     <target name="compile-library">
+         <mkdir dir="svnkit/bin" />
+-        <mkdir dir="contrib/javahl/bin" />
+-        <mkdir dir="contrib/sequence/bin" />
+ 
+         <path id="library.classpath">
+-            <pathelement location="contrib/ganymed/ganymed.jar" />
+-            <pathelement path="contrib/javahl/bin" />
+-            <pathelement path="contrib/sequence/bin" />
++            <fileset dir="contrib">
++                <include name="**/*.jar"/>
++            </fileset>
+         </path>
+ 
+-        <javac debug="true" destdir="contrib/javahl/bin" srcdir="contrib/javahl/src">
+-            <exclude name="**/SVNClient.java" />
+-            <exclude name="**/SVNAdmin.java" />
+-            <exclude name="org/tigris/subversion/javahl/tests/**" />
+-        </javac>
+-        <javac debug="true" destdir="contrib/sequence/bin" srcdir="contrib/sequence/src" />
+         <javac debug="true"
+                destdir="svnkit/bin"
+                srcdir="svnkit/src"
+@@ -102,24 +94,12 @@
+         <mkdir dir="contrib/sequence/bin-test" />
+         <mkdir dir="svnkit-test/bin" />
+         <path id="tests.classpath">
+-            <pathelement location="contrib/ganymed/ganymed.jar" />
+-            <pathelement location="contrib/junit/junit.jar" />
+-            <pathelement path="contrib/javahl/bin" />
+-            <pathelement path="contrib/sequence/bin" />
+-            <pathelement path="contrib/sequence/bin-test" />
++            <fileset dir="contrib">
++                <include name="**/*.jar"/>
++            </fileset>
+             <pathelement path="svnkit/bin" />
+         </path>
+ 
+-        <path id="sequence.tests.classpath">
+-            <pathelement location="contrib/junit/junit.jar" />
+-            <pathelement path="contrib/sequence/bin" />
+-        </path>
+-
+-        <javac debug="true"
+-               destdir="contrib/sequence/bin-test"
+-               srcdir="contrib/sequence/src-test"
+-               classpathref="sequence.tests.classpath"
+-        />
+         <javac debug="true"
+                destdir="svnkit-test/bin"
+                srcdir="svnkit-test/src"
+@@ -140,40 +120,17 @@
+                 <include name="svnkit.build.properties" />
+                 <include name="COPYING" />
+             </fileset>
+-        	<fileset dir="contrib/sequence">
+-                <include name="SEQUENCE-LICENSE" />
+-        	</fileset>
+-            <fileset dir="contrib/sequence/bin" />
+             <fileset dir="svnkit/src">
+                 <include name="org/tmatesoft/svn/core/internal/wc/config/**" />
+                 <include name="org/tmatesoft/svn/core/io/repository/**" />
+             </fileset>
+         </jar>
+-        <jar destfile="build/lib/svnkit-javahl.jar">
+-            <fileset dir="svnkit/bin">
+-                <include name="org/tigris/**" />
+-            </fileset>
+-            <fileset dir="contrib/javahl/bin" >
+-                <exclude name="org/tigris/subversion/javahl/tests/**" />
+-                <exclude name="org/tigris/subversion/javahl/SVNClient.class" />
+-                <exclude name="org/tigris/subversion/javahl/SVNClient$*.class" />
+-                <exclude name="org/tigris/subversion/javahl/SVNAdmin.class" />
+-                <exclude name="org/tigris/subversion/javahl/SVNAdmin$*.class" />
+-            </fileset>
+-            <fileset dir="contrib/javahl">
+-                <include name="JAVAHL-LICENSE" />
+-            </fileset>
+-        </jar>
+-        <copy file="contrib/ganymed/ganymed.jar" todir="build/lib" />
+         <!-- copy licences and changelog -->
+         <copy todir="build/lib" flatten="true">
+             <fileset dir=".">
+                 <include name="changelog.txt" />
+                 <include name="README.txt" />
+                 <include name="COPYING" />
+-                <include name="contrib/javahl/JAVAHL-LICENSE" />
+-                <include name="contrib/sequence/SEQUENCE-LICENSE" />
+-                <include name="contrib/ganymed/GANYMED-LICENSE" />
+             </fileset>
+         </copy>
+     </target>
+@@ -362,11 +319,11 @@
+ 
+     <target name="test-java" depends="init-environment,compile-tests">
+         <path id="test.classpath">
+-            <pathelement path="contrib/junit/junit.jar" />
++            <fileset dir="contrib">
++                <include name="**/*.jar"/>
++            </fileset>
+             <pathelement path="svnkit/bin" />
+-            <pathelement path="contrib/sequence/bin" />
+             <pathelement path="svnkit-test/bin" />
+-            <pathelement path="contrib/sequence/bin-test" />
+         </path>
+         <java classpathref="test.classpath"
+               dir="svnkit-test"
