@@ -1,0 +1,9 @@
+# ChangeLog for dev-java/sequence
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  25 Feb 2007; Miroslav Šulc <fordfrog@gentoo.org> +sequence-1.1.1.ebuild,
+  +files/sequence-1.1.1-build.xml, +metadata.xml:
+  New ebuild. I didn't find the original sources (if there are any other than
+  the one from svnkit). License has to be identified.
+
