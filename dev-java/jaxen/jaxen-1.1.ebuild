@@ -10,7 +10,7 @@ HOMEPAGE="http://jaxen.org/"
 SRC_URI="http://dist.codehaus.org/${PN}/distributions/${MY_P}-src.tar.gz"
 
 LICENSE="jaxen"
-SLOT="0"
+SLOT="1.1"
 KEYWORDS="~amd64 ~ppc ~x86 ~x86-fbsd"
 IUSE="doc source test"
 
