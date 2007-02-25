@@ -1,0 +1,57 @@
+--- build.xml.original	2007-02-25 13:12:45.000000000 +0100
++++ build.xml	2007-02-25 19:42:06.000000000 +0100
+@@ -11,6 +11,8 @@
+     <pathelement location="${svnjavahl.jar}"/>
+   	<pathelement location="${svnkit.jar}"/>
+   	<pathelement location="${ganymed.jar}"/>
++  	<pathelement location="${junit.jar}"/>
++  	<pathelement location="${sequence.jar}"/>
+   </path>
+ 
+   <!-- ================================================================= -->
+@@ -112,11 +114,13 @@
+   <!-- ================================================================= -->
+   <!-- Define custom tasks for the unit tests (e.g. code coverage)       -->
+   <!-- ================================================================= -->
++  <!--
+   <path id="emma.lib" >
+     <pathelement location="${test.lib.dir}/emma.jar" />
+     <pathelement location="${test.lib.dir}/emma_ant.jar" />
+   </path>
+   <taskdef resource="emma_ant.properties" classpathref="emma.lib" />
++  -->
+ 	
+   <!-- ================================================================= -->
+   <!-- run junit tests                                                   -->
+@@ -132,7 +136,6 @@
+         <pathelement location="${build.classes.dir}"/>
+       	<pathelement location="${build.testClasses.dir}"/>
+         <path refid="project.classpath"/>	
+-        <path refid="emma.lib" />
+       </classpath>
+       <jvmarg value="-Demma.coverage.out.file=${coverage.dir}/coverage.emma" />
+       <jvmarg value="-Demma.coverage.out.merge=true" />
+@@ -148,7 +151,6 @@
+         <pathelement location="${build.classes.dir}"/>
+         <pathelement location="${build.testClasses.dir}"/>
+         <path refid="project.classpath"/>	
+-        <path refid="emma.lib" />
+       </classpath>
+       <jvmarg value="-Demma.coverage.out.file=${coverage.dir}/coverage.emma" />
+       <jvmarg value="-Demma.coverage.out.merge=true" />
+@@ -190,6 +192,7 @@
+   	<!-- run the EMMA instrumentation -->
+     <delete dir="${emma.instrClasses.dir}"/>
+     <mkdir dir="${emma.instrClasses.dir}" />
++    <!--
+     <emma enabled="${emma.enabled}" >
+       <instr instrpath="${build.classes.dir}"
+              destdir="${emma.instrClasses.dir}"
+@@ -197,6 +200,7 @@
+              merge="true"
+       />
+     </emma>
++    -->
+   </target>
+ 
+ </project>

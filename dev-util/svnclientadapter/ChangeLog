@@ -1,0 +1,10 @@
+# ChangeLog for dev-util/svnclientadapter
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  25 Feb 2007; Miroslav Šulc <fordfrog@gentoo.org>
+  +svnclientadapter-1.2.0.ebuild,
+  +files/svnclientadapter-1.2.0-build.xml.patch, +metadata.xml:
+  New ebuild. Used copy from chewi-overlay. Tests for svnkit and cmdline svn
+  fail.
+
