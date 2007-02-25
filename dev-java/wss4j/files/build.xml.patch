@@ -1,0 +1,55 @@
+--- wss4j-1.5.1/build.xml	2007-02-24 16:12:48.000000000 +0100
++++ build.xml	2007-02-25 03:30:52.718768326 +0100
+@@ -113,6 +113,8 @@
+                 <include name="**/*.jar"/>
+                 <!-- <pathelement path="${java.class.path}"/> -->
+             </fileset>
++	     <pathelement path="${gentoo.classpath}"/> 
++
+         </path>
+ 
+         <path id="classpath.wss4j" description="wss4j classes; first try pure class files, then jars">
+@@ -140,12 +142,16 @@
+         <path id="classpath.test">
+             <!-- classpath for test is librarypath plus junit -->
+             <path refid="classpath.library"/>
+-<!--            <pathelement path="${java.class.path}"/> -->
++	
++		 <pathelement path="${gentoo.classpath}"/> 
+         </path>
+ 
+         <path id="classpath.test.jar">
+             <!-- classpath for test is librarypath plus junit -->
++
+             <path refid="classpath.library"/>
++	 <pathelement path="${gentoo.classpath}"/> 
++
+             <pathelement path="${build.dir}/${jar.library}"/>
+             <pathelement path="${build.dir}/${jar.tests}"/>
+         </path>
+@@ -323,7 +329,7 @@
+             description="Target for the gump run"/>
+ 
+     <target name="compile" 
+-       depends="compile.library,compile.samples, compile.tests, 
++       depends="compile.library,compile.samples,  
+                 compile.interops, fix.properties"
+             description="compile everything"/>
+ 
+@@ -362,6 +368,7 @@
+ 
+         <javac srcdir="${dir.test}" destdir="${build.classes}" debug="on">
+             <classpath refid="classpath.test"/>
++
+ <!--            <exclude name="**/secconv/**/*.java"/> -->
+         </javac>
+ 
+@@ -702,7 +709,7 @@
+     </target>
+ 
+     <target name="jar"
+-        depends="compile, test"
++        depends="compile"
+         description="Creates the ${jar.library}">
+ 
+         <jar jarfile="${build.dir}/${jar.library}"

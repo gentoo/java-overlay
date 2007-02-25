@@ -1,0 +1,32 @@
+--- wss4j-1.5.1/src/org/apache/ws/security/policy/parser/WSSPolicyProcessor.java	2007-02-24 21:15:13.150400696 +0100
++++ WSSPolicyProcessor.java	2007-02-25 02:48:31.318004977 +0100
+@@ -25,9 +25,9 @@
+ 
+ import org.apache.commons.logging.Log;
+ import org.apache.commons.logging.LogFactory;
+-import org.apache.ws.policy.All;
++import org.apache.neethi.All;
+ import org.apache.ws.policy.Assertion;
+-import org.apache.ws.policy.ExactlyOne;
++import org.apache.neethi.ExactlyOne;
+ import org.apache.ws.policy.Policy;
+ import org.apache.ws.policy.PrimitiveAssertion;
+ import org.apache.ws.policy.util.PolicyFactory;
+@@ -204,7 +204,7 @@
+ 
+         ExactlyOne xor = (ExactlyOne) policy.getTerms()
+                 .get(0);
+-        List listOfPolicyAlternatives = xor.getTerms();
++        List listOfPolicyAlternatives = xor.getPolicyComponents();
+ 
+         boolean success = false;
+         int numberOfAlternatives = listOfPolicyAlternatives.size();
+@@ -213,7 +213,7 @@
+             All aPolicyAlternative = (All) listOfPolicyAlternatives
+                     .get(i);
+ 
+-            List listOfAssertions = aPolicyAlternative.getTerms();
++            List listOfAssertions = aPolicyAlternative.getAssertions();
+ 
+             Iterator iterator = listOfAssertions.iterator();
+             /*
