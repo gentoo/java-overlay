@@ -1,0 +1,9 @@
+# ChangeLog for dev-java/ganymed-ssh2
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  25 Feb 2007; Miroslav Šulc <fordfrog@gentoo.org>
+  +ganymed-ssh2-210.ebuild, +files/ganymed-ssh2-210-debian-build.properties,
+  +files/ganymed-ssh2-210-debian-build.xml, +metadata.xml:
+  Took from chewi-overlay, version bump, migration
+

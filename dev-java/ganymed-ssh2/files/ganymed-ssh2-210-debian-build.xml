@@ -1,0 +1,50 @@
+<project name="ganymed-ssh2" default="all" basedir=".">
+
+    <property file="build.properties"/>
+        
+    <target name="clean" description="Clean everything">
+        <delete dir="${build.lib.dir}"/>
+        <delete dir="${build.classes.dir}"/>
+        <delete dir="${build.javadoc.dir}"/>
+    </target>
+
+    <target name="compile" description="Compile all sources files">
+        <mkdir dir="${build.classes.dir}" />
+        <depend srcDir="${src.main.dir}"
+                destDir="${build.classes.dir}"
+                cache="${build.cache.dir}"/>
+        <javac srcdir="${src.main.dir}"
+               destdir="${build.classes.dir}"
+               debug="${debug}"
+               includes="**">
+        </javac>
+    </target>
+
+    <target name="javadoc" description="Create javadoc">
+        <mkdir dir="${build.javadoc.dir}" />
+        <javadoc sourcepath="${src.main.dir}"
+                 destdir="${build.javadoc.dir}"
+                 packagenames="ch.*"
+                 windowtitle="Ganymed SSH2 API"
+                 doctitle="ganymed-ssh2">
+        </javadoc>  
+    </target>
+
+    <target name="ganymed-ssh2.jar" depends="compile" description="Generate ganymed-ssh2.jar">
+        <tstamp/>
+        <mkdir dir="${build.lib.dir}" />
+        <jar jarfile="${build.lib.dir}/ganymed-ssh2.jar"
+             basedir="${build.classes.dir}"
+             includes="**/*.class">
+            <manifest>
+                <section name="ch.ethz.ssh2">
+                    <attribute name="Specification-Title" value="Ganymed-SSH2"/>
+                    <attribute name="Specification-Version" value="${ganymedssh2.version}"/>
+                    <attribute name="Implementation-Title" value="ch.ethz.ssh2"/>
+                    <attribute name="Implementation-Version" value="${ganymedssh2.version} (${TODAY})"/> 
+                </section>
+            </manifest>
+        </jar>
+    </target>
+    <target name="all" depends="ganymed-ssh2.jar,javadoc"/>
+</project>
