@@ -2,6 +2,9 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  25 Feb 2007; kiorky <kiorky@cryptelium.net> +axiom-1.2.2.ebuild:
+  Bumped to 1.2.2
+
   24 Feb 2007; kiorky <kiorky@cryptelium.net> +axiom-1.1.1.ebuild,
   +files/StAXUtils.java.cast.patch, +files/build.xml, +metadata.xml:
   Added as a dependency of neethy
