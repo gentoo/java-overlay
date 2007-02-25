@@ -13,6 +13,8 @@ www-servers/jboss-bin:srvdir - Add SRVDIR support
 dev-db/hsqldb:sqltools - Add data managment tools
 dev-java/quartz:servlet-2.3 - Use the 2.3 servlet specification
 dev-java/quartz:servlet-2.4 - Use the 2.4 servlet specification
+dev-util/netbeans:mobility - Add Netbeans Mobility Pack
+dev-util/netbeans:profiler - Add Netbeans Profiler
 
 dev-java/geronimo-specs:activation - Enable to install the 'activation' geronimo specification
 dev-java/geronimo-specs:commonj - Enable to install the 'commonj' geronimo specification
