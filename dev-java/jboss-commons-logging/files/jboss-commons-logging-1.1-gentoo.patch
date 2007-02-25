@@ -1,0 +1,28 @@
+--- jboss-commons-logging-1.1/build.xml	2007-02-25 23:24:10.000000000 +0100
++++ build.xml	2007-02-25 23:36:35.752565904 +0100
+@@ -771,6 +771,25 @@
+     <fail if="test.failure">
+       One or more unit tests failed.
+     </fail>
++ </target>
++  <target name="javadoc" description="o Generate javadoc" depends="">
++    <mkdir dir="${build.home}/docs">
++    </mkdir>
++    <tstamp>
++      <format pattern="2001-yyyy" property="year">
++      </format>
++    </tstamp>
++    <property name="copyright" value="Copyright &amp;copy;  The Apache Software Foundation. All Rights Reserved.">
++    </property>
++    <property name="title" value="Logging 1.1 API">
++    </property>
++    <javadoc use="true" private="true" destdir="${build.home}/docs" author="true" version="true" sourcepath="src/java" packagenames="org.apache.commons.logging.*">
++      <classpath>
++        <path refid="javadoc.classpath">
++        </path>
++      </classpath>
++    </javadoc>
+   </target>
+ 
++
+ </project>

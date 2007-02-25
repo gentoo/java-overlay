@@ -1,0 +1,12 @@
+# ChangeLog for dev-java/jboss-commons-logging
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  25 Feb 2007; kiorky <kiorky@cryptelium.net>
+  +jboss-commons-logging-1.1.ebuild,
+  +files/jboss-commons-logging-1.1-gentoo.patch,
+  +files/jboss-commons-logging-1.1-servletapi.patch, +metadata.xml:
+  Added to the "java-migration-overlay" as it is a jboss dependency.
+  This is a special version patched by jboss!
+  See #168395
+
