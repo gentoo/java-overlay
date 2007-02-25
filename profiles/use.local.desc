@@ -35,3 +35,9 @@ dev-java/geronimo-specs:jta - Enable to install the 'jta' geronimo specification
 dev-java/geronimo-specs:qname - Enable to install the 'qname' geronimo specification
 dev-java/geronimo-specs:saaj - Enable to install the 'saaj' geronimo specification
 dev-java/geronimo-specs:servlet - Enable to install the 'servlet' geronimo specification
+
+dev-java/jboss-commons-logging:avalon-logkit - Add support for avalon-logkit
+dev-java/jboss-commons-logging:log4j - Add support for log4j
+dev-java/jboss-commons-logging:servletapi - Add support for servletapi
+dev-java/jboss-commons-logging:avalon-framework - Add support for avalon-framework
+
