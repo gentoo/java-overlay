@@ -38,6 +38,6 @@ src_install() {
 	java-pkg_dojar "dist/lib/${PN}.jar"
 	java-pkg_dojavadoc javadoc
 
-	use source && java-pkg_dosrc src
+	use source && java-pkg_dosrc src/*
 }
 

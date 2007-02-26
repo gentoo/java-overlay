@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>java</herd>
+<longdescription lang="en">
+Utility and Framework for timing and animations. The code serves as a tutorial
+on how to use timers, as well as a framework for doing more powerful things with
+timers.
+</longdescription>
+</pkgmetadata>
+
