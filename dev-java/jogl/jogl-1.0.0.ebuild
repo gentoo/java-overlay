@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+WANT_ANT_TASKS="ant-antlr"
+
 inherit java-pkg-2 java-ant-2 versionator
 
 MY_PV=$(replace_all_version_separators '_' )
@@ -22,36 +24,35 @@ COMMON_DEPEND="virtual/opengl
 			   cg? ( media-gfx/nvidia-cg-toolkit )"
 
 DEPEND=">=virtual/jdk-1.4
-		>=dev-java/ant-core-1.5
-		dev-java/ant-tasks
 		dev-java/antlr
 		app-arch/unzip
+		>=dev-java/cpptasks-1.0_beta4-r2
 		${COMMON_DEPEND}"
 RDEPEND=">=virtual/jre-1.4
 		${COMMON_DEPEND}"
 
 S="${WORKDIR}/${PN}"
 
-pkg_setup() {
-	if built_with_use dev-java/ant-tasks noantlr; then
-		eerror "antlr support is required in dev-java/ant-tasks"
-		die "please re-emerge dev-java/ant-tasks without noantlr"
-	fi
-}
-
 src_unpack() {
 	unpack ${A}
 	epatch "${FILESDIR}/${P}-fix-solaris-compiler.patch" "${FILESDIR}/${P}-libpath.patch"
+	java-ant_rewrite-classpath gluegen/make/build.xml
+	cd gluegen/make/lib
+	rm -v *.jar || die
+	java-pkg_jar-from cpptasks
 }
 
 src_compile() {
 	cd make/
 	local antflags="-Dantlr.jar=$(java-pkg_getjars antlr)"
+	local gcp="$(java-pkg_getjars ant-core):$(java-config --tools)"
 	use cg && antflags="${antflags} -Djogl.cg=1 -Dx11.cg.lib=/usr/lib"
 	# -Dbuild.sysclasspath=ignore fails with missing ant dependencies.
-	
+
 	export ANT_OPTS="-Xmx1g"
-	eant ${antflags} all $(use_doc javadoc.dev.x11) $(use_doc javadoc)
+	eant \
+		-Dgentoo.classpath="${gcp}" \
+		${antflags} all $(use_doc javadoc.dev.x11) $(use_doc javadoc)
 }
 
 src_install() {
