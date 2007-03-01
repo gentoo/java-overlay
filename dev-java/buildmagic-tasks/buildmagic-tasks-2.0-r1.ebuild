@@ -52,9 +52,9 @@ src_unpack() {
 	mkdir -p tasks/src/main/org/jboss/logging
 	cp ../jboss-common/src/main/org/jboss/util/DirectoryBuilder.java tasks/src/main/org/jboss/util
 	cp ../jboss-common/src/main/org/jboss/util/Strings.java tasks/src/main/org/jboss/util
-cp 	../jboss-common/src/main/org/jboss/util/NestedError.java tasks/src/main/org/jboss/util
+	cp 	../jboss-common/src/main/org/jboss/util/NestedError.java tasks/src/main/org/jboss/util
 	cp ../jboss-common/src/main/org/jboss/util/NestedThrowable.java tasks/src/main/org/jboss/util
-cp 	../jboss-common/src/main/org/jboss/util/ThrowableHandler.java tasks/src/main/org/jboss/util
+	cp 	../jboss-common/src/main/org/jboss/util/ThrowableHandler.java tasks/src/main/org/jboss/util
 	cp ../jboss-common/src/main/org/jboss/util/ThrowableListener.java tasks/src/main/org/jboss/util
 	cp ../jboss-common/src/main/org/jboss/util/NullArgumentException.java tasks/src/main/org/jboss/util
 	cp ../jboss-common/src/main/org/jboss/util/EmptyStringException.java tasks/src/main/org/jboss/util
