@@ -15,12 +15,15 @@ KEYWORDS="~x86"
 IUSE="doc source"
 
 COMMON_DEP="
+	dev-java/junit
+	dev-java/ant-core
+	~dev-java/jdom-1.0
+	=dev-java/jaxen-1.1*
 	"
 
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEP}"
 DEPEND=">=virtual/jdk-1.4
-		dev-java/ant-core
 		app-arch/unzip
 		source? ( app-arch/zip )
 		${COMMON_DEP}"
@@ -34,6 +37,7 @@ src_unpack() {
 	cp "${FILESDIR}/${PV}-build.xml" build.xml || die
 	cp "${FILESDIR}/${PV}-common.properties" common.properties || die
 }
+
 _eant() {
 	eant \
 		-Djunit.jar="$(java-pkg_getjar junit junit.jar)" \
