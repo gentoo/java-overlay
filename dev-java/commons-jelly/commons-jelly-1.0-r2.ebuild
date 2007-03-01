@@ -62,22 +62,6 @@ src_unpack() {
 	# rewrite their classpath and prevent them to use bundled jars !
 	for build in $(find "${WORKDIR}" -name build*xml);do
 		java-ant_rewrite-classpath "$build"
-		# get out of classpath errors at build/test time
-		sed -i "${build}" -re\
-			's/pathelement\s*path="\$\{testclassesdir\}"/pathelement path="\$\{gentoo.classpath\}:\$\{testclassesdir\}"/'\
-			|| die
-		# separate compile and test time
-		sed -i "${build}" -re\
-			's/compile,test/compile/'\
-			|| die
-		# don't get bundled jars
-		sed -i "${build}" -re\
-			's/depends=\"get-deps\"//'\
-			|| die
-		# don't uset bundled jars
-		sed -i "${build}" -re\
-			's/refid=\"build.classpath\"/path=\"\$\{gentoo.classpath\}\"/'\
-			|| die
 	done
 
 }
