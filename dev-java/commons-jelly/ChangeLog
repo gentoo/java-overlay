@@ -1,0 +1,37 @@
+# ChangeLog for dev-java/commons-jelly
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-java/commons-jelly/ChangeLog,v 1.6 2007/02/10 14:28:42 betelgeuse Exp $
+
+  01 Mar 2007; kiorky <kiorky@cryptelium.net> ChangeLog:
+  Version bump (-r2)
+
+  10 Feb 2007; Petteri Räty <betelgeuse@gentoo.org>
+  commons-jelly-1.0-r1.ebuild:
+  Use split ant for test depends.
+
+  26 Dec 2006; Petteri Räty <betelgeuse@gentoo.org>
+  commons-jelly-1.0-r1.ebuild:
+  Always needs junit and commons-logging to compile. Relaxed commons-jexl
+  dependency for upcoming version bump and cleaned the ebuild.
+
+  30 Nov 2006; Vlastimil Babka <caster@gentoo.org>
+  -commons-jelly-1.0.ebuild, commons-jelly-1.0-r1.ebuild:
+  Update xerces dep for upcoming 2.6 slotmove.
+
+*commons-jelly-1.0-r1 (22 Jul 2006)
+
+  22 Jul 2006; Krzysiek Pawlik <nelchael@gentoo.org>
+  +commons-jelly-1.0-r1.ebuild:
+  Migrated to Generation 2.
+
+  07 Jun 2006; Joshua Nichols <jnichols@gentoo.org>
+  commons-jelly-1.0.ebuild:
+  Fixed USE flags (bug #135959)
+
+*commons-jelly-1.0 (24 Dec 2005)
+
+  24 Dec 2005; Joshua Nichols <nichoj@gentoo.org>
+  +files/commons-jelly-1.0-gentoo.patch, +metadata.xml,
+  +commons-jelly-1.0.ebuild:
+  Initial commit (bug #70847).
+
