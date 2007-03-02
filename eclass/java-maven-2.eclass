@@ -55,20 +55,20 @@ emaven() {
 	${JAVA_MAVEN_EXEC} ${maven_flags} "-o $@" || die "maven failed"
 }
 
-# in case we re using maven1, we will need to generate 
+# in case we re using maven1, we will need to generate
 # a build.xml to apply our classpath
 javava-maven-2-m1-gen_build_xml() {
 	# generate build.xml whereever there is a project.xml
 	for project in $(find "${WORKDIR}" -name project*xml);do
 		cd $(dirname ${project}) || die
-		emaven ant:ant 
-			|| die "Generation of build.xml failed for ${project}"		
+		emaven ant:ant\
+			|| die "Generation of build.xml failed for ${project}"
 	done
 }
 
 # searching for maven style generated ant build files
 # rewrite their classpath and prevent them to use bundled jars !
-# Separated from javava-maven-2-m1-gen_build_xml as we 
+# Separated from javava-maven-2-m1-gen_build_xml as we
 # don't have always the ant plugin !
 java-maven-2-rewrite_build_xml() {
 		for build in $(find "${WORKDIR}" -name build*xml);do
