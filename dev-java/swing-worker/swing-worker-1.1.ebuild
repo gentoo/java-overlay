@@ -27,9 +27,9 @@ EANT_BUILD_TARGET="compile"
 src_install() {
 	use doc & java-pkg_dojavadoc dist/javadoc
 	cd build
-	jar cf ../swing-worker.jar *
+	jar cf "../${PN}.jar" * || die "Unable to create jar"
 	cd ..
-	java-pkg_dojar swing-worker.jar
+	java-pkg_dojar "${PN}.jar"
 
 	use source && java-pkg_dosrc src/java/*
 }
