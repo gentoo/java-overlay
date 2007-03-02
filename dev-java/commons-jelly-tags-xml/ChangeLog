@@ -1,0 +1,10 @@
+# ChangeLog for dev-java/commons-jelly-tags-xml
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  02 Mar 2007; kiorky <kiorky@cryptelium.net>
+  +commons-jelly-tags-xml-1.0.ebuild, +metadata.xml:
+  Adding as i must do something else for now
+      Will finnish later
+      It s maven related stuff
+
