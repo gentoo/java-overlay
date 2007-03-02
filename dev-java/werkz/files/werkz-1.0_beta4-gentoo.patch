@@ -1,0 +1,62 @@
+--- titi/werkz/build.xml	2002-10-23 17:39:59.000000000 +0200
++++ build.xml	2007-02-28 08:39:53.708678255 +0100
+@@ -12,9 +12,6 @@
+   
+   <target name="init" description="o Initializes some properties">
+     <mkdir dir="lib"></mkdir>
+-    <condition property="noget">
+-      <equals arg2="only" arg1="${build.sysclasspath}"></equals>
+-    </condition>
+   </target>
+ 
+   <target name="compile" description="o Compile the code" depends="get-deps">
+@@ -25,11 +22,6 @@
+       <src>
+         <pathelement location="src/java/main"></pathelement>
+       </src>
+-      <classpath>
+-        <fileset dir="lib">
+-          <include name="*.jar"></include>
+-        </fileset>
+-      </classpath>
+     </javac>
+     
+     
+@@ -53,7 +45,7 @@
+ 
+   </target>
+     
+-  <target name="jar" description="o Create the jar" depends="compile,test">
++  <target name="jar" description="o Create the jar" depends="compile">
+ 
+     <jar jarfile="target/${final.name}.jar" excludes="**/package.html" basedir="${classesdir}"></jar>
+ 
+@@ -81,10 +73,7 @@
+         <sysproperty key="basedir" value="src/java/test"></sysproperty>
+         <formatter type="xml"></formatter>
+         <formatter usefile="true" type="plain"></formatter>
+-        <classpath>
+-          <fileset dir="lib">
+-            <include name="*.jar"></include>
+-          </fileset>
++	<classpath>
+           <pathelement path="${testclassesdir}"></pathelement>
+           <pathelement path="${classesdir}"></pathelement>
+         </classpath>
+@@ -108,9 +97,6 @@
+           <pathelement location="src/java/test"></pathelement>
+         </src>
+         <classpath>
+-          <fileset dir="lib">
+-            <include name="*.jar"></include>
+-          </fileset>
+           <pathelement path="${classesdir}"></pathelement>
+         </classpath>
+       </javac>
+@@ -184,4 +170,4 @@
+   </target>
+ 
+ </project>
+-    
+\ Pas de fin de ligne à la fin du fichier.
++    
