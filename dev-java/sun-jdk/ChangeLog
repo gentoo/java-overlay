@@ -2,6 +2,11 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  02 Mar 2007; Vlastimil Babka <caster@gentoo.org>
+  -sun-jdk-1.7.0.0_alpha07.ebuild, +sun-jdk-1.7.0.0_alpha09.ebuild,
+  +wget-log:
+  Snapshot bump.
+
   11 Feb 2007; Vlastimil Babka <caster@gentoo.org>
   -sun-jdk-1.7.0.0_alpha06.ebuild, +sun-jdk-1.7.0.0_alpha07.ebuild:
   Bump to new snapshot.
