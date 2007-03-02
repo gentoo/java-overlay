@@ -10,15 +10,25 @@
 
 inherit java-pkg-2
 
-DEPEND="${DEPEND}
-	dev-java/ant-core
-	dev-java/ant-tasks
-	=dev-java/bsf-2.3*
-	dev-java/buildmagic-tasks
-	dev-java/xml-commons-resolver
-	dev-java/xalan
-	=dev-java/xerces-2.6.2*
-	dev-java/xdoclet"
+TOOLS_DEPEND="dev-java/ant-core
+			  dev-java/ant-pretty
+			  dev-java/ant-tasks
+			  =dev-java/bsf-2.3*
+			  dev-java/buildmagic-tasks
+			  =dev-java/eclipse-ecj-3.1*
+			  =dev-java/junit-3.8*
+			  dev-java/xalan
+			  =dev-java/xerces-2.6.2*
+			  =dev-java/xml-commons-external-1.3*
+			  dev-java/xml-commons-resolver"
+
+jboss-4_get-thirdparty-depend
+DEPEND="${DEPEND} ${TOOLS_DEPEND} ${PN_THIRDPARTY_DEPEND}
+		dev-java/xdoclet
+		=dev-java/gnu-regexp-1*
+		dev-java/gnu-jaxp
+		=dev-java/jaxen-1.1*
+		"
 
 SLOT="4"
 
@@ -30,7 +40,7 @@ S="${JBOSS_ROOT}/${MODULE}"
 
 THIRDPARTY_P="jboss-thirdparty-${PV}"
 TOOLS_P="jboss-tools-${PV}"
-GENTOO_CONF="jboss-${PVR}.data"
+GENTOO_CONF="jboss-${PVR}.mappings.sh"
 BASE_URL="http://dev.gentooexperimental.org/~kiorky/"
 BASE_URL_ORIG="http://gentooexperimental.org/distfiles"
 ECLASS_URI="${BASE_URL}/${TOOLS_P}.tar.bz2 ${BASE_URL}/${THIRDPARTY_P}.tar.bz2
@@ -76,12 +86,12 @@ jboss-4_fix-dir() {
 	echo ${java_pkg_args}
 	# remove spaces before beginning or after comma
 	# so we can do multilines in the mapping file
-	# then replace all " " by __ and the "," by " " 
+	# then replace all " " by __ and the "," by " "
 	# for the for statement
 	java_pkg_args=$(echo ${java_pkg_args}|\
-					sed -re "s/(^|,)\s*/\1/g"  |\
+					sed -re "s/(^|,)\s*/\1/g"|\
 					sed -re "s/\s+/__/g" |\
-					sed	-re "s/,/ /g"     \
+					sed -re "s/,/ /g"     \
 					|| die "substitute failed")
 	debug-print "value of ${temp}=${java_pkg_args}"
 
@@ -92,9 +102,7 @@ jboss-4_fix-dir() {
 
 	quiet_pushd "${full_dir}"
 	for i in $(echo "${java_pkg_args}"); do
-		echo $i
-		java-pkg_jar-from "${i//__/ }"
-		echo java-pkg_jar-from "${i//__/ }"
+		java-pkg_jar-from ${i//__/ }
 	done
 	quiet_popd
 }
@@ -115,13 +123,13 @@ jboss-4_get-dirs-to-fix() {
 	debug-print-function ${FUNCNAME} $*
 
 	local dirs_to_fix=$(jboss-4_get-dirs-to-fix-for-module ${MODULE})
-	for module in $(jboss-4_get-modules-to-fix); do
-		dirs_to_fix="$(jboss-4_get-dirs-to-fix-for-module ${module}) ${dirs_to_fix}"
+	for dependency in $(jboss-4_get-modules-to-fix); do
+		dirs_to_fix="$(jboss-4_get-dirs-to-fix-for-module ${dependency}) ${dirs_to_fix}"
 	done
 
-	# get unique dirs... behold bash voodoo magic!
+	# get unique dirs... behold bash voodoo magic !
 	dirs_to_fix=$(echo ${dirs_to_fix} | \
-		sed -e 's/ /\n/g'|sort | uniq | sed -e 's/\n/ /g')
+		sed -e 's/ /\n/g'| sort | uniq | sed -e 's/\n/ /g')
 
 	echo ${dirs_to_fix}
 }
@@ -130,12 +138,42 @@ jboss-4_get-dirs-to-fix-for-module() {
 	debug-print-function ${FUNCNAME} $*
 
 	local varname=${1//-/_}_library_dirs
-	#echo "jboss-4_get-dirs-to-fix:varname=${varname}" 1>&2
-	local dirs_to_fix=$(eval echo \$$varname)
-	#echo "jboss-4_get-dirs-to-fix:dirs_to_fix=${dirs_to_fix}" 1>&2
+	echo "jboss-4_get-dirs-to-fix:varname=${varname}" 1>&2
+	local dirs_to_fix=$(eval echo \$$varname|sed -re "s/\s\s+//g")
+	echo "jboss-4_get-dirs-to-fix:dirs_to_fix=${dirs_to_fix}" 1>&2
 
 	echo ${dirs_to_fix}
 }
+
+# lookup which depends we must have to ensure third deps own dependencies
+jboss-4_get-thirdparty-depend() {
+	debug-print-function ${FUNCNAME} $*
+	local depend=""
+	# getting dependencies
+	local dirs_to_fix=$(jboss-4_get-dirs-to-fix-for-module ${MODULE})
+	# getting the third dep. according direcotries
+	for dependency in $(jboss-4_get-modules-to-fix); do
+		dirs_to_fix="$(jboss-4_get-dirs-to-fix-for-module ${dependency}) ${dirs_to_fix}"
+	done
+
+	# get unique dirs... behold bash voodoo magic !
+	dirs_to_fix=$(echo ${dirs_to_fix} | \
+		sed -e 's/ /\n/g'| sort | uniq | sed -e 's/\n/ /g')
+
+	# for each thirddep, getting the dependencies from the portage tree
+	# and apend them to DEPEND
+	for dir in $(jboss-4_get-dirs-to-fix); do
+		local temp=${relative_dir//\//_} # convert / to _
+		temp="${temp//-/_}_depend" # convert - to _
+		eval java_pkg_depend=\$$temp # get the contents of temp
+		java_pkg_depend=$(echo ${java_pkg_depend} | \
+			sed -e 's/ /\n/g'| sort | uniq | sed -e 's/\n/ /g')
+		depend="${depend} ${java_pkg_depend}"
+	done
+
+	echo ${depend}
+}
+
 
 # lookup which modules should be fixed for the current module
 jboss-4_get-modules-to-fix() {
@@ -192,16 +230,20 @@ jboss-4_src_unpack() {
 	# NOTE: don't use java-ant's src_unpack!
 	# it cases some funky issues with buildmagic
 	unpack ${MY_A}
-	
+
 	cd "${S}" || die "cd failed"
 
 	unpack "${TOOLS_P}.tar.bz2"
-		
+
 	# workaround because something depends on this being around
 	mkdir -p "${JBOSS_THIRDPARTY}/sun-servlet/lib" || die "mkdir failed"
 
-	jboss-4_fix-dir tools/lib
-	#jboss-4_fix-thirdparty
+#	jboss-4_fix-dir tools/lib
+	jboss-4_fix-thirdparty
+	[[ -d ${JBOSS_THIRDPARTY}/apache-tomcat/lib ]] &&
+		ln -s /usr/share/tomcat-5.5/server/webapps/manager/WEB-INF/lib/catalina-manager.jar \
+		${JBOSS_THIRDPARTY}/apache-tomcat/lib || die "ln catalina-manager.jar failed"
+
 	#jboss-4_fix-modules
 }
 
