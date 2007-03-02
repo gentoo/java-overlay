@@ -2,16 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+JAVA_PKG_IUSE="doc source"
+
 inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="Java 1.6 SwingWorker backport for Java 1.5"
 HOMEPAGE="https://swingworker.dev.java.net"
-SRC_URI="https://swingworker.dev.java.net/files/documents/2810/41371/${PN}-src.zip"
+SRC_URI="https://swingworker.dev.java.net/files/documents/2810/51774/${PN}-src-${PV}.zip"
 
 LICENSE="LGPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="doc"
+IUSE=""
 
 DEPEND=">=virtual/jdk-1.5
 		app-arch/unzip
@@ -20,9 +22,7 @@ RDEPEND=">=virtual/jre-1.5"
 
 S="${WORKDIR}"
 
-src_compile() {
-	eant compile $(use_doc javadoc)
-}
+EANT_BUILD_TARGET="compile"
 
 src_install() {
 	use doc & java-pkg_dojavadoc dist/javadoc
@@ -30,4 +30,6 @@ src_install() {
 	jar cf ../swing-worker.jar *
 	cd ..
 	java-pkg_dojar swing-worker.jar
+
+	use source && java-pkg_dosrc src/java/*
 }

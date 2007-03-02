@@ -3,8 +3,8 @@
 <pkgmetadata>
 <herd>java</herd>
 <longdescription lang="en">
-swing-worker is a backport for java 1.5 of the swing threading libraries
-available within the sun 1.6 api.
+swing-worker is a backport for Java 1.5 of the Swing Threading libraries
+available within the Java 1.6 API.
 </longdescription>
 </pkgmetadata>
 
