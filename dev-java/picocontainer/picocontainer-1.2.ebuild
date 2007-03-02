@@ -9,7 +9,7 @@ HOMEPAGE="http://www.picocontainer.org"
 SRC_URI="http://dev.gentooexperimental.org/~kiorky/${P}.tar.bz2"
 LICENSE="PicoContainer"
 SLOT="1"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="source"
 RDEPEND=">=virtual/jre-1.4"
 DEPEND=">=virtual/jdk-1.4

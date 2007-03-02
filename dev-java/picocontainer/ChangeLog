@@ -2,6 +2,9 @@
 # Copyright 2000-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/picocontainer/ChangeLog,v 1.19 2006/08/01 12:22:41 nichoj Exp $
 
+  02 Mar 2007; Joshua Nichols <nichoj@gentoo.org> picocontainer-1.2.ebuild:
+  Added ~amd64
+
   13 Feb 2007; Vlastimil Babka <caster@gentoo.org>
   -picocontainer-1.0_beta4.ebuild, -files/build-1.0_beta4.xml,
   -picocontainer-1.1.ebuild, -picocontainer-1.1-r1.ebuild:
