@@ -1,0 +1,11 @@
+# ChangeLog for dev-java/maven-core
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  02 Mar 2007; kiorky <kiorky@cryptelium.net>
+  +files/build.xml-core-1.0.2-r1, +files/build.xml-jelly-1.0.2-r1,
+  +files/build.xml-1.0.2-r1, +maven-core-1.0.2-r1.ebuild, +metadata.xml:
+  Adding as i must do something else for now
+      Will finnish later
+      It s maven related stuff
+
