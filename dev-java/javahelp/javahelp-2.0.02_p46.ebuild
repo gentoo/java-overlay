@@ -54,7 +54,7 @@ _eant() {
 }
 
 src_compile() {
-	_eant jar $(use_doc)
+	_eant release $(use_doc)
 }
 
 #Does not actually run anything
@@ -76,7 +76,7 @@ src_install() {
 	use source && java-pkg_dosrc \
 		./jhMaster/JSearch/*/com \
 		./jhMaster/JavaHelp/src/*/{javax,com}
-	java-pkg_doexamples jhMaster/JavaHelp/demos
+	use examples && java-pkg_doexamples jhMaster/JavaHelp/demos
 }
 
 pkg_postinst() {
