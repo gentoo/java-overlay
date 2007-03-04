@@ -31,7 +31,7 @@ COMMON_DEPEND="
 	dev-java/flute
 	>=dev-java/jakarta-jstl-1.1.2
 	>=dev-java/sun-j2ee-deployment-bin-1.1
-	>=dev-java/javahelp-bin-2.0.02
+	>=dev-java/javahelp-2.0.02
 	>=dev-java/jsch-0.1.24
 	=dev-java/junit-3.8*
 	dev-java/sac
@@ -299,7 +299,7 @@ function place_unpack_symlinks() {
 	einfo "Symlinking jars for apisupport"
 	cd ${S}/apisupport/external
 	java-pkg_jar-from --build-only jdom-1.0
-	java-pkg_jar-from javahelp-bin jsearch.jar jsearch-2.0_03.jar
+	java-pkg_jar-from javahelp jsearch.jar jsearch-2.0_03.jar
 	java-pkg_jar-from --build-only rome rome.jar rome-fetcher-0.6.jar
 	java-pkg_jar-from --build-only rome rome.jar rome-0.6.jar
 	#apisupport/project/test/unit/data/example-external-projects/suite3/nbplatform/platform5/core/openide.jar
@@ -317,7 +317,7 @@ function place_unpack_symlinks() {
 
 	einfo "Symlinking jars for core"
 	cd ${S}/core/external
-	java-pkg_jar-from javahelp-bin jh.jar jh-2.0_04.jar
+	java-pkg_jar-from javahelp jh.jar jh-2.0_04.jar
 	#core/test/qa-functional/data/SampleProject/data.jar
 
 	# db
@@ -546,7 +546,7 @@ function symlink_extjars() {
 	#jnlp-launcher.jar (netbeans stuff)
 
 	cd ${1}/harness
-	java-pkg_jar-from javahelp-bin jsearch.jar jsearch-2.0_04.jar
+	java-pkg_jar-from javahelp jsearch.jar jsearch-2.0_04.jar
 	#tasks.jar (netbeans stuff)
 
 
@@ -626,7 +626,7 @@ function symlink_extjars() {
 	#platform7/lib/org-openide-util.jar
 
 	cd ${1}/platform${PLATFORM}/modules/ext
-	java-pkg_jar-from javahelp-bin jh.jar jh-2.0_04.jar
+	java-pkg_jar-from javahelp jh.jar jh-2.0_04.jar
 	# MISSING: jsr223-api.jar
 	java-pkg_jar-from swing-layout-1 swing-layout.jar swing-layout-1.0.1.jar
 	#updater.jar (netbeans stuff)
