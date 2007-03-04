@@ -48,6 +48,8 @@ _eant() {
 		-Djsp-jar="$(java-pkg_getjar servletapi-2.4 jsp-api.jar)" \
 		-Djdic-jar-present=true \
 		-Djdic-zip-present=true \
+		-Dtomcat-zip-present=true \
+		-Dservlet-jar-present=true \
 		${@}
 }
 
