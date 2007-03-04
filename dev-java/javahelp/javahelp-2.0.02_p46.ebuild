@@ -3,7 +3,7 @@
 # $Header: $
 
 WANT_ANT_TASKS="ant-nodeps"
-JAVA_PKG_IUSE="doc source"
+JAVA_PKG_IUSE="doc examples source"
 
 inherit versionator java-pkg-2 java-ant-2
 
