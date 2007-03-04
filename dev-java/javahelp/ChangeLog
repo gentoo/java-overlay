@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/javahelp
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  04 Mar 2007; Petteri Räty <betelgeuse@gentoo.org>
+  +javahelp-2.0.02_p46.ebuild:
+  Added an open source version of javahelp.
+
