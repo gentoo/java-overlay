@@ -102,7 +102,7 @@ src_install() {
 
 	if use examples; then
 		dodir /usr/share/doc/${PF}/examples
-		cp -pPR examples ${D}/usr/share/doc/${PF}/examples
+		cp -pPR examples/* ${D}/usr/share/doc/${PF}/examples
 	fi
 
 	use source && java-pkg_dosrc src/java/org src/java-1.4/* src/sandbox/org
