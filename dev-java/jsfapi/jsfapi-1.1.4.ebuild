@@ -15,7 +15,7 @@ MY_P="${MY_PN}-${PV}"
 DESCRIPTION="JavaServer Faces technology is a framework for building user interfaces for web applications"
 HOMEPAGE="http://myfaces.apache.org/"
 SRC_URI="mirror://apache/myfaces/source/${MY_P}-src.tar.gz
-	doc? (${DOC_A})"
+	doc? ( ${DOC_A} )"
 
 RESTRICT="fetch"
 LICENSE="Apache-2.0"
