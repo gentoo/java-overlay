@@ -1,2 +1,8 @@
-MD5 3ee4fcc6069633f3b370f339838957fa java-kernel-support-1.01.ebuild 793
-MD5 aa01e5ad0927b7d862a151f82327a582 files/digest-java-kernel-support-1.01 86
+DIST java-kernel-support-gentoo-20050425.tar.bz2 3079 RMD160 c34836e2ae2c7cc720a09ffb60d4be22d6b85b7a SHA1 74ea2e4f6bf0efa30e82c84bca6562f1cd79d780 SHA256 fc76082693e0ed30df1f1d436a287cc30ba8bf5c41da917eddc7b5518e2e053a
+EBUILD java-kernel-support-1.01.ebuild 939 RMD160 72080db65cc429147866a9b2ce19f8840458bd5d SHA1 2bf48eb27cd3d72a75a0cf09073e94af89c84671 SHA256 cbfd6899fc0abab14e1286b36a8e4c61b198aaacab972efdf77f36c4ec357b2e
+MD5 db557a20c22e211b3964fac391ce3a14 java-kernel-support-1.01.ebuild 939
+RMD160 72080db65cc429147866a9b2ce19f8840458bd5d java-kernel-support-1.01.ebuild 939
+SHA256 cbfd6899fc0abab14e1286b36a8e4c61b198aaacab972efdf77f36c4ec357b2e java-kernel-support-1.01.ebuild 939
+MD5 cfb30b39287d446d46fcb60900f4f8db files/digest-java-kernel-support-1.01 304
+RMD160 170f765b0da64254dbc218f917162eb54625fccf files/digest-java-kernel-support-1.01 304
+SHA256 cf3f71dfac5895ddc8d01a97c9ffbe40916c20b2a1c841e6f5cc2c1743cc8b02 files/digest-java-kernel-support-1.01 304
