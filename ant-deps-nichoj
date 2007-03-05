@@ -6,8 +6,6 @@ Notes so I don't forget to fix them eventually:
 # Packages that are fixed in ~arch
 # Will be fixed after these hit stable
 ################
-dev-java/cglib-2.0.2-r1
-dev-java/poi-2.5.1
 
 
 ################
