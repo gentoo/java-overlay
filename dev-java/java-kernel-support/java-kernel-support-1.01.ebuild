@@ -19,8 +19,8 @@ S=${WORKDIR}/${PN}
 
 CONFIG_CHECK="BINFMT_MISC"
 ERROR_BINFMT_MISC="
-You need to have 'Kernel support for MISC binaries' 
-turned on in your kernel config. It can be either 
+You need to have 'Kernel support for MISC binaries'
+turned on in your kernel config. It can be either
 compile in or as a module.
 "
 
