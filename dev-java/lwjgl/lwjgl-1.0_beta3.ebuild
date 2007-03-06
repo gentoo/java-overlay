@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+WANT_ANT_TASKS="ant-nodeps"
+
 inherit java-pkg-2 java-ant-2 eutils
 
 # See for dev info
@@ -25,6 +27,7 @@ CDEPEND="virtual/opengl
 		x11-libs/libXxf86vm
 		x11-libs/libXcursor
 		devil? ( media-libs/devil )"
+
 DEPEND=">=virtual/jdk-1.5
 		>=dev-java/ant-core-1.5
 		${CDEPEND}"
@@ -33,12 +36,12 @@ RDEPEND=">=virtual/jre-1.5
 
 src_unpack() {
 	unpack ${A}
-	cd ${S}
-	epatch ${FILESDIR}/fix-linux-build.patch
+	cd "${S}"
+	epatch "${FILESDIR}/fix-linux-build.patch"
 	eant clean clean-generated
 
 	# libs is the final install path for jars and so's
-	rm -r libs/*
+	rm -vr libs/*
 	mkdir libs/linux
 	cd libs
 	java-pkg_jarfrom jinput
@@ -48,7 +51,9 @@ src_unpack() {
 }
 
 src_compile() {
-	eant -Djava.home=${JAVA_HOME} generate-all all $(use_doc javadoc)
+	# Using com.sun.mirror.declaration from tools.jar
+	eant -Djava.home=${JAVA_HOME} generate-all all $(use_doc javadoc) \
+		-Dbuild.sysclasspath=first
 }
 
 src_install() {
@@ -56,7 +61,7 @@ src_install() {
 	java-pkg_dojar lwjgl.jar lwjgl_util.jar
 	use devil && java-pkg_dojar lwjgl_devil.jar
 	if use amd64; then
-		cp linux/liblwjgl64.so linux/liblwjgl.so
+		cp linux/liblwjgl64.so linux/liblwjgl.so || die
 	fi
 	java-pkg_doso linux/liblwjgl.so
 	#if use_doc; then
@@ -64,6 +69,6 @@ src_install() {
 	#	mv javadoc api
 	#	java-pkg_dohtml -r api
 	#fi
-	cd ${S}
+	cd "${S}"
 	use_doc && java-pkg_dojavadoc doc/javadoc
 }
