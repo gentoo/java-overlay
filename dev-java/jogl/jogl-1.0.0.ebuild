@@ -3,6 +3,7 @@
 # $Header: $
 
 WANT_ANT_TASKS="ant-antlr"
+JAVA_PKG_IUSE="cg doc source"
 
 inherit java-pkg-2 java-ant-2 versionator
 
@@ -16,7 +17,6 @@ SRC_URI="http://download.java.net/media/jogl/builds/archive/jsr-231-${PV}/${PN}-
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="cg doc"
 
 COMMON_DEPEND="virtual/opengl
 			   x11-libs/libX11
@@ -24,7 +24,6 @@ COMMON_DEPEND="virtual/opengl
 			   cg? ( media-gfx/nvidia-cg-toolkit )"
 
 DEPEND=">=virtual/jdk-1.4
-		dev-java/antlr
 		app-arch/unzip
 		>=dev-java/cpptasks-1.0_beta4-r2
 		${COMMON_DEPEND}"
@@ -56,12 +55,10 @@ src_compile() {
 }
 
 src_install() {
-	#if use doc; then
-	#	mv javadoc_jogl_dev dev_api
-	#	java-pkg_dojavadoc javadoc_public
-	#	dohtml dev_api
-	#fi
 	use doc && java-pkg_dojavadoc javadoc_public
+	# Installed binary bundles a gluegen runtime but it's probably not worth it
+	# but it's a bundled dep any way.
+	use source && java-pkg_dosrc src/classes/*
 	java-pkg_doso build/obj/*.so
 	java-pkg_dojar build/*.jar
 }
