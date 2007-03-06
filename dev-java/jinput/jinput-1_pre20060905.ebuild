@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+WANT_ANT_TASKS="ant-nodeps"
+
 inherit java-pkg-2 java-ant-2 eutils
 
 DESCRIPTION="Jinput is an implementation of an API for game controller discovery and polled input"
@@ -14,9 +16,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=">=virtual/jdk-1.4
-		dev-java/jutils
-		>=dev-java/ant-core-1.5
-		dev-java/ant-tasks"
+		dev-java/jutils"
 RDEPEND=">=virtual/jre-1.4
 		${DEPEND}"
 
@@ -24,9 +24,8 @@ S="${WORKDIR}/${PN}"
 
 src_unpack() {
 	unpack ${A}
-	cd ${WORKDIR}
 	epatch "${FILESDIR}/jinput-fix-build.xmls.patch"
-	cd ${S}/coreAPI
+	cd "${S}/coreAPI"
 	mkdir lib
 	cd lib
 	java-pkg_jarfrom jutils
