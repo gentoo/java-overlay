@@ -18,7 +18,7 @@ SRC_URI="mirror://sourceforge/java-game-lib/${PN}-source-${PV}.zip"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 
 CDEPEND="virtual/opengl
 		media-libs/openal
@@ -46,13 +46,16 @@ S="${WORKDIR}"
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	mkdir bin
 	#eant clean clean-generated
+	mkdir bin
 	java-ant_rewrite-classpath build.xml
 }
 
+#EANT_BUILD_TARGET="generate-all all"
 EANT_BUILD_TARGET="all"
 EANT_GENTOO_CLASSPATH="jinput,jutils"
+# needs com.sun.* from tools.jar for code generation
+# EANT_EXTRA_ARGS="-Dbuild.sysclasspath=first"
 
 src_install() {
 	java-pkg_dojar libs/lwjgl*jar
