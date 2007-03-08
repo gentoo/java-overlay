@@ -13,7 +13,7 @@ HOMEPAGE="http://htmlunit.sourceforge.net/"
 SRC_URI="mirror://sourceforge/htmlunit/${MY_P}.zip"
 LICENSE="as-is"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="-* ~amd64 ~x86"
 
 COMMON_DEP="
 	>=dev-java/commons-collections-3.2
