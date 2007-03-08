@@ -6,6 +6,12 @@
 # NOTE: Please add your entry at the top!
 #
 
+#William L. Thomson Jr. wltjr@gentoo.org (8 Mar 2007)
+# Masked due to package being incomplete and broken. Not
+# all deps are packaged, last on run into seems to be a
+# jar from Jetty which is out of date and lacks maintainer
+dev-java/htmlunit
+
 #Alistair Bush alistair.bush@gmail.com (10 Feburary 2007)
 # Masked so that dev-db/octopus and dev-java/saxon can be updated
 # to depend on <fop-0.93.  This is required as fop
