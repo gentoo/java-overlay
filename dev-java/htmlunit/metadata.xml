@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+
+	<herd>java</herd>
+
+	<longdescription>
+	HtmlUnit is a java unit testing framework for testing web based 
+	applications. It is similar in concept to httpunit  but is very 
+	different in implementation. HttpUnit models the http protocol so 
+	you deal with request and response objects. HtmlUnit on the other hand, 
+	models the returned document so that you deal with pages and forms and 
+	tables.
+	</longdescription>
+
+</pkgmetadata>
