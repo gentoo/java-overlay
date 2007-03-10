@@ -10,7 +10,7 @@ inherit java-pkg-2 java-ant-2
 DESCRIPTION="GlueGen is a tool which automatically generates the Java and JNI
 code necessary to call C libraries"
 HOMEPAGE="https://gluegen.dev.java.net"
-SRC_URI="${P}.tar.gz"
+SRC_URI="http://www.counties.co.nz/alistair/distfiles/${P}.tar.gz"
 
 LICENSE="BSD"
 SLOT="0"
@@ -51,6 +51,8 @@ src_install() {
 	rm "${PN}-rt-natives"*.jar
 	java-pkg_dojar *.jar
 	java-pkg_doso obj/*.so
+
+	#If we are going to install the source
 	#use source && java-pkg_dosrc src
 }
 
