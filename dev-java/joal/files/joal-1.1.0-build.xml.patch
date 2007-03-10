@@ -1,0 +1,14 @@
+diff -Naur joal.old/make/build.xml joal/make/build.xml
+--- joal.old/make/build.xml	2006-12-20 18:43:10.000000000 +1300
++++ joal/make/build.xml	2007-03-10 14:42:29.000000000 +1300
+@@ -345,7 +345,9 @@
+     <target name="build.gluegen" depends="init">
+         <!-- Run the GlueGen build to ensure that the GlueGen ANT task
+            - has been built. -->
+-        <ant antfile="${gluegen.build.xml}" dir="${gluegen.make.dir}" target="all" inheritAll="false" />
++        <ant antfile="${gluegen.build.xml}" dir="${gluegen.make.dir}" target="all" inheritAll="false">
++		<property name="antlr.jar" value="${antlr.jar}" />
++	</ant>
+     </target>
+ 
+     <!-- ================================================================== -->
