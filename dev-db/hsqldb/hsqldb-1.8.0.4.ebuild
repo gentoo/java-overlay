@@ -38,7 +38,7 @@ pkg_setup() {
 	java-pkg-2_pkg_setup
 }
 
-ant_src_unpack() {
+src_unpack() {
 	unpack ${A}
 	cd ${S}/lib
 		rm *.jar
