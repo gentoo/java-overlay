@@ -1,0 +1,70 @@
+diff -Naur jogl.old/make/build.xml jogl/make/build.xml
+--- jogl.old/make/build.xml	2006-07-28 15:13:42.000000000 +1200
++++ jogl/make/build.xml	2007-03-11 10:59:27.000000000 +1300
+@@ -128,7 +128,27 @@
+         <property name="gluegen.build.xml" value="${gluegen.make.dir}/build.xml" />
+         <property name="gluegen.jar" value="../../gluegen/build/gluegen.jar" />
+         <property name="gluegen-rt.jar" value="../../gluegen/build/gluegen-rt.jar" />
+-                                                
++	<!--
++		Echo out the locations of gluegen jars so users can confirm
++		they are using system (verses bundled) jars.
++	-->
++	<echo message="gluegen.jar=${gluegen.jar}" />
++	<echo message="gluegen-rt.jar=${gluegen-rt.jar}" />
++
++	<!--
++		This property will be used for deciding whether or not to build
++		and bundle gluegen.  Its purpose is to leave the user
++		experience of this ebuild unharmed, while allowing 
++		linux distro's to uncouple jogl and gluegen.
++	-->
++	<condition property="gluegen.prebuilt">
++		<and>
++			<available file="${gluegen.jar}" />
++			<available file="${gluegen-rt.jar}" />
++		</and>
++	</condition>
++	<echo message="gluegen.prebuilt=${gluegen.prebuilt}" />
++
+         <!-- Names of directories relative to the project root.
+              Some of these are used in FileMappers later for dependence information
+              and need exact string matching, which is why they use file.separator
+@@ -488,7 +508,7 @@
+     <!--
+        - Build GlueGen
+       -->
+-    <target name="build.gluegen" depends="init">
++    <target name="build.gluegen" depends="init" unless="gluegen.prebuilt" >
+         <!-- Run the GlueGen build to ensure that the GlueGen ANT task
+            - has been built. -->
+         <!-- FIXME: remove passing down of antlr.jar when gluegen.properties is on all
+@@ -500,10 +520,6 @@
+           </propertyset>
+         </ant>
+ 
+-        <!-- Extract the GlueGen runtime classes into our build directory.
+-           - We currently bundle them into jogl.jar; they could be kept in
+-           - a separate jar, but this makes deployment simpler.
+-           -->
+         <unjar src="${gluegen-rt.jar}" dest="${classes}" />
+     </target>
+ 
+@@ -708,6 +724,7 @@
+                includes="javax/media/opengl/GL.java"
+                fork="yes"
+                memoryMaximumSize="128m"
++	       classpath="${gluegen-rt.jar}"
+                source="1.4" debug="true" debuglevel="source,lines">
+         </javac>
+     </target>
+@@ -718,7 +735,8 @@
+                excludes="${java.excludes.platform},com/sun/opengl/impl/nurbs/**"               source="${jogl.sourcelevel}" 
+                fork="yes"
+                memoryMaximumSize="128m"
+-               debug="true" debuglevel="source,lines">
++               classpath="${gluegen-rt.jar}"
++	       debug="true" debuglevel="source,lines">
+             <src path="${src.java}" />
+             <src path="${src.generated.java}" />
+         </javac>

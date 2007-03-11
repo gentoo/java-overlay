@@ -21,7 +21,8 @@ KEYWORDS="~amd64 ~x86"
 COMMON_DEPEND="virtual/opengl
 			   x11-libs/libX11
 			   x11-libs/libXxf86vm
-			   cg? ( media-gfx/nvidia-cg-toolkit )"
+			   cg? ( media-gfx/nvidia-cg-toolkit )
+			   dev-java/gluegen"
 
 DEPEND=">=virtual/jdk-1.4
 		app-arch/unzip
@@ -34,8 +35,11 @@ S="${WORKDIR}/${PN}"
 
 src_unpack() {
 	unpack ${A}
-	epatch "${FILESDIR}/${P}-fix-solaris-compiler.patch" "${FILESDIR}/${P}-libpath.patch"
-	java-ant_rewrite-classpath gluegen/make/build.xml
+	epatch "${FILESDIR}/${P}-fix-solaris-compiler.patch" \
+	"${FILESDIR}/${P}-libpath.patch" "${FILESDIR}/${PF}-build.xml.patch"
+
+	#Should no longer be required
+	#java-ant_rewrite-classpath gluegen/make/build.xml
 	cd gluegen/make/lib
 	rm -v *.jar || die
 	java-pkg_jar-from cpptasks
@@ -45,13 +49,18 @@ src_compile() {
 	cd make/
 	local antflags="-Dantlr.jar=$(java-pkg_getjars antlr)"
 	local gcp="$(java-pkg_getjars ant-core):$(java-config --tools)"
+
+	local gluegen="-Dgluegen.jar=$(java-pkg_getjar gluegen gluegen.jar)"
+	local gluegenrt="-Dgluegen-rt.jar=$(java-pkg_getjar gluegen gluegen-rt.jar)"
+
 	use cg && antflags="${antflags} -Djogl.cg=1 -Dx11.cg.lib=/usr/lib"
 	# -Dbuild.sysclasspath=ignore fails with missing ant dependencies.
 
 	export ANT_OPTS="-Xmx1g"
 	eant \
 		-Dgentoo.classpath="${gcp}" \
-		${antflags} all $(use_doc javadoc.dev.x11) $(use_doc javadoc)
+		"${antflags}" "${gluegen}" "${gluegenrt}" \
+		all $(use_doc javadoc.dev.x11) $(use_doc javadoc)
 }
 
 src_install() {
