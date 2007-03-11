@@ -16,7 +16,7 @@ SRC_URI="http://download.java.net/media/jogl/builds/archive/jsr-231-${PV}/${PN}-
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 
 COMMON_DEPEND="virtual/opengl
 			   x11-libs/libX11

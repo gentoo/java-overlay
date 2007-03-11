@@ -1,0 +1,7 @@
+# ChangeLog for dev-java/jogl
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  11 Mar 2007; Alistair Bush <alistair.bush@gmail.com> jogl-1.0.0-r1.ebuild:
+  Rev bump to jogl-1.0.0-r1 to attempt to unbundle gluegen
+
