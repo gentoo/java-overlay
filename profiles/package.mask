@@ -6,6 +6,12 @@
 # NOTE: Please add your entry at the top!
 #
 
+#Alistair Bush alistair.bush@gmail.com (11 Mar 2007)
+# Masked as does not build.  Currently attempting to seperate
+# gluegen from jogl.  It is going moderately successfully.  This shouldn't
+# be masked for very long
+=dev-java/jogl-1.0.0-r1
+
 #William L. Thomson Jr. wltjr@gentoo.org (8 Mar 2007)
 # Masked due to package being incomplete and broken. Not
 # all deps are packaged, last on run into seems to be a
