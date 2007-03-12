@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=jRipper
+GenericName=jRipper
+Comment=A graphical CD ripper and encoder.
+Exec=jripper
+Terminal=false
+Type=Application
+Icon=jripper
+Categories=Application;AudioVideo;Multimedia
+Encoding=UTF-8
