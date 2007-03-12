@@ -36,7 +36,7 @@ src_compile() {
 }
 
 src_install() {
-	java-pkg_dojar ${PN}.jar
+	java-pkg_dojar ${PN}.jar ${PN}-charsets.jar
 
 	use doc && java-pkg_dohtml -r readme.html docs/*
 	use source && java-pkg_dosrc src/*
