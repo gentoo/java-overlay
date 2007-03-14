@@ -36,7 +36,7 @@ src_install() {
 	java-pkg_newjar dist/${P}.jar ${PN}.jar
 	java-pkg_dolauncher apgdiff --jar ${PN}.jar
 
-	use doc && java-pkg_dohtml -r dist/javadoc/*
+	use doc && java-pkg_dojavadoc dist/javadoc
 	use source && java-pkg_dosrc src/main/java/*
 }
 
