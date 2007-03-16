@@ -1,6 +1,10 @@
 # ChangeLog for dev-util/statcvs
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  16 Mar 2007; Miroslav Šulc <fordfrog@gentoo.org> +statcvs-0.3.ebuild,
+  +files/statcvs-0.3-build.xml.patch:
+  Version bump.
 
   03 Dec 2006; Miroslav Šulc <miroslav.sulc@startnet.cz> ChangeLog:
   version bump
