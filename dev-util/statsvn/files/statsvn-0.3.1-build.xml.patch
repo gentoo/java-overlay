@@ -1,0 +1,18 @@
+--- build.xml.original	2007-02-10 02:13:10.000000000 +0100
++++ build.xml	2007-02-10 02:14:01.000000000 +0100
+@@ -130,15 +130,6 @@
+ 	</target>
+ 
+ 	<target name="dist" depends="compile,copyfiles">
+-		<!-- Creates an executable jar file for the project -->
+-		<unjar src="${lib}/${statcvs.jar}" dest="${build}" />
+-		<!-- Expand and use the concurrent JAR -->
+-		<unjar src="${lib}/${concurrent.jar}" dest="${build}" />
+-
+-		<!-- Now included in statcvs.jar -->
+-		<!--<unjar src="${lib}/${jfreechart.jar}" dest="${build}" />
+-		<unjar src="${lib}/${jcommon.jar}" dest="${build}" />-->
+-		
+ 		<mkdir dir="${dist}" />
+ 		<jar jarfile="${dist}/${project.jar}" basedir="${build}">
+ 			<manifest>
