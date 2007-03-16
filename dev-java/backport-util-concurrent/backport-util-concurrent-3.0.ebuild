@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/backport-util-concurrent/backport-util-concurrent-1.1.01-r1.ebuild,v 1.2 2006/07/22 21:44:22 nelchael Exp $
 
+JAVA_PKG_IUSE="doc source"
+
 inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="This package is the backport of java.util.concurrent API, introduced in Java 5.0, to Java 1.4, and from Java 6.0 to Java 5.0"
@@ -12,7 +14,7 @@ SRC_URI="!java5? ( http://dcl.mathcs.emory.edu/util/${PN}/dist/${P}/Java14/${P}-
 LICENSE="public-domain"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~x86"
-IUSE="doc java5 source test"
+IUSE="java5 test"
 
 DEPEND="java5? ( =virtual/jdk-1.5* )
 	!java5? ( =virtual/jdk-1.4* )
@@ -30,6 +32,9 @@ fi
 
 src_unpack() {
 	unpack ${A}
+
+	cd ${S}
+	use test && epatch ${FILESDIR}/${P}-build.xml.patch
 	cd ${S}/external
 	rm -f *.jar
 	java-pkg_jar-from junit
