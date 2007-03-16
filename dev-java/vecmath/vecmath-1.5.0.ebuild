@@ -28,7 +28,6 @@ DEPEND=">=virtual/jdk-1.5
 RDEPEND=">=virtual/jre-1.5"
 
 S="${WORKDIR}/${PN}"
-S_TEST="${S}-test"
 
 EANT_DOC_TARGET="docs"
 EANT_BUILD_TARGET="jar"
