@@ -25,9 +25,7 @@ COMMON_DEPEND="
 	dev-java/antlr
 	=dev-java/commons-beanutils-1.7*
 	dev-java/commons-collections
-	mobility? ( dev-java/commons-httpclient )
 	>=dev-java/commons-logging-1.0.4
-	mobility? ( dev-java/commons-net )
 	dev-java/flute
 	>=dev-java/jakarta-jstl-1.1.2
 	>=dev-java/sun-j2ee-deployment-bin-1.1
@@ -38,7 +36,13 @@ COMMON_DEPEND="
 	=dev-java/servletapi-2.2*
 	=dev-java/swing-layout-1*
 	>=dev-java/xerces-2.8.0
-	>=dev-java/xml-commons-1.0_beta2"
+	>=dev-java/xml-commons-1.0_beta2
+	mobility? (
+		dev-java/commons-httpclient
+		dev-java/commons-net
+		dev-java/proguard
+	)
+"
 
 RDEPEND=">=virtual/jre-1.5
 	dev-java/commons-digester
@@ -487,7 +491,10 @@ function place_unpack_symlinks_mobility() {
 	#mobility/designer/nb_midp_components/dist/nb_midp_components.jar
 	#mobility/j2meunit/external/jmunit4cldc10-1.0.1.jar
 	#mobility/j2meunit/external/jmunit4cldc11-1.0.1.jar
-	#mobility/proguard/external/proguard3.5.jar
+
+	cd ${S}/mobility/proguard/external
+	java-pkg_jar-from proguard proguard.jar proguard3.5.jar
+
 	#mobility/project/test/unit/data/goldenfiles/org/netbeans/modules/mobility/project/classpath/J2MEProjectClassPathExtenderTest/MIDletSuite.jar
 	#mobility/project/test/unit/data/goldenfiles/org/netbeans/modules/mobility/project/J2MEProjectGeneratorTest/Studio/MIDletSuite.jar
 	#mobility/svg/nb_svg_midp_components/dist/nb_svg_midp_components.jar
@@ -598,6 +605,7 @@ function symlink_extjars() {
 	java-pkg_jar-from sun-jaxb-bin jaxb-xjc.jar
 	java-pkg_jar-from sun-jaxws-bin jaxws-rt.jar
 	java-pkg_jar-from sun-jaxws-bin jaxws-tools.jar
+	java-pkg_jar-from jsr173 jsr173.jar jsr173_api.jar
 	java-pkg_jar-from jsr250
 	#resolver.jar (netbeans stuff)
 	java-pkg_jar-from sun-saaj-bin saaj-impl.jar
@@ -608,7 +616,6 @@ function symlink_extjars() {
 	cd ${1}/ide${IDE_VERSION}/modules/ext/jaxws21/api
 	java-pkg_jar-from sun-jaxb-bin jaxb-api.jar
 	java-pkg_jar-from sun-jaxws-bin jaxws-api.jar
-	java-pkg_jar-from jsr173 jsr173.jar jsr173_api.jar
 	java-pkg_jar-from jsr181 jsr181.jar jsr181-api.jar
 	java-pkg_jar-from sun-saaj-bin saaj-api.jar
 
@@ -667,7 +674,8 @@ function symlink_extjars_mobility() {
 	java-pkg_jar-from jdom-1.0
 	# MISSING: RicohAntTasks.jar
 
-	#extra/external/proguard/proguard3.5.jar
+	cd ${1}/extra/external/proguard
+	java-pkg_jar-from proguard proguard.jar proguard3.5.jar
 
 	cd ${1}/extra/modules/ext
 	#cdc-agui-swing-layout.jar
