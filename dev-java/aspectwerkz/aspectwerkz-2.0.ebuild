@@ -22,7 +22,8 @@ COMMON_DEP="
 	dev-java/jrexx
 	>=dev-java/junitperf-1.9.1
 	dev-java/trove
-	=dev-java/qdox-20050104"
+	=dev-java/qdox-20050104
+	=dev-java/junit-3*"
 RDEPEND="
 	!java5? ( >=virtual/jre-1.4 )
 	java5? ( >=virtual/jre-1.5 )
@@ -51,6 +52,7 @@ src_unpack() {
 	java-pkg_jar-from dom4j-1
 	java-pkg_jar-from javassist-2
 	java-pkg_jar-from jrexx
+	java-pkg_jar-from junit
 	java-pkg_jar-from junitperf
 	java-pkg_jar-from trove
 	java-pkg_jar-from qdox-1.6
