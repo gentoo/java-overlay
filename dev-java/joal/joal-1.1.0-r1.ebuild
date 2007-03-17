@@ -13,18 +13,18 @@ SRC_URI="http://download.java.net/media/${PN}/builds/archive/${PV}/${P}-src.zip"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 IUSE=""
 
 CDEPEND="media-libs/openal
 		dev-java/gluegen"
-DEPEND="${CDEPEND}
-		>=virtual/jdk-1.4
+DEPEND=">=virtual/jdk-1.4
 		>=dev-java/ant-core-1.5
 		dev-java/antlr
-		app-arch/unzip"
-RDEPEND="${CDEPEND}
-		>=virtual/jre-1.4"
+		app-arch/unzip
+		${CDEPEND}"
+RDEPEND=">=virtual/jre-1.4
+		${CDEPEND}"
 
 S="${WORKDIR}/${PN}"
 
