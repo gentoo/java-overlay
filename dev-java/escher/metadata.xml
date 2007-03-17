@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>java</herd>
+<longdescription lang="en">
+Escher is a collection of libraries for X Window System written purely
+in Java. It consists of an X11 protocol implementation (similar to
+xlib for C/C++), and its extensions such as GLX, the OpenGL rendering
+protocol.
+</longdescription>
+</pkgmetadata>
+
