@@ -15,6 +15,7 @@ KEYWORDS="~amd64"
 SLOT="0"
 
 RDEPEND=">=virtual/jre-1.5
+	virtual/cdrtools
 	aac? ( media-libs/faac media-libs/faad2 )
 	cddb? ( media-libs/libcddb )
 	flac? ( media-libs/flac )
