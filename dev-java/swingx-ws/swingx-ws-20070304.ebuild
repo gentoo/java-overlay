@@ -2,22 +2,24 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+JAVA_PKG_IUSE="doc source"
+
 inherit java-pkg-2 java-ant-2
+
+MY_PV="2007_03_04"
 
 DESCRIPTION="SwingX-WS contains a set of JavaBeans for interacting with web
 services"
-HOMEPAGE=""
-SRC_URI="http://www.javadesktop.org/swinglabs/build/weekly/week-02-2007-01-07/${PN}-HEAD/${PN}-2007_01_05-src.zip"
+HOMEPAGE="https://swingx-ws.dev.java.net"
+SRC_URI="http://swingx-ws.dev.java.net/files/documents/5363/51937/${PN}-${MY_PV}-src.zip"
 
 LICENSE="LGPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="doc"
+IUSE=""
 
-DEPEND=">=virtual/jdk-1.5
-		dev-java/ant-core
-		app-arch/unzip
-		=dev-java/commons-codec-1.3*
+
+CDEPEND="=dev-java/commons-codec-1.3*
 		>=dev-java/commons-httpclient-3.0.1
 		>=dev-java/commons-logging-1.0
 		dev-java/jdom
@@ -27,13 +29,20 @@ DEPEND=">=virtual/jdk-1.5
 		dev-java/xerces
 		dev-java/swingx
 		dev-java/swing-worker"
-RDEPEND=">=virtual/jre-1.5"
 
-S="${WORKDIR}/swingx-ws-2007_01_05-src"
+DEPEND=">=virtual/jdk-1.5
+		>=dev-java/ant-core-1.7
+		app-arch/unzip
+		${CDEPEND}"
+
+RDEPEND=">=virtual/jre-1.5
+		${CDEPEND}"
+
+S="${WORKDIR}/swingx-ws-${MY_PV}-src"
 
 src_unpack() {
-	unpack ${A}
-	cd ${S}/lib/optional
+	unpack "${A}"
+	cd "${S}/lib/optional"
 	rm *.jar
 	java-pkg_jar-from commons-codec commons-codec.jar commons-codec-1.3.jar
 	java-pkg_jar-from commons-httpclient-3 commons-httpclient.jar commons-httpclient-3.0.1.jar
@@ -44,14 +53,10 @@ src_unpack() {
 	java-pkg_jar-from rome rome.jar rome-0.8.jar
 	java-pkg_jar-from xerces-2
 
-	cd ${S}/lib/cobundle
+	cd "${S}/lib/cobundle"
 	rm *.jar
 	java-pkg_jar-from swingx
 	java-pkg_jar-from swing-worker
-}
-
-src_compile() {
-	ant jar $(use_doc javadoc)
 }
 
 src_install() {
