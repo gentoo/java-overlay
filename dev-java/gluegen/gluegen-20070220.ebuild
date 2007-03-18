@@ -40,7 +40,7 @@ src_compile() {
 	local antflags="-Dantlr.jar=$(java-pkg_getjars antlr)"
 	local gcp="$(java-pkg_getjars ant-core):$(java-config --tools)"
 
-	eant "${antflags}" -Dgentoo.classpath="${gcp}" all
+	eant ${antflags} -Dgentoo.classpath="${gcp}" all
 }
 src_install() {
 	cd build || dir "Unable to enter build directory"
