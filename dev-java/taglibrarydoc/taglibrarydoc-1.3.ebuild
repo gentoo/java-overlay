@@ -1,8 +1,10 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 inherit eutils java-pkg-2 java-ant-2
+
+MY_PV="${PV/./_}"
 
 DESCRIPTION="Utility for automatically generating javadoc-style documentation for JavaServer Pages Technology Tag Libraries"
 HOMEPAGE="https://taglibrarydoc.dev.java.net/"
@@ -22,7 +24,7 @@ S="${WORKDIR}/${PN}"
 
 src_unpack() {
 	unpack "${A}"
-	cd "${S}"	
+	cd "${S}"
 	epatch "${FILESDIR}/build.xml.patch"
 }
 
@@ -31,7 +33,7 @@ src_compile() {
 }
 
 src_install() {
-	java-pkg_dojar "dist/taglibrarydoc-1_3/tlddoc.jar"
+	java-pkg_dojar "dist/${PN}-${MY_PV}/tlddoc.jar"
 
 	java-pkg_dolauncher
 }
