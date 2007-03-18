@@ -1,8 +1,8 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg-2 versionator
+inherit java-pkg-2 java-ant-2
 
 
 DESCRIPTION="A java presentation framework for building web applications"
@@ -22,23 +22,27 @@ DEPEND=">=virtual/jdk-1.5
 		app-arch/unzip
 		>=dev-java/ant-core-1.5
 		doc? ( dev-java/taglibrarydoc
-		dev-java/sun-javamail-bin )
+		dev-java/sun-javamail )
 		${CDEPEND}"
 RDEPEND=">=virtual/jre-1.5
 		${CDEPEND}"
 
+#S="${WORKDIR}/${P}/${PN}"
+
 src_unpack() {
 	unpack ${A}
-	cd ${S}
+	cd "${S}"
 
-	cd ${PN}/lib/build
+	cd "${PN}/lib/build"
+	#cd lib/build
 	rm *.jar
 
 	#add new jars to file
+	ln -s "$(java-config --tools)" tools.jar
 	java-pkg_jarfrom servletapi-2.4
 	java-pkg_jarfrom cos
 	use doc && java-pkg_jarfrom taglibrarydoc
-	use doc && java-pkg_jarfrom sun-javamail-bin mail.jar
+	use doc && java-pkg_jarfrom sun-javamail mail.jar
 }
 
 src_compile() {
@@ -49,6 +53,8 @@ src_install() {
 	cd stripes
 	java-pkg_dojar dist/*.jar
 
-	use doc && java-pkg_dohtml -r docs/api docs/taglib
+	use doc && java-pkg_dojavadoc docs/
 	use source && java-pkg_dosrc src/*
 }
+
+src_test
