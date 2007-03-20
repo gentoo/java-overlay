@@ -37,7 +37,7 @@ COMMON_DEPEND="
 	)
 	!jboss? ( dev-java/sun-jacc-api )
 	dev-java/jgroups
-	=dev-java/javassist-3.3*
+	=dev-java/javassist-3*
 	>=dev-java/xerces-2.7
 	dev-java/jta"
 RDEPEND=">=virtual/jre-1.4
@@ -56,7 +56,7 @@ src_unpack() {
 	unpack ${A}
 	cd ${S}
 
-	if ! use jboss; then 
+	if ! use jboss; then
 		rm src/org/hibernate/cache/JndiBoundTreeCacheProvider.java \
 			src/org/hibernate/cache/OptimisticTreeCache.java \
 			src/org/hibernate/cache/OptimisticTreeCacheProvider.java \
