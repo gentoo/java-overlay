@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+
+JAVA_PKG_IUSE="doc source"
 inherit java-pkg-2 java-ant-2
 
 
@@ -12,7 +14,7 @@ SRC_URI="mirror://sourceforge/stripes/${P}-src.zip"
 LICENSE="Apache-2.0"
 SLOT="1.4"
 KEYWORDS="~amd64"
-IUSE="doc source"
+IUSE="test"
 
 CDEPEND=">=dev-java/commons-logging-1.0.4
 		dev-java/cos
@@ -23,11 +25,13 @@ DEPEND=">=virtual/jdk-1.5
 		>=dev-java/ant-core-1.5
 		doc? ( dev-java/taglibrarydoc
 		dev-java/sun-javamail )
+		test? ( dev-java/testng )
 		${CDEPEND}"
 RDEPEND=">=virtual/jre-1.5
 		${CDEPEND}"
 
 #S="${WORKDIR}/${P}/${PN}"
+S_TEST="${WORKDIR}/test"
 
 src_unpack() {
 	unpack ${A}
@@ -57,4 +61,10 @@ src_install() {
 	use source && java-pkg_dosrc src/*
 }
 
-src_test
+src_test() {
+	cd "${S_TEST}/lib"
+	java-pkgjarfrom testng
+	cd "${S_TEST}"
+	eant test
+}
+
