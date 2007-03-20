@@ -68,7 +68,7 @@ src_unpack() {
 	cd ${S}/lib
 	rm *.jar
 
-	local JAR_PACKAGES="c3p0 commons-collections javassist-3.3
+	local JAR_PACKAGES="c3p0 commons-collections javassist-3
 		commons-logging dom4j-1 ehcache-1.2 jaxen-1.1
 		log4j oscache proxool swarmcache-1.0 xerces-2 jgroups jta"
 	for PACKAGE in ${JAR_PACKAGES}; do
