@@ -6,6 +6,11 @@
 # NOTE: Please add your entry at the top!
 #
 
+# Alistair Bush. alistair.bush@gmail.com (20 Mar 2007)
+# Masked so I can experiement with building testng with both the 1.4 and 1.5
+# versions of jars
+=dev-java/testng-5.2-r1
+
 #Alistair Bush alistair.bush@gmail.com (11 Mar 2007)
 # Masked as does not build.  Currently attempting to seperate
 # gluegen from jogl.  It is going moderately successfully.  This shouldn't
