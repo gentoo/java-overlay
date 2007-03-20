@@ -29,7 +29,7 @@ src_unpack() {
 
 	cd ${HIBERNATE_S}/lib
 	# start: pulled from hibernate ebuild
-	local JAR_PACKAGES="c3p0 commons-collections javassist-3.3
+	local JAR_PACKAGES="c3p0 commons-collections javassist-3
 		commons-logging dom4j-1 ehcache jaxen-1.1 jdbc2-stdext
 		log4j oscache proxool swarmcache-1.0 xerces-2 jgroups"
 	for PACKAGE in ${JAR_PACKAGES}; do
