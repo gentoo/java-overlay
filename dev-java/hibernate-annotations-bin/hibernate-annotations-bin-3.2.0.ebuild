@@ -26,7 +26,7 @@ RDEPEND=">=virtual/jre-1.5
 	=dev-java/dom4j-1*
 	=dev-java/ehcache-1.2*
 	=dev-java/hibernate-${SLOT}*
-	=dev-java/javassist-3.3
+	=dev-java/javassist-3*
 	=dev-java/jaxen-1.1*
 	dev-java/jdbc2-stdext
 	dev-java/jgroups
@@ -46,7 +46,7 @@ src_unpack() {
 
 	cd ${HIBERNATE_S}/lib || die "cd failed"
 	# start: pulled from hibernate ebuild
-	local JAR_PACKAGES="c3p0 commons-collections javassist-3.3
+	local JAR_PACKAGES="c3p0 commons-collections javassist-3
 		commons-logging dom4j-1 jaxen-1.1 jdbc2-stdext
 		log4j oscache proxool swarmcache-1.0 xerces-2 jgroups"
 	for PACKAGE in ${JAR_PACKAGES}; do
