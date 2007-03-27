@@ -1,8 +1,0 @@
-# ChangeLog for dev-java/quartz
-# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-  14 Feb 2007; kiorky <kiorky@cryptelium.net> +quartz-1.5.2.ebuild:
-  Bumped to version 1.5.2
-  See #166776
-
