@@ -21,7 +21,7 @@ DEPEND="java5? ( =virtual/jdk-1.5* )
 	dev-java/ant-core
 	dev-java/junit"
 RDEPEND="java5? ( =virtual/jdk-1.5* )
-	!java5? ( =virtual/jre-1.4* )"
+	!java5? ( >=virtual/jre-1.4 )"
 
 # NOTE: This is just workaround because setting ${S} in pkg_setup doesn't currently work
 if use java5 ; then
@@ -33,16 +33,14 @@ fi
 src_unpack() {
 	unpack ${A}
 
-	cd ${S}
+	cd "${S}"
 	use test && epatch ${FILESDIR}/${P}-build.xml.patch
-	cd ${S}/external
-	rm -f *.jar
+	cd "${S}/external"
+	rm -v *.jar || die
 	java-pkg_jar-from junit
 }
 
-src_compile() {
-	eant javacompile archive $(use_doc)
-}
+EANT_BUILD_TARGET="javacompile archive"
 
 src_test() {
 	eant test
@@ -52,5 +50,5 @@ src_install() {
 	java-pkg_dojar ${PN}.jar
 	use doc && java-pkg_dojavadoc doc/api
 	use source && java-pkg_dosrc src/*
-	java-pkg_dohtml README.html
+	dohtml README.html || die
 }
