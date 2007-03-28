@@ -29,7 +29,7 @@ RDEPEND=">=virtual/jre-1.5
 DEPEND="
 	app-arch/unzip
 	=dev-java/junit-3.8*
-	test? ( 
+	test? (
 		dev-java/ant-junit
 		dev-java/ant-trax
 		=virtual/jdk-1.5*
