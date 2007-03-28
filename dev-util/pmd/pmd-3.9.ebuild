@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-util/pmd/pmd-3.7.ebuild,v 1.2 2006/10/05 14:40:20 gustavoz Exp $
 
+JAVA_PKG_IUSE="doc source test"
+
 inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="A Java source code analyzer. It finds unused variables, empty catch blocks, unnecessary object creation and so forth."
@@ -11,11 +13,11 @@ SRC_URI="mirror://sourceforge/pmd/${PN}-src-${PV}.zip"
 LICENSE="pmd"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~x86"
-IUSE="doc source test"
 
 COMMON_DEPEND="
+	dev-java/ant-core
 	>=dev-java/asm-3.0
-	dev-java/backport-util-concurrent
+	>=dev-java/backport-util-concurrent-3.0
 	>=dev-java/jaxen-1.1_beta10"
 
 RDEPEND=">=virtual/jre-1.5
@@ -23,11 +25,16 @@ RDEPEND=">=virtual/jre-1.5
 
 # NOTE: they include regression tests in the main jar so junit is needed on the cp even for src_compile
 
-DEPEND=">=virtual/jdk-1.5
+# Fails unit tests with sun-jdk-1.6
+DEPEND="
 	app-arch/unzip
-	dev-java/ant
 	=dev-java/junit-3.8*
-	source? ( app-arch/zip )
+	test? ( 
+		dev-java/ant-junit
+		dev-java/ant-trax
+		=virtual/jdk-1.5*
+	)
+	!test? ( >=virtual/jdk-1.5 )
 	${COMMON_DEPEND}"
 
 src_unpack() {
@@ -35,30 +42,28 @@ src_unpack() {
 
 	# We patch build.xml to include all jars in lib dir
 	cd "${S}"
-	epatch "${FILESDIR}/${P}-build.xml.patch"
+	epatch "${FILESDIR}/${PN}-3.9-build.xml.patch"
 
 	cd "${S}/lib/"
-	rm -f *.jar
+	rm -v *.jar || die
 	java-pkg_jar-from ant-core
-	java-pkg_jar-from asm-3 asm.jar asm-3.0.jar
+	java-pkg_jar-from asm-3 asm.jar
 	java-pkg_jar-from backport-util-concurrent
-	java-pkg_jar-from jaxen-1.1 jaxen.jar jaxen-1.1-beta-10.jar
+	java-pkg_jar-from jaxen-1.1 jaxen.jar
 	java-pkg_jar-from --build-only junit
 }
 
-src_compile() {
-	eant -f bin/build.xml jar $(use_doc)
-}
+EANT_BUILD_XML="bin/build.xml"
 
 src_test() {
-	eant -f bin/build.xml test
+	# fails with sun-jdk-1.6
+	# http://sourceforge.net/tracker/index.php?func=detail&aid=1690135&group_id=56262&atid=479921
+	ANT_TASKS="ant-junit ant-trax" eant -f bin/build.xml test -DoutputTestResultsToFile=true
 }
 
 src_install() {
-	# Install jar to its default location + to ant's location
-	java-pkg_newjar lib/${P}.jar ${PN}.jar
-	dodir /usr/share/ant-core/lib/
-	dosym /usr/share/${PN}/lib/${PN}.jar /usr/share/ant-core/lib/${PN}.jar
+	java-pkg_newjar lib/${P}.jar
+	java-pkg_register-ant-task
 
 	# Create launchers and copy rulesets
 	java-pkg_dolauncher ${PN} --main net.sourceforge.pmd.PMD --java_args "-Xmx512m" \
