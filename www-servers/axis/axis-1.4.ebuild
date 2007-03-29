@@ -55,11 +55,11 @@ src_unpack() {
 		|| die "failed to copy build.properties from ${FILESDIR}"
 
 	# bundled fun
-	find . -name '*.jar' -delete
+	find . -name '*.jar' -delete || die
 
 	rm -rf docs/apiDocs
 
-	cd ${S}/lib
+	cd "${S}/lib"
 
 	# mandatory deps
 	java-pkg_jar-from commons-discovery commons-discovery.jar
@@ -97,10 +97,10 @@ src_install() {
 	java-pkg_dojar build/lib/jaxrpc.jar
 	java-pkg_dojar build/lib/saaj.jar
 
-	dodoc LICENSE NOTICE README
+	dodoc LICENSE NOTICE README || die
+	dohtml release-notes.html changelog.html || die
 
 	if use doc; then
-		dohtml release-notes.html changelog.html
 		java-pkg_dojavadoc build/javadocs/
 		dohtml -r docs/*
 		dosym api /usr/share/doc/${PF}/html/apiDocs
