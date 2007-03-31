@@ -8,7 +8,7 @@ MY_PV=${PV/_beta*/}
 MY_PVL=${MY_PV%.*}_${MY_PV##*.}
 MY_PVA=${MY_PV//./_}
 ALPHA=${PV#*_alpha}
-DATE="01_mar_2007"
+DATE="20_mar_2007"
 MY_RPV=${MY_PV%.*}
 
 
@@ -32,12 +32,10 @@ KEYWORDS="~amd64 ~x86"
 RESTRICT="nostrip fetch"
 IUSE="doc nsplugin examples"
 
-DEPEND="
-	sys-apps/sed
-	doc? ( =dev-java/java-sdk-docs-1.5.0* )"
+DEPEND="sys-apps/sed"
 
 RDEPEND="x86? ( sys-libs/lib-compat )
-	doc? ( =dev-java/java-sdk-docs-1.5.0* )"
+	doc? ( =dev-java/java-sdk-docs-1.6.0* )"
 
 JAVA_PROVIDE="jdbc-stdext jdbc-rowset"
 
