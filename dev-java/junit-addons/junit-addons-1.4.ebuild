@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+JAVA_PKG_IUSE="doc source"
+
 inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="JUnit-addons is a collection of helper classes for JUnit."
@@ -11,8 +13,6 @@ SRC_URI="mirror://sourceforge/${PN}/${P}.zip"
 LICENSE="Apache-1.1"
 SLOT="0"
 KEYWORDS="~x86"
-
-IUSE="doc source"
 
 COMMON_DEP="
 	dev-java/junit
@@ -25,14 +25,13 @@ RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEP}"
 DEPEND=">=virtual/jdk-1.4
 		app-arch/unzip
-		source? ( app-arch/zip )
 		${COMMON_DEP}"
 
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
 	unpack ./src.jar
-	rm -v *.jar
+	rm -v *.jar || die
 	# Not included so taken from cvs
 	cp "${FILESDIR}/${PV}-build.xml" build.xml || die
 	cp "${FILESDIR}/${PV}-common.properties" common.properties || die
