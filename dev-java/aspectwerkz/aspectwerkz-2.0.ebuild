@@ -1,4 +1,4 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/aspectwerkz/aspectwerkz-2.0_rc2.ebuild,v 1.5 2005/07/15 18:04:56 axxo Exp $
 
@@ -22,7 +22,7 @@ COMMON_DEP="
 	dev-java/jrexx
 	>=dev-java/junitperf-1.9.1
 	dev-java/trove
-	=dev-java/qdox-20050104
+	~dev-java/qdox-20050104
 	=dev-java/junit-3*"
 RDEPEND="
 	!java5? ( >=virtual/jre-1.4 )

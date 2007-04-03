@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/aspektwerkz>
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  03 Apr 2007; Miroslav Šulc <fordfrog@gentoo.org> aspectwerkz-2.0.ebuild,
+  +metadata.xml:
+  Corrected ebuild so it does not force generation-1 ebuild of qdox
+
