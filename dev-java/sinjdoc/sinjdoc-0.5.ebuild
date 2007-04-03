@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+JAVA_PKG_IUSE="source"
+
 inherit autotools java-pkg-2
 
 DESCRIPTION="A javadoc compatible Java source documentation generator."
@@ -10,25 +12,23 @@ SRC_URI="http://www.cag.lcs.mit.edu/~cananian/Projects/GJ/sinjdoc-latest/sinjdoc
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64"
-IUSE="source"
+KEYWORDS="~x86 ~amd64"
 
 CDEPEND="dev-java/javacup"
 RDEPEND=">=virtual/jre-1.5
 	${CDEPEND}"
 DEPEND=">=virtual/jdk-1.5
-	${CDEPEND}
-	source? ( app-arch/zip )"
+	${CDEPEND}"
 
 src_unpack() {
 	unpack ${A}
-	cd ${S}
+	cd "${S}"
 
-	epatch ${FILESDIR}/${PN}-annotations.patch
-	epatch ${FILESDIR}/${PN}-autotools-changes.patch
+	epatch "${FILESDIR}/${PN}-annotations.patch"
+	epatch "${FILESDIR}/${PN}-autotools-changes.patch"
 
-	cd ${S}/lib
-	rm *.jar
+	cd "${S}/lib"
+	rm -v *.jar || die
 	java-pkg_jar-from javacup javacup.jar cup.jar
 }
 
@@ -39,7 +39,10 @@ src_compile() {
 }
 
 src_install() {
+	#Use this when upgrading to check what upstream wants to install
+	#emake DESTDIR="${D}" install || die
 	java-pkg_dojar ${PN}.jar
-	use source && java-pkg_dosrc ${S}/src
-	dobin ${FILESDIR}/${PN}
+	java-pkg_dolauncher ${PN} --main net.cscott.sinjdoc.Main
+	dodoc README AUTHORS ChangeLog || die
+	use source && java-pkg_dosrc "${S}/src"
 }

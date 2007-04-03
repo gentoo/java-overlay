@@ -1,4 +1,0 @@
-#!/bin/sh
-
-$(java-config --java) -cp "$(java-config --classpath=javacup,sinjdoc)" \
-	net.cscott.sinjdoc.Main ${1+"${@}"}
