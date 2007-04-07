@@ -26,10 +26,6 @@ src_unpack() {
 	#Dirty hack to get rid of tests
 }
 
-src_compile() {
-	ant jar
-}
-
 src_install() {
 	java-pkg_dojar dist/JID3.jar
 	use source && java-pkg_dosrc src/

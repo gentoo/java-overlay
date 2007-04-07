@@ -38,7 +38,7 @@ src_compile() {
 	local classpath=$(java-pkg_getjars jid3,jlayer,jgoodies-looks-2.0)
 	cd ${S}/src
 	find . -name '*.java'  -print > sources.list
-	ejavac -g -cp ${classpath} @sources.list
+	ejavac -cp ${classpath} @sources.list
   	find . -name '*.class' -print > classes.list
   	find . -name '*.png' -print >> classes.list
   	touch myManifest
