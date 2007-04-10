@@ -1,0 +1,8 @@
+DIST libmatthew-java-0.3.tar.gz 33235 RMD160 c9e075a7f93b2a67477a5843c9f1a30b3aa64c3c SHA1 86314f6fd8f1f3aed2eea9351d6b066230076c3c SHA256 d078ebe37332fdcfe5d217ddd6d20689855756b7a7e835f00f8e849c67a7e9f1
+EBUILD libmatthew-java-0.3.ebuild 1031 RMD160 72588a210353d6e717ebfdc5ba0d26e8168ff20a SHA1 4cb423696038024f9f8c9983908e9ed70f192059 SHA256 ef60508ea339b2374e3a3cd03c479db62bdbebf6c1faf676acf814a3dbe360f6
+MD5 5413624f9558a3bf4a42c5b13ebe23f5 libmatthew-java-0.3.ebuild 1031
+RMD160 72588a210353d6e717ebfdc5ba0d26e8168ff20a libmatthew-java-0.3.ebuild 1031
+SHA256 ef60508ea339b2374e3a3cd03c479db62bdbebf6c1faf676acf814a3dbe360f6 libmatthew-java-0.3.ebuild 1031
+MD5 cf2497745e130ceecd41ac96dbb8296d files/digest-libmatthew-java-0.3 256
+RMD160 9ee63dc9e5cb26545d37aec44da4670d1a8222ab files/digest-libmatthew-java-0.3 256
+SHA256 adcafde9bb6e8d4185ecd1236f5f446f3ee3074db8501165feb097cb7887759b files/digest-libmatthew-java-0.3 256
