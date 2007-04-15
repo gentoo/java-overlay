@@ -1,7 +1,8 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+JAVA_PKG_IUSE="doc source"
 inherit eutils java-pkg-2 java-ant-2
 
 DESCRIPTION="Java Simple Arguments Parser (JSAP)"
@@ -13,19 +14,19 @@ SRC_URI="mirror://sourceforge/${PN}/${MY_P}-src.tar.gz"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~x86"
-IUSE="doc source"
+IUSE="test"
 
-COMMON_DEP="
-	>=dev-java/ant-core-1.5.4
-	dev-java/junit
-	dev-java/xstream"
+COMMON_DEP="dev-java/xstream"
 
-DEPEND="
-	>=virtual/jdk-1.4
+DEPEND=">=virtual/jdk-1.4
 	${COMMON_DEP}
 	=dev-java/snip-0.11*
 	>=dev-java/ant-core-1.7.0
-	=dev-java/rundoc-0.11*"
+	=dev-java/rundoc-0.11*
+	test? (
+		dev-java/ant-junit
+		=dev-java/junit-3.8*
+	)"
 
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEP}"
@@ -42,15 +43,15 @@ src_unpack() {
 	rm -v *.jar
 }
 
-EANT_ANT_TASKS="rundoc"
+EANT_ANT_TASKS="rundoc snip"
 EANT_GENTOO_CLASSPATH="junit,ant-core,xstream"
 
 src_test() {
-	eant test
+	ANT_TASKS="ant-junit rundoc snip" eant test
 }
 
 src_install() {
-	java-pkg_newjar dist/${MY_P}.jar ${PN}.jar
+	java-pkg_newjar dist/${MY_P}.jar
 
 	if use doc; then
 		dohtml doc/*.html
@@ -60,4 +61,3 @@ src_install() {
 
 	use source && java-pkg_dosrc src/java/com
 }
-
