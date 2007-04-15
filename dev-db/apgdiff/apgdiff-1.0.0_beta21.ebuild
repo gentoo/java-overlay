@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+JAVA_PKG_IUSE="doc source"
 inherit eutils java-pkg-2 java-ant-2
 
 DESCRIPTION="Another PostgreSQL Diff Tool is a simple PostgreSQL diff tool that is useful for schema upgrades."
@@ -10,7 +11,7 @@ SRC_URI="mirror://sourceforge/${PN}/${P}-src.zip"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~x86"
-IUSE="doc source test"
+IUSE="test"
 
 DEPEND=">=virtual/jdk-1.5
 	>=dev-java/ant-core-1.7.0
