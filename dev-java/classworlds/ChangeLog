@@ -2,6 +2,9 @@
 # Copyright 2000-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/classworlds/ChangeLog,v 1.16 2007/01/09 17:17:04 nelchael Exp $
 
+  17 Apr 2007; kiorky <kiorky@cryptelium.net> classworlds-1.1.ebuild:
+  correction keywords
+
   02 Mar 2007; kiorky <kiorky@cryptelium.net> +classworlds-1.1.ebuild,
   +metadata.xml:
   Adding as i must do something else for now

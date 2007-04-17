@@ -9,7 +9,7 @@ HOMEPAGE="http://classworlds.codehaus.org/"
 SRC_URI="http://dev.gentooexperimental.org/~kiorky/${P}.tar.bz2"
 LICENSE="codehaus-classworlds"
 SLOT="1.1"
-KEYWORDS=""
+KEYWORDS="~x86"
 IUSE="doc source"
 
 RDEPEND=">=virtual/jre-1.4
