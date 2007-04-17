@@ -3,6 +3,10 @@
 # $Header: $
 
   17 Apr 2007; kiorky <kiorky@cryptelium.net>
+  plexus-component-api-1.0.ebuild:
+  Whitespaces again and again
+
+  17 Apr 2007; kiorky <kiorky@cryptelium.net>
   +plexus-component-api-1.0.ebuild, +metadata.xml:
   added as a maven dependency
 

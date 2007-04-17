@@ -20,17 +20,17 @@ RDEPEND=">=virtual/jre-1.4 ${DEP}"
 
 EANT_BUILD_TARGET="jar"
 EANT_EXTRA_FLAGS="-Dproject.name=${PN}"
-EANT_GENTOO_CLASSPATH="plexus-classworlds" 
+EANT_GENTOO_CLASSPATH="plexus-classworlds"
 
 src_unpack() {
 	unpack ${A}
-	find "${S}" -name *.jar -exec rm -f {} \; || die 
+	find "${S}" -name *.jar -exec rm -f {} \; || die
 	for build in $(find "${S}" -name build*xml);do
 		java-ant_rewrite-classpath "$build"
 		# get out of classpath errors at build/test time
 		sed  -i "${build}" -re\
 			's/depends="get-deps"/ /'\
-			|| die 
+			|| die
 		sed  -i "${build}" -re\
 			's/pathelement\s*path="\$\{testclassesdir\}"/pathelement path="\$\{gentoo.classpath\}:\$\{testclassesdir\}"/'\
 			|| die
