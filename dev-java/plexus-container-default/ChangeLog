@@ -1,0 +1,6 @@
+
+
+  17 Apr 2007; kiorky <kiorky@cryptelium.net>
+  +plexus-container-default-1.0.ebuild, +metadata.xml:
+  added as a maven dependency
+
