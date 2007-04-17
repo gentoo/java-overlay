@@ -11,7 +11,7 @@ SRC_URI="http://dev.gentooexperimental.org/~kiorky/${P}.tar.bz2"
 
 LICENSE="as-is" # http://plexus.codehaus.org/plexus-utils/license.html
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~x86"
 IUSE="source"
 
 DEP="=dev-java/classworlds-1.1*"
