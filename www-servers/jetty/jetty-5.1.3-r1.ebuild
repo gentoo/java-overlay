@@ -1,4 +1,4 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -12,31 +12,34 @@ HOMEPAGE="http://www.mortbay.org/"
 KEYWORDS="~amd64 ~x86"
 LICENSE="Apache-1.1"
 
-DEPEND=" >=virtual/jdk-1.4
-	app-arch/unzip
-	>=dev-java/ant-1.6
-	test? ( dev-java/junit )"
-RDEPEND=">=virtual/jre-1.4
-	>=dev-java/commons-el-1.0
+DEP=">=dev-java/commons-el-1.0
 	>=dev-java/commons-logging-1.0.4
-	=dev-java/mx4j-2.1*
+	>=dev-java/mx4j-core-3.0
+ 	>=dev-java/mx4j-tools-3.0
 	>=dev-java/xerces-2.7
 	=dev-java/xml-commons-external-1.3*
 	dev-java/tomcat-jasper"
+
+DEPEND=">=virtual/jdk-1.4
+	app-arch/unzip
+	>=dev-java/ant-1.6
+	test? ( dev-java/junit )
+	${DEP}"
+RDEPEND=">=virtual/jre-1.4
+		${DEP}"
+
 #	extra? ( dev-java/gnu-activation
 #			=dev-java/commons-cli-1*
-#			>=dev-java/log4j-1.2 
+#			>=dev-java/log4j-1.2
 #			>=dev-java/jta-1.0.1
 #			>=dev-java/sun-javamail-bin-1.3.1)"
 
 # disabling extra until all dependencies are packaged
 #IUSE="doc extra jikes junit source"
-IUSE="doc test source" 
+IUSE="doc test source"
 
 JETTY_NAME="${PN}-${SLOT}"
 JETTY_HOME="/opt/${JETTY_NAME}"
-
-
 
 pkg_setup() {
 	enewgroup ${JETTY_NAME}
@@ -47,21 +50,21 @@ src_unpack() {
 	unpack ${A}
 	if use source; then
 		S_ORIG="${WORKDIR}/${P}.orig"
-		cp -a ${S} ${S_ORIG}
+		cp -a "${S}" "${S_ORIG}" || die
 	fi
 	epatch ${FILESDIR}/${PV}/${PN}.patch
 
-	cd ${S}/ext
-	rm *.jar
+	cd "${S}/ext" || die
+	rm *.jar || die
 	java-pkg_jar-from commons-el commons-el.jar
 	java-pkg_jar-from commons-logging commons-logging.jar
-	java-pkg_jar-from mx4j-2.1 mx4j-impl.jar
-	java-pkg_jar-from mx4j-2.1 mx4j-tools.jar
-	java-pkg_jar-from mx4j-2.1 mx4j-remote.jar
-	java-pkg_jar-from mx4j-2.1 mx4j.jar
+	java-pkg_jar-from mx4j-core-3.0 mx4j-impl.jar
+	java-pkg_jar-from mx4j-tools-3.0 mx4j-tools.jar
+	java-pkg_jar-from mx4j-core-3.0 mx4j-remote.jar
+	java-pkg_jar-from mx4j-core-3.0 mx4j.jar
 	java-pkg_jar-from xerces-2 xercesImpl.jar
 	java-pkg_jar-from xml-commons-external-1.3 xml-apis.jar
-	java-pkg_jar-from jakarta-tomcat-jasper-2
+	java-pkg_jar-from tomcat-jasper-2
 
 #	if use extra; then
 #		cd ${S}/extra/ext
@@ -99,7 +102,7 @@ src_test() {
 }
 
 pkg_preinst() {
-	chown -R ${JETTY_NAME}:${JETTY_NAME} ${D}
+	chown -R ${JETTY_NAME}:${JETTY_NAME} "${D}" || die
 }
 
 src_install() {
@@ -135,13 +138,13 @@ src_install() {
 	insinto ${JETTY_HOME}
 	dodoc ${S}/*.TXT
 
-	cd ${S}/etc
+	cd "${S}/etc" || die
 	insinto /etc/${JETTY_NAME}
 	doins admin.xml commons-logging.properties jetty.xml simplelog.properties webdefault.xml
 	dodoc LICENSE.*
 
-	cd ${S}/webapps
-	cp -a * ${D}/${JETTY_HOME}/webapps
+	cd "${S}/webapps" || die
+	cp -a * "${D}/${JETTY_HOME}/webapps" || die
 
 	into /usr
 	java-pkg_dojar ${S}/lib/*.jar
@@ -159,7 +162,7 @@ src_install() {
 #
 #		insinto /etc/${JETTY_NAME}/dtd
 #		doins ${S}/etc/dtd/*
-#		
+#
 #		cd ${S}/extra/etc
 #		insinto ${JETTY_HOME}/extra/etc
 #		doins jaas.* jettyplus.* login.conf start*.config tmtest*
@@ -182,20 +185,20 @@ src_install() {
 
 	if use source; then
 		einfo "Installing source files..."
-		cd ${S_ORIG}
+		cd "${S_ORIG}" || die
 		insinto ${JETTY_HOME}
 		doins ant.properties build.xml
 
 		# TODO use java-pkg_dosrc
 		for DIR in extra/ftp/src extra/ftp/test/src extra/ibmjsse/src extra/j2ee/src extra/jdk1.2/src extra/jsr77/src extra/loadbalancer/src extra/plus/demo/src extra/plus/src extra/plus/test/src src test; do
 			dodir ${JETTY_HOME}/${DIR}
-			cp -a ${S_ORIG}/${DIR}/* ${D}/${JETTY_HOME}/${DIR}
+			cp -a "${S_ORIG}/${DIR}"/* "${D}/${JETTY_HOME}/${DIR}" || die
 		done
 	fi
 
 	einfo "Fixing permissions..."
-	chown -R ${JETTY_NAME}:${JETTY_NAME} ${D}/${JETTY_HOME}
-	chmod -R o-rwx ${D}/${JETTY_HOME}
+	chown -R ${JETTY_NAME}:${JETTY_NAME} "${D}/${JETTY_HOME}" || die
+	chmod -R o-rwx "${D}/${JETTY_HOME}"  || die
 }
 
 pkg_postinst() {
