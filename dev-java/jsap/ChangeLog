@@ -2,6 +2,10 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  21 Apr 2007; Miroslav Šulc <fordfrog@gentoo.org>
+  -files/2.1-test-target.patch, -jsap-2.1.ebuild:
+  jsap-2.1 moved to tree
+
   15 Apr 2007; Miroslav Šulc <fordfrog@gentoo.org> jsap-2.1.ebuild:
   Updated style, corrected deps, added missing ant tasks
 
