@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+JAVA_PKG_IUSE="doc source"
 inherit eutils java-pkg-2 java-ant-2
 
 DESCRIPTION="A wrapper for some of Sun's Java Look and Feels to enable anti-aliasing."
@@ -11,7 +12,6 @@ SRC_URI="mirror://sourceforge/${PN}/${P}.zip"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~x86"
-JAVA_PKG_IUSE="doc source"
 IUSE=""
 EANT_BUILD_TARGET="dist"
 S=${WORKDIR}
