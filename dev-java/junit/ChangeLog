@@ -2,6 +2,10 @@
 # Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/junit/ChangeLog,v 1.30 2006/11/18 10:18:47 nixnut Exp $
 
+  21 Apr 2007; Miroslav Šulc <fordfrog@gentoo.org> -junit-4.1.ebuild,
+  -junit-4.2.ebuild, +junit-4.3.1.ebuild:
+  Version bump
+
   13 Feb 2007; Vlastimil Babka <caster@gentoo.org> +junit-3.8.2-r1.ebuild,
   +files/junit-3.8.2-build.xml:
   Revbump of junit-3.8.2 that stops symlinking to ant-core/lib, so that can
