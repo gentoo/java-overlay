@@ -11,14 +11,14 @@ SRC_URI="mirror://sourceforge/${PN}/${P}.zip"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~x86"
-IUSE="doc source"
+JAVA_PKG_IUSE="doc source"
+IUSE=""
 EANT_BUILD_TARGET="dist"
 S=${WORKDIR}
 
 RDEPEND=">=virtual/jre-1.4"
 DEPEND=">=virtual/jdk-1.4
-	app-arch/unzip
-	source? (app-arch/zip)"
+	app-arch/unzip"
 
 src_unpack() {
 	unpack ${A}
