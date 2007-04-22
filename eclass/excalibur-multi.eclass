@@ -24,7 +24,7 @@ EXPORT_FUNCTIONS src_unpack src_compile src_test src_install
 excalibur-multi_src_unpack() {
 	unpack ${A}
 	for module in ${EXCALIBUR_MODULES}; do
-		cd ${module} || die
+		cd ${module}* || die
 		excalibur_src_prepare
 		cd "${WORKDIR}"
 	done
@@ -32,7 +32,7 @@ excalibur-multi_src_unpack() {
 
 excalibur-multi_src_compile() {
 	for module in ${EXCALIBUR_MODULES}; do
-		cd ${module} || die
+		cd ${module}* || die
 		local jar
 		for module in ${EXCALIBUR_MODULES}; do
 			for jar in "${WORKDIR}"/${module}/target/*.jar; do
@@ -46,7 +46,7 @@ excalibur-multi_src_compile() {
 
 excalibur-multi_src_test() {
 	for module in ${EXCALIBUR_MODULES}; do
-		cd ${module} || die
+		cd ${module}* || die
 		excalibur_src_test || die
 		cd "${WORKDIR}"
 	done
@@ -54,7 +54,7 @@ excalibur-multi_src_test() {
 
 excalibur-multi_src_install() {
 	for module in ${EXCALIBUR_MODULES}; do
-		cd ${module}
+		cd ${module}*
 		java-pkg_newjar target/${module}*.jar ${module/-${PV}}.jar
 		if use doc; then
 			# Doing this manually or we would have api/x/api/
