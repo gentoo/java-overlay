@@ -54,7 +54,6 @@ excalibur-multi_src_test() {
 
 excalibur-multi_src_install() {
 	for module in ${EXCALIBUR_MODULES}; do
-		einfo ${module}
 		cd ${module}
 		java-pkg_newjar target/${module}*.jar ${module/-${PV}}.jar
 		if use doc; then
