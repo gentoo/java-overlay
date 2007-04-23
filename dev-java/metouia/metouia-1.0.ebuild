@@ -5,7 +5,7 @@
 inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="Another Java Look and Feel"
-HOMEPAGE=""
+HOMEPAGE="http://mlf.sourceforge.net/"
 SRC_URI="http://www.counties.co.nz/alistair/distfiles/${P}.tar.gz"
 
 LICENSE="LGPL-2"

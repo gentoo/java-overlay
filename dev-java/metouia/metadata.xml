@@ -3,10 +3,12 @@
 <pkgmetadata>
 <herd>java</herd>
 <maintainer>
+<email>ali_bush@gentoo.org</email>
 <name>Alistair Bush</name>
-<email>alistair.bush at gmail.com</email>
 </maintainer>
 <longdescription lang="en">
+Metouia Look and Feel, has a dead up stream (been replaced by a new project).
+and will be removed in 30 days (24/04/07).
 </longdescription>
 </pkgmetadata>
 
