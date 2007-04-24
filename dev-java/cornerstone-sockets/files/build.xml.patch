@@ -1,0 +1,15 @@
+--- /usr/local/tmp/portage/dev-java/cornerstone-sockets-2.1/work/cornerstone-sockets-impl-2.1/build.xml	2007-04-22 18:17:31.507865080 +0200
++++ build.xml	2007-04-22 18:19:51.604696354 +0200
+@@ -42,6 +42,12 @@
+       </src>
+       <classpath refid="build.classpath" >
+       </classpath>
++      <classpath> 
++      <fileset dir="../.." > 
++	       <include name="**/*.jar" >
++	       </include> 
++       </fileset> 
++       </classpath> 
+     </javac>
+     <copy todir="${classesdir}" >
+       <fileset dir="." >
