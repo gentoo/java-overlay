@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/excalibur-thread
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  24 Apr 2007; kiorky <kiorky@cryptelium.net> +excalibur-thread-2.1.ebuild:
+  added  to the java-experimental overlay as a maven dependency.see #175836
+
+
