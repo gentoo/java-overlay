@@ -1,0 +1,344 @@
+--- /usr/local/tmp/portage/dev-java/cornerstone-threads-2.1/work/cornerstone-threads-impl-2.1/build.xml	2007-04-22 18:10:02.306723372 +0200
++++ build.xml	2007-04-22 18:09:16.458524201 +0200
+@@ -1,170 +1,176 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project default="jar" basedir="." name="cornerstone-threads-impl" >
+-  <property name="defaulttargetdir" value="target" >
+-  </property>
+-  <property name="libdir" value="target/lib" >
+-  </property>
+-  <property name="classesdir" value="target/classes" >
+-  </property>
+-  <property name="testclassesdir" value="target/test-classes" >
+-  </property>
+-  <property name="distdir" value="dist" >
+-  </property>
+-  <property name="javadocdir" value="dist/docs/api" >
+-  </property>
+-  <property name="final.name" value="cornerstone-threads-impl-2.1" >
+-  </property>
+-  <path id="build.classpath" >
+-    <fileset dir="${libdir}" >
+-      <include name="**/*.jar" >
+-      </include>
+-    </fileset>
+-  </path>
+-  <target name="init" description="o Initializes some properties" >
+-    <mkdir dir="${libdir}" >
+-    </mkdir>
+-    <condition property="noget" >
+-      <equals arg1="${build.sysclasspath}" arg2="only" >
+-      </equals>
+-    </condition>
+-    
++	<property name="defaulttargetdir" value="target" >
++	</property>
++	<property name="libdir" value="target/lib" >
++	</property>
++	<property name="classesdir" value="target/classes" >
++	</property>
++	<property name="testclassesdir" value="target/test-classes" >
++	</property>
++	<property name="distdir" value="dist" >
++	</property>
++	<property name="javadocdir" value="dist/docs/api" >
++	</property>
++	<property name="final.name" value="cornerstone-threads-impl-2.1" >
++	</property>
++	<path id="build.classpath" >
++		<fileset dir="${libdir}" >
++			<include name="**/*.jar" >
++			</include>
++		</fileset>
++	</path>
++	<target name="init" description="o Initializes some properties" >
++		<mkdir dir="${libdir}" >
++		</mkdir>
++		<condition property="noget" >
++			<equals arg1="${build.sysclasspath}" arg2="only" >
++			</equals>
++		</condition>
+ 
+-    <available classname="junit.framework.Test" property="Junit.present" ignoresystemclasses="true" >
+-    </available>
+-  </target>
+-  <target depends="get-deps" name="compile" description="o Compile the code" >
+-    <mkdir dir="${classesdir}" >
+-    </mkdir>
+-    <javac debug="true" deprecation="true" optimize="false" destdir="${classesdir}" excludes="**/package.html" >
+-      <src >
+-        <pathelement location="src/java" >
+-        </pathelement>
+-      </src>
+-      <classpath refid="build.classpath" >
+-      </classpath>
+-    </javac>
+-    <copy todir="${classesdir}" >
+-      <fileset dir="." >
+-        <include name="LICENSE*" >
+-        </include>
+-        <include name="NOTICE*" >
+-        </include>
+-      </fileset>
+-    </copy>
+-    <copy todir="${classesdir}" >
+-      <fileset dir="src/java" >
+-        <include name="**/*.jpg" >
+-        </include>
+-        <include name="**/*.png" >
+-        </include>
+-        <include name="**/*.gif" >
+-        </include>
+-        <include name="**/*.ico" >
+-        </include>
+-        <include name="**/*.dtd" >
+-        </include>
+-        <include name="**/*.properties" >
+-        </include>
+-        <include name="**/*.xinfo" >
+-        </include>
+-        <include name="**/*.xtype" >
+-        </include>
+-        <include name="**/*.xprofile" >
+-        </include>
+-        <include name="**/*.xconfig" >
+-        </include>
+-        <include name="**/*.xml" >
+-        </include>
+-        <include name="**/*.xservice" >
+-        </include>
+-        <include name="**/*.rng" >
+-        </include>
+-        <include name="**/*.xlog" >
+-        </include>
+-        <include name="**/*.instruments" >
+-        </include>
+-      </fileset>
+-    </copy>
+-  </target>
+-  <target depends="compile,test" name="jar" description="o Create the jar" >
+-    <jar excludes="**/package.html" basedir="${classesdir}" jarfile="${defaulttargetdir}/${final.name}.jar" >
+-    </jar>
+-  </target>
+-  <target name="clean" description="o Clean up the generated directories" >
+-    <delete dir="${defaulttargetdir}" >
+-    </delete>
+-    <delete dir="${distdir}" >
+-    </delete>
+-  </target>
+-  <target depends="jar, javadoc" name="dist" description="o Create a distribution" >
+-    <mkdir dir="dist" >
+-    </mkdir>
+-    <copy todir="dist" >
+-      <fileset dir="${defaulttargetdir}" includes="*.jar" >
+-      </fileset>
+-      <fileset dir="${basedir}" includes="LICENSE*, README*" >
+-      </fileset>
+-    </copy>
+-  </target>
+-  <target depends="internal-test" if="test.failure" name="test" description="o Run the test cases" >
+-    <fail message="There were test failures." >
+-    </fail>
+-  </target>
+-  <target depends="junit-present,compile-tests" name="internal-test" if="Junit.present" >
+-  </target>
+-  <target depends="init" unless="Junit.present" name="junit-present" >
+-    <echo >================================= WARNING ================================</echo>
+-    <echo >Junit isn't present in your ${ANT_HOME}/lib directory. Tests not executed.</echo>
+-    <echo >==========================================================================</echo>
+-  </target>
+-  <target depends="junit-present,compile" name="compile-tests" if="Junit.present" >
+-  </target>
+-  <target depends="get-deps" name="javadoc" description="o Generate javadoc" >
+-    <mkdir dir="${javadocdir}" >
+-    </mkdir>
+-    <tstamp >
+-      <format pattern="2001-yyyy" property="year" >
+-      </format>
+-    </tstamp>
+-    <property name="copyright" value="Copyright &amp;copy;  The Apache Software Foundation. All Rights Reserved." >
+-    </property>
+-    <property name="title" value="Cornerstone Thread Manager Implementation 2.1 API" >
+-    </property>
+-    <javadoc use="true" author="true" sourcepath="src/java" destdir="${javadocdir}" version="true" private="true" packagenames="org.apache.avalon.cornerstone.blocks.threads.*" >
+-      <classpath >
+-        <path refid="build.classpath" >
+-        </path>
+-      </classpath>
+-    </javadoc>
+-  </target>
+-  <target depends="init" unless="noget" name="get-deps" >
+-    
+ 
+-    <setproxy >
+-    </setproxy>
+-    <get dest="${libdir}/cornerstone-threads-api-2.1.jar" src="http://www.ibiblio.org/maven/cornerstone-threads/jars/cornerstone-threads-api-2.1.jar" ignoreerrors="true" usetimestamp="true" >
+-    </get>
+-    <get dest="${libdir}/avalon-framework-api-4.3.jar" src="http://www.ibiblio.org/maven/avalon-framework/jars/avalon-framework-api-4.3.jar" ignoreerrors="true" usetimestamp="true" >
+-    </get>
+-    <get dest="${libdir}/avalon-framework-impl-4.3.jar" src="http://www.ibiblio.org/maven/avalon-framework/jars/avalon-framework-impl-4.3.jar" ignoreerrors="true" usetimestamp="true" >
+-    </get>
+-    <get dest="${libdir}/excalibur-thread-api-2.1.jar" src="http://www.ibiblio.org/maven/excalibur-thread/jars/excalibur-thread-api-2.1.jar" ignoreerrors="true" usetimestamp="true" >
+-    </get>
+-    <get dest="${libdir}/excalibur-thread-impl-2.1.jar" src="http://www.ibiblio.org/maven/excalibur-thread/jars/excalibur-thread-impl-2.1.jar" ignoreerrors="true" usetimestamp="true" >
+-    </get>
+-    <get dest="${libdir}/excalibur-pool-api-2.1.jar" src="http://www.ibiblio.org/maven/excalibur-pool/jars/excalibur-pool-api-2.1.jar" ignoreerrors="true" usetimestamp="true" >
+-    </get>
+-    <get dest="${libdir}/excalibur-pool-impl-2.1.jar" src="http://www.ibiblio.org/maven/excalibur-pool/jars/excalibur-pool-impl-2.1.jar" ignoreerrors="true" usetimestamp="true" >
+-    </get>
+-    <get dest="${libdir}/commons-collections-3.1.jar" src="http://www.ibiblio.org/maven/commons-collections/jars/commons-collections-3.1.jar" ignoreerrors="true" usetimestamp="true" >
+-    </get>
+-    <get dest="${libdir}/concurrent-1.3.4.jar" src="http://www.ibiblio.org/maven/concurrent/jars/concurrent-1.3.4.jar" ignoreerrors="true" usetimestamp="true" >
+-    </get>
+-  </target>
+-  <target name="install-maven" >
+-    <get dest="${user.home}/maven-install-latest.jar" src="${repo}/maven/maven-install-latest.jar" usetimestamp="true" >
+-    </get>
+-    <unjar dest="${maven.home}" src="${user.home}/maven-install-latest.jar" >
+-    </unjar>
+-  </target>
++		<available classname="junit.framework.Test" ignoresystemclasses="true" property="Junit.present" >
++		</available>
++	</target>
++	<target depends="get-deps" name="compile" description="o Compile the code" >
++		<mkdir dir="${classesdir}" >
++		</mkdir>
++		<javac deprecation="true" excludes="**/package.html" destdir="${classesdir}" source="1.4" debug="true" optimize="false" target="1.4" >
++			<src >
++				<pathelement location="src/java" >
++				</pathelement>
++			</src>
++			<classpath refid="build.classpath" >
++			</classpath>
++			<classpath>
++				<fileset dir="../.." >
++					<include name="**/*.jar" >
++					</include>
++				</fileset> 
++			</classpath> 
++		</javac>
++		<copy todir="${classesdir}" >
++			<fileset dir="." >
++				<include name="LICENSE*" >
++				</include>
++				<include name="NOTICE*" >
++				</include>
++			</fileset>
++		</copy>
++		<copy todir="${classesdir}" >
++			<fileset dir="src/java" >
++				<include name="**/*.jpg" >
++				</include>
++				<include name="**/*.png" >
++				</include>
++				<include name="**/*.gif" >
++				</include>
++				<include name="**/*.ico" >
++				</include>
++				<include name="**/*.dtd" >
++				</include>
++				<include name="**/*.properties" >
++				</include>
++				<include name="**/*.xinfo" >
++				</include>
++				<include name="**/*.xtype" >
++				</include>
++				<include name="**/*.xprofile" >
++				</include>
++				<include name="**/*.xconfig" >
++				</include>
++				<include name="**/*.xml" >
++				</include>
++				<include name="**/*.xservice" >
++				</include>
++				<include name="**/*.rng" >
++				</include>
++				<include name="**/*.xlog" >
++				</include>
++				<include name="**/*.instruments" >
++				</include>
++			</fileset>
++		</copy>
++	</target>
++	<target depends="compile,test" name="jar" description="o Create the jar" >
++		<jar excludes="**/package.html" basedir="${classesdir}" jarfile="${defaulttargetdir}/${final.name}.jar" >
++		</jar>
++	</target>
++	<target name="clean" description="o Clean up the generated directories" >
++		<delete dir="${defaulttargetdir}" >
++		</delete>
++		<delete dir="${distdir}" >
++		</delete>
++	</target>
++	<target depends="jar, javadoc" name="dist" description="o Create a distribution" >
++		<mkdir dir="dist" >
++		</mkdir>
++		<copy todir="dist" >
++			<fileset dir="${defaulttargetdir}" includes="*.jar" >
++			</fileset>
++			<fileset dir="${basedir}" includes="LICENSE*, README*" >
++			</fileset>
++		</copy>
++	</target>
++	<target depends="internal-test" if="test.failure" description="o Run the test cases" name="test" >
++		<fail message="There were test failures." >
++		</fail>
++	</target>
++	<target depends="junit-present,compile-tests" name="internal-test" if="Junit.present" >
++	</target>
++	<target depends="init" unless="Junit.present" name="junit-present" >
++		<echo >================================= WARNING ================================</echo>
++		<echo >Junit isn't present in your ${ANT_HOME}/lib directory. Tests not executed.</echo>
++		<echo >==========================================================================</echo>
++	</target>
++	<target depends="junit-present,compile" name="compile-tests" if="Junit.present" >
++	</target>
++	<target depends="get-deps" name="javadoc" description="o Generate javadoc" >
++		<mkdir dir="${javadocdir}" >
++		</mkdir>
++		<tstamp >
++			<format pattern="2001-yyyy" property="year" >
++			</format>
++		</tstamp>
++		<property name="copyright" value="Copyright &amp;copy;  The Apache Software Foundation. All Rights Reserved." >
++		</property>
++		<property name="title" value="Cornerstone Thread Manager Implementation 2.1 API" >
++		</property>
++		<javadoc use="true" author="true" sourcepath="src/java" destdir="${javadocdir}" source="1.4" version="true" private="true" packagenames="org.apache.avalon.cornerstone.blocks.threads.*" >
++			<classpath >
++				<path refid="build.classpath" >
++				</path>
++			</classpath>
++		</javadoc>
++	</target>
++	<target depends="init" unless="noget" name="get-deps" >
++
++
++		<setproxy >
++		</setproxy>
++		<get dest="${libdir}/cornerstone-threads-api-2.1.jar" src="http://www.ibiblio.org/maven/cornerstone-threads/jars/cornerstone-threads-api-2.1.jar" ignoreerrors="true" usetimestamp="true" >
++		</get>
++		<get dest="${libdir}/avalon-framework-api-4.3.jar" src="http://www.ibiblio.org/maven/avalon-framework/jars/avalon-framework-api-4.3.jar" ignoreerrors="true" usetimestamp="true" >
++		</get>
++		<get dest="${libdir}/avalon-framework-impl-4.3.jar" src="http://www.ibiblio.org/maven/avalon-framework/jars/avalon-framework-impl-4.3.jar" ignoreerrors="true" usetimestamp="true" >
++		</get>
++		<get dest="${libdir}/excalibur-thread-api-2.1.jar" src="http://www.ibiblio.org/maven/excalibur-thread/jars/excalibur-thread-api-2.1.jar" ignoreerrors="true" usetimestamp="true" >
++		</get>
++		<get dest="${libdir}/excalibur-thread-impl-2.1.jar" src="http://www.ibiblio.org/maven/excalibur-thread/jars/excalibur-thread-impl-2.1.jar" ignoreerrors="true" usetimestamp="true" >
++		</get>
++		<get dest="${libdir}/excalibur-pool-api-2.1.jar" src="http://www.ibiblio.org/maven/excalibur-pool/jars/excalibur-pool-api-2.1.jar" ignoreerrors="true" usetimestamp="true" >
++		</get>
++		<get dest="${libdir}/excalibur-pool-impl-2.1.jar" src="http://www.ibiblio.org/maven/excalibur-pool/jars/excalibur-pool-impl-2.1.jar" ignoreerrors="true" usetimestamp="true" >
++		</get>
++		<get dest="${libdir}/commons-collections-3.1.jar" src="http://www.ibiblio.org/maven/commons-collections/jars/commons-collections-3.1.jar" ignoreerrors="true" usetimestamp="true" >
++		</get>
++		<get dest="${libdir}/concurrent-1.3.4.jar" src="http://www.ibiblio.org/maven/concurrent/jars/concurrent-1.3.4.jar" ignoreerrors="true" usetimestamp="true" >
++		</get>
++	</target>
++	<target name="install-maven" >
++		<get dest="${user.home}/maven-install-latest.jar" src="${repo}/maven/maven-install-latest.jar" usetimestamp="true" >
++		</get>
++		<unjar dest="${maven.home}" src="${user.home}/maven-install-latest.jar" >
++		</unjar>
++	</target>
+ </project>
