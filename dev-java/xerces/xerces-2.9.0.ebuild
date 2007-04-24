@@ -35,27 +35,24 @@ src_unpack() {
 	cd "${S}"
 	epatch ${FILESDIR}/${P}-gentoo.patch
 	epatch ${FILESDIR}/${P}-no_dom3.patch
-
-	mkdir tools && cd tools
-	java-pkg_jar-from xml-commons-external-1.3 xml-apis.jar
-	java-pkg_jar-from xml-commons-resolver xml-commons-resolver.jar resolver.jar
-	java-pkg_jar-from xalan-serializer serializer.jar
+	java-ant_rewrite-classpath
 }
 
 src_compile() {
 	# known small bug - javadocs use custom taglets, which come as bundled jar in xerces-J-tools.2.8.0.tar.gz
 	# ommiting them causes non-fatal errors in javadocs generation
 	# need to either find the taglets source, use the bundled jars as it's only compile-time or remove the taglet defs from build.xml
-	eant -lib "$(java-pkg_getjars --build-only xjavac-1)" jar $(use_doc javadocs)
+	ANT_TASKS="xjavac-1" eant -Dgentoo.classpath=$(java-pkg_getjars --build-only xjavac-1):$(java-pkg_getjars xml-commons-resolver,xml-commons-external-1.3,xalan-serializer) \
+		jar $(use_doc javadocs)
 }
 
 src_install() {
 	java-pkg_dojar build/xercesImpl.jar
 
-	dodoc TODO STATUS README ISSUES
-	java-pkg_dohtml Readme.html
+	dodoc README NOTICE
+	dohtml Readme.html
 
-	use doc && java-pkg_dohtml -r build/docs/javadocs
+	use doc && java-pkg_dojavadoc build/docs/javadocs
 	if use examples; then
 		dodir "/usr/share/doc/${PF}/examples"
 		cp -r samples/* "${D}/usr/share/doc/${PF}/examples"
