@@ -1,0 +1,48 @@
+--- /usr/local/tmp/portage/dev-java/cornerstone-connection-2.1/work/cornerstone-connection-impl-2.1/build.xml	2007-04-22 18:31:42.405797636 +0200
++++ build.xml	2007-04-22 18:31:07.562606397 +0200
+@@ -29,19 +29,25 @@
+     </condition>
+     
+ 
+-    <available classname="junit.framework.Test" property="Junit.present" ignoresystemclasses="true" >
++    <available classname="junit.framework.Test" ignoresystemclasses="true" property="Junit.present" >
+     </available>
+   </target>
+   <target depends="get-deps" name="compile" description="o Compile the code" >
+     <mkdir dir="${classesdir}" >
+     </mkdir>
+-    <javac debug="true" deprecation="true" optimize="false" destdir="${classesdir}" excludes="**/package.html" >
++    <javac deprecation="true" excludes="**/package.html" destdir="${classesdir}" source="1.4" debug="true" optimize="false" target="1.4" >
+       <src >
+         <pathelement location="src/java" >
+         </pathelement>
+       </src>
+       <classpath refid="build.classpath" >
+       </classpath>
++      <classpath >
++	      <fileset dir="../.." >
++		      <include name="**/*.jar" >
++		      </include>
++	      </fileset> 
++      </classpath> 
+     </javac>
+     <copy todir="${classesdir}" >
+       <fileset dir="." >
+@@ -106,7 +112,7 @@
+       </fileset>
+     </copy>
+   </target>
+-  <target depends="internal-test" if="test.failure" name="test" description="o Run the test cases" >
++  <target depends="internal-test" if="test.failure" description="o Run the test cases" name="test" >
+     <fail message="There were test failures." >
+     </fail>
+   </target>
+@@ -130,7 +136,7 @@
+     </property>
+     <property name="title" value="Cornerstone Connection Manager Implementation 2.1 API" >
+     </property>
+-    <javadoc use="true" author="true" sourcepath="src/java" destdir="${javadocdir}" version="true" private="true" packagenames="org.apache.avalon.cornerstone.*" >
++    <javadoc use="true" author="true" sourcepath="src/java" destdir="${javadocdir}" source="1.4" version="true" private="true" packagenames="org.apache.avalon.cornerstone.*" >
+       <classpath >
+         <path refid="build.classpath" >
+         </path>
