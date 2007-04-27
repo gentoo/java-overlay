@@ -33,8 +33,7 @@ if _excalibur_test; then
 	IUSE="${IUSE} test"
 	DEPEND="
 		${DEPEND}
-		dev-java/junit
-		dev-java/ant-tasks"
+		dev-java/ant-junit"
 fi
 
 EXPORT_FUNCTIONS src_unpack src_test src_install
@@ -62,9 +61,9 @@ excalibur_src_unpack() {
 
 excalibur_src_test() {
 	if _excalibur_test; then
-		eant -DJunit.present=true
+		ANT_TASKS="ant-junit" eant -DJunit.present=true
 	else
-		echo "This package does not support tests."
+		einfo "This package does not support or have unit tests."
 	fi
 }
 
