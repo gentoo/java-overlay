@@ -1,0 +1,7 @@
+# ChangeLog for dev-java/gluegen
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  29 Apr 2007; William L. Thomson Jr. <wltjr@gentoo.org> ChangeLog:
+  Added dep of ant-core, dropped second IUSE already has JAVA_PKG_IUSE
+

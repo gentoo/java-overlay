@@ -16,9 +16,8 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 
-IUSE=""
-
-COMMON_DEP="dev-java/antlr"
+COMMON_DEP="dev-java/ant-core
+	dev-java/antlr"
 
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEP}
@@ -55,4 +54,3 @@ src_install() {
 	#If we are going to install the source
 	#use source && java-pkg_dosrc src
 }
-
