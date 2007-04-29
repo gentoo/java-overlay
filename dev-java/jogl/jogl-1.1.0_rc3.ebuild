@@ -18,18 +18,20 @@ LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 
-COMMON_DEPEND="virtual/opengl
-			   x11-libs/libX11
-			   x11-libs/libXxf86vm
-			   cg? ( media-gfx/nvidia-cg-toolkit )
-			   dev-java/gluegen"
+COMMON_DEPEND="dev-java/ant-core
+	>=dev-java/cpptasks-1.0_beta4-r2
+	dev-java/gluegen
+	cg? ( media-gfx/nvidia-cg-toolkit )
+	virtual/opengl
+	x11-libs/libX11
+	x11-libs/libXxf86vm"
 
 DEPEND=">=virtual/jdk-1.4
-		app-arch/unzip
-		>=dev-java/cpptasks-1.0_beta4-r2
-		${COMMON_DEPEND}"
+	app-arch/unzip
+	${COMMON_DEPEND}"
+
 RDEPEND=">=virtual/jre-1.4
-		${COMMON_DEPEND}"
+	${COMMON_DEPEND}"
 
 S="${WORKDIR}/${PN}"
 
@@ -48,7 +50,7 @@ src_unpack() {
 
 src_compile() {
 	cd make/
-	local antflags="-Dantlr.jar=$(java-pkg_getjars antlr)"
+	local antflags="-Dantlr.jar=$(java-pkg_getjars --build-only antlr)"
 	local gcp="$(java-pkg_getjars ant-core):$(java-config --tools)"
 
 	local gluegen="-Dgluegen.jar=$(java-pkg_getjar gluegen gluegen.jar)"
@@ -72,4 +74,3 @@ src_install() {
 	java-pkg_doso build/obj/*.so
 	java-pkg_dojar build/*.jar
 }
-

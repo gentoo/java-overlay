@@ -2,6 +2,9 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  29 Apr 2007; William L. Thomson Jr. <wltjr@gentoo.org> ChangeLog:
+  Fixed deps per QA, added --build-only for antlr
+
   14 Mar 2007; <alistair@gentoo.org> ChangeLog:
   Updated to latest version of jogl and unbundled gluegen
 
