@@ -18,7 +18,6 @@ IUSE="java5 test"
 
 DEPEND="java5? ( =virtual/jdk-1.5* )
 	!java5? ( =virtual/jdk-1.4* )
-	dev-java/ant-core
 	dev-java/junit"
 RDEPEND="java5? ( =virtual/jdk-1.5* )
 	!java5? ( >=virtual/jre-1.4 )"
@@ -37,7 +36,8 @@ src_unpack() {
 	use test && epatch ${FILESDIR}/${P}-build.xml.patch
 	cd "${S}/external"
 	rm -v *.jar || die
-	java-pkg_jar-from junit
+	# ideally tests should be compiled separately
+	java-pkg_jar-from --build-only junit
 }
 
 EANT_BUILD_TARGET="javacompile archive"
