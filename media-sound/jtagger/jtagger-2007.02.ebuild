@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -39,10 +39,10 @@ src_compile() {
 	cd ${S}/src
 	find . -name '*.java'  -print > sources.list
 	ejavac -cp ${classpath} @sources.list
-  	find . -name '*.class' -print > classes.list
-  	find . -name '*.png' -print >> classes.list
-  	touch myManifest
-  	jar cmf myManifest ${PN}.jar @classes.list
+	find . -name '*.class' -print > classes.list
+	find . -name '*.png' -print >> classes.list
+	touch myManifest
+	jar cmf myManifest ${PN}.jar @classes.list
 }
 
 src_install() {
