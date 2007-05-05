@@ -1,0 +1,8 @@
+# ChangeLog for media-sound/tuxguitar
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  05 May 2007; Alistair John Bush <ali_bush@gentoo.org>
+  +tuxguitar-0.9.1-r1.ebuild:
+  Rev bump tuxguitar to relocated shared folders
+
