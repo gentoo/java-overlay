@@ -1,19 +1,17 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 inherit java-pkg-2 java-ant-2
 
-DESCRIPTION="HttpUnit emulates the relevant portions of browser behavior, including form submission, JavaScript, basic http authentication, cookies and automatic page redirection, and allows Java test code to examine returned pages either as text, an XML DOM, or containers of forms, tables, and links."
+DESCRIPTION="HttpUnit emulates the relevant portions of browser behavior."
 HOMEPAGE="http://httpunit.sourceforge.net/"
 # TODO what is metainf for?
 # TODO where did it come from?
 SRC_URI="mirror://sourceforge/${PN}/${P}.zip
 	http://gentooexperimental.org/distfiles/${P}-metainf.tar.gz"
 
-# TODO: new license needed?
-# http://httpunit.sourceforge.net/doc/license.html
-LICENSE=""
+LICENSE="as-is"
 SLOT="0"
 KEYWORDS="~x86"
 IUSE="doc"
