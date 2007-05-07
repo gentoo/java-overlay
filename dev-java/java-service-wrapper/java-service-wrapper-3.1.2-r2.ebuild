@@ -1,7 +1,9 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+WANT_ANT_TASKS="ant-nodeps"
+JAVA_PKG_IUSE="doc source test"
 inherit base java-pkg-2 java-ant-2 eutils
 
 MY_PN=wrapper
@@ -13,15 +15,17 @@ SRC_URI="mirror://sourceforge/${MY_PN}/${MY_P}.tar.gz"
 LICENSE="java-service-wrapper"
 SLOT="3.1"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc source test"
+IUSE=""
 
 RDEPEND=">=virtual/jre-1.4"
 
 # TODO test with 1.3
 DEPEND="${RDEPEND}
 	>=virtual/jdk-1.4
-	dev-java/ant
-	test? ( dev-java/junit )"
+	test? (
+		dev-java/ant-junit
+		=dev-java/junit-3*
+	)"
 
 S="${WORKDIR}/${MY_P}"
 
@@ -51,7 +55,7 @@ src_compile() {
 }
 
 src_test() {
-	eant test
+	ANT_TASKS="ant-junit ant-nodeps" eant test
 }
 
 src_install() {

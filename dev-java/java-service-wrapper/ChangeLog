@@ -1,6 +1,10 @@
 # ChangeLog for dev-java/java-service-wrapper
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  07 May 2007; Vlastimil Babka <caster@gentoo.org>
+  java-service-wrapper-3.1.2-r2.ebuild:
+  Migrate to split-ant.
 
   02 Sep 2006; Vlastimil Babka <caster@matfyz.cz>
   -java-service-wrapper-3.1.2-r1.ebuild,
