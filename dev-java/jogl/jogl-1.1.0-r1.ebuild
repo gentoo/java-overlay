@@ -37,13 +37,12 @@ src_unpack() {
 	epatch \
 		"${FILESDIR}/${PV}/uncouple-gluegen.patch" \
 		"${FILESDIR}/${PV}/fix-solaris-compiler.patch"
-	
+
 	cd "${S}/make"
 	mv build.xml build.xml.bak
 
 	sed 's_/usr/X11R6_/usr_g' build.xml.bak > build.xml
-	
-	#echo "`pwd`"
+
 	rm -R "${S}/build/gensrc/classes/javax"
 
 	cd "${WORKDIR}/gluegen/make/lib"
