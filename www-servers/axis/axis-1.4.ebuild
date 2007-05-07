@@ -1,8 +1,9 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/www-servers/axis/axis-1.2_rc2.ebuild,v 1.8 2006/09/30 12:17:23 caster Exp $
 
-inherit eutils java-pkg-2
+WANT_ANT_TASKS="ant-nodeps"
+inherit eutils java-pkg-2 java-ant-2
 
 MY_PV="${PV//./_}"
 MY_P="${PN}-${MY_PV}"
@@ -31,7 +32,6 @@ RDEPEND="
 	dev-java/xml-xmlbeans
 "
 DEPEND="=virtual/jdk-1.4*
-	>=dev-java/ant-1.6
 	${RDEPEND}"
 RDEPEND=">=virtual/jre-1.4
 	${RDEPEND}"
