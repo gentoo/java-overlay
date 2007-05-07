@@ -2,6 +2,10 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  07 May 2007; Alistair John Bush <ali_bush@gentoo.org>
+  +jogl-1.1.0-r1.ebuild:
+  Rev bump to use packages gluegen and fix #177438
+
   29 Apr 2007; Alistair John Bush <ali_bush@gentoo.org> ChangeLog:
   Bump jogl to latest version and unbundle gluegen from it. it is now very
   close to being tree ready :)
