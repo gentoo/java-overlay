@@ -1,6 +1,9 @@
 # ChangeLog for www-servers/jboss
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  07 May 2007; kiorky <kiorky@cryptelium.net> jboss-bin-4.0.5.ebuild:
+  Changing old ant monolithic dep
 
   30 Jan 2007; kiorky <kiorky@cryptelium.net>
   files/digest-jboss-bin-4.0.5, +ChangeLog, Manifest:

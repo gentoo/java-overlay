@@ -20,7 +20,7 @@ KEYWORDS="~amd64 x86"
 RDEPEND="ejb3? ( >=virtual/jdk-1.5 )
 		!ejb3? ( >=virtual/jdk-1.4 )"
 
-DEPEND="${RDEPEND} app-arch/unzip dev-java/ant dev-java/ant-contrib"
+DEPEND="${RDEPEND} app-arch/unzip dev-java/ant-core dev-java/ant-contrib"
 
 S=${WORKDIR}/${MY_P}
 INSTALL_DIR="/opt/${PN}-${SLOT}"
