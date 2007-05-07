@@ -68,7 +68,7 @@ src_install() {
 	dodir "${INSTALL_DIR}"        \
 		  "${INSTALL_DIR}/bin"    \
 		  "${INSTALL_DIR}/client" \
-	      "${INSTALL_DIR}/lib"    \
+		  "${INSTALL_DIR}/lib"    \
 		  "${SERVICES_DIR}/${DEFAULT_VHOST}" \
 		  "${CACHE_INSTALL_DIR}/${DEFAULT_VHOST}"  \
 		  "${CONF_INSTALL_DIR}/${DEFAULT_VHOST}"   \
@@ -108,6 +108,8 @@ src_install() {
 		einfo "EJB 3.0 support  Activation"
 		cd "../$MY_EJB3" || die "cd failed"
 		cp -rf "${FILESDIR}/${PV}/ejb3/install.xml" . || die "cp failed"
+
+		# add the latest EJB3 patch for profiles "all" and "default"
 		JBOSS_HOME="../${MY_P}" ant -f install.xml || die "EJB3 Patch failed"
 		einfo "EJB3 installed"
 		cd "../${MY_P}" || die "cd failed"
@@ -119,11 +121,17 @@ src_install() {
 		for app in ${backported_apps};do
 			cp -rf "server/all/deploy/${app}"    server/gentoo/deploy || die "cp failed"
 		done
+
+		#Since the default profile will not have the jars "jgroups.jar jboss-cache.jar"
+		# it should not also have the following configuration files
+		rm server/default/deploy/ejb3-entity-cache-service.xml
+		rm server/default/deploy/ejb3-clustered-sfsbcache-service.xml
+
 	fi
 	# our nice little welcome app
 	cp -rf "${FILESDIR}/${PV}/tomcat/webapp/gentoo" . || die "cp failed"
 	cd gentoo || die "cd failed"
-	#for /gentoo-doc context
+	#for /gentoo-doc context    
 	jar cf ../gentoo.war * || die "jar failed"
 	# for root context
 	rm -f WEB-INF/jboss-web.xml || die "rm failed"
