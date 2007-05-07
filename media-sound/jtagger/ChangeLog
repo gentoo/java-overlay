@@ -2,6 +2,9 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  07 May 2007; <serkan_kaba@yahoo.com> ChangeLog:
+  Added src_test and fixed a few issues.
+
   04 May 2007; Petteri Räty <betelgeuse@gentoo.org> jtagger-2007.02.ebuild:
   Fix indentation.
 
