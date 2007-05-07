@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/jlayer
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  07 May 2007; Petteri Räty <betelgeuse@gentoo.org> jlayer-1.0.ebuild:
+  Implement the source use flag, actually build by removing bundled classes
+  and did src_test but it doesn't work without an existing mp3 file.
+
