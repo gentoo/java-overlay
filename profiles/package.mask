@@ -6,28 +6,15 @@
 # NOTE: Please add your entry at the top!
 #
 
-# Alistair Bush. alistair.bush@gmail.com (20 Mar 2007)
-# Masked so I can experiement with building testng with both the 1.4 and 1.5
-# versions of jars
-=dev-java/testng-5.2-r1
-
-#Alistair Bush alistair.bush@gmail.com (11 Mar 2007)
-# Masked as does not build.  Currently attempting to seperate
-# gluegen from jogl.  It is going moderately successfully.  This shouldn't
-# be masked for very long
-=dev-java/jogl-1.0.0-r1
+# Alistair Bush. ali_bush@gentoo.org (24 Apr 2007)
+# Masked for removal in 30 days. Dead upstream.
+dev-java/metouia
 
 #William L. Thomson Jr. wltjr@gentoo.org (8 Mar 2007)
 # Masked due to package being incomplete and broken. Not
 # all deps are packaged, last on run into seems to be a
 # jar from Jetty which is out of date and lacks maintainer
 dev-java/htmlunit
-
-#Alistair Bush alistair.bush@gmail.com (10 Feburary 2007)
-# Masked so that dev-db/octopus and dev-java/saxon can be updated
-# to depend on <fop-0.93.  This is required as fop
-# underwent a major redesign and breaks API.
-=dev-java/fop-0.93
 
 # kiorky kiorky@cryptelium.net
 # just backported stuff and began working on it, don't work yet
