@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/buildmagic-tasks
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  08 May 2007; Vlastimil Babka <caster@gentoo.org>
+  buildmagic-tasks-2.0-r1.ebuild:
+  Update bsf dep.
+

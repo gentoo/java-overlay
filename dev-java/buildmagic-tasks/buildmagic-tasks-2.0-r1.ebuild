@@ -1,8 +1,8 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg-2 eutils
+inherit java-pkg-2 java-ant-2 eutils
 
 DESCRIPTION="JBoss buildmagic tasks module"
 HOMEPAGE="http://www.jboss.org"
@@ -17,11 +17,13 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
+CDEPEND="dev-java/log4j
+	>=dev-java/bsf-2.3"
 DEPEND=">=virtual/jdk-1.4
-	dev-java/ant"
+	${CDEPEND}"
 RDEPEND=">=virtual/jre-1.4
-	dev-java/log4j
-	=dev-java/bsf-2.3*"
+	${CDEPEND}"
+	
 S="${WORKDIR}/buildmagic/tasks"
 
 COMMON=${WORKDIR}/jboss-common
@@ -52,9 +54,9 @@ src_unpack() {
 	mkdir -p tasks/src/main/org/jboss/logging
 	cp ../jboss-common/src/main/org/jboss/util/DirectoryBuilder.java tasks/src/main/org/jboss/util
 	cp ../jboss-common/src/main/org/jboss/util/Strings.java tasks/src/main/org/jboss/util
-	cp 	../jboss-common/src/main/org/jboss/util/NestedError.java tasks/src/main/org/jboss/util
+	cp ../jboss-common/src/main/org/jboss/util/NestedError.java tasks/src/main/org/jboss/util
 	cp ../jboss-common/src/main/org/jboss/util/NestedThrowable.java tasks/src/main/org/jboss/util
-	cp 	../jboss-common/src/main/org/jboss/util/ThrowableHandler.java tasks/src/main/org/jboss/util
+	cp ../jboss-common/src/main/org/jboss/util/ThrowableHandler.java tasks/src/main/org/jboss/util
 	cp ../jboss-common/src/main/org/jboss/util/ThrowableListener.java tasks/src/main/org/jboss/util
 	cp ../jboss-common/src/main/org/jboss/util/NullArgumentException.java tasks/src/main/org/jboss/util
 	cp ../jboss-common/src/main/org/jboss/util/EmptyStringException.java tasks/src/main/org/jboss/util
