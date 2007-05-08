@@ -18,7 +18,6 @@ COMMON_DEP="
 	dev-java/javacup
 	dev-java/bcel
 	=dev-java/jakarta-regexp-1.3*
-	=dev-java/bsf-2.3*
 	>=dev-java/xerces-2.7.1
 	=dev-java/xml-commons-external-1.3*
 	~dev-java/xalan-serializer-${PV}"
