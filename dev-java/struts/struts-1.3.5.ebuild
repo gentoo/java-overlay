@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/struts/struts-1.2.9.ebuild,v 1.1 2006/03/31 15:49:34 karltk Exp $
 
@@ -23,7 +23,7 @@ COMMON_DEP="
 	=dev-java/jakarta-oro-2.0*
 	>=dev-java/commons-fileupload-1.1.1
 	=dev-java/servletapi-2.3*
-	=dev-java/bsf-2.3*
+	>=dev-java/bsf-2.3
 	=dev-java/jsfapi-1*
 	>=dev-java/junit-3.8"
 
