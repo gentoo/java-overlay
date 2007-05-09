@@ -29,7 +29,6 @@ RDEPEND="
 	dev-java/commons-net
 	dev-java/sun-jimi
 	=dev-java/servletapi-2.4*
-	dev-java/xml-xmlbeans
 "
 DEPEND="=virtual/jdk-1.4*
 	${RDEPEND}"
