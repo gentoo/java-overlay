@@ -15,41 +15,46 @@ KEYWORDS="~x86"
 IUSE=""
 SLOT="0"
 
+COMMON_DEP="
+	dev-java/jlayer
+	dev-java/jid3"
 RDEPEND=">=virtual/jre-1.5
-	 dev-java/jlayer
-	 dev-java/jid3
-	 >=dev-java/jgoodies-looks-2.0"
+	>=dev-java/jgoodies-looks-2.0
+	${COMMON_DEP}"
 
-DEPEND="${RDEPEND}
+DEPEND="${COMMON_DEP}
 	>=virtual/jdk-1.5
 	app-arch/unzip
 	test? ( dev-java/junit )"
 
 src_unpack() {
-	mkdir -p ${S}/src
-	cd ${S}/src && unpack ${A}
-	rm -rf src/com/jgoodies
-	rm -rf javazoom
-	rm -rf org
-	find . -name '*.class' -delete
+	mkdir -p "${S}/src"
+	cd "${S}/src"
+	unpack ${A}
+	rm -vr com/jgoodies || die
+	rm -vr javazoom || die
+	rm -vr org || die
+	find . -name '*.class' -delete || die
 	#Move the tests away
-	mkdir -p ../test/com/googlepages/dronten/jtagger
-	mv com/googlepages/dronten/jtagger/test ../test/com/googlepages/dronten/jtagger/test
+	mkdir -p ../test/com/googlepages/dronten/jtagger || die
+	mv com/googlepages/dronten/jtagger/test \
+		../test/com/googlepages/dronten/jtagger/test || die
 }
 
 src_compile() {
-	local classpath=$(java-pkg_getjars jid3,jlayer,jgoodies-looks-2.0)
-	cd ${S}/src
+	local classpath=$(java-pkg_getjars jid3,jlayer)
+	cd "${S}/src"
 	find . -name '*.java'  -print > sources.list
-	ejavac -cp ${classpath} @sources.list
+	ejavac -encoding latin1 -cp ${classpath} @sources.list
 	find . -name '*.class' -print > classes.list
 	find . -name '*.png' -print >> classes.list
 	touch myManifest
-	jar cmf myManifest ${PN}.jar @classes.list
+	jar cmf myManifest ${PN}.jar @classes.list || die "jar failed"
 }
 
 src_install() {
 	java-pkg_dojar src/${PN}.jar
+	java-pkg_register-dependency jgoodies-looks-2.0
 	use source && java-pkg_dosrc src/com
 	java-pkg_dolauncher jtagger --main com.googlepages.dronten.jtagger.JTagger
 	newicon src/com/googlepages/dronten/jtagger/resource/jTagger.icon.png ${PN}.png
@@ -57,7 +62,7 @@ src_install() {
 }
 
 src_test() {
-	cd ${S}/test
+	cd "${S}/test"
 	local cp=".:../src/${PN}.jar:$(java-pkg_getjars jid3,jlayer)"
 	cp="${cp}:$(java-pkg_getjars --build-only junit)"
 	find . -name '*.java'  -print > sources.list
