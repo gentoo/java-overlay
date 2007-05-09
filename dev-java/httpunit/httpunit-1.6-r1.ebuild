@@ -16,14 +16,15 @@ SLOT="0"
 KEYWORDS="~x86"
 IUSE="doc"
 
-DEPEND=">=virtual/jdk-1.4
-	dev-java/ant-core"
 RDEPEND=">=virtual/jre-1.4
 	dev-java/jtidy
 	=dev-java/rhino-1.6*
 	dev-java/nekohtml
 	=dev-java/servletapi-2.3*
 	>=dev-java/xerces-2.7"
+DEPEND=">=virtual/jdk-1.4
+	dev-java/ant-core
+	${RDEPEND}"
 
 TIDY="jtidy Tidy.jar"
 JS="rhino-1.6 js.jar"
