@@ -2,6 +2,9 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/javatoolkit/ChangeLog,v 1.31 2007/03/15 13:27:00 caster Exp $
 
+  12 May 2007; Alistair John Bush <ali_bush@gentoo.org> ChangeLog:
+  Adding to ~amd64
+
   11 May 2007; kiorky <kiorky@cryptelium.net> +javatoolkit-0.2.1.ebuild,
   +metadata.xml:
   Integrating bsfix changes and maven toolkit
