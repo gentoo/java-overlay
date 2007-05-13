@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+JAVA_PKG_IUSE="doc source"
+
 inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="Advanced classloader framework"
@@ -9,8 +11,8 @@ HOMEPAGE="http://classworlds.codehaus.org/"
 SRC_URI="http://dev.gentooexperimental.org/~kiorky/${P}.tar.bz2"
 LICENSE="codehaus-classworlds"
 SLOT="1.1"
-KEYWORDS="~x86"
-IUSE="doc source"
+KEYWORDS="~amd64 ~x86"
+IUSE=""
 
 RDEPEND=">=virtual/jre-1.4
 		>=dev-java/xerces-2.7"
@@ -41,5 +43,5 @@ src_unpack() {
 src_install() {
 	java-pkg_newjar "target/${P}.jar" "${PN}.jar"
 	use doc && java-pkg_dojavadoc dist/docs/api
-	use source && java-pkg_dosrc "${S}/src/java"
+	use source && java-pkg_dosrc "${S}/src/java/main/*"
 }
