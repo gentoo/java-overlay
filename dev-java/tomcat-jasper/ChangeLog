@@ -2,6 +2,10 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/jakarta-tomcat-jasper/ChangeLog,v 1.4 2006/11/30 15:42:32 caster Exp $
 
+  13 May 2007; Alistair John Bush <ali_bush@gentoo.org>
+  tomcat-jasper-5.0.28.ebuild:
+  Added --build-only to function calls involving ant
+
   10 Feb 2007; kiorky <kiorky@cryptelium.net> tomcat-jasper-5.0.28.ebuild:
   Correct ebuild to use a -1.4 jdk as it wont compile with >1.4
   Correct year

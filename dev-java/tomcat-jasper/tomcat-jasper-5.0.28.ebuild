@@ -40,7 +40,7 @@ src_unpack() {
 	# Setup build.properties
 	echo "servlet-api.jar=$(java-pkg_getjar servletapi-2.4 servlet-api.jar)" >> build.properties
 	echo "jsp-api.jar=$(java-pkg_getjar servletapi-2.4 jsp-api.jar)" >> build.properties
-	echo "ant.jar.jar=$(java-pkg_getjar ant-core ant.jar)" >> build.properties
+	echo "ant.jar.jar=$(java-pkg_getjar --build-only ant-core ant.jar)" >> build.properties
 	echo "xerces.jar=$(java-pkg_getjar xerces-1.3 xerces.jar)" >> build.properties
 	echo "xercesImpl.jar=$(java-pkg_getjar xerces-2 xercesImpl.jar)" >> build.properties
 	echo "xml-apis.jar=$(java-pkg_getjar xml-commons xml-apis.jar)" >> build.properties
