@@ -1,6 +1,8 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+
+JAVA_PKG_IUSE="doc test source"
 
 inherit java-pkg-2 java-ant-2
 
@@ -9,44 +11,45 @@ HOMEPAGE="http://jakarta.apache.org/commons/math/"
 SRC_URI="mirror://apache/jakarta/commons/math/source/${P}-src.tar.gz"
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~x86 ~sparc ~ppc ~amd64 ~ppc64"
-IUSE="doc test source"
+KEYWORDS="~x86 ~ppc ~amd64"
+IUSE=""
 
-DEPEND=">=virtual/jdk-1.4
-	>=dev-java/ant-1.6
-	test? ( >=dev-java/junit-3.7 )
-	source? ( app-arch/zip )"
-
-RDEPEND=">=virtual/jre-1.4
+COMMON_DEP="
 	>=dev-java/commons-discovery-0.2
 	>=dev-java/commons-logging-1.0.3"
+
+DEPEND=">=virtual/jdk-1.4
+	>=dev-java/ant-core-1.6
+	${COMMON_DEP}
+	test? ( dev-java/ant-junit )"
+
+RDEPEND=">=virtual/jre-1.4
+	${COMMON_DEP}"
 
 S=${WORKDIR}/${P}-src
 
 src_unpack() {
 	unpack ${A}
+	cd "${S}"
 
-	cd ${S}
-
-	epatch ${FILESDIR}/commons-math-1.1.build.xml.patch
+	epatch "${FILESDIR}/commons-math-1.1.build.xml.patch"
 
 	mkdir lib
 	cd lib
-	java-pkg_jar-from commons-discovery || die "Could not link to discovery"
-	java-pkg_jar-from commons-logging || die "Could not link to commons-logging"
-}
-
-src_compile() {
-	eant jar $(use_doc)
+	java-pkg_jar-from commons-discovery
+	java-pkg_jar-from commons-logging
 }
 
 src_test() {
-	eant test
+	cd lib || die
+	java-pkg_jar-from junit
+	cd ..
+	ANT_TASKS="ant-junit" eant test
 }
 
 src_install() {
 	java-pkg_dojar target/${PN}.jar
 
-	use doc && java-pkg_dohtml -r dist/docs/
+	use doc && java-pkg_dojavadoc dist/docs/api
 	use source && java-pkg_dosrc src/java/org
 }

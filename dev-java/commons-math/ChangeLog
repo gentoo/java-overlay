@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/commons-math
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  15 May 2007; Petteri Räty <betelgeuse@gentoo.org>
+  commons-math-1.1.ebuild:
+  Migrate so splitted ant and QA fixes.
+
