@@ -2,6 +2,10 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  19 May 2007; Petteri Räty <betelgeuse@gentoo.org> kxml-1.2.1.ebuild,
+  metadata.xml:
+  Move the very long description to metadata.xml.
+
   15 Feb 2007; kiorky <kiorky@cryptelium.net> ChangeLog:
   Added as it is a joram dependency
   see #167104

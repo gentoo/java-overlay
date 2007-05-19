@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-<herd>java</herd>
+	<herd>java</herd>
+	<longdescription>
+		The kXML project provides an XML pull parser and writer suitable
+		for all Java platforms including the Java 2 Micro Edition 
+		(CLDC/MIDP/CDC)
+	</longdescription>
 </pkgmetadata>

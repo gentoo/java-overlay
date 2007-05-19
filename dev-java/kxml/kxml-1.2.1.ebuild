@@ -4,15 +4,14 @@
 
 inherit java-pkg-2 java-utils-2
 
-DESCRIPTION="The kXML project provides an XML pull parser and writer suitable
-for all Java platforms including the Java 2 Micro Edition (CLDC/MIDP/CDC)"
+DESCRIPTION="A XML pull parser and writer for all Java platforms"
 HOMEPAGE="http://kxml.objectweb.org/"
 SRC_URI="http://dev.gentooexperimental.org/~kiorky/${P}.tar.bz2"
 
 LICENSE="Enhydra"
 SLOT="0"
 KEYWORDS="~x86 "
-IUSE="source ${SPECS}"
+IUSE="source"
 DEPEND=">=virtual/jdk-1.4"
 RDEPEND="${DEPEND} >=virtual/jre-1.4"
 S=${WORKDIR}
