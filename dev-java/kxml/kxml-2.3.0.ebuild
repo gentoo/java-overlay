@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-JAVA_PKG_IUSE="doc source"
+JAVA_PKG_IUSE="doc examples source"
 
 inherit eutils java-pkg-2 java-ant-2
 
@@ -27,6 +27,7 @@ S=${WORKDIR}
 src_unpack() {
 	unpack ${A}
 	rm dist/*
+	find bin -name "*.class" | xargs rm -v
 	#We do not remove the lib/xmlpull_*.jar, the source is avail at
 	# http://www.xmlpull.org/v1/download/ but ONLY the latest version
 }
@@ -35,7 +36,8 @@ EANT_BUILD_TARGET="build_jar"
 
 src_install() {
 	java-pkg_newjar dist/${PN}2-${PV}.jar ${PN}2.jar
-	use source && java-pkg_dosrc src/*
+	use source && java-pkg_dosrc src/org
 	use doc && java-pkg_dojavadoc www/kxml2/javadoc
+	use examples && java-pkg_doexamples samples
 }
 
