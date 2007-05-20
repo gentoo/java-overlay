@@ -6,12 +6,13 @@ JAVA_PKG_IUSE="doc examples source"
 
 inherit eutils java-pkg-2 java-ant-2
 
-MY_P=${PN}_${PV//./_}${R}
+MY_PN=${PN//-api/}
+MY_P=${MY_PN}_${PV//./_}${R}
 MY_V=_${PV//./_}${R}
 DESCRIPTION="The aim of that library is to provide a similar but orthogonal pull parsing basis to widely successful push parsing SAX API."
 HOMEPAGE="http://xmlpull.org/index.shtml"
 
-SRC_URI="http://${PN}.org/v1/download/${MY_P}_src.tgz"
+SRC_URI="http://${MY_PN}.org/v1/download/${MY_P}_src.tgz"
 LICENSE="as-is"
 SLOT="0"
 KEYWORDS="~x86"
