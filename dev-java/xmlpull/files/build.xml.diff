@@ -1,0 +1,39 @@
+--- xmlpull_1_1_3_4c/build.xml	2006-10-23 07:20:43.000000000 +0200
++++ build.xml	2007-05-20 23:18:31.328965415 +0200
+@@ -127,11 +127,11 @@
+     </uptodate>
+   </target>
+ 
+-  <target name="check_junit" unless="junit_present" depends="prepare">
+-    <echo message="Warning: JUnit dependencies were not resolved."/>
++  <target name="check_junit"  depends="prepare">
++    <echo message="Nothing."/>
+   </target>
+ 
+-  <target name="require_junit" unless="junit_present" depends="prepare">
++  <target name="require_junit"  depends="prepare">
+     <fail message="ERROR: JUnit library must be present to compile this target (see http://www.junit.org)."/>
+   </target>
+ 
+@@ -252,10 +252,10 @@
+ 
+   <path id="test-classpath">
+     <pathelement location="${build_classes}" />
+-    <pathelement path="${java.class.path}" />
++    <pathelement path="lib/junit/junit.jar" />
+   </path>
+ 
+-  <target name="tests_junit" if="junit_present" depends="xmlpull,check_junit">
++  <target name="tests_junit"  depends="xmlpull,check_junit">
+     <mkdir dir="${build_tests}"/>
+     <javac debug="${debug}" deprecation="${deprecation}"
+       srcdir="${src_tests}"
+@@ -279,7 +279,7 @@
+ 
+   <target name="tests" depends="tests_jar"/>
+ 
+-  <target name="junit" if="junit_present" depends="tests">
++  <target name="junit"  depends="tests">
+ 
+     <java classname="org.xmlpull.v1.tests.PackageTests" fork="yes">
+       <!--arg value="foo_argument_1" /-->
