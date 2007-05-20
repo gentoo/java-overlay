@@ -31,7 +31,7 @@ S=${WORKDIR}/${MY_P}
 
 src_unpack() {
 	unpack ${A}
-	find "${S}" -iname *jar | xargs rm -rf || die
+	find "${S}" -name *jar | xargs rm -rf || die
 	cd "${S}" || die
 	epatch "${FILESDIR}/build.xml.diff"
 	cd "${S}/lib/junit" || die
