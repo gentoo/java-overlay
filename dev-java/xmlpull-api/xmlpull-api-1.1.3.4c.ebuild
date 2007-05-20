@@ -7,7 +7,7 @@ JAVA_PKG_IUSE="doc examples source"
 inherit eutils java-pkg-2 java-ant-2
 
 MY_PN=${PN//-api/}
-MY_P=${MY_PN}_${PV//./_}${R}
+MY_P=${MY_PN}_${PV//./_}
 MY_V=_${PV//./_}${R}
 DESCRIPTION="The aim of that library is to provide a similar but orthogonal pull parsing basis to widely successful push parsing SAX API."
 HOMEPAGE="http://xmlpull.org/index.shtml"
@@ -31,8 +31,8 @@ S=${WORKDIR}/${MY_P}
 
 src_unpack() {
 	unpack ${A}
-	find "${S}" -name *jar | xargs rm -rf || die
 	cd "${S}" || die
+	rm ${MY_P}.jar || die
 	epatch "${FILESDIR}/build.xml.diff"
 	cd "${S}/lib/junit" || die
 	java-pkg_jarfrom junit
