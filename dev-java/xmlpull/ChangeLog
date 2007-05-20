@@ -2,6 +2,9 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  20 May 2007; kiorky <kiorky@cryptelium.net> xmlpull-1.1.3.4c.ebuild:
+  slot correction
+
   20 May 2007; kiorky <kiorky@cryptelium.net> +xmlpull-1.1.3.4c.ebuild,
   +files/build.xml.diff, +metadata.xml:
   added as a kxml dependency, see #179165

@@ -13,7 +13,7 @@ HOMEPAGE="http://xmlpull.org/index.shtml"
 
 SRC_URI="http://${PN}.org/v1/download/${MY_P}_src.tgz"
 LICENSE="as-is"
-SLOT="2"
+SLOT="0"
 KEYWORDS="~x86"
 
 IUSE=""
