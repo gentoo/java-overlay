@@ -37,7 +37,7 @@ src_unpack() {
 	epatch "${FILESDIR}/build.xml.diff"
 	if use test-framework;then
 		mkdir -p "${S}/build/lib" || die
-		cd "${S}/build/lib" || die
+		d "${S}/build/lib" || die
 		java-pkg_jarfrom junit
 		java-pkg_jarfrom xpp3
 	fi
@@ -45,7 +45,6 @@ src_unpack() {
 
 src_test() {
 	ANT_TASKS="ant-junit" eant junit
-	einfo "prout"
 }
 
 src_install() {
