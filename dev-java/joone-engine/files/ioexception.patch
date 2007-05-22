@@ -1,0 +1,14 @@
+diff -Nur joone/org/joone/script/JooneGroovyScript.java joone_fixed/org/joone/script/JooneGroovyScript.java
+--- joone/org/joone/script/JooneGroovyScript.java	2005-06-02 16:42:42.000000000 +0300
++++ joone_fixed/org/joone/script/JooneGroovyScript.java	2007-05-16 21:05:16.000000000 +0300
+@@ -86,10 +86,6 @@
+             log.error( "CompilationFailedException thrown. Message is : " + cfe.getMessage(),
+             cfe);
+         } 
+-        catch (IOException ioe) {
+-            log.error( "IOException thrown. Message is : " + ioe.getMessage(),
+-            ioe);
+-        }
+     }
+     
+     public void set(String name, Object jObject){

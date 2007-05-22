@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/joone-engine
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  22 May 2007; Petteri Räty <betelgeuse@gentoo.org>
+  joone-engine-2.0.0_rc1.ebuild:
+  Code review.
+
