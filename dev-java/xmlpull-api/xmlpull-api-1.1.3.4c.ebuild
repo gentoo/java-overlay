@@ -7,8 +7,8 @@ JAVA_PKG_IUSE="doc examples source"
 inherit eutils java-pkg-2 java-ant-2
 
 MY_PN=${PN//-api/}
-MY_V=_${PV//./_}
-MY_P=${MY_PN}${MY_V}
+MY_PV=_${PV//./_}
+MY_P=${MY_PN}${MY_PV}
 DESCRIPTION="XmlPull V1 API"
 HOMEPAGE="http://xmlpull.org"
 
@@ -17,9 +17,12 @@ LICENSE="as-is test-framework? ( LGPL-2.1 )"
 SLOT="0"
 KEYWORDS="~x86"
 
-IUSE="test-framework"
+IUSE="addons test-framework"
 
-COMMON_DEP="test-framework? ( dev-java/junit )"
+COMMON_DEP="
+	test-framework? ( dev-java/junit )
+	addons? ( dev-java/junit )
+	"
 
 RDEPEND=">=virtual/jre-1.5 ${COMMON_DEP}"
 DEPEND=">=virtual/jdk-1.5 ${COMMON_DEP}"
@@ -29,18 +32,20 @@ S=${WORKDIR}/${MY_P}
 src_unpack() {
 	unpack ${A}
 	cd "${S}" || die
-	rm ${MY_P}.jar || die
-	epatch "${FILESDIR}/build.xml.diff"
-	if use test-framework;then
-		mkdir -p "${S}/build/lib" || die
-		java-pkg_jarfrom --into "${S}/build/lib" junit
-	fi
+	rm -v ${MY_P}.jar || die
+	java-ant_ignore-system-classes
 }
 
 src_compile() {
+	local antflags bo
+	if use test-framework || use addons; then
+		antflags="-Djunit_present=true \
+			-Djava.class.path=$(java-pkg_getjars junit)"
+	fi
 	eant jar $(use_doc apidoc) \
 		$(use test-framework && echo tests) \
-		-Dbuild_apidoc=api
+		$(use addons && echo addons) \
+		-Dbuild_apidoc=api ${antflags}
 }
 
 # Could be done by depending on xpp3 for example but the test are meant
@@ -51,9 +56,9 @@ src_compile() {
 
 src_install() {
 	cd "${S}"/build/lib || die
-	java-pkg_newjar ${MY_P}.jar
-	use test-framework && \
-		java-pkg_newjar ${MY_PN}-tests${MY_V}.jar ${MY_PN}-tests.jar
+	for jar in *.jar; do
+		java-pkg_newjar ${jar} ${jar//${MY_PV}}
+	done
 	cd "${S}"
 	dohtml README.html || die
 	dohtml -r doc || die
