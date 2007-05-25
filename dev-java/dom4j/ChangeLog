@@ -2,9 +2,13 @@
 # Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/dom4j/ChangeLog,v 1.40 2007/01/10 03:11:01 caster Exp $
 
-  18 Feb 2007; kiorky <kiorky@cryptelium.net> ChangeLog:
+ 18 Feb 2007; kiorky <kiorky@cryptelium.net> ChangeLog:
   Ressurecting 1.4 as it is a "findbugs" dependency
   see #93232
+
+  25 May 2007; kiorky <kiorky@cryptelium.net> dom4j-1.4.ebuild,
+  +files/makethingscompile.diff, +makethingscompile.diff:
+  fix patches
 
   10 Jan 2007; Vlastimil Babka <caster@gentoo.org> -dom4j-1.4-r1.ebuild,
   -dom4j-1.5.ebuild, -dom4j-1.6.1.ebuild:

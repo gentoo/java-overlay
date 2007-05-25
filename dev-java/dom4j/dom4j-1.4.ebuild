@@ -41,14 +41,15 @@ EANT_BUILD_TARGET="clean package"
 src_unpack() {
 	unpack ${A}
 
-	epatch ${FILESDIR}/fop.patch
-	epatch ${FILESDIR}/DefaultXPath.java.diff
-	epatch ${FILESDIR}/ProxyXmlStartTag.java.diff
-	epatch ${FILESDIR}/DocumentFactory.java.diff
-	epatch ${FILESDIR}/XPathPattern.java.diff
-	epatch ${FILESDIR}/AbstractNode.java.diff
-	epatch ${FILESDIR}/DocumentHelper.java.diff
-	epatch ${FILESDIR}/ProxyDocumentFactory.java.diff
+	#epatch ${FILESDIR}/fop.patch
+	#epatch ${FILESDIR}/DefaultXPath.java.diff
+	#epatch ${FILESDIR}/ProxyXmlStartTag.java.diff
+	#epatch ${FILESDIR}/DocumentFactory.java.diff
+	#epatch ${FILESDIR}/XPathPattern.java.diff
+	#epatch ${FILESDIR}/AbstractNode.java.diff
+	#epatch ${FILESDIR}/DocumentHelper.java.diff
+	#epatch ${FILESDIR}/ProxyDocumentFactory.java.diff
+	epatch ${FILESDIR}/makethingscompile.diff
 
 	find "${S}" -name *.jar | xargs rm -rf || die "rm failed"
 	cd "${S}/lib" || die "cd failed"
