@@ -13,13 +13,13 @@ SLOT="0"
 KEYWORDS="~x86 "
 IUSE="doc source"
 
-DEPEND="|| ( =virtual/jdk-1.4*  =virtual/jdk-1.5* =virtual/jdk-1.6* )
+DEPEND="|| ( =virtual/jdk-1.6*  =virtual/jdk-1.5* =virtual/jdk-1.4* )
 		source? ( app-arch/zip )
 		dev-java/commons-logging
 		dev-java/stax
 		dev-java/log4j
 		dev-java/junit
-		=dev-java/jaxen-1.1
+		=dev-java/jaxen-1.1*
 		=dev-java/xmlunit-1*
 		dev-java/sun-javamail
 		dev-java/sun-jaf
