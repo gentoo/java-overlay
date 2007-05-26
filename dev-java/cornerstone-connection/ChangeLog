@@ -2,6 +2,10 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  26 May 2007; Vlastimil Babka <caster@gentoo.org>
+  cornerstone-connection-2.1.ebuild:
+  Fix typo in RDEPEND.
+
   24 Apr 2007; kiorky <kiorky@cryptelium.net>
   +cornerstone-connection-2.1.ebuild, +files/build.xml.patch, +metadata.xml:
   added  to the java-overlay as a maven dependency.see #175839

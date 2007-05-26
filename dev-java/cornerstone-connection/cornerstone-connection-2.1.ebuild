@@ -15,7 +15,7 @@ inherit excalibur-multi
 SLOT="0"
 KEYWORDS="~x86"
 
-RDEDEND="=www-servers/jetty-5*
+RDEPEND="=www-servers/jetty-5*
 	dev-java/tomcat-jasper
 	dev-java/plexus-component-api
 	dev-java/plexus-utils
