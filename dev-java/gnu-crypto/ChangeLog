@@ -2,6 +2,11 @@
 # Copyright 2000-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/gnu-crypto/ChangeLog,v 1.25 2007/03/11 20:47:03 nichoj Exp $
 
+ 26 May 2007; kiorky <kiorky@cryptelium.net> +gnu-crypto-2.0.1-r3.ebuild,
+  -gnu-crypto-2.0.1-r2.ebuild:
+  delete 2.0.1-r2, merge to the tree
+  restore bumped version
+
   26 May 2007; kiorky <kiorky@cryptelium.net> +gnu-crypto-2.0.1-r3.ebuild,
   -gnu-crypto-2.1.0.ebuild, +metadata.xml:
   fix source USE in DEPEND, see #179874
