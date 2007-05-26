@@ -15,18 +15,17 @@ inherit excalibur-multi
 SLOT="0"
 KEYWORDS="~x86"
 
-#RDEPEND="dev-java/excalibur-thread"
-#DEPEND="${RDEPEND}"
+RDEPEND="dev-java/junit dev-java/junitperf =dev-java/avalon-framework-4.2*"
+DEPEND="${RDEPEND}"
 
 S=${WORKDIR}
 
-#EXCALIBUR_JAR_FROM="excalibur-thread"
+EXCALIBUR_JAR_FROM="avalon-framework-4.2"
 
-EXCALIBUR_TEST_JAR_FROM="junit junitperf"
+EXCALIBUR_TEST_JAR_FROM="junit junitperf "
 
 
 src_unpack(){
-	excalibur-multi_src_unpack
-	epatch "${FILESDIR}"/build.xml.patch
+	excalibur-multi_src_unpack "${FILESDIR}"/build.xml.patch
 }
 
