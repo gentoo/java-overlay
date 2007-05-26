@@ -15,20 +15,22 @@ inherit excalibur-multi
 SLOT="0"
 KEYWORDS="~x86"
 
-RDEPEND="dev-java/excalibur-thread"
+RDEPEND="dev-java/excalibur-thread dev-java/junit dev-java/junitperf"
 DEPEND="${RDEPEND}"
 
 S=${WORKDIR}
 
-EXCALIBUR_JAR_FROM="
-	excalibur-thread
-"
-
-EXCALIBUR_TEST_JAR_FROM="junit junitperf"
-
+EXCALIBUR_JAR_FROM="excalibur-thread"
+EXCALIBUR_TEST_JAR_FROM="excalibur-thread junit junitperf"
 
 src_unpack(){
-	excalibur-multi_src_unpack
-	epatch "${FILESDIR}"/build.xml.patch
+	unpack ${A}
+	cd "${S}" || die
+	epatch "${FILESDIR}/build.xml.patch"
+	for module in ${EXCALIBUR_MODULES}; do
+		cd ${module}* || die
+		excalibur_src_prepare
+		cd "${WORKDIR}"
+	done
 }
 
