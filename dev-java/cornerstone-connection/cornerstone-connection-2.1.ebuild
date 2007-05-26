@@ -21,6 +21,8 @@ RDEPEND="=www-servers/jetty-5*
 	dev-java/plexus-utils
 	dev-java/cornerstone-threads
 	dev-java/cornerstone-sockets
+	dev-java/junit
+	dev-java/junitperf
 	dev-java/excalibur-thread"
 DEPEND="${RDEPEND}"
 
@@ -31,7 +33,12 @@ EXCALIBUR_JAR_FROM="jetty-5 tomcat-jasper-2 plexus-component-api excalibur-threa
 EXCALIBUR_TEST_JAR_FROM="junit junitperf"
 
 src_unpack(){
-	excalibur-multi_src_unpack
-	epatch "${FILESDIR}"/build.xml.patch
+	unpack ${A}
+	cd "${S}" || die
+	epatch "${FILESDIR}/build.xml.patch"
+	for module in ${EXCALIBUR_MODULES}; do
+		cd ${module}* || die
+		excalibur_src_prepare
+		cd "${WORKDIR}"
+	done
 }
-
