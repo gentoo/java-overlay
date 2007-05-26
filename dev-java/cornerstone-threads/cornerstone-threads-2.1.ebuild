@@ -24,13 +24,6 @@ EXCALIBUR_JAR_FROM="excalibur-thread"
 EXCALIBUR_TEST_JAR_FROM="excalibur-thread junit junitperf"
 
 src_unpack(){
-	unpack ${A}
-	cd "${S}" || die
-	epatch "${FILESDIR}/build.xml.patch"
-	for module in ${EXCALIBUR_MODULES}; do
-		cd ${module}* || die
-		excalibur_src_prepare
-		cd "${WORKDIR}"
-	done
+	excalibur-multi_src_unpack  "${FILESDIR}/build.xml.patch"
 }
 
