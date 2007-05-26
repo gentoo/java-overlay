@@ -16,7 +16,7 @@ inherit excalibur-multi
 SLOT="0"
 KEYWORDS="~x86"
 
-RDEDEND="
+RDEPEND="
 =dev-java/avalon-framework-4.2*
 dev-java/commons-collections
 dev-java/concurrent-util
