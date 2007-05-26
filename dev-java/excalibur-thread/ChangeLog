@@ -2,6 +2,9 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  26 May 2007; kiorky <kiorky@cryptelium.net> excalibur-thread-2.1.ebuild:
+  fix DEPEND
+
   26 May 2007; Vlastimil Babka <caster@gentoo.org>
   excalibur-thread-2.1.ebuild:
   Fix typo in RDEPEND.

@@ -18,6 +18,8 @@ KEYWORDS="~x86"
 
 RDEPEND="
 =dev-java/avalon-framework-4.2*
+dev-java/junit
+dev-java/junitperf
 dev-java/commons-collections
 dev-java/concurrent-util
 dev-java/excalibur-pool
