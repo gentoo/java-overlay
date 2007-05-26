@@ -199,7 +199,7 @@ src_install() {
 
 	einfo "Fixing permissions..."
 	chown -R ${JETTY_NAME}:${JETTY_NAME} "${D}/${JETTY_HOME}" || die
-	chmod -R o-rwx "${D}/${JETTY_HOME}"  || die
+	chmod -R 755  "${D}/${JETTY_HOME}"  || die
 }
 
 pkg_postinst() {
