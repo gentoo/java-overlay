@@ -24,8 +24,8 @@ COMMON_DEP="
 	addons? ( dev-java/junit )
 	"
 
-RDEPEND=">=virtual/jre-1.5 ${COMMON_DEP}"
-DEPEND=">=virtual/jdk-1.5 ${COMMON_DEP}"
+RDEPEND=">=virtual/jre-1.4 ${COMMON_DEP}"
+DEPEND=">=virtual/jdk-1.4 ${COMMON_DEP}"
 
 S=${WORKDIR}/${MY_P}
 
