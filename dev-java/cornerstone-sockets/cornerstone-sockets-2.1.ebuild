@@ -15,7 +15,7 @@ inherit excalibur-multi
 SLOT="0"
 KEYWORDS="~x86"
 
-#RDEDEND="dev-java/excalibur-thread"
+#RDEPEND="dev-java/excalibur-thread"
 #DEPEND="${RDEPEND}"
 
 S=${WORKDIR}
