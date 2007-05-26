@@ -15,7 +15,7 @@ LICENSE="Apache-1.1"
 DEP=">=dev-java/commons-el-1.0
 	>=dev-java/commons-logging-1.0.4
 	>=dev-java/mx4j-core-3.0
- 	>=dev-java/mx4j-tools-3.0
+	>=dev-java/mx4j-tools-3.0
 	>=dev-java/xerces-2.7
 	=dev-java/xml-commons-external-1.3*
 	dev-java/tomcat-jasper"
@@ -44,6 +44,7 @@ JETTY_HOME="/opt/${JETTY_NAME}"
 pkg_setup() {
 	enewgroup ${JETTY_NAME}
 	enewuser ${JETTY_NAME} -1 /bin/bash ${JETTY_HOME} ${JETTY_NAME}
+	java-pkg-2_pkg_setup
 }
 
 src_unpack() {
