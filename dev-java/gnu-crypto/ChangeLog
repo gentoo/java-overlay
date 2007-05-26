@@ -4,7 +4,7 @@
 
   26 May 2007; kiorky <kiorky@cryptelium.net> +gnu-crypto-2.0.1-r3.ebuild,
   -gnu-crypto-2.1.0.ebuild, +metadata.xml:
-  fix source USE in DEPEND
+  fix source USE in DEPEND, see #179874
 
   11 Mar 2007; Joshua Nichols <nichoj@gentoo.org>
   gnu-crypto-2.0.1-r2.ebuild:
