@@ -3,6 +3,10 @@
 # $Header: $
 
   26 May 2007; kiorky <kiorky@cryptelium.net>
+  cornerstone-connection-2.1.ebuild:
+  update according to excalibur eclass changes
+
+  26 May 2007; kiorky <kiorky@cryptelium.net>
   cornerstone-connection-2.1.ebuild, files/build.xml.patch:
   fix patches
 

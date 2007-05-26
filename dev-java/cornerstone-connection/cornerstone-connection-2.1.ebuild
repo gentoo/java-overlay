@@ -21,24 +21,19 @@ RDEPEND="=www-servers/jetty-5*
 	dev-java/plexus-utils
 	dev-java/cornerstone-threads
 	dev-java/cornerstone-sockets
+	=dev-java/avalon-framework-4.2*
 	dev-java/junit
+	dev-java/commons-logging
 	dev-java/junitperf
 	dev-java/excalibur-thread"
 DEPEND="${RDEPEND}"
 
 S=${WORKDIR}
 
-EXCALIBUR_JAR_FROM="jetty-5 tomcat-jasper-2 plexus-component-api excalibur-thread cornerstone-threads cornerstone-sockets"
+EXCALIBUR_JAR_FROM="avalon-framework-4.2 commons-logging jetty-5 tomcat-jasper-2 plexus-component-api excalibur-thread cornerstone-threads cornerstone-sockets"
 
 EXCALIBUR_TEST_JAR_FROM="junit junitperf"
 
 src_unpack(){
-	unpack ${A}
-	cd "${S}" || die
-	epatch "${FILESDIR}/build.xml.patch"
-	for module in ${EXCALIBUR_MODULES}; do
-		cd ${module}* || die
-		excalibur_src_prepare
-		cd "${WORKDIR}"
-	done
+	excalibur-multi_src_unpack "${FILESDIR}/build.xml.patch"
 }
