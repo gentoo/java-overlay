@@ -23,6 +23,12 @@ EXPORT_FUNCTIONS src_unpack src_compile src_test src_install
 
 excalibur-multi_src_unpack() {
 	unpack ${A}
+	if [[ -n "${@}" ]];then
+		for i in ${@};do
+			epatch ${i}
+		done
+	fi
+
 	for module in ${EXCALIBUR_MODULES}; do
 		cd ${module}* || die
 		excalibur_src_prepare
@@ -31,6 +37,7 @@ excalibur-multi_src_unpack() {
 }
 
 excalibur-multi_src_compile() {
+
 	for module in ${EXCALIBUR_MODULES}; do
 		cd ${module}* || die
 		local jar
