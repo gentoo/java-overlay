@@ -2,6 +2,11 @@
 # Copyright 2000-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/picocontainer/ChangeLog,v 1.19 2006/08/01 12:22:41 nichoj Exp $
 
+  27 May 2007; Vlastimil Babka <caster@gentoo.org>
+  -picocontainer-1.2.ebuild, +picocontainer-1.2-r1.ebuild:
+  Revbump to move to slot 1.2, deskzilla doesn't work with 1.2 so it can't go
+  to same slot.
+
   02 Mar 2007; Joshua Nichols <nichoj@gentoo.org> picocontainer-1.2.ebuild:
   Added ~amd64
 
