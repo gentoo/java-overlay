@@ -39,7 +39,7 @@ AVALON_FRAMEWORK="avalon-framework-4.1 avalon-framework.jar avalon-framework-4.1
 CONCURRENT="concurrent-util concurrent.jar concurrent-1.3.2.jar"
 LOGKIT="avalon-logkit-2.0 avalon-logkit.jar logkit-1.2.jar"
 WRAPPER="java-service-wrapper-3.1 wrapper.jar wrapper-3.1.0.jar"
-PICOCONTAINER="picocontainer-1 picocontainer.jar picocontainer-1.2.jar"
+PICOCONTAINER="picocontainer-1.2 picocontainer.jar picocontainer-1.2.jar"
 
 src_unpack() {
 	unpack ${A}
