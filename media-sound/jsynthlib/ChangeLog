@@ -1,0 +1,23 @@
+# ChangeLog for media-sound/jsynthlib
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/media-sound/jsynthlib/ChangeLog,v 1.4 2007/02/22 01:05:33 peper Exp $
+
+  29 May 2007; William L. Thomson Jr. <wltjr@gentoo.org> ChangeLog:
+  Package bumped to latest version by a contributing user Alejandro Nova
+  <novaasc@yahoo.com> in bug # 137688. Older version removed, and package
+  re-located to java-overlay.
+
+  22 Feb 2007; Piotr Jaroszyński <peper@gentoo.org> ChangeLog:
+  Transition to Manifest2.
+
+  08 Mar 2006; Diego Pettenò <flameeyes@gentoo.org> metadata.xml,
+  jsynthlib-0.19_pre20041220.ebuild:
+  Use gentoo mirrors instead of dev.gentoo.org for tarball.
+
+  25 Jul 2005; David Holm <dholm@gentoo.org>
+  jsynthlib-0.19_pre20041220.ebuild:
+  Added to ~ppc.
+
+  09 Jan 2005; Eric Shattow <jnc@gentoo.org> +metadata.xml:
+  Initial revision. closes bug #75139.
+
