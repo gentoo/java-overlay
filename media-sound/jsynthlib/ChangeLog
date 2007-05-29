@@ -3,8 +3,8 @@
 # $Header: /var/cvsroot/gentoo-x86/media-sound/jsynthlib/ChangeLog,v 1.4 2007/02/22 01:05:33 peper Exp $
 
   29 May 2007; William L. Thomson Jr. <wltjr@gentoo.org> ChangeLog:
-  Package bumped to latest version by a contributing user Alejandro Nova
-  <novaasc@yahoo.com> in bug # 137688. Older version removed, and package
+  Package bumped to latest version by a contributing user xaero 
+  <xaero@inwind.it> in bug # 137688. Older version removed, and package
   re-located to java-overlay.
 
   22 Feb 2007; Piotr Jaroszyński <peper@gentoo.org> ChangeLog:
