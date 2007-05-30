@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+JAVA_PKG_IUSE="doc source"
+
 inherit java-pkg-2 java-ant-2
 
 DESCRIPTION=""
@@ -14,7 +16,7 @@ LICENSE=""
 SLOT="0"
 KEYWORDS="~x86"
 
-IUSE="doc source"
+IUSE=""
 
 COMMON_DEP="
 	"
@@ -22,9 +24,7 @@ COMMON_DEP="
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEP}"
 DEPEND=">=virtual/jdk-1.4
-		dev-java/ant-core
 		app-arch/unzip
-		source? ( app-arch/zip )
 		${COMMON_DEP}"
 
 S=${WORKDIR}/${MY_P}
