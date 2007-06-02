@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/spring
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  02 Jun 2007; Petteri Räty <betelgeuse@gentoo.org> -spring-1.2.7.ebuild,
+  -files/spring-1.2.7-excludes.patch, spring-1.2.8.ebuild:
+  Remove old version and cleanup 1.2.8.
+
