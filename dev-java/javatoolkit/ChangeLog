@@ -2,6 +2,10 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/javatoolkit/ChangeLog,v 1.31 2007/03/15 13:27:00 caster Exp $
 
+  03 Jun 2007; kiorky <kiorky@cryptelium.net> -javatoolkit-0.2.0-r3.ebuild,
+  +javatoolkit-0.2.0-r4.ebuild:
+  maven-helper improvements
+
   25 May 2007; kiorky <kiorky@cryptelium.net> +javatoolkit-0.2.0-r3.ebuild:
   New revision of javatoolkit including a new release of xml-revrite and
   improvments to maven-helper
