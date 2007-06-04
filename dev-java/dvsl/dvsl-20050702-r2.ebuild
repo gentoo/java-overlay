@@ -1,4 +1,4 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -24,40 +24,31 @@ COMMON_DEPEND="=dev-java/crimson-1*
 	dev-java/velocity
 	dev-java/xalan
 	=dev-java/xerces-1.3*"
-#	dev-java/jdbc2-stdext
 
-# Therotically, jdk/jre 1.3 can be used
 DEPEND=">=virtual/jdk-1.4
-	dev-java/ant-core
 	${COMMON_DEPEND}"
 RDEPEND=">=virtual/jre-1.4
+	dev-java/ant-core
 	${COMMON_DEPEND}"
-	
+
 src_unpack() {
 	unpack ${A}
 	cd ${S}
 	rm -r lib/*.jar
 
-	local classpath;
+	local classpath
 	for jars in crimson-1 dom4j-1 gnu-jaxp velocity xalan ant-core; do
 		classpath="${classpath}:`java-pkg_getjars ${jars}`"
 	done
 
-	# TODO need to test if this actually works for 1.3
-#	if ! java-utils_is_vm_version_ge 1.4; then
-#		for jars in xerces-1.3 jdbc2-stdext; do
-#			classpath="${classpath}:`java-pkg_getjars ${jars}`"
-#		done
-#	fi
 	echo "portage.classpath=${classpath}" > build.properties
 }
 
-src_compile() {
-	eant jar $(use_doc javadocs)
-}
+EANT_DOC_TARGET="javadocs"
 
 src_install() {
 	java-pkg_newjar velocity-${MY_P}.jar ${PN}.jar
+	java-pkg_register-ant-task
 
-	use doc && java-pkg_dohtml -r target/api
+	use doc && java-pkg_dojavadoc target/api
 }
