@@ -1,4 +1,4 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -11,7 +11,7 @@ SRC_URI="http://archive.apache.org/dist/jakarta/${PN}/source/${P}-src.tar.gz"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="doc jikes"
+IUSE="doc"
 COMMON_DEPEND="
 	=dev-java/commons-beanutils-1.6*
 	dev-java/commons-collections
@@ -28,7 +28,6 @@ COMMON_DEPEND="
 	dev-java/dvsl"
 DEPEND=">=virtual/jdk-1.4
 	dev-java/ant-core
-	jikes? ( dev-java/jikes )
 	${COMMON_DEPEND}"
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"
@@ -43,7 +42,7 @@ src_unpack() {
 	epatch ${FILESDIR}/${P}-gentoo.patch
 
 	local packages="commons-beanutils-1.6 commons-collections commons-digester
-		commons-logging commons-validator dom4j-1 jaxen-1.1 
+		commons-logging commons-validator dom4j-1 jaxen-1.1
 		servletapi-2.3 struts-1.1 struts-sslext-1.1 velocity dvsl"
 	local classpath
 	for dependency in ${packages}; do
@@ -56,10 +55,9 @@ src_unpack() {
 	done
 
 	echo "portage.classpath=${classpath}" > build.properties
-			
 }
 src_compile() {
-	eant -Dproject.name=${PN} jar  $(use_doc)
+	eant -Dproject.name=${PN} jar $(use_doc)
 }
 
 src_install() {
@@ -67,5 +65,5 @@ src_install() {
 	java-pkg_newjar dist/${PN}-generic-${PV}.jar ${PN}-generic.jar
 	java-pkg_newjar dist/${PN}-view-${PV}.jar ${PN}-view.jar
 
-	use doc && java-pkg_dohtml -r dist/doc/api
+	use doc && java-pkg_dojavadoc dist/doc/api
 }
