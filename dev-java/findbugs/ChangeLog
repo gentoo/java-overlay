@@ -2,6 +2,9 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  09 Jun 2007; Joshua Nichols <nichoj@gentoo.org> ChangeLog:
+  Added missing ~amd64 for ant-pretty.
+
   18 Feb 2007; kiorky <kiorky@cryptelium.net> +findbugs-0.8.4.ebuild:
   Adding 0.8.4 as it is a jrefactory dependency
   It s the only where jrefactory compiles against with

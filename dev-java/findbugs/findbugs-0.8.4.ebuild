@@ -11,7 +11,7 @@ SRC_URI="mirror://sourceforge/${PN}/${P}-source.zip"
 
 LICENSE="LGPL-2.1"
 SLOT="0.8"
-KEYWORDS="~x86 "
+KEYWORDS="~amd64 ~x86"
 IUSE="source"
 
 RDEPEND="dev-java/apple-java-extensions-bin
