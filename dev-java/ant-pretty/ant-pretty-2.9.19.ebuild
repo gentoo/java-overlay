@@ -11,7 +11,7 @@ SRC_URI="mirror://sourceforge/${MY_PN}/${MY_PN}-${PV}-source.zip"
 
 LICENSE="as-is"
 SLOT="0"
-KEYWORDS="~x86 "
+KEYWORDS="~amd64 ~x86"
 IUSE="doc source examples"
 
 DEPEND=">=virtual/jdk-1.5
