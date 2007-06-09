@@ -2,7 +2,10 @@
 # Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/dom4j/ChangeLog,v 1.40 2007/01/10 03:11:01 caster Exp $
 
- 18 Feb 2007; kiorky <kiorky@cryptelium.net> ChangeLog:
+  09 Jun 2007; Joshua Nichols <nichoj@gentoo.org> ChangeLog:
+  Added ~amd64.
+
+  18 Feb 2007; kiorky <kiorky@cryptelium.net> ChangeLog:
   Ressurecting 1.4 as it is a "findbugs" dependency
   see #93232
 

@@ -9,7 +9,7 @@ HOMEPAGE="http://dom4j.sourceforge.net/"
 SRC_URI="mirror://sourceforge/dom4j/${P}.tar.gz"
 LICENSE="dom4j"
 SLOT="1.4"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc source"
 RDEPEND="=virtual/jdk-1.4*
 	dev-java/jaxme
