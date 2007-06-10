@@ -44,14 +44,16 @@ S=${WORKDIR}
 
 pkg_setup() {
 	# must choose at least one spec to ebuild
-	local stop = "y"
+	local stop="y"
 	for i in ${SPECS};do
 		if use $i;then
-			stop = "n"
+			stop="n"
 		fi
 	done
-	[[ ${stop} == "y" ]] &&\
-	 eerror "You must choose at least one spec to build in ${SPECS}, add it to the geronimo-specs USES"
+	if [[ ${stop} == "y" ]] ; then
+		eerror "You must choose at least one spec to build in ${SPECS}, add it to the geronimo-specs USES"
+		exit 1
+	fi
 }
 
 src_compile(){
