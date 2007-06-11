@@ -1,0 +1,16 @@
+# ChangeLog for dev-java/sun-ejb-spec
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: /var/cvsroot/gentoo-x86/dev-java/sun-ejb-spec/ChangeLog,v 1.3 2007/02/09 13:14:30 flameeyes Exp $
+
+  09 Feb 2007; Diego Pettenò <flameeyes@gentoo.org> ChangeLog:
+  Regenerate digest in Manifest2 format.
+
+  22 Jan 2006; Joshua Nichols <nichoj@gentoo.org> sun-ejb-spec-2.1.ebuild:
+  Keyworded ~amd64. Tweaked message in pkg_nofetch.
+
+*sun-ejb-spec-2.1 (22 Jan 2006)
+
+  22 Jan 2006; Joshua Nichols <nichoj@gentoo.org> +metadata.xml,
+  +sun-ejb-spec-2.1.ebuild:
+  Initial commit. Needed to build oscore from source (bug #63282).
+
