@@ -1,0 +1,7 @@
+# ChangeLog for dev-java/easymock
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  14 Jun 2007; Miroslav Šulc <fordfrog@gentoo.org> +easymock-2.2.ebuild:
+  Version bump
+
