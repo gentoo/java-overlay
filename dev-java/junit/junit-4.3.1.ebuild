@@ -19,7 +19,7 @@ IUSE="examples test"
 
 RDEPEND=">=virtual/jre-1.5"
 DEPEND=">=virtual/jdk-1.5
-	>=dev-java/ant-core-1.4
+	userland_GNU? ( >=sys-apps/findutils-4.3 )
 	app-arch/unzip"
 
 # TODO:
@@ -36,21 +36,23 @@ DEPEND=">=virtual/jdk-1.5
 
 src_unpack() {
 	unpack ${A}
-	cd ${S}
+	cd "${S}"
 	mkdir src
 	cd src
 	unzip ../${P}-src.jar || die "Could not extract sources"
+	cd "${S}"
 
 	# Their own unit tests do not even work in unix!
 	# - reported to upstream
-	sed -i 's/";"/File.pathSeparator/' org/junit/tests/JUnitCoreTest.java
+	sed -i 's/";"/File.pathSeparator/' org/junit/tests/JUnitCoreTest.java || die
 
 	# remove jars
 	cd ${S}
 	rm -v *.jar
 
 	# remove compiled classes
-	find -name "*.class" | xargs rm -v
+	find . -name "*.class" -print -delete \
+		|| die "Failed to remove bundled classes"
 
 	# remove javadoc dir
 	rm -fr javadoc
@@ -59,7 +61,7 @@ src_unpack() {
 src_compile() {
 	# create jar
 	mkdir -p build/classes
-	ejavac -sourcepath src -d build/classes `find src -name "*.java"` || die "Cannot compile sources"
+	ejavac -sourcepath src -d build/classes $(find src -name "*.java") || die "Cannot compile sources"
 	mkdir dist
 	cd build/classes
 	jar -cvf ${S}/dist/${PN}.jar junit org || die "Cannot create JAR"
@@ -73,9 +75,10 @@ src_compile() {
 }
 
 src_test() {
-	ejavac -sourcepath org:junit -cp build/classes -d build/classes `find org -name "*.java"` `find junit -name "*.java"`
+	ejavac -sourcepath org:junit -cp build/classes -d build/classes \
+		$(find org junit -name "*.java")
 	cd build/classes
-	for FILE in `find -name "AllTests\.class"`; do
+	for FILE in $(find . -name "AllTests\.class"); do
 		CLASS=`echo ${FILE} | sed -e "s/\.class//" | sed -e "s%/%.%g" | sed -e "s/\.\.//"`
 		java -cp . org.junit.runner.JUnitCore ${CLASS} || die "Test failed"
 	done
