@@ -32,7 +32,7 @@ RDEPEND=">=virtual/jre-1.4
 #			=dev-java/commons-cli-1*
 #			>=dev-java/log4j-1.2
 #			>=dev-java/jta-1.0.1
-#			>=dev-java/sun-javamail-bin-1.3.1)"
+#			>=dev-java/sun-javamail-1.3.1)"
 
 # disabling extra until all dependencies are packaged
 #IUSE="doc extra jikes junit source"
@@ -83,7 +83,7 @@ src_unpack() {
 #		java-pkg_jar-from jta jta.jar
 #		# TODO jts1_0.jar ... dev-java/sun-jts-bin
 #		java-pkg_jar-from log4j log4j.jar
-#		java-pkg_jar-from sun-javamail-bin mail.jar
+#		java-pkg_jar-from sun-javamail mail.jar
 #		# TODO: xapool... dev-java/xapool
 #	fi
 }
