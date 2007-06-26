@@ -1,0 +1,12 @@
+diff -ur src.old/build.xml src/build.xml
+--- src.old/build.xml	2007-06-26 21:28:41.000000000 +0300
++++ src/build.xml	2007-06-26 21:28:50.000000000 +0300
+@@ -124,7 +124,7 @@
+ 
+     <property name="manifest" value="org/tigris/gef/manifest.mf"/>
+ 
+-    <property name="packages" value="org.tigris.gef.* Acme.*"/>
++    <property name="packages" value="org.tigris.gef.*,Acme.*"/>
+ 
+     <property name="build.dir" value="../build"/>
+     <property name="build.src" value="${src.dir}"/>

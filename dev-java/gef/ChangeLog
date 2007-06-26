@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/gef
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  26 Jun 2007; Petteri Räty <betelgeuse@gentoo.org> ++,
+  +files/0.12.3-javadoc.patch:
+  Version bump. Adds the doc use flag.
+
