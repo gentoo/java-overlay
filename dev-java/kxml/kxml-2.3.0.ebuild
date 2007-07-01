@@ -12,7 +12,7 @@ HOMEPAGE="http://kxml.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${PN}2-src-${PV}.zip"
 LICENSE="as-is"
 SLOT="2"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 
 IUSE=""
 
