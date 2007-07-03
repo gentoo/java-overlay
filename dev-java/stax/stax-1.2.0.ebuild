@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+JAVA_PKG_IUSE="doc source"
+
 inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="A standard XML processing API that allows you to stream XML data from and to your application."
@@ -11,14 +13,13 @@ SRC_URI="http://dist.codehaus.org/${PN}/distributions/${PN}-src-${PV}.zip"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~x86"
-IUSE="doc source"
+IUSE=""
 
 RDEPEND=">=virtual/jdk-1.4"
 
 DEPEND="${RDEPEND}
 		>=virtual/jdk-1.4
-		app-arch/unzip
-		source? ( app-arch/zip )"
+		app-arch/unzip"
 
 S="${WORKDIR}"
 
@@ -39,9 +40,8 @@ src_install() {
 	java-pkg_newjar ${S}/build/stax-${PV}-dev.jar stax-dev.jar
 
 	if use doc; then
-			dodoc ${S}/ASF2.0.txt
-			java-pkg_dohtml *.html
-			java-pkg_dojavadoc "${S}/build/javadoc"
+		java-pkg_dohtml *.html
+		java-pkg_dojavadoc "${S}/build/javadoc"
 	fi
-	use source && java-pkg_dosrc src
+	use source && java-pkg_dosrc src/*
 }
