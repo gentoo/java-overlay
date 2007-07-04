@@ -2,6 +2,10 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  04 Jul 2007; Jean-Noël Rivasseau <elvanor@gmail.com> ChangeLog:
+  Version bump to 1.1.3, switched to split-ant, added new license to
+  java-overlay.
+
   25 Feb 2007; William L. Thomson Jr. <wltjr@gentoo.org> ChangeLog:
   Added ~amd64, ebuild is missing a license
 

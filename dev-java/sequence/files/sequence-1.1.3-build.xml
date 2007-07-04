@@ -1,6 +1,6 @@
 <project name="sequence" default="jar" basedir=".">
     <property name="name" value="Sequence"/>
-    <property name="version" value="1.1.1"/>
+    <property name="version" value="1.1.3"/>
     <property name="build" value="build"/>
     <property name="dist" value="dist"/>
     <property name="build.output" value="${build}/classes"/>

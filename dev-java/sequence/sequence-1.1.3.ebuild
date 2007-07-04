@@ -11,15 +11,11 @@ HOMEPAGE="http://svnkit.com/"
 SRC_URI="http://www.svnkit.com/org.tmatesoft.svn_${PV}.src.zip"
 KEYWORDS="~amd64 ~x86"
 SLOT="0"
-LICENSE=""
+LICENSE="sequence"
 IUSE="test"
 
 DEPEND=">=virtual/jdk-1.4
-	!test? ( dev-java/ant-core )
-	test? (
-		dev-java/ant
-		=dev-java/junit-3.8*
-	)"
+	test? ( dev-java/ant-junit )"
 
 RDEPEND=">=virtual/jre-1.4"
 
@@ -39,7 +35,7 @@ src_unpack() {
 
 src_test() {
 	java-pkg_jar-from --into lib junit
-	eant test
+	ANT_TASKS="ant-junit" eant test
 }
 
 src_install() {
