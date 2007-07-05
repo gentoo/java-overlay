@@ -11,7 +11,7 @@ HOMEPAGE="http://svnkit.com/"
 SRC_URI="http://www.svnkit.com/org.tmatesoft.svn_${PV}.src.zip"
 KEYWORDS="~amd64 ~x86"
 SLOT="0"
-LICENSE="svnkit"
+LICENSE="tmate"
 IUSE=""
 
 COMMON_DEPEND="
@@ -19,7 +19,6 @@ COMMON_DEPEND="
 	dev-java/sequence"
 DEPEND=">=virtual/jdk-1.4
 	>=dev-util/subversion-1.4
-	dev-java/ant-core
 	test? ( =dev-java/junit-3.8* )
 	${COMMON_DEPEND}"
 
@@ -39,7 +38,7 @@ src_unpack() {
 	cd contrib
 	java-pkg_jar-from ganymed-ssh2
 	java-pkg_jar-from sequence
-	java-pkg_jar-from subversion
+	java-pkg_jar-from --build-only subversion
 }
 
 src_install() {
@@ -47,6 +46,7 @@ src_install() {
 	java-pkg_dojar *.jar
 	dodoc *.txt
 
-	use doc && java-pkg_dojavadoc doc/javadoc
+	cd ${S}
+	use doc && java-pkg_dojavadoc build/doc/javadoc
 	use source && java-pkg_dosource svnkit/src/*
 }
