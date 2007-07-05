@@ -16,10 +16,9 @@ IUSE=""
 
 COMMON_DEPEND="
 	dev-java/ganymed-ssh2
-	dev-java/sequence"
+	dev-java/sequence
+	>=dev-util/subversion-1.4"
 DEPEND=">=virtual/jdk-1.4
-	>=dev-util/subversion-1.4
-	test? ( =dev-java/junit-3.8* )
 	${COMMON_DEPEND}"
 
 RDEPEND=">=virtual/jre-1.4
@@ -27,26 +26,35 @@ RDEPEND=">=virtual/jre-1.4
 
 S="${WORKDIR}/${PN}-src-${PV}"
 
-EANT_BUILD_TARGET="build-library build-cli"
-EANT_DOC_TARGET="build-doc"
+pkg_setup() {
+	if ! built_with_use dev-util/subversion java; then
+		msg="${CATEGORY}/${P} needs dev-util/subversion built with the java"
+		msg="${msg} use flag"
+		error ${msg}
+		die ${msg}
+	fi
+}
 
 src_unpack() {
 	unpack ${A}
-	cd ${S}
+	cd "${S}"
 	epatch ${FILESDIR}/${P}-build.xml.patch
-	rm -fr contrib/*
-	cd contrib
+	rm -vr contrib/* || die
+	cd contrib || die
 	java-pkg_jar-from ganymed-ssh2
 	java-pkg_jar-from sequence
-	java-pkg_jar-from --build-only subversion
+	java-pkg_jar-from subversion
 }
+
+EANT_BUILD_TARGET="build-library build-cli"
+EANT_DOC_TARGET="build-doc"
 
 src_install() {
 	cd build/lib
 	java-pkg_dojar *.jar
-	dodoc *.txt
+	dodoc *.txt || die
 
-	cd ${S}
+	cd "${S}"
 	use doc && java-pkg_dojavadoc build/doc/javadoc
 	use source && java-pkg_dosource svnkit/src/*
 }
