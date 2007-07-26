@@ -2,6 +2,13 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  26 Jul 2007; Jean-Noël Rivasseau <elvanor@gmail.com>
+  +files/buildmagic-tasks-2.0.4-defaults.ent.patch, +files/build.properties,
+  +buildmagic-tasks-2.0.4.ebuild:
+  Version bump to 2.0.4 (in fact the actual source did not change, only the
+  Jpackage package). Fixed a lots of things, and now builds without bundled
+  jars.
+
   08 May 2007; Vlastimil Babka <caster@gentoo.org>
   buildmagic-tasks-2.0-r1.ebuild:
   Update bsf dep.
