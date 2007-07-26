@@ -12,6 +12,7 @@ SLOT="1.4"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc source"
 RDEPEND="=virtual/jdk-1.4*
+	dev-java/commons-logging
 	dev-java/jaxme
 	=dev-java/jaxen-1.1*
 	dev-java/jsr173
@@ -34,7 +35,7 @@ RDEPEND="=virtual/jdk-1.4*
 
 DEPEND="${RDEPEND}"
 
-EANT_GENTOO_CLASSPATH="batik-1.5,fop,jaxen-1.1,xml-commons-external-1.3,saxpath,junit,jaxme,jsr173,msv,xpp3,xpp2,relaxng-datatype,xsdlib,xalan,xerces-2.6,avalon-logkit-1.2,avalon-framework-4.1"
+EANT_GENTOO_CLASSPATH="batik-1.5,commons-logging,fop,jaxen-1.1,xml-commons-external-1.3,saxpath,junit,jaxme,jsr173,msv,xpp3,xpp2,relaxng-datatype,xsdlib,xalan,xerces-2,avalon-logkit-1.2,avalon-framework-4.1"
 EANT_DOC_TARGET="javadoc"
 EANT_BUILD_TARGET="clean package"
 

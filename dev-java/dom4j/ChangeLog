@@ -2,6 +2,9 @@
 # Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/dom4j/ChangeLog,v 1.40 2007/01/10 03:11:01 caster Exp $
 
+  26 Jul 2007; Miroslav Šulc <fordfrog@gentoo.org> dom4j-1.4.ebuild:
+  Quickfix of problem with missing commons-logging on classpath.
+
   09 Jun 2007; Joshua Nichols <nichoj@gentoo.org> ChangeLog:
   Added ~amd64.
 
