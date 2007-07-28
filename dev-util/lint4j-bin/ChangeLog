@@ -1,0 +1,8 @@
+# ChangeLog for dev-util/lint4j-bin
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  28 Jul 2007; Miroslav Šulc <fordfrog@gentoo.org>
+  +lint4j-bin-0.9.1.ebuild:
+  New package
+
