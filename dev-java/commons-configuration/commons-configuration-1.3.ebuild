@@ -30,7 +30,7 @@ RDEPEND=">=virtual/jre-1.3
 LICENSE="Apache-2.0"
 SLOT="0"
 
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
 IUSE="doc source"
 
 S="${WORKDIR}/${P}-src"
