@@ -64,6 +64,8 @@ src_install() {
 		-pre ${FILESDIR}/${P}-launcher-pre-commands
 	java-pkg_dolauncher ${PN}-designer --main net.sourceforge.pmd.util.designer.Designer
 	cp -r rulesets ${D}/usr/share/${PN}
+	mkdir ${D}/usr/share/${PN}/etc
+	cp -r etc/xslt ${D}/usr/share/${PN}/etc/
 
 	use doc && java-pkg_dojavadoc docs/api
 	use source && java-pkg_dosrc src/*

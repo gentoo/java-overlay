@@ -2,6 +2,9 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  29 Jul 2007; Miroslav Šulc <fordfrog@gentoo.org> pmd-4.0.ebuild:
+  Included xslt files
+
   29 Jul 2007; Miroslav Šulc <fordfrog@gentoo.org>
   +files/pmd-4.0-build.xml.patch, +files/pmd-4.0-launcher-pre-commands,
   +pmd-4.0.ebuild:
