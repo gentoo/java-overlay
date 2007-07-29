@@ -1,0 +1,31 @@
+--- build.xml.original	2007-07-29 02:07:36.000000000 +0200
++++ build.xml	2007-07-29 02:22:57.000000000 +0200
+@@ -17,10 +17,7 @@
+ 
+ 	<path id="dependencies.path">
+ 		<pathelement location="${dir.build}" />
+-		<fileset dir="${dir.lib}">
+-			<include name="jaxen-1.1.jar" />
+-			<include name="asm-3.0.jar" />
+-		</fileset>
++		<fileset dir="${dir.lib}" includes="*.jar"/>
+ 	</path>
+ 
+ 	<target name="delete" description="Deletes the build directory and the pmd-x.x jar file.">
+@@ -66,7 +63,6 @@
+ 		<jar jarfile="${dir.lib}/pmd-${version}.jar" includes="net/sourceforge/pmd/**/**,test/net/sourceforge/pmd/testframework/**/**,rulesets/**" basedir="${dir.build}">
+ 			<manifest>
+ 				<attribute name="Main-Class" value="net.sourceforge.pmd.PMD" />
+-				<attribute name="Class-Path" value="jaxen-1.1.jar asm-3.0.jar" />
+ 			</manifest>
+ 		</jar>
+ 	</target>
+@@ -178,7 +174,7 @@
+             <istrue value="${outputTestResultsToFile}"/>
+         </condition>
+ 
+-        <junit printsummary="yes" haltonfailure="no" forkmode="perBatch">
++        <junit printsummary="yes" haltonfailure="yes" forkmode="perBatch">
+ 			<classpath>
+ 				<path refid="dependencies.path" />
+ 			</classpath>
