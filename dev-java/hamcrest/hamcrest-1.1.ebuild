@@ -9,7 +9,7 @@ HOMEPAGE="http://code.google.com/p/hamcrest/"
 SRC_URI="http://${PN}.googlecode.com/files/${P}.tgz"
 LICENSE="BSD-2"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
 IUSE=""
 
 CDEPEND=">=dev-java/easymock-2.2
