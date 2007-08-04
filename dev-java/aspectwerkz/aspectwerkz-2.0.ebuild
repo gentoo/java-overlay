@@ -22,7 +22,7 @@ COMMON_DEP="
 	dev-java/jrexx
 	>=dev-java/junitperf-1.9.1
 	dev-java/trove
-	~dev-java/qdox-20050104
+	dev-java/qdox
 	=dev-java/junit-3*"
 RDEPEND="
 	!java5? ( >=virtual/jre-1.4 )
