@@ -1,0 +1,7 @@
+# ChangeLog for dev-java/hamcrest
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  04 Aug 2007; Miroslav Šulc <fordfrog@gentoo.org> +hamcrest-1.1.ebuild:
+  New package. Needed by junit-4.4.
+
