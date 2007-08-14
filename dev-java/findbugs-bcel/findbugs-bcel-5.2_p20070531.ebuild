@@ -16,7 +16,7 @@ SRC_URI="mirror://apache/jakarta/${BCEL_PN}/source/${BCEL_P}-src.tar.gz
 	http://dev.gentoo.org/~fordfrog/distfiles/findbugs-bcel-5.2_p20070531.patch.bz2"
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 RDEPEND=">=virtual/jre-1.5
 	${COMMON_DEP}"
