@@ -28,7 +28,7 @@ DEPEND=">=virtual/jdk-1.5
 	${CDEPEND}"
 
 EANT_DOC_TARGET="apiJavadoc"
-EANT_BUILD_TARGET="build"
+EANT_BUILD_TARGET="jars anttask"
 EANT_GENTOO_CLASSPATH="ant-core"
 ANT_OPTS="-Xmx256m"
 
@@ -59,6 +59,10 @@ src_test() {
 
 src_install() {
 	java-pkg_dojar "${S}"/lib/${PN}*.jar "${S}"/plugin/*.jar
+	dodir /usr/share/${PN}/plugin
+	dosym /usr/share/${PN}/lib/coreplugin.jar  /usr/share/${PN}/plugin/
+	dobin ${FILESDIR}/findbugs
+
 	use doc && java-pkg_dojavadoc "${S}/apiJavaDoc"
 	use source && java-pkg_dosrc "${S}/src"
 }

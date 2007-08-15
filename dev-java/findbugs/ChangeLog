@@ -2,6 +2,10 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  15 Aug 2007; Miroslav Šulc <fordfrog@gentoo.org> +files/findbugs,
+  findbugs-1.2.1.ebuild:
+  Added launcher script
+
   14 Aug 2007; Miroslav Šulc <fordfrog@gentoo.org> ++:
   Version bump. Please note that I got StackOverFlow in 50% of the merges, and
   do not know why.
