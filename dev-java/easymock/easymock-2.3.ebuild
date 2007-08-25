@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-JAVA_PKG_IUSE="doc source"
+JAVA_PKG_IUSE="doc source test"
 inherit java-pkg-2 java-ant-2
 
 MY_P="${PN}${PV}"
@@ -11,12 +11,13 @@ HOMEPAGE="http://www.easymock.org/"
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}.zip"
 
 # TODO figure out license
-LICENSE=""
+LICENSE="MIT"
 SLOT="2"
 KEYWORDS="~amd64 ~x86"
-IUSE="examples test"
+IUSE="examples"
 
-COMMON_DEPEND=">=dev-java/junit-4"
+COMMON_DEPEND="
+	test? ( >=dev-java/junit-4 )"
 DEPEND=">=virtual/jdk-1.5
 	${COMMON_DEPEND}
 	app-arch/unzip"
@@ -28,15 +29,23 @@ src_unpack() {
 	unpack ${A}
 	cd ${S}
 	unzip -qq -d src/ src.zip
-	unzip -qq -d test/ tests.zip
+	use test && unzip -qq -d test/ tests.zip
 	use examples && unzip -qq -d examples/ samples.zip
 }
 
 src_compile() {
 	# create jar
 	mkdir -p build/classes
-	ejavac -sourcepath src -d build/classes -cp $(java-pkg_getjars junit-4) \
-		`find src -name "*.java"` || die "Cannot compile sources"
+
+	if use test ; then
+		ejavac -sourcepath src -d build/classes -cp \
+			$(java-pkg_getjars junit-4) \
+			`find src -name "*.java"` || die "Cannot compile sources"
+	else
+		ejavac -sourcepath src -d build/classes `find src -name "*.java"` \
+			|| die "Cannot compile sources"
+	fi
+
 	mkdir dist
 	cd build/classes
 	jar -cvf ${S}/dist/${PN}.jar org || die "Cannot create JAR"
@@ -55,7 +64,8 @@ src_test() {
 	cd build/classes
 	for FILE in `find -name "*Test\.class"`; do
 		CLASS=`echo ${FILE} | sed -e "s/\.class//" | sed -e "s%/%.%g" | sed -e "s/\.\.//"`
-		java -cp .:$(java-pkg_getjars junit-4) org.junit.runner.JUnitCore ${CLASS} || die "Test failed"
+		java -cp .:$(java-pkg_getjars --with-dependencies junit-4) \
+		org.junit.runner.JUnitCore ${CLASS} || die "Test failed"
 	done
 }
 
