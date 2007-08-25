@@ -12,7 +12,7 @@ SRC_URI="http://www.json.org/java/json.zip"
 
 LICENSE="json"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 
 DEPEND=">=virtual/jdk-1.4"
 RDEPEND=">=virtual/jre-1.4"
