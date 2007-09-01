@@ -2,6 +2,10 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  01 Sep 2007; Miroslav Šulc <fordfrog@gentoo.org> ++,
+  -apgdiff-1.0.0_beta24.ebuild:
+  Version bump
+
   22 Jul 2007; Miroslav Šulc <fordfrog@gentoo.org> ++,
   -apgdiff-1.0.0_beta23.ebuild:
   Version bump
