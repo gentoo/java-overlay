@@ -3,5 +3,9 @@
 # $Header: $
 
   03 Sep 2007; William L. Thomson Jr. <wltjr@gentoo.org> Manifest:
+  Previous digest was correct, but seems to be a borked download on a mirror
+  or etc
+
+  03 Sep 2007; William L. Thomson Jr. <wltjr@gentoo.org> Manifest:
   Corrected digest, added ChangeLog :)
 
