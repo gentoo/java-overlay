@@ -24,7 +24,7 @@ RDEPEND="
 	>=dev-java/commons-logging-1.0.4
 	dev-java/sun-javamail
 	>=dev-java/bsf-2.3
-	=dev-java/castor-1.0*
+	=dev-java/castor-1.1*
 	=dev-java/commons-httpclient-3*
 	dev-java/commons-net
 	dev-java/sun-jimi

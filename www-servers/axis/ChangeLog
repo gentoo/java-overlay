@@ -2,6 +2,9 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  09 Sep 2007; William L. Thomson Jr. <wltjr@gentoo.org> axis-1.4.ebuild:
+  Bumped dep on castor from -1.0 to 1.1, since 1.0 no longer exists :)
+
   09 May 2007; Vlastimil Babka <caster@gentoo.org> axis-1.4.ebuild:
   Remove xmlbeans dep.
 
