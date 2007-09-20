@@ -2,6 +2,9 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  20 Sep 2007; <alistair@gentoo.org> +tuxguitar-0.9.1-r2.ebuild:
+  Updated to add packages dir to classpath
+
   05 May 2007; Alistair John Bush <ali_bush@gentoo.org>
   +tuxguitar-0.9.1-r1.ebuild:
   Rev bump tuxguitar to relocated shared folders
