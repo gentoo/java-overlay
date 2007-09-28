@@ -1,6 +1,9 @@
 # ChangeLog for app-benchmarks/jmeter
-# Copyright 2000-2006 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 2000-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/app-benchmarks/jmeter/ChangeLog,v 1.26 2006/08/05 21:42:43 nichoj Exp $
+
+  28 Sep 2007; Petteri Räty <betelgeuse@gentoo.org> jmeter-2.0.1-r2.ebuild:
+  Fix commons-httpclient to match needed slot.
 
   05 Aug 2006; Joshua Nichols <nichoj@gentoo.org> jmeter-2.0.1-r1.ebuild:
   Fixed dependencies to account for java-strict.

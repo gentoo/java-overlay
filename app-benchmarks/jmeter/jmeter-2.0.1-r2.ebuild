@@ -13,7 +13,7 @@ SRC_URI="mirror://apache/jakarta/jmeter/source/jakarta-${P}_src.tgz"
 # excalibur-logger-1.1
 CDEPEND="=dev-java/rhino-1.5*
 		dev-java/commons-collections
-		dev-java/commons-httpclient
+		=dev-java/commons-httpclient-2*
 		dev-java/commons-logging
 		=dev-java/avalon-framework-4.2*
 		=dev-java/jakarta-oro-2*
