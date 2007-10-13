@@ -21,7 +21,7 @@ IUSE=""
 CDEPEND="=dev-java/servletapi-2.3*"
 RDEPEND=">=virtual/jre-1.4
 	${CDEPEND}"
-DEPEND="|| ( =virtual/jdk-1.4* =virtual/jdk-1.5* )
+DEPEND="|| ( =virtual/jdk-1.5* =virtual/jdk-1.4* )
 	app-arch/unzip
 	${CDEPEND}"
 
@@ -39,8 +39,8 @@ pkg_setup() {
 
 src_unpack() {
 	unpack ${A}
-	cd ${S}
-	
+	cd "${S}"
+
 	rm -v lib/*.jar
 	java-pkg_jar-from --into lib servletapi-2.3
 
@@ -50,7 +50,7 @@ src_unpack() {
 
 	eant -q -f "${EANT_BUILD_XML}" cleanall > /dev/null
 
-	epatch ${FILESDIR}/resolve-config-softlinks.patch
+	epatch "${FILESDIR}/resolve-config-softlinks.patch"
 
 	mkdir conf
 	sed -e "s/^HSQLDB_JAR_PATH=.*$/HSQLDB_JAR_PATH=${HSQLDB_JAR//\//\\/}/g" \
@@ -58,8 +58,8 @@ src_unpack() {
 		-e "s/^HSQLDB_OWNER=.*$/HSQLDB_OWNER=hsqldb/g" \
 		-e 's/^#AUTH_FILE=.*$/AUTH_FILE=${SERVER_HOME}\/sqltool.rc/g' \
 		src/org/hsqldb/sample/sample-hsqldb.cfg > conf/hsqldb
-	cp ${FILESDIR}/server.properties-1.8 conf/server.properties
-	cp ${FILESDIR}/sqltool.rc-1.8 conf/sqltool.rc
+	cp "${FILESDIR}/server.properties-1.8 conf/server.properties"
+	cp "${FILESDIR}/sqltool.rc-1.8 conf/sqltool.rc"
 }
 
 # EANT_BUILD_XML used also in src_unpack
@@ -78,10 +78,10 @@ src_install() {
 	use source && java-pkg_dosrc src/*
 
 	# Install env file for CONFIG_PROTECT support
-	doenvd ${FILESDIR}/35hsqldb
+	doenvd "${FILESDIR}/35hsqldb"
 
 	# Put init, configuration and authorization files in /etc
-	doinitd ${FILESDIR}/hsqldb
+	doinitd "${FILESDIR}/hsqldb"
 	doconfd conf/hsqldb
 	dodir /etc/hsqldb
 	insinto /etc/hsqldb
@@ -93,20 +93,20 @@ src_install() {
 	doins conf/sqltool.rc
 
 	# Install init script
-	dodir ${HSQLDB_HOME}/bin
-	keepdir ${HSQLDB_HOME}
-	exeinto ${HSQLDB_HOME}/bin
+	dodir "${HSQLDB_HOME}/bin"
+	keepdir "${HSQLDB_HOME}"
+	exeinto "${HSQLDB_HOME}/bin"
 	doexe bin/hsqldb
 
 	# Create symlinks to authorization files in the server home dir
 	# (required by the hqldb init script)
-	insinto ${HSQLDB_HOME}
-	dosym /etc/hsqldb/server.properties ${HSQLDB_HOME}/server.properties
-	dosym /etc/hsqldb/sqltool.rc ${HSQLDB_HOME}/sqltool.rc
+	insinto "${HSQLDB_HOME}"
+	dosym /etc/hsqldb/server.properties "${HSQLDB_HOME}/server.properties"
+	dosym /etc/hsqldb/sqltool.rc "${HSQLDB_HOME}/sqltool.rc"
 
 	# Make sure that files have correct permissions
-	chown -R hsqldb:hsqldb ${D}${HSQLDB_HOME}
-	chmod o-rwx ${D}${HSQLDB_HOME}
+	chown -R hsqldb:hsqldb "${D}${HSQLDB_HOME}"
+	chmod o-rwx "${D}${HSQLDB_HOME}"
 }
 
 pkg_postinst() {
