@@ -1,0 +1,22 @@
+Index: plexus-component-api-1.0_alpha33_pre20071021/src/main/java/org/codehaus/plexus/component/repository/ComponentDescriptor.java
+===================================================================
+--- plexus-component-api-1.0_alpha33_pre20071021/src/main/java/org/codehaus/plexus/component/repository/ComponentDescriptor.java	(révision 6980)
++++ plexus-component-api-1.0_alpha33_pre20071021/src/main/java/org/codehaus/plexus/component/repository/ComponentDescriptor.java	(copie de travail)
+@@ -85,6 +85,17 @@
+     // Instance methods
+     // ----------------------------------------------------------------------
+ 
++    public String getComponentKey()
++    {
++        if ( getRoleHint() != null )
++        {
++            return getRole() + getRoleHint();
++        }
++
++        return getRole();
++    }
++
++
+     /**
+      * The location this information came from (descriptor file URI).
+      */
