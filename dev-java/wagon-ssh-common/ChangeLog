@@ -2,6 +2,9 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  03 Nov 2007; kiorky <kiorky@cryptelium.net> wagon-ssh-common-1.0.ebuild:
+  fix DEPENDS
+
   03 Nov 2007; kiorky <kiorky@cryptelium.net> ChangeLog:
   fix depend to use current plexus stuff
 
