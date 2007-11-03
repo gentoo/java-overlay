@@ -1,0 +1,27 @@
+# ChangeLog for dev-java/maven-core
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  03 Nov 2007; kiorky <kiorky@cryptelium.net> wagon-provider-api-1.0.ebuild:
+  fix depend to use current plexus stuff
+
+  02 Jun 2007; kiorky <kiorky@cryptelium.net> wagon-provider-api-1.0.ebuild:
+  moving to JAVA_MAVEN_CLASSPATH
+
+  29 May 2007; kiorky <kiorky@cryptelium.net> wagon-provider-api-1.0.ebuild:
+  Adding maven bootstrap flag
+
+  19 May 2007; Alistair John Bush <ali_bush@gentoo.org>
+  wagon-provider-api-1.0.ebuild:
+  Adding to ~amd64 and Restricted tests
+
+  25 Apr 2007; kiorky <kiorky@cryptelium.net> wagon-provider-api-1.0.ebuild:
+  Migrating to new maven eclass
+
+  18 Apr 2007; kiorky <kiorky@cryptelium.net> wagon-provider-api-1.0.ebuild:
+  correcting slot
+
+  18 Apr 2007; kiorky <kiorky@cryptelium.net>
+  -wagon-provider-api-1.0_alpha4.ebuild, +wagon-provider-api-1.0.ebuild:
+  added as a maven dependency
+
