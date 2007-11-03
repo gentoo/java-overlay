@@ -1,0 +1,16 @@
+Index: maven-plugins-2.1_pre20071021/maven-war-plugin/src/main/java/org/apache/maven/plugin/war/packaging/AbstractWarPackagingTask.java
+===================================================================
+--- maven-plugins-2.1_pre20071021/maven-war-plugin/src/main/java/org/apache/maven/plugin/war/packaging/AbstractWarPackagingTask.java	(révision 586908)
++++ maven-plugins-2.1_pre20071021/maven-war-plugin/src/main/java/org/apache/maven/plugin/war/packaging/AbstractWarPackagingTask.java	(copie de travail)
+@@ -257,11 +257,6 @@
+             unArchiver.setOverwrite( true );
+             unArchiver.extract();
+         }
+-        catch ( IOException e )
+-        {
+-            throw new MojoExecutionException( "Error unpacking file[" + file.getAbsolutePath() + "]" + "to[" +
+-                unpackDirectory.getAbsolutePath() + "]", e );
+-        }
+         catch ( ArchiverException e )
+         {
+             throw new MojoExecutionException( "Error unpacking file[" + file.getAbsolutePath() + "]" + "to[" +

@@ -1,0 +1,10 @@
+# ChangeLog for dev-java/maven-plugins
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  03 Nov 2007; kiorky <kiorky@cryptelium.net>
+  +maven-plugins-2.1_pre20071021.ebuild, +files/maven-javadoc-plugin.diff,
+  +files/maven-war-plugin.diff, +files/plugin-testing-tools.patch,
+  +metadata.xml:
+  Added as a maven dependency, see #197947.
+
