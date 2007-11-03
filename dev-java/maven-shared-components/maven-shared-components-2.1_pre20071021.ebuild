@@ -14,7 +14,7 @@ SRC_URI="${MY_BASE_URL}/${P}.tar.bz2
 ${MY_BASE_URL}/${P}-gen-src.tar.bz2"
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
 IUSE="source doc"
 COMMON_DEPS="
 dev-java/maven-base-poms

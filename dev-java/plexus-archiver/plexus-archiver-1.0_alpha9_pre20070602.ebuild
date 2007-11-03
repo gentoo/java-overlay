@@ -12,7 +12,7 @@ SRC_URI="http://dev.gentooexperimental.org/~kiorky/${P}.tar.bz2"
 
 LICENSE="as-is" # http://plexus.codehaus.org/plexus-utils/license.html
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
 IUSE="source doc"
 COMMON_DEPS="
 >=dev-java/plexus-utils-1.4.7_pre20071021

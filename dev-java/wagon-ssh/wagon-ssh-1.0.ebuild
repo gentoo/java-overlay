@@ -9,7 +9,7 @@ DESCRIPTION="The Wagon API project defines a simple API for transfering resource
 # svn co http://svn.apache.org/repos/asf/maven/wagon/tags/*/wagon-provider-api/ wagon-provider-api
 SRC_URI="http://dev.gentooexperimental.org/~kiorky/${P}.tar.bz2"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
 IUSE="source doc"
 LICENSE="Apache-2.0"
 HOMEPAGE="http://maven.apache.org"

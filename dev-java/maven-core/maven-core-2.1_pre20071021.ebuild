@@ -44,7 +44,7 @@ dev-java/wagon-ssh-external
 DEPEND=">=virtual/jdk-1.4 ${COMMON_DEPS}
 source? ( app-arch/zip )"
 RDEPEND=">=virtual/jre-1.4 ${COMMON_DEPS}"
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
 IUSE="doc source"
 SLOT="0"
 JAVA_MAVEN_CLASSPATH="

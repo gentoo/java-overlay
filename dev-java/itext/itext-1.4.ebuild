@@ -12,7 +12,7 @@ IUSE="doc source"
 
 LICENSE="MPL-1.1"
 SLOT="1.4"
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
 
 DEPEND=">=virtual/jdk-1.4 source? ( app-arch/zip )"
 RDEPEND=">=virtual/jre-1.4"
