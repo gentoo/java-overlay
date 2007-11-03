@@ -1,0 +1,11 @@
+# ChangeLog for dev-java/plexus-cli
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  03 Nov 2007; kiorky <kiorky@cryptelium.net> +Manifest:
+  Adding manifest file
+
+  27 Oct 2007; kiorky <kiorky@cryptelium.net>
+  +plexus-cli-1.3_pre20071027.ebuild, +metadata.xml:
+  added as a maven dependency. see #197195
+
