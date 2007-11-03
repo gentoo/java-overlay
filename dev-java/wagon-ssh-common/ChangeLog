@@ -1,0 +1,25 @@
+# ChangeLog for dev-java/wagon-ssh-common
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  03 Nov 2007; kiorky <kiorky@cryptelium.net> ChangeLog:
+  fix depend to use current plexus stuff
+
+  21 Oct 2007; kiorky <kiorky@cryptelium.net> wagon-ssh-common-1.0.ebuild:
+  fix DEPENDS
+
+  21 Oct 2007; kiorky <kiorky@cryptelium.net> wagon-ssh-common-1.0.ebuild:
+  update to use lastest deps
+
+  02 Jun 2007; kiorky <kiorky@cryptelium.net> wagon-ssh-common-1.0.ebuild:
+  moving to JAVA_MAVEN_CLASSPATH
+
+  29 May 2007; kiorky <kiorky@cryptelium.net> wagon-ssh-common-1.0.ebuild:
+  Adding maven bootstrap flag
+
+  25 Apr 2007; kiorky <kiorky@cryptelium.net> wagon-ssh-common-1.0.ebuild:
+  Migrating to new maven eclass
+
+  18 Apr 2007; kiorky <kiorky@cryptelium.net> ChangeLog:
+  Added as a maven dependency
+
