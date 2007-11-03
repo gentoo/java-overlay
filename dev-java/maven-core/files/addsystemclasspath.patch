@@ -1,0 +1,106 @@
+Index: maven-core-2.0_pre20070530/src/main/java/org/apache/maven/cli/MavenCli.java
+===================================================================
+--- maven-core-2.0_pre20070530/src/main/java/org/apache/maven/cli/MavenCli.java	(révision 542776)
++++ maven-core-2.0_pre20070530/src/main/java/org/apache/maven/cli/MavenCli.java	(copie de travail)
+@@ -674,6 +674,8 @@
+ 
+         private static final String FAIL_NEVER = "fn";
+ 
++		private static final String USE_EXTERNAL_CLASSPATH = "cp";
++
+         public CLIManager()
+         {
+             options = new Options();
+@@ -684,6 +686,9 @@
+             options.addOption(
+                 OptionBuilder.withLongOpt( "define" ).hasArg().withDescription( "Define a system property" ).create(
+                     SET_SYSTEM_PROPERTY ) );
++			options.addOption(
++					OptionBuilder.withLongOpt( "external-classpath" ).hasArg().withDescription( "Use system scope and external classpath" ).create(
++                    USE_EXTERNAL_CLASSPATH ) );
+             options.addOption(
+                 OptionBuilder.withLongOpt( "offline" ).withDescription( "Work offline" ).create( OFFLINE ) );
+             options.addOption(
+Index: maven-core-2.0_pre20070530/src/main/java/org/apache/maven/DefaultMaven.java
+===================================================================
+--- maven-core-2.0_pre20070530/src/main/java/org/apache/maven/DefaultMaven.java	(révision 542776)
++++ maven-core-2.0_pre20070530/src/main/java/org/apache/maven/DefaultMaven.java	(copie de travail)
+@@ -288,12 +288,14 @@
+ 
+         boolean foundProjects = true;
+         List projects = getProjects( request, globalProfileManager );
++
+         if ( projects.isEmpty() )
+         {
+             projects.add( getSuperProject( request ) );
+             foundProjects = false;
+         }
+ 
++
+         ReactorManager rm;
+         try
+         {
+@@ -361,9 +363,13 @@
+         {
+             List files = getProjectFiles( request );
+ 
++
++  		System.out.println( "popo");  
+             projects = collectProjects( files, request.getLocalRepository(), request.isRecursive(),
+                                         request.getSettings(), globalProfileManager, !request.isReactorActive() );
+ 
++  		System.out.println( "papa");  
++
+         }
+         catch ( IOException e )
+         {
+@@ -450,6 +456,8 @@
+         throws ArtifactResolutionException, ProjectBuildingException, ProfileActivationException,
+         MavenExecutionException, BuildFailureException
+     {
++
++  		System.out.println( "pipi");  
+         List projects = new ArrayList( files.size() );
+ 
+         for ( Iterator iterator = files.iterator(); iterator.hasNext(); )
+@@ -464,13 +472,20 @@
+                 usingReleasePom = true;
+             }
+ 
++
++
++
++  		System.out.println( "pupu");  
+             MavenProject project = getProject( file, localRepository, settings, globalProfileManager );
++  		System.out.println( "pipi");  
+ 
++
+             if ( isRoot )
+             {
+                 project.setExecutionRoot( true );
+             }
+ 
++
+             if ( project.getPrerequisites() != null && project.getPrerequisites().getMaven() != null )
+             {
+                 DefaultArtifactVersion version = new DefaultArtifactVersion( project.getPrerequisites().getMaven() );
+@@ -481,6 +496,7 @@
+                 }
+             }
+ 
++
+             if ( project.getModules() != null && !project.getModules().isEmpty() && recursive )
+             {
+                 // TODO: Really should fail if it was not? What if it is aggregating - eg "ear"?
+Index: maven-core-2.0_pre20070530/src/main/java/org/apache/maven/plugin/DefaultPluginManager.java
+===================================================================
+--- maven-core-2.0_pre20070530/src/main/java/org/apache/maven/plugin/DefaultPluginManager.java	(révision 542776)
++++ maven-core-2.0_pre20070530/src/main/java/org/apache/maven/plugin/DefaultPluginManager.java	(copie de travail)
+@@ -1260,6 +1260,7 @@
+         for ( Iterator it = project.getArtifacts().iterator(); it.hasNext(); )
+         {
+             Artifact artifact = (Artifact) it.next();
++			System.out.println(artifact);  
+ 
+             artifactResolver.resolve( artifact, remoteArtifactRepositories, localRepository );
+         }
