@@ -19,7 +19,7 @@ dev-java/ant-core
 dev-java/ant-junit
 dev-java/antlr
 >=dev-java/bsh-2.0_beta4-r2
-dev-java/checkstyle
+dev-util/checkstyle
 dev-java/commons-collections
 >=dev-java/commons-httpclient-3
 =dev-java/commons-lang-2.1*
