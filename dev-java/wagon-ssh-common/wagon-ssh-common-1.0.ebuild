@@ -12,7 +12,7 @@ SLOT="0"
 KEYWORDS="~x86"
 IUSE="source doc"
 DEP="
->=dev-java/plexus-utils-1.4.7_pre20071021
+>=dev-java/plexus-utils-1.4.7_pre20071021_pre20071021
 dev-java/plexus-interactivity-api
 dev-java/wagon-provider-api
 "

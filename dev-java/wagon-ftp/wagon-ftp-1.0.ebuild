@@ -14,7 +14,7 @@ IUSE="source doc"
 LICENSE="Apache-2.0"
 HOMEPAGE="http://maven.apache.org"
 DEP="
->=dev-java/plexus-utils-1.4.7
+>=dev-java/plexus-utils-1.4.7_pre20071021
 dev-java/plexus-server
 dev-java/commons-net
 dev-java/xml-commons

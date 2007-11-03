@@ -18,7 +18,7 @@ HOMEPAGE="http://maven.apache.org"
 DEP="
 dev-java/plexus-utils
 dev-java/wagon-provider-api
->=dev-java/plexus-utils-1.4.7
+>=dev-java/plexus-utils-1.4.7_pre20071021
 "
 DEPEND=">=virtual/jdk-1.4 ${DEP}"
 RDEPEND=">=virtual/jre-1.4 ${DEP}"
