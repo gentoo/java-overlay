@@ -1,0 +1,16 @@
+Index: maven-plugin-testing-tools-2.1_pre20070603.new/src/main/java/org/apache/maven/shared/test/plugin/RepositoryTool.java
+===================================================================
+--- maven-shared-components-2.1_pre20070615/maven-plugin-testing-tools/src/main/java/org/apache/maven/shared/test/plugin/RepositoryTool.java	(révision 546838)
++++ maven-shared-components-2.1_pre20070615/maven-plugin-testing-tools/src/main/java/org/apache/maven/shared/test/plugin/RepositoryTool.java	(copie de travail)
+@@ -97,7 +97,7 @@
+         Settings settings;
+         try
+         {
+-            settings = settingsBuilder.buildSettings();
++            settings = settingsBuilder.buildSettings(null,null);
+         }
+         catch ( IOException e )
+         {
+
+
+
