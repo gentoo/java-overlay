@@ -1,0 +1,46 @@
+# ChangeLog for dev-java/plexus-utils
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  21 Oct 2007; kiorky <kiorky@cryptelium.net>
+  +plexus-utils-1.4.7_pre20071021.ebuild:
+  version bump
+
+  11 Jun 2007; kiorky <kiorky@cryptelium.net> -plexus-utils-1.0.5.ebuild,
+  +plexus-utils-1.4.3_pre20070611.ebuild:
+  Maven 2.1 Bump
+
+  02 Jun 2007; kiorky <kiorky@cryptelium.net> plexus-utils-1.0.4.ebuild,
+  plexus-utils-1.0.5.ebuild:
+  moving to JAVA_MAVEN_CLASSPATH
+
+  29 May 2007; kiorky <kiorky@cryptelium.net> ChangeLog:
+  Adding maven bootstrap flag
+
+  29 May 2007; kiorky <kiorky@cryptelium.net> plexus-utils-1.0.4.ebuild,
+  plexus-utils-1.0.5.ebuild:
+  Adding maven bootstrap flag
+
+  19 May 2007; Alistair John Bush <ali_bush@gentoo.org>
+  plexus-utils-1.0.5.ebuild:
+  Fixed installation of source code
+
+  19 May 2007; Alistair John Bush <ali_bush@gentoo.org>
+  plexus-utils-1.0.5.ebuild:
+  Adding to ~amd64, Restrict test and removed doc use flag
+
+  01 May 2007; kiorky <kiorky@cryptelium.net> +plexus-utils-1.0.4.ebuild:
+  Adding specific ebuilds beecause of maven wants it
+
+  25 Apr 2007; kiorky <kiorky@cryptelium.net> plexus-utils-1.0.5.ebuild:
+  Migrating to new maven eclass
+
+  17 Apr 2007; kiorky <kiorky@cryptelium.net> plexus-utils-1.0.5.ebuild:
+  correction keywords
+
+  02 Mar 2007; kiorky <kiorky@cryptelium.net> +plexus-utils-1.0.5.ebuild,
+  +files/build.xml-1.0.5.patch, +metadata.xml:
+  Adding as i must do something else for now
+      Will finnish later
+      It s maven related stuff
+
