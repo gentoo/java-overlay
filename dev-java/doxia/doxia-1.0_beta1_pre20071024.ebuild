@@ -29,7 +29,6 @@ dev-java/fop
 dev-java/junit
 dev-java/plexus-cli
 >=dev-java/plexus-component-api-1.0_alpha33_pre20071021
->=dev-java/maven-shared-components-2.1_pre20071021
 >=dev-java/plexus-container-default-1.0_alpha33_pre20071021
 dev-java/plexus-i18n
 >=dev-java/plexus-utils-1.4.7_pre20071021
@@ -55,7 +54,6 @@ junit
 plexus-cli
 plexus-component-api-1.0_alpha33
 plexus-container-default-1.0_alpha33
-maven-shared-components
 maven-plugin-api
 plexus-i18n
 plexus-utils-1.4.7

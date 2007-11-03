@@ -6,6 +6,10 @@
   doxia-1.0_beta1_pre20071024.ebuild:
   fix DEPENDS
 
+  03 Nov 2007; kiorky <kiorky@cryptelium.net>
+  doxia-1.0_beta1_pre20071024.ebuild:
+  fix DEPENDS
+
   01 Nov 2007; kiorky <kiorky@cryptelium.net>
   +doxia-1.0_beta1_pre20071024.ebuild,
   +files/doxia-sitetools_DefaultSiteRenderer.java.diff:
