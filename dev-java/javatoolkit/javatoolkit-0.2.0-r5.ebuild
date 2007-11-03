@@ -12,6 +12,9 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
+COMMONS_DEPS="dev-python/pyxml"
+DEPEND="${COMMONS_DEPS}"
+RDEPEND="${COMMONS_DEPS}"
 S=${WORKDIR}/${PF}
 
 src_unpack() {
