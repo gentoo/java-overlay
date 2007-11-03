@@ -30,7 +30,7 @@ dev-java/easymock
 DEPEND=">=virtual/jdk-1.4 ${DEP}"
 RDEPEND=">=virtual/jre-1.4 ${DEP}"
 JAVA_MAVEN_CLASSPATH="
-classworlds-1
+classworlds-1.1
 plexus-classworlds
 plexus-active-collections
 plexus-component-api-1.0_alpha33
