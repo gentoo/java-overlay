@@ -10,6 +10,7 @@ LICENSE="Apache-2.0"
 HOMEPAGE="http://maven.apache.org"
 COMMON_DEPS="
 dev-java/maven-artifact
+dev-java/maven-base-poms
 dev-java/maven-build-context
 dev-java/maven-core
 dev-java/maven-embedder
