@@ -7,6 +7,10 @@
   fix DEPENDS
 
   03 Nov 2007; kiorky <kiorky@cryptelium.net>
+  maven-plugins-2.1_pre20071021.ebuild:
+  fix DEPENDS
+
+  03 Nov 2007; kiorky <kiorky@cryptelium.net>
   +maven-plugins-2.1_pre20071021.ebuild, +files/maven-javadoc-plugin.diff,
   +files/maven-war-plugin.diff, +files/plugin-testing-tools.patch,
   +metadata.xml:

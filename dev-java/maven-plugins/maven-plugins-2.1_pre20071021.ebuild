@@ -42,7 +42,6 @@ dev-java/plexus-resources
 dev-java/plexus-velocity
 dev-java/saxpath
 dev-java/velocity
-dev-java/wagon
 dev-java/wagon-file
 dev-java/wagon-ftp
 dev-java/wagon-http
