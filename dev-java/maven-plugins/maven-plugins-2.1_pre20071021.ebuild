@@ -22,7 +22,7 @@ dev-java/antlr
 dev-util/checkstyle
 dev-java/commons-collections
 >=dev-java/commons-httpclient-3
-=dev-java/commons-lang-2.1*
+>dev-java/commons-lang-2.1
 >dev-java/dom4j-1.4
 dev-java/easymock
 dev-java/gnu-javamail
