@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 DEP="
-=dev-java/classworlds-1*
+>=dev-java/classworlds-1.1
 dev-java/plexus-classworlds
 dev-java/plexus-active-collections
 >=dev-java/plexus-component-api-1.0_alpha33_pre20071021
