@@ -1,0 +1,15 @@
+Index: doxia-sitetools-1.0_beta1_pre20071024/doxia-site-renderer/src/main/java/org/apache/maven/doxia/siterenderer/DefaultSiteRenderer.java
+===================================================================
+--- doxia-sitetools-1.0_beta1_pre20071024/doxia-site-renderer/src/main/java/org/apache/maven/doxia/siterenderer/DefaultSiteRenderer.java	(révision 590331)
++++ doxia-sitetools-1.0_beta1_pre20071024/doxia-site-renderer/src/main/java/org/apache/maven/doxia/siterenderer/DefaultSiteRenderer.java	(copie de travail)
+@@ -182,7 +182,9 @@
+             {
+                 String doc = (String) k.next();
+ 
+-                RenderingContext context = new RenderingContext( moduleBasedir, doc, module.getParserId(), module.getExtension() );
++                // gentoo java hack
++                // RenderingContext context = new RenderingContext( moduleBasedir, doc, module.getParserId(), module.getExtension() );
++                RenderingContext context = new RenderingContext( moduleBasedir, doc, module.getParserId()); 
+ 
+                 // TODO: DOXIA-111: we need a general filter here that knows how to alter the context
+                 if ( doc.endsWith( ".vm" ) )
