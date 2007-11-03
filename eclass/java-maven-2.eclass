@@ -4,7 +4,7 @@
 
 inherit base java-pkg-2 java-ant-2
 
-JAVA_MAVEN_COMMON_DEPS="dev-java/maven-base-poms"
+JAVA_MAVEN_COMMON_DEPS=""
 DEPEND=">=dev-java/javatoolkit-0.2.0-r3 source? ( app-arch/zip )
 ${JAVA_MAVEN_COMMON_DEPS}"
 RDEPEND=">=dev-java/javatoolkit-0.2.0-r3
