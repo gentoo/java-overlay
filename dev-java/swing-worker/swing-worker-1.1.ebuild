@@ -25,7 +25,7 @@ S="${WORKDIR}"
 EANT_BUILD_TARGET="compile"
 
 src_install() {
-	use doc & java-pkg_dojavadoc dist/javadoc
+	use doc && java-pkg_dojavadoc dist/javadoc
 	cd build
 	jar cf "../${PN}.jar" * || die "Unable to create jar"
 	cd ..
