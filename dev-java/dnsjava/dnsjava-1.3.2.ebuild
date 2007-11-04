@@ -11,7 +11,7 @@ HOMEPAGE="http://www.dnsjava.org/"
 SRC_URI="mirror://sourceforge/${PN}/${P}.tar.gz"
 LICENSE="BSD"
 SLOT="1.3.2" #used by plexus-server (maven)
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
 IUSE=""
 RDEPEND="=virtual/jre-1.4*"
 DEPEND="=virtual/jdk-1.4*"

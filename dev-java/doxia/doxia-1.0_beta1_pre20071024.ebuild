@@ -19,7 +19,7 @@ ${MY_BASE_URL}/doxia-sitetools-${PV}-gen-src.tar.bz2
 "
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
 IUSE="source doc"
 COMMON_DEPS="
 dev-java/commons-cli

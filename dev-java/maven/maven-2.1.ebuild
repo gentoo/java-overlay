@@ -58,7 +58,7 @@ dev-java/plexus-interactivity-api
 DEPEND=">=virtual/jdk-1.4 ${COMMON_DEPS} ${MAVEN_PLUGINS_DEPS}
 source? ( app-arch/zip )"
 RDEPEND=">=virtual/jre-1.4 ${COMMON_DEPS} ${MAVEN_PLUGINS_DEPS}"
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
 IUSE="doc source"
 SLOT="2"
 

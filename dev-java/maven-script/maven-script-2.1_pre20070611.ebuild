@@ -10,7 +10,7 @@ SRC_URI="http://dev.gentooexperimental.org/~kiorky/${P}.tar.bz2"
 HOMEPAGE="http://maven.apache.org/"
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
 IUSE="source doc"
 COMMON_DEPS="
 dev-java/ant-core
