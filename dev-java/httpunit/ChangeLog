@@ -2,6 +2,9 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  11 Nov 2007; Serkan Kaba <serkan_kaba@yahoo.com> +httpunit-1.6.2-r1.ebuild
+  Revision bump that adds more deps
+
   01 Jul 2007; William L. Thomson Jr. <wltjr@gentoo.org>
   httpunit-1.6.2.ebuild:
   Added ~amd64 keyword
