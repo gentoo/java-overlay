@@ -13,11 +13,11 @@ SLOT="0"
 KEYWORDS="~x86 ~amd64"
 IUSE="debug doc source"
 
-RDEPEND=">=virtual/jre-1.5"
+RDEPEND=">=virtual/jre-1.5
+	dev-java/libmatthew-java"
 
 DEPEND=">=virtual/jdk-1.5
 	app-text/docbook-sgml-utils
-	!dev-java/libdbus-java
 	dev-java/libmatthew-java
 	doc? ( dev-tex/tex4ht )
 	source? ( app-arch/zip )"
