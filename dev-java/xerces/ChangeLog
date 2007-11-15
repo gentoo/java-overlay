@@ -2,6 +2,11 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  15 Nov 2007; Petteri Räty <betelgeuse@gentoo.org>
+  +files/xerces-2.6.2-gentoo.patch, +files/xerces-2.6.2-javadoc.patch,
+  +xerces-2.6.2-r4.ebuild:
+  Add xerces 2.6 slot from the main tree as it's only used in this overlay.
+
   24 Apr 2007; Miroslav Šulc <fordfrog@gentoo.org> xerces-2.9.0.ebuild:
   Corrected compilation errors and installation warnings
 

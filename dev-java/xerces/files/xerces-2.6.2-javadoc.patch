@@ -1,0 +1,17 @@
+--- build.xml.orig	2005-03-22 00:07:10.000000000 +0100
++++ build.xml	2005-03-22 00:35:19.392906216 +0100
+@@ -422,6 +422,14 @@
+       windowtitle='Other Classes' doctitle='Other Classes'
+       bottom='${copyright}'
+       />
++    
++    <javadoc packagenames='org.*'
++      locale='en_US'
++      sourcepath='${src.dir}/dom3' destdir='${build.dir}/docs/javadocs/api'
++      author='true' version='true'
++      windowtitle='Other Classes' doctitle='Other Classes'
++      bottom='${copyright}'
++      />
+   </target>
+ 
+   <!-- =================================================================== -->
