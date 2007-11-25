@@ -2,6 +2,10 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  25 Nov 2007; Miroslav Šulc <fordfrog@gentoo.org> ++, ++, ++,
+  pmd-4.0.ebuild:
+  Version bump
+
   29 Jul 2007; Miroslav Šulc <fordfrog@gentoo.org> pmd-4.0.ebuild:
   Included xslt files
 

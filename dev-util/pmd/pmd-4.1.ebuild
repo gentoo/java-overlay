@@ -25,12 +25,19 @@ RDEPEND=">=virtual/jre-1.5
 # NOTE: they include regression tests in the main jar so junit is needed on the cp even for src_compile
 DEPEND=">=virtual/jdk-1.5
 	app-arch/unzip
-	>=dev-java/junit-4
+	>=dev-java/junit-4.4
 	test? (
 		dev-java/ant-junit
 		dev-java/ant-trax
+		dev-java/hamcrest
 	)
 	${COMMON_DEPEND}"
+
+pkg_setup() {
+	use test && ewarn "Please note that tests currently fail"
+
+	java-pkg-2_pkg_setup
+}
 
 src_unpack() {
 	unpack "${A}"
@@ -47,6 +54,7 @@ src_unpack() {
 	java-pkg_jar-from asm-3 asm.jar
 	java-pkg_jar-from jaxen-1.1 jaxen.jar
 	java-pkg_jar-from --build-only junit-4
+	java-pkg_jar-from --build-only hamcrest
 }
 
 EANT_BUILD_XML="bin/build.xml"
