@@ -6,7 +6,7 @@ JAVA_PKG_IUSE="doc source"
 inherit java-pkg-2 java-ant-2
 DESCRIPTION="An auxiliary findbugs.sourceforge.net plugin for bug detectors that fall outside the narrow scope of detectors to be packaged with the product itself."
 HOMEPAGE="http://fb-contrib.sourceforge.net/"
-SRC_URI="mirror://sourceforge/${PN}/${PN}-src.zip"
+SRC_URI="mirror://sourceforge/${PN}/${PN}-src-${PV}.zip"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~x86"
@@ -38,7 +38,7 @@ src_compile() {
 }
 
 src_install() {
-	java-pkg_dojar fb-contrib.jar
+	java-pkg_newjar ${P}.jar
 	dosym /usr/share/${PN}/lib/fb-contrib.jar /usr/share/findbugs/plugin/
 
 	if use doc ; then
