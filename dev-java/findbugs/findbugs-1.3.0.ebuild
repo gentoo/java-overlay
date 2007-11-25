@@ -17,13 +17,17 @@ IUSE=""
 
 CDEPEND="dev-java/ant-core
 	dev-java/apple-java-extensions-bin
+	>=dev-java/asm-3.1
 	=dev-java/dom4j-1.4
 	dev-java/findbugs-bcel
-	=dev-java/asm-3*
-	test? ( =dev-java/junit-3.8* )"
+	dev-java/jsr305
+	test? (
+		dev-java/ant-junit
+		=dev-java/junit-3.8*
+	)"
 RDEPEND=">=virtual/jre-1.5
 	${CDEPEND}"
-DEPEND=">=virtual/jdk-1.5
+DEPEND="=virtual/jdk-1.5*
 	app-arch/unzip
 	${CDEPEND}"
 
@@ -32,12 +36,18 @@ EANT_BUILD_TARGET="jars anttask"
 EANT_GENTOO_CLASSPATH="ant-core"
 ANT_OPTS="-Xmx256m"
 
+pkg_setup() {
+	use doc && ewarn "Installing javadocs does not pass sanity check."
+
+	java-pkg-2_pkg_setup
+}
+
 src_unpack(){
 	unpack ${A}
 
 	cd "${S}"
 	find -name "*.jar" | xargs rm -v
-	cd "${S}/lib"
+	cd "${S}"/lib
 	java-pkg_jarfrom findbugs-bcel findbugs-bcel.jar bcel.jar
 	java-pkg_jarfrom apple-java-extensions-bin,junit
 	java-pkg_jarfrom asm-3 asm.jar asm-3.0.jar
@@ -47,6 +57,7 @@ src_unpack(){
 	java-pkg_jarfrom asm-3 asm-util.jar asm-util-3.0.jar
 	java-pkg_jarfrom asm-3 asm-xml.jar asm-xml-3.0.jar
 	java-pkg_jarfrom dom4j-1.4 dom4j-full.jar dom4j-full.jar
+	java-pkg_jarfrom jsr305
 	use test && java-pkg_jarfrom junit
 
 	cd "${S}"
@@ -54,7 +65,7 @@ src_unpack(){
 }
 
 src_test() {
-	eant runjunit
+	ANT_TASKS="ant-nodeps ant-junit" eant runjunit
 }
 
 src_install() {
@@ -63,6 +74,6 @@ src_install() {
 	dosym /usr/share/${PN}/lib/coreplugin.jar  /usr/share/${PN}/plugin/
 	dobin "${FILESDIR}"/findbugs
 
-	use doc && java-pkg_dojavadoc "${S}/apiJavaDoc"
-	use source && java-pkg_dosrc "${S}/src"
+	use doc && java-pkg_dojavadoc "${S}"/apiJavaDoc
+	use source && java-pkg_dosrc "${S}"/src
 }

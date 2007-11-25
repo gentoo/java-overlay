@@ -2,6 +2,10 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  25 Nov 2007; Miroslav Šulc <fordfrog@gentoo.org> ++,
+  findbugs-1.2.1.ebuild:
+  Version bump
+
   15 Aug 2007; Miroslav Šulc <fordfrog@gentoo.org> +files/findbugs,
   findbugs-1.2.1.ebuild:
   Added launcher script
