@@ -20,10 +20,10 @@ IUSE="doc source examples"
 #dev-java/liquidlnf
 #dev-java/kunststoff
 #dev-java/jgoodies-looka
-CDEPEND="=dev-java/jakarta-regexp-1.3*"
+CDEPEND="=dev-java/jakarta-regexp-1.3*
+	>=dev-java/ant-core-1.5"
 DEPEND=">=virtual/jdk-1.4
 		app-arch/zip
-		>=dev-java/ant-core-1.5
 		${CDEPEND}"
 RDEPEND=">=virtual/jre-1.4
 		${CDEPEND}"
@@ -31,6 +31,7 @@ S=${WORKDIR}
 
 src_unpack() {
 	unpack ${A}
+	epatch ${FILESDIR}/buildfix.patch
 	cd ${S}/lib
 	rm *.jar
 	java-pkg_jarfrom jakarta-regexp-1.3 jakarta-regexp.jar jakarta-regexp-1.3.jar
@@ -43,7 +44,7 @@ src_compile() {
 }
 
 src_install() {
-	java-pkg_dojar lib/*.jar
+	java-pkg_dojar lib/{uninstaller-ext,compiler,izevent,installer,standalone-compiler,uninstaller}.jar
 	use_doc && java-pkg_dojavadoc doc/izpack/javadoc
 
 	use source && java-pkg_dosrc src/*
