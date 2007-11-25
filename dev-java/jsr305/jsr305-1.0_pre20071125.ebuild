@@ -12,7 +12,7 @@ DESCRIPTION="JSR 305: Annotations for Software Defect Detection in Java"
 SRC_URI="http://dev.gentoo.org/~fordfrog/distfiles/${P}.tar.bz2"
 HOMEPAGE="http://code.google.com/p/jsr-305/"
 LICENSE="BSD-2"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="examples"
 SLOT="0"
 
