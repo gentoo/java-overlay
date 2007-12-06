@@ -24,8 +24,8 @@ RDEPEND=">=virtual/jre-1.5"
 src_unpack() {
 	unpack ${A}
 
-	mkdir ${S}/lib
-	cd ${S}/lib
+	mkdir "${S}"/lib
+	cd "${S}"/lib
 	use test && java-pkg_jar-from --build-only junit-4
 }
 

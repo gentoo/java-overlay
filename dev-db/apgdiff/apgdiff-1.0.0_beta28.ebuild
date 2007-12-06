@@ -10,7 +10,7 @@ HOMEPAGE="http://apgdiff.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${P}-src.zip"
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="test"
 
 DEPEND=">=virtual/jdk-1.5
@@ -27,8 +27,8 @@ RDEPEND=">=virtual/jre-1.5"
 src_unpack() {
 	unpack ${A}
 
-	mkdir ${S}/lib
-	cd ${S}/lib
+	mkdir "${S}"/lib
+	cd "${S}"/lib
 	if use test ; then
 		java-pkg_jar-from --build-only hamcrest
 		java-pkg_jar-from --build-only junit-4
