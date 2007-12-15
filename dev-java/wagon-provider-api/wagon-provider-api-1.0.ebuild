@@ -18,5 +18,5 @@ DEPEND=">=virtual/jdk-1.4 ${DEP}"
 RDEPEND=">=virtual/jre-1.4 ${DEP}"
 JAVA_MAVEN_CLASSPATH="plexus-utils-1.4.7"
 
-JAVA_PKG_SRC_DIRS="src/main/java/"
+
 RESTRICT="test"
