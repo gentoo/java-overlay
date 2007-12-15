@@ -40,7 +40,7 @@ dev-java/wagon-ssh-external
 "
 DEPEND=">=virtual/jdk-1.4 ${COMMON_DEPS}"
 RDEPEND=">=virtual/jre-1.4 ${COMMON_DEPS}"
-JAVA_PKG_SRC_DIRS="src/main/java/*"
+
 JAVA_MAVEN_CLASSPATH="
 commons-cli-1
 jdom-1.0
