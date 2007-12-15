@@ -14,7 +14,7 @@ LICENSE="as-is" # http://plexus.codehaus.org/plexus-utils/license.html
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
-JAVA_PKG_SRC_DIRS="src/main/java/org"
+
 DEP="
 >=dev-java/plexus-utils-1.4.7_pre20071021
 >=dev-java/plexus-container-default-1.0_alpha33_pre20071021
