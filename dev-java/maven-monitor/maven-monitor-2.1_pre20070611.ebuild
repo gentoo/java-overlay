@@ -20,4 +20,4 @@ RDEPEND=">=virtual/jre-1.4 ${DEP}"
 
 #Tests failing at least for the present.
 RESTRICT="test"
-JAVA_PKG_SRC_DIRS="src/main/java/*"
+
