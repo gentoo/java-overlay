@@ -27,4 +27,4 @@ plexus-container-default-1.0_alpha33
 plexus-utils-1.4.7
 "
 
-JAVA_PKG_SRC_DIRS="src/main/java/*"
+
