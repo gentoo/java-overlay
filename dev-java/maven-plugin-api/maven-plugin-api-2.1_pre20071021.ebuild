@@ -35,4 +35,4 @@ plexus-container-default-1.0_alpha33
 plexus-component-api-1.0_alpha33
 "
 
-JAVA_PKG_SRC_DIRS="src/main/java/*"
+
