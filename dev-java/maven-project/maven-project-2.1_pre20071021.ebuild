@@ -41,7 +41,7 @@ plexus-classworlds
 wagon-provider-api
 "
 
-JAVA_PKG_SRC_DIRS="src/main/java/*"
+
 #JAVA_MAVEN_PATCHES="${FILESDIR}/cp.patch"
 
 
