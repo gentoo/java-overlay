@@ -27,5 +27,5 @@ plexus-utils-1.4.7
 wagon-provider-api
 "
 
-JAVA_PKG_SRC_DIRS="src/main/java/*"
+
 RESTRICT=test
