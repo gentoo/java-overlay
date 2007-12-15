@@ -109,7 +109,7 @@ JAVA_MAVEN_MULTIPROJECT_CLASSESPATH="${WORKDIR}/maven_classes"
 
 # Where sources are hold in a maven project
 JAVA_MAVEN_SOURCES="src/main/"
-JAVA_MAVEN_SRC_DIRS=${JAVA_MAVEN_SRC_DIRS}
+JAVA_MAVEN_SRC_DIRS="${JAVA_MAVEN_SRC_DIRS}"
 
 # maven build file
 POM_XML="pom.xml"
@@ -235,7 +235,10 @@ java-maven-2_src_unpack() {
 		base_src_unpack
 	else
 		# only unpack base tarball, we unpack generated stuff later
-		unpack "${P}.tar.bz2"
+		# must be IN ${P} or ${PF}
+		for myfile in "${P}.tar.bz2" "${PF}.tar.bz2";do
+			[[ -f "${DISTDIR}/${myfile}" ]] && unpack "${myfile}"
+		done
 	fi
 
 	# patch if neccessary
@@ -308,8 +311,8 @@ java-maven-2_src_unpack() {
 		popd >> /dev/null || die
 
 		# add src dirs
-		if [[ -d "${S}/${project}/${JAVA_MAVEN_SOURCES}/java" ]]; then
-			JAVA_MAVEN_SRC_DIRS="${JAVA_MAVEN_SRC_DIRS} ${S}/${project//.\//}/${JAVA_MAVEN_SOURCES}/java"
+		if [[ -d "${S}/${project}/${JAVA_MAVEN_SOURCES}/" ]]; then
+			JAVA_MAVEN_SRC_DIRS="${JAVA_MAVEN_SRC_DIRS} ${S}/${project//.\//}/${JAVA_MAVEN_SOURCES}"
 		fi
 	done
 
@@ -540,9 +543,37 @@ java-maven-2_src_install() {
 	&& [[ -n "${JAVA_ANT_JAVADOC_INPUT_DIRS}" ]] \
 	&& java-pkg_dojavadoc ${JAVA_ANT_JAVADOC_OUTPUT_DIR}
 	if hasq source ${IUSE} && use source; then
+		# JAVA_MAVEN_SRC_DIRS must be maven parent sources dirs like "src/main"
+		# install java/* into zip/* and the rest inside zip/subdir/*
+		local java_maven_src_dir="${WORKDIR}/mavenjavasrcpack"
+		mkdir -p "$java_maven_src_dir" || die "mkdir failed"
 		for dir in ${JAVA_MAVEN_SRC_DIRS};do
-			[[ -d "${dir}" ]] && java-pkg_dosrc ${dir}
+			for subfile in $(ls -1 $dir);do
+				if [[ -d "$dir/${subfile}" ]] && [[ "${subfile//*\//}" == "java" ]] ;then
+					rsync -a "$dir/$subfile/" "$java_maven_src_dir"|| die "rsync	failed"
+				fi
+				if [[ -e "$dir/${subfile}" ]] && [[ ! "${subfile//*\//}" == "java" ]] ;then
+					# can be a directory
+					cp -rf "$dir/$subfile" "$java_maven_src_dir" || die "cp failed"
+				fi
+			done
 		done
+		pushd "$java_maven_src_dir" >> /dev/null || die
+		local zip_name="${PN}-src.zip"
+		local zip_path="${T}/${zip_name}"
+		zip -q -r ${zip_path} .
+		local result=$?
+		# 12 means zip has nothing to do
+		if [[ ${result} != 12 && ${result} != 0 ]]; then
+			die "failed to zip ${dir_name}"
+		fi
+		popd  >> /dev/null
+		# Install the zip
+		INSDESTTREE=${JAVA_PKG_SOURCESPATH} \
+		doins ${zip_path} || die "Failed to install source"
+
+		JAVA_SOURCES="${JAVA_PKG_SOURCESPATH}/${zip_name}"
+		java-pkg_do_write_
 	fi
 
 	# install all subprojects
