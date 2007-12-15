@@ -35,4 +35,4 @@ plexus-component-api-1.0_alpha33
 "
 
 RESTRICT=test
-JAVA_PKG_SRC_DIRS="src/main/java/*"
+
