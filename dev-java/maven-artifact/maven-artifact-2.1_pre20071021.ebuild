@@ -43,7 +43,7 @@ junit
 "
 
 RESTRICT=test
-JAVA_PKG_SRC_DIRS="src/main/java/*"
+
 
 # NOTE: the tests are merged with the compiled classes for plexus-compiler to build.
 # please adapt future build.xml when bumping
