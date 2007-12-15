@@ -33,4 +33,4 @@ plexus-utils-1.4.7
 "
 
 RESTRICT=test
-JAVA_PKG_SRC_DIRS="src/main/java/*"
+
