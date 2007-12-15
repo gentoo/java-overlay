@@ -100,7 +100,7 @@ xalan
 xml-commons
 "
 RESTRICT=test
-JAVA_PKG_SRC_DIRS="src/main/java/*"
+
 JAVA_MAVEN_PROJECTS="
 maven-ant-plugin
 maven-antrun-plugin
