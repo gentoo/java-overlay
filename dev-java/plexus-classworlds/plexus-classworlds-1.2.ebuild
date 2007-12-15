@@ -17,4 +17,4 @@ IUSE=""
 DEPEND=">=virtual/jdk-1.4 ${DEP}"
 RDEPEND=">=virtual/jre-1.4 ${DEP}"
 
-JAVA_PKG_SRC_DIRS="src/main/java/org"
+
