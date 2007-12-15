@@ -64,7 +64,6 @@ SLOT="2"
 
 # maven-repository-metadata
 MAVEN_UBERJAR_FAKE="
-doxia
 maven-artifact
 maven-build-context
 maven-core
@@ -83,6 +82,8 @@ maven-reporting
 maven-script
 maven-settings
 maven-shared-components
+
+doxia
 
 wagon-file
 wagon-ftp
