@@ -20,4 +20,4 @@ RDEPEND=">=virtual/jre-1.4 ${DEP}"
 JAVA_MAVEN_CLASSPATH="jtidy wagon-provider-api plexus-utils-1.4.7"
 
 RESTRICT=test
-JAVA_PKG_SRC_DIRS="src/main/java/*"
+
