@@ -1,6 +1,8 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2007 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+
+JAVA_PKG_IUSE="doc source"
 
 inherit java-pkg-2 java-ant-2
 
@@ -11,8 +13,7 @@ SRC_URI="http://www.extreme-java.de/dist/${P}-src.jar"
 LICENSE="LGPL-2"
 SLOT="0"
 KEYWORDS="~x86"
-
-IUSE="doc source"
+IUSE=""
 
 COMMON_DEP="dev-java/junit"
 
@@ -20,7 +21,6 @@ RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEP}"
 DEPEND=">=virtual/jdk-1.4
 		app-arch/unzip
-		source? ( app-arch/zip )
 		${COMMON_DEP}"
 
 S="${WORKDIR}"
