@@ -41,7 +41,7 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}"
 
-	rm -v lib/*.jar
+	rm -v lib/*.jar || die
 	java-pkg_jar-from --into lib servletapi-2.3
 
 	sed -i -r \
@@ -71,7 +71,7 @@ src_install() {
 	java-pkg_dojar lib/hsql*.jar
 
 	if use doc; then
-		dodoc doc/*.txt
+		dodoc doc/*.txt || die
 		java-pkg_dohtml -r doc/guide
 		java-pkg_dohtml -r doc/src
 	fi
@@ -116,24 +116,24 @@ pkg_postinst() {
 	ewarn "(read the 'Init script Setup Procedure' section of the 'Chapter 3."
 	ewarn "UNIX Quick Start' in the Hsqldb docs for more information)"
 	echo
-	einfo "Example:"
+	elog "Example:"
 	echo
-	einfo "/etc/hsqldb/server.properties"
-	einfo "============================="
-	einfo "server.database.1=file:xdb/xdb"
-	einfo "server.dbname.1=xdb"
-	einfo "server.urlid.1=xdb"
-	einfo
-	einfo "/etc/hsqldb/sqltool.rc"
-	einfo "======================"
-	einfo "urlid xdb"
-	einfo "url jdbc:hsqldb:hsql://localhost/xdb"
-	einfo "username sa"
-	einfo "password "
+	elog "/etc/hsqldb/server.properties"
+	elog "============================="
+	elog "server.database.1=file:xdb/xdb"
+	elog "server.dbname.1=xdb"
+	elog "server.urlid.1=xdb"
+	elog
+	elog "/etc/hsqldb/sqltool.rc"
+	elog "======================"
+	elog "urlid xdb"
+	elog "url jdbc:hsqldb:hsql://localhost/xdb"
+	elog "username sa"
+	elog "password "
 	echo
-	einfo "Also note that each hsqldb server can serve only up to 10"
-	einfo "different databases simultaneously (with consecutive {0-9}"
-	einfo "suffixes in the 'server.properties' file)."
+	elog "Also note that each hsqldb server can serve only up to 10"
+	elog "different databases simultaneously (with consecutive {0-9}"
+	elog "suffixes in the 'server.properties' file)."
 	echo
 	ewarn "For data manipulation use:"
 	ewarn
@@ -142,21 +142,21 @@ pkg_postinst() {
 	ewarn "# java -classpath ${HSQLDB_JAR} org.hsqldb.util.SqlTool \\"
 	ewarn "  --rcFile /var/lib/hsqldb/sqltool.rc <dbname>"
 	echo
-	einfo "The Hsqldb can be run in multiple modes - read 'Chapter 1. Running'"
-	einfo "and Using Hsqldb' in the Hsqldb docs at:"
-	einfo "  http://hsqldb.org/web/hsqlDocsFrame.html"
-	einfo "If you intend to run it in the Server mode, it is suggested to add the"
-	einfo "init script to your start-up scripts, this should be done like this:"
-	einfo "  \`rc-update add hsqldb default\`"
+	elog "The Hsqldb can be run in multiple modes - read 'Chapter 1. Running'"
+	elog "and Using Hsqldb' in the Hsqldb docs at:"
+	elog "  http://hsqldb.org/web/hsqlDocsFrame.html"
+	elog "If you intend to run it in the Server mode, it is suggested to add the"
+	elog "init script to your start-up scripts, this should be done like this:"
+	elog "  \`rc-update add hsqldb default\`"
 	echo
 
 	# Enable CONFIG_PROTECT for hsqldb
 	env-update
-	einfo "Hsqldb stores its database files in ${HSQLDB_HOME} and this directory"
-	einfo "is added to the CONFIG_PROTECT list. In order to immediately activate"
-	einfo "these settings please do:"
-	einfo "  \`env-update && source /etc/profile\`"
-	einfo "Otherwise the settings will become active next time you login"
+	elog "Hsqldb stores its database files in ${HSQLDB_HOME} and this directory"
+	elog "is added to the CONFIG_PROTECT list. In order to immediately activate"
+	elog "these settings please do:"
+	elog "  \`env-update && source /etc/profile\`"
+	elog "Otherwise the settings will become active next time you login"
 	echo
 }
 
