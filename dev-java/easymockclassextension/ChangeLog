@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/easymockclassextension
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  29 Dec 2007; <alistair@gentoo.org> +files/build.xml, +metadata.xml,
+  +easymockclassextension-1.2.ebuild:
+  Adding easymockclassextension
+
