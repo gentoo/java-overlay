@@ -334,7 +334,7 @@ java-maven-2_src_unpack() {
 
 java-maven-2_src_compile_from_build_xml() {
 	# compile order
-	EANT_BUILD_TARGET="clean compile jar"
+	EANT_BUILD_TARGET="${EANT_BUILD_TARGET:=clean compile jar}"
 
 	# remove maven predefined depends to let us control the build
 	# steps (order, and not use external jars)
@@ -351,7 +351,12 @@ java-maven-2_src_compile_from_build_xml() {
 		for module in ${JAVA_MAVEN_PROJECTS};do
 			einfo "Compiling module: ${module}"
 			pushd "${module}" >> /dev/null || die
-			[[ -f build.xml ]] && java-ant_bsfix_files build.xml
+			#[[ -f build.xml ]] && java-ant_bsfix_files build.xml
+			local build_files=""
+			[[ -f build.xml ]] && build_files="build.xml"
+			[[ -f maven-build.xml ]] && build_files="${build_files} maven-build.xml"
+			[[ -n "${build_files}" ]] && java-ant_bsfix_files ${build_files}
+
 			java-pkg-2_src_compile
 			# need to unset unless bsfix will just die after the first call as
 			# EANT_DOC_TARGET cannot be set if JAVA_ANT_JAVADOC_INPUT_DIRS is
@@ -369,7 +374,10 @@ java-maven-2_src_compile_from_build_xml() {
 	fi
 
 	if [[ -z "${JAVA_MAVEN_PROJECTS}" ]]; then
-		[[ -f build.xml ]] && java-ant_bsfix_files build.xml
+		local build_files=""
+		[[ -f build.xml ]] && build_files = "build.xml"
+		[[ -f maven-build.xml ]] && build_files="${build_files} maven-build.xml"
+		[[ -n "${build_files}" ]] && java-ant_bsfix_files ${build_files}
 		java-pkg-2_src_compile
 	fi
 
