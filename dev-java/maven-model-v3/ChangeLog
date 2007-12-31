@@ -2,6 +2,11 @@
 # Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  31 Dec 2007; kiorky <kiorky@cryptelium.net>
+  -maven-model-v3-2.1_pre20071021.ebuild,
+  +maven-model-v3-2.1_pre20071021-r2.ebuild:
+  -c udpate pom
+
   21 Oct 2007; kiorky <kiorky@cryptelium.net>
   maven-model-v3-2.1_pre20071021.ebuild:
   fix DEPENDS

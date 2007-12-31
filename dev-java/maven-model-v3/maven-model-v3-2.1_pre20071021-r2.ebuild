@@ -8,6 +8,12 @@ JAVA_MAVEN_BOOTSTRAP="Y"
 JAVA_MAVEN_GENERATED_STUFF_UNPACK_DIR="${S}"
 inherit java-maven-2
 
+
+# need it for -rx remove when bumping
+MVN_MOD_GEN_SRC="${PF}-gen-src.tar.bz2"
+BASE_URL="http://dev.gentooexperimental.org/~kiorky"
+SRC_URI="${BASE_URL}/${PF}.tar.bz2 ${BASE_URL}/${MVN_MOD_GEN_SRC}"
+
 DESCRIPTION="Maven is a software project management and comprehension tool."
 HOMEPAGE="http://maven.apache.org/"
 LICENSE="Apache-2.0"
@@ -25,12 +31,14 @@ plexus-utils-1.4.7
 jdom-1.0
 "
 
+# need it for -rx remove when bumping
 RESTRICT=test
 
 # STEPS TO BUILD:
 # - co the src on the tag on the svn
 #     * http://svn.apache.org/repos/asf/maven/components/tags/maven-model-3.0.2/
 # - patch the pom to include the version for :
+#   * modify the artifact name to model-v3
 #   * jdom : 1.0
 #   * plexus-utils : 1.4.6
 # - mkdir src/main/java for ant:ant to include the compile step on the build.xml
