@@ -375,7 +375,7 @@ java-maven-2_src_compile_from_build_xml() {
 
 	if [[ -z "${JAVA_MAVEN_PROJECTS}" ]]; then
 		local build_files=""
-		[[ -f build.xml ]] && build_files = "build.xml"
+		[[ -f build.xml ]] && build_files="build.xml"
 		[[ -f maven-build.xml ]] && build_files="${build_files} maven-build.xml"
 		[[ -n "${build_files}" ]] && java-ant_bsfix_files ${build_files}
 		java-pkg-2_src_compile
