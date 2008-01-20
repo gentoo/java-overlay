@@ -25,8 +25,7 @@ DEPEND=">=virtual/jdk-1.5
 src_compile() {
 	local debug="disable"
 	use debug && debug="enable"
-	local libdir=$(java-pkg_getjar libmatthew-java unix.jar)
-	libdir=${libdir/unix.jar/}
+	local libdir=$(dirname $(java-pkg_getjar libmatthew-java unix.jar))
 	emake -j1 JCFLAGS="$(java-pkg_javac-args)" \
 		STRIP=echo DEBUG=${debug} JAVAUNIXJARDIR=${libdir}
 
