@@ -11,16 +11,17 @@ SRC_URI="http://www.matthew.ath.cx/projects/java/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE="source"
+IUSE="source doc"
 
 RDEPEND=">=virtual/jre-1.5"
 DEPEND=">=virtual/jdk-1.5
 	source? (app-arch/zip)"
 
 src_compile() {
-	append-ldflags -lc
+	local doc=""
+	use doc && doc="doc"
 	append-flags -fPIC
-	emake -j1 LDFLAGS="$(raw-ldflags) -shared" JCFLAGS="$(java-pkg_javac-args)"
+	emake -j1 JCFLAGS="$(java-pkg_javac-args)" all ${doc}
 }
 
 src_install() {
@@ -34,4 +35,5 @@ src_install() {
 	java-pkg_doso libunix-java.so
 	dodoc COPYING INSTALL changelog README || die
 	use source && java-pkg_dosrc cx/
+	use doc && java-pkg_dojavadoc doc
 }
