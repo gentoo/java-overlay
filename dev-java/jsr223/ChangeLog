@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/jsr223
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  28 Jan 2008; Miroslav Šulc <fordfrog@gentoo.org> +metadata.xml,
+  +jsr223-1.0.ebuild:
+  New package
+
