@@ -13,7 +13,7 @@ SRC_URI="sjp-1_0-fr-ri.zip"
 LICENSE="sun-bcla-jsr223"
 RESTRICT="fetch"
 SLOT="0"
-KEYWORDS="amd64 ~ppc x86 ~x86-fbsd"
+KEYWORDS="~amd64"
 
 IUSE=""
 
