@@ -1,0 +1,7 @@
+# ChangeLog for dev-java/ini4j
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  28 Jan 2008; Petteri Räty <betelgeuse@gentoo.org> ini4j-0.2.6.ebuild:
+  Force 1.5 for tests and they pass.
+

@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI=1
-JAVA_PKG_IUSE="doc examples source"
+JAVA_PKG_IUSE="doc examples source test"
 WANT_ANT_TASKS="ant-nodeps"
 
 inherit java-pkg-2 java-ant-2
@@ -22,11 +22,15 @@ COMMON_DEP="dev-java/servletapi:2.4"
 
 RDEPEND=">=virtual/jre-1.5
 	${COMMON_DEP}"
-#	test? (
-#		dev-java/ant-junit
-#		dev-java/ant-nodeps
-#	)
-DEPEND=">=virtual/jdk-1.5
+# Preferences api is broken in 1.6 if a later xalan version is in cp
+# http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6519088
+DEPEND="
+ 	!test? ( >=virtual/jdk-1.5 )
+	test? (
+		=virtual/jdk-1.5*
+		dev-java/ant-junit
+		dev-java/ant-nodeps
+	)
 	app-arch/unzip
 	${COMMON_DEP}"
 
@@ -46,9 +50,6 @@ EANT_GENTOO_CLASSPATH="servletapi-2.4"
 # So that we don't need junit
 EANT_EXTRA_ARGS="-Dbuild.src.test=nbproject -Dbuild.src.sample=nbproject"
 
-# TODO Failure with xalan
-# [junit] java.lang.IllegalArgumentException: Not supported: indent-number
-RESTRICT="test"
 src_test() {
 	ANT_TASKS="ant-junit,ant-nodeps" eant test
 }
