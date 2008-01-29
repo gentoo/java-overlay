@@ -14,7 +14,7 @@ SRC_URI="mirror://sourceforge/${PN}/${PN}-src-${PV}.zip"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 
 IUSE=""
 
