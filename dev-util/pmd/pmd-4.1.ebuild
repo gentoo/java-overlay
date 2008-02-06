@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-util/pmd/pmd-3.9.ebuild,v 1.2 2007/05/24 13:38:03 flameeyes Exp $
 
@@ -54,7 +54,7 @@ src_unpack() {
 	java-pkg_jar-from asm-3 asm.jar
 	java-pkg_jar-from jaxen-1.1 jaxen.jar
 	java-pkg_jar-from --build-only junit-4
-	java-pkg_jar-from --build-only hamcrest
+	use test && java-pkg_jar-from --build-only hamcrest
 }
 
 EANT_BUILD_XML="bin/build.xml"

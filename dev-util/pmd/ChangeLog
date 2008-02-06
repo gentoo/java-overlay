@@ -1,6 +1,9 @@
 # ChangeLog for dev-util/pmd
-# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  06 Feb 2008; Miroslav Šulc <fordfrog@gentoo.org> pmd-4.1.ebuild:
+  Fixed dependency on hamcrest
 
   25 Nov 2007; Miroslav Šulc <fordfrog@gentoo.org> ++, ++, ++,
   pmd-4.0.ebuild:
