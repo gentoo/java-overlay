@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/netbeans-svnclientadapter
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  07 Feb 2008; Miroslav Šulc <fordfrog@gentoo.org> +metadata.xml,
+  +netbeans-svnclientadapter-6.0.1.ebuild:
+  Added ebuild for netbeans svnClientAdapter fork
+
