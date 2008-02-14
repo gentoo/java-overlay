@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -8,11 +8,11 @@ DESCRIPTION="Echo2 is the next-generation of the Echo Web Framework"
 HOMEPAGE="http://www.nextapp.com/platform/echo2/echo/"
 SRC_URI="NextApp_Echo2-${PV}.tgz"
 
-DOWNLOAD_URI="http://www.nextapp.com/downloads/echo2/${PV/_beta/.beta}/NextApp_Echo2.tgz"
+DOWNLOAD_URI="http://www.nextapp.com/downloads/echo2/${PV/_rc/.rc}/NextApp_Echo2.tgz"
 
 LICENSE="MPL-1.1 GPL-2 LGPL-2.1"
 SLOT="2.1"
-KEYWORDS="~ppc ~x86"
+KEYWORDS="~amd64"
 IUSE="doc source"
 
 RESTRICT="fetch"
@@ -42,27 +42,22 @@ pkg_nofetch() {
 
 src_unpack() {
 	unpack ${A}
-
-	cd ${S}/SourceCode
-
+	rm -rfv "${S}"/BinaryLibraries || die
+	cd "${S}"/SourceCode
 	echo "servlet.lib.jar=$(java-pkg_getjars servletapi-2.4)" >> ant.properties
 }
 
 src_compile() {
 	cd SourceCode
-
 	eant dist $(use_doc doc.public)
 }
 
 src_install() {
 	java-pkg_dojar SourceCode/dist/lib/*.jar
-
 	use doc && {
 		cp Documentation/api/public/*.html SourceCode/javadoc/public
 		java-pkg_dojavadoc SourceCode/javadoc/public
 	}
-
 	use source && java-pkg_dosrc SourceCode/src
-
 	dodoc readme.txt
 }
