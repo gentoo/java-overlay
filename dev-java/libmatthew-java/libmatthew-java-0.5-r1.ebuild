@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+JAVA_PKG_IUSE="doc source"
 inherit eutils java-pkg-2 flag-o-matic
 
 DESCRIPTION="A selection of libraries for Java"
@@ -11,11 +12,10 @@ SRC_URI="http://www.matthew.ath.cx/projects/java/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="source doc"
+IUSE=""
 
 RDEPEND=">=virtual/jre-1.5"
-DEPEND=">=virtual/jdk-1.5
-	source? ( app-arch/zip )"
+DEPEND=">=virtual/jdk-1.5"
 
 src_compile() {
 	append-flags -fPIC
