@@ -10,7 +10,7 @@ SRC_URI="http://www.matthew.ath.cx/projects/java/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE="source doc"
 
 RDEPEND=">=virtual/jre-1.5"
