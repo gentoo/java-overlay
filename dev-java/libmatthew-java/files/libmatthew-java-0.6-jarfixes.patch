@@ -1,0 +1,27 @@
+--- Makefile	2008-02-19 22:29:03.000000000 +0200
++++ Makefile.patched	2008-02-19 22:38:41.000000000 +0200
+@@ -57,8 +57,7 @@
+ io-$(IOVER).jar: .classes
+ 	(cd classes; $(JAR) cf ../$@ cx/ath/matthew/io/*class)
+ unix-$(UNIXVER).jar: .classes
+-	echo "Class-Path: $(JARDIR)/debug-$(DEBUG).jar" > Manifest
+-	(cd classes; $(JAR) cfm ../$@ ../Manifest cx/ath/matthew/unix/*class)
++	(cd classes; $(JAR) cf ../$@ cx/ath/matthew/unix/*class)
+ hexdump-$(HEXVER).jar: .classes
+ 	(cd classes; $(JAR) cf ../$@ cx/ath/matthew/utils/Hexdump.class)
+ 
+@@ -81,12 +80,10 @@
+ 
+ debug-enable-$(DEBUGVER).jar: cx/ath/matthew/debug/Debug.jpp
+ 	make .enabledebug
+-	echo "Class-Path: $(JARDIR)/hexdump.jar" > Manifest
+-	(cd classes;jar cfm ../$@ ../Manifest cx/ath/matthew/debug/*.class)
++	(cd classes;jar cf ../$@ cx/ath/matthew/debug/*.class)
+ debug-disable-$(DEBUGVER).jar: cx/ath/matthew/debug/Debug.jpp
+ 	make .disabledebug
+-	echo "Class-Path: $(JARDIR)/hexdump.jar" > Manifest
+-	(cd classes;jar cfm ../$@ ../Manifest cx/ath/matthew/debug/*.class)
++	(cd classes;jar cf ../$@ cx/ath/matthew/debug/*.class)
+ .enabledebug: cx/ath/matthew/debug/Debug.jpp 
+ 	mkdir -p classes
+ 	cpp $(PPFLAGS) -DDEBUGSETTING=true < cx/ath/matthew/debug/Debug.jpp > cx/ath/matthew/debug/Debug.java

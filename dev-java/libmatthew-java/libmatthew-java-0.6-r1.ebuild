@@ -12,7 +12,7 @@ SRC_URI="http://www.matthew.ath.cx/projects/java/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE=""
+IUSE="debug"
 
 RDEPEND=">=virtual/jre-1.5"
 DEPEND=">=virtual/jdk-1.5"
@@ -21,11 +21,14 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}" || die
 	epatch "${FILESDIR}"/"${P}"-fixwarning.patch
+	epatch "${FILESDIR}"/"${P}"-jarfixes.patch
 }
 
 src_compile() {
+	local debug="disable"
+	use debug && debug="enable"
 	append-flags -fPIC -std=c99
-	emake JCFLAGS="$(java-pkg_javac-args)" all $(use doc && echo doc) || die "emake failed"
+	emake DEBUG=${debug} JCFLAGS="$(java-pkg_javac-args)" all $(use doc && echo doc) || die "emake failed"
 }
 
 src_install() {
