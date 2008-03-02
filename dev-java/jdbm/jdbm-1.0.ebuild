@@ -1,6 +1,8 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/jdbm/jdbm-0.12-r1.ebuild,v 1.1 2006/12/21 12:42:06 betelgeuse Exp $
+# $Header: $
+
+JAVA_PKG_IUSE="doc source"
 
 inherit java-pkg-2 java-ant-2
 
@@ -11,15 +13,14 @@ SRC_URI="mirror://sourceforge/${PN}/${P}-src.zip"
 LICENSE="BSD"
 SLOT="1"
 KEYWORDS="~amd64 ~ppc ~x86"
-IUSE="doc source"
+IUSE=""
 
 RDEPEND=">=virtual/jre-1.4"
 
-DEPEND="
-	>=virtual/jdk-1.4
-	dev-java/ant-core
-	app-arch/unzip
-	test? ( dev-java/ant-junit dev-java/ant-trax )"
+DEPEND=">=virtual/jdk-1.4
+		dev-java/ant-core
+		app-arch/unzip
+		test? ( dev-java/ant-junit dev-java/ant-trax )"
 
 src_unpack() {
 	unpack ${A}
