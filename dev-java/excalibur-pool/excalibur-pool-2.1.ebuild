@@ -14,7 +14,7 @@ EXCALIBUR_TESTS="true"
 inherit excalibur-multi
 
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 
 RDEPEND="
 	=dev-java/avalon-framework-4.2*
