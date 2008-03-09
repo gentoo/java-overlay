@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/excalibur-component
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  09 Mar 2008; Alistair Bush <ali_bush@gentoo.org>
+  excalibur-component-2.1.ebuild:
+  Keyword ~amd64
+
