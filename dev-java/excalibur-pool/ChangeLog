@@ -1,6 +1,10 @@
 # ChangeLog for dev-java/excalibur-pool
-# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  09 Mar 2008; Alistair Bush <ali_bush@gentoo.org>
+  excalibur-pool-2.1.ebuild:
+  Keyworded ~amd64. Fixed javadoc building.  Need to fix javadoc install.
 
   27 Apr 2007; Petteri Räty <betelgeuse@gentoo.org>
   excalibur-pool-2.1.ebuild:

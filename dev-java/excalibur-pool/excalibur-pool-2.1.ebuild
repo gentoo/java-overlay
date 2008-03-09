@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/excalibur-logger/excalibur-logger-2.1.ebuild,v 1.2 2006/12/22 18:12:09 betelgeuse Exp $
 
@@ -24,7 +24,7 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	test? ( dev-java/junitperf )"
 
-S=${WORKDIR}
+S="${WORKDIR}"
 
 EXCALIBUR_JAR_FROM="
 	avalon-framework-4.2
@@ -34,3 +34,10 @@ EXCALIBUR_JAR_FROM="
 
 EXCALIBUR_TEST_JAR_FROM="junit junitperf"
 
+src_unpack() {
+	excalibur-multi_src_unpack
+	cd "${S}"
+	sed -i -e 's/org.apache.excalibur/org.apache.avalon.excalibur/' \
+		excalibur-pool-api/build.xml excalibur-pool-impl/build.xml \
+		excalibur-pool-instrumented/build.xml
+}
