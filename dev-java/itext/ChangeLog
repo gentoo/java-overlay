@@ -1,6 +1,9 @@
 # ChangeLog for dev-java/itext
-# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/itext/ChangeLog,v 1.46 2007/06/07 11:20:20 corsair Exp $
+
+  11 Mar 2008; Serkan Kaba <serkan_kaba@yahoo.com> +files/itext-1.4-jdk7fix.patch, itext-1.4.ebuild:
+  Add patch to remove com.sun.* classes usage
 
   11 Jun 2007; kiorky <kiorky@cryptelium.net> +itext-1.4.ebuild,
   +metadata.xml:
