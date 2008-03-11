@@ -45,6 +45,8 @@ src_compile() {
 }
 
 src_install() {
+	local debug="disable"
+	use debug && debug="enable"
 	for jar in unix debug-${debug} hexdump; do
 		java-pkg_register-dependency libmatthew-java ${jar}.jar
 	done
