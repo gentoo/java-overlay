@@ -1,6 +1,10 @@
 # ChangeLog for dev-java/maven
-# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  28 Mar 2008; Alistair Bush <ali_bush@gentoo.org> maven-2.1.ebuild,
+  +maven-2.1-r1.ebuild:
+  Bumping maven to remove wagon-http.
 
   03 Nov 2007; kiorky <kiorky@cryptelium.net> maven-2.1.ebuild:
   fix DEPENDS

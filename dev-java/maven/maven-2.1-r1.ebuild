@@ -87,7 +87,6 @@ doxia
 
 wagon-file
 wagon-ftp
-wagon-http
 wagon-http-lightweight
 wagon-http-shared
 wagon-provider-api
