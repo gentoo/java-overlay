@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -23,7 +23,7 @@ COMMON_DEPEND="=dev-java/crimson-1*
 	dev-java/gnu-jaxp
 	dev-java/velocity
 	dev-java/xalan
-	=dev-java/xerces-1.3*"
+	=dev-java/xerces-1*"
 
 DEPEND=">=virtual/jdk-1.4
 	${COMMON_DEPEND}"
