@@ -29,12 +29,11 @@ src_unpack() {
 	mv entagged/entagged/junit test/entagged || die
 	rm entagged/*.jar || die
 	java-pkg_jarfrom hsqldb hsqldb.jar entagged/hsqldb.jar
-	cd entagged || die
-	epatch "${FILESDIR}"/${P}-buildfixes.patch
 }
 
 src_compile() {
 	cd "${S}/entagged" || die
+	epatch "${FILESDIR}"/buildfixes.patch
 	cd "${S}" || die
 	eant -f entagged/build.xml build
 }
