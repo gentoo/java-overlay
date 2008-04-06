@@ -7,7 +7,7 @@ inherit eutils java-pkg-2 java-ant-2
 
 DESCRIPTION="Open-source audiofile tagger"
 HOMEPAGE="http://entagged.sourceforge.net/"
-SRC_URI="mirror://sourceforge/entagged/${P}.tar.gz"
+SRC_URI="http://ebuild.linux-sevenler.org/distfiles/${P}.tar.gz"
 
 LICENSE="|| ( GPL-2 LGPL-2.1 )"
 SLOT="0"
@@ -29,11 +29,12 @@ src_unpack() {
 	mv entagged/entagged/junit test/entagged || die
 	rm entagged/*.jar || die
 	java-pkg_jarfrom hsqldb hsqldb.jar entagged/hsqldb.jar
+	cd entagged || die
+	epatch "${FILESDIR}"/${P}-buildfixes.patch
 }
 
 src_compile() {
 	cd "${S}/entagged" || die
-	epatch "${FILESDIR}"/buildfixes.patch
 	cd "${S}" || die
 	eant -f entagged/build.xml build
 }
