@@ -9,7 +9,7 @@ DESCRIPTION="A selection of libraries for Java"
 HOMEPAGE="http://www.matthew.ath.cx/projects/java/"
 SRC_URI="http://www.matthew.ath.cx/projects/java/${P}.tar.gz"
 
-LICENSE="GPL-2"
+LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="debug"
