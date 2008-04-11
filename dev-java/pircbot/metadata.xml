@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>java</herd>
+<longdescription lang="en">
+PircBot is a Java framework for writing IRC bots quickly and easily. Its
+features include an event-driven architecture to handle common IRC events, flood
+protection, DCC resuming support, ident support, and more.
+</longdescription>
+</pkgmetadata>
+

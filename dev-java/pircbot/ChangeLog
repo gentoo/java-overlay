@@ -1,0 +1,14 @@
+# ChangeLog for dev-java/pircbot
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  11 Apr 2008; Serkan Kaba <serkan_kaba@yahoo.com> pircbot-1.4.6.ebuild:
+  Fixed quoting and removed unnecessary eutils inherit.
+
+  10 Feb 2008; Serkan Kaba <serkan_kaba@yahoo.com> pircbot-1.4.6.ebuild:
+  Added ~amd64 keyword
+
+  05 May 2007; Alistair John Bush <ali_bush@gentoo.org>
+  pircbot-1.4.6.ebuild, +metadata.xml:
+  Added metadata.xml and performed minor cleanup
+
