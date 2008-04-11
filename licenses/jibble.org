@@ -1,0 +1,28 @@
+ This License Agreement is a legal agreement between you (either an individual or a single entity) and www.jibble.org for the software product identified above, including any software, media, and accompanying on-line or printed documentation ("Product").
+
+BY INSTALLING, COPYING, OR OTHERWISE USING THE SOFTWARE, YOU AGREE TO BE BOUND BY ALL OF THE TERMS AND CONDITIONS OF THE LICENSE AGREEMENT.
+GRANT OF LICENSE
+
+Provided that you comply with all terms and conditions of this agreement, www.jibble.org grants you a nonexclusive license including the following rights:
+
+   1. You may install and use one copy of the Product on a single computer. Additional copies of the Product may be installed and used, up to the number of "Licensed Copies" specified above.
+   2. Incorporation of the Product into your own software, modification of the Product's source-code and incorporation of the modified source-code into your software, within the limits of the number of "Licenced Copies" specified above.
+   3. Royalty-free distribution of your software with the incorporated Product.
+   4. You may make copies of the Product for backup and archival purposes.
+   5. www.jibble.org reserves all rights not expressly granted to you in this agreement.
+
+NO WARRANTY
+
+This Product is provided on an "as is" basis without warranty of any kind, expressed or implied, including, but not limited to implied warranties of merchantability or fitness for a particular purpose. All other warranties are also expressly disclaimed.
+LIMITATION OF LIABILITY
+
+Under no circumstances and under no legal theory, tort, contract, or otherwise, shall www.jibble.org be liable to you or any other person for any indirect, special, incidental, or consequential damages of any character including, without limitation, damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses. In no event will www.jibble.org be liable for any damages in excess of the amount www.jibble.org received from you for a license to the Product, even if www.jibble.org shall have been informed of the possibility of such damages, or for any claim by any other party.
+SUITABILITY
+
+The persons or company using this Product are solely responsible for thoroughly testing it to make sure it works to their satisfaction before purchasing a license and/or incorporating it into their programs. By obtaining a license, the licensee indicates that the Product has met his/her expectations and runs to his/her satisfaction.
+TERMINATION
+
+This agreement terminates, you lose all rights licensed to you, and you must stop use of the Product if you:
+
+   1. fail to comply with any term or condition of this License Agreement or
+   2. do not pay the license fee.
