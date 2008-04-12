@@ -6,6 +6,10 @@
 # NOTE: Please add your entry at the top!
 #
 
+# Alistair Bush. ali_bush@gentoo.org (12 Apr 2008)
+# Masked for removal in 30 days. Dead upstream, use fop instead.
+dev-java/jfor
+
 # Alistair Bush. ali_bush@gentoo.org (24 Apr 2007)
 # Masked for removal in 30 days. Dead upstream.
 dev-java/metouia
