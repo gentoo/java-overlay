@@ -19,7 +19,7 @@ IUSE=""
 RESTRICT="fetch"
 
 COMMON_DEP="=dev-java/servletapi-2.4*
-	>=dev-java/echo2-2.1.0_rc3"
+	>=dev-java/echo2-2.1.0_rc4"
 
 DEPEND=">=virtual/jdk-1.4
 	${COMMON_DEP}"
