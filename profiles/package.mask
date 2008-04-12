@@ -10,10 +10,6 @@
 # Masked for removal in 30 days. Dead upstream, use fop instead.
 dev-java/jfor
 
-# Alistair Bush. ali_bush@gentoo.org (24 Apr 2007)
-# Masked for removal in 30 days. Dead upstream.
-dev-java/metouia
-
 #William L. Thomson Jr. wltjr@gentoo.org (8 Mar 2007)
 # Masked due to package being incomplete and broken. Not
 # all deps are packaged, last on run into seems to be a
