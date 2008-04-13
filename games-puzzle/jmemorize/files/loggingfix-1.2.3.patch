@@ -1,0 +1,11 @@
+--- Main.java	2008-02-02 09:35:50.000000000 +0200
++++ Main.java.fixed	2008-02-02 09:39:32.000000000 +0200
+@@ -404,7 +404,7 @@
+         {
+             // TODO - make this adjustable
+             // Note that the limit might not be enough for finer.
+-            Handler fh = new FileHandler("%t/jmemorize%g.log", 10000, 3);
++            Handler fh = new FileHandler("%h/jmemorize%g.log", 10000, 3);
+             fh.setLevel(Level.WARNING);            
+             fh.setFormatter(new SimpleFormatter());
+             logger.addHandler(fh);
