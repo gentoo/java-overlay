@@ -7,7 +7,7 @@ inherit eutils java-pkg-2 flag-o-matic
 
 DESCRIPTION="A selection of libraries for Java"
 HOMEPAGE="http://www.matthew.ath.cx/projects/java/"
-SRC_URI="http://www.matthew.ath.cx/projects/java/${P}.tar.gz"
+SRC_URI="http://dev.gentooexperimental.org/~serkan/distfiles/${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
