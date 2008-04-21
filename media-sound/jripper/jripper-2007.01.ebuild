@@ -7,7 +7,7 @@ inherit java-pkg-2
 IUSE="aac cddb flac gtk mp3 vorbis"
 
 DESCRIPTION="jRipper, a Java frontend to CD ripper and encoder tools"
-SRC_URI="http://dronten.googlepages.com/${P}.jar"
+SRC_URI="http://dronten.googlepages.com/${P}.zip"
 HOMEPAGE="http://dronten.googlepages.com/jripper"
 
 LICENSE="GPL-2"
@@ -23,12 +23,15 @@ RDEPEND=">=virtual/jre-1.5
 	mp3? ( media-sound/lame )
 	vorbis? ( media-sound/vorbis-tools )"
 DEPEND=">=virtual/jdk-1.5
-	sys-apps/findutils"
+	sys-apps/findutils
+	app-arch/unzip"
 
 S=${WORKDIR}
 
 src_unpack() {
 	unpack ${A}
+	unzip -q ${WORKDIR}/${P}.jar
+	rm ${WORKDIR}/${P}.jar
 	cd ${S}
 
 	# delete testcode

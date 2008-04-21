@@ -1,0 +1,11 @@
+--- plugins/org.eclipse.update.core.linux/src/build.xml.orig	2006-01-27 15:35:35.000000000 -0500
++++ plugins/org.eclipse.update.core.linux/src/build.xml	2006-01-27 15:36:07.000000000 -0500
+@@ -5,7 +5,7 @@
+   <!-- Set a meaningful default value for when it is not. -->
+   <property name="eclipse-home" value="${basedir}/../.."/>
+   <property name="jdk-path" value="${java.home}"/>  
+-  <property name="destination" value="${eclipse-home}/org.eclipse.update.core.linux/os/linux/x86/"/>
++  <property name="destination" value="${eclipse-home}/org.eclipse.update.core.linux/os/linux/${installArch}/"/>
+   <property name="obj-path" value="${eclipse-home}/org.eclipse.update.core.linux/src/"/>
+   <property name="src-path" value="${eclipse-home}/org.eclipse.update.core.linux/src/"/>  
+   
