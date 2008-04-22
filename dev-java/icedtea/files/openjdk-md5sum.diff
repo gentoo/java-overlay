@@ -1,0 +1,12 @@
+--- Makefile.am.orig	2008-04-16 15:56:56.000000000 +0200
++++ Makefile.am	2008-04-16 15:57:37.000000000 +0200
+@@ -1,6 +1,6 @@
+-OPENJDK_DATE = 26_mar_2008
+-OPENJDK_MD5SUM = 18f325ec51da83783c48b1fcb72c053c
+-OPENJDK_VERSION = b08
++OPENJDK_DATE = 11_apr_2008
++OPENJDK_MD5SUM = 9ef5b6e83ec0c7a32bffd1a4de50fe5c
++OPENJDK_VERSION = b09
+ 
+ if NETX_PLUGIN
+ NETX_PATCH = patches/icedtea-netx-plugin.patch
