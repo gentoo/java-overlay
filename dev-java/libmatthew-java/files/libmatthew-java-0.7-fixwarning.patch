@@ -1,0 +1,30 @@
+diff -Nur libmatthew-java-0.7/unix-java.c libmatthew-java-0.7_patched/unix-java.c
+--- libmatthew-java-0.7/unix-java.c	2008-04-18 22:33:21.000000000 +0300
++++ libmatthew-java-0.7_patched/unix-java.c	2008-04-23 14:26:40.000000000 +0300
+@@ -295,7 +295,7 @@
+ {
+ #ifdef SO_PEERCRED
+    struct ucred cr;
+-   size_t cl=sizeof(cr);
++   socklen_t cl=sizeof(cr);
+ 
+    if (getsockopt(sock, SOL_SOCKET, SO_PEERCRED, &cr, &cl)==0) 
+       return cr.pid;
+@@ -316,7 +316,7 @@
+ {
+ #ifdef SO_PEERCRED
+    struct ucred cr;
+-   size_t cl=sizeof(cr);
++   socklen_t cl=sizeof(cr);
+ 
+    if (getsockopt(sock, SOL_SOCKET, SO_PEERCRED, &cr, &cl)==0) 
+       return cr.uid;
+@@ -337,7 +337,7 @@
+ {
+ #ifdef SO_PEERCRED
+    struct ucred cr;
+-   size_t cl=sizeof(cr);
++   socklen_t cl=sizeof(cr);
+ 
+    if (getsockopt(sock, SOL_SOCKET, SO_PEERCRED, &cr, &cl)==0) 
+       return cr.gid;
