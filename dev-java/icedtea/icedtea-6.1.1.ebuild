@@ -43,17 +43,17 @@ DEPEND=">=virtual/jdk-1.6
 pkg_setup() {
 	if [ ${ARCH} != x86 -a ${ARCH} != amd64 ]; then
 		local zero_err
-		ewarn "Building on a non-x86-based";
-		ewarn "architecture requires using the zero";
-		ewarn "assembler port, which requires libffi from gcc.";
+		ewarn "Building on a non-x86-based"
+		ewarn "architecture requires using the zero"
+		ewarn "assembler port, which requires libffi from gcc."
 		if ! use zero; then
 			eerror "USE [zero] not set!"
-			zero_err=1;
+			zero_err=1
 		fi
 		if ! built_with_use sys-devel/gcc libffi; then
 			eerror "gcc built without libffi support!"
 			eerror "USE=\"libffi\" emerge gcc"
-			zero_err=1;
+			zero_err=1
 		fi
 		[ $zero_err ] && die "bad luck"
 	fi
@@ -83,7 +83,7 @@ src_compile() {
 		--with-openjdk-home="$(java-config --jdk-home)" \
 		--with-openjdk"
 	use nsplugin || myconf="${myconf} --disable-gcjwebplugin"
-	use doc && myconf="${myconf} --enable-docs"
+	use doc || myconf="${myconf} --disable-docs"
 	use debug && myconf="${myconf} --enable-fast-build"
 	use zero && myconf="${myconf} --enable-zero"
 	econf ${myconf} || die "configure failed"
@@ -101,7 +101,7 @@ src_install() {
 	cd ${S}/openjdk/control/build/linux-${arch}/
 
 	if use doc; then
-		dohtml -r docs/* || die;
+		dohtml -r docs/* || die
 	fi
 
 	cd j2sdk-image
