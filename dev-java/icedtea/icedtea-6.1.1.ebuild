@@ -41,9 +41,9 @@ DEPEND=">=app-arch/zip-2.32
 	${RDEPEND}"
 
 pkg_setup() {
-	if [ ${ARCH} != x86 -a ${ARCH} != amd64 ]; then
+	if [ ${ARCH} != x86 -a ${ARCH} != amd64 -a ${ARCH} != sparc ]; then
 		local zero_err
-		ewarn "Building on a non-x86-based"
+		ewarn "Building on a non-x86/sparc-based"
 		ewarn "architecture requires using the zero"
 		ewarn "assembler port, which requires libffi from gcc."
 		if ! use zero; then
