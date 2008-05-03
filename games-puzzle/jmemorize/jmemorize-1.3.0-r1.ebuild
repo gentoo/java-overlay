@@ -64,9 +64,8 @@ src_compile() {
 
 src_install() {
 	newicon resource/icons/main.png ${PN}.png
-	insinto "${GAMES_DATADIR}/${PN}"
-	newins dist/${MY_PV}/${MY_P}.jar ${PN}.jar
-	java-pkg_regjar "${D}/${GAMES_DATADIR}/${PN}/${PN}.jar"
+	java-pkg_jarinto "${GAMES_DATADIR}"/${PN}
+	java-pkg_newjar dist/${MY_PV}/${MY_P}.jar ${PN}.jar
 	java-pkg_dolauncher ${PN} --main jmemorize.core.Main --into "${GAMES_PREFIX}"
 	make_desktop_entry ${PN} "jMemorize" ${PN}.png
 	prepgamesdirs
