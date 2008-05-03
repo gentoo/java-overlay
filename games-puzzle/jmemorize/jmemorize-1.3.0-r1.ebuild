@@ -4,7 +4,7 @@
 
 EAPI=1
 WANT_ANT_TASKS="ant-nodeps"
-inherit java-pkg-2 java-ant-2
+inherit java-pkg-2 java-ant-2 games
 
 MY_PN="${PN/jm/jM}"
 MY_PV="${PV/_beta/-beta}"
@@ -35,6 +35,11 @@ EANT_BUILD_TARGET="dist-bin"
 EANT_GENTOO_CLASSPATH="jfreechart-1.0,jgoodies-forms,jcommon-1.0,javacsv,itext-1.4"
 RESTRICT="test"
 
+pkg_setup() {
+	games_pkg_setup
+	java-pkg-2_pkg_setup
+}
+
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
@@ -53,11 +58,18 @@ src_unpack() {
 	java-ant_rewrite-classpath
 }
 
+src_compile() {
+	java-pkg-2_src_compile
+}
+
 src_install() {
 	newicon resource/icons/main.png ${PN}.png
-	java-pkg_newjar dist/${MY_PV}/${MY_P}.jar ${PN}.jar
-	java-pkg_dolauncher ${PN} --main jmemorize.core.Main
+	insinto "${GAMES_DATADIR}/${PN}"
+	newins dist/${MY_PV}/${MY_P}.jar ${PN}.jar
+	java-pkg_regjar "${D}/${GAMES_DATADIR}/${PN}/${PN}.jar"
+	java-pkg_dolauncher ${PN} --main jmemorize.core.Main --into "${GAMES_PREFIX}"
 	make_desktop_entry ${PN} "jMemorize" ${PN}.png
+	prepgamesdirs
 }
 
 src_test() {
