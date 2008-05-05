@@ -30,7 +30,7 @@ JAVA_PKG_IUSE="doc"
 inherit java-pkg-2 java-ant-2 check-reqs
 
 MY_PV="${PV/_pre/M}"
-DMF="S-${MY_PV}-200803301350"
+DMF="S-${MY_PV}-200805020100"
 MY_A="eclipse-sourceBuild-srcIncluded-${MY_PV}.zip"
 
 DESCRIPTION="Eclipse Tools Platform"
@@ -39,7 +39,7 @@ SRC_URI="http://download.eclipse.org/eclipse/downloads/drops/${DMF}/${MY_A}"
 
 SLOT="3.4"
 LICENSE="EPL-1.0"
-IUSE=""
+IUSE="java6"
 KEYWORDS="~amd64 ~ppc ~x86"
 
 S=${WORKDIR}
@@ -59,11 +59,11 @@ CDEPEND="dev-java/ant-eclipse-ecj:${SLOT}
 	>=dev-java/tomcat-servlet-api-5.5.25-r1:2.4
 	dev-java/lucene:1.9
 	dev-java/lucene-analyzers:1.9"
-
 RDEPEND=">=virtual/jre-1.5
+	java6? ( >=virtual/jre-1.6 )
 	${CDEPEND}"
-
 DEPEND=">=virtual/jdk-1.5
+	java6? ( >=virtual/jdk-1.6 )
 	dev-java/ant-nodeps
 	dev-java/cldc-api:1.1
 	sys-apps/findutils
@@ -112,12 +112,11 @@ src_compile() {
 
 	# system_jars will be used when compiling (javac)
 	# gentoo_jars will be used when building JSPs and other ant tasks (not javac)
-
 	local system_jars="$(java-pkg_getjars swt-${SLOT},icu4j,ant-core,jsch,junit-4,tomcat-servlet-api-2.4,lucene-1.9,lucene-analyzers-1.9):$(java-pkg_getjars --build-only ant-nodeps,cldc-api-1.1)"
 	local gentoo_jars="$(java-pkg_getjars ant-core,icu4j,jsch,commons-logging,commons-el,tomcat-servlet-api-2.4)"
 	local options="-q -Dnobootstrap=true -Dlibsconfig=true -Dbootclasspath=${bootclasspath} -DinstallOs=linux \
 		-DinstallWs=gtk -DinstallArch=${eclipsearch} -Djava5.home=$(java-config --jdk-home)"
-
+	use java6 && options="${options} -DJavaSE-1.6=${bootclasspath}"
 	use doc && options="${options} -Dgentoo.javadoc=true"
 
 	ANT_OPTS=-Xmx512M ANT_TASKS="ant-nodeps" \
@@ -208,7 +207,7 @@ patch-apply() {
 	mv launchersrc.zip plugins/org.eclipse.platform/launchersrc.zip
 	rm -rf launchertmp
 
-	# disable swt, jdt-tool, jdk6
+	# disable swt, jdk6
 	# use sed where possible -> ease revbump :)
 	sed -e "/..\/..\/plugins\/org.eclipse.ui.win32/,/<\/ant>/d" \
 		-i features/org.eclipse.platform/build.xml
@@ -220,25 +219,29 @@ patch-apply() {
 	sed -e "/name=\"swtlibs\"/,/<\/move>/d" \
 		-i build.xml
 
-	sed -e "/..\/..\/plugins\/org.eclipse.jdt.apt.pluggable.core/,/<\/ant>/d" \
-		-e "/..\/..\/plugins\/org.eclipse.jdt.compiler.apt/,/<\/ant>/d" \
-		-e "/..\/..\/plugins\/org.eclipse.jdt.compiler.tool/,/<\/ant>/d" \
-		-i features/org.eclipse.jdt/build.xml
-
-	sed -e "/id=\"org.eclipse.jdt.apt.pluggable.core\"/,/<plugin/d" \
-		-e "/id=\"org.eclipse.jdt.compiler.apt\"/,/<plugin/d" \
-		-e "/id=\"org.eclipse.jdt.compiler.tool\"/,/<plugin/d" \
-		-i features/org.eclipse.jdt/feature.xml
-
-	sed -e "/dir=\"plugins\/org.eclipse.jdt.apt.pluggable.core\"/d" \
-		-e "/dir=\"plugins\/org.eclipse.jdt.compiler.apt/d" \
-		-e "/dir=\"plugins\/org.eclipse.jdt.compiler.tool\"/d" \
-		-e "/dir=\"plugins\/org.eclipse.swt.gtk.linux.${eclipsearch}/d" \
-		-e "/value=\"org.eclipse.jdt.apt.pluggable.core/,/eclipse.plugins/d" \
-		-e "/value=\"org.eclipse.jdt.compiler.apt/,/eclipse.plugins/d" \
-		-e "/value=\"org.eclipse.jdt.compiler.tool/,/eclipse.plugins/d" \
+	sed -e "/dir=\"plugins\/org.eclipse.swt.gtk.linux.${eclipsearch}/d" \
 		-e "/value=\"org.eclipse.swt.gtk.linux.${eclipsearch}/,/eclipse.plugins/d" \
 		-i assemble.org.eclipse.sdk.linux.gtk.${eclipsearch}.xml
+
+	if ! use java6; then
+		sed -e "/..\/..\/plugins\/org.eclipse.jdt.apt.pluggable.core/,/<\/ant>/d" \
+			-e "/..\/..\/plugins\/org.eclipse.jdt.compiler.apt/,/<\/ant>/d" \
+			-e "/..\/..\/plugins\/org.eclipse.jdt.compiler.tool/,/<\/ant>/d" \
+			-i features/org.eclipse.jdt/build.xml
+
+		sed -e "/id=\"org.eclipse.jdt.apt.pluggable.core\"/,/<plugin/d" \
+			-e "/id=\"org.eclipse.jdt.compiler.apt\"/,/<plugin/d" \
+			-e "/id=\"org.eclipse.jdt.compiler.tool\"/,/<plugin/d" \
+			-i features/org.eclipse.jdt/feature.xml
+
+		sed -e "/dir=\"plugins\/org.eclipse.jdt.apt.pluggable.core\"/d" \
+			-e "/dir=\"plugins\/org.eclipse.jdt.compiler.apt/d" \
+			-e "/dir=\"plugins\/org.eclipse.jdt.compiler.tool\"/d" \
+			-e "/value=\"org.eclipse.jdt.apt.pluggable.core/,/eclipse.plugins/d" \
+			-e "/value=\"org.eclipse.jdt.compiler.apt/,/eclipse.plugins/d" \
+			-e "/value=\"org.eclipse.jdt.compiler.tool/,/eclipse.plugins/d" \
+			-i assemble.org.eclipse.sdk.linux.gtk.${eclipsearch}.xml
+	fi
 
 	sed -e "/plugins\/javax.servlet.source_/d" \
 		-e "/plugins\/javax.servlet.jsp.source_/d" \
@@ -261,6 +264,7 @@ patch-apply() {
 	# waaaaahhhhhhk !!!!11oneone
 	epatch ${PATCHDIR}/how_to_loose_sanity_on_freaky_env_vars_argh.diff
 	epatch ${PATCHDIR}/eclipse_String.compareTo.diff
+	epatch ${PATCHDIR}/eclipse_buildfix-pde.diff
 
 	# JNI
 	epatch ${FEDORA}/eclipse-libupdatebuild2.patch

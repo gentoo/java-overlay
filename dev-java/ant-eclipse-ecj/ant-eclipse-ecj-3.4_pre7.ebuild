@@ -5,7 +5,7 @@
 inherit java-pkg-2
 
 MY_PV="${PV/_pre/M}"
-DMF="S-${MY_PV}-200803301350"
+DMF="S-${MY_PV}-200805020100"
 S="${WORKDIR}"
 
 DESCRIPTION="Ant Compiler Adapter for Eclipse Java Compiler"
@@ -38,7 +38,7 @@ src_unpack() {
 src_compile() {
 	cd src
 	ejavac -classpath "$(java-pkg_getjars ant-core,eclipse-ecj-${SLOT})" \
-		`find org/ -name '*.java'` || die "ejavac failed!"
+		$(find org/ -name '*.java') || die "ejavac failed!"
 	find org/ -name '*.class' -o -name '*.properties' | \
 			xargs jar cf "${S}/${PN}.jar" || die "jar failed!"
 }

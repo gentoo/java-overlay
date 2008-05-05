@@ -9,3 +9,14 @@
  			}
  		});		
  				
+--- plugins/org.eclipse.pde.api.tools/src_ant/org/eclipse/pde/api/tools/internal/tasks/DeltaReportConversionTask.java.orig	2008-05-05 21:35:49.000000000 +0200
++++ plugins/org.eclipse.pde.api.tools/src_ant/org/eclipse/pde/api/tools/internal/tasks/DeltaReportConversionTask.java	2008-05-05 21:36:16.000000000 +0200
+@@ -243,7 +243,7 @@
+ 			public int compare(Object o1, Object o2) {
+ 				Map.Entry entry1 = (Map.Entry) o1;
+ 				Map.Entry entry2 = (Map.Entry) o2;
+-				return ((String) entry1.getKey()).compareTo(entry2.getKey());
++				return ((String)entry1.getKey()).compareTo((String)entry2.getKey());
+ 			}
+ 		});
+ 		for (Iterator iterator = allEntries.iterator(); iterator.hasNext(); ) {

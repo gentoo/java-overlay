@@ -11,6 +11,7 @@ SLOT="1.6"
 KEYWORDS="amd64 ~ppc ~ppc64 x86"
 IUSE=""
 
+# Keeps this and java-virtuals/jaf in sync
 RDEPEND="|| (
 		=dev-java/sun-jdk-1.6.0*
 		=dev-java/ibm-jdk-bin-1.6.0*

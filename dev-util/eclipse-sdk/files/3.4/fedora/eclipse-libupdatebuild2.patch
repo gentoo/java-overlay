@@ -1,11 +1,17 @@
---- plugins/org.eclipse.update.core.linux/src/build.xml.orig	2006-01-27 15:35:35.000000000 -0500
-+++ plugins/org.eclipse.update.core.linux/src/build.xml	2006-01-27 15:36:07.000000000 -0500
-@@ -5,7 +5,7 @@
+--- plugins/org.eclipse.update.core.linux/src/build.xml.orig	2008-05-05 16:48:06.000000000 +0200
++++ plugins/org.eclipse.update.core.linux/src/build.xml	2008-05-05 16:48:15.000000000 +0200
+@@ -5,7 +5,6 @@
    <!-- Set a meaningful default value for when it is not. -->
    <property name="eclipse-home" value="${basedir}/../.."/>
-   <property name="jdk-path" value="${java.home}"/>  
--  <property name="destination" value="${eclipse-home}/org.eclipse.update.core.linux/os/linux/x86/"/>
-+  <property name="destination" value="${eclipse-home}/org.eclipse.update.core.linux/os/linux/${installArch}/"/>
+   <property name="jdk-path" value="${java.home}"/>
+-  <property name="installArch" value="x86" />
+   <property name="destination" value="${eclipse-home}/org.eclipse.update.core.linux/os/linux/${installArch}/"/>
    <property name="obj-path" value="${eclipse-home}/org.eclipse.update.core.linux/src/"/>
    <property name="src-path" value="${eclipse-home}/org.eclipse.update.core.linux/src/"/>  
+@@ -67,4 +66,4 @@
+   </target>
    
+   
+-</project>
+\ Kein Zeilenumbruch am Dateiende.
++</project>
