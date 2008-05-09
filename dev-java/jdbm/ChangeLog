@@ -2,6 +2,10 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  09 May 2008; Alistair Bush <ali_bush@gentoo.org> +metadata.xml,
+  jdbm-1.0.ebuild:
+  Add test use flag. Add metadata.xml
+
   02 Mar 2008; Alistair Bush <ali_bush@gentoo.org> jdbm-1.0.ebuild:
   Added JAVA_PKG_IUSE to resolve zip dependency.
 
