@@ -1,6 +1,10 @@
 # ChangeLog for dev-java/json
-# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  11 May 2008; Serkan Kaba <serkan_kaba@yahoo.com> -json-1.0.ebuild,
+  +json-20080426.ebuild:
+  Switch to versioned zip file.
 
   03 Sep 2007; William L. Thomson Jr. <wltjr@gentoo.org> Manifest:
   Previous digest was correct, but seems to be a borked download on a mirror

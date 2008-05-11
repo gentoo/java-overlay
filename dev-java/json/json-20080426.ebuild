@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -8,7 +8,7 @@ inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="Java implementation of the JavaScript Object Notation"
 HOMEPAGE="http://www.json.org"
-SRC_URI="http://www.json.org/java/json.zip"
+SRC_URI="http://dev.gentooexperimental.org/~serkan/distfiles/${P}.zip"
 
 LICENSE="json"
 SLOT="0"
