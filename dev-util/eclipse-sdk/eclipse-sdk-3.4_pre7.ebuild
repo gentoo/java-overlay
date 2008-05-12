@@ -60,7 +60,6 @@ CDEPEND="dev-java/ant-eclipse-ecj:${SLOT}
 	dev-java/lucene:1.9
 	dev-java/lucene-analyzers:1.9"
 RDEPEND=">=virtual/jre-1.5
-	java6? ( >=virtual/jre-1.6 )
 	${CDEPEND}"
 DEPEND=">=virtual/jdk-1.5
 	java6? ( >=virtual/jdk-1.6 )
@@ -196,7 +195,7 @@ install-link-system-jars() {
 }
 
 patch-apply() {
-	# patch launcher source
+	# optimize launcher build
 	mkdir launchertmp
 	unzip -qq -d launchertmp plugins/org.eclipse.platform/launchersrc.zip > /dev/null || die "unzip failed"
 	pushd launchertmp/ > /dev/null
@@ -267,7 +266,8 @@ patch-apply() {
 	epatch ${PATCHDIR}/eclipse_buildfix-pde.diff
 
 	# JNI
-	epatch ${FEDORA}/eclipse-libupdatebuild2.patch
+	# since installArch is set; obsolete(?)
+	#epatch ${FEDORA}/eclipse-libupdatebuild2.patch
 
 	# Generic releng plugins that can be used to build plugins
 	# https://www.redhat.com/archives/fedora-devel-java-list/2006-April/msg00048.html
