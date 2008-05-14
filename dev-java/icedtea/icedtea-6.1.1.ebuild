@@ -1,6 +1,8 @@
 # Copyright 2008 Andrew John Hughes
 # Distributed under the terms of the GNU General Public License v2
 
+EAPI=1
+
 inherit autotools pax-utils java-vm-2 java-pkg-2
 
 icedtea="${PN}${PV/./-}"
