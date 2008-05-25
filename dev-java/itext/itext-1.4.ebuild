@@ -5,7 +5,7 @@
 JAVA_PKG_IUSE="doc source"
 inherit java-pkg-2 java-ant-2
 
-DESCRIPTION="A Java library that generate documents in the Portable Document Format (PDF) and/or HTML."
+DESCRIPTION="Java library that generate documents in the Portable Document Format (PDF) and/or HTML"
 HOMEPAGE="http://www.lowagie.com/iText/"
 SRC_URI="mirror://sourceforge/itext/${PN}-src-${PV}.tar.gz"
 
@@ -27,7 +27,7 @@ src_unpack() {
 	for antfile in ant/*.xml;do
 		java-ant_bsfix_one "${antfile}"
 	done
-	epatch ${FILESDIR}/${P}-jdk7fix.patch
+	epatch "${FILESDIR}"/${P}-jdk7fix.patch
 
 }
 
