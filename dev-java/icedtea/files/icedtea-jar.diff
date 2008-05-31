@@ -1,0 +1,29 @@
+--- patches/icedtea-ecj.patch	Fri May 30 15:37:38 2008 +0200
++++ patches/icedtea-ecj.patch	Fri May 30 15:39:55 2008 +0200
+@@ -665,9 +665,9 @@ diff -ru openjdk-ecj.orig/langtools/make
+  	$(prep-target)
+ -	$(BOOT_JAR_CMD) c0mf $(JAR_MANIFEST_FILE) $@ \
+ -	    @$(RES_JAR_ARGLIST) $(JAR_JFLAGS)
+-+	(cd $(CLASSBINDIR) && $(CAT) $(RES_JAR_FILELIST) | \
+-+	$(BOOT_JAR_CMD) c0mf@ $(JAR_MANIFEST_FILE) $@ \
+-+	    $(JAR_JFLAGS))
+++	(cd $(CLASSBINDIR) && \
+++	$(BOOT_JAR_CMD) c0mf $(JAR_MANIFEST_FILE) $@ \
+++	    $(JAR_JFLAGS) `cat $(RES_JAR_FILELIST)`)
+  	@$(java-vm-cleanup)
+  
+  # Create jsse.jar containing SunJSSE implementation classes
+@@ -680,9 +680,9 @@ diff -ru openjdk-ecj.orig/langtools/make
+  	$(prep-target)
+ -	$(BOOT_JAR_CMD) c0mf $(JAR_MANIFEST_FILE) $@ \
+ -	    @$(RT_JAR_ARGLIST) $(JAR_JFLAGS)
+-+	(cd $(CLASSBINDIR) && $(CAT) $(RT_JAR_FILELIST) | \
+-+	$(BOOT_JAR_CMD) c0mf@ $(JAR_MANIFEST_FILE) $@ \
+-+	    $(JAR_JFLAGS))
+++	(cd $(CLASSBINDIR) && \
+++	$(BOOT_JAR_CMD) c0mf $(JAR_MANIFEST_FILE) $@ \
+++	    $(JAR_JFLAGS) `$(CAT) $(RT_JAR_FILELIST)`)
+  	@$(java-vm-cleanup)
+  
+  # Meta-index construction to make core class loaders lazier
+

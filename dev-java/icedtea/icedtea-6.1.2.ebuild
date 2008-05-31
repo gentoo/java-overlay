@@ -67,29 +67,24 @@ pkg_setup() {
 src_unpack() {
 	unpack ${icedtea}.tar.gz
 	cd "${S}"
-
-	epatch "${FILESDIR}/docs.diff"
-	epatch "${FILESDIR}/parallel_jobs.diff"
-	epatch "${FILESDIR}/openjdk-md5sum.diff"
-	epatch "${FILESDIR}/bootstrap_fix-heapsize-so-we-get-happy-please-thanks.diff"
-
+	epatch "${FILESDIR}/${PN}-configure.diff"
+	epatch "${FILESDIR}/${PN}-jar.diff"
+	epatch "${FILESDIR}/bootstrap_fix-heapsize.diff"
 	eautoreconf
 }
 
 src_compile() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 
-	# lovely configure.ac --- horribly broken checks
-	local myconf="--with-openjdk-src-zip=${DISTDIR}/${openjdk} \
+	econf --with-openjdk-src-zip=${DISTDIR}/${openjdk} \
 		--with-parallel-jobs=$(grep -s -c ^processor /proc/cpuinfo) \
 		--with-openjdk-home=$(java-config --jdk-home) \
-		--with-openjdk"
-	use debug && myconf="${myconf} --enable-fast-build"
-	use doc || myconf="${myconf} --disable-docs"
-	use nsplugin || myconf="${myconf} --disable-gcjwebplugin"
-	use zero && myconf="${myconf} --enable-zero"
-
-	econf ${myconf} || die "configure failed"
+		--with-openjdk \
+		$(use_enable debug fast-build) \
+		$(use_enable doc docs) \
+		$(use_enable nsplugin gcjwebplugin) \
+		$(use_enable zero) \
+		|| die "configure failed"
 	emake -j1 || die "make failed"
 }
 
