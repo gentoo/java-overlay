@@ -26,7 +26,8 @@ DEPEND=">=virtual/jdk-1.5
 src_unpack() {
 	unpack ${A}
 	cd "${S}" || die
-	epatch "${FILESDIR}"/"${P}"-jarfixes.patch
+	epatch "${FILESDIR}/${P}-jarfixes.patch"
+	epatch "${FILESDIR}/${P}-createinterface.patch"
 }
 
 src_compile() {
@@ -34,14 +35,16 @@ src_compile() {
 	use debug && debug="enable"
 	local libdir=$(dirname $(java-pkg_getjar libmatthew-java unix.jar))
 	emake -j1 JCFLAGS="$(java-pkg_javac-args)" \
-		STRIP=echo DEBUG=${debug} JAVAUNIXJARDIR=${libdir}
+		STRIP=echo DEBUG=${debug} JAVAUNIXJARDIR=${libdir} || die "emake failed"
 
 	for i in *.sgml; do
 		docbook2man $i || die;
 		mv DBUS-JAVA.1 $(echo $i | sed 's/sgml/1/g') || die;
 	done
 
-	use doc && emake doc
+	if use doc; then
+		emake doc || die "emake doc failed"
+	fi
 }
 
 src_install() {
