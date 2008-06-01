@@ -75,7 +75,7 @@ src_compile() {
 		--with-parallel-jobs=$(grep -s -c ^processor /proc/cpuinfo) \
 		--with-openjdk-home=$(java-config --jdk-home) \
 		--with-openjdk \
-		$(use_enable debug fast-build) \
+		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nsplugin gcjwebplugin) \
 		$(use_enable zero) \
