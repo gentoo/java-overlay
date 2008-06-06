@@ -1,6 +1,10 @@
 # ChangeLog for dev-java/plexus-utils
-# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  06 Jun 2008; Alistair Bush <ali_bush@gentoo.org>
+  +plexus-utils-1.5.1.ebuild:
+  Version Bump.
 
   21 Oct 2007; kiorky <kiorky@cryptelium.net>
   +plexus-utils-1.4.7_pre20071021.ebuild:
