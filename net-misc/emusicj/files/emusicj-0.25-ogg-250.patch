@@ -1,0 +1,33 @@
+Index: src/nz/net/kallisti/emusicj/download/MusicDownloader.java
+===================================================================
+--- src/nz/net/kallisti/emusicj/download/MusicDownloader.java	(revision 249)
++++ src/nz/net/kallisti/emusicj/download/MusicDownloader.java	(working copy)
+@@ -51,7 +51,7 @@
+ 	String genre;
+ 	int duration = -1;
+ 	static IMimeType[] mimeTypes = { MimeTypes.AUDIO, MimeTypes.APP_OCTET,
+-			MimeTypes.PDF };
++			MimeTypes.PDF, MimeTypes.OGG };
+ 
+ 	@Inject
+ 	public MusicDownloader(IPreferences prefs) {
+Index: src/nz/net/kallisti/emusicj/download/mime/MimeTypes.java
+===================================================================
+--- src/nz/net/kallisti/emusicj/download/mime/MimeTypes.java	(revision 249)
++++ src/nz/net/kallisti/emusicj/download/mime/MimeTypes.java	(working copy)
+@@ -36,6 +36,7 @@
+ 	public static MimeType AUDIO;
+ 	public static MimeType APP_OCTET;
+ 	public static MimeType PDF;
++	public static MimeType OGG;
+ 
+ 	static {
+ 		try {
+@@ -43,6 +44,7 @@
+ 			AUDIO = new MimeType("audio/*");
+ 			APP_OCTET = new MimeType("application/octet-stream");
+ 			PDF = new MimeType("application/pdf");
++			OGG = new MimeType("application/ogg");
+ 		} catch (MimeTypeParseException e) {
+ 			e.printStackTrace();
+ 		}
