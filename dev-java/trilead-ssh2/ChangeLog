@@ -1,0 +1,20 @@
+# ChangeLog for dev-java/trilead-ssh2
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  09 Jun 2008; James Le Cuirot <chewi@aura-online.co.uk>
+  -ganymed-ssh2-210.ebuild, -files/ganymed-ssh2-210-debian-build.properties,
+  -files/ganymed-ssh2-210-debian-build.xml, +trilead-ssh2-213.ebuild,
+  +files/trilead-ssh2-213-debian-build.properties,
+  +files/trilead-ssh2-213-debian-build.xml:
+  Package name changed to trilead-ssh2. Version bump to 213.
+
+  05 Jul 2007; Petteri Räty <betelgeuse@gentoo.org>
+  ganymed-ssh2-210.ebuild:
+  Ebuild cleanup.
+
+  25 Feb 2007; Miroslav Šulc <fordfrog@gentoo.org>
+  +ganymed-ssh2-210.ebuild, +files/ganymed-ssh2-210-debian-build.properties,
+  +files/ganymed-ssh2-210-debian-build.xml, +metadata.xml:
+  Took from chewi-overlay, version bump, migration
+

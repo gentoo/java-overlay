@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -7,25 +7,24 @@ WANT_ANT_TASKS="ant-nodeps"
 
 inherit java-pkg-2 java-ant-2
 
-
 DESCRIPTION="A library that implements the SSH2 protocol in pure Java"
-HOMEPAGE="http://www.ganymed.ethz.ch/ssh2/"
-MY_P="${PN}-build${PV}"
-SRC_URI="http://www.ganymed.ethz.ch/ssh2/${MY_P}.zip"
+HOMEPAGE="http://www.trilead.com/Products/Trilead_SSH_for_Java/"
+SRC_URI="http://www.trilead.com/DesktopModules/Releases/download_file.aspx?ReleaseId=4102"
 KEYWORDS="~amd64 ~x86"
 SLOT="0"
-LICENSE="ganymed-ssh2"
+LICENSE="trilead-ssh2"
 IUSE=""
 
 DEPEND=">=virtual/jdk-1.4"
 RDEPEND=">=virtual/jre-1.4"
 
-S="${WORKDIR}/${MY_P}"
+S="${WORKDIR}/${PN}-build${PV}"
 
-EANT_BUILD_TARGET="ganymed-ssh2.jar"
+EANT_BUILD_TARGET="trilead-ssh2.jar"
 
 src_unpack() {
-	unpack "${A}"
+	mv "${DISTDIR}/${A}" "${DISTDIR}/${A}.zip"
+	unpack "${A}.zip"
 	find . -name "*.jar" -delete
 
 	# ganymed does not provide its own build files so we took the ones from here:
@@ -35,7 +34,7 @@ src_unpack() {
 }
 
 src_install() {
-	java-pkg_dojar build/lib/ganymed-ssh2.jar
+	java-pkg_dojar "build/lib/${EANT_BUILD_TARGET}"
 
 	dodoc HISTORY.txt README.txt || die
 	dohtml faq/FAQ.html || die

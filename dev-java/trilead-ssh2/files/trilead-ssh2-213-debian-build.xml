@@ -1,4 +1,4 @@
-<project name="ganymed-ssh2" default="all" basedir=".">
+<project name="trilead-ssh2" default="all" basedir=".">
 
     <property file="build.properties"/>
         
@@ -24,27 +24,27 @@
         <mkdir dir="${build.javadoc.dir}" />
         <javadoc sourcepath="${src.main.dir}"
                  destdir="${build.javadoc.dir}"
-                 packagenames="ch.*"
-                 windowtitle="Ganymed SSH2 API"
-                 doctitle="ganymed-ssh2">
-        </javadoc>  
+                 packagenames="com.trilead.*"
+                 windowtitle="trilead SSH2 API"
+                 doctitle="trilead-ssh2">
+        </javadoc>
     </target>
 
-    <target name="ganymed-ssh2.jar" depends="compile" description="Generate ganymed-ssh2.jar">
+    <target name="trilead-ssh2.jar" depends="compile" description="Generate trilead-ssh2.jar">
         <tstamp/>
         <mkdir dir="${build.lib.dir}" />
-        <jar jarfile="${build.lib.dir}/ganymed-ssh2.jar"
+        <jar jarfile="${build.lib.dir}/trilead-ssh2.jar"
              basedir="${build.classes.dir}"
              includes="**/*.class">
             <manifest>
                 <section name="ch.ethz.ssh2">
-                    <attribute name="Specification-Title" value="Ganymed-SSH2"/>
-                    <attribute name="Specification-Version" value="${ganymedssh2.version}"/>
+                    <attribute name="Specification-Title" value="trilead-SSH2"/>
+                    <attribute name="Specification-Version" value="${trileadssh2.version}"/>
                     <attribute name="Implementation-Title" value="ch.ethz.ssh2"/>
-                    <attribute name="Implementation-Version" value="${ganymedssh2.version} (${TODAY})"/> 
+                    <attribute name="Implementation-Version" value="${trileadssh2.version} (${TODAY})"/> 
                 </section>
             </manifest>
         </jar>
     </target>
-    <target name="all" depends="ganymed-ssh2.jar,javadoc"/>
+    <target name="all" depends="trilead-ssh2.jar,javadoc"/>
 </project>
