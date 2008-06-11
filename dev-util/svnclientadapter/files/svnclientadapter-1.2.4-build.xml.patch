@@ -1,0 +1,10 @@
+--- build.xml.orig	2006-11-15 05:18:40.000000000 +0000
++++ build.xml	2008-06-11 00:15:43.933996421 +0100
+@@ -11,6 +11,7 @@
+     <pathelement location="${svnjavahl.jar}"/>
+   	<pathelement location="${svnkit.jar}"/>
+   	<pathelement location="${ganymed.jar}"/>
++        <pathelement path="${gentoo.classpath}"/>
+   </path>
+ 
+   <!-- ================================================================= -->

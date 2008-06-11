@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -19,7 +19,7 @@ DEPEND=">=virtual/jdk-1.4
 
 RDEPEND=">=virtual/jre-1.4"
 
-S="${WORKDIR}/svnkit-src-${PV}/contrib/sequence"
+S="${WORKDIR}/svnkit-src-${PV}.4142/contrib/sequence"
 
 EANT_BUILD_TARGET="jar"
 EANT_DOC_TARGET="javadoc"

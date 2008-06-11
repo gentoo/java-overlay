@@ -1,6 +1,11 @@
 # ChangeLog for dev-java/sequence
-# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  09 Jun 2008; James Le Cuirot <chewi@aura-online.co.uk>
+  -sequence-1.1.3.ebuild, -files/sequence-1.1.3-build.xml,
+  +sequence-1.1.7.ebuild, +files/sequence-1.1.7-build.xml:
+  Version bump.
 
   04 Jul 2007; Jean-Noël Rivasseau <elvanor@gmail.com> ChangeLog:
   Version bump to 1.1.3, switched to split-ant, added new license to
