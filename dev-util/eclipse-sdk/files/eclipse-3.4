@@ -31,12 +31,14 @@ fi
 
 LIBDIR="lib"
 [ -d /usr/lib64 ] && LIBDIR="lib64"
-[ -f /usr/${LIBDIR}/xulrunner/libgtkembedmoz.so ] \
-	&& export MOZILLA_FIVE_HOME="/usr/${LIBDIR}/xulrunner"
 [ -f /usr/${LIBDIR}/mozilla-firefox/libgtkembedmoz.so ] \
 	&& export MOZILLA_FIVE_HOME="/usr/${LIBDIR}/mozilla-firefox"
 [ -f /usr/${LIBDIR}/seamonkey/libgtkembedmoz.so ] \
 	&& export MOZILLA_FIVE_HOME="/usr/${LIBDIR}/seamonkey"
+[ -f /usr/${LIBDIR}/xulrunner/libgtkembedmoz.so ] \
+	&& export MOZILLA_FIVE_HOME="/usr/${LIBDIR}/xulrunner"
+[ -d /usr/${LIBDIR}/xulrunner-1.9 ] \
+	&& export MOZILLA_FIVE_HOME="/usr/${LIBDIR}/xulrunner-1.9"
 
 [ -n "${ECLIPSE_XMS}" ] && VM_ARGS="${VM_ARGS} -Xms${ECLIPSE_XMS}"
 [ -n "${ECLIPSE_XMX}" ] && VM_ARGS="${VM_ARGS} -Xmx${ECLIPSE_XMX}"

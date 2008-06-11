@@ -5,8 +5,8 @@
 inherit eutils java-pkg-2
 
 MY_PN="ecj"
-MY_PV="${PV/_pre/M}"
-DMF="S-${MY_PV}-200805020100"
+MY_PV="${PV/_rc/RC}"
+DMF="S-${MY_PV}-200806091311"
 S="${WORKDIR}"
 
 DESCRIPTION="Eclipse Compiler for Java"
@@ -41,8 +41,8 @@ src_unpack() {
 			org/eclipse/jdt/internal/compiler/apt/
 	fi
 
-	# gcj feature
-	epatch "${FILESDIR}"/${PN}-3.4_pre6-gcj.diff
+	# gcj feature, broken
+	#epatch "${FILESDIR}"/${PN}-3.4_pre6-gcj.diff
 }
 
 src_compile() {

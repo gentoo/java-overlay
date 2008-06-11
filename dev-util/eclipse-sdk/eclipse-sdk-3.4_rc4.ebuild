@@ -29,8 +29,8 @@ EAPI="1"
 JAVA_PKG_IUSE="doc"
 inherit java-pkg-2 java-ant-2 check-reqs
 
-MY_PV="${PV/_pre/M}"
-DMF="S-${MY_PV}-200805020100"
+MY_PV="${PV/_rc/RC}"
+DMF="S-${MY_PV}-200806091311"
 MY_A="eclipse-sourceBuild-srcIncluded-${MY_PV}.zip"
 
 DESCRIPTION="Eclipse Tools Platform"
@@ -215,8 +215,6 @@ patch-apply() {
 		-i features/org.eclipse.rcp.source/build.xml
 	sed -e "/dir=\"..\/..\/plugins\/org.eclipse.ui.carbon\"/,/<\/ant>/d" \
 		-i features/org.eclipse.rcp/build.xml
-	sed -e "/name=\"swtlibs\"/,/<\/move>/d" \
-		-i build.xml
 
 	sed -e "/dir=\"plugins\/org.eclipse.swt.gtk.linux.${eclipsearch}/d" \
 		-e "/value=\"org.eclipse.swt.gtk.linux.${eclipsearch}/,/eclipse.plugins/d" \
@@ -261,13 +259,12 @@ patch-apply() {
 		-i package.org.eclipse.sdk.linux.gtk.${eclipsearch}.xml
 
 	# waaaaahhhhhhk !!!!11oneone
-	epatch ${PATCHDIR}/how_to_loose_sanity_on_freaky_env_vars_argh.diff
+	epatch ${PATCHDIR}/eclipse_build-libs.diff
 	epatch ${PATCHDIR}/eclipse_String.compareTo.diff
 	epatch ${PATCHDIR}/eclipse_buildfix-pde.diff
 
 	# JNI
-	# since installArch is set; obsolete(?)
-	#epatch ${FEDORA}/eclipse-libupdatebuild2.patch
+	epatch ${FEDORA}/eclipse-libupdatebuild2.patch
 
 	# Generic releng plugins that can be used to build plugins
 	# https://www.redhat.com/archives/fedora-devel-java-list/2006-April/msg00048.html

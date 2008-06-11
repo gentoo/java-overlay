@@ -6,9 +6,9 @@ EAPI="1"
 
 inherit eutils java-pkg-2 java-ant-2 toolchain-funcs java-osgi
 
-MY_PV="${PV/_pre/M}"
-MY_DMF="download.eclipse.org/eclipse/downloads/drops/S-${MY_PV}-200805020100"
-MY_P="${PN}-${MY_PV}"
+MY_PV="${PV/_rc/RC}"
+MY_DMF="download.eclipse.org/eclipse/downloads/drops/S-${MY_PV/.0}-200806091311"
+MY_P="${PN}-${MY_PV/.0}"
 
 DESCRIPTION="GTK based SWT Library"
 HOMEPAGE="http://www.eclipse.org/"
@@ -48,8 +48,8 @@ COMMON=">=dev-libs/glib-2.6
 			>=dev-libs/nspr-4.6.2
 		) )
 		xulrunner? (
-			net-libs/xulrunner:1.8
-			>=dev-libs/nspr-4.6.2
+			net-libs/xulrunner:1.9
+			>=dev-libs/nspr-4.7.1
 		)
 		opengl?	(
 			virtual/opengl
@@ -111,7 +111,7 @@ get_gecko() {
 	# order here match the logic in DEPEND and USE flag descriptions
 	use seamonkey && gecko="seamonkey"
 	use firefox && gecko="firefox"
-	use xulrunner && gecko="xulrunner"
+	use xulrunner && gecko="mozilla"
 
 	echo ${gecko}
 }
@@ -166,13 +166,12 @@ src_compile() {
 	local gecko="$(get_gecko)"
 	if [[ ${gecko} ]]; then
 		einfo "Building the Mozilla component against ${gecko}"
-		#local idir="$(pkg-config ${gecko}-xpcom --variable=includedir)"
-		local inc="$(pkg-config ${gecko}-xpcom --cflags)"
-		local libs="$(pkg-config ${gecko}-xpcom --libs)"
+		local inc="$(pkg-config ${gecko}-gtkmozembed --cflags)"
+		local libs="$(pkg-config ${gecko}-gtkmozembed --libs)"
 		MOZILLA_INCLUDES="${inc}" \
 		MOZILLA_LIBS="${libs}" \
 			${make} make_mozilla || die "Failed to build ${gecko} support"
-		if [[ "${gecko}" = "xulrunner" ]]; then
+		if use xulrunner; then
 			XULRUNNER_INCLUDES="${inc}" \
 			XULRUNNER_LIBS="${libs}" \
 				${make} make_xulrunner || die "Failed to build ${gecko} support"
