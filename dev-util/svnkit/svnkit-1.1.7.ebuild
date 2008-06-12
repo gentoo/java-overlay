@@ -34,7 +34,7 @@ pkg_setup() {
 	java-pkg-2_pkg_setup
 	if ! built_with_use dev-util/subversion java ; then
 		msg="${CATEGORY}/${P} needs dev-util/subversion built with the java USE flag"
-		error ${msg}
+		eerror ${msg}
 		die ${msg}
 	fi
 }
