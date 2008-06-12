@@ -27,7 +27,7 @@ SRC_URI="x86? (
 
 SLOT="3.4"
 LICENSE="CPL-1.0 LGPL-2.1 MPL-1.1"
-KEYWORDS="~amd64 ~ppc ~x86 ~x86-fbsd"
+KEYWORDS="" #~amd64 ~ppc ~x86 ~x86-fbsd
 
 IUSE="cairo firefox gnome seamonkey opengl xulrunner"
 COMMON=">=dev-libs/glib-2.6
