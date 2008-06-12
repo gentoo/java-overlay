@@ -12,7 +12,7 @@ HOMEPAGE="https://jna.dev.java.net/"
 SRC_URI="http://jna.dev.java.net/source/browse/*checkout*/jna/tags/${PV}/jnalib/dist/src.zip"
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 
 RDEPEND=">=sys-devel/gcc-4.3
 	>=virtual/jre-1.4"
