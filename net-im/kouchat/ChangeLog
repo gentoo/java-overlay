@@ -1,0 +1,8 @@
+# ChangeLog for net-im/kouchat
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  12 Jun 2008; Serkan Kaba <serkan@gentoo.org> +kouchat-0.9.8.ebuild,
+  +files/build.xml, +metadata.xml:
+  Initial ebuild.
+
