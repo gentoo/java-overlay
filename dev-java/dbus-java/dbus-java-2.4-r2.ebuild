@@ -59,24 +59,24 @@ src_install() {
 	local javaargs='-DPid=$$'
 	javaargs="${javaargs} -DVersion=${PV}"
 
-	java-pkg_dolauncher CreateInterface --jar dbus-java-bin.jar \
+	java-pkg_dolauncher CreateInterface \
 		--main org.freedesktop.dbus.bin.CreateInterface \
-		--java_args ${javaargs}
+		--java_args "${javaargs}"
 
-	java-pkg_dolauncher DBusViewer --jar dbus-java-viewer.jar \
+	java-pkg_dolauncher DBusViewer \
 		--main org.freedesktop.dbus.viewer.DBusViewer \
-		--java_args ${javaargs}
+		--java_args "${javaargs}"
 
-	java-pkg_dolauncher ListDBus --jar dbus-java-bin.jar \
+	java-pkg_dolauncher ListDBus \
 		--main org.freedesktop.dbus.bin.ListDBus \
-		--java_args ${javaargs}
+		--java_args "${javaargs}"
 
-	java-pkg_dolauncher DBusDaemon --jar dbus-java-bin.jar \
+	java-pkg_dolauncher DBusDaemon \
 		--main org.freedesktop.dbus.bin.DBusDaemon \
-		--java_args ${javaargs}
-	java-pkg_dolauncher DBusCall --jar dbus-java-bin.jar \
+		--java_args "${javaargs}"
+	java-pkg_dolauncher DBusCall \
 		--main org.freedesktop.dbus.bin.Caller \
-		--java_args ${javaargs}
+		--java_args "${javaargs}"
 
 	doman *.1
 	dodoc INSTALL changelog AUTHORS README || die
