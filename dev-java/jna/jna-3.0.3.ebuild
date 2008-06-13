@@ -25,6 +25,7 @@ DEPEND=">=sys-devel/gcc-4.3
 		>=virtual/jdk-1.5
 	)"
 
+JAVA_ANT_REWRITE_CLASSPATH="true"
 S="${WORKDIR}"
 
 pkg_setup() {
@@ -42,7 +43,6 @@ pkg_setup() {
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	java-ant_rewrite-classpath
 	
 	# Fetch our own prebuilt libffi.
 	mkdir -p build/native/libffi/.libs || die
