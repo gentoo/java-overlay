@@ -23,6 +23,9 @@ DEPEND=">=virtual/jdk-1.5
 	dev-db/hsqldb
 	test? ( dev-java/junit )"
 
+EANT_BUILD_XML="entagged/build.xml"
+EANT_BUILD_TARGET="build"
+
 src_unpack() {
 	unpack ${A}
 	mkdir -p test/entagged/junit || die
@@ -31,12 +34,6 @@ src_unpack() {
 	java-pkg_jarfrom hsqldb hsqldb.jar entagged/hsqldb.jar
 	cd entagged || die
 	epatch "${FILESDIR}"/${P}-buildfixes.patch
-}
-
-src_compile() {
-	cd "${S}/entagged" || die
-	cd "${S}" || die
-	eant -f entagged/build.xml build
 }
 
 src_install() {
