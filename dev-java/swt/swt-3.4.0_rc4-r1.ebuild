@@ -20,7 +20,7 @@ LICENSE="CPL-1.0 LGPL-2.1 MPL-1.1"
 KEYWORDS="~amd64 ~ppc ~x86 ~x86-fbsd"
 IUSE="cairo firefox gnome opengl seamonkey xulrunner"
 
-COMMON_DEPEND=">=dev-libs/glib-2.10
+CDEPEND=">=dev-libs/glib-2.10
 	>=x11-libs/gtk+-2.8
 	>=dev-libs/atk-1.10.2
 	cairo? ( >=x11-libs/cairo-1.0.2 )
@@ -33,11 +33,8 @@ COMMON_DEPEND=">=dev-libs/glib-2.10
 		firefox? ( >=www-client/mozilla-firefox-2 >=dev-libs/nspr-4.6.2 )
 	) seamonkey? ( >=www-client/seamonkey-1.0.2 >=dev-libs/nspr-4.6.2 )
 	xulrunner? ( >=net-libs/xulrunner-1.9_beta5 >=dev-libs/nspr-4.7.1_beta2 )
-	opengl? (
-		virtual/opengl
-		virtual/glu
-	)"
-DEPEND="${COMMON_DEPEND}
+	opengl? ( virtual/opengl virtual/glu )"
+DEPEND="${CDEPEND}
 	>=virtual/jdk-1.4
 	dev-java/ant-core
 	app-arch/unzip
@@ -45,7 +42,7 @@ DEPEND="${COMMON_DEPEND}
 	x11-libs/libXrender
 	x11-libs/libXt
 	x11-proto/xextproto"
-RDEPEND="${COMMON_DEPEND}
+RDEPEND="${CDEPEND}
 	>=virtual/jre-1.4"
 
 src_unpack() {

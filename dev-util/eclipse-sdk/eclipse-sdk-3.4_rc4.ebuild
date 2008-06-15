@@ -146,7 +146,6 @@ src_install() {
 }
 
 pkg_postinst() {
-	einfo
 	einfo "Welcome to Eclipse ${PV} (Ganymede)!"
 	einfo
 	einfo "You can now install plugins via Update Manager without any"
@@ -158,6 +157,10 @@ pkg_postinst() {
 	einfo "The FileInitializer Plugin is no more integrated."
 	einfo "If you need it, get org.eclipse.equinox.initializer_x.y.z.jar from:"
 	einfo "	http://download.eclipse.org/eclipse/equinox/"
+	echo
+	ewarn "If you have only one 'Software Updates' entry in Help menu that fails"
+	ewarn "please enable the 'Classic Update' under:"
+	ewarn "	Window > Preferences > General > Capabilities"
 	ewarn
 	ewarn "UPGRADE WARNING"
 	ewarn "You may do a backup of your ~/.eclipse and ~/workspace folders."
