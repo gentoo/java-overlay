@@ -32,6 +32,7 @@ S="${WORKDIR}"
 RESTRICT="test"
 
 JAVA_PKG_BSFIX_NAME="build.xml common.xml servlet/build.xml"
+JAVA_ANT_CLASSPATH_TAGS="${JAVA_ANT_CLASSPATH_TAGS} javadoc"
 
 src_unpack() {
 	unpack ${A}
