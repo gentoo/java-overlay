@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/jruby
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  19 Jun 2008; Alistair Bush <ali_bush@gentoo.org> +metadata.xml,
+  jruby-1.1.2.ebuild:
+  Add metadata. Add EAPI=1 as using slot depends
+

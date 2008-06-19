@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="1"
 JAVA_PKG_IUSE="doc source test"
 inherit eutils java-pkg-2 java-ant-2
 
@@ -51,7 +52,7 @@ pkg_setup() {
 		ewarn "dev-java/jruby now uses dev-lang/ruby's site_ruby directory by creating symlinks."
 		ewarn "${SITE_RUBY} is a directory right now, which will cause problems when being merged onto the filesystem."
 	fi
-	
+
 	if [[ -d "${GEMS}" && ! -L "${GEMS}" ]]; then
 		ewarn "dev-java/jruby now uses dev-lang/ruby's gems directory by creating symlinks."
 		ewarn "${GEMS} is a directory right now, which will cause problems when being merged onto the filesystem."
@@ -64,7 +65,7 @@ src_unpack() {
 
 	# We don't need to use Retroweaver.
 	sed -i "/RetroWeaverTask/d" build.xml
-	
+
 	# Remove jarjar stuff.
 	jarjarclean || die
 
@@ -73,19 +74,19 @@ src_unpack() {
 
 	cd "${S}/build_lib" || die
 	rm -vf *.jar || die
-	
+
 	# tools.jar must be symlinked manually.
 	ln -s `java-config --tools` || die
-	
+
 	# This must be named anything but joni.jar because it is excluded from the tests.
 	java-pkg_jar-from joni joni.jar joni_.jar
-	
+
 	# Collect the other JARs.
 	java-pkg_jar-from asm-3,backport-util-concurrent,bytelist,jline,joda-time,jna,jna-posix,jvyamlb
-	
+
 	cd "${S}/lib" || die
 	rm -vf *.jar || die
-	
+
 	if ! use bsf; then
 		# Remove BSF test cases.
 		cd "${S}/test/org/jruby"
@@ -103,7 +104,7 @@ src_compile() {
 src_test() {
 	# Tests will fail if this isn't present.
 	mkdir -p spec
-	
+
 	# BSF is a compile-time only dependency because it's just the adapter
 	# classes and they won't be used unless invoked from BSF itself.
 	use bsf && java-pkg_jar-from --into build_lib --with-dependencies bsf-2.3
@@ -119,11 +120,11 @@ src_install() {
 	if use doc; then
 		java-pkg_dojavadoc docs/api
 	fi
-	
+
 	java-pkg_dolauncher ${PN} \
 		--main 'org.jruby.Main' \
 		--java_args '-Djruby.base=/usr/share/jruby -Djruby.home=/usr/share/jruby -Djruby.lib=/usr/share/jruby/lib -Djruby.script=jruby -Djruby.shell=/bin/sh'
-	
+
 	dobin "${S}"/bin/jirb
 	dodir "/usr/share/${PN}/lib"
 	insinto "/usr/share/${PN}/lib"
