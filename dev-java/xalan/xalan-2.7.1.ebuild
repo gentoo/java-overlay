@@ -63,7 +63,7 @@ src_compile() {
 		-Dxsltc.bcel_jar.not_needed=true \
 		-Dxsltc.runtime_jar.not_needed=true \
 		-Dxsltc.regexp_jar.not_needed=true
-	
+
 	use doc && eant autojavadocs
 }
 

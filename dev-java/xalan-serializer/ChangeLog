@@ -1,0 +1,33 @@
+# ChangeLog for dev-java/xalan-serializer
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*xalan-serializer-2.7.1 (19 Jun 2008)
+
+  19 Jun 2008; James Le Cuirot <chewi@aura-online.co.uk>
+  +xalan-serializer-2.7.1.ebuild:
+  Version bump.
+
+  25 Nov 2007; Christian Faulhammer <opfer@gentoo.org>
+  xalan-serializer-2.7.0.ebuild:
+  stable x86, bug 199501
+
+  25 Nov 2007; Samuli Suominen <drac@gentoo.org>
+  xalan-serializer-2.7.0.ebuild:
+  amd64 stable wrt #199501
+
+  25 Nov 2007; Krzysiek Pawlik <nelchael@gentoo.org>
+  xalan-serializer-2.7.0.ebuild:
+  Stable on ppc, bug #199501.
+
+  23 Nov 2007; Markus Rothe <corsair@gentoo.org>
+  xalan-serializer-2.7.0.ebuild:
+  Stable on ppc64; bug #199501
+
+*xalan-serializer-2.7.0 (26 May 2007)
+
+  26 May 2007; Vlastimil Babka <caster@gentoo.org> +metadata.xml,
+  +xalan-serializer-2.7.0.ebuild:
+  New package for serializer.jar from xalan, now used by both xalan and xerces
+  - bug #156258.
+

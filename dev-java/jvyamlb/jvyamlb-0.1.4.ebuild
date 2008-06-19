@@ -23,7 +23,7 @@ JAVA_ANT_REWRITE_CLASSPATH="true"
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	
+
 	# Don't do tests unnecessarily.
 	sed -i 's:depends="test":depends="compile":' build.xml
 }
