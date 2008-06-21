@@ -29,6 +29,7 @@ RDEPEND="${CDEPEND}
 
 DEPEND="${CDEPEND}
 	>=virtual/jdk-1.5
+	>=dev-java/javatoolkit-0.3.0
 	bsf? ( >=dev-java/bsf-2.3 )
 	test? (
 		dev-java/ant-junit
@@ -67,7 +68,7 @@ src_unpack() {
 	sed -i "/RetroWeaverTask/d" build.xml
 
 	# Remove jarjar stuff.
-	jarjarclean || die
+	/usr/$(get_libdir)/javatoolkit/bin/jarjarclean || die
 
 	# Search only lib, kills jdk1.5+ property, which we set manually.
 	java-ant_ignore-system-classes
