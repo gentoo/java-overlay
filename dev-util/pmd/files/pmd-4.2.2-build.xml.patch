@@ -1,0 +1,47 @@
+--- build.xml.original	2007-11-25 16:27:02.000000000 +0100
++++ build.xml	2007-11-25 16:38:10.000000000 +0100
+@@ -21,11 +21,7 @@
+ 
+ 	<path id="dependencies.path">
+ 		<pathelement location="${dir.build}" />
+-		<fileset dir="${dir.lib}">
+-			<include name="jaxen-${jaxen.version}.jar" />
+-			<include name="asm-${asm.version}.jar" />
+-			<include name="junit-${junit.version}.jar" />
+-		</fileset>
++		<fileset dir="${dir.lib}" includes="*.jar"/>
+ 	</path>
+ 
+ 	<target name="delete" description="Deletes the build directory and the pmd-x.x jar file.">
+@@ -72,22 +68,10 @@
+ 		<jar jarfile="${dir.lib}/pmd-${version}.jar" includes="net/sourceforge/pmd/**/**,test/net/sourceforge/pmd/testframework/**/**,rulesets/**" basedir="${dir.build}">
+ 			<manifest>
+ 				<attribute name="Main-Class" value="net.sourceforge.pmd.PMD" />
+-				<attribute name="Class-Path" value="jaxen-${jaxen.version}.jar asm-${asm.version}.jar" />
+ 			</manifest>
+ 		</jar>
+ 	</target>
+ 
+-	<taskdef name="retroweaver" classname="net.sourceforge.retroweaver.ant.RetroWeaverTask">
+-		<classpath>
+-			<pathelement location="${dir.lib14}/retroweaver-${retroweaver.version}.jar"/>
+-			<pathelement location="${dir.lib14}/retroweaver-rt-${retroweaver.version}.jar"/>
+-			<pathelement location="${dir.lib14}/backport-util-concurrent.jar"/>
+-			<pathelement location="${dir.lib14}/asm-commons-${asm.version}.jar"/>
+-			<pathelement location="${dir.lib14}/asm-util-${asm.version}.jar"/>
+-			<pathelement location="${dir.lib}/asm-${asm.version}.jar"/>
+-		</classpath>
+-	</taskdef>
+-
+ 	<target name="weavejunit" depends="jar">
+ 		<path id="retroweaverclasspath">
+ 			<pathelement location="${dir.lib14}/retroweaver-rt-${retroweaver.version}.jar"/>
+@@ -197,7 +181,7 @@
+ 	<target name="test-execute" description="Runs the unit tests">
+ 		<delete dir="${test.outputdir}" />
+ 		<mkdir dir="${test.outputdir}/xml"/>
+-		<junit printsummary="${test.printsummary}" showoutput="no" filtertrace="yes" haltonfailure="no" jvm="${test.jvm}" forkmode="perBatch"
++		<junit printsummary="${test.printsummary}" showoutput="no" filtertrace="yes" haltonfailure="yes" jvm="${test.jvm}" forkmode="perBatch"
+ 			failureProperty="test.failure" 
+ 		>
+ 			<sysproperty key="pmd.regress" value="${test.regression}"/>
