@@ -13,11 +13,11 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-RDEPEND=">=virtual/jre-1.4
-	dev-java/jna"
+RDEPEND=">=virtual/jre-1.5
+		dev-java/jna"
 
-DEPEND=">=virtual/jdk-1.4
-	dev-java/jna"
+DEPEND=">=virtual/jdk-1.5
+		dev-java/jna"
 
 src_unpack() {
 	unpack ${A}
