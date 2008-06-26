@@ -1,6 +1,9 @@
 # ChangeLog for media-sound/tuxguitar
-# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  26 Jun 2008; Serkan Kaba <serkan@gentoo.org> +tuxguitar-1.0.ebuild:
+  Version bump. Thanks to all people on bug #144967.
 
   20 Sep 2007; <alistair@gentoo.org> +tuxguitar-0.9.1-r2.ebuild:
   Updated to add packages dir to classpath
