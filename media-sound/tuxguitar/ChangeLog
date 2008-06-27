@@ -2,6 +2,9 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  27 Jun 2008; Serkan Kaba <serkan@gentoo.org> tuxguitar-1.0.ebuild:
+  Fix jni directory.
+
   26 Jun 2008; Serkan Kaba <serkan@gentoo.org> +tuxguitar-1.0.ebuild:
   Version bump. Thanks to all people on bug #144967.
 

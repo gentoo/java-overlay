@@ -78,7 +78,7 @@ src_install() {
 	# Images and Files
 	insinto /usr/share/${PN}/lib
 	doins -r share || die "doins failed"
-	java-pkg_sointo /usr/share/${PN}-${SLOT}/lib/lib
+	java-pkg_sointo /usr/share/${PN}/lib/lib
 	for plugin in $(list_plugins); do
 		plugin_install $plugin
 	done
