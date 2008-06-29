@@ -1,0 +1,34 @@
+# ChangeLog for dev-java/gcj-jdk
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  22 Jun 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3.0.ebuild:
+  Fix use of gcj-config.
+
+  22 Jun 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3.1.ebuild:
+  Fix paths to tools.jar and rt.jar, variable substitution and use of gcj-config.
+	
+*gcj-jdk-4.3.1 (16 Jun 2008)
+	
+  16 Jun 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3.1.ebuild:
+  Convert to use gcc 4.3.1 and include USE flag warning.
+
+  26 May 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3.0.ebuild:
+  Fix quoting issue.
+
+  23 Apr 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3.0.ebuild:
+  Symlink against versioned ecj.
+
+  22 Apr 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3.0.ebuild:
+  Disable gcjwebplugin.
+
+  15 Apr 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3.0.ebuild:
+  Use jcf-dump to provide javap.
+
+  12 Apr 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3.0.ebuild:
+  Use ecj to provide javac.
+
+*gcj-jdk-4.3.0 (07 Apr 2008)
+
+  07 Apr 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3.0.ebuild:
+  Initial import.
