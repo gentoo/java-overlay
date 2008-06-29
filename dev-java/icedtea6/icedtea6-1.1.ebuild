@@ -72,9 +72,11 @@ src_unpack() {
 	# Add true disable-zero support (http://icedtea.classpath.org/hg/icedtea6/rev/edf310873bf7)
 	epatch "${FILESDIR}/zero.patch"
 	# Fix use of --enable-plugin (http://icedtea.classpath.org/hg/icedtea6/rev/1c580400c8d9)
-	epatch "${FILESDIR}/enable_fix-1.1.patch"
+	epatch "${FILESDIR}/enable_fix-${PV}.patch"
 	# Fix use of jar cfm0@ (http://icedtea.classpath.org/hg/icedtea6/rev/cebc828cf765)
-	epatch "${FILESDIR}/gjar-1.1.patch"
+	epatch "${FILESDIR}/gjar-${PV}.patch"
+	# Use Classpath's JAVAC and JAVA tests
+	epatch "${FILESDIR}/javac_fix-${PV}.patch"
 	eautoreconf || die "failed to reautoconf"
 }
 

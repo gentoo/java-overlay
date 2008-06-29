@@ -48,10 +48,12 @@ src_unpack() {
 	unpack ${P}.tar.gz
 	cd "${S}"
 	# Fix use of --enable-plugin (http://icedtea.classpath.org/hg/icedtea6/rev/1c580400c8d9)
-	epatch "${FILESDIR}/enable_fix-1.2.patch"
+	epatch "${FILESDIR}/enable_fix-${PV}.patch"
 	# Fix use of jar cfm0@ (http://icedtea.classpath.org/hg/icedtea6/rev/cebc828cf765)
-	epatch "${FILESDIR}/gjar-1.2.patch"
-	eautoreconf || die "failed to reautoconf"
+	epatch "${FILESDIR}/gjar-${PV}.patch"
+	# Use Classpath's JAVAC and JAVA tests
+	epatch "${FILESDIR}/javac_fix-${PV}.patch"
+	eautoreconf -I m4 || die "failed to reautoconf"
 }
 
 pkg_setup() {
