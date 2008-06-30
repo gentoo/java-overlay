@@ -53,6 +53,8 @@ src_unpack() {
 	epatch "${FILESDIR}/gjar-${PV}.patch"
 	# Use Classpath's JAVAC and JAVA tests
 	epatch "${FILESDIR}/javac_fix-${PV}.patch"
+	# Use @JAVAC_MEM_OPT@ in javac.in
+	epatch "${FILESDIR}/javac.in.patch"
 	eautoreconf -I m4 || die "failed to reautoconf"
 }
 
@@ -93,6 +95,7 @@ src_compile() {
 		--with-gcj-home=$(java-config -O) \
 		--with-libgcj-jar=$(java-config -O)/jre/lib/rt.jar \
 		--with-openjdk-src-zip="${DISTDIR}"/openjdk-6-src-b09-11_apr_2008.tar.gz \
+		--with-ecj-jar=$(ls -r /usr/share/eclipse-ecj-3.*/lib/ecj.jar|head -n 1) \
 		${parallel} \
 		$(use_enable nsplugin gcjwebplugin) \
 		$(use_enable debug fast-build) \

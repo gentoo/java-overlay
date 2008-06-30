@@ -2,24 +2,30 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  30 Jun 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.1.ebuild icedtea6-1.2.ebuild files/javac.in.patch:
+	Patch javac.in as well so it also gets the benefit of the new memory option.
+
+  30 Jun 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.1.ebuild icedtea6-1.2.ebuild:
+	Supply ecj.jar directly to configure.
+
   30 Jun 2008: Andrew John Hughes <gnu_andrew@member.fsf.org> files/icedtea6-1.1.env files/icedtea6-1.2.env files/icedtea6.env:
         Removed version-specific environments (which are identical anyway).
 
   29 Jun 2008: Andrew John Hughes <gnu_andrew@member.fsf.org> files/javac_fix-1.1.patch files/javac_fix-1.2.patch icedtea6-1.1.ebuild icedtea6-1.2.ebuild:
         Use Classpath's javac detection.
 
-  26 Jun 2008: Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.1.ebuild icedtea6-1.2.ebuild:
+  26 Jun 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.1.ebuild icedtea6-1.2.ebuild:
 
 	Remove slot allocation, making both 0.
 	
-  01 Jun 2008: Andrew John Hughes <gnu_andrew@member.fsf.org> files/gjar-1.1.patch files/gjar-1.2.patch icedtea6-1.1.ebuild icedtea6-1.2.ebuild:
+  01 Jun 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> files/gjar-1.1.patch files/gjar-1.2.patch icedtea6-1.1.ebuild icedtea6-1.2.ebuild:
         Fix gjar patches for both versions of icedtea6 and note source of each patch.
 	
-  30 May 2008: Andrew John Hughes <gnu_andrew@member.fsf.org> files/gjar.patch icedtea6-1.1.ebuild icedtea6-1.2.ebuild:
+  30 May 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> files/gjar.patch icedtea6-1.1.ebuild icedtea6-1.2.ebuild:
 	Add fix for jar cfm@ issue and revert icedtea6-1.2 to depending on virtual/jdk-1.5.
 	
 *icedtea6-1.2 (29 05 2008)
 
-  29 May 2008: Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.2.ebuild:
+  29 May 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.2.ebuild:
 	Added.
 	

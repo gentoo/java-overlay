@@ -1,0 +1,8 @@
+--- javac.in	2008-06-30 22:06:01.000000000 +0100
++++ javac.in.new	2008-06-30 22:06:29.000000000 +0100
+@@ -31,4 +31,4 @@
+ fi
+ 
+ CLASSPATH=@ECJ_JAR@${CLASSPATH:+:}$CLASSPATH \
+-  @JAVA@ org.eclipse.jdt.internal.compiler.batch.Main -1.5 -nowarn $bcoption $NEW_ARGS
++  @JAVA@ @JAVAC_MEM_OPT@ org.eclipse.jdt.internal.compiler.batch.Main -1.5 -nowarn $bcoption $NEW_ARGS
