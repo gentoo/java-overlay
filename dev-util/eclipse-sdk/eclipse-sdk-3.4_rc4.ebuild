@@ -219,8 +219,8 @@ patch-apply() {
 	sed -e "/dir=\"..\/..\/plugins\/org.eclipse.ui.carbon\"/,/<\/ant>/d" \
 		-i features/org.eclipse.rcp/build.xml
 
-	sed -e "/dir=\"plugins\/org.eclipse.swt.gtk.linux.${eclipsearch}/d" \
-		-e "/value=\"org.eclipse.swt.gtk.linux.${eclipsearch}/,/eclipse.plugins/d" \
+	sed -e "/dir=\"plugins\/org.eclipse.swt.gtk.linux.${eclipsearch}\"/d" \
+		-e "/value=\"org.eclipse.swt.gtk.linux.${eclipsearch}_/,/eclipse.plugins/d" \
 		-i assemble.org.eclipse.sdk.linux.gtk.${eclipsearch}.xml
 
 	if ! use java6; then

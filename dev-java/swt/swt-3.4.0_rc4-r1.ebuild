@@ -64,7 +64,7 @@ src_unpack() {
 	# version: 3.2.1.v3235
 	local eclipsearch=${ARCH}
 	use amd64 && eclipsearch=x86_64
-	local myver="${PV/_*}.v$(sed -e "s:[A-Za-z. ]::g" version.txt)"
+	local myver="${PV/_*}.v$(sed -e "s:[A-Za-z. ]::g" version.txt)d"
 	sed -r -e "s:ARCH:${eclipsearch}:g" -e "s:PV:${myver}:g" \
 		< ${FILESDIR}/swt-3.4-manifest-2 > ${S}/manifest \
 		|| die "manifest failed"
