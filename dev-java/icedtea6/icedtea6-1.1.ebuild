@@ -116,7 +116,7 @@ src_install() {
 	dodir ${dest}
 
 	local arch=${ARCH}
-	[[ ${ARCH} = x86 ]] && arch=i586
+	[[ ${ARCH} = x86 ]] && arch=i386
 
 	cd "${S}"/openjdk/control/build/linux-${arch}/
 
