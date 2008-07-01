@@ -57,7 +57,7 @@ fi
 src_unpack() {
 	gcc_src_unpack
 
-	wget -O ${S}/ecj.jar -v ftp://sourceware.org/pub/java/ecj-latest.jar
+	wget -O ${S}/ecj.jar -v ftp://sourceware.org/pub/java/ecj-4.3.jar
 
 	use vanilla && return 0
 
