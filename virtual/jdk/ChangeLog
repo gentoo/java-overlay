@@ -1,0 +1,41 @@
+# ChangeLog for virtual/jdk
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  30 Jun 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> jdk-1.4.2.ebuild jdk-1.5.0.ebuild jdk-1.6.0.ebuild:
+  Add evil dependencies and import into java-overlay.
+	
+  16 Jun 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> jdk-1.5.0.ebuild:
+  Add IcedTea6.
+
+  26 May 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> jdk-1.6.0.ebuild:
+  Add gcj and downgrade to testing.
+
+  26 May 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> jdk-1.5.0.ebuild:
+  Remove untested archs and downgrade to testing.
+	
+  26 May 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> jdk-1.4.2.ebuild:
+  Remove untested archs, downgrade to testing and remove Kaffe.
+
+  26 May 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> jdk-1.4.1.ebuild
+  Move to testing keywords and remove Kaffe.  
+
+*jdk-1.6.0 (14 Apr 2008)
+	
+  14 Apr 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> jdk-1.6.0.ebuild:
+  Initial import.
+
+*jdk-1.5.0 (07 Apr 2008)
+
+  07 Apr 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> jdk-1.5.0.ebuild:
+  Initial import.
+	
+*jdk-1.4.2 (07 Apr 2008)
+
+  07 Apr 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> jdk-1.4.2.ebuild:
+  Initial import.
+	
+*jdk-1.4.1 (07 Apr 2008)
+
+  07 Apr 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> jdk-1.4.1.ebuild:
+  Initial import.
