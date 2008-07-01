@@ -222,6 +222,8 @@ patch-apply() {
 	sed -e "/dir=\"plugins\/org.eclipse.swt.gtk.linux.${eclipsearch}\"/d" \
 		-e "/value=\"org.eclipse.swt.gtk.linux.${eclipsearch}_/,/eclipse.plugins/d" \
 		-i assemble.org.eclipse.sdk.linux.gtk.${eclipsearch}.xml
+	sed -e "s:\${basedir}/swt.jar:$(java-pkg_getjars --build-only swt-${SLOT}):" \
+		-i plugins/org.eclipse.swt.gtk.linux.${eclipsearch}/build.xml
 
 	if ! use java6; then
 		sed -e "/..\/..\/plugins\/org.eclipse.jdt.apt.pluggable.core/,/<\/ant>/d" \
@@ -340,25 +342,33 @@ remove-bundled-stuff() {
 	# ...  .so libraries
 	find ${S} -type f -name '*.so' | xargs rm
 	# ... .jar files
-	rm plugins/org.eclipse.osgi/osgi/osgi*.jar \
-		plugins/org.eclipse.osgi/supplement/osgi/osgi.jar \
-		plugins/org.eclipse.swt/extra_jars/exceptions.jar
+	pushd plugins >/dev/null
+	rm org.eclipse.osgi/osgi/osgi*.jar \
+		org.eclipse.osgi/supplement/osgi/osgi.jar \
+		org.eclipse.swt/extra_jars/exceptions.jar
 
-	rm -rf plugins/org.eclipse.swt.* plugins/org.apache.ant_*/*
-	rm plugins/org.apache.commons.*.jar plugins/com.jcraft.jsch* \
-		plugins/com.ibm.icu* plugins/org.junit_*/*.jar \
-		plugins/org.junit4*/*.jar plugins/javax.*.jar \
-		plugins/org.apache.lucene_*.jar plugins/org.apache.lucene.analysis_*.jar
+	rm -rf org.apache.ant_*/*
+	rm org.apache.commons.*.jar com.jcraft.jsch* \
+		com.ibm.icu* org.junit_*/*.jar \
+		org.junit4*/*.jar javax.*.jar \
+		org.apache.lucene_*.jar org.apache.lucene.analysis_*.jar
+	for d in $(ls -1 -d org.eclipse.swt.*); do
+		[[ ${d} = org.eclipse.swt.tools ]] && continue
+		[[ ${d} = org.eclipse.swt.gtk.linux.${eclipsearch} ]] && continue
+		[[ ${d} = org.eclipse.swt.gtk.linux.${eclipsearch}.source ]] && continue
+		rm -rf ${d}
+	done
 
 	# Removing Tomcat stuff
-	rm -rf plugins/org.eclipse.tomcat/
+	rm -rf org.eclipse.tomcat/
 
 	# Remove bundled classes
-	rm -rf plugins/org.eclipse.osgi.services/org
-	unzip -q plugins/org.eclipse.osgi.services/src.zip -d plugins/org.eclipse.osgi.services/
-	rm -rf plugins/org.eclipse.osgi.util/org
-	unzip -q plugins/org.eclipse.osgi.util/src.zip -d plugins/org.eclipse.osgi.util/
+	rm -rf org.eclipse.osgi.services/org
+	unzip -q org.eclipse.osgi.services/src.zip -d org.eclipse.osgi.services/
+	rm -rf org.eclipse.osgi.util/org
+	unzip -q org.eclipse.osgi.util/src.zip -d org.eclipse.osgi.util/
 
-	rm -rf plugins/org.eclipse.jdt.core/scripts/*.class
-	rm -rf plugins/org.eclipse.core.runtime.compatibility.registry/classes
+	rm -rf org.eclipse.jdt.core/scripts/*.class
+	rm -rf org.eclipse.core.runtime.compatibility.registry/classes
+	popd >/dev/null
 }
