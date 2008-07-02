@@ -23,7 +23,6 @@ DEPEND=">=virtual/jdk-1.4
 
 S="${WORKDIR}"
 
-EANT_EXTRA_ARGS="-Djarfile=${PN}.jar"
 EANT_GENTOO_CLASSPATH="slf4j-api"
 
 src_unpack() {
