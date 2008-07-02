@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="1"
-JAVA_PKG_IUSE="doc examples source test"
+JAVA_PKG_IUSE="source test"
 inherit java-pkg-2
 
 DESCRIPTION="Utility classes that allow high performance XML processing based on SAX"
@@ -27,6 +27,7 @@ src_compile() {
 
 src_install() {
 	java-pkg_dojar "${PN}.jar"
+	use source && java-pkg_dosrc src/main/java/*
 }
 
 src_test() {
