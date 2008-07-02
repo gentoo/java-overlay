@@ -2,6 +2,9 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  02 Jul 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.1.ebuild icedtea6-1.2.ebuild:
+        x86 architecture should be i586 for build directory, and i386 for plugin (!?!?)
+	
   30 Jun 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.1.ebuild icedtea6-1.2.ebuild:
 	x86 architecture should be 'i386' apparently
 

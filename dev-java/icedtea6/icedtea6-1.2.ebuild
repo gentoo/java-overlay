@@ -112,7 +112,7 @@ src_install() {
 	dodir ${dest}
 
 	local arch=${ARCH}
-	[[ ${ARCH} = x86 ]] && arch=i386
+	[[ ${ARCH} = x86 ]] && arch=i586
 
 	cd "${S}"/openjdk/control/build/linux-${arch}/
 
@@ -161,7 +161,8 @@ src_install() {
 	cp src.zip "${ddest}" || die
 
 	if use nsplugin; then
-		install_mozilla_plugin ${dest}/jre/lib/${arch}/gcjwebplugin.so
+		[[ ${ARCH} = x86 ]] && arch=i386;
+		install_mozilla_plugin ${dest}/jre/lib/${arch}/gcjwebplugin.so;
 	fi
 
 	set_java_env
