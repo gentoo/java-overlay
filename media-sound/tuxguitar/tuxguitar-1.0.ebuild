@@ -17,7 +17,6 @@ IUSE="alsa fluidsynth oss pdf"
 
 # Test notes
 # Couldn't test ftp plugin.
-# Couldn't play midi files exported by midi plugin.
 # Couldn't get JSA plugin working out of the box with IcedTea.
 
 KEYWORDS="~amd64"
