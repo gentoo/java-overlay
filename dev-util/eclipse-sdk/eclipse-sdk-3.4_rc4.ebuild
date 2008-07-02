@@ -245,24 +245,6 @@ patch-apply() {
 			-i assemble.org.eclipse.sdk.linux.gtk.${eclipsearch}.xml
 	fi
 
-	sed -e "/plugins\/javax.servlet.source_/d" \
-		-e "/plugins\/javax.servlet.jsp.source_/d" \
-		-e "/plugins\/org.apache.jasper.source_/d" \
-		-e "/plugins\/org.apache.commons.el.source_/d" \
-		-e "/plugins\/org.apache.commons.logging.source_/d" \
-		-e "/plugins\/org.apache.ant.source_/d" \
-		-e "/plugins\/org.apache.lucene.source_/d" \
-		-e "/plugins\/org.apache.lucene.analysis.source_/d" \
-		-e "/value=\"javax.servlet.source_/,/eclipse.plugins/d" \
-		-e "/value=\"javax.servlet.jsp.source_/,/eclipse.plugins/d" \
-		-e "/value=\"org.apache.jasper.source_/,/eclipse.plugins/d" \
-		-e "/value=\"org.apache.commons.el.source_/,/eclipse.plugins/d" \
-		-e "/value=\"org.apache.commons.logging.source_/,/eclipse.plugins/d" \
-		-e "/value=\"org.apache.ant.source_/,/eclipse.plugins/d" \
-		-e "/value=\"org.apache.lucene.source_/,/eclipse.plugins/d" \
-		-e "/value=\"org.apache.lucene.analysis.source_/,/eclipse.plugins/d" \
-		-i package.org.eclipse.sdk.linux.gtk.${eclipsearch}.xml
-
 	# waaaaahhhhhhk !!!!11oneone
 	epatch ${PATCHDIR}/eclipse_build-libs.diff
 	epatch ${PATCHDIR}/eclipse_String.compareTo.diff
@@ -325,8 +307,8 @@ patch-apply() {
 		</copy>' plugins/org.eclipse.core.runtime.compatibility.registry/build.xml
 
 	# This removes the copying operation for bundled jars
-	sed -e "s/<copy.*com\.jcraft\.jsch.*\/>//" \
-		-e "s/<copy.*com\.ibm\.icu.*\/>//" \
+	sed -e "s/<copy.*com\.jcraft\.jsch_.*\/>//" \
+		-e "s/<copy.*com\.ibm\.icu_.*\/>//" \
 		-e "s/<copy.*org\.apache\.commons\.el_.*\/>//" \
 		-e "s/<copy.*org\.apache\.commons\.logging_.*\/>//" \
 		-e "s/<copy.*javax\.servlet\.jsp_.*\/>//" \
@@ -348,9 +330,9 @@ remove-bundled-stuff() {
 		org.eclipse.swt/extra_jars/exceptions.jar
 
 	rm -rf org.apache.ant_*/*
-	rm org.apache.commons.*.jar com.jcraft.jsch* \
-		com.ibm.icu* org.junit_*/*.jar \
-		org.junit4*/*.jar javax.*.jar \
+	rm org.apache.commons.el_*.jar org.apache.commons.logging_*.jar \
+		com.jcraft.jsch_*.jar com.ibm.icu_*.jar org.junit_*/*.jar \
+		org.junit4*/*.jar javax.servlet.jsp_*.jar javax.servlet_*.jar \
 		org.apache.lucene_*.jar org.apache.lucene.analysis_*.jar
 	for d in $(ls -1 -d org.eclipse.swt.*); do
 		[[ ${d} = org.eclipse.swt.tools ]] && continue
