@@ -12,22 +12,18 @@ SRC_URI="http://dev.gentooexperimental.org/~serkan/distfiles/${P}.tar.gz"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="debug"
+IUSE=""
 
 RDEPEND=">=virtual/jre-1.5"
 DEPEND=">=virtual/jdk-1.5"
 
 src_unpack() {
 	unpack ${A}
-	cd "${S}" || die
-	epatch "${FILESDIR}"/${P}-fixwarning.patch
-	epatch "${FILESDIR}"/${P}-jarfixes.patch
+	epatch "${FILESDIR}"/${P}-makefile-fixes.patch
 }
 
 src_compile() {
-	local debug="disable"
-	use debug && debug="enable"
-	emake DEBUG=${debug} JCFLAGS="$(java-pkg_javac-args)" all $(use doc && echo doc) || die "emake failed"
+	emake JCFLAGS="$(java-pkg_javac-args)" all $(usev doc) || die "emake failed"
 }
 
 src_install() {
@@ -36,7 +32,7 @@ src_install() {
 	java-pkg_newjar debug-enable-1.1.jar debug-enable.jar
 	java-pkg_newjar hexdump-0.2.jar hexdump.jar
 	java-pkg_newjar io-0.1.jar io.jar
-	java-pkg_newjar unix-0.4.jar unix.jar
+	java-pkg_newjar unix-0.5.jar unix.jar
 	java-pkg_doso libcgi-java.so
 	java-pkg_doso libunix-java.so
 	dodoc INSTALL changelog README || die
