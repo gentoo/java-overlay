@@ -3,6 +3,8 @@
 # $Header: $
 
 JAVA_PKG_IUSE="doc source"
+#TODO: Re-add doc keyword
+#JAVA_PKG_IUSE="source"
 inherit eutils java-pkg-2
 
 DESCRIPTION="Java bindings for the D-Bus messagebus."
@@ -26,8 +28,8 @@ DEPEND=">=virtual/jdk-1.5
 src_unpack() {
 	unpack ${A}
 	cd "${S}" || die
-	epatch "${FILESDIR}/${P}-jarfixes.patch"
-	epatch "${FILESDIR}/${P}-createinterface.patch"
+	epatch "${FILESDIR}/${PN}-2.4-jarfixes.patch"
+	#epatch "${FILESDIR}/${P}-createinterface.patch"
 }
 
 src_compile() {
@@ -35,7 +37,7 @@ src_compile() {
 	use debug && debug="enable"
 	local libdir=$(dirname $(java-pkg_getjar libmatthew-java unix.jar))
 	emake -j1 JCFLAGS="$(java-pkg_javac-args)" \
-		STRIP=echo DEBUG=${debug} JAVAUNIXJARDIR=${libdir} || die "emake failed"
+		STRIP=echo DEBUG=${debug} JAVAUNIXJARDIR=${libdir} bin || die "emake failed"
 
 	for i in *.sgml; do
 		docbook2man $i || die;
@@ -74,6 +76,7 @@ src_install() {
 	java-pkg_dolauncher DBusDaemon \
 		--main org.freedesktop.dbus.bin.DBusDaemon \
 		--java_args "${javaargs}"
+	
 	java-pkg_dolauncher DBusCall \
 		--main org.freedesktop.dbus.bin.Caller \
 		--java_args "${javaargs}"
