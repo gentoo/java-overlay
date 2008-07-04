@@ -44,7 +44,8 @@ pkg_setup() {
 	if ! built_with_use 'dev-java/swt' 'cairo'; then
 		eerror "You must build dev-java/swt with cairo support"
 		die "dev-java/swt built without cairo"
-	fi 
+	fi
+	java-pkg-2_pkg_setup
 }
 
 src_unpack() {
@@ -86,15 +87,13 @@ src_install() {
 	doins "${S}/misc/${PN}.xml"
 	doicon "${S}/misc/${PN}.xpm" || die "doicon failed"
 	domenu "${S}/misc/${PN}.desktop" || die "domenu failed"
-	
-	
 }
 
 plugin_compile() {
 	cd "${S}"/TuxGuitar-${1} || die
 	eant all
 	if [[ -d jni ]]; then
-		append-flags "-I${JAVA_HOME}/include/ -I${JAVA_HOME}/include/linux"
+		append-flags $(java-pkg_get-jni-cflags)
 		cd jni || die "\"cd jni\" failed"
 		CC=$(tc-getCC) emake || die "emake failed"
 	fi
@@ -107,7 +106,6 @@ plugin_install() {
 	insinto ${TUXGUITAR_INST_PATH}/share/plugins
 	doins ${BINARY_NAME}.jar || die "doins ${BINARY_NAME}.jar failed"
 	#TuxGuitar has its own classloader. No need to register the plugins.
-	
 	if [[ -d jni ]]; then
 		java-pkg_doso jni/lib${BINARY_NAME}-jni.so
 	fi
@@ -122,7 +120,7 @@ list_plugins() {
 
 pkg_postinst() {
 	fdo-mime_desktop_database_update
-        gnome2_icon_cache_update
+	gnome2_icon_cache_update
 	if use fluidsynth; then
 		ewarn "Fluidsynth plugin blocks behavior of JSA plugin."
 		ewarn "Enable only one of them in \"Tools > Plugins\""
@@ -130,6 +128,6 @@ pkg_postinst() {
 }
 
 pkg_postrm() {
-        fdo-mime_desktop_database_update
-        gnome2_icon_cache_update
+	fdo-mime_desktop_database_update
+	gnome2_icon_cache_update
 }
