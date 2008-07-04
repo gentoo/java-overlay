@@ -1,0 +1,21 @@
+diff -Nur jpcap-0.7/src/c/Makefile jpcap-0.7_patched/src/c/Makefile
+--- jpcap-0.7/src/c/Makefile	2007-06-09 01:42:09.000000000 +0300
++++ jpcap-0.7_patched/src/c/Makefile	2008-02-09 05:54:27.000000000 +0200
+@@ -12,7 +12,7 @@
+ 
+ ifeq ($(PLATFORM), Linux)
+     JNI_INCLUDE2 = $(JAVA_DIR)/include/linux
+-    COMPILE_OPTION = -shared -L.
++    COMPILE_OPTION = -shared -L. -fPIC
+     SUFFIX = .so
+ else
+ ifeq ($(PLATFORM), FreeBSD)
+@@ -39,7 +39,7 @@
+ #PCAP_INCLUDE = /usr/include/pcap
+ 
+ #CC = cl
+-CC = gcc
++#CC = gcc
+ 
+ all: libjpcap.so
+ 
