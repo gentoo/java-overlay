@@ -22,7 +22,7 @@ src_unpack() {
 	unpack ${A}
 	epatch "${FILESDIR}"/make-fixes.patch
 	mkdir "${S}"/bin
-	rm -rv "${S}"/lib/* || die "rm failed" 
+	rm -rv "${S}"/lib/* || die "rm failed"
 }
 
 src_compile() {
