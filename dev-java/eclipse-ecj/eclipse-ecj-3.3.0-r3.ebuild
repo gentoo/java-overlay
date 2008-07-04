@@ -93,7 +93,6 @@ src_install() {
 	else
 		java-pkg_dolauncher ${MY_PN}-${SLOT} --main \
 			org.eclipse.jdt.internal.compiler.batch.Main;
-		dosym /usr/bin/${MY_PN}-${SLOT} /usr/bin/${MY_PN};
 	fi
 }
 
