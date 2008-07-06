@@ -23,7 +23,10 @@ DEPEND=">=virtual/jdk-1.5
 	app-text/docbook-sgml-utils
 	dev-java/libmatthew-java
 	sys-devel/gettext
-	doc? ( dev-tex/tex4ht )"
+	doc? (
+		dev-tex/tex4ht
+		dev-texlive/texlive-latexextra
+	)"
 
 src_unpack() {
 	unpack ${A}
