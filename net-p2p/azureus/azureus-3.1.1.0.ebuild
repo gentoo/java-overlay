@@ -22,19 +22,19 @@ inherit eutils fdo-mime java-pkg-2 java-ant-2
 
 DESCRIPTION="BitTorrent client in Java"
 HOMEPAGE="http://azureus.sourceforge.net/"
-SRC_URI="mirror://sourceforge/azureus/Azureus_${PV}_source.zip
+SRC_URI="mirror://sourceforge/azureus/Vuze_${PV}_source.zip
 	http://azureus.sourceforge.net/plugins/azupdater_1.8.8.zip"
 LICENSE="GPL-2 BSD"
 
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="cli"
+IUSE=""
 
 RDEPEND="
 	dev-java/json-simple:0
 	>=dev-java/bcprov-1.35:0
-	cli? ( >=dev-java/commons-cli-1.0:1
-		>=dev-java/log4j-1.2.8:0 )
+	>=dev-java/commons-cli-1.0:1
+	>=dev-java/log4j-1.2.8:0
 	>=dev-java/swt-3.4_pre6-r1:3.4
 	!net-p2p/azureus-bin
 	>=virtual/jre-1.5"
@@ -63,8 +63,8 @@ src_unpack() {
 	unzip -q azupdaterpatcher_1.8.8.jar || die
 	rm -v org/gudy/azureus2/update/*.class || die
 
-	epatch "${FILESDIR}/patches-3.0.5.2/use-jdk-cipher-only.patch"
-	epatch "${FILESDIR}/patches-3.0.5.2/remove-osx-platform.patch"
+	epatch "${FILESDIR}/patches-3.1.1.0/use-jdk-cipher-only.diff"
+	epatch "${FILESDIR}/patches-3.1.1.0/remove-osx-platform.diff"
 	epatch "${FILESDIR}/patches-3.0.5.2/no-debug.patch"
 
 	### Removes OS X files and entries.
@@ -75,7 +75,8 @@ src_unpack() {
 	rm -v ./org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java || die
 
 	### Removes test files.
-	rm -rv "org/gudy/azureus2/ui/swt/test" || die
+	rm -rv "org/gudy/azureus2/ui/swt/test" \
+		org/gudy/azureus2/ui/console/multiuser/TestUserManager.java || die
 
 	### Removes bouncycastle (we use our own bcprov).
 	rm -rv "org/bouncycastle" || die
@@ -83,16 +84,11 @@ src_unpack() {
 	### Removes bundled json
 	rm -rv "org/json" || die
 
-	### Remove console code if not requested
-	use !cli && rm -rv org/pf \
-		org/gudy/azureus2/ui/console org/gudy/azureus2/ui/telnet \
-
 	mkdir -p build/libs || die
 }
 
 JAVA_ANT_REWRITE_CLASSPATH="true"
-EANT_GENTOO_CLASSPATH="swt-3.4,bcprov,json-simple"
-use cli && EANT_GENTOO_CLASSPATH="${EANT_GENTOO_CLASSPATH},log4j,commons-cli-1"
+EANT_GENTOO_CLASSPATH="swt-3.4,bcprov,json-simple,log4j,commons-cli-1"
 
 src_compile() {
 	local mem
@@ -135,18 +131,10 @@ pkg_postinst() {
 	elog "modify this file, rather than the startup script."
 	elog
 	elog "Using this config file you can start the console UI."
-	ewarn "If USE flag [cli] was set!"
-	ewarn "The console UI is missing in this release!"
 	echo
 	elog "To switch from classic UI to Vuze use"
 	elog "1: Tools > Options > Interface > Start > Display Azureus UI Chooser"
 	elog "2: Toolbar (right-hand side)"
-	echo
-	ewarn "The org.gudy.azureus2.ui.common.Main wrapper is gone in 3.0.5.2"
-	ewarn "so if you use something other than console or swt as the UI"
-	ewarn "option, you will need to adjust the setting. See /usr/bin/azureus"
-	ewarn "on how console and swt are mapped to starter classes. This should"
-	ewarn "a problem with just this release."
 	echo
 	elog "If you have problems starting Azureus, try starting it"
 	elog "from the command line to look at debugging output."
