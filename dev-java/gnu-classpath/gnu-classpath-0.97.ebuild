@@ -28,7 +28,7 @@ GTK_DEPS="
 "
 
 RDEPEND="alsa? ( media-libs/alsa-lib )
-	        doc? ( >=dev-java/gjdoc-0.7.8 )
+			doc? ( >=dev-java/gjdoc-0.7.8 )
 		dssi? ( >=media-libs/dssi-0.9 )
 		gconf? ( gnome-base/gconf )
 		gtk? ( ${GTK_DEPS} )
@@ -44,7 +44,7 @@ RDEPEND="alsa? ( media-libs/alsa-lib )
 		xml? ( >=dev-libs/libxml2-2.6.8 >=dev-libs/libxslt-1.1.11 )"
 
 DEPEND="app-arch/zip
-		>=virtual/jdk-1.5.0
+		>=dev-java/eclipse-ecj-3.2.1
 		gtk? ( || (
 					x11-libs/libXrender
 					x11-proto/xextproto
@@ -87,6 +87,7 @@ src_compile() {
 		--disable-dependency-tracking \
 		--host=${CHOST} \
 		--prefix=/usr/${PN}-${SLOT} \
+		--with-ecj-jar=$(ls -r /usr/share/eclipse-ecj-3.*/lib/ecj.jar|head -n 1) \
 		|| die "configure failed"
 	emake || die "make failed"
 }
