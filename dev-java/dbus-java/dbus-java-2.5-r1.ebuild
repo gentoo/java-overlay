@@ -17,7 +17,7 @@ KEYWORDS="~amd64"
 IUSE="debug"
 
 RDEPEND=">=virtual/jre-1.5
-	>=dev-java/libmatthew-java-0.6"
+	>=dev-java/libmatthew-java-0.7-r1"
 
 DEPEND=">=virtual/jdk-1.5
 	app-text/docbook-sgml-utils
@@ -32,7 +32,6 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}" || die
 	epatch "${FILESDIR}/${PN}-2.4-jarfixes.patch"
-	#epatch "${FILESDIR}/${P}-createinterface.patch"
 }
 
 src_compile() {
@@ -55,7 +54,7 @@ src_compile() {
 src_install() {
 	local debug="disable"
 	use debug && debug="enable"
-	for jar in unix debug-${debug} hexdump; do
+	for jar in unix debug-${debug}; do
 		java-pkg_register-dependency libmatthew-java ${jar}.jar
 	done
 	java-pkg_newjar lib${P}.jar dbus.jar

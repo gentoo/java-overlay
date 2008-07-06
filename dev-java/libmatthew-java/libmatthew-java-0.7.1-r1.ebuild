@@ -20,10 +20,11 @@ DEPEND=">=virtual/jdk-1.5"
 src_unpack() {
 	unpack ${A}
 	epatch "${FILESDIR}"/${P}-makefile-fixes.patch
+	rm -v "${S}"/cx/ath/matthew/debug/Debug.{java,class} || die "rm failed"
 }
 
 src_compile() {
-	emake JCFLAGS="$(java-pkg_javac-args)" all $(usev doc) || die "emake failed"
+	emake -j1 JARDIR=/usr/share/libmatthew-java/lib JCFLAGS="$(java-pkg_javac-args)" all $(usev doc) || die "emake failed"
 }
 
 src_install() {

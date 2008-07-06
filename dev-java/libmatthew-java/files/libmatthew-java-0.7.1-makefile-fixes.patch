@@ -24,18 +24,3 @@ diff -Nur libmatthew-java-0.7.1/Makefile libmatthew-java-0.7.1_patched/Makefile
  
  hexdump-$(HEXVER).jar: .classes
  	(cd classes; $(JAR) cf ../$@ cx/ath/matthew/utils/Hexdump.class)
-@@ -86,12 +81,10 @@
- 
- debug-enable-$(DEBUGVER).jar: cx/ath/matthew/debug/Debug.jpp
- 	make .enabledebug
--	echo "Class-Path: $(JARDIR)/hexdump.jar" > Manifest
--	(cd classes;jar cfm ../$@ ../Manifest cx/ath/matthew/debug/*.class)
-+	(cd classes;jar cf ../$@ cx/ath/matthew/debug/*.class)
- debug-disable-$(DEBUGVER).jar: cx/ath/matthew/debug/Debug.jpp
- 	make .disabledebug
--	echo "Class-Path: $(JARDIR)/hexdump.jar" > Manifest
--	(cd classes;jar cfm ../$@ ../Manifest cx/ath/matthew/debug/*.class)
-+	(cd classes;jar cf ../$@ cx/ath/matthew/debug/*.class)
- .enabledebug: cx/ath/matthew/debug/Debug.jpp 
- 	mkdir -p classes
- 	cpp $(PPFLAGS) -DDEBUGSETTING=true < cx/ath/matthew/debug/Debug.jpp > cx/ath/matthew/debug/Debug.java
