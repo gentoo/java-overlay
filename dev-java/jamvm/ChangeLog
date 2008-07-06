@@ -2,6 +2,9 @@
 # Copyright 2000-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/jamvm/ChangeLog,v 1.32 2008/04/13 22:14:22 betelgeuse Exp $
 
+  06 Jul 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> jamvm-1.5.0-r3.ebuild, jamvm-1.5.1.ebuild:
+  Add symlinks for rt.jar and tools.jar
+	
 *jamvm-1.5.1 (06 Jul 2008)
 
 *jamvm-1.5.0-r3 (06 Jul 2008)

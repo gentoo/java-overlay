@@ -95,6 +95,10 @@ src_install() {
 	dosym /usr/bin/jamvm ${bindir}/java
 	dosym $(ls -r /usr/bin/ecj-3.*|head -n 1) ${bindir}/javac
 	dosym /usr/bin/gjdoc ${bindir}/javadoc
+	dodir /usr/${PN}/jre/lib
+	dosym /usr/gnu-classpath-0.97/share/classpath/glibj.zip /usr/${PN}/jre/lib/rt.jar
+	dodir /usr/${PN}/lib
+	dosym /usr/gnu-classpath-0.97/share/classpath/tools.zip /usr/${PN}/lib/tools.jar
 	for file in ${CLASSPATH_DIR}/bin/*; do
 		base=$(basename ${file})
 		create_launcher ${base#g}
