@@ -60,7 +60,11 @@ src_install() {
 	dosym /usr/share/gcc-data/${gccchost}/${PV}/java/libgcj-tools-${PV/_/-}.jar ${gcjhome}/lib/tools.jar
 
 	# use ecj for javac
-	dosym /usr/bin/ecj-${ECJ_VER} ${gcjhome}/bin/javac
+	if [ -e /usr/bin/ecj ]; then
+		dosym /usr/bin/ecj ${bindir}/javac;
+	else
+		dosym $(ls -r /usr/bin/ecj-3*|head -n 1) ${bindir}/javac;
+	fi
 	# use gjdoc for javadoc
 	dosym /usr/bin/gjdoc ${gcjhome}/bin/javadoc
 
