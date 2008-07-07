@@ -39,8 +39,6 @@ pkg_setup() {
 src_unpack() {
 	unpack ${A}
 	cd "${S}"
-	epatch "${FILESDIR}/classes-location.patch"
-	eautoreconf
 
 	# These come precompiled.
 	# configure script uses detects the compiler
