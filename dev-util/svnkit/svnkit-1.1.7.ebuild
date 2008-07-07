@@ -3,7 +3,6 @@
 # $Header: $
 
 JAVA_PKG_IUSE="doc source"
-
 inherit eutils java-pkg-2 java-ant-2
 
 DESCRIPTION="A pure Java Subversion client library"
@@ -32,7 +31,7 @@ EANT_DOC_TARGET="build-doc"
 
 pkg_setup() {
 	java-pkg-2_pkg_setup
-	if ! built_with_use dev-util/subversion java ; then
+	if ! built_with_use =dev-util/subversion-1.4* java ; then
 		msg="${CATEGORY}/${P} needs dev-util/subversion built with the java USE flag"
 		eerror ${msg}
 		die ${msg}
@@ -41,20 +40,20 @@ pkg_setup() {
 
 src_unpack() {
 	unpack ${A}
-	
-	cd "${S}"
+
+	cd "${S}" || die
 	epatch "${FILESDIR}/${P}-build.xml.patch"
-	
+
 	rm -r contrib/* || die
 	java-pkg_jar-from --into contrib jna,trilead-ssh2,sequence,subversion
 }
 
 src_install() {
-	cd build/lib
+	cd build/lib || die
 	java-pkg_dojar *.jar
 	dodoc *.txt || die
 
-	cd "${S}"
+	cd "${S}" || die
 	use doc && java-pkg_dojavadoc build/doc/javadoc
 	use source && java-pkg_dosrc svnkit/src/*
 }
