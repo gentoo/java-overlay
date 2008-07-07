@@ -118,18 +118,18 @@ src_install() {
 	use source && java-pkg_dosrc src/org
 	dodoc README docs/{*.txt,README.*} || die
 
-	if use doc; then
+	if use doc ; then
 		java-pkg_dojavadoc docs/api
 	fi
 
-	java-pkg_dolauncher ${PN} \
-		--main 'org.jruby.Main' \
-		--java_args '-Djruby.base=/usr/share/jruby -Djruby.home=/usr/share/jruby -Djruby.lib=/usr/share/jruby/lib -Djruby.script=jruby -Djruby.shell=/bin/sh'
+	dobin "${FILESDIR}/jruby" || die
+	dobin "${S}/bin/jirb" || die
 
-	dobin "${S}"/bin/jirb
-	dodir "/usr/share/${PN}/lib"
+	exeinto "/usr/share/${PN}/bin"
+	doexe "${S}/bin/jruby" || die
+
 	insinto "/usr/share/${PN}/lib"
-	doins -r "${S}/lib/ruby"
+	doins -r "${S}/lib/ruby" || die
 
 	# Share gems with regular Ruby.
 	rm -r "${D}"/usr/share/${PN}/lib/ruby/gems || die

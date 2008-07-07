@@ -2,6 +2,11 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  07 Jul 2008; James Le Cuirot <chewi@aura-online.co.uk>
+  -jruby-1.1.2.ebuild, +jruby-1.1.2-r1.ebuild, +files/jruby:
+  Documented options for JRuby were not working because they are parsed by the
+  packaged shell script. We now wrap this shell script with our own.
+
   19 Jun 2008; Alistair Bush <ali_bush@gentoo.org> +metadata.xml,
   jruby-1.1.2.ebuild:
   Add metadata. Add EAPI=1 as using slot depends

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+JRUBY_PARENT_CLASSPATH=`java-config -d -p jruby`
+source /usr/share/jruby/bin/jruby ${@}
