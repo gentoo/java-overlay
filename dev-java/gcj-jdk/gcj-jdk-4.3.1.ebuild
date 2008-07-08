@@ -81,12 +81,10 @@ src_install() {
 
 	# copy scripts
 	exeinto /usr/bin
-	doexe "${FILESDIR}"/gcj-config
 	doexe "${FILESDIR}"/rebuild-classmap-db
 }
 
 pkg_postinst() {
-	gcj-config gcj-${PV}
 
 	# Set as default VM if none exists
 	java-vm-2_pkg_postinst
