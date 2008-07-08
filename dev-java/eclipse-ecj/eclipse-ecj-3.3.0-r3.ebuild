@@ -19,7 +19,7 @@ KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 SLOT="3.3"
 
 DEPEND="gcj? ( >=sys-devel/gcc-4.3.1 )
-	!gcj? ( !java6? ( >=virtual/jdk-1.4 ) 
+	!gcj? ( !java6? ( >=virtual/jdk-1.4 )
 		java6? ( >=virtual/jdk-1.6 ) )"
 RDEPEND=${DEPEND}
 
@@ -93,7 +93,8 @@ src_install() {
 		exeinto /usr/bin;
 		newexe ${MY_PN} native_${MY_PN}-${SLOT};
 		dosym /usr/bin/native_${MY_PN}-${SLOT} /usr/bin/native_${MY_PN};
-		dosym /usr/bin/native_${MY_PN}-${SLOT} /usr/bin/${MY_PN};
+		newexe ${FILESDIR}/ecj /usr/bin/${MY_PN}-${SLOT}
+		dosym /usr/bin/${MY_PN}-${SLOT} /usr/bin/${MY_PN};
 	else
 		java-pkg_dolauncher ${MY_PN}-${SLOT} --main \
 			org.eclipse.jdt.internal.compiler.batch.Main;

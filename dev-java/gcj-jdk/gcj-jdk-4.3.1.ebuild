@@ -61,9 +61,9 @@ src_install() {
 
 	# use ecj for javac
 	if [ -e /usr/bin/ecj ]; then
-		dosym /usr/bin/ecj ${bindir}/javac;
+		dosym /usr/bin/ecj ${gcjhome}/bin/javac;
 	else
-		dosym $(ls -r /usr/bin/ecj-3*|head -n 1) ${bindir}/javac;
+		dosym $(ls -r /usr/bin/ecj-3*|head -n 1) ${gcjhome}/bin/javac;
 	fi
 	# use gjdoc for javadoc
 	dosym /usr/bin/gjdoc ${gcjhome}/bin/javadoc
