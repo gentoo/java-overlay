@@ -52,7 +52,11 @@ src_compile() {
 	local javac="javac" java="java" jar="jar"
 
 	if use gcj; then
-	  local gcj="$(gcc-config -B)/gcj";
+	  local gccbin="$(gcc-config -B $(ls /etc/env.d/gcc/*4.3.?|head -1))";
+	  local gcj="${gccbin}/gcj";
+	  javac="${gcj} -C";
+	  jar="${gccbin}/gjar";
+	  java="${gccbin}/gij";
 	fi
 
 	mkdir -p bootstrap
