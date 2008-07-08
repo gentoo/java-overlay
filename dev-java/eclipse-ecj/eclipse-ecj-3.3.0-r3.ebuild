@@ -93,7 +93,7 @@ src_install() {
 		exeinto /usr/bin;
 		newexe ${MY_PN} native_${MY_PN}-${SLOT};
 		dosym /usr/bin/native_${MY_PN}-${SLOT} /usr/bin/native_${MY_PN};
-		newexe ${FILESDIR}/ecj /usr/bin/${MY_PN}-${SLOT}
+		newexe ${FILESDIR}/ecj ${MY_PN}-${SLOT}
 		dosym /usr/bin/${MY_PN}-${SLOT} /usr/bin/${MY_PN};
 	else
 		java-pkg_dolauncher ${MY_PN}-${SLOT} --main \
