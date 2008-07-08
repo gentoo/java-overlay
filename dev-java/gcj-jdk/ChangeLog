@@ -3,6 +3,9 @@
 # $Header: $
 
   08 Jul 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3.0.ebuild:
+  Move creation of jre/bin up to come before the java symlink.
+
+  08 Jul 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3.0.ebuild:
   Add explicit dir creation.
 	
   08 Jul 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3.0.ebuild:

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -e /usr/bin/native_gjdoc ]; then
+    LD_LIBRARY_PATH=`gcj-config --lib` /usr/bin/native_gjdoc ${1+"$@"};
+else
+    $(java-config --java) -classpath "$(java-config --classpath=gjdoc,antlr):$CLASSPATH" \
+	gnu.classpath.tools.gjdoc.Main ${1+"$@"};
+fi

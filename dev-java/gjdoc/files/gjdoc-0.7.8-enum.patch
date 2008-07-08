@@ -1,0 +1,59 @@
+Index: src/gnu/classpath/tools/gjdoc/Parser.java
+===================================================================
+RCS file: /sources/classpath/gjdoc/src/gnu/classpath/tools/gjdoc/Parser.java,v
+retrieving revision 1.28
+diff -u -3 -p -u -r1.28 Parser.java
+--- src/gnu/classpath/tools/gjdoc/Parser.java	15 Apr 2007 20:22:34 -0000	1.28
++++ src/gnu/classpath/tools/gjdoc/Parser.java	17 Mar 2008 01:48:36 -0000
+@@ -1,5 +1,5 @@
+ /* gnu.classpath.tools.gjdoc.Parser
+-   Copyright (C) 2001, 2005 Free Software Foundation, Inc.
++   Copyright (C) 2001, 2005, 2008 Free Software Foundation, Inc.
+ 
+    This file is part of GNU Classpath.
+ 
+@@ -381,7 +381,6 @@ import gnu.classpath.tools.MalformedInpu
+ 	 //ctx.fieldList.add(FieldDocImpl.createFromSource(source, startIndex, endIndex));
+ 
+ 	 //System.out.println("function match '"+new String(source,startIndex,endIndex-startIndex)+"'");
+-
+ 	 ExecutableMemberDocImpl execDoc=MethodDocImpl.createFromSource(parser.ctx.classDoc, 
+ 									parser.ctx.classDoc.containingPackage(), 
+ 									source, startIndex, endIndex);
+@@ -585,20 +584,28 @@ import gnu.classpath.tools.MalformedInpu
+ 	 parser.setLastComment(null);
+ 	 if (parser.ctx.classDoc.isEnum())
+ 	   {
++	     int depth = 0;
+ 	     for (int a = endIndex; a < source.length; ++a)
+ 	     {
+-	       Debug.log(1, "Enum skipping " + a);
+-	       if (source[a] == ';')
++	       Debug.log(9, "Enum skipping " + a);
++	       if (source[a] == '{')
+ 		 {
+-		   Debug.log(1, "Found enum ;");
+-		   endIndex = a + 1;
+-		   break;
++		   Debug.log(1, "Found inner { in enum");
++		   ++depth;
+ 		 }
+ 	       if (source[a] == '}')
+ 		 {
+-		   Debug.log(1, "Found enum }");
+-		   parser.classClosed();
+-		   return a + 1;
++		   if (depth > 0)
++		     {
++		       Debug.log(1, "Found inner } in enum");
++		       --depth;
++		     }
++		   else
++		     {
++		       Debug.log(1, "Found enum }");
++		       parser.classClosed();
++		       return a + 1;
++		     }
+ 		 }
+ 	     }
+ 	   }
