@@ -3,9 +3,12 @@
 
 <pkgmetadata>
 <herd>java</herd>
-
+<maintainer>
+  <email>gnu_andrew@member.fsf.org</email>
+  <name>Andrew John Hughes</name>
+</maintainer>
 <longdescription>
-CACAO is started out as a research JIT compiler for Java to explore new 
+CACAO started out as a research JIT compiler for Java to explore new 
 implementation techniques. It is now a full-blown Java Virtual Machine
 based on GNU Classpath.
 </longdescription>
