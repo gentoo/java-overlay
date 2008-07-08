@@ -16,7 +16,7 @@ SLOT="0"
 IUSE="alsa fluidsynth oss pdf"
 
 # Test notes
-# Couldn't test ftp plugin.
+# FTP plugin seems to connect but it doesn't list my files at FTP.
 # Couldn't get JSA plugin working out of the box with IcedTea.
 
 KEYWORDS="~amd64"
