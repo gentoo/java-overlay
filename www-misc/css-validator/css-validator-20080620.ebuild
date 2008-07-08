@@ -48,9 +48,9 @@ src_install() {
 
 src_test() {
 	local xml CP=".:${PN}.jar:"`java-pkg_getjars --with-dependencies "${EANT_GENTOO_CLASSPATH// /,}"`
-	javac -cp "${CP}" autotest/*.java || die "tests failed to compile"
+	ejavac -cp "${CP}" autotest/*.java || die "tests failed to compile"
 
 	for xml in autotest/testsuite/xml/*.xml ; do
-		java -cp "${CP}" autotest.AutoTest "${xml}" || die "tests failed"
+		`java-config -J` -cp "${CP}" autotest.AutoTest "${xml}" || die "tests failed"
 	done
 }
