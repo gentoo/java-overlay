@@ -1,6 +1,6 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-devel/gcc/gcc-4.3.1-r1.ebuild,v 1.1 2008/07/06 03:42:52 halcy0n Exp $
+# $Header: $
 
 PATCH_VER="1.1"
 UCLIBC_VER="1.0"
@@ -14,6 +14,9 @@ SPLIT_SPECS=no #${SPLIT_SPECS-true} hard disable until #106690 is fixed
 inherit toolchain
 
 DESCRIPTION="The GNU Compiler Collection.  Includes C/C++, java compilers, pie+ssp extensions, Haj Ten Brugge runtime bounds checking"
+
+SRC_URI="${SRC_URI}
+	gcj? ( ftp://sourceware.org/pub/java/ecj-4.3.jar )"
 
 LICENSE="GPL-2 LGPL-2.1"
 KEYWORDS="~amd64 ~hppa ~ia64 ~ppc ~ppc64 ~sparc ~x86"
@@ -57,7 +60,9 @@ fi
 src_unpack() {
 	gcc_src_unpack
 
-	wget -O ${S}/ecj.jar -v ftp://sourceware.org/pub/java/ecj-4.3.jar
+	if use gcj ; then
+		ln -snf "${DISTDIR}/ecj-4.3.jar" "${S}/ecj.jar" || die
+	fi
 
 	use vanilla && return 0
 
