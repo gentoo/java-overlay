@@ -41,7 +41,7 @@ src_install() {
 	local gccchost=$(echo $gccbin|sed -r 's#/usr/([a-z0-9_-]*).*$#\1#')
 
 	# links
-	dodir ${gcjhome}
+	dodir ${gcjhome}/bin
 	dosym ${gccbin}/gij ${gcjhome}/bin/gij
 	dosym ${gcjhome}/bin/java ${gcjhome}/jre/bin/java
 	dosym ${gccbin}/gjar ${gcjhome}/bin/jar
@@ -51,12 +51,15 @@ src_install() {
 	dosym ${gccbin}/gappletviewer ${gcjhome}/bin/appletviewer
 	dosym ${gccbin}/gjarsigner ${gcjhome}/bin/jarsigner
 	dosym ${gccbin}/grmiregistry ${gcjhome}/bin/rmiregistry
+	dodir ${gcjhome}/jre/bin
 	dosym ${gccbin}/grmiregistry ${gcjhome}/jre/bin/rmiregistry
 	dosym ${gccbin}/gkeytool ${gcjhome}/bin/keytool
 	dosym ${gccbin}/gkeytool ${gcjhome}/jre/bin/keytool
+	dodir ${gcjhome}/jre/lib/${libarch}/client
 	dosym /usr/$(get_libdir)/gcj-${PV}*/libjvm.so ${gcjhome}/jre/lib/${libarch}/client/libjvm.so
 	dosym /usr/$(get_libdir)/gcj-${PV}*/libjawt.so ${gcjhome}/jre/lib/${libarch}/libjawt.so
 	dosym /usr/share/gcc-data/${gccchost}/${PV}/java/libgcj-${PV/_/-}.jar ${gcjhome}/jre/lib/rt.jar
+	dodir ${gcjhome}/lib
 	dosym /usr/share/gcc-data/${gccchost}/${PV}/java/libgcj-tools-${PV/_/-}.jar ${gcjhome}/lib/tools.jar
 
 	# use ecj for javac
