@@ -10,7 +10,7 @@ SRC_URI="mirror://gnu/classpath/${MY_P}.tar.gz"
 HOMEPAGE="http://www.gnu.org/software/classpath"
 
 LICENSE="GPL-2-with-linking-exception"
-SLOT="0.96.1"
+SLOT="0.96"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
 IUSE="alsa cairo debug doc dssi examples gconf gtk gstreamer nsplugin qt4 xml"
@@ -91,6 +91,7 @@ src_compile() {
 		--host=${CHOST} \
 		--prefix=/usr/${PN}-${SLOT} \
 		--with-ecj=/usr/bin/ecj-3.2 \
+		--with-vm=java \
 		|| die "configure failed"
 	emake || die "make failed"
 }

@@ -2,6 +2,9 @@
 # Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/cacao/ChangeLog,v 1.12 2006/10/06 14:25:54 caster Exp $
 
+  08 Jul 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> cacao-0.99.2.ebuild cacao-0.98.ebuild:
+  Provide CACAO as a JDK to java-config.
+	
 * cacao-0.99.2 (08 Jul 2008)
 	
   08 Jul 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> cacao-0.99.2.ebuild:

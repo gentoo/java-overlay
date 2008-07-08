@@ -81,6 +81,7 @@ src_compile() {
 		--host=${CHOST} \
 		--prefix=/usr/${PN}-${SLOT} \
 		--with-ecj-jar=$(ls -r /usr/share/eclipse-ecj-3.*/lib/ecj.jar|head -n 1) \
+		--with-vm=java \
 		|| die "configure failed"
 	emake || die "make failed"
 }

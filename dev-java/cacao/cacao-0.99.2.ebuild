@@ -4,7 +4,7 @@
 
 EAPI=1
 
-inherit eutils flag-o-matic
+inherit eutils flag-o-matic java-vm-2
 
 DESCRIPTION="Cacao Java Virtual Machine"
 HOMEPAGE="http://www.cacaojvm.org/"
@@ -19,15 +19,16 @@ RDEPEND="${DEPEND}"
 
 CLASSPATH_DIR=/usr/gnu-classpath-${CLASSPATH_SLOT}
 
-src_compile() {
-	# Upstream has patches this already so we just use this until the next
-	# version
-	append-flags -Wa,--noexecstack
+pkg_setup() {
+	java-vm-2_pkg_setup
+}
 
+src_compile() {
 	# A compiler can be forced with the JAVAC variable if needed
 	unset JAVAC
 	econf --bindir=/usr/${P}/bin \
 		--libdir=/usr/${P}/lib \
+		--datarootdir=/usr/${P}/share \
 		--disable-dependency-tracking \
 		--with-java-runtime-library-prefix=${CLASSPATH_DIR}
 	emake || die "emake failed"
@@ -38,4 +39,29 @@ src_install() {
 	dodir /usr/bin
 	dosym /usr/${P}/bin/cacao /usr/bin/cacao
 	dodoc AUTHORS ChangeLog* NEWS README || die "failed to install docs"
+
+	for files in ${CLASSPATH_DIR}/bin/g*;
+	  do
+	  dosym $files /usr/${P}/bin/$(echo $files|sed "s#$(dirname $files)/g##");
+	done
+
+	dodir /usr/${P}/jre/lib
+	dosym ${CLASSPATH_DIR}/share/classpath/glibj.zip /usr/${P}/jre/lib/rt.jar
+	dodir /usr/${P}/lib
+	dosym ${CLASSPATH_DIR}/share/classpath/tools.zip /usr/${P}/lib
+
+	# use ecj for javac
+	if [ -e /usr/bin/ecj ]; then
+		dosym /usr/bin/ecj /usr/${P}/bin/javac;
+	else
+		dosym $(ls -r /usr/bin/ecj-3*|head -n 1) /usr/${P}/bin/javac;
+	fi
+
+	set_java_env
+}
+
+pkg_postinst() {
+
+	# Set as default VM if none exists
+	java-vm-2_pkg_postinst
 }
