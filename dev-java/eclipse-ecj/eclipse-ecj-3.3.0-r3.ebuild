@@ -19,9 +19,9 @@ KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 SLOT="3.3"
 
 DEPEND="gcj? ( >=sys-devel/gcc-4.3.1 )
-	!gcj? ( java6? ( >=virtual/jdk-1.4 ) 
-		!java6? ( >=virtual/jdk-1.6 ) )
-	sys-apps/findutils"
+	!gcj? ( !java6? ( >=virtual/jdk-1.4 ) 
+		java6? ( >=virtual/jdk-1.6 ) )"
+RDEPEND=${DEPEND}
 
 pkg_setup() {
 	if use gcj && ! built_with_use sys-devel/gcc gcj; then
