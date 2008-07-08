@@ -43,6 +43,7 @@ src_install() {
 	# links
 	dodir ${gcjhome}/bin
 	dosym ${gccbin}/gij ${gcjhome}/bin/gij
+	dodir ${gcjhome}/jre/bin
 	dosym ${gcjhome}/bin/java ${gcjhome}/jre/bin/java
 	dosym ${gccbin}/gjar ${gcjhome}/bin/jar
 	dosym ${gccbin}/grmic ${gcjhome}/bin/rmic
@@ -51,7 +52,6 @@ src_install() {
 	dosym ${gccbin}/gappletviewer ${gcjhome}/bin/appletviewer
 	dosym ${gccbin}/gjarsigner ${gcjhome}/bin/jarsigner
 	dosym ${gccbin}/grmiregistry ${gcjhome}/bin/rmiregistry
-	dodir ${gcjhome}/jre/bin
 	dosym ${gccbin}/grmiregistry ${gcjhome}/jre/bin/rmiregistry
 	dosym ${gccbin}/gkeytool ${gcjhome}/bin/keytool
 	dosym ${gccbin}/gkeytool ${gcjhome}/jre/bin/keytool
