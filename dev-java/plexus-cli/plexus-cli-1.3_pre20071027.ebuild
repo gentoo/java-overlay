@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=1
 JAVA_PKG_IUSE="source"
 
 JAVA_MAVEN_BOOTSTRAP="Y"
@@ -20,7 +21,7 @@ DEP="
 >=dev-java/plexus-container-default-1.0_alpha33_pre20071021
 >=dev-java/plexus-component-api-1.0_alpha33_pre20071021
 =dev-java/commons-cli-1*
-=dev-java/commons-lang-2.3*
+dev-java/commons-lang:2.3
 dev-java/commons-logging
 dev-java/plexus-classworlds
 "

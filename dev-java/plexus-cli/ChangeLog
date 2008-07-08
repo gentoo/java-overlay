@@ -1,6 +1,10 @@
 # ChangeLog for dev-java/plexus-cli
-# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  08 Jul 2008; Serkan Kaba <serkan@gentoo.org> Manifest:
+  Migrated to EAPI 1 slot deps. Thanks to Chris Ryan <wyvern@bigpond.net.au>
+  for the comment in bug #197195.
 
   03 Nov 2007; kiorky <kiorky@cryptelium.net> +Manifest:
   Adding manifest file
