@@ -2,6 +2,10 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  09 Jul 2008; Serkan Kaba <serkan@gentoo.org>
+  plexus-cli-1.3_pre20071027.ebuild:
+  Fix commons-lang slot.
+
   08 Jul 2008; Serkan Kaba <serkan@gentoo.org> Manifest:
   Migrated to EAPI 1 slot deps. Thanks to Chris Ryan <wyvern@bigpond.net.au>
   for the comment in bug #197195.

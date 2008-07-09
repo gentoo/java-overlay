@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -21,7 +21,7 @@ DEP="
 >=dev-java/plexus-container-default-1.0_alpha33_pre20071021
 >=dev-java/plexus-component-api-1.0_alpha33_pre20071021
 =dev-java/commons-cli-1*
-dev-java/commons-lang:2.3
+dev-java/commons-lang:2.1
 dev-java/commons-logging
 dev-java/plexus-classworlds
 "
