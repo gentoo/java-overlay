@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>java</herd>
+<maintainer>
+  <email>gnu_andrew@member.fsf.org</email>
+  <name>Andrew John Hughes</name>
+</maintainer>
+<longdescription>Java-based build tool similar to 'make' that uses XML configuration files.</longdescription>
+<use>
+  <flag name='doc'>Build and install the Javadoc documentation.</flag>
+  <flag name='source'>Install the source code.</flag>
+</use>
+</pkgmetadata>
