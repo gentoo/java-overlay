@@ -5,20 +5,21 @@
 inherit eutils java-pkg-2
 
 MY_PN="ecj"
-DMF="R-${PV}-200806172000"
+DMF="R-${PV}-200706251500"
 S="${WORKDIR}"
 
 DESCRIPTION="Eclipse Compiler for Java"
 HOMEPAGE="http://www.eclipse.org/"
-SRC_URI="http://download.eclipse.org/eclipse/downloads/drops/${DMF}/${MY_PN}src-${PV}.zip"
+SRC_URI="http://download.eclipse.org/eclipse/downloads/drops/${DMF/.0}/${MY_PN}src.zip"
 
 IUSE="gcj java6"
 
 LICENSE="EPL-1.0"
-KEYWORDS="~amd64 ~ia64 ~ppc ~ppc64 ~x86 ~x86-fbsd"
-SLOT="3.4"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
+SLOT="3.3"
 
-CDEPEND="gcj? ( >=sys-devel/gcc-4.3.1 )"
+CDEPEND=">=app-admin/eselect-ecj-0.1
+	gcj? ( >=sys-devel/gcc-4.3.1 )"
 DEPEND="${CDEPEND}
 	!gcj? ( !java6? ( >=virtual/jdk-1.4 )
 		java6? ( >=virtual/jdk-1.6 ) )"
@@ -50,8 +51,8 @@ src_unpack() {
 		rm -fr org/eclipse/jdt/internal/compiler/{apt,tool}/ || die
 	fi
 
-	# gcj feature, broken
-	#epatch "${FILESDIR}"/${PN}-3.4_pre6-gcj.diff
+	# add GCCMain support
+	epatch "${FILESDIR}"/${PN}-gcj-${PV/_*}.patch
 }
 
 src_compile() {
@@ -65,9 +66,9 @@ src_compile() {
 		java="${gccbin}/gij"
 	else
 		javac_opts="$(java-pkg_javac-args) -encoding ISO-8859-1"
-		javac="$(java-config -c)" 
-		java="$(java-config -J)" 
-		jar="$(java-config -j)" 
+		javac="$(java-config -c)"
+		java="$(java-config -J)"
+		jar="$(java-config -j)"
 	fi
 
 	mkdir -p bootstrap || die
@@ -89,16 +90,14 @@ src_compile() {
 
 	if use gcj ; then
 		einfo "Building native ${MY_PN} binary ..."
-		${gcj} ${CFLAGS} -findirect-dispatch -Wl,-Bsymbolic -o native_${MY_PN}-${SLOT} \
+		${gcj} ${CFLAGS} -findirect-dispatch -Wl,-Bsymbolic -o ${MY_PN}-${SLOT} \
 			--main=org.eclipse.jdt.internal.compiler.batch.Main ${MY_PN}.jar || die
 	fi
 }
 
 src_install() {
 	if use gcj ; then
-		dobin native_${MY_PN}-${SLOT} || die
-		dosym native_${MY_PN}-${SLOT} /usr/bin/native_${MY_PN} || die
-		dosym native_${MY_PN}-${SLOT} /usr/bin/${MY_PN}-${SLOT} || die
+		dobin ${MY_PN}-${SLOT} || die
 
 		# Don't complain when doing dojar below.
 		JAVA_PKG_WANT_SOURCE=1.4
@@ -112,6 +111,15 @@ src_install() {
 }
 
 pkg_postinst() {
-	ewarn "To get the Compiler Adapter of ECJ for ANT..."
-	ewarn " # emerge ant-eclipse-ecj"
+	einfo "To get the Compiler Adapter of ECJ for ANT..."
+	einfo " # emerge ant-eclipse-ecj"
+	echo
+	einfo "To select between slots of ECJ..."
+	einfo " # eselect ecj"
+
+	eselect ecj update ecj-${SLOT}
+}
+
+pkg_postrm() {
+	eselect ecj update
 }
