@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit base java-pkg-2
+inherit eutils java-pkg-2
 
 MY_PN="ecj"
 DMF="R-${PV}-200806172000"
@@ -19,16 +19,12 @@ KEYWORDS="~amd64 ~ia64 ~ppc ~ppc64 ~x86 ~x86-fbsd"
 SLOT="3.4"
 
 CDEPEND="gcj? ( >=sys-devel/gcc-4.3.1 )"
-
 DEPEND="${CDEPEND}
 	!gcj? ( !java6? ( >=virtual/jdk-1.4 )
 		java6? ( >=virtual/jdk-1.6 ) )"
-
 RDEPEND="${CDEPEND}
 	!gcj? ( !java6? ( >=virtual/jre-1.4 )
 		java6? ( >=virtual/jre-1.6 ) )"
-
-PATCHES=( "${FILESDIR}/${P}-gcj.diff" )
 
 pkg_setup() {
 	if use gcj ; then
@@ -43,7 +39,7 @@ pkg_setup() {
 }
 
 src_unpack() {
-	base_src_unpack
+	unpack ${A}
 	cd "${S}" || die
 
 	# These have their own package.
@@ -53,44 +49,43 @@ src_unpack() {
 	if use gcj || ! use java6 ; then
 		rm -fr org/eclipse/jdt/internal/compiler/{apt,tool}/ || die
 	fi
+
+	# gcj feature, broken
+	#epatch "${FILESDIR}"/${PN}-3.4_pre6-gcj.diff
 }
 
 src_compile() {
 	local javac_opts javac java jar
 
 	if use gcj ; then
-		local gccbin="`gcc-config -B $(ls -r /etc/env.d/gcc/${CHOST}-* | head -1) || die`"
+		local gccbin="$(gcc-config -B $(ls -r /etc/env.d/gcc/${CHOST}-* | head -1) || die)"
 		local gcj="${gccbin}/gcj"
 		javac="${gcj} -C"
 		jar="${gccbin}/gjar"
 		java="${gccbin}/gij"
 	else
-		javac_opts="`java-pkg_javac-args` -encoding ISO-8859-1"
-		javac="`java-config -c`"
-		java="`java-config -J`"
-		jar="`java-config -j`"
+		javac_opts="$(java-pkg_javac-args) -encoding ISO-8859-1"
+		javac="$(java-config -c)" 
+		java="$(java-config -J)" 
+		jar="$(java-config -j)" 
 	fi
-
 
 	mkdir -p bootstrap || die
 	cp -a org bootstrap || die
 	cd "${S}/bootstrap" || die
 
-	einfo "Bootstrapping ${MY_PN} with ${javac} ..."
-	${javac} ${javac_opts} `find org/ -name '*.java'` || die
-
-	ebegin "Creating bootstrap ${MY_PN}.jar"
-	${jar} cf ${MY_PN}.jar `find org/ -name '*.class' -o -name '*.properties' -o -name '*.rsc'` || die
-	eend 0
+	einfo "bootstrapping ${MY_PN} with ${javac} ..."
+	${javac} ${javac_opts} $(find org/ -name '*.java') || die
+	find org/ -name '*.class' -o -name '*.properties' \
+		-o -name '*.rsc' | xargs ${jar} cf ${MY_PN}.jar
 
 	cd "${S}" || die
-
-	einfo "Building final ${MY_PN} with bootstrapped ${MY_PN} ..."
-	${java} -cp bootstrap/${MY_PN}.jar org.eclipse.jdt.internal.compiler.batch.Main ${javac_opts} org || die
-
-	ebegin "Creating final ${MY_PN}.jar"
-	${jar} cf ${MY_PN}.jar `find org/ -name '*.class' -o -name '*.properties' -o -name '*.rsc'` || die
-	eend 0
+	einfo "building ${MY_PN} with bootstrapped ${MY_PN} ..."
+	${java} -classpath bootstrap/${MY_PN}.jar \
+		org.eclipse.jdt.internal.compiler.batch.Main \
+		${javac_opts} -nowarn org || die
+	find org/ -name '*.class' -o -name '*.properties' \
+		-o -name '*.rsc' | xargs ${jar} cf ${MY_PN}.jar
 
 	if use gcj ; then
 		einfo "Building native ${MY_PN} binary ..."

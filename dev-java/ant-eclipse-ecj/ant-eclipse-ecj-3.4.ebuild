@@ -4,13 +4,12 @@
 
 inherit java-pkg-2
 
-MY_PV="${PV/_rc/RC}"
-DMF="S-${MY_PV}-200806091311"
+DMF="R-${PV}-200806172000"
 S="${WORKDIR}"
 
 DESCRIPTION="Ant Compiler Adapter for Eclipse Java Compiler"
 HOMEPAGE="http://www.eclipse.org/"
-SRC_URI="http://download.eclipse.org/eclipse/downloads/drops/${DMF/.0}/ecjsrc-${MY_PV}.zip"
+SRC_URI="http://download.eclipse.org/eclipse/downloads/drops/${DMF/.0}/ecjsrc-${PV}.zip"
 
 LICENSE="EPL-1.0"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
