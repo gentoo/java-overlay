@@ -74,16 +74,16 @@ src_compile() {
 
 	einfo "bootstrapping ${MY_PN} with ${javac} ..."
 	${javac} ${javac_opts} $(find org/ -name '*.java') || die
-	find org/ -name '*.class' -o -name '*.properties' \
-		-o -name '*.rsc' | xargs ${jar} cf ${MY_PN}.jar
+	find org/ -name '*.class' -o -name '*.properties' -o -name '*.rsc' |\
+		xargs ${jar} cf ${MY_PN}.jar
 
 	cd "${S}" || die
 	einfo "building ${MY_PN} with bootstrapped ${MY_PN} ..."
 	${java} -classpath bootstrap/${MY_PN}.jar \
 		org.eclipse.jdt.internal.compiler.batch.Main \
 		${javac_opts} -nowarn org || die
-	find org/ -name '*.class' -o -name '*.properties' \
-		-o -name '*.rsc' | xargs ${jar} cf ${MY_PN}.jar
+	find org/ -name '*.class' -o -name '*.properties' -o -name '*.rsc' |\
+		xargs ${jar} cf ${MY_PN}.jar
 
 	if use gcj ; then
 		einfo "Building native ${MY_PN} binary ..."
