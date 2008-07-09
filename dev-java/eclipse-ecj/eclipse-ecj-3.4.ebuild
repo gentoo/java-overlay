@@ -99,7 +99,6 @@ src_install() {
 		dobin native_${MY_PN}-${SLOT} || die
 		dosym native_${MY_PN}-${SLOT} /usr/bin/native_${MY_PN} || die
 		dosym native_${MY_PN}-${SLOT} /usr/bin/${MY_PN}-${SLOT} || die
-		dosym native_${MY_PN}-${SLOT} /usr/bin/${MY_PN} || die
 
 		# Don't complain when doing dojar below.
 		JAVA_PKG_WANT_SOURCE=1.4
@@ -107,7 +106,6 @@ src_install() {
 	else
 		java-pkg_dolauncher ${MY_PN}-${SLOT} --main \
 			org.eclipse.jdt.internal.compiler.batch.Main
-		dosym ${MY_PN}-${SLOT} /usr/bin/${MY_PN} || die
 	fi
 
 	java-pkg_dojar ${MY_PN}.jar
