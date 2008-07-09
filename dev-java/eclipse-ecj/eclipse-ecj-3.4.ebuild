@@ -96,8 +96,7 @@ src_compile() {
 
 src_install() {
 	if use gcj ; then
-		exeinto /usr/bin
-		doexe native_${MY_PN}-${SLOT} || die
+		dobin native_${MY_PN}-${SLOT} || die
 		dosym native_${MY_PN}-${SLOT} /usr/bin/native_${MY_PN} || die
 		dosym native_${MY_PN}-${SLOT} /usr/bin/${MY_PN}-${SLOT} || die
 		dosym native_${MY_PN}-${SLOT} /usr/bin/${MY_PN} || die
@@ -108,6 +107,7 @@ src_install() {
 	else
 		java-pkg_dolauncher ${MY_PN}-${SLOT} --main \
 			org.eclipse.jdt.internal.compiler.batch.Main
+		dosym ${MY_PN}-${SLOT} /usr/bin/${MY_PN} || die
 	fi
 
 	java-pkg_dojar ${MY_PN}.jar
