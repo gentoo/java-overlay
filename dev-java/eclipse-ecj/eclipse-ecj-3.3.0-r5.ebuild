@@ -2,23 +2,23 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit java-pkg-2
+inherit eutils java-pkg-2
 
 MY_PN="ecj"
-DMF="R-${PV}-200806172000"
+DMF="R-${PV}-200706251500"
 S="${WORKDIR}"
 
 DESCRIPTION="Eclipse Compiler for Java"
 HOMEPAGE="http://www.eclipse.org/"
-SRC_URI="http://download.eclipse.org/eclipse/downloads/drops/${DMF}/${MY_PN}src-${PV}.zip"
+SRC_URI="http://download.eclipse.org/eclipse/downloads/drops/${DMF/.0}/${MY_PN}src.zip"
 
 IUSE="gcj java6"
 
 LICENSE="EPL-1.0"
-KEYWORDS="~amd64 ~ia64 ~ppc ~ppc64 ~x86 ~x86-fbsd"
-SLOT="3.4"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
+SLOT="3.3"
 
-CDEPEND=">=app-admin/eselect-ecj-0.1
+CDEPEND=">=app-admin/eselect-ecj-0.2
 	gcj? ( >=sys-devel/gcc-4.3.1 )"
 DEPEND="${CDEPEND}
 	!gcj? ( !java6? ( >=virtual/jdk-1.4 )
@@ -50,6 +50,9 @@ src_unpack() {
 	if use gcj || ! use java6 ; then
 		rm -fr org/eclipse/jdt/internal/compiler/{apt,tool}/ || die
 	fi
+
+	# add GCCMain support
+	epatch "${FILESDIR}"/${PN}-gcj-${PV/_*}.patch
 }
 
 src_compile() {

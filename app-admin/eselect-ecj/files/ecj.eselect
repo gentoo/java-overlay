@@ -4,7 +4,7 @@
 
 DESCRIPTION="Manage ECJ targets"
 MAINTAINER="chewi@aura-online.co.uk"
-VERSION="0.1"
+VERSION="0.2"
 
 ECJ="${ROOT}/usr/bin/ecj"
 
@@ -64,14 +64,15 @@ do_show() {
 		die -q "No parameters allowed."
 	fi
 
-	write_list_start "Current ECJ target:"
-
 	if [[ -L "${ECJ}" ]] ; then
-		write_kv_list_entry "$(get_target)" ""
+		get_target
+		return 0
 	elif [[ -e "${ECJ}" ]] ; then
-		write_kv_list_entry "(not a symlink)" ""
+		echo "(not a symlink)" >&2
+		return 1
 	else
-		write_kv_list_entry "(unset)" ""
+		echo "(unset)" >&2
+		return 1
 	fi
 }
 

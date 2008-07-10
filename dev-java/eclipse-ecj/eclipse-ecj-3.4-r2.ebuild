@@ -2,23 +2,23 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-inherit eutils java-pkg-2
+inherit java-pkg-2
 
 MY_PN="ecj"
-DMF="R-${PV}-200706251500"
+DMF="R-${PV}-200806172000"
 S="${WORKDIR}"
 
 DESCRIPTION="Eclipse Compiler for Java"
 HOMEPAGE="http://www.eclipse.org/"
-SRC_URI="http://download.eclipse.org/eclipse/downloads/drops/${DMF/.0}/${MY_PN}src.zip"
+SRC_URI="http://download.eclipse.org/eclipse/downloads/drops/${DMF}/${MY_PN}src-${PV}.zip"
 
 IUSE="gcj java6"
 
 LICENSE="EPL-1.0"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
-SLOT="3.3"
+KEYWORDS="~amd64 ~ia64 ~ppc ~ppc64 ~x86 ~x86-fbsd"
+SLOT="3.4"
 
-CDEPEND=">=app-admin/eselect-ecj-0.1
+CDEPEND=">=app-admin/eselect-ecj-0.2
 	gcj? ( >=sys-devel/gcc-4.3.1 )"
 DEPEND="${CDEPEND}
 	!gcj? ( !java6? ( >=virtual/jdk-1.4 )
@@ -50,9 +50,6 @@ src_unpack() {
 	if use gcj || ! use java6 ; then
 		rm -fr org/eclipse/jdt/internal/compiler/{apt,tool}/ || die
 	fi
-
-	# add GCCMain support
-	epatch "${FILESDIR}"/${PN}-gcj-${PV/_*}.patch
 }
 
 src_compile() {
@@ -77,16 +74,16 @@ src_compile() {
 
 	einfo "bootstrapping ${MY_PN} with ${javac} ..."
 	${javac} ${javac_opts} $(find org/ -name '*.java') || die
-	find org/ -name '*.class' -o -name '*.properties' \
-		-o -name '*.rsc' | xargs ${jar} cf ${MY_PN}.jar
+	find org/ -name '*.class' -o -name '*.properties' -o -name '*.rsc' |\
+		xargs ${jar} cf ${MY_PN}.jar
 
 	cd "${S}" || die
 	einfo "building ${MY_PN} with bootstrapped ${MY_PN} ..."
 	${java} -classpath bootstrap/${MY_PN}.jar \
 		org.eclipse.jdt.internal.compiler.batch.Main \
 		${javac_opts} -nowarn org || die
-	find org/ -name '*.class' -o -name '*.properties' \
-		-o -name '*.rsc' | xargs ${jar} cf ${MY_PN}.jar
+	find org/ -name '*.class' -o -name '*.properties' -o -name '*.rsc' |\
+		xargs ${jar} cf ${MY_PN}.jar
 
 	if use gcj ; then
 		einfo "Building native ${MY_PN} binary ..."
