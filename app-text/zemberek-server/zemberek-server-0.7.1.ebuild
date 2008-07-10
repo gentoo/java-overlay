@@ -7,7 +7,7 @@ inherit eutils java-pkg-2 java-ant-2
 
 DESCRIPTION="A Turkish spell checker server based on Zemberek NLP library"
 HOMEPAGE="http://code.google.com/p/zemberek/"
-SRC_URI="http://zemberek.googlecode.com/files/${P}.tar.gz"
+SRC_URI="http://zemberek.googlecode.com/files/${PN}-nolibs-${PV}.tar.gz"
 
 LICENSE="MPL-1.1"
 SLOT="0"
@@ -36,8 +36,8 @@ pkg_setup() {
 
 src_unpack() {
 	unpack ${A}
-	cd "${S}"/lib || die
-	rm -v *.jar
+	mkdir lib || die
+	cd lib || die
 	java-pkg_jarfrom zemberek zemberek2-cekirdek.jar
 	java-pkg_jarfrom zemberek zemberek2-tr.jar
 	java-pkg_jarfrom dbus-java dbus.jar
