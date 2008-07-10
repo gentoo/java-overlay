@@ -38,6 +38,7 @@ RDEPEND=">=net-print/cups-1.2.12
 #   ant, ecj, gcj-jdk: required to build Java code
 DEPEND=">=virtual/jdk-1.5
 	>=dev-java/eclipse-ecj-3.2.1
+	>=app-admin/eselect-ecj-0.2
 	>=app-arch/unzip-5.52
 	>=dev-java/xalan-2.7.0
 	>=dev-java/xerces-2.9.1
@@ -89,13 +90,23 @@ src_compile() {
 		parallel="";
 	fi
 
+	local ecj="/usr/share/eclipse-$(eselect ecj show)/lib/ecj.jar"
+
+	if [[ ! -f "${ecj}" ]] ; then
+		eerror "ecj.jar not found. Please ensure that you have a valid ECJ version"
+		eerror "selected with eselect-ecj."
+		die "ecj.jar not found"
+	else
+		einfo "Configuring using --with-ecj-jar=\"${ecj}\""
+	fi
+
 	# Note: we must use gjar as the jar from IcedTea6 fails
 	# to handle the @ option.
 	econf \
 		--with-gcj-home=$(java-config -O) \
 		--with-libgcj-jar=$(java-config -O)/jre/lib/rt.jar \
 		--with-openjdk-src-zip="${DISTDIR}"/openjdk-6-src-b09-11_apr_2008.tar.gz \
-		--with-ecj-jar=$(ls -r /usr/share/eclipse-ecj-3.*/lib/ecj.jar|head -n 1) \
+		--with-ecj-jar="${ecj}" \
 		${parallel} \
 		$(use_enable nsplugin gcjwebplugin) \
 		$(use_enable debug fast-build) \
