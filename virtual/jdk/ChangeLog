@@ -2,6 +2,12 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  10 Jul 2008; James Le Cuirot <chewi@aura-online.co.uk> -jdk-1.4.2.ebuild,
+  -jdk-1.5.0.ebuild, -jdk-1.6.0.ebuild, +jdk-1.4.2-r1.ebuild,
+  +jdk-1.5.0-r1.ebuild, +jdk-1.6.0-r1.ebuild:
+  No actual changes. Bumped the revisions on these so that they take precedence
+  over already-installed versions.
+
   30 Jun 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> jdk-1.4.2.ebuild jdk-1.5.0.ebuild jdk-1.6.0.ebuild:
   Add evil dependencies and import into java-overlay.
 	
