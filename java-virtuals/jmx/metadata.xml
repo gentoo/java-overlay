@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
-<pkgmetadata>
-	<herd>java</herd>
-	<longdescription lang="en">The JavaTM Management Extensions (JMXTM) API is a standard API for management and monitoring of resources such as applications, devices, services, and the Java virtual machine.
-	</longdescription>
-</pkgmetadata>
-
