@@ -16,5 +16,5 @@ IUSE=""
 DEPEND=""
 RDEPEND="|| ( dev-java/sun-jdk dev-java/icedtea6 dev-java/gcj-jdk dev-java/ibm-jdk-bin dev-java/blackdown-jdk dev-java/jrockit-jdk-bin dev-java/diablo-jdk )"
 
-JAVA_VIRTUAL_VM=`echo sun-jdk-1.{4,5,6} icedtea6-1.6 gcj-jdk ibm-jdk-bin-1.{4,5,6} blackdown-jdk-1.4 jrockit-jdk-bin-1.{4,5} diablo-jdk-1.5`
+JAVA_VIRTUAL_VM=`echo sun-jdk-1.{4,5,6} icedtea6 gcj-jdk ibm-jdk-bin-1.{4,5,6} blackdown-jdk-1.4 jrockit-jdk-bin-1.{4,5} diablo-jdk-1.5`
 JAVA_VIRTUAL_VM_CLASSPATH="/lib/tools.jar"
