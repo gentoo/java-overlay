@@ -2,6 +2,9 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  12 Jul 2008; Serkan Kaba <serkan@gentoo.org> tuxguitar-1.0.ebuild:
+  Removed ftp from list of plugins to build.
+
   08 Jul 2008; Serkan Kaba <serkan@gentoo.org> tuxguitar-1.0.ebuild:
   Updated note about ftp plugin.
 

@@ -112,9 +112,11 @@ plugin_install() {
 }
 
 #Return list of plugins to compile/install
+#Removed FTP plugin from list as it's not working now.
+#Check to see if it's working while bumping. 
 list_plugins() {
 	echo \
-		$(usev alsa) ascii browser-ftp compat converter $(usev fluidsynth) gtp \
+		$(usev alsa) ascii compat converter $(usev fluidsynth) gtp \
 		jsa lilypond midi musicxml $(usev oss) $(usev pdf) ptb tef tray
 }
 
