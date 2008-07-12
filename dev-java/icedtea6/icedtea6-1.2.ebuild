@@ -4,17 +4,15 @@
 
 EAPI="1"
 
-ECJ_SLOT="3.3"
-OJDK_TARBALL="openjdk-6-src-b09-11_apr_2008.tar.gz"
-
 inherit autotools pax-utils java-pkg-2 java-vm-2
 
 DESCRIPTION="A harness to build the OpenJDK using Free Software build tools and dependencies"
+OPENJDK_TARBALL="openjdk-6-src-b09-11_apr_2008.tar.gz"
 SRC_URI="http://icedtea.classpath.org/download/source/icedtea6-1.2.tar.gz
-	 http://download.java.net/openjdk/jdk6/promoted/b09/${OJDK_TARBALL}"
+	 http://download.java.net/openjdk/jdk6/promoted/b09/${OPENJDK_TARBALL}"
 HOMEPAGE="http://icedtea.classpath.org"
 
-IUSE="doc examples nsplugin zero"
+IUSE="debug doc examples nsplugin zero"
 
 LICENSE="GPL-2-with-linking-exception"
 SLOT="0"
@@ -37,13 +35,28 @@ RDEPEND=">=net-print/cups-1.2.12
 		www-client/seamonkey
 	 ) )"
 
+# Additional dependencies for building:
+#   unzip: extract OpenJDK tarball
+#   xalan/xerces: automatic code generation
+#   ant, ecj, jdk: required to build Java code
 DEPEND="${RDEPEND}
 	>=virtual/jdk-1.5
 	>=app-arch/unzip-5.52
 	>=dev-java/xalan-2.7.0
 	>=dev-java/xerces-2.9.1
 	>=dev-java/ant-core-1.7.0-r3
-	dev-java/eclipse-ecj:${ECJ_SLOT}"
+	>=dev-java/eclipse-ecj-3.2.1"
+
+pkg_setup() {
+	if use_zero && ! built_with_use sys-devel/gcc libffi; then
+		eerror "Using the zero assembler port requires libffi. Please rebuild sys-devel/gcc"
+		eerror "with USE=\"libffi\" or turn off the zero USE flag on ${PN}."
+		die "Rebuild sys-devel/gcc with libffi support"
+	fi
+
+	java-vm-2_pkg_setup
+	java-pkg-2_pkg_setup
+}
 
 src_unpack() {
 	unpack ${P}.tar.gz
@@ -58,38 +71,21 @@ src_unpack() {
 	# Use @JAVAC_MEM_OPT@ in javac.in
 	epatch "${FILESDIR}/javac.in.patch"
 
-	eautoreconf -I m4 || die "failed to reautoconf"
-}
-
-pkg_setup() {
-	if use_zero && ! built_with_use sys-devel/gcc libffi; then
-		eerror "Using the zero assembler port requires libffi. Please rebuild sys-devel/gcc"
-		eerror "with USE=\"libffi\" or turn off the zero USE flag on ${PN}."
-		die "Rebuild sys-devel/gcc with libffi support"
-	fi
-
-	java-vm-2_pkg_setup
-	java-pkg-2_pkg_setup
+	eautoreconf || die "failed to regenerate autoconf infrastructure"
 }
 
 src_compile() {
-	local config env procs
+	local config procs
 
-	if [[ "$(java-pkg_get-current-vm)" == "icedtea6" ]] ; then
-		# If we already have icedtea6 then we can build it much faster
-		# by not having to bootstrap. You can also give sun-jdk-1.6 here
-		# but you don't get a clean build.
+	if [[ "$(java-pkg_get-current-vm)" == "icedtea6" || "$(java-pkg_get-current-vm)" == "icedtea" ]] ; then
+		# If we are upgrading icedtea, then we don't need to bootstrap.
 		config="${config} --with-icedtea"
 		config="${config} --with-icedtea-home=$(java-config -O)"
 	else
-		# Any 1.6 JDK can be given in place of GCJ here.
-		config="${config} --with-ecj-jar=/usr/share/eclipse-ecj-${ECJ_SLOT}/lib/ecj.jar"
+		# For other 1.5 JDKs e.g. GCJ, CACAO, JamVM.
+		config="${config} --with-ecj-jar=$(ls -r /usr/share/eclipse-ecj-3.*/lib/ecj.jar|head -n 1)" \
 		config="${config} --with-libgcj-jar=$(java-config -O)/jre/lib/rt.jar"
 		config="${config} --with-gcj-home=$(java-config -O)"
-
-		# We need to force ecj-3.3 but only during configure. JAVAC must
-		# not be set during make because it causes problems.
-		env="JAVAC='/usr/bin/ecj-${ECJ_SLOT}'"
 	fi
 
 	# OpenJDK-specific parallelism support.
@@ -107,10 +103,11 @@ src_compile() {
 
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 
-	eval ${env} econf ${config} \
+	econf ${config} \
 		--with-openjdk-src-zip="${DISTDIR}/${OJDK_TARBALL}" \
-		$(use_enable nsplugin gcjwebplugin) \
+		$(use_enable debug fast-build) \
 		$(use_enable doc docs) \
+		$(use_enable nsplugin gcjwebplugin) \
 		|| die "configure failed"
 
 	emake -j 1  || die "make failed"
@@ -127,7 +124,7 @@ src_install() {
 	cd "${S}/openjdk/control/build/linux-${arch}/j2sdk-image" || die
 
 	if use doc ; then
-		dohtml -r ../docs/* || die
+		dohtml -r ../docs/* || die "Failed to install documentation"
 	fi
 
 	# doins can't handle symlinks.
@@ -158,5 +155,10 @@ src_install() {
 }
 
 use_zero() {
-	use zero || ( ! use amd64 && ! use x86 )
+	use zero || ( ! use amd64 && ! use x86 && ! use sparc )
+}
+
+pkg_postinst() {
+	# Set as default VM if none exists
+	java-vm-2_pkg_postinst
 }

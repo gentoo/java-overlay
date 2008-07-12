@@ -2,6 +2,12 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  12 Jul 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.1.ebuild icedtea6-1.2.ebuild:
+        Fix ecj building, cleanups and port changes to 1.1.
+	
+  12 Jul 2008; James Le Cuirot <chewi@aura-online.co.uk> icedtea6-1.2.ebuild:
+	Add IcedTea upgrade functionality, cleanups and break ecj.
+
   02 Jul 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.1.ebuild icedtea6-1.2.ebuild:
         x86 architecture should be i586 for build directory, and i386 for plugin (!?!?)
 	

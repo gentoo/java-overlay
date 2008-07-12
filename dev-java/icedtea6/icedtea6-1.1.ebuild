@@ -2,14 +2,17 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="1"
+
 inherit autotools pax-utils java-vm-2 java-pkg-2
 
 DESCRIPTION="A harness to build the OpenJDK using Free Software build tools and dependencies."
+OPENJDK_TARBALL="openjdk-6-src-b08-26_mar_2008.tar.gz"
 SRC_URI="http://icedtea.classpath.org/download/source/icedtea6-1.1.tar.gz
-	 http://download.java.net/openjdk/jdk6/promoted/b08/openjdk-6-src-b08-26_mar_2008.tar.gz"
+	 http://download.java.net/openjdk/jdk6/promoted/b08/${OPENJDK_TARBALL}"
 HOMEPAGE="http://icedtea.classpath.org/wiki/Main_Page"
 
-IUSE="nsplugin debug doc examples zero"
+IUSE="debug doc examples nsplugin zero"
 
 LICENSE="GPL-2-with-linking-exception"
 SLOT="0"
@@ -21,50 +24,47 @@ RDEPEND=">=net-print/cups-1.2.12
 	 >=media-libs/freetype-2.3.5
 	 >=media-libs/alsa-lib-1.0
 	 >=x11-libs/gtk+-2.8
-	 nsplugin? ( || (
-		www-client/mozilla-firefox
-		net-libs/xulrunner
-		www-client/seamonkey
-	 ) )
 	 >=x11-libs/libXinerama-1.0.2
 	 >=media-libs/jpeg-6b
 	 >=media-libs/libpng-1.2
 	 >=media-libs/giflib-4.1.6
-	 >=sys-libs/zlib-1.2.3"
+	 >=sys-libs/zlib-1.2.3
+	 nsplugin? ( || (
+		www-client/mozilla-firefox
+		net-libs/xulrunner
+		www-client/seamonkey
+	 ) )"
 
 # Additional dependencies for building:
 #   unzip: extract OpenJDK tarball
 #   xalan/xerces: automatic code generation
 #   ant, ecj, jdk: required to build Java code
-DEPEND=">=virtual/jdk-1.5
+DEPEND="${RDEPEND}
+	>=virtual/jdk-1.5
 	>=dev-java/eclipse-ecj-3.2.1
 	>=app-arch/unzip-5.52
 	>=dev-java/xalan-2.7.0
 	>=dev-java/xerces-2.9.1
 	>=dev-java/ant-core-1.7.0
-	${RDEPEND}"
+	>=dev-java/ant-core-1.7.0-r3
+	>=dev-java/eclipse-ecj-3.2.1"
 
 pkg_setup() {
-	if use zero && ! built_with_use sys-devel/gcc libffi; then
-		eerror "Using the zero assembler port requires libffi.";
-		eerror "Please rebuild sys-devel/gcc with USE=\"libffi\" or"
-		eerror "turn off the zero use flag on ${PN}"
+	if use_zero && ! built_with_use sys-devel/gcc libffi; then
+		eerror "Using the zero assembler port requires libffi. Please rebuild sys-devel/gcc"
+		eerror "with USE=\"libffi\" or turn off the zero USE flag on ${PN}."
 		die "Rebuild sys-devel/gcc with libffi support"
 	fi
-	if [ ${ARCH} != x86 -a ${ARCH} != amd64 ] && ! built_with_use sys-devel/gcc libffi; then
-		eerror "Building on a non-x86 or non-x86_64";
-		eerror "architecture requires using the zero";
-		eerror "assembler port, which requires libffi.";
-		eerror "Please rebuild sys-devel/gcc with USE=\"libffi\""
-		die "Rebuild sys-devel/gcc with libffi support"
-	fi
+
 	java-vm-2_pkg_setup
 	java-pkg-2_pkg_setup
 }
 
 src_unpack() {
+
 	unpack ${P}.tar.gz
-	cd "${S}"
+	cd "${S}" || die "Couldn't unpack OpenJDK"
+
 	# Add --enable/disable-docs option (http://icedtea.classpath.org/hg/icedtea6/rev/ff3d152968b5)
 	epatch "${FILESDIR}/docs.patch"
 	# Add --with-parallel-jobs option (http://icedtea.classpath.org/hg/icedtea6/rev/9cd18444aa30)
@@ -79,97 +79,91 @@ src_unpack() {
 	epatch "${FILESDIR}/javac_fix-${PV}.patch"
 	# Use @JAVAC_MEM_OPT@ in javac.in
 	epatch "${FILESDIR}/javac.in.patch"
-	eautoreconf || die "failed to reautoconf"
+	eautoreconf || die "failed to rebuild autotools infrastructure"
 }
 
 src_compile() {
-	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
-	local parallel
+	local config procs
 
-	# OpenJDK-specific parallelism support
-	PROCS=$(echo ${MAKEOPTS}|sed -r 's/.*-j\W*([0-9]+).*/\1/')
-	if [ x${PROCS} != x ]; then
-		parallel="--with-parallel-jobs=${PROCS}";
-		einfo "Configuring using ${parallel}"
+	if [[ "$(java-pkg_get-current-vm)" == "icedtea6" || "$(java-pkg_get-current-vm)" == "icedtea" ]] ; then
+		# If we are upgrading icedtea, then we don't need to bootstrap.
+		config="${config} --with-icedtea"
+		config="${config} --with-icedtea-home=$(java-config -O)"
 	else
-		parallel="";
+		# For other 1.5 JDKs e.g. GCJ, CACAO, JamVM.
+		config="${config} --with-ecj-jar=$(ls -r /usr/share/eclipse-ecj-3.*/lib/ecj.jar|head -n 1)" \
+		config="${config} --with-libgcj-jar=$(java-config -O)/jre/lib/rt.jar"
+		config="${config} --with-gcj-home=$(java-config -O)"
 	fi
 
-	econf \
-		--with-gcj-home=$(java-config -O) \
-		--with-libgcj-jar=$(java-config -O)/jre/lib/rt.jar \
-		--with-openjdk-src-zip="${DISTDIR}"/openjdk-6-src-b08-26_mar_2008.tar.gz \
-		--with-ecj-jar=$(ls -r /usr/share/eclipse-ecj-3.*/lib/ecj.jar|head -n 1) \
-		${parallel} \
-		$(use_enable nsplugin gcjwebplugin) \
+	# OpenJDK-specific parallelism support.
+	procs=$(echo ${MAKEOPTS} | sed -r 's/.*-j\W*([0-9]+).*/\1/')
+	if [[ -n ${procs} ]] ; then
+		config="${config} --with-parallel-jobs=${procs}";
+		einfo "Configuring using --with-parallel-jobs=${procs}"
+	fi
+
+	if use_zero ; then
+		zero="${config} --enable-zero"
+	else
+		zero="${config} --disable-zero"
+	fi
+
+	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
+
+	econf ${config} \
+		--with-openjdk-src-zip="${DISTDIR}/${OJDK_TARBALL}" \
 		$(use_enable debug fast-build) \
 		$(use_enable doc docs) \
-		$(use_enable zero) \
+		$(use_enable nsplugin gcjwebplugin) \
 		|| die "configure failed"
 
-	emake -j 1 || die "make failed"
+	emake -j 1  || die "make failed"
 }
 
 src_install() {
-	local dest=/usr/lib/${P}
+	local dest="/usr/$(get_libdir)/${P}"
 	local ddest="${D}/${dest}"
-	dodir ${dest}
+	dodir "${dest}" || die
 
 	local arch=${ARCH}
-	[[ ${ARCH} = x86 ]] && arch=i586
+	use x86 && arch=i586
 
-	cd "${S}"/openjdk/control/build/linux-${arch}/
+	cd "${S}/openjdk/control/build/linux-${arch}/j2sdk-image" || die
 
 	if use doc ; then
-		dohtml -r docs/* || die;
+		dohtml -r ../docs/* || die "Failed to install documentation"
 	fi
 
-	cd j2sdk-image
-
-	# For some people the files got 600 so doing it manually
-	# should be investigated why this happened
-	if is-java-strict; then
-		if [[ $(find . -perm 600) ]]; then
-			eerror "OpenJDK built with permission mask 600"
-			eerror "report this on #gentoo-java on freenode"
-		fi
-	fi
-
-	# doins can't handle symlinks
+	# doins can't handle symlinks.
 	cp -vRP bin include jre lib man "${ddest}" || die "failed to copy"
-	find "${ddest}" -type f -exec chmod 644 {} +
-	find "${ddest}" -type d -exec chmod 755 {} +
-	chmod 755 ${ddest}/bin/* \
-		${ddest}/jre/bin/* \
-		${ddest}/jre/lib/*/*.{so,cfg} \
-		${ddest}/jre/lib/*/*/*.so \
-		${ddest}/jre/lib/jexec \
-		${ddest}/lib/jexec || die
-
-	if [[ $(find "${ddest}" -perm 600) ]]; then
-		eerror "Files with permission set to 600 found in the image"
-		eerror "please report this to java@gentoo.org"
-	fi
 
 	# Set PaX markings on all JDK/JRE executables to allow code-generation on
 	# the heap by the JIT compiler.
-	pax-mark m $(list-paxables ${ddest}{,/jre}/bin/*)
+	pax-mark m $(list-paxables "${ddest}"{,/jre}/bin/*)
 
 	dodoc ASSEMBLY_EXCEPTION THIRD_PARTY_README || die
 	dohtml README.html || die
 
 	if use examples; then
-		cp -pPR demo sample "${ddest}/share/"
+		cp -vRP demo sample "${ddest}/share/" || die
 	fi
 
 	cp src.zip "${ddest}" || die
 
+	# Fix the permissions.
+	find "${ddest}" -perm +111 -exec chmod 755 {} \; -o -exec chmod 644 {} \; || die
+
 	if use nsplugin; then
-		[[ ${ARCH} = x86 ]] && arch=i386;
-		install_mozilla_plugin ${dest}/jre/lib/${arch}/gcjwebplugin.so;
+		use x86 && arch=i386
+		install_mozilla_plugin "${dest}/jre/lib/${arch}/gcjwebplugin.so"
 	fi
 
 	set_java_env
+}
+
+use_zero() {
+	use zero || ( ! use amd64 && ! use x86 && ! use sparc )
 }
 
 pkg_postinst() {
