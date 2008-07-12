@@ -26,8 +26,7 @@ IUSE="doc source"
 RDEPEND=">=virtual/jdk-1.4
 	!<dev-java/ant-tasks-1.7.0
 	!<dev-java/ant-1.7.0
-	!dev-java/ant-optional
-	java-virtuals/jdk-tools"
+	!dev-java/ant-optional"
 DEPEND="${RDEPEND}
 	source? ( app-arch/zip )"
 
@@ -59,7 +58,7 @@ src_compile() {
 		bsyscp="-Dbuild.sysclasspath=ignore"
 	fi
 
-	CLASSPATH="$(java-pkg_getjars jdk-tools)" ./build.sh \
+	CLASSPATH="$(java-config -t)" ./build.sh \
 		${bsyscp} jars-core $(use_doc javadocs) \
 		|| die "build failed"
 }

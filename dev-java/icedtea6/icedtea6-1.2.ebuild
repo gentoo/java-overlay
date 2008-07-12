@@ -104,7 +104,7 @@ src_compile() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 
 	econf ${config} \
-		--with-openjdk-src-zip="${DISTDIR}/${OJDK_TARBALL}" \
+		--with-openjdk-src-zip="${DISTDIR}/${OPENJDK_TARBALL}" \
 		$(use_enable debug fast-build) \
 		$(use_enable doc docs) \
 		$(use_enable nsplugin gcjwebplugin) \
