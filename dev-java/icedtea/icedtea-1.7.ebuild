@@ -7,9 +7,9 @@ EAPI="1"
 inherit autotools pax-utils java-pkg-2 java-vm-2
 
 DESCRIPTION="A harness to build the OpenJDK using Free Software build tools and dependencies"
-OPENJDK_TARBALL="openjdk-6-src-b09-11_apr_2008.tar.gz"
-SRC_URI="http://icedtea.classpath.org/download/source/icedtea6-1.2.tar.gz
-	 http://download.java.net/openjdk/jdk6/promoted/b09/${OPENJDK_TARBALL}"
+OPENJDK_TARBALL="openjdk-7-ea-src-b26-24_apr_2008.zip"
+SRC_URI="http://icedtea.classpath.org/download/source/icedtea-1.7.tar.gz
+	 http://www.java.net/download/openjdk/jdk7/promoted/b26/${OPENJDK_TARBALL}"
 HOMEPAGE="http://icedtea.classpath.org"
 
 IUSE="debug doc examples nsplugin zero"
@@ -57,21 +57,9 @@ pkg_setup() {
 	java-vm-2_pkg_setup
 	java-pkg-2_pkg_setup
 }
-
 src_unpack() {
 	unpack ${P}.tar.gz
-	cd "${S}" || die
-
-	# Fix use of --enable-plugin (http://icedtea.classpath.org/hg/icedtea6/rev/1c580400c8d9)
-	epatch "${FILESDIR}/enable_fix-${PV}.patch"
-	# Fix use of jar cfm0@ (http://icedtea.classpath.org/hg/icedtea6/rev/cebc828cf765)
-	epatch "${FILESDIR}/gjar-${PV}.patch"
-	# Use Classpath's JAVAC and JAVA tests
-	epatch "${FILESDIR}/javac_fix-${PV}.patch"
-	# Use @JAVAC_MEM_OPT@ in javac.in
-	epatch "${FILESDIR}/javac.in.patch"
-
-	eautoreconf || die "failed to regenerate autoconf infrastructure"
+	cd "${S}" || die "Failed unpacking IcedTea"
 }
 
 src_compile() {
@@ -103,8 +91,18 @@ src_compile() {
 
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 
+	# Hack to correct the bad tarball for b26 which doesn't have a 'openjdk' prefix
+	einfo "Repacking bad OpenJDK b26 tarball..."
+	cd "${T}"
+	mkdir openjdk
+	cd openjdk
+	unzip -q "${DISTDIR}"/"${OPENJDK_TARBALL}"
+	cd ..
+	zip -9rq openjdk-rezipped.zip openjdk
+	cd "${WORKDIR}"/"${P}"
+
 	econf ${config} \
-		--with-openjdk-src-zip="${DISTDIR}/${OPENJDK_TARBALL}" \
+		--with-openjdk-src-zip="${T}/openjdk-rezipped.zip" \
 		$(use_enable debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nsplugin gcjwebplugin) \
@@ -121,7 +119,7 @@ src_install() {
 	local arch=${ARCH}
 	use x86 && arch=i586
 
-	cd "${S}/openjdk/control/build/linux-${arch}/j2sdk-image" || die
+	cd "${S}/openjdk/build/linux-${arch}/j2sdk-image" || die
 
 	if use doc ; then
 		dohtml -r ../docs/* || die "Failed to install documentation"

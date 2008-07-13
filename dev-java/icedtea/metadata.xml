@@ -6,5 +6,5 @@
   <email>gnu_andrew@member.fsf.org</email>
   <name>Andrew John Hughes</name>
 </maintainer>
-<longdescription>The IcedTea project provides a harness to build the source code from OpenJDK6 (http://openjdk.java.net) using Free Software build tools along with additional tools such as a browser plugin and Web Start support via NetX. </longdescription>
+<longdescription>The IcedTea project provides a harness to build the source code from OpenJDK (http://openjdk.java.net) using Free Software build tools along with additional tools such as a browser plugin and Web Start support via NetX. </longdescription>
 </pkgmetadata>

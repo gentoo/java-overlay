@@ -2,6 +2,9 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  12 Jul 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> metadata.xml:
+	Fix reference to OpenJDK to say OpenJDK6.
+
   12 Jul 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.1.ebuild icedtea6-1.2.ebuild:
         Fix ecj building, cleanups and port changes to 1.1.
 	
