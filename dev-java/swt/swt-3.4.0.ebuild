@@ -13,11 +13,12 @@ HOMEPAGE="http://www.eclipse.org/swt/"
 SRC_URI="amd64? ( http://download.eclipse.org/eclipse/downloads/drops/${DMF}/${PN}-${MY_PV}-gtk-linux-x86_64.zip )
 	x86? ( http://download.eclipse.org/eclipse/downloads/drops/${DMF}/${PN}-${MY_PV}-gtk-linux-x86.zip )
 	x86-fbsd? ( http://download.eclipse.org/eclipse/downloads/drops/${DMF}/${PN}-${MY_PV}-gtk-linux-x86.zip )
-	ppc? ( http://download.eclipse.org/eclipse/downloads/drops/${DMF}/${PN}-${MY_PV}-gtk-linux-ppc.zip )"
+	ppc? ( http://download.eclipse.org/eclipse/downloads/drops/${DMF}/${PN}-${MY_PV}-gtk-linux-ppc.zip )
+	ppc64? ( http://download.eclipse.org/eclipse/downloads/drops/${DMF}/${PN}-${MY_PV}-gtk-linux-x86_64.zip )"
 
 SLOT="3.4"
 LICENSE="CPL-1.0 LGPL-2.1 MPL-1.1"
-KEYWORDS="~amd64 ~ppc ~x86 ~x86-fbsd"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~x86 ~x86-fbsd"
 IUSE="cairo gnome opengl xulrunner"
 
 CDEPEND=">=dev-libs/glib-2.10
@@ -63,6 +64,7 @@ src_unpack() {
 src_compile() {
 	local jvmarch="${ARCH}"
 	use x86 && jvmarch="i386"
+	use ppc64 && jvmarch="ppc"
 	
 	# set awt library path
 	AWT_LIB_PATH="$(java-config --jdk-home)/jre/lib/${jvmarch}"
@@ -73,7 +75,7 @@ src_compile() {
 	export AWT_LIB_PATH
 
 	# fix pointer size
-	[[ ${ARCH} == "amd64" ]] && export SWT_PTR_CFLAGS=-DSWT_PTR_SIZE_64
+	[[ ${ARCH} = *64 ]] && export SWT_PTR_CFLAGS=-DSWT_PTR_SIZE_64
 
 	# set targets
 	local target="awt swt atk"
