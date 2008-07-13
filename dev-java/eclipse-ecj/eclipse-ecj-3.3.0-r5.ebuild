@@ -59,7 +59,7 @@ src_compile() {
 	local javac_opts javac java jar
 
 	if use gcj ; then
-		local gccbin="$(gcc-config -B $(ls -r /etc/env.d/gcc/${CHOST}-* | head -1) || die)"
+		local gccbin="$(gcc-config -B $(ls -1r /etc/env.d/gcc/${CHOST}-* | head -1) || die)"
 		local gcj="${gccbin}/gcj"
 		javac="${gcj} -C"
 		jar="${gccbin}/gjar"
@@ -90,18 +90,15 @@ src_compile() {
 
 	if use gcj ; then
 		einfo "Building native ${MY_PN} binary ..."
-		${gcj} ${CFLAGS} -findirect-dispatch -Wl,-Bsymbolic -o ${MY_PN}-${SLOT} \
+		${gcj} ${CFLAGS} -findirect-dispatch -Wl,-Bsymbolic -o native_${MY_PN}-${SLOT} \
 			--main=org.eclipse.jdt.internal.compiler.batch.Main ${MY_PN}.jar || die
 	fi
 }
 
 src_install() {
 	if use gcj ; then
-		exeinto /usr/bin;
-		newexe ${MY_PN} native_${MY_PN}-${SLOT};
-		dosym /usr/bin/native_${MY_PN}-${SLOT} /usr/bin/native_${MY_PN};
-		newexe ${FILESDIR}/ecj ${MY_PN}-${SLOT}
-		dosym /usr/bin/${MY_PN}-${SLOT} /usr/bin/${MY_PN};
+		dobin native_${MY_PN}-${SLOT}
+		newbin "${FILESDIR}/ecj" ${MY_PN}-${SLOT}
 
 		# Don't complain when doing dojar below.
 		JAVA_PKG_WANT_SOURCE=1.4
