@@ -12,4 +12,4 @@ Export-Package: org.eclipse.swt.internal.accessibility.gtk; x-internal
  pse.swt.internal.mozilla; x-internal:=true,org.eclipse.swt.internal.o
  pengl.glx; x-internal:=true
 Eclipse-PlatformFilter: (& (osgi.ws=gtk) (osgi.os=linux) (osgi.arch=ARCH))
-Bundle-Version: PV
+Bundle-Version: 3.4.0.v3448f
