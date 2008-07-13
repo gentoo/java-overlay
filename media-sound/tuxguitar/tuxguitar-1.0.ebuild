@@ -21,12 +21,7 @@ IUSE="alsa fluidsynth oss pdf"
 
 KEYWORDS="~amd64"
 # FIXME: Are these X dependencies really needed to be here explicitly?
-CDEPEND="virtual/libc
-		|| ( ( x11-libs/libXxf86vm
-				x11-libs/libXext
-				x11-libs/libX11
-			) virtual/x11 )
-	dev-java/swt:3
+CDEPEND="dev-java/swt:3
 	alsa? ( media-libs/alsa-lib )
 	fluidsynth? ( media-sound/fluidsynth )
 	pdf? ( dev-java/itext:0 )"
