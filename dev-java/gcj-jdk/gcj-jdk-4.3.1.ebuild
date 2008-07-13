@@ -4,8 +4,6 @@
 
 inherit java-vm-2 multilib
 
-ECJ_VER="3.3"
-
 DESCRIPTION="Java wrappers around GCJ"
 HOMEPAGE="http://www.gentoo.org/"
 SRC_URI=""
@@ -13,9 +11,10 @@ SRC_URI=""
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 SLOT="0"
+IUSE=""
 
 RDEPEND="~sys-devel/gcc-${PV}
-	=dev-java/eclipse-ecj-${ECJ_VER}*
+	>=dev-java/eclipse-ecj-3.2.1
 	>=dev-java/java-config-2"
 DEPEND="${RDEPEND}"
 PDEPEND="dev-java/gjdoc"
@@ -62,12 +61,9 @@ src_install() {
 	dodir ${gcjhome}/lib
 	dosym /usr/share/gcc-data/${gccchost}/${PV}/java/libgcj-tools-${PV/_/-}.jar ${gcjhome}/lib/tools.jar
 
-	# use ecj for javac
-	if [ -e /usr/bin/ecj ]; then
-		dosym /usr/bin/ecj ${gcjhome}/bin/javac;
-	else
-		dosym $(ls -r /usr/bin/ecj-3*|head -n 1) ${gcjhome}/bin/javac;
-	fi
+	# the /usr/bin/ecj symlink is managed by eselect-ecj
+	dosym /usr/bin/ecj ${gcjhome}/bin/javac;
+
 	# use gjdoc for javadoc
 	dosym /usr/bin/gjdoc ${gcjhome}/bin/javadoc
 
