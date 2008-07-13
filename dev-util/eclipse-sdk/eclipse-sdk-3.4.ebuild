@@ -64,6 +64,7 @@ DEPEND=">=virtual/jdk-1.5
 	java6? ( >=virtual/jdk-1.6 )
 	dev-java/ant-nodeps
 	dev-java/cldc-api:1.1
+	sys-apps/findutils
 	app-arch/unzip
 	app-arch/zip
 	${CDEPEND}"
@@ -87,17 +88,13 @@ src_unpack() {
 
 	# no warnings / java5 / all output should be directed to stdout
 	find ${S} -type f -name '*.xml' -exec \
-		sed -r -e "s:(-encoding ISO-8859-1):\1 -nowarn:g" \
-		-e "s:(\"compilerArg\" value=\"):\1-nowarn :g" \
+		sed -r -e "s:(-encoding ISO-8859-1):\1 -nowarn:g" -e "s:(\"compilerArg\" value=\"):\1-nowarn :g" \
 		-e "s:(<property name=\"javacSource\" value=)\".*\":\1\"1.5\":g" \
-		-e "s:(<property name=\"javacTarget\" value=)\".*\":\1\"1.5\":g" \
-		-e "s:output=\".*(txt|log).*\"::g" -i {} \;
+		-e "s:(<property name=\"javacTarget\" value=)\".*\":\1\"1.5\":g" -e "s:output=\".*(txt|log).*\"::g" -i {} \;
 
 	# jdk home
-	sed -r -e "s:^(JAVA_HOME =) .*:\1 $(java-config --jdk-home):" \
-		-e "s:gcc :gcc ${CFLAGS} :" \
-		-i plugins/org.eclipse.core.filesystem/natives/unix/linux/Makefile \
-		|| die "sed Makefile failed"
+	sed -r -e "s:^(JAVA_HOME =) .*:\1 $(java-config --jdk-home):" -e "s:gcc :gcc ${CFLAGS} :" \
+		-i plugins/org.eclipse.core.filesystem/natives/unix/linux/Makefile || die "sed Makefile failed"
 
 	while read line; do
 		java-ant_rewrite-classpath "$line" > /dev/null
@@ -121,9 +118,7 @@ src_compile() {
 	use doc && options="${options} -Dgentoo.javadoc=true"
 
 	ANT_OPTS=-Xmx512M ANT_TASKS="ant-nodeps" \
-	eant ${options} \
-		-Dgentoo.classpath="${system_jars}" \
-		-Dgentoo.jars="${gentoo_jars//:/,}"
+		eant ${options} -Dgentoo.classpath="${system_jars}" -Dgentoo.jars="${gentoo_jars//:/,}"
 }
 
 src_install() {
@@ -198,8 +193,7 @@ install-link-system-jars() {
 patch-apply() {
 	# optimize launcher build
 	mkdir launchertmp
-	unzip -qq -d launchertmp plugins/org.eclipse.platform/launchersrc.zip \
-		|| die "unzip failed"
+	unzip -qq -d launchertmp plugins/org.eclipse.platform/launchersrc.zip > /dev/null || die "unzip failed"
 	pushd launchertmp/ > /dev/null
 	sed -r -e "s/CFLAGS = -O -s -Wall/CFLAGS = ${CFLAGS} -Wall/" \
 		-i library/gtk/make_linux.mak || die "Failed to tweak make_linux.mak"
@@ -209,7 +203,7 @@ patch-apply() {
 	rm -rf launchertmp
 
 	# disable swt, jdk6
-	# use sed where possible => ease bump ;)
+	# use sed where possible -> ease revbump :)
 	sed -e "/..\/..\/plugins\/org.eclipse.ui.win32/,/<\/ant>/d" \
 		-i features/org.eclipse.platform/build.xml
 	sed -e "/dir=\"..\/..\/plugins\/org.eclipse.swt/,/<\/ant>/d" \
@@ -333,7 +327,6 @@ remove-bundled-stuff() {
 		com.jcraft.jsch_*.jar com.ibm.icu_*.jar org.junit_*/*.jar \
 		org.junit4*/*.jar javax.servlet.jsp_*.jar javax.servlet_*.jar \
 		org.apache.lucene_*.jar org.apache.lucene.analysis_*.jar
-	# Remove some swt code -- FIXME: really needed?!
 	for d in $(ls -1 -d org.eclipse.swt.*); do
 		[[ ${d} = org.eclipse.swt.tools ]] && continue
 		[[ ${d} = org.eclipse.swt.gtk.linux.${eclipsearch} ]] && continue
