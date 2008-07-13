@@ -29,9 +29,8 @@ EAPI="1"
 JAVA_PKG_IUSE="doc"
 inherit java-pkg-2 java-ant-2 check-reqs
 
-MY_PV="${PV/_rc/RC}"
-DMF="S-${MY_PV}-200806091311"
-MY_A="eclipse-sourceBuild-srcIncluded-${MY_PV}.zip"
+DMF="R-${PV}-200806172000"
+MY_A="eclipse-sourceBuild-srcIncluded-${PV}.zip"
 
 DESCRIPTION="Eclipse Tools Platform"
 HOMEPAGE="http://www.eclipse.org/"
@@ -178,9 +177,6 @@ pkg_postinst() {
 
 install-link-system-jars() {
 	pushd plugins/ > /dev/null
-	local ant_dir="$(basename plugins/org.apache.ant_*)"
-	rm -rf plugins/org.apache.ant_*
-	dosym /usr/share/ant-core ${ECLIPSE_DIR}/plugins/${ant_dir}
 
 	java-pkg_jarfrom swt-${SLOT}
 	java-pkg_jarfrom icu4j
@@ -191,14 +187,11 @@ install-link-system-jars() {
 	java-pkg_jarfrom lucene-analyzers-1.9
 	java-pkg_jarfrom tomcat-servlet-api-2.4
 
-	popd > /dev/null
+	java-pkg_jarfrom --into org.junit_*/ junit
+	java-pkg_jarfrom --into org.junit4*/ junit-4
 
-	pushd plugins/org.junit_*/ > /dev/null
-	java-pkg_jarfrom junit
-	popd > /dev/null
+	ln -snf /usr/share/ant/{bin,lib} org.apache.ant_*/ || die
 
-	pushd plugins/org.junit4*/ > /dev/null
-	java-pkg_jarfrom junit-4
 	popd > /dev/null
 }
 
@@ -335,7 +328,7 @@ remove-bundled-stuff() {
 		org.eclipse.osgi/supplement/osgi/osgi.jar \
 		org.eclipse.swt/extra_jars/exceptions.jar
 
-	rm -rf org.apache.ant_*/*
+	rm -rf org.apache.ant_*/{bin,lib}
 	rm org.apache.commons.el_*.jar org.apache.commons.logging_*.jar \
 		com.jcraft.jsch_*.jar com.ibm.icu_*.jar org.junit_*/*.jar \
 		org.junit4*/*.jar javax.servlet.jsp_*.jar javax.servlet_*.jar \
