@@ -83,7 +83,7 @@ src_compile() {
 		config="${config} --with-icedtea-home=$(java-config -O)"
 	else
 		# For other 1.5 JDKs e.g. GCJ, CACAO, JamVM.
-		config="${config} --with-ecj-jar=$(ls -r /usr/share/eclipse-ecj-3.*/lib/ecj.jar|head -n 1)" \
+		config="${config} --with-ecj-jar=$(ls -1r /usr/share/eclipse-ecj-3.*/lib/ecj.jar|head -n 1)" \
 		config="${config} --with-libgcj-jar=$(java-config -O)/jre/lib/rt.jar"
 		config="${config} --with-gcj-home=$(java-config -O)"
 	fi

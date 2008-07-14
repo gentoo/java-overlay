@@ -2,6 +2,10 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  14 Jul 2008; James Le Cuirot <chewi@aura-online.co.uk>
+  icedtea6-1.1.ebuild, icedtea6-1.2.ebuild:
+  Make sure only one version of ecj is passed to configure.
+
   12 Jul 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> metadata.xml:
 	Fix reference to OpenJDK to say OpenJDK6.
 
