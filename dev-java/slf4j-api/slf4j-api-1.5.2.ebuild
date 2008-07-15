@@ -12,7 +12,7 @@ HOMEPAGE="http://www.slf4j.org/"
 SRC_URI="http://dev.gentoo.org/~serkan/distfiles/${P}-sources.jar"
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND=">=virtual/jre-1.4"
