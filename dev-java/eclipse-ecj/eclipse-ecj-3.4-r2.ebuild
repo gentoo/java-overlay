@@ -95,7 +95,7 @@ src_compile() {
 src_install() {
 	if use gcj ; then
 		dobin native_${MY_PN}-${SLOT}
-		newbin "${FILESDIR}/ecj" ${MY_PN}-${SLOT}
+		newbin "${FILESDIR}/ecj-${SLOT}" ${MY_PN}-${SLOT}
 
 		# Don't complain when doing dojar below.
 		JAVA_PKG_WANT_SOURCE=1.4
