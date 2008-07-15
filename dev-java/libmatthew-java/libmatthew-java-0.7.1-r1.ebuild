@@ -3,7 +3,7 @@
 # $Header: $
 
 JAVA_PKG_IUSE="doc source"
-inherit eutils java-pkg-2 flag-o-matic
+inherit eutils java-pkg-2 flag-o-matic toolchain-funcs
 
 DESCRIPTION="A selection of libraries for Java"
 HOMEPAGE="http://www.matthew.ath.cx/projects/java/"
@@ -24,7 +24,9 @@ src_unpack() {
 }
 
 src_compile() {
-	emake -j1 JARDIR=/usr/share/libmatthew-java/lib JCFLAGS="$(java-pkg_javac-args)" all $(usev doc) || die "emake failed"
+	LDFLAGS="$(raw-ldflags)" \
+	CC=$(tc-getCC) LD=$(tc-getLD) \
+		emake -j1 JARDIR=/usr/share/libmatthew-java/lib JCFLAGS="$(java-pkg_javac-args)" all $(usev doc) || die "emake failed"
 }
 
 src_install() {
