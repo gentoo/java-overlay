@@ -19,7 +19,7 @@ SRC_URI="amd64? ( http://download.eclipse.org/eclipse/downloads/drops/${DMF}/${P
 SLOT="3.4"
 LICENSE="CPL-1.0 LGPL-2.1 MPL-1.1"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86 ~x86-fbsd"
-IUSE="cairo gnome opengl xulrunner"
+IUSE="cairo gnome opengl seamonkey xulrunner"
 
 CDEPEND=">=dev-libs/glib-2.10
 	>=x11-libs/gtk+-2.8
