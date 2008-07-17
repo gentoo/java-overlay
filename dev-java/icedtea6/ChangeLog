@@ -2,6 +2,11 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  17 Jul 2008; James Le Cuirot <chewi@aura-online.co.uk>
+  icedtea6-1.1.ebuild, icedtea6-1.2.ebuild:
+  Make sure ecj 3.4 isn't used because it doesn't work. Also remove duplicate
+  ant-core dependency.
+
   14 Jul 2008; James Le Cuirot <chewi@aura-online.co.uk>
   icedtea6-1.1.ebuild, icedtea6-1.2.ebuild:
   Make sure only one version of ecj is passed to configure.

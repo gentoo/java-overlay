@@ -41,13 +41,12 @@ RDEPEND=">=net-print/cups-1.2.12
 #   ant, ecj, jdk: required to build Java code
 DEPEND="${RDEPEND}
 	>=virtual/jdk-1.5
-	>=dev-java/eclipse-ecj-3.2.1
 	>=app-arch/unzip-5.52
 	>=dev-java/xalan-2.7.0
 	>=dev-java/xerces-2.9.1
-	>=dev-java/ant-core-1.7.0
 	>=dev-java/ant-core-1.7.0-r3
-	>=dev-java/eclipse-ecj-3.2.1"
+	|| (	>=dev-java/eclipse-ecj-3.2.1:3.2
+		dev-java/eclipse-ecj:3.3 )"
 
 pkg_setup() {
 	if use_zero && ! built_with_use sys-devel/gcc libffi; then
@@ -91,7 +90,7 @@ src_compile() {
 		config="${config} --with-icedtea-home=$(java-config -O)"
 	else
 		# For other 1.5 JDKs e.g. GCJ, CACAO, JamVM.
-		config="${config} --with-ecj-jar=$(ls -1r /usr/share/eclipse-ecj-3.*/lib/ecj.jar|head -n 1)" \
+		config="${config} --with-ecj-jar=$(ls -1r /usr/share/eclipse-ecj-3.[23]/lib/ecj.jar|head -n 1)" \
 		config="${config} --with-libgcj-jar=$(java-config -O)/jre/lib/rt.jar"
 		config="${config} --with-gcj-home=$(java-config -O)"
 	fi
