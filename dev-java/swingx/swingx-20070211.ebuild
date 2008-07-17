@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-
+EAPI=1
 WANT_ANT_TASKS="ant-nodeps"
 JAVA_PKG_IUSE="doc source examples"
 
@@ -16,55 +16,34 @@ SRC_URI="https://swingx.dev.java.net/files/documents/2981/50412/${MY_P}-src.zip"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-
 RDEPEND=">=virtual/jre-1.5
-		>=dev-java/jmock-1.1.0
-		dev-java/swing-worker
-		>=dev-java/batik-1.6
-		dev-java/ant-core
-		dev-java/filters"
+		dev-java/swing-worker:0
+		dev-java/batik:1.6"
 DEPEND=">=virtual/jdk-1.5
 		app-arch/unzip
-		dev-java/emma
-		${REDPEND}"
+		${RDEPEND}"
 
 S="${WORKDIR}/${MY_P}-src"
 
 src_unpack(){
 	unpack "${A}"
+	java-ant_rewrite-classpath "${S}/nbproject/build-impl.xml"
 	cd "${S}/lib"
-
-	rm junit*
-
-	#jmock-1.1.0 seems to be slotted in 1.0
-	java-pkg_jar-from jmock-1.0 jmock.jar jmock-1.1.0RC1.jar
-	cd optional
-
-	java-pkg_jar-from swing-worker
-
-	java-pkg_jar-from batik-1.6 batik-awt-util.jar MultipleGradientPaint.jar
-
-	java-pkg_jar-from filters filters.jar Filters.jar
-
-	cd ../build-only
-	java-pkg_jarfrom emma
-
-
-
+	rm -v *.jar */*.jar || die
 }
+
+EANT_GENTOO_CLASSPATH="batik-1.6,swing-worker"
 
 src_install() {
 	java-pkg_dojar "dist/${PN}.jar"
 	use doc && java-pkg_dojavadoc dist/javadoc/
 
-	use source && java-pkg_dosrc src
+	use source && java-pkg_dosrc src/java/* src/test/* \
+		src/beaninfo/*
 
-	if use examples; then
-		dodir "/usr/share/doc/${PF}/examples"
-		cp -r src/demo/* "${D}/usr/share/doc/${PF}/examples"
-	fi
+	use examples && java-pkg_doexamples src/demo
 }
 
