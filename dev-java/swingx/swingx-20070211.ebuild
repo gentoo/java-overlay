@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -41,8 +41,7 @@ src_install() {
 	java-pkg_dojar "dist/${PN}.jar"
 	use doc && java-pkg_dojavadoc dist/javadoc/
 
-	use source && java-pkg_dosrc src/java/* src/test/* \
-		src/beaninfo/*
+	use source && java-pkg_dosrc src/java/* src/beaninfo/*
 
 	use examples && java-pkg_doexamples src/demo
 }
