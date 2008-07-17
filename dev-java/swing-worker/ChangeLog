@@ -2,6 +2,10 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  17 Jul 2008; Petteri Räty <betelgeuse@gentoo.org>
+  swing-worker-1.1.ebuild:
+  Keyword ~x86.
+
   10 Feb 2008; Miroslav Šulc <fordfrog@gentoo.org> Manifest:
   Redigested
 
