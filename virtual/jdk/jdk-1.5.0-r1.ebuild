@@ -14,6 +14,7 @@ IUSE=""
 RDEPEND="|| (
 		=dev-java/gcj-jdk-4.3*
 		=dev-java/jamvm-1.5*
+		>=dev-java/cacao-0.98
 		=dev-java/sun-jdk-1.5.0*
 		=dev-java/ibm-jdk-bin-1.5.0*
 		=dev-java/jrockit-jdk-bin-1.5.0*
