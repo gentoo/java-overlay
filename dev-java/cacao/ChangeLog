@@ -5,6 +5,9 @@
   18 Jul 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> cacao-0.97.ebuild cacao-0.98.ebuild:
   Removed due to missing GNU Classpath versions.
 	
+  15 Jul 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> cacao-0.99.2.ebuild cacao-0.98.ebuild:
+  Add -1 to ls in finding ecj.
+
   08 Jul 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> cacao-0.99.2.ebuild cacao-0.98.ebuild:
   Provide CACAO as a JDK to java-config.
 	

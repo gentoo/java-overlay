@@ -54,7 +54,7 @@ src_install() {
 	if [ -e /usr/bin/ecj ]; then
 		dosym /usr/bin/ecj /usr/${P}/bin/javac;
 	else
-		dosym $(ls -r /usr/bin/ecj-3*|head -n 1) /usr/${P}/bin/javac;
+		dosym $(ls -r1 /usr/bin/ecj-3*|head -n 1) /usr/${P}/bin/javac;
 	fi
 
 	set_java_env

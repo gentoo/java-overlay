@@ -20,7 +20,6 @@ KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
 RDEPEND=">=net-print/cups-1.2.12
 	 >=x11-libs/libX11-1.1.3
-	 >=x11-libs/openmotif-2.3.0
 	 >=media-libs/freetype-2.3.5
 	 >=media-libs/alsa-lib-1.0
 	 >=x11-libs/gtk+-2.8
@@ -68,6 +67,10 @@ src_unpack() {
 	epatch "${FILESDIR}/enable_fix-${PV}.patch"
 	# Fix use of jar cfm0@ (http://icedtea.classpath.org/hg/icedtea6/rev/cebc828cf765)
 	epatch "${FILESDIR}/gjar-${PV}.patch"
+	# Remove motif dependency
+	epatch "${FILESDIR}/motif.patch"
+	epatch "${FILESDIR}/motif-config.patch"
+	epatch "${FILESDIR}/motif-make.patch"
 	# Use Classpath's JAVAC and JAVA tests
 	epatch "${FILESDIR}/javac_fix-${PV}.patch"
 	# Use @JAVAC_MEM_OPT@ in javac.in
