@@ -164,6 +164,12 @@ do_update() {
 		die -q "Too many parameters. Expected only one."
 	fi
 
+	# For pkg_postrm
+	if [[ ! $(find_targets) ]]; then
+		remove_symlink
+		return
+	fi
+
 	local canonicalised=$(canonicalise "${ECJ}")
 
 	if [[ ! -L "${ECJ}" ]] || [[ ! -f "${canonicalised}" ]] ; then
