@@ -18,7 +18,7 @@ LICENSE="EPL-1.0"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 SLOT="3.3"
 
-CDEPEND=">=app-admin/eselect-ecj-0.2
+CDEPEND=">=app-admin/eselect-ecj-0.3
 	gcj? ( >=sys-devel/gcc-4.3.1 )"
 DEPEND="${CDEPEND}
 	!gcj? ( !java6? ( >=virtual/jdk-1.4 )
@@ -98,8 +98,8 @@ src_compile() {
 src_install() {
 	if use gcj ; then
 		dobin native_${MY_PN}-${SLOT}
-		newbin "${FILESDIR}/ecj" ${MY_PN}-${SLOT}
-
+		newbin "${FILESDIR}/ecj-${SLOT}" ${MY_PN}-${SLOT}
+		
 		# Don't complain when doing dojar below.
 		JAVA_PKG_WANT_SOURCE=1.4
 		JAVA_PKG_WANT_TARGET=1.4

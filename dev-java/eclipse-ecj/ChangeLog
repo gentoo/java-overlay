@@ -2,6 +2,9 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  22 Jul 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> eclipse-ecj-3.3.0-r5.ebuild eclipse-ecj-3.4.0-r2.ebuild:
+  Installed GCJ file should be ecj-3.3 in 3.3 ebuild.  Depend on current version of eselect-ecj.
+	
   14 Jul 2008; James Le Cuirot <chewi@aura-online.co.uk>
   eclipse-ecj-3.3.0-r5.ebuild, eclipse-ecj-3.4.0-r2.ebuild:
   Sorry about deleting the script. Didn't notice the update and thought it was

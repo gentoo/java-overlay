@@ -18,7 +18,7 @@ LICENSE="EPL-1.0"
 KEYWORDS="~amd64 ~ia64 ~ppc ~ppc64 ~x86 ~x86-fbsd"
 SLOT="3.4"
 
-CDEPEND=">=app-admin/eselect-ecj-0.2
+CDEPEND=">=app-admin/eselect-ecj-0.3
 	gcj? ( >=sys-devel/gcc-4.3.1 )"
 DEPEND="${CDEPEND}
 	!gcj? ( !java6? ( >=virtual/jdk-1.4 )
