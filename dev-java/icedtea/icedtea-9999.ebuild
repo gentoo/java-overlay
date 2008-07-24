@@ -7,12 +7,12 @@ EAPI="1"
 inherit autotools pax-utils java-pkg-2 java-vm-2 mercurial
 
 DESCRIPTION="A harness to build the OpenJDK using Free Software build tools and dependencies"
-OPENJDK_BUILD="11"
-OPENJDK_DATE="10_jul_2008"
-OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.gz"
+OPENJDK_BUILD="31"
+OPENJDK_DATE="17_jul_2008"
+OPENJDK_TARBALL="openjdk-7-ea-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.zip"
 SRC_URI="http://download.java.net/openjdk/jdk6/promoted/b${OPENJDK_BUILD}/${OPENJDK_TARBALL}"
 HOMEPAGE="http://icedtea.classpath.org"
-EHG_REPO_URI="http://icedtea.classpath.org/hg/icedtea6"
+EHG_REPO_URI="http://icedtea.classpath.org/hg/icedtea"
 
 IUSE="debug doc examples nsplugin zero"
 
@@ -22,6 +22,7 @@ KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
 RDEPEND=">=net-print/cups-1.2.12
 	 >=x11-libs/libX11-1.1.3
+	 >=x11-libs/openmotif-2.3.0
 	 >=media-libs/freetype-2.3.5
 	 >=media-libs/alsa-lib-1.0
 	 >=x11-libs/gtk+-2.8
@@ -30,7 +31,6 @@ RDEPEND=">=net-print/cups-1.2.12
 	 >=media-libs/libpng-1.2
 	 >=media-libs/giflib-4.1.6
 	 >=sys-libs/zlib-1.2.3
-	x11-proto/inputproto
 	 nsplugin? ( || (
 		www-client/mozilla-firefox
 		net-libs/xulrunner
@@ -47,8 +47,7 @@ DEPEND="${RDEPEND}
 	>=dev-java/xalan-2.7.0
 	>=dev-java/xerces-2.9.1
 	>=dev-java/ant-core-1.7.0-r3
-	|| (	>=dev-java/eclipse-ecj-3.2.1:3.2
-		dev-java/eclipse-ecj:3.3 )"
+	>=dev-java/eclipse-ecj-3.2.1"
 
 pkg_setup() {
 	if use_zero && ! built_with_use sys-devel/gcc libffi; then
@@ -60,14 +59,13 @@ pkg_setup() {
 	java-vm-2_pkg_setup
 	java-pkg-2_pkg_setup
 }
-
 src_unpack() {
 	mercurial_src_unpack
 	einfo "Fixing naming of directory from ${PN} to ${PN}-${PV}..."
 	cd "${WORKDIR}" || die "Failed unpacking IcedTea"
 	mv "${PN}" "${PN}-${PV}"
 	cd "${S}"
-	eautoreconf || die "failed to regenerate autoconf infrastructure"
+	eautoreconf
 }
 
 src_compile() {
@@ -79,7 +77,7 @@ src_compile() {
 		config="${config} --with-icedtea-home=$(java-config -O)"
 	else
 		# For other 1.5 JDKs e.g. GCJ, CACAO, JamVM.
-		config="${config} --with-ecj-jar=$(ls -1r /usr/share/eclipse-ecj-3.[23]/lib/ecj.jar|head -n 1)" \
+		config="${config} --with-ecj-jar=$(ls -r /usr/share/eclipse-ecj-3.*/lib/ecj.jar|head -n 1)" \
 		config="${config} --with-libgcj-jar=$(java-config -O)/jre/lib/rt.jar"
 		config="${config} --with-gcj-home=$(java-config -O)"
 	fi
@@ -117,7 +115,7 @@ src_install() {
 	local arch=${ARCH}
 	use x86 && arch=i586
 
-	cd "${S}/openjdk/control/build/linux-${arch}/j2sdk-image" || die
+	cd "${S}/openjdk/build/linux-${arch}/j2sdk-image" || die
 
 	if use doc ; then
 		dohtml -r ../docs/* || die "Failed to install documentation"
