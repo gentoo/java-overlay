@@ -22,7 +22,6 @@ KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
 RDEPEND=">=net-print/cups-1.2.12
 	 >=x11-libs/libX11-1.1.3
-	 >=x11-libs/openmotif-2.3.0
 	 >=media-libs/freetype-2.3.5
 	 >=media-libs/alsa-lib-1.0
 	 >=x11-libs/gtk+-2.8
