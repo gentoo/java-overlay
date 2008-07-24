@@ -48,7 +48,7 @@ src_install() {
 	dodir /usr/${P}/jre/lib
 	dosym ${CLASSPATH_DIR}/share/classpath/glibj.zip /usr/${P}/jre/lib/rt.jar
 	dodir /usr/${P}/lib
-	dosym ${CLASSPATH_DIR}/share/classpath/tools.zip /usr/${P}/lib
+	dosym ${CLASSPATH_DIR}/share/classpath/tools.zip /usr/${P}/lib/tools.jar
 
 	# use ecj for javac
 	if [ -e /usr/bin/ecj ]; then
