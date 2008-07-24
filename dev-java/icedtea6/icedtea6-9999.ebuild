@@ -4,7 +4,7 @@
 
 EAPI="1"
 
-inherit autotools pax-utils java-pkg-2 java-vm-2
+inherit autotools pax-utils java-pkg-2 java-vm-2 mercurial
 
 DESCRIPTION="A harness to build the OpenJDK using Free Software build tools and dependencies"
 OPENJDK_BUILD="11"
@@ -12,6 +12,7 @@ OPENJDK_DATE="10_jul_2008"
 OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.gz"
 SRC_URI="http://download.java.net/openjdk/jdk6/promoted/b${OPENJDK_BUILD}/${OPENJDK_TARBALL}"
 HOMEPAGE="http://icedtea.classpath.org"
+EHG_REPO_URI="http://icedtea.classpath.org/hg/icedtea6"
 
 IUSE="debug doc examples nsplugin zero"
 
@@ -41,7 +42,6 @@ RDEPEND=">=net-print/cups-1.2.12
 #   xalan/xerces: automatic code generation
 #   ant, ecj, jdk: required to build Java code
 DEPEND="${RDEPEND}
-	>=dev-util/mercurial-0.9.5
 	>=virtual/jdk-1.5
 	>=app-arch/unzip-5.52
 	>=dev-java/xalan-2.7.0
@@ -62,7 +62,7 @@ pkg_setup() {
 }
 
 src_unpack() {
-	hg clone http://icedtea.classpath.org/hg/icedtea6 icedtea6-9999
+	mercurial_src_unpack
 	cd "${S}" || die "Couldn't enter source directory"
 	eautoreconf || die "failed to regenerate autoconf infrastructure"
 }
