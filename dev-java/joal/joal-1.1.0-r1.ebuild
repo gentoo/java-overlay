@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -19,7 +19,6 @@ IUSE=""
 CDEPEND="media-libs/openal
 		dev-java/gluegen"
 DEPEND=">=virtual/jdk-1.4
-		>=dev-java/ant-core-1.5
 		dev-java/antlr
 		app-arch/unzip
 		${CDEPEND}"
@@ -39,8 +38,9 @@ src_unpack() {
 
 src_compile() {
 	cd make/ || die "Unable to enter make directory"
-	local antflags="-Dantlr.jar=$(java-pkg_getjars antlr)"
-	local gcp="$(java-pkg_getjars ant-core):$(java-config --tools)"
+	local antflags="-Dantlr.jar=$(java-pkg_getjars --build-only antlr)"
+	#local gcp="$(java-pkg_getjars ant-core):$(java-config --tools)"
+	local gcp="$(java-config --tools)"
 	local gluegen="-Dgluegen.jar=$(java-pkg_getjar gluegen gluegen.jar)"
 	local gluegen_rt="-Dgluegen-rt.jar=$(java-pkg_getjar gluegen 'gluegen-rt.jar')"
 
