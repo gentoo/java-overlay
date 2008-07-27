@@ -1,0 +1,68 @@
+diff -Naur joal.old/make/build.xml joal/make/build.xml
+--- joal.old/make/build.xml	2006-12-20 18:43:10.000000000 +1300
++++ joal/make/build.xml	2007-03-10 23:31:58.000000000 +1300
+@@ -113,9 +113,12 @@
+         <!-- sibling of the JOAL workspace. -->
+         <property name="gluegen.make.dir" value="../../gluegen/make" />
+         <property name="gluegen.build.xml" value="${gluegen.make.dir}/build.xml" />
++
+         <property name="gluegen.jar" value="../../gluegen/build/gluegen.jar" />
+         <property name="gluegen-rt.jar" value="../../gluegen/build/gluegen-rt.jar" />
+-
++	<echo message="gluegen.jar=${gluegen.jar}" />
++	<echo message="gluegen-rt.jar=${gluegen-rt.jar}" />
++	
+         <!-- Create the classpath that includes GlueGen and
+            - ANTLR. This requires the user-defined "antlr.jar"
+            - property. -->
+@@ -124,6 +127,22 @@
+           <pathelement location="${antlr.jar}" />
+         </path>
+ 
++
++
++	<!-- This property will stop gluegen from being built.
++	   - It is meant for situations where gluegen is already
++	   - availiable on the system.
++	-->
++	<condition property="gluegen.prebuilt">
++		<and>
++			<available file="${gluegen.jar}" />
++			<available file="${gluegen-rt.jar}" />
++		</and>
++	</condition>
++
++	<echo message="gluegen.prebuilt=${gluegen.prebuilt}" />
++
++
+         <!-- Names of directories relative to the project root.
+              Some of these are used in FileMappers later for dependence information
+              and need exact string matching, which is why they use file.separator
+@@ -342,10 +361,16 @@
+     <!--
+        - Build GlueGen
+       -->
+-    <target name="build.gluegen" depends="init">
++
++     <!--
++	Gentoo patch makes this check whether gluegen is already avaliable
++     -->
++    <target name="build.gluegen" depends="init" unless="gluegen.prebuilt">
+         <!-- Run the GlueGen build to ensure that the GlueGen ANT task
+            - has been built. -->
+-        <ant antfile="${gluegen.build.xml}" dir="${gluegen.make.dir}" target="all" inheritAll="false" />
++        <ant antfile="${gluegen.build.xml}" dir="${gluegen.make.dir}" target="all" inheritAll="false">
++		<property name="antlr.jar" value="${antlr.jar}" />
++	</ant>
+     </target>
+ 
+     <!-- ================================================================== -->
+@@ -577,7 +602,7 @@
+     </target>
+ 
+     <!-- Build zip archives for developers, both source and binaries -->
+-    <target name="zip" depends="setup-version-string">
++    <target name="zip" depends="setup-version-string" >
+         <!-- Clean up and create temporary directory -->
+         <delete dir="../build/tmp" failonerror="false" />
+         <delete>
