@@ -10,7 +10,7 @@ inherit java-pkg-2 java-ant-2
 DESCRIPTION="GlueGen is a tool which automatically generates the Java and JNI
 code necessary to call C libraries"
 HOMEPAGE="https://gluegen.dev.java.net"
-SRC_URI="${P}.tar.bz2"
+SRC_URI="http://dev.gentoo.org/~ali_bush/distfiles/${P}.tar.bz2"
 
 LICENSE="BSD"
 SLOT="0"
