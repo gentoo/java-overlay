@@ -4,7 +4,7 @@
 
 EAPI="1"
 
-inherit autotools pax-utils java-pkg-2 java-vm-2 mercurial
+inherit autotools pax-utils java-pkg-2 java-utils-2 java-vm-2 mercurial
 
 DESCRIPTION="A harness to build the OpenJDK using Free Software build tools and dependencies"
 OPENJDK_BUILD="31"
@@ -14,7 +14,7 @@ SRC_URI="http://download.java.net/openjdk/jdk7/promoted/b${OPENJDK_BUILD}/${OPEN
 HOMEPAGE="http://icedtea.classpath.org"
 EHG_REPO_URI="http://icedtea.classpath.org/hg/icedtea"
 
-IUSE="debug doc examples nsplugin zero"
+IUSE="debug doc examples javascript nsplugin zero"
 
 LICENSE="GPL-2-with-linking-exception"
 SLOT="0"
@@ -46,7 +46,8 @@ DEPEND="${RDEPEND}
 	>=dev-java/xalan-2.7.0
 	>=dev-java/xerces-2.9.1
 	>=dev-java/ant-core-1.7.0-r3
-	>=dev-java/eclipse-ecj-3.2.1"
+	>=dev-java/eclipse-ecj-3.2.1
+	javascript? ( dev-java/rhino:1.6 )"
 
 pkg_setup() {
 	if use_zero && ! built_with_use sys-devel/gcc libffi; then
@@ -64,7 +65,7 @@ src_unpack() {
 	cd "${WORKDIR}" || die "Failed unpacking IcedTea"
 	mv "${PN}" "${PN}-${PV}"
 	cd "${S}"
-	eautoreconf
+	eautoreconf || die "failed to regenerate autoconf infrastructure"
 }
 
 src_compile() {
@@ -101,6 +102,7 @@ src_compile() {
 		$(use_enable debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nsplugin gcjwebplugin) \
+		$(use_with javascript rhino $(java-pkg_getjar rhino:1.6 js.jar)) \
 		|| die "configure failed"
 
 	emake -j 1  || die "make failed"

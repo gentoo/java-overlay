@@ -49,7 +49,7 @@ DEPEND="${RDEPEND}
 	>=dev-java/ant-core-1.7.0-r3
 	|| (	>=dev-java/eclipse-ecj-3.2.1:3.2
 		dev-java/eclipse-ecj:3.3 )
-	javascript? ( >=dev-java/rhino-1.6.5:1.6 )"
+	javascript? ( >=dev-java/rhino:1.6 )"
 
 pkg_setup() {
 	if use_zero && ! built_with_use sys-devel/gcc libffi; then
@@ -105,7 +105,7 @@ src_compile() {
 		$(use_enable debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nsplugin gcjwebplugin) \
-		$(use_with javascript rhino $(java-pkg_getjar rhino-1.6 js.jar)) \
+		$(use_with javascript rhino $(java-pkg_getjar rhino:1.6 js.jar)) \
 		|| die "configure failed"
 
 	emake -j 1  || die "make failed"
