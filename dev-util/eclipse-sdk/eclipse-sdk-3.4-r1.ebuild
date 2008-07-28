@@ -2,14 +2,6 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-util/eclipse-sdk/eclipse-sdk-3.3.1.1.ebuild,v 1.1 2008/01/21 12:15:55 elvanor Exp $
 
-# Notes: This is a preliminary ebuild of Eclipse-3.3
-# It was based on the initial ebuild in the gcj-overlay, so much of the credit goes out to geki.
-
-# Tomcat is almost no longer needed in 3.3 and removed in 3.4.
-# See bug: https://bugs.eclipse.org/bugs/show_bug.cgi?id=173692
-# Currently we remove the Tomcat stuff entirely - potentially this can still break things.
-# We'll put it back if there is any bug report, which is unlikely.
-
 # To unbundle a jar, do the following:
 # 1) Rewrite the ebuild so it uses OSGi packaging
 # 2) Add the dependency and add it to gentoo_jars/system_jars
@@ -17,8 +9,7 @@
 # so that it does *NOT* copy the file at the end
 # 4) Install the symlink itself via java-pkg_jarfrom
 
-# Jetty, Tomcat-jasper and Lucene analysis (1.9.1) jars have to stay bundled for now, until someone does some work on them.
-# Hopefully, wltjr will soon package tomcat-jasper.
+# Jetty, Tomcat-jasperhave to stay bundled for now, until someone does some work on them.
 
 # Current patches are hard to maintain when revbumping.
 # Two solutions:
@@ -29,8 +20,9 @@ EAPI="1"
 JAVA_PKG_IUSE="doc"
 inherit java-pkg-2 java-ant-2 check-reqs
 
-DMF="R-${PV}-200806172000"
-MY_A="eclipse-sourceBuild-srcIncluded-${PV}.zip"
+MY_PV="${PV/_rc/RC}"
+DMF="R-${MY_PV}-200806172000"
+MY_A="eclipse-sourceBuild-srcIncluded-${MY_PV}.zip"
 
 DESCRIPTION="Eclipse Tools Platform"
 HOMEPAGE="http://www.eclipse.org/"
@@ -86,13 +78,13 @@ src_unpack() {
 	patch-apply
 	remove-bundled-stuff
 
-	# no warnings / java5 / all output should be directed to stdout
+	# Specific Gentoo tweaks for the build
 	find ${S} -type f -name '*.xml' -exec \
 		sed -r -e "s:(-encoding ISO-8859-1):\1 -nowarn:g" -e "s:(\"compilerArg\" value=\"):\1-nowarn :g" \
 		-e "s:(<property name=\"javacSource\" value=)\".*\":\1\"1.5\":g" \
 		-e "s:(<property name=\"javacTarget\" value=)\".*\":\1\"1.5\":g" -e "s:output=\".*(txt|log).*\"::g" -i {} \;
 
-	# jdk home
+	# JDK home
 	sed -r -e "s:^(JAVA_HOME =) .*:\1 $(java-config --jdk-home):" -e "s:gcc :gcc ${CFLAGS} :" \
 		-i plugins/org.eclipse.core.filesystem/natives/unix/linux/Makefile || die "sed Makefile failed"
 
@@ -157,9 +149,9 @@ pkg_postinst() {
 	einfo "If you need it, get org.eclipse.equinox.initializer_x.y.z.jar from:"
 	einfo "	http://download.eclipse.org/eclipse/equinox/"
 	echo
-	ewarn "If you have only one 'Software Updates' entry in Help menu that fails"
-	ewarn "please enable the 'Classic Update' under:"
-	ewarn "	Window > Preferences > General > Capabilities"
+	ewarn "The new Update Manager (P2) is not yet supported under Gentoo."
+	ewarn "Please enable the 'Classic Update' under:"
+	ewarn "Window > Preferences > General > Capabilities"
 	ewarn
 	ewarn "UPGRADE WARNING"
 	ewarn "You may do a backup of your ~/.eclipse and ~/workspace folders."
@@ -172,6 +164,9 @@ pkg_postinst() {
 
 install-link-system-jars() {
 	pushd plugins/ > /dev/null
+	local ant_dir="$(basename plugins/org.apache.ant_*)"
+	rm -rf plugins/org.apache.ant_*
+	dosym /usr/share/ant-core ${ECLIPSE_DIR}/plugins/${ant_dir}
 
 	java-pkg_jarfrom swt-${SLOT}
 	java-pkg_jarfrom icu4j
@@ -182,11 +177,14 @@ install-link-system-jars() {
 	java-pkg_jarfrom lucene-analyzers-1.9
 	java-pkg_jarfrom tomcat-servlet-api-2.4
 
-	java-pkg_jarfrom --into org.junit_*/ junit
-	java-pkg_jarfrom --into org.junit4*/ junit-4
+	popd > /dev/null
 
-	ln -snf /usr/share/ant/{bin,lib} org.apache.ant_*/ || die
+	pushd plugins/org.junit_*/ > /dev/null
+	java-pkg_jarfrom junit
+	popd > /dev/null
 
+	pushd plugins/org.junit4*/ > /dev/null
+	java-pkg_jarfrom junit-4
 	popd > /dev/null
 }
 
@@ -322,7 +320,7 @@ remove-bundled-stuff() {
 		org.eclipse.osgi/supplement/osgi/osgi.jar \
 		org.eclipse.swt/extra_jars/exceptions.jar
 
-	rm -rf org.apache.ant_*/{bin,lib}
+	rm -rf org.apache.ant_*/*
 	rm org.apache.commons.el_*.jar org.apache.commons.logging_*.jar \
 		com.jcraft.jsch_*.jar com.ibm.icu_*.jar org.junit_*/*.jar \
 		org.junit4*/*.jar javax.servlet.jsp_*.jar javax.servlet_*.jar \
