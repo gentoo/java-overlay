@@ -1,4 +1,4 @@
 #!/bin/bash
 
-JRUBY_PARENT_CLASSPATH=`java-config -d -p jruby`
-source /usr/share/jruby/bin/jruby ${@}
+export JRUBY_CP=`java-config -d -p jruby`
+exec bash /usr/share/jruby/bin/jruby ${@}

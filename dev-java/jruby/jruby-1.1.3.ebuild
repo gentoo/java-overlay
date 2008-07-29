@@ -12,17 +12,17 @@ SRC_URI="http://dist.codehaus.org/${PN}/${PN}-src-${PV}.tar.gz"
 LICENSE="|| ( CPL-1.0 GPL-2 LGPL-2.1 )"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="bsf"
+IUSE="bsf java6 ssl"
 
 CDEPEND=">=dev-java/jline-0.9.91
+	>=dev-java/joni-1.0.2-r1
+	>=dev-java/jvyamlb-0.2
 	dev-java/asm:3
-	dev-java/backport-util-concurrent
 	dev-java/bytelist
 	dev-java/jna
 	dev-java/jna-posix
 	dev-java/joda-time
-	dev-java/joni
-	dev-java/jvyamlb"
+	!java6? ( dev-java/backport-util-concurrent )"
 
 RDEPEND="${CDEPEND}
 	>=virtual/jre-1.5"
@@ -38,7 +38,8 @@ DEPEND="${CDEPEND}
 
 PDEPEND="dev-ruby/rubygems
 	>=dev-ruby/rake-0.7.3
-	>=dev-ruby/rspec-1.0.4"
+	>=dev-ruby/rspec-1.0.4
+	ssl? ( dev-ruby/jruby-openssl )"
 
 RUBY_HOME=/usr/share/${PN}/lib/ruby
 SITE_RUBY=${RUBY_HOME}/site_ruby
@@ -48,11 +49,6 @@ JAVA_ANT_REWRITE_CLASSPATH="true"
 
 pkg_setup() {
 	java-pkg-2_pkg_setup
-
-	if [[ -d "${SITE_RUBY}" && ! -L "${SITE_RUBY}" ]]; then
-		ewarn "dev-java/jruby now uses dev-lang/ruby's site_ruby directory by creating symlinks."
-		ewarn "${SITE_RUBY} is a directory right now, which will cause problems when being merged onto the filesystem."
-	fi
 
 	if [[ -d "${GEMS}" && ! -L "${GEMS}" ]]; then
 		ewarn "dev-java/jruby now uses dev-lang/ruby's gems directory by creating symlinks."
@@ -83,7 +79,8 @@ src_unpack() {
 	java-pkg_jar-from joni joni.jar joni_.jar
 
 	# Collect the other JARs.
-	java-pkg_jar-from asm-3,backport-util-concurrent,bytelist,jline,joda-time,jna,jna-posix,jvyamlb
+	java-pkg_jar-from asm-3,bytelist,jline,joda-time,jna,jna-posix,jvyamlb
+	use java6 || java-pkg_jar-from backport-util-concurrent
 
 	cd "${S}/lib" || die
 	rm -vf *.jar || die
@@ -115,12 +112,10 @@ src_test() {
 
 src_install() {
 	java-pkg_dojar lib/${PN}.jar
-	use source && java-pkg_dosrc src/org
 	dodoc README docs/{*.txt,README.*} || die
 
-	if use doc ; then
-		java-pkg_dojavadoc docs/api
-	fi
+	use doc && java-pkg_dojavadoc docs/api
+	use source && java-pkg_dosrc src/org
 
 	dobin "${FILESDIR}/jruby" || die
 	dobin "${S}/bin/jirb" || die
@@ -128,32 +123,26 @@ src_install() {
 	exeinto "/usr/share/${PN}/bin"
 	doexe "${S}/bin/jruby" || die
 
-	insinto "/usr/share/${PN}/lib"
-	doins -r "${S}/lib/ruby" || die
+	insinto "${RUBY_HOME}"
+	doins -r "${S}/lib/ruby/1.8" || die
+	doins -r "${S}/lib/ruby/site_ruby" || die
 
 	# Share gems with regular Ruby.
-	rm -r "${D}"/usr/share/${PN}/lib/ruby/gems || die
-	dosym /usr/lib/ruby/gems /usr/share/${PN}/lib/ruby/gems || die
+	dosym /usr/$(get_libdir)/ruby/gems "${GEMS}" || die
 
-	# Share site_ruby with regular Ruby.
-	rm -r "${D}"/usr/share/${PN}/lib/ruby/site_ruby || die
-	dosym /usr/lib/ruby/site_ruby /usr/share/${PN}/lib/ruby/site_ruby || die
+	# Autoload rubygems and append regular site_ruby to $LOAD_PATH.
+	# Unfortunately the -I option prepends instead.
+	insinto "${SITE_RUBY}"
+	doins "${FILESDIR}/gentoo.rb" || die
+	doenvd "${FILESDIR}/10jruby" || die
 }
 
 pkg_preinst() {
-	local bad_directory=0
-
-	if [[ -d "${SITE_RUBY}" && ! -L "${SITE_RUBY}" ]]; then
-		eerror "${SITE_RUBY} is a directory. Please move this directory out of the way, and then emerge --resume."
-		bad_directory=1
-	fi
-
 	if [[ -d "${GEMS}" && ! -L "${GEMS}" ]]; then
 		eerror "${GEMS} is a directory. Please move this directory out of the way, and then emerge --resume."
-		bad_directory=1
-	fi
-
-	if [[ ! "${bad_directory}" ]]; then
 		die "Please address the above errors, then emerge --resume."
 	fi
+
+	# Delete site_ruby if it is a symlink.
+	[[ -L "${SITE_RUBY}" ]] && rm -f "${SITE_RUBY}"
 }
