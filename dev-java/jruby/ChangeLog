@@ -2,6 +2,8 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*jruby-1.1.3 (29 Jul 2008)
+
   29 Jul 2008; James Le Cuirot <chewi@aura-online.co.uk>
   -jruby-1.1.2-r1.ebuild, +jruby-1.1.3.ebuild:
   Version bump. The wrapper script I committed last time actually crippled JRuby
@@ -12,8 +14,6 @@
   #184375. The java6 USE flag now prevents backport-util-concurrent from being
   required. This fixes bug #217388. Finally, the ssl USE flag now installs the
   jruby-openssl gem because SSL support is missing from JRuby itself.
-
-*jruby-1.1.3 (29 Jul 2008)
 
   07 Jul 2008; James Le Cuirot <chewi@aura-online.co.uk>
   -jruby-1.1.2.ebuild, +jruby-1.1.2-r1.ebuild, +files/jruby:
