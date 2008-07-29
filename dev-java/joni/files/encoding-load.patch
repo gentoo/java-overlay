@@ -1,0 +1,47 @@
+Index: src/org/joni/encoding/Encoding.java
+===================================================================
+--- src/org/joni/encoding/Encoding.java	(revision 6838)
++++ src/org/joni/encoding/Encoding.java	(revision 6839)
+@@ -23,6 +23,8 @@
+ import org.joni.CaseFoldCodeItem;
+ import org.joni.IntHolder;
+ import org.joni.constants.CharacterType;
++import org.joni.exception.ErrorMessages;
++import org.joni.exception.ValueException;
+ import org.joni.util.BytesHash;
+ 
+ public abstract class Encoding {
+@@ -424,4 +426,21 @@
+     public abstract boolean isFixedWidth();
+     
+     public static final byte NEW_LINE = (byte)0x0a;
++
++    public static Encoding load(String name) { 
++        String encClassName = "org.joni.encoding.specific." + name + "Encoding";
++
++        Class<?> encClass;
++        try {
++            encClass = Class.forName(encClassName);
++        } catch (ClassNotFoundException cnfe) {
++            throw new ValueException(ErrorMessages.ERR_ENCODING_CLASS_DEF_NOT_FOUND, encClassName);
++        }
++
++        try {
++            return (Encoding)encClass.getField("INSTANCE").get(encClass);
++        } catch (Exception e) {
++            throw new ValueException(ErrorMessages.ERR_ENCODING_LOAD_ERROR, encClassName);
++        }
++    }
+ }
+Index: src/org/joni/exception/ErrorMessages.java
+===================================================================
+--- src/org/joni/exception/ErrorMessages.java	(revision 6838)
++++ src/org/joni/exception/ErrorMessages.java	(revision 6839)
+@@ -92,4 +92,7 @@
+     final String ERR_INVALID_COMBINATION_OF_OPTIONS = "invalid combination of options";
+     final String ERR_OVER_THREAD_PASS_LIMIT_COUNT = "over thread pass limit count";
+     final String ERR_TOO_BIG_SB_CHAR_VALUE = "too big singlebyte char value";
++
++    final String ERR_ENCODING_CLASS_DEF_NOT_FOUND = "encoding class <%n> not found";
++    final String ERR_ENCODING_LOAD_ERROR = "problem loading encoding <%n>";
+ }

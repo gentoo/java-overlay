@@ -3,7 +3,7 @@
 # $Header: $
 
 JAVA_PKG_IUSE="source"
-inherit eutils java-pkg-2 java-ant-2
+inherit base java-pkg-2 java-ant-2
 
 DESCRIPTION="Java port of the Oniguruma regular expression engine"
 HOMEPAGE="http://jruby.codehaus.org/"
@@ -16,13 +16,8 @@ IUSE=""
 RDEPEND=">=virtual/jre-1.4"
 DEPEND=">=virtual/jdk-1.5"
 
+PATCHES=( "${FILESDIR}/exposure.patch" "${FILESDIR}/encoding-load.patch" )
 EANT_BUILD_TARGET="build"
-
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
-	epatch "${FILESDIR}/exposure.patch"
-}
 
 src_install() {
 	java-pkg_dojar target/${PN}.jar
