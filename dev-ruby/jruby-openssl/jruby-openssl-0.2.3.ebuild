@@ -6,7 +6,7 @@ inherit ruby gems
 
 USE_RUBY="ruby18"
 DESCRIPTION="A Ruby SSL library that works with JRuby"
-HOMEPAGE="http://rubyforge.org/projects/activerecord/"
+HOMEPAGE="http://rubyforge.org/projects/jruby-extras"
 SRC_URI="http://gems.rubyforge.org/gems/${P}.gem"
 
 LICENSE="MIT"
