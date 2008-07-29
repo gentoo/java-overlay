@@ -9,7 +9,7 @@
 # so that it does *NOT* copy the file at the end
 # 4) Install the symlink itself via java-pkg_jarfrom
 
-# Jetty, Tomcat-jasperhave to stay bundled for now, until someone does some work on them.
+# Jetty, Tomcat-jasper have to stay bundled for now, until someone does some work on them.
 
 # Current patches are hard to maintain when revbumping.
 # Two solutions:
@@ -20,9 +20,8 @@ EAPI="1"
 JAVA_PKG_IUSE="doc"
 inherit java-pkg-2 java-ant-2 check-reqs
 
-MY_PV="${PV/_rc/RC}"
-DMF="R-${MY_PV}-200806172000"
-MY_A="eclipse-sourceBuild-srcIncluded-${MY_PV}.zip"
+DMF="R-${PV}-200806172000"
+MY_A="eclipse-sourceBuild-srcIncluded-${PV}.zip"
 
 DESCRIPTION="Eclipse Tools Platform"
 HOMEPAGE="http://www.eclipse.org/"
@@ -56,7 +55,6 @@ DEPEND=">=virtual/jdk-1.5
 	java6? ( >=virtual/jdk-1.6 )
 	dev-java/ant-nodeps
 	dev-java/cldc-api:1.1
-	sys-apps/findutils
 	app-arch/unzip
 	app-arch/zip
 	${CDEPEND}"
@@ -80,13 +78,17 @@ src_unpack() {
 
 	# Specific Gentoo tweaks for the build
 	find ${S} -type f -name '*.xml' -exec \
-		sed -r -e "s:(-encoding ISO-8859-1):\1 -nowarn:g" -e "s:(\"compilerArg\" value=\"):\1-nowarn :g" \
+		sed -r -e "s:(-encoding ISO-8859-1):\1 -nowarn:g" \
+		-e "s:(\"compilerArg\" value=\"):\1-nowarn :g" \
 		-e "s:(<property name=\"javacSource\" value=)\".*\":\1\"1.5\":g" \
-		-e "s:(<property name=\"javacTarget\" value=)\".*\":\1\"1.5\":g" -e "s:output=\".*(txt|log).*\"::g" -i {} \;
+		-e "s:(<property name=\"javacTarget\" value=)\".*\":\1\"1.5\":g" \
+		-e "s:output=\".*(txt|log).*\"::g" -i {} \;
 
 	# JDK home
-	sed -r -e "s:^(JAVA_HOME =) .*:\1 $(java-config --jdk-home):" -e "s:gcc :gcc ${CFLAGS} :" \
-		-i plugins/org.eclipse.core.filesystem/natives/unix/linux/Makefile || die "sed Makefile failed"
+	sed -r -e "s:gcc :gcc ${CFLAGS} :" \
+		-e "s:^(JAVA_HOME =) .*:\1 $(java-config --jdk-home):" \
+		-i plugins/org.eclipse.core.filesystem/natives/unix/linux/Makefile \
+		|| die "sed Makefile failed"
 
 	while read line; do
 		java-ant_rewrite-classpath "$line" > /dev/null
@@ -110,7 +112,9 @@ src_compile() {
 	use doc && options="${options} -Dgentoo.javadoc=true"
 
 	ANT_OPTS=-Xmx512M ANT_TASKS="ant-nodeps" \
-		eant ${options} -Dgentoo.classpath="${system_jars}" -Dgentoo.jars="${gentoo_jars//:/,}"
+	eant ${options} \
+		-Dgentoo.classpath="${system_jars}" \
+		-Dgentoo.jars="${gentoo_jars//:/,}"
 }
 
 src_install() {
@@ -164,8 +168,8 @@ pkg_postinst() {
 
 install-link-system-jars() {
 	pushd plugins/ > /dev/null
-	local ant_dir="$(basename plugins/org.apache.ant_*)"
-	rm -rf plugins/org.apache.ant_*
+	local ant_dir="$(basename org.apache.ant_*)"
+	rm -rf org.apache.ant_*
 	dosym /usr/share/ant-core ${ECLIPSE_DIR}/plugins/${ant_dir}
 
 	java-pkg_jarfrom swt-${SLOT}
@@ -176,32 +180,26 @@ install-link-system-jars() {
 	java-pkg_jarfrom lucene-1.9
 	java-pkg_jarfrom lucene-analyzers-1.9
 	java-pkg_jarfrom tomcat-servlet-api-2.4
-
-	popd > /dev/null
-
-	pushd plugins/org.junit_*/ > /dev/null
-	java-pkg_jarfrom junit
-	popd > /dev/null
-
-	pushd plugins/org.junit4*/ > /dev/null
-	java-pkg_jarfrom junit-4
+	java-pkg_jarfrom --into org.junit_*/ junit
+	java-pkg_jarfrom --into org.junit4*/ junit-4
 	popd > /dev/null
 }
 
 patch-apply() {
 	# optimize launcher build
 	mkdir launchertmp
-	unzip -qq -d launchertmp plugins/org.eclipse.platform/launchersrc.zip > /dev/null || die "unzip failed"
+	unzip -qq -d launchertmp plugins/org.eclipse.platform/launchersrc.zip \
+		|| die "unzip failed"
 	pushd launchertmp/ > /dev/null
 	sed -r -e "s/CFLAGS = -O -s -Wall/CFLAGS = ${CFLAGS} -Wall/" \
 		-i library/gtk/make_linux.mak || die "Failed to tweak make_linux.mak"
-	zip -q -6 -r ../launchersrc.zip * >/dev/null || die "zip failed"
+	zip -q -6 -r ../launchersrc.zip * || die "zip failed"
 	popd > /dev/null
 	mv launchersrc.zip plugins/org.eclipse.platform/launchersrc.zip
 	rm -rf launchertmp
 
 	# disable swt, jdk6
-	# use sed where possible -> ease revbump :)
+	# use sed where possible => ease bump :)
 	sed -e "/..\/..\/plugins\/org.eclipse.ui.win32/,/<\/ant>/d" \
 		-i features/org.eclipse.platform/build.xml
 	sed -e "/dir=\"..\/..\/plugins\/org.eclipse.swt/,/<\/ant>/d" \
@@ -249,53 +247,51 @@ patch-apply() {
 	pushd plugins/org.eclipse.pde.build > /dev/null
 	# %patch53
 	epatch ${FEDORA}/eclipse-pde.build-add-package-build.patch
-	sed -e "s:@eclipse_base@:${ECLIPSE_DIR}:g" -i templates/package-build/build.properties
+	sed -e "s:@eclipse_base@:${ECLIPSE_DIR}:g" \
+		-i templates/package-build/build.properties
 	popd > /dev/null
 
-	# Later we could produce a patch out of all these sed, but this is not the best solution
-	# since this would make a lot of patches (x86, x86_64...) and would be hard to revbump
-
 	# Following adds an additional classpath when building JSPs
-	sed -i '/<path id="@dot\.classpath">/ a\
-			<filelist dir="" files="${gentoo.jars}" />'  plugins/org.eclipse.help.webapp/build.xml
+	sed '/<path id="@dot\.classpath">/ a\
+		<filelist dir="" files="${gentoo.jars}" />' \
+		-i plugins/org.eclipse.help.webapp/build.xml
 
 	# Following allows the doc USE flag to be honored
-	sed -i -e '/<target name="generateJavadoc" depends="getJavadocPath"/ c\
+	sed -e '/<target name="generateJavadoc" depends="getJavadocPath"/ c\
 		<target name="generateJavadoc" depends="getJavadocPath" if="gentoo.javadoc">' \
 		-e '/<replace file="\${basedir}\/\${optionsFile}" token="@rt@" value="\${bootclasspath}/ c\
 		<replace file="${basedir}/${optionsFile}" token="@rt@" value="${bootclasspath}:${gentoo.classpath}" />' \
-		"plugins/org.eclipse.platform.doc.isv/buildDoc.xml"
-
-	# Following disables Tomcat entirely
-	sed -i '/plugins\/org\.eclipse\.tomcat"/{N;N;N;N;d;}' "features/org.eclipse.platform/build.xml"
-	sed -i '/org\.eclipse\.tomcat/{N;N;N;d;}' "plugins/org.eclipse.platform.source/build.xml"
-	sed -i '/<ant.*org\.eclipse\.tomcat/{N;N;d;}' "assemble.org.eclipse.sdk.linux.gtk.${eclipsearch}.xml"
+		-i plugins/org.eclipse.platform.doc.isv/buildDoc.xml
 
 	# This allows to compile osgi.util and osgi.service, and fixes IPluginDescriptor.class which is present compiled
-	sed -i -e 's/<src path="\."/<src path="org"/' -e '/<include name="org\/"\/>/ d' \
-	-e '/<subant antfile="\${customBuildCallbacks}" target="pre\.gather\.bin\.parts" failonerror="false" buildpath="\.">/ { n;n;n; a\
+	sed -e 's/<src path="\."/<src path="org"/' \
+		-e '/<include name="org\/"\/>/d' \
+		-e '/<subant antfile="\${customBuildCallbacks}" target="pre\.gather\.bin\.parts" failonerror="false" buildpath="\.">/ { n;n;n; a\
 		<copy todir="${destination.temp.folder}/org.eclipse.osgi.services_3.1.200.v20071203" failonerror="true" overwrite="false"> \
 			<fileset dir="${build.result.folder}/@dot"> \
 				<include name="**"/> \
 			</fileset> \
 		</copy>
-}' plugins/org.eclipse.osgi.services/build.xml
+		}' \
+		-i plugins/org.eclipse.osgi.services/build.xml
 
-	sed -i -e 's/<src path="\."/<src path="org"/' -e '/<include name="org\/"\/>/ d' \
-	-e '/<subant antfile="\${customBuildCallbacks}" target="pre\.gather\.bin\.parts" failonerror="false" buildpath="\.">/ { n;n;n; a\
+	sed -e 's/<src path="\."/<src path="org"/' \
+		-e '/<include name="org\/"\/>/d' \
+		-e '/<subant antfile="\${customBuildCallbacks}" target="pre\.gather\.bin\.parts" failonerror="false" buildpath="\.">/ { n;n;n; a\
 		<copy todir="${destination.temp.folder}/org.eclipse.osgi.util_3.1.200.v20071203" failonerror="true" overwrite="false"> \
 			<fileset dir="${build.result.folder}/@dot"> \
 				<include name="**"/> \
 			</fileset> \
 		</copy>
-}' 	plugins/org.eclipse.osgi.util/build.xml
+		}' \
+		-i plugins/org.eclipse.osgi.util/build.xml
 
-	sed -i 	'/<mkdir dir="${temp\.folder}\/runtime_registry_compatibility\.jar\.bin"\/>/ a\
+	sed '/<mkdir dir="${temp\.folder}\/runtime_registry_compatibility\.jar\.bin"\/>/ a\
 		<mkdir dir="classes"/> \
 		<copy todir="classes" failonerror="true" overwrite="false"> \
-			<fileset dir="${build.result.folder}/../org.eclipse.core.runtime/@dot/" includes="**/IPluginDescriptor.class" > \
-			</fileset> \
-		</copy>' plugins/org.eclipse.core.runtime.compatibility.registry/build.xml
+			<fileset dir="${build.result.folder}/../org.eclipse.core.runtime/@dot/" includes="**/IPluginDescriptor.class" /> \
+		</copy>' \
+		-i plugins/org.eclipse.core.runtime.compatibility.registry/build.xml
 
 	# This removes the copying operation for bundled jars
 	sed -e "s/<copy.*com\.jcraft\.jsch_.*\/>//" \
@@ -315,7 +311,7 @@ remove-bundled-stuff() {
 	# ...  .so libraries
 	find ${S} -type f -name '*.so' | xargs rm
 	# ... .jar files
-	pushd plugins >/dev/null
+	pushd plugins/ >/dev/null
 	rm org.eclipse.osgi/osgi/osgi*.jar \
 		org.eclipse.osgi/supplement/osgi/osgi.jar \
 		org.eclipse.swt/extra_jars/exceptions.jar
@@ -325,15 +321,6 @@ remove-bundled-stuff() {
 		com.jcraft.jsch_*.jar com.ibm.icu_*.jar org.junit_*/*.jar \
 		org.junit4*/*.jar javax.servlet.jsp_*.jar javax.servlet_*.jar \
 		org.apache.lucene_*.jar org.apache.lucene.analysis_*.jar
-	for d in $(ls -1 -d org.eclipse.swt.*); do
-		[[ ${d} = org.eclipse.swt.tools ]] && continue
-		[[ ${d} = org.eclipse.swt.gtk.linux.${eclipsearch} ]] && continue
-		[[ ${d} = org.eclipse.swt.gtk.linux.${eclipsearch}.source ]] && continue
-		rm -rf ${d}
-	done
-
-	# Removing Tomcat stuff
-	rm -rf org.eclipse.tomcat/
 
 	# Remove bundled classes
 	rm -rf org.eclipse.osgi.services/org
