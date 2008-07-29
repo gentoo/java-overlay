@@ -64,15 +64,13 @@ pkg_setup() {
 
 src_unpack() {
 	mercurial_src_unpack
-	einfo "Fixing naming of directory from ${PN} to ${PN}-${PV}..."
-	cd "${WORKDIR}" || die "Failed unpacking IcedTea"
-	mv "${PN}" "${PN}-${PV}"
+	S="${WORKDIR}"/"${PN}"
 	cd "${S}"
 	eautoreconf || die "failed to regenerate autoconf infrastructure"
 }
 
 src_compile() {
-	local config procs
+	local config procs rhino_jar
 
 	if [[ "$(java-pkg_get-current-vm)" == "icedtea6" || "$(java-pkg_get-current-vm)" == "icedtea" ]] ; then
 		# If we are upgrading icedtea, then we don't need to bootstrap.
@@ -93,9 +91,13 @@ src_compile() {
 	fi
 
 	if use_zero ; then
-		zero="${config} --enable-zero"
+		config="${config} --enable-zero"
 	else
-		zero="${config} --disable-zero"
+		config="${config} --disable-zero"
+	fi
+
+	if use javascript ; then
+		rhino_jar=$(use_with javascript rhino $(java-pkg_getjar rhino:1.6 js.jar));
 	fi
 
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
@@ -105,7 +107,7 @@ src_compile() {
 		$(use_enable debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nsplugin gcjwebplugin) \
-		$(use_with javascript rhino $(java-pkg_getjar rhino:1.6 js.jar)) \
+		$(use_with javascript rhino ${rhino_jar}) \
 		|| die "configure failed"
 
 	emake -j 1  || die "make failed"
@@ -145,8 +147,8 @@ src_install() {
 	find "${ddest}" -perm +111 -exec chmod 755 {} \; -o -exec chmod 644 {} \; || die
 
 	if use nsplugin; then
-		use x86 && arch=i386
-		install_mozilla_plugin "${dest}/jre/lib/${arch}/gcjwebplugin.so"
+		use x86 && arch=i386;
+		install_mozilla_plugin "${dest}/jre/lib/${arch}/gcjwebplugin.so";
 	fi
 
 	set_java_env
