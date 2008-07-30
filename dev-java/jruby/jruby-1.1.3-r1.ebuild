@@ -4,7 +4,7 @@
 
 EAPI="1"
 JAVA_PKG_IUSE="doc source test"
-inherit eutils java-pkg-2 java-ant-2
+inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="Java-based Ruby interpreter implementation"
 HOMEPAGE="http://jruby.codehaus.org/"
@@ -111,6 +111,8 @@ src_test() {
 }
 
 src_install() {
+	local bin
+
 	java-pkg_dojar lib/${PN}.jar
 	dodoc README docs/{*.txt,README.*} || die
 
@@ -118,10 +120,16 @@ src_install() {
 	use source && java-pkg_dosrc src/org
 
 	dobin "${FILESDIR}/jruby" || die
-	dobin "${S}/bin/jirb" || die
-
 	exeinto "/usr/share/${PN}/bin"
 	doexe "${S}/bin/jruby" || die
+
+	# Install some jruby tools.
+	dobin "${S}"/bin/j{gem,irb{,_swing},rubyc} || die
+
+	# Symlink some common tools so that jruby can launch them internally.
+	for bin in {j,}gem jirb jrubyc rake rdoc ri spec{,_translator} ; do
+		dosym "/usr/bin/${bin}" "/usr/share/${PN}/bin/${bin}" || die
+	done
 
 	insinto "${RUBY_HOME}"
 	doins -r "${S}/lib/ruby/1.8" || die

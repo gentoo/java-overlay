@@ -2,6 +2,12 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  30 Jul 2008; James Le Cuirot <chewi@aura-online.co.uk>
+  -jruby-1.1.3.ebuild, +jruby-1.1.3-r1.ebuild:
+  Install jgem, jirb_swing and jrubyc. Also install symlinks so that JRuby can
+  launch certain common tools internally. The wrapper script doesn't need bash
+  so change to /bin/sh.
+
 *jruby-1.1.3 (29 Jul 2008)
 
   29 Jul 2008; James Le Cuirot <chewi@aura-online.co.uk>
