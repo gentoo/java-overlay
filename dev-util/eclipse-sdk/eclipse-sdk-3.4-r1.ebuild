@@ -48,7 +48,7 @@ CDEPEND="dev-java/ant-eclipse-ecj:${SLOT}
 	>=dev-java/commons-logging-1.1-r6
 	>=dev-java/tomcat-servlet-api-5.5.25-r1:2.4
 	dev-java/lucene:1.9
-	dev-java/lucene-analyzers:1.9"
+	>=dev-java/lucene-analyzers-1.9.1-r1:1.9"
 RDEPEND=">=virtual/jre-1.5
 	${CDEPEND}"
 DEPEND=">=virtual/jdk-1.5
@@ -104,7 +104,8 @@ src_compile() {
 
 	# system_jars will be used when compiling (javac)
 	# gentoo_jars will be used when building JSPs and other ant tasks (not javac)
-	local system_jars="$(java-pkg_getjars swt-${SLOT},icu4j,ant-core,jsch,junit-4,tomcat-servlet-api-2.4,lucene-1.9,lucene-analyzers-1.9):$(java-pkg_getjars --build-only ant-nodeps,cldc-api-1.1)"
+	local system_jars="$(java-pkg_getjars swt-${SLOT},icu4j,ant-core,jsch,junit-4,tomcat-servlet-api-2.4,\
+lucene-1.9,lucene-analyzers-1.9):$(java-pkg_getjars --build-only ant-nodeps,cldc-api-1.1)"
 	local gentoo_jars="$(java-pkg_getjars ant-core,icu4j,jsch,commons-logging,commons-el,tomcat-servlet-api-2.4)"
 	local options="-q -Dnobootstrap=true -Dlibsconfig=true -Dbootclasspath=${bootclasspath} -DinstallOs=linux \
 		-DinstallWs=gtk -DinstallArch=${eclipsearch} -Djava5.home=$(java-config --jdk-home)"
@@ -118,25 +119,25 @@ src_compile() {
 }
 
 src_install() {
-	dodir /usr/lib
+	dodir "/usr/lib"
 
-	[ -f result/linux-gtk-${eclipsearch}-sdk.tar.gz ] \
+	[ -f "result/linux-gtk-${eclipsearch}-sdk.tar.gz" ] \
 		|| die "tar.gz bundle was not built properly!"
-	tar xzf result/linux-gtk-${eclipsearch}-sdk.tar.gz -C ${D}/usr/lib \
+	tar xzf "result/linux-gtk-${eclipsearch}-sdk.tar.gz" -C "${D}/usr/lib" \
 		|| die "Failed to extract the built package"
 
-	mv ${D}/usr/lib/eclipse ${D}/${ECLIPSE_DIR}
+	mv "${D}/usr/lib/eclipse" "${D}/${ECLIPSE_DIR}"
 
-	# install startup script
-	dobin ${FILESDIR}/eclipse-${SLOT}
-	chmod +x ${D}/${ECLIPSE_DIR}/eclipse
+	# Install startup script
+	dobin "${FILESDIR}/eclipse-${SLOT}"
+	chmod +x "${D}/${ECLIPSE_DIR}/eclipse"
 
-	insinto /etc
-	doins ${FILESDIR}/${SLOT}/eclipserc
+	insinto "/etc"
+	doins "${FILESDIR}/${SLOT}/eclipserc"
 
-	make_desktop_entry eclipse-${SLOT} "Eclipse ${PV}" "${ECLIPSE_DIR}/icon.xpm"
+	make_desktop_entry "eclipse-${SLOT}" "Eclipse ${PV}" "${ECLIPSE_DIR}/icon.xpm"
 
-	cd ${D}/${ECLIPSE_DIR}
+	cd "${D}/${ECLIPSE_DIR}"
 	install-link-system-jars
 }
 
@@ -234,19 +235,18 @@ patch-apply() {
 			-i assemble.org.eclipse.sdk.linux.gtk.${eclipsearch}.xml
 	fi
 
-	# waaaaahhhhhhk !!!!11oneone
-	epatch ${PATCHDIR}/eclipse_build-libs.diff
-	epatch ${PATCHDIR}/eclipse_String.compareTo.diff
-	epatch ${PATCHDIR}/eclipse_buildfix-pde.diff
+	epatch "${PATCHDIR}/eclipse_build-libs.diff"
+	epatch "${PATCHDIR}/eclipse_String.compareTo.diff"
+	epatch "${PATCHDIR}/eclipse_buildfix-pde.diff"
 
 	# JNI
-	epatch ${FEDORA}/eclipse-libupdatebuild2.patch
+	epatch "${FEDORA}/eclipse-libupdatebuild2.patch"
 
 	# Generic releng plugins that can be used to build plugins
 	# https://www.redhat.com/archives/fedora-devel-java-list/2006-April/msg00048.html
 	pushd plugins/org.eclipse.pde.build > /dev/null
 	# %patch53
-	epatch ${FEDORA}/eclipse-pde.build-add-package-build.patch
+	epatch "${FEDORA}/eclipse-pde.build-add-package-build.patch"
 	sed -e "s:@eclipse_base@:${ECLIPSE_DIR}:g" \
 		-i templates/package-build/build.properties
 	popd > /dev/null
