@@ -1,6 +1,11 @@
 # ChangeLog for dev-db/apgdiff
-# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  01 Aug 2008; Miroslav Šulc <fordfrog@gentoo.org>
+  -apgdiff-1.0.0_beta26.ebuild, -apgdiff-1.0.0_beta28.ebuild,
+  +apgdiff-1.1.ebuild:
+  Version bump. Old version removed.
 
   06 Dec 2007; Miroslav Šulc <fordfrog@gentoo.org>
   apgdiff-1.0.0_beta28.ebuild:

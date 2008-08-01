@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -10,14 +10,17 @@ HOMEPAGE="http://apgdiff.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${P}-src.zip"
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~amd64 ~x86"
 IUSE="test"
 
 DEPEND=">=virtual/jdk-1.5
 	>=dev-java/ant-core-1.7.0
 	>=dev-java/ant-junit-1.7.0
 	app-arch/zip
-	test? ( >=dev-java/junit-4.1 )"
+	test? (
+		dev-java/hamcrest
+		>=dev-java/junit-4.4
+	)"
 
 RDEPEND=">=virtual/jre-1.5"
 
@@ -26,7 +29,10 @@ src_unpack() {
 
 	mkdir "${S}"/lib
 	cd "${S}"/lib
-	use test && java-pkg_jar-from --build-only junit-4
+	if use test ; then
+		java-pkg_jar-from --build-only hamcrest
+		java-pkg_jar-from --build-only junit-4
+	fi
 }
 
 src_compile() {
