@@ -45,9 +45,20 @@ src_compile() {
 	local myc="--with-antlr-jar=$(java-pkg_getjar antlr antlr.jar)"
 	myc="${myc} --disable-dependency-tracking"
 
-	econf ${myc} \
-		$(use_enable xmldoclet) \
-		$(use_enable gcj native) || die "econf failed"
+	# better way welcome, didn't want to pollute the env by exporting
+	# and was just tired of seeing this fail on wrong bytecode
+	# version when not using gcj...
+	if use gcj; then
+		econf ${myc} \
+			$(use_enable xmldoclet) \
+			$(use_enable gcj native) || die "econf failed"
+	else
+		# TODO ideally, would respect JAVACFLAGS
+		JAVA="java" JAVAC="javac $(java-pkg_javac-args)" \
+			econf ${myc} \
+			$(use_enable xmldoclet) \
+			$(use_enable gcj native) || die "econf failed"
+	fi
 
 	emake || die "emake failed"
 }
