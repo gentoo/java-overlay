@@ -2,6 +2,9 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  01 Aug 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea-1.7.ebuild icedtea-9999.ebuild:
+        Use dest not ddest for examples directory creation.
+
   31 Jul 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.2.ebuild icedtea6-9999.ebuild:
         Create directory for examples.
 

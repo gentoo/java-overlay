@@ -138,7 +138,7 @@ src_install() {
 	dohtml README.html || die
 
 	if use examples; then
-		dodir "${ddest}/share";
+		dodir "${dest}/share";
 		cp -vRP demo sample "${ddest}/share/" || die
 	fi
 
