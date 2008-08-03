@@ -17,7 +17,7 @@ KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
 # Possible USE flags.
 #
-# native: to --enable-native
+# gcj: for native build
 # doc:    to generate javadoc
 # debug:  There is a debug doclet installed by default but maybe could
 #         have a wrapper that uses it.
@@ -45,20 +45,11 @@ src_compile() {
 	local myc="--with-antlr-jar=$(java-pkg_getjar antlr antlr.jar)"
 	myc="${myc} --disable-dependency-tracking"
 
-	# better way welcome, didn't want to pollute the env by exporting
-	# and was just tired of seeing this fail on wrong bytecode
-	# version when not using gcj...
-	if use gcj; then
-		econf ${myc} \
-			$(use_enable xmldoclet) \
-			$(use_enable gcj native) || die "econf failed"
-	else
 		# TODO ideally, would respect JAVACFLAGS
-		JAVA="java" JAVAC="javac $(java-pkg_javac-args)" \
-			econf ${myc} \
-			$(use_enable xmldoclet) \
-			$(use_enable gcj native) || die "econf failed"
-	fi
+	JAVA="java" JAVAC="javac $(java-pkg_javac-args)" \
+		econf ${myc} \
+		$(use_enable xmldoclet) \
+		$(use_enable gcj native) || die "econf failed"
 
 	emake || die "emake failed"
 }
