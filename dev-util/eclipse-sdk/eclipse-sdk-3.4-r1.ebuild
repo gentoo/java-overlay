@@ -39,6 +39,7 @@ ECLIPSE_DIR="/usr/lib/eclipse-${SLOT}"
 
 CDEPEND="dev-java/ant-eclipse-ecj:${SLOT}
 	dev-java/ant-core
+	dev-java/ant-nodeps
 	dev-java/junit:0
 	dev-java/junit:4
 	dev-java/swt:${SLOT}
@@ -53,7 +54,6 @@ RDEPEND=">=virtual/jre-1.5
 	${CDEPEND}"
 DEPEND=">=virtual/jdk-1.5
 	java6? ( >=virtual/jdk-1.6 )
-	dev-java/ant-nodeps
 	dev-java/cldc-api:1.1
 	app-arch/unzip
 	app-arch/zip
@@ -129,7 +129,7 @@ src_install() {
 	mv "${D}/usr/lib/eclipse" "${D}/${ECLIPSE_DIR}"
 
 	# Install startup script
-	dobin "${FILESDIR}/eclipse-${SLOT}"
+	dobin "${FILESDIR}/${SLOT}/eclipse-${SLOT}"
 	chmod +x "${D}/${ECLIPSE_DIR}/eclipse"
 
 	insinto "/etc"
@@ -157,10 +157,6 @@ pkg_postinst() {
 	ewarn "The new Update Manager (P2) is not yet supported under Gentoo."
 	ewarn "Please enable the 'Classic Update' under:"
 	ewarn "Window > Preferences > General > Capabilities"
-	ewarn
-	ewarn "UPGRADE WARNING"
-	ewarn "You may do a backup of your ~/.eclipse and ~/workspace folders."
-	ewarn "Otherwise configuration changes may confuse older Eclipse versions."
 }
 
 # -----------------------------------------------------------------------------
@@ -169,9 +165,15 @@ pkg_postinst() {
 
 install-link-system-jars() {
 	pushd plugins/ > /dev/null
-	local ant_dir="$(basename org.apache.ant_*)"
-	rm -rf org.apache.ant_*
-	dosym /usr/share/ant-core ${ECLIPSE_DIR}/plugins/${ant_dir}
+
+	mkdir "org.apache.ant"
+	mkdir "org.apache.ant/META-INF/"
+	mkdir "org.apache.ant/lib"
+	cp "${FILESDIR}/${SLOT}/ant-osgi-manifest.mf" "org.apache.ant/META-INF/MANIFEST.MF"
+	pushd org.apache.ant/lib > /dev/null
+	java-pkg_jarfrom ant-core
+	java-pkg_jarfrom ant-nodeps
+	popd > /dev/null
 
 	java-pkg_jarfrom swt-${SLOT}
 	java-pkg_jarfrom icu4j

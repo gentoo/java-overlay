@@ -137,7 +137,7 @@ src_install() {
 	mv ${D}/usr/lib/eclipse ${D}/${ECLIPSE_DIR}
 
 	# install startup script
-	dobin ${FILESDIR}/eclipse-${SLOT}
+	dobin ${FILESDIR}/${SLOT}/eclipse-${SLOT}
 	chmod +x ${D}/${ECLIPSE_DIR}/eclipse
 
 	insinto /etc

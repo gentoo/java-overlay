@@ -18,3 +18,7 @@ ECLIPSE_XMX=256m
 
 #ECLIPSE_PERMSIZE=64m
 #ECLIPSE_MAX_PERMSIZE=128m
+
+# Additional needed properties (see bug #219413)
+
+#ECLIPSE_USER_ARGS=""
