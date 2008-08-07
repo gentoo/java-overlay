@@ -97,7 +97,7 @@ src_compile() {
 	fi
 
 	if use javascript ; then
-		rhino_jar=$(use_with javascript rhino $(java-pkg_getjar rhino:1.6 js.jar));
+		rhino_jar=$(java-pkg_getjar rhino:1.6 js.jar);
 	fi
 
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
