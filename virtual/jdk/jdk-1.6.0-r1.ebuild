@@ -14,7 +14,6 @@ IUSE=""
 # Keeps this and java-virtuals/jaf in sync
 RDEPEND="|| (
 		dev-java/icedtea6
-		=dev-java/gcj-jdk-4.3*
 		=dev-java/sun-jdk-1.6.0*
 		=dev-java/ibm-jdk-bin-1.6.0*
 	)"
