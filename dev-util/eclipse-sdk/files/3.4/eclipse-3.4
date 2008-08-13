@@ -37,4 +37,7 @@ eval $(gjl --package "swt-${SLOT}" --get-args)
 [ -n "${ECLIPSE_PERMSIZE}" ] && VM_ARGS="${VM_ARGS} -XX:PermSize=${ECLIPSE_PERMSIZE}"
 [ -n "${ECLIPSE_MAX_PERMSIZE}" ] && VM_ARGS="${VM_ARGS} -XX:MaxPermSize=${ECLIPSE_MAX_PERMSIZE}"
 
+# Fix for JRE 1.5.
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib
+
 exec "${ECLIPSE_BIN}" -vm $(java-config --java) "$@" "${ECLIPSE_USER_ARGS}" -vmargs ${VM_ARGS} 
