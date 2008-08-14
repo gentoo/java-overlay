@@ -74,6 +74,11 @@ pkg_setup() {
 	CHECKREQS_MEMORY="512"
 	check_reqs
 
+	if use doc ; then
+		ewarn "Having the doc USE flag enabled greatly increases the build time. You might"
+		ewarn "want to disable it for ${PN} if you don't need it."
+	fi
+
 	eclipsearch=${ARCH}
 	use amd64 && eclipsearch="x86_64"
 }
@@ -307,6 +312,14 @@ remove-bundled-stuff() {
 	mkdir -p org.eclipse.swt.gtk.linux.${eclipsearch}/@dot || die
 	remove-plugin-sources org.eclipse.swt.gtk.linux.${eclipsearch}
 
+	# Mark the SWT plugins as unpacked. More evilness that works.
+	sed -r '/<plugin/{:x;/id="org\.eclipse\.swt\./{:y;/\/>/s/unpack="[^"]*"/unpack="true"/;t;N;by};/\/>/b;N;bx}' \
+		-i "${S}"/features/org.eclipse.rcp/feature.xml || die
+
+	# Prevent the SWT plugin from being JAR'd.
+	sed -r '/<param .*\bvalue="org.eclipse.swt.gtk.linux.'"${eclipsearch}"'_/d' \
+		-i "${S}"/assemble.org.eclipse.sdk.linux.gtk.${eclipsearch}.xml || die
+
 	popd >/dev/null
 }
 
@@ -327,21 +340,23 @@ unbundle-dir() {
 }
 
 # Unbundle a JAR plugin by removing its class files and modifying its manifest
-# so that it points to external JARs instead.
+# so that it points to external JARs instead. The plugin must remain unpacked
+# because OSGi cannot handle external JARs in packed plugins.
 unbundle-jar() {
 	ebegin "Unbundling $1"
 	remove-plugin-sources $1
 
-	# Save current directory.
-	local dir=$(pwd) file
+	# Find full plugin name and version.
+	local plugin=`echo $1_*`
+	plugin=${plugin%.jar}
 
-	# Make directory for JAR creation and clear it just in case.
-	mkdir -p "${T}/jar" || die
-	cd "${T}/jar" || die
+	# Make directory to replace JAR.
+	mkdir -p "${plugin}" || die
+	cd "${plugin}" || die
 	rm -rf * || die
 
 	# Extract what we need from the existing JAR.
-	`java-config -j` xf "${dir}/$1"_*.jar META-INF/MANIFEST.MF plugin.{properties,xml} || die
+	`java-config -j` xf "../${plugin}.jar" META-INF/MANIFEST.MF plugin.{properties,xml} || die
 
 	# Apply our new classpath.
 	local classpath=$(java-pkg_getjars $2)
@@ -351,18 +366,22 @@ unbundle-jar() {
 	# The javadoc options are stored in text files and so rewriting the classpath in
 	# the ant build files has no effect. Instead, we replace plugins paths with the
 	# paths to their external JARs. Passing gentoo.classpath is too RAM-intensive.
-	sed -r "s:^;\.\.\/${1//./\.}[_/].*\.jar$:;${classpath//:/\:}:" \
-		-i "${S}"/plugins/*/*Options.txt || die
+	sed -i -r "s:^;\.\.\/${1//./\.}[_/].*\.jar$:;${classpath//:/\:}:" ../*/*Options.txt || die
 
 	# Delete unneeded manifest entries.
 	sed -i -r "/^Name:|^SHA1-Digest:/d" META-INF/MANIFEST.MF || die
 
-	# Create the new JAR over the old one.
-	`java-config -j` cfm "${dir}/$1"_*.jar META-INF/MANIFEST.MF . || die
+	# This plugin is now unpacked. More evilness that works.
+	sed -r '/<plugin/{:x;/id="'"${1//./\.}"'"/{:y;/\/>/s/unpack="[^"]*"/unpack="true"/;t;N;by};/\/>/b;N;bx}' \
+		-i "${S}"/features/*/feature.xml || die
 
-	# Return to previous directory and clear out our mess.
-	cd "${dir}" || die
-	rm -rf "${T}/jar" || die
+	# Copy the whole directory instead of just a JAR.
+	sed -r "/<copy .*\/${1//./\.}/{s/<copy\b/<copydir/;s/\.jar//g;s/\bfile=/src=/;s/\btofile=/dest=/}" \
+		-i "${S}"/package.org.eclipse.sdk.linux.gtk.${eclipsearch}.xml || die
+
+	# Delete JAR and return to previous directory.
+	rm -f "../${plugin}.jar" || die
+	cd .. || die
 
 	eend 0
 }

@@ -2,6 +2,13 @@
 # Copyright 2003-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*eclipse-sdk-3.4-r4 (14 Aug 2008)
+
+  14 Aug 2008; James Le Cuirot <chewi@aura-online.co.uk>
+  -eclipse-sdk-3.4-r3.ebuild, +eclipse-sdk-3.4-r4.ebuild:
+  Fixed the unbundling of JARs. The "external" directive does not work when
+  the plugins are packed as JARs and so they must remain unpacked.
+
 *eclipse-sdk-3.4-r3 (13 Aug 2008)
 
   13 Aug 2008; James Le Cuirot <chewi@aura-online.co.uk>
