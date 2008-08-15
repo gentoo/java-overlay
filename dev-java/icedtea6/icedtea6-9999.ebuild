@@ -18,7 +18,7 @@ IUSE="debug doc examples javascript nsplugin zero"
 
 LICENSE="GPL-2-with-linking-exception"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
+KEYWORDS=""
 
 RDEPEND=">=net-print/cups-1.2.12
 	 >=x11-libs/libX11-1.1.3
@@ -97,7 +97,7 @@ src_compile() {
 	fi
 
 	if use javascript ; then
-		rhino_jar=$(java-pkg_getjar rhino:1.6 js.jar);
+		rhino_jar=$(use_with javascript rhino $(java-pkg_getjar rhino:1.6 js.jar));
 	fi
 
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
