@@ -45,6 +45,8 @@ pkg_setup() {
 
 src_unpack() {
 	unpack ${A}
+	cd "${S}" || die
+	epatch "${FILESDIR}"/${P}-ftp.patch
 	cd "${S}"/TuxGuitar/lib || die
 	java-pkg_jar-from swt-3
 }
@@ -111,8 +113,8 @@ plugin_install() {
 #Check to see if it's working while bumping. 
 list_plugins() {
 	echo \
-		$(usev alsa) ascii compat converter $(usev fluidsynth) gtp \
-		jsa lilypond midi musicxml $(usev oss) $(usev pdf) ptb tef tray
+		$(usev alsa) ascii browser-ftp compat converter $(usev fluidsynth) \
+		gtp jsa lilypond midi musicxml $(usev oss) $(usev pdf) ptb tef tray
 }
 
 pkg_postinst() {
