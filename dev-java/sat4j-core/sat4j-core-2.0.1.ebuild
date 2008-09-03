@@ -47,6 +47,6 @@ src_unpack() {
 
 src_install() {
 	java-pkg_dojar dist/CUSTOM/${MY_PN}.jar
-	use doc && java-pkg_dojavadoc api
+	use doc && java-pkg_dojavadoc api/core
 	use source && java-pkg_dosrc core/src/org
 }
