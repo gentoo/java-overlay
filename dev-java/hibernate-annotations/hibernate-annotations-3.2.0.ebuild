@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -16,8 +16,7 @@ SLOT="3.2"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc source"
 
-DEPEND=">=virtual/jdk-1.5"
-RDEPEND=">=virtual/jre-1.5
+COMMON_DEPS="
 	dev-java/antlr
 	=dev-java/asm-1.5*
 	dev-java/c3p0
@@ -26,16 +25,24 @@ RDEPEND=">=virtual/jre-1.5
 	=dev-java/dom4j-1*
 	=dev-java/ehcache-1.2*
 	=dev-java/hibernate-${SLOT}*
-	=dev-java/javassist-3*
 	=dev-java/jaxen-1.1*
+	=dev-java/javassist-3*
 	dev-java/jdbc2-stdext
 	dev-java/jgroups
 	dev-java/log4j
-	=dev-java/lucene-1*
 	dev-java/oscache
 	dev-java/proxool
 	=dev-java/swarmcache-1*
 	=dev-java/xerces-2*
+	"
+DEPEND=">=virtual/jdk-1.5
+	dev-java/ant-antlr
+	dev-java/commons-collections
+	${COMMON_DEPS}
+	"
+RDEPEND=">=virtual/jre-1.5
+	=dev-java/lucene-1*
+	${COMMON_DEPS}
 	"
 
 S="${WORKDIR}/${MY_P}"
@@ -54,17 +61,19 @@ src_unpack() {
 
 	cd ${HIBERNATE_S}/lib || die "cd failed"
 	# start: pulled from hibernate ebuild
-	local JAR_PACKAGES="c3p0 commons-collections javassist-3
+	local JAR_PACKAGES="c3p0 javassist-3
 		commons-logging dom4j-1 jaxen-1.1 jdbc2-stdext
 		log4j oscache proxool swarmcache-1.0 xerces-2 jgroups"
 	for PACKAGE in ${JAR_PACKAGES}; do
 		java-pkg_jar-from ${PACKAGE}
 	done
+	java-pkg_jar-from --build-only commons-collections
+
 	java-pkg_jar-from ehcache-1.2 ehcache.jar
 	java-pkg_jar-from cglib-2.1 cglib.jar
-	java-pkg_jar-from ant-tasks ant-antlr.jar
+	java-pkg_jar-from --build-only ant-antlr
 	java-pkg_jar-from antlr
-	java-pkg_jar-from ant-core ant.jar
+	java-pkg_jar-from --build-only ant-core ant.jar
 	java-pkg_jar-from asm-1.5 asm.jar
 	java-pkg_jar-from asm-1.5 asm-attrs.jar
 	java-pkg_jar-from hibernate-${SLOT}
