@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/jdbc2-stdext/jdbc2-stdext-2.0-r2.ebuild,v 1.5 2007/07/11 19:58:38 mr_bones_ Exp $
 
@@ -7,7 +7,7 @@ JAVA_PKG_IUSE="doc source"
 inherit java-pkg-2
 
 stdext_src="jdbc2_0-stdext-src.zip"
-stdext_jar="jdbc2_0-stdext.jar"
+stdext_jar="jdbc2-stdext.jar"
 
 DESCRIPTION="A standard set of libs for Server-Side JDBC support"
 HOMEPAGE="http://java.sun.com/products/jdbc"

@@ -1,6 +1,11 @@
 # ChangeLog for dev-java/jdbc2-stdext
-# Copyright 2000-2007 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 2000-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/jdbc2-stdext/ChangeLog,v 1.14 2007/05/06 07:55:45 dertobi123 Exp $
+
+  04 Sep 2008; Miroslav Šulc <fordfrog@gentoo.org>
+  jdbc2-stdext-2.0-r2.ebuild:
+  Renamed target jar jdbc2_0-stdext.jar to jdbc2-stdext.jar as otherwise
+  portage complains about installing versioned jar
 
   06 May 2007; Tobias Scherbaum <dertobi123@gentoo.org>
   jdbc2-stdext-2.0-r2.ebuild:
