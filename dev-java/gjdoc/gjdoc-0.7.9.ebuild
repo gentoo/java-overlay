@@ -1,9 +1,8 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/gjdoc/gjdoc-0.7.9.ebuild,v 1.1 2008/04/22 13:57:59 betelgeuse Exp $
 
-WANT_AUTOMAKE="latest"
-WANT_AUTOCONF="latest"
+JAVA_PKG_IUSE="source"
 
 inherit eutils autotools java-pkg-2
 
@@ -13,21 +12,19 @@ SRC_URI="mirror://gnu/classpath/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
+KEYWORDS="~amd64 ~ia64 ~ppc ~ppc64 ~x86 ~x86-fbsd"
 
 # Possible USE flags.
 #
-# gcj: for native build
 # doc:    to generate javadoc
 # debug:  There is a debug doclet installed by default but maybe could
 #         have a wrapper that uses it.
 #
-IUSE="xmldoclet source gcj"
+IUSE="xmldoclet gcj"
 
 # Refused to emerge with sun-jdk-1.3* complaining about wanting a bigger stack size
 DEPEND=">=dev-java/antlr-2.7.1
-		>=virtual/jdk-1.4
-		source? ( app-arch/zip )"
+		>=virtual/jdk-1.4"
 
 RDEPEND=">=virtual/jre-1.4
 	>=dev-java/antlr-2.7.1
@@ -63,7 +60,7 @@ src_install() {
 	dodoc AUTHORS ChangeLog NEWS README
 
 	cd "${S}"/docs
-	make DESTDIR="${D}" install || die "Failed to install documentation"
+	emake DESTDIR="${D}" install || die "Failed to install documentation"
 
 	if use gcj ; then
 		exeinto /usr/bin
