@@ -4,11 +4,12 @@
 
 inherit base java-pkg-2 java-ant-2
 
-JAVA_MAVEN_COMMON_DEPS=">=dev-java/javatoolkit-0.2.0-r5"
-DEPEND=">=dev-java/javatoolkit-0.2.0-r3 source? ( app-arch/zip )
-${JAVA_MAVEN_COMMON_DEPS}"
-RDEPEND=">=dev-java/javatoolkit-0.2.0-r3
-${JAVA_MAVEN_COMMON_DEPS}"
+JAVA_MAVEN_COMMON_DEPS=">=dev-java/javatoolkit-0.3.0-r2"
+
+DEPEND="source? ( app-arch/zip )
+		${JAVA_MAVEN_COMMON_DEPS}"
+
+RDEPEND="${JAVA_MAVEN_COMMON_DEPS}"
 
 # We provide two ways to build maven based ebuilds.
 # The first is with maven itself
@@ -89,7 +90,7 @@ esac
 JAVA_MAVEN_SYSTEM_HOME="/usr/share/maven-${JAVA_MAVEN_VERSION}/maven_home"
 
 # our pom helper
-JAVA_MAVEN_POM_HELPER="/usr/share/javatoolkit/maven-helper.py"
+JAVA_MAVEN_POM_HELPER="/usr/lib/javatoolkit/bin/maven-helper.py"
 
 # maven 1 and 1.1 share the same repo
 JAVA_MAVEN_SYSTEM_REPOSITORY="/usr/share/maven-${JAVA_MAVEN_VERSION//1.1/1}/maven_home/gentoo-repo"
@@ -226,8 +227,8 @@ java-maven-2-gen_build_xml() {
 
 # take a list of patch as arguments
 java-maven-2_src_unpack() {
-	if  ! has_version ">=dev-java/javatoolkit-0.2.0-r2"; then
-		die "please upgrade to at least dev-java/javatoolkit-0.2.0-r2"
+	if  ! has_version ">=dev-java/javatoolkit-0.3.0-r2"; then
+		die "please upgrade to at least dev-java/javatoolkit-0.3.0-r2"
 	fi
 
 	# unpack time.
