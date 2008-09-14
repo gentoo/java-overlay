@@ -141,7 +141,7 @@ diff -Nru icedtea6-1.2.orig/Makefile.am icedtea6-1.2/Makefile.am
 +	if test x"$(VERSION_SUFFIX)" != "x"; then \
 +	  ver_suffix="-$(VERSION_SUFFIX)"; \
 +	fi ; \
-+	sed -i "s#IcedTea#IcedTea $${icedtea_version}#" openjdk/jdk/make/common/shared/Defs.gmk ; \
++	sed -i "s#IcedTea6#IcedTea6 $${icedtea_version}#" openjdk/jdk/make/common/shared/Defs.gmk ; \
 +	sed -i "s#BUILD_VARIANT_RELEASE)#BUILD_VARIANT_RELEASE)$${proj_suffix}$${ver_suffix}#" \
 +	  openjdk/jdk/make/common/shared/Defs.gmk
  
