@@ -8,7 +8,7 @@ inherit autotools pax-utils java-pkg-2 java-vm-2
 
 DESCRIPTION="A harness to build the OpenJDK using Free Software build tools and dependencies"
 OPENJDK_TARBALL="openjdk-6-src-b09-11_apr_2008.tar.gz"
-SRC_URI="http://icedtea.classpath.org/download/source/icedtea6-1.2.tar.gz
+SRC_URI="http://icedtea.classpath.org/download/source/${P}.tar.gz
 	 http://download.java.net/openjdk/jdk6/promoted/b09/${OPENJDK_TARBALL}"
 HOMEPAGE="http://icedtea.classpath.org"
 
@@ -28,7 +28,7 @@ RDEPEND=">=net-print/cups-1.2.12
 	 >=media-libs/libpng-1.2
 	 >=media-libs/giflib-4.1.6
 	 >=sys-libs/zlib-1.2.3
-	x11-proto/inputproto
+	 x11-proto/inputproto
 	 nsplugin? ( || (
 		www-client/mozilla-firefox
 		net-libs/xulrunner
@@ -75,6 +75,8 @@ src_unpack() {
 	epatch "${FILESDIR}/javac_fix-${PV}.patch"
 	# Use @JAVAC_MEM_OPT@ in javac.in
 	epatch "${FILESDIR}/javac.in.patch"
+	# Backport security and versioning fixes
+	epatch "${FILESDIR}/security_and_versioning.patch"
 
 	eautoreconf || die "failed to regenerate autoconf infrastructure"
 }
@@ -110,6 +112,7 @@ src_compile() {
 
 	econf ${config} \
 		--with-openjdk-src-zip="${DISTDIR}/${OPENJDK_TARBALL}" \
+		--with-version-suffix="gentoo" \
 		$(use_enable debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nsplugin gcjwebplugin) \
