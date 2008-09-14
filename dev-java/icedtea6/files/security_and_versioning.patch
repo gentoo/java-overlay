@@ -1,6 +1,6 @@
 diff -Nru icedtea6-1.2.orig/acinclude.m4 icedtea6-1.2/acinclude.m4
 --- icedtea6-1.2.orig/acinclude.m4	2008-05-20 14:40:43.000000000 +0100
-+++ icedtea6-1.2/acinclude.m4	2008-09-14 21:16:18.000000000 +0100
++++ icedtea6-1.2/acinclude.m4	2008-09-14 21:54:47.000000000 +0100
 @@ -664,3 +664,32 @@
    AM_CONDITIONAL(WITH_CACAO, test x"${CACAO}" != "xno")
    AC_SUBST(CACAO)
@@ -34,9 +34,51 @@ diff -Nru icedtea6-1.2.orig/acinclude.m4 icedtea6-1.2/acinclude.m4
 +  AC_SUBST(VERSION_SUFFIX, $version_suffix)
 +])
 + 
+diff -Nru icedtea6-1.2.orig/acinclude.m4.rej icedtea6-1.2/acinclude.m4.rej
+--- icedtea6-1.2.orig/acinclude.m4.rej	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.2/acinclude.m4.rej	2008-09-14 21:57:29.000000000 +0100
+@@ -0,0 +1,38 @@
++***************
++*** 664,666 ****
++    AM_CONDITIONAL(WITH_CACAO, test x"${CACAO}" != "xno")
++    AC_SUBST(CACAO)
++  ])
++--- 664,695 ----
++    AM_CONDITIONAL(WITH_CACAO, test x"${CACAO}" != "xno")
++    AC_SUBST(CACAO)
++  ])
+++ 
+++ AC_DEFUN([WITH_VERSION_SUFFIX],
+++ [
+++   AC_MSG_CHECKING(if a version suffix has been specified)
+++   AC_ARG_WITH([version-suffix],
+++               [AS_HELP_STRING(--with-version-suffix,appends the given text to the JDK version)],
+++   [
+++     case "${withval}" in
+++       yes)
+++ 	version_suffix=
+++ 	AC_MSG_RESULT([no])
+++         ;;
+++       no)
+++ 	version_suffix=
+++ 	AC_MSG_RESULT([no])
+++ 	;;
+++       *)
+++         version_suffix=${withval}
+++ 	AC_MSG_RESULT([${version_suffix}])
+++         ;;
+++     esac
+++   ],
+++   [
+++     version_suffix=
+++     AC_MSG_RESULT([no])
+++   ])
+++   AC_SUBST(VERSION_SUFFIX, $version_suffix)
+++ ])
+++  
 diff -Nru icedtea6-1.2.orig/configure.ac icedtea6-1.2/configure.ac
---- icedtea6-1.2.orig/configure.ac	2008-09-14 21:15:47.000000000 +0100
-+++ icedtea6-1.2/configure.ac	2008-09-14 21:16:18.000000000 +0100
+--- icedtea6-1.2.orig/configure.ac	2008-09-14 21:54:17.000000000 +0100
++++ icedtea6-1.2/configure.ac	2008-09-14 21:54:47.000000000 +0100
 @@ -209,6 +209,7 @@
  ENABLE_ZERO_BUILD
  ENABLE_NETX_PLUGIN
@@ -45,15 +87,35 @@ diff -Nru icedtea6-1.2.orig/configure.ac icedtea6-1.2/configure.ac
  
  dnl pkgconfig cannot be used to finid these headers and libraries.
  AC_CHECK_HEADERS([cups/cups.h cups/ppd.h],[]
+diff -Nru icedtea6-1.2.orig/configure.ac.rej icedtea6-1.2/configure.ac.rej
+--- icedtea6-1.2.orig/configure.ac.rej	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.2/configure.ac.rej	2008-09-14 21:57:29.000000000 +0100
+@@ -0,0 +1,16 @@
++***************
++*** 209,214 ****
++  ENABLE_ZERO_BUILD
++  ENABLE_NETX_PLUGIN
++  SET_CORE_BUILD
++  
++  dnl pkgconfig cannot be used to finid these headers and libraries.
++  AC_CHECK_HEADERS([cups/cups.h cups/ppd.h],[]
++--- 209,215 ----
++  ENABLE_ZERO_BUILD
++  ENABLE_NETX_PLUGIN
++  SET_CORE_BUILD
+++ WITH_VERSION_SUFFIX
++  
++  dnl pkgconfig cannot be used to finid these headers and libraries.
++  AC_CHECK_HEADERS([cups/cups.h cups/ppd.h],[]
 diff -Nru icedtea6-1.2.orig/Makefile.am icedtea6-1.2/Makefile.am
---- icedtea6-1.2.orig/Makefile.am	2008-09-14 21:15:47.000000000 +0100
-+++ icedtea6-1.2/Makefile.am	2008-09-14 21:17:03.000000000 +0100
+--- icedtea6-1.2.orig/Makefile.am	2008-09-14 21:54:17.000000000 +0100
++++ icedtea6-1.2/Makefile.am	2008-09-14 21:59:42.000000000 +0100
 @@ -192,7 +192,7 @@
  
  # Mercurial snapshot.
  snapshot: dist
 -	mv $(DIST_ARCHIVES) $(distdir)-`hg tip --template '{node}'`.tar.gz
-+	mv $(DIST_ARCHIVES) $(distdir)-`$(HG) tip --template '{node}'`.tar.gz
++	mv $(DIST_ARCHIVES) $(distdir)-`${HG} tip --template '{node}'`.tar.gz
  
  # OpenJDK Source Preparation Targets
  # ==================================
@@ -72,6 +134,9 @@ diff -Nru icedtea6-1.2.orig/Makefile.am icedtea6-1.2/Makefile.am
 -       fi
 -
 +	fi ; \
++	if [ -e $(abs_top_srcdir)/.hg ]; then \
++	  revision="-r`(cd $(srcdir); $(HG) --template '{rev}')`" ; \
++	fi ; 
 +	icedtea_version="$(PACKAGE_VERSION)$${revision}" ; \
 +	if test x"$(VERSION_SUFFIX)" != "x"; then \
 +	  ver_suffix="-$(VERSION_SUFFIX)"; \
@@ -82,21 +147,9 @@ diff -Nru icedtea6-1.2.orig/Makefile.am icedtea6-1.2/Makefile.am
  
  clean-patch:
  	rm -f stamps/patch.stamp
-@@ -442,7 +452,10 @@
- 	  $(PATCH) -p0 -l -R < $(ICEDTEA_ECJ_PATCH) ; \
- 	else \
- 	  false; \
--	fi
-+	fi ; \
-+	if [ -e $(abs_top_srcdir)/.hg ]; then \
-+	  revision="-r`(cd $(srcdir); $(HG) --template '{rev}')`" ; \
-+	fi ; 
- 
- # Bootstrap Directory Targets
- # ===========================
 diff -Nru icedtea6-1.2.orig/patches/icedtea-security-updates.patch icedtea6-1.2/patches/icedtea-security-updates.patch
 --- icedtea6-1.2.orig/patches/icedtea-security-updates.patch	1970-01-01 01:00:00.000000000 +0100
-+++ icedtea6-1.2/patches/icedtea-security-updates.patch	2008-09-14 21:16:18.000000000 +0100
++++ icedtea6-1.2/patches/icedtea-security-updates.patch	2008-09-14 21:57:29.000000000 +0100
 @@ -0,0 +1,994 @@
 +--- old/src/share/classes/sun/management/jmxremote/ConnectorBootstrap.java	Mon Jun  2 08:53:51 2008
 ++++ openjdk/jdk/src/share/classes/sun/management/jmxremote/ConnectorBootstrap.java	Mon Jun  2 08:53:51 2008
@@ -1094,7 +1147,7 @@ diff -Nru icedtea6-1.2.orig/patches/icedtea-security-updates.patch icedtea6-1.2/
 ++}
 diff -Nru icedtea6-1.2.orig/patches/icedtea-version.patch icedtea6-1.2/patches/icedtea-version.patch
 --- icedtea6-1.2.orig/patches/icedtea-version.patch	2008-04-24 20:43:46.000000000 +0100
-+++ icedtea6-1.2/patches/icedtea-version.patch	2008-09-14 21:16:18.000000000 +0100
++++ icedtea6-1.2/patches/icedtea-version.patch	2008-09-14 21:57:29.000000000 +0100
 @@ -13,7 +13,7 @@
  -  LAUNCHER_NAME = openjdk
  -  PRODUCT_NAME = OpenJDK
