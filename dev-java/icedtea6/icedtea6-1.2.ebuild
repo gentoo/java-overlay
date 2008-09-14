@@ -76,7 +76,7 @@ src_unpack() {
 	# Use @JAVAC_MEM_OPT@ in javac.in
 	epatch "${FILESDIR}/javac.in.patch"
 	# Backport security and versioning fixes
-	#epatch "${FILESDIR}/security_and_versioning.patch"
+	epatch "${FILESDIR}/security_and_versioning.patch"
 
 	eautoreconf || die "failed to regenerate autoconf infrastructure"
 }
