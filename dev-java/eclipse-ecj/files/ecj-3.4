@@ -1,8 +1,0 @@
-#! /bin/sh
-#
-# Copyright (C) 2008 Andrew John Hughes
-#
-# Licensed under the GNU General Public License, v2
-
-LD_LIBRARY_PATH=$(gcc-config -L $(ls -1r /etc/env.d/gcc/*4.3.?|head -1)) /usr/bin/native_ecj-3.4 "${@}"
-
