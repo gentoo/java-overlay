@@ -1,0 +1,13 @@
+diff -Nur statcvs-0.4.0/build.xml statcvs-0.4.0_patched/build.xml
+--- statcvs-0.4.0/build.xml	2008-04-21 18:33:32.000000000 +0300
++++ statcvs-0.4.0_patched/build.xml	2008-09-19 05:27:41.000000000 +0300
+@@ -150,9 +150,6 @@
+   </target>
+   <target name="jar" depends="test">
+     <!-- Creates an executable jar file for the project -->
+-    <unjar src="${lib}/${jfreechart.jar}" dest="${build}" />
+-    <unjar src="${lib}/${jcommon.jar}" dest="${build}" />
+-    <unjar src="${lib}/jdom.jar" dest="${build}" />
+     <mkdir dir="${dist}" />
+     <jar jarfile="${dist}/${project.jar}" basedir="${build}">
+       <manifest>
