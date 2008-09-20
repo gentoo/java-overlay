@@ -1,0 +1,21 @@
+diff -Nur jtreemap-site-1.1.0/JTreeMap/build.xml jtreemap-site-1.1.0_patched/JTreeMap/build.xml
+--- jtreemap-site-1.1.0/JTreeMap/build.xml	2007-04-29 11:46:46.000000000 +0300
++++ jtreemap-site-1.1.0_patched/JTreeMap/build.xml	2008-09-20 21:24:19.000000000 +0300
+@@ -33,6 +33,10 @@
+ 				<include name="**/*.class" />
+ 				<include name="**/*.png" />
+ 				<include name="**/*.gif" />
++			</fileset>
++			<fileset dir="${java.dir}/main/java">
++				<include name="**/*.dtd" />
++				<include name="**/*.png" />
+ 			</fileset>
+ 			<manifest>
+ 				<attribute name="Main-Class" value="net.sf.jtreemap.swing.example.JTreeMapExample" />
+@@ -78,4 +82,4 @@
+ 	</zip>
+ </target>
+ 
+-</project>
+\ Dosya sonunda yenisatır yok.
++</project>

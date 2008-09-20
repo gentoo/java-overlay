@@ -25,6 +25,7 @@ DEPEND=">=virtual/jdk-1.4
 
 RDEPEND=">=virtual/jre-1.4
 	dev-util/cvs
+	dev-java/jtreemap
 	${COMMON_DEPEND}"
 
 src_unpack() {
@@ -32,9 +33,11 @@ src_unpack() {
 
 	cd ${S}
 	epatch ${FILESDIR}/${P}-build.xml.patch
+	epatch ${FILESDIR}/${P}-external-jtreemap.patch
+	
+	find . -name "*.jar" -print -delete
 
-	cd ${S}/lib
-	rm *.jar
+	cd "${S}"/lib || die
 	java-pkg_jar-from jcommon-1.0 jcommon.jar jcommon-1.0.6.jar
 	java-pkg_jar-from jfreechart-1.0 jfreechart.jar jfreechart-1.0.3.jar
 	java-pkg_jar-from jdom-1.0 jdom.jar
@@ -47,6 +50,10 @@ src_install() {
 
 	use doc && java-pkg_dohtml -r doc/*
 	use source && java-pkg_dosrc src/net
+}
+
+src_compile() {
+	eant compile copyfiles jar $(use_doc)
 }
 
 src_test() {
