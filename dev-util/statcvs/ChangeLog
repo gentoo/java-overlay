@@ -2,6 +2,10 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  20 Sep 2008; Serkan Kaba <serkan@gentoo.org>
+  files/statcvs-0.4.0-build.xml.patch:
+  Revert change in revision #7004 for now.
+
   19 Sep 2008; Serkan Kaba <serkan@gentoo.org>
   files/statcvs-0.4.0-build.xml.patch:
   Fix building without tests.
