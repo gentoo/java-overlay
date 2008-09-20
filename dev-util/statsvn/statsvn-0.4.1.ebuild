@@ -33,20 +33,19 @@ RDEPEND=">=virtual/jre-1.4
 
 EANT_GENTOO_CLASSPATH="statcvs,backport-util-concurrent"
 EANT_BUILD_TARGET="dist"
-JAVA_ANT_CLASSPATH_TAGS="javac java"
+JAVA_ANT_CLASSPATH_TAGS="javac java javadoc"
 
 src_unpack() {
 	unpack ${A}
 
 	# patches tests so they do not attempt to create cache in /root/.statsvn
 	#cd ${S}/tests-src/net/sf/statsvn/input
-	cd ${S}
-	epatch ${FILESDIR}/${P}-build.xml.patch
-	epatch ${FILESDIR}/${P}-fixstatcvsusage.patch
+	cd "${S}" || die
+	find . -name "*.jar" -print -delete
+	rm -r "${S}"/bin/*
+	epatch "${FILESDIR}"/${P}-build.xml.patch
+	epatch "${FILESDIR}"/${P}-fixstatcvsusage.patch
 	java-ant_rewrite-classpath
-
-	rm ${S}/lib/*.jar || die
-	rm -r ${S}/bin/*
 }
 
 src_test() {

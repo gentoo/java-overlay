@@ -31,10 +31,10 @@ RDEPEND=">=virtual/jre-1.4
 src_unpack() {
 	unpack ${A}
 
-	cd ${S}
-	epatch ${FILESDIR}/${P}-build.xml.patch
-	epatch ${FILESDIR}/${P}-external-jtreemap.patch
-	
+	cd "${S}" || die
+	epatch "${FILESDIR}"/${P}-build.xml.patch
+	epatch "${FILESDIR}"/${P}-external-jtreemap.patch
+
 	find . -name "*.jar" -print -delete
 
 	cd "${S}"/lib || die

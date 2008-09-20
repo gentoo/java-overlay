@@ -24,6 +24,7 @@ EANT_BUILD_TARGET="buildJar"
 src_unpack() {
 	unpack ${A}
 	epatch "${FILESDIR}"/${P}-build.xml.patch
+	find . -name "*.jar" -print -delete
 }
 
 src_install() {
