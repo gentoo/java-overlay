@@ -3,6 +3,9 @@
 # $Header: $
 
   20 Sep 2008; Serkan Kaba <serkan@gentoo.org> statsvn-0.4.1.ebuild:
+  Remove ~x86 keyword.
+
+  20 Sep 2008; Serkan Kaba <serkan@gentoo.org> statsvn-0.4.1.ebuild:
   Remove bundled jars. Fix javadoc. Fix quoting.
 
   19 Sep 2008; Serkan Kaba <serkan@gentoo.org> -statsvn-0.2.0.ebuild,

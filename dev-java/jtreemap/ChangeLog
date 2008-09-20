@@ -3,6 +3,9 @@
 # $Header: $
 
   20 Sep 2008; Serkan Kaba <serkan@gentoo.org> jtreemap-1.1.0.ebuild:
+  Remove ~x86 keyword. Fix license.
+
+  20 Sep 2008; Serkan Kaba <serkan@gentoo.org> jtreemap-1.1.0.ebuild:
   Remove bundled jars.
 
   20 Sep 2008; Serkan Kaba <serkan@gentoo.org> +jtreemap-1.1.0.ebuild,

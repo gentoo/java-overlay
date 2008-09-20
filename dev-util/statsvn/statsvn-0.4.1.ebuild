@@ -10,7 +10,7 @@ HOMEPAGE="http://www.statsvn.org/"
 SRC_URI="mirror://sourceforge/${PN}/${P}-source.zip"
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 IUSE=""
 
 COMMON_DEPEND="
