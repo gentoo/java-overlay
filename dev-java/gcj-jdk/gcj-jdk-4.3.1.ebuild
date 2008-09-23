@@ -13,7 +13,7 @@ KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 SLOT="0"
 IUSE=""
 
-RDEPEND="~sys-devel/gcc-${PV}
+RDEPEND=">=sys-devel/gcc-4.3
 	>=dev-java/eclipse-ecj-3.2.1
 	>=dev-java/java-config-2"
 DEPEND="${RDEPEND}"

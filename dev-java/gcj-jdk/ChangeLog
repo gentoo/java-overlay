@@ -2,6 +2,9 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  23 Sep 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3.0.ebuild:
+  Allow later versions of gcc.
+	
   14 Jul 2008; James Le Cuirot <chewi@aura-online.co.uk> gcj-jdk-4.3.1.ebuild:
   Don't depend on a specific version of ecj anymore. Let eselect worry about the
   /usr/bin/ecj symlink.
