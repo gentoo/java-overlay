@@ -1,4 +1,4 @@
---- /home/andrew/projects/openjdk/icedtea6/configure.ac	2008-05-30 00:34:34.000000000 +0100
+--- configure.ac	2008-05-30 00:34:34.000000000 +0100
 +++ configure.ac	2008-05-30 00:23:20.000000000 +0100
 @@ -101,13 +101,13 @@
  AC_ARG_ENABLE([gcjwebplugin],
