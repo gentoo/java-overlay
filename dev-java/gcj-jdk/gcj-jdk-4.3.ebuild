@@ -36,8 +36,9 @@ src_install() {
 	[ ${ARCH} == x86 ] && libarch="i386"
 	[ ${ARCH} == x86_64 ] && libarch="amd64"
 	local gccbin=$(gcc-config -B)
-	local gcjhome="/usr/lib/gcj-${PV}"
-	local gccchost=$(echo $gccbin|sed -r 's#/usr/([a-z0-9_-]*).*$#\1#')
+	local gcjhome="/usr/lib/${P}"
+	local gcc_version=$(${gccbin}/gcc --version|head -n1|sed -r 's/gcc \(.*\) ([0-9.]*).*/\1/')
+	local gccchost=$(echo ${gccbin}|sed -r 's#/usr/([a-z0-9_-]*).*$#\1#')
 
 	# links
 	dodir ${gcjhome}/bin
@@ -55,11 +56,13 @@ src_install() {
 	dosym ${gccbin}/gkeytool ${gcjhome}/bin/keytool
 	dosym ${gccbin}/gkeytool ${gcjhome}/jre/bin/keytool
 	dodir ${gcjhome}/jre/lib/${libarch}/client
-	dosym /usr/$(get_libdir)/gcj-${PV}*/libjvm.so ${gcjhome}/jre/lib/${libarch}/client/libjvm.so
-	dosym /usr/$(get_libdir)/gcj-${PV}*/libjawt.so ${gcjhome}/jre/lib/${libarch}/libjawt.so
-	dosym /usr/share/gcc-data/${gccchost}/${PV}/java/libgcj-${PV/_/-}.jar ${gcjhome}/jre/lib/rt.jar
+	dosym /usr/$(get_libdir)/gcj-${gcc_version}*/libjvm.so ${gcjhome}/jre/lib/${libarch}/client/libjvm.so
+	dosym /usr/$(get_libdir)/gcj-${gcc_version}*/libjawt.so ${gcjhome}/jre/lib/${libarch}/libjawt.so
+	dosym /usr/share/gcc-data/${gccchost}/${gcc_version}/java/libgcj-${gcc_version/_/-}.jar \
+		${gcjhome}/jre/lib/rt.jar
 	dodir ${gcjhome}/lib
-	dosym /usr/share/gcc-data/${gccchost}/${PV}/java/libgcj-tools-${PV/_/-}.jar ${gcjhome}/lib/tools.jar
+	dosym /usr/share/gcc-data/${gccchost}/${gcc_version}/java/libgcj-tools-${gcc_version/_/-}.jar \
+		${gcjhome}/lib/tools.jar
 
 	# the /usr/bin/ecj symlink is managed by eselect-ecj
 	dosym /usr/bin/ecj ${gcjhome}/bin/javac;
