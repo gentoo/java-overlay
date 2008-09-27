@@ -70,4 +70,6 @@ src_install() {
 pkg_postinst() {
 	elog "For instractions on how to use StatSVN see"
 	elog "http://svn.statsvn.org/statsvnwiki/index.php/Main_Page"
+	elog "You need to regenerate statistics"
+	elog "if you update dev-java/jtreemap"
 }

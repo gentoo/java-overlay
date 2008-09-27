@@ -3,6 +3,9 @@
 # $Header: $
 
   27 Sep 2008; Serkan Kaba <serkan@gentoo.org> statsvn-0.4.1.ebuild:
+  Add note about updating dev-java/jtreemap.
+
+  27 Sep 2008; Serkan Kaba <serkan@gentoo.org> statsvn-0.4.1.ebuild:
   Add einfo before bundled jar removal.
 
   20 Sep 2008; Serkan Kaba <serkan@gentoo.org> statsvn-0.4.1.ebuild:

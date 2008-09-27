@@ -64,4 +64,6 @@ src_test() {
 pkg_postinst() {
 	elog "For instructions on how to use StatCVS see"
 	elog "http://statcvs.sourceforge.net/manual/"
+	elog "You need to regenerate statistics"
+	elog "if you update dev-java/jtreemap"
 }
