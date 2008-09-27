@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-#JAVA_PKG_IUSE="doc source"
-JAVA_PKG_IUSE="source"
+JAVA_PKG_IUSE="doc source"
+#JAVA_PKG_IUSE="source"
 
 inherit eutils java-pkg-2 java-ant-2
 
@@ -24,12 +24,13 @@ EANT_BUILD_TARGET="buildJar"
 src_unpack() {
 	unpack ${A}
 	epatch "${FILESDIR}"/${P}-build.xml.patch
+	einfo "Removing bundled jars."
 	find . -name "*.jar" -print -delete
 }
 
 src_install() {
 	java-pkg_dojar ${PN}.jar
-	#use doc && java-pkg_dojavadoc doc
+	use doc && java-pkg_dojavadoc doc
 	java-pkg_dolauncher ${PN}-demo --main net.sf.jtreemap.swing.example.JTreeMapExample
 	use source && java-pkg_dosrc src/main/java/net
 }

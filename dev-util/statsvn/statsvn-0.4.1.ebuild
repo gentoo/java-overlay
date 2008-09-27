@@ -41,6 +41,7 @@ src_unpack() {
 	# patches tests so they do not attempt to create cache in /root/.statsvn
 	#cd ${S}/tests-src/net/sf/statsvn/input
 	cd "${S}" || die
+	einfo "Removing bundled jars."
 	find . -name "*.jar" -print -delete
 	rm -r "${S}"/bin/*
 	epatch "${FILESDIR}"/${P}-build.xml.patch

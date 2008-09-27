@@ -35,6 +35,7 @@ src_unpack() {
 	epatch "${FILESDIR}"/${P}-build.xml.patch
 	epatch "${FILESDIR}"/${P}-external-jtreemap.patch
 
+	einfo "Removing bundled jars."
 	find . -name "*.jar" -print -delete
 
 	cd "${S}"/lib || die
