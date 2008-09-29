@@ -12,7 +12,7 @@ KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 IUSE=""
 
 RDEPEND="|| (
-		=dev-java/gcj-jdk-4.3*
+		>=dev-java/gcj-jdk-4.3
 		=dev-java/jamvm-1.5*
 		>=dev-java/cacao-0.99.2
 		=dev-java/sun-jdk-1.5.0*

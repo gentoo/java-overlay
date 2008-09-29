@@ -2,6 +2,9 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/gjdoc/ChangeLog,v 1.32 2008/04/22 13:57:59 betelgeuse Exp $
 
+  29 Sep 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gjdoc-0.7.9.ebuild:
+  Fix gcj-jdk depedency and remove changes which break the ebuild.
+
   27 Sep 2008; Petteri Räty <betelgeuse@gentoo.org> gjdoc-0.7.9.ebuild:
   USE deps for antlr.
 
