@@ -2,6 +2,13 @@
 # Copyright 2003-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*eclipse-sdk-3.4.1 (30 Sep 2008)
+
+  30 Sep 2008; James Le Cuirot <chewi@aura-online.co.uk>
+  -eclipse-sdk-3.4-r4.ebuild, -files/3.4/eclipse_String.compareTo.diff,
+  +eclipse-sdk-3.4.1.ebuild:
+  Version bump. Only a couple of small changes. Fixed source USE flag.
+
 *eclipse-sdk-3.4-r4 (14 Aug 2008)
 
   14 Aug 2008; James Le Cuirot <chewi@aura-online.co.uk>

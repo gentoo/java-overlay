@@ -20,7 +20,7 @@ WANT_ANT_TASKS="ant-nodeps"
 
 inherit java-pkg-2 java-ant-2 check-reqs
 
-DMF="R-${PV}-200806172000"
+DMF="R-${PV}-200809111700"
 MY_A="eclipse-sourceBuild-srcIncluded-${PV}.zip"
 
 DESCRIPTION="Eclipse Tools Platform"
@@ -197,7 +197,6 @@ patch-apply() {
 
 	# Miscellaneous patches.
 	epatch "${PATCHDIR}/eclipse_build-libs.diff"
-	epatch "${PATCHDIR}/eclipse_String.compareTo.diff"
 
 	# JNI.
 	sed -i '/value="x86"/d' plugins/org.eclipse.update.core.linux/src/build.xml || die
@@ -249,6 +248,10 @@ patch-apply() {
 		sed -r '/<(copy|customGather) .*\.source/d' \
 			-i {assemble,package}.org.eclipse.sdk.linux.gtk.${eclipsearch}.xml || die
 	fi
+
+	# In 3.4.1, bootclasspath was removed from here. Not sure why.
+	sed -r '/\bname="bundleBootClasspath"/s:value=":\0${bootclasspath};:' \
+		-i plugins/org.eclipse.osgi/build.xml || die
 }
 
 remove-bundled-stuff() {
@@ -395,6 +398,6 @@ remove-plugin-sources() {
 		-i "${S}/features"/*.source/feature.xml || die
 
 	# Don't try to install the sources either.
-	sed -r '/<(copy|customGather) .*\/'"${1//./\.}"'\.source/d' \
+	sed -r '/<(copy|copydir|customGather) .*\/'"${1//./\.}"'\.source/d' \
 		-i "${S}"/{assemble,package}.org.eclipse.sdk.linux.gtk.${eclipsearch}.xml || die
 }
