@@ -1,0 +1,10 @@
+--- build/faster.old	2008-08-17 00:16:23.000000000 -0400
++++ build/faster	2008-08-17 00:16:29.000000000 -0400
+@@ -656,7 +656,6 @@
+ 
+ def generateDocumentation():
+ 	compileDocumentation()
+-	takeSnapshots()
+ 
+ #
+ # Final miscallaneous execution targets, taking advantage of the fact that
