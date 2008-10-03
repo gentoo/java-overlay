@@ -41,9 +41,6 @@ JAVA_ANT_REWRITE_CLASSPATH="true"
 
 src_unpack() {
 	unpack ${A}
-
-	# patches tests so they do not attempt to create cache in /root/.statsvn
-	#cd ${S}/tests-src/net/sf/statsvn/input
 	cd "${S}" || die
 	einfo "Removing bundled jars."
 	find . -name "*.jar" -print -delete
@@ -54,7 +51,6 @@ src_unpack() {
 
 src_test() {
 	ewarn "Note that the tests require you to be online."
-	#java-pkg_jar-from --into lib junit
 	eant -Dgentoo.classpath=$(java-pkg_getjars statcvs,backport-util-concurrent):$(java-pkg_getjars --build-only junit,jfreechart-1.0,jcommon-1.0) test
 }
 
