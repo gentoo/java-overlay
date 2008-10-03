@@ -30,6 +30,8 @@ RDEPEND=">=virtual/jre-1.4
 	dev-java/jtreemap:0
 	${COMMON_DEPEND}"
 
+EANT_BUILD_TARGET="compile copyfiles jar"
+
 src_unpack() {
 	unpack ${A}
 
@@ -53,8 +55,6 @@ src_install() {
 	use doc && java-pkg_dohtml -r doc/*
 	use source && java-pkg_dosrc src/net
 }
-
-EANT_BUILD_TARGET="compile copyfiles jar"
 
 src_test() {
 	java-pkg_jar-from --into lib junit

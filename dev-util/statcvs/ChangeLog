@@ -2,6 +2,9 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  03 Oct 2008; Serkan Kaba <serkan@gentoo.org> statcvs-0.4.0.ebuild:
+  Move EANT_BUILD_TARGET up.
+
   03 Oct 2008; Petteri Räty <betelgeuse@gentoo.org> statcvs-0.4.0.ebuild:
   Code review and keyword ~x86.
 
