@@ -2,7 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=1
 JAVA_PKG_IUSE="doc source test"
+
 inherit eutils java-pkg-2 java-ant-2
 
 DESCRIPTION="StatCVS generates HTML reports from CVS repository logs."
@@ -10,22 +12,22 @@ HOMEPAGE="http://statcvs.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${P}-source.zip"
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 COMMON_DEPEND="
-	>=dev-java/jcommon-1.0.6
-	>=dev-java/jfreechart-1.0.3
-	dev-java/jdom"
+	dev-java/jcommon:1.0
+	dev-java/jfreechart:1.0
+	dev-java/jdom:1.0"
 
 DEPEND=">=virtual/jdk-1.4
 	app-arch/unzip
-	test? ( =dev-java/junit-3.8* )
+	test? ( dev-java/ant-junit:0 )
 	${COMMON_DEPEND}"
 
 RDEPEND=">=virtual/jre-1.4
 	dev-util/cvs
-	dev-java/jtreemap
+	dev-java/jtreemap:0
 	${COMMON_DEPEND}"
 
 src_unpack() {
@@ -42,7 +44,6 @@ src_unpack() {
 	java-pkg_jar-from jcommon-1.0 jcommon.jar jcommon-1.0.6.jar
 	java-pkg_jar-from jfreechart-1.0 jfreechart.jar jfreechart-1.0.3.jar
 	java-pkg_jar-from jdom-1.0 jdom.jar
-	use test && java-pkg_jar-from --build-only junit
 }
 
 src_install() {
@@ -53,11 +54,10 @@ src_install() {
 	use source && java-pkg_dosrc src/net
 }
 
-src_compile() {
-	eant compile copyfiles jar $(use_doc)
-}
+EANT_BUILD_TARGET="compile copyfiles jar"
 
 src_test() {
+	java-pkg_jar-from --into lib junit
 	ANT_TASKS="ant-junit" eant test
 }
 
