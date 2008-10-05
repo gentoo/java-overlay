@@ -1,0 +1,77 @@
+# Bazaar merge directive format 2 (Bazaar 0.90)
+# revision_id: serkan@gentoo.org-20081005045146-jspegmo5ljm2less
+# target_branch: ../mainline/
+# testament_sha1: aad4b35143ec69622f6af833be1c41e8ba3c742a
+# timestamp: 2008-10-05 07:54:22 +0300
+# base_revision_id: andrew@operationaldynamics.com-20081004065325-\
+#   grsoaun9jq879ia2
+# 
+# Begin patch
+=== modified file 'src/bindings/org/gnome/gdk/CrossingMode.java'
+--- src/bindings/org/gnome/gdk/CrossingMode.java	2008-03-27 05:45:36 +0000
++++ src/bindings/org/gnome/gdk/CrossingMode.java	2008-10-05 04:51:46 +0000
+@@ -46,4 +46,19 @@
+      * Event occurred because an ungrab happened.
+      */
+     public static final CrossingMode UNGRAB = new CrossingMode(GdkCrossingMode.UNGRAB, "UNGRAB");
++
++    /**
++     * Event occurred because a GTK+ grab happened.
++     */
++    public static final CrossingMode GTK_GRAB = new CrossingMode(GdkCrossingMode.GTK_GRAB, "GTK_GRAB");
++
++    /**
++     * Event occurred because a GTK+ ungrab happened.
++     */
++    public static final CrossingMode GTK_UNGRAB = new CrossingMode(GdkCrossingMode.GTK_UNGRAB, "GTK_UNGRAB");
++
++    /**
++     * Event occurred because a GTK+ widget changed state.
++     */
++    public static final CrossingMode STATE_CHANGED = new CrossingMode(GdkCrossingMode.STATE_CHANGED, "STATE_CHANGED");
+ }
+
+=== modified file 'src/defs/GdkCrossingMode.defs'
+--- src/defs/GdkCrossingMode.defs	2007-04-14 23:21:13 +0000
++++ src/defs/GdkCrossingMode.defs	2008-10-05 04:51:46 +0000
+@@ -6,6 +6,9 @@
+     '("normal" "GDK_CROSSING_NORMAL")
+     '("grab" "GDK_CROSSING_GRAB")
+     '("ungrab" "GDK_CROSSING_UNGRAB")
++    '("gtk-grab" "GDK_CROSSING_GTK_GRAB")
++    '("gtk-ungrab" "GDK_CROSSING_GTK_UNGRAB")
++    '("state-changed" "GDK_CROSSING_STATE_CHANGED")
+   )
+ )
+ 
+
+# Begin bundle
+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

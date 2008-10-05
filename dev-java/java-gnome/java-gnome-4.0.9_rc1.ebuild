@@ -41,6 +41,7 @@ S="${WORKDIR}/${MY_P}"
 src_prepare() {
 	epatch "${FILESDIR}/${PN}-4.0.8-disable-doc-snapshots.patch"
 	epatch "${FILESDIR}/${P}-jardir.patch" #sent upstream
+	epatch "${FILESDIR}/${PN}-gtk-214.patch"
 }
 
 src_configure() {
