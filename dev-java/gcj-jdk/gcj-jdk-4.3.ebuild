@@ -100,6 +100,4 @@ pkg_postinst() {
 	ewarn "Edit /etc/java-config-2/build/jdk.conf"
 	ewarn "	*=${PN}-${SLOT}"
 	ewarn
-	ewarn "Install GCJ's javadoc"
-	ewarn "	# emerge gjdoc"
 }
