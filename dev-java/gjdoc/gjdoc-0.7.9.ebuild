@@ -43,7 +43,7 @@ src_compile() {
 	myc="${myc} --disable-dependency-tracking"
 
 		# TODO ideally, would respect JAVACFLAGS
-	JAVA="java" JAVAC="javac $(java-pkg_javac-args)" \
+	JAVA="java" JAVAC="javac" \
 		econf ${myc} \
 		$(use_enable xmldoclet) \
 		$(use_enable gcj native) || die "econf failed"

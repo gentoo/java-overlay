@@ -3,6 +3,9 @@
 # $Header: /var/cvsroot/gentoo-x86/dev-java/gjdoc/ChangeLog,v 1.32 2008/04/22 13:57:59 betelgeuse Exp $
 
   29 Sep 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gjdoc-0.7.9.ebuild:
+  Remove stupid flags given to JAVAC.
+
+  29 Sep 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gjdoc-0.7.9.ebuild:
   Fix gcj-jdk depedency and remove changes which break the ebuild.
 
   27 Sep 2008; Petteri Räty <betelgeuse@gentoo.org> gjdoc-0.7.9.ebuild:
@@ -18,7 +21,7 @@
   Generalise Vlastimil's fix to all compiles.
 
   01 Aug 2008; Vlastimil Babka <caster@gentoo.org> gjdoc-0.7.9.ebuild:
-  Fix wrong bytecode version issue when building with >1.4 JDK and not gjc.
+  Fix wrong bytecode version issue when building with >1.4 JDK and not gcj.
 
   16 Jun 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gjdoc-0.7.9.ebuild:
   Depend on gcj-jdk not gcj.
