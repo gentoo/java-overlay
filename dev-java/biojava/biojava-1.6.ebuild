@@ -24,7 +24,6 @@ IUSE=""
 
 COMMON_DEPEND="dev-java/jgrapht:0
 	dev-java/commons-cli:1
-	dev-java/commons-collections:0
 	dev-java/commons-dbcp:0
 	dev-java/commons-pool:0
 	dev-java/bytecode:0"
@@ -50,7 +49,6 @@ src_prepare() {
 	rm -r doc/*
 	java-pkg_jar-from jgrapht jgrapht.jar jgrapht-jdk1.5.jar
 	java-pkg_jar-from commons-cli-1
-	#java-pkg_jar-from commons-collections commons-collections.jar commons-collections-2.1.jar
 	java-pkg_jar-from commons-dbcp commons-dbcp.jar commons-dbcp-1.1.jar
 	java-pkg_jar-from commons-pool commons-pool.jar commons-pool-1.1.jar
 	java-pkg_jar-from bytecode
