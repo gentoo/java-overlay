@@ -1,0 +1,19 @@
+<project name="jaminid" default="jar">
+	<target name="init">
+		<delete dir="doc"/>
+	</target>
+	<target name="compile" depends="init">
+		<mkdir dir="build"/>
+		<javac srcdir="." destdir="build" classpath="${gentoo.classpath}"/>
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar destfile="jaminid.jar" basedir="build"/>
+	</target>
+
+	<target name="javadoc">
+		<mkdir dir="docs"/>
+		<javadoc sourcepath="src" destdir="docs" classpath="${gentoo.classpath}"/>
+	</target>
+
+</project>
