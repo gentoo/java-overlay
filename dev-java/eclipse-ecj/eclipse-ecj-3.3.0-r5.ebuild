@@ -59,8 +59,10 @@ src_compile() {
 	local javac_opts javac java jar
 
 	if use gcj ; then
-		local gccbin="$(gcc-config -B $(ls -1r /etc/env.d/gcc/${CHOST}-* | head -1) || die)"
-		local gcj="${gccbin}/gcj"
+		local gccver="$(ls -1r /etc/env.d/gcc/${CHOST}-* | head -1)"
+		local gccbin="$(gcc-config -B ${gccver} || die)"
+		local gcclib="$(gcc-config -L ${gccver} || die)"
+		local gcj="LD_LIBRARY_PATH=${gcclib} ${gccbin}/gcj"
 		javac="${gcj} -C"
 		jar="${gccbin}/gjar"
 		java="${gccbin}/gij"
@@ -99,7 +101,7 @@ src_install() {
 	if use gcj ; then
 		dobin native_${MY_PN}-${SLOT}
 		newbin "${FILESDIR}/ecj-${SLOT}" ${MY_PN}-${SLOT}
-		
+
 		# Don't complain when doing dojar below.
 		JAVA_PKG_WANT_SOURCE=1.4
 		JAVA_PKG_WANT_TARGET=1.4
