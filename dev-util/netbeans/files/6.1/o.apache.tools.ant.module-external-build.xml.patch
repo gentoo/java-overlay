@@ -1,0 +1,10 @@
+--- o.apache.tools.ant.module/external/build.xml.orig	2008-02-07 18:48:01.000000000 +0100
++++ o.apache.tools.ant.module/external/build.xml	2008-02-07 18:48:13.000000000 +0100
+@@ -42,7 +42,6 @@
+ -->
+ <project name="o.apache.tools.ant.module/external" default="unzip" basedir=".">
+     <target name="unzip">
+-        <unzip src="ant-libs-1.7.0.zip" dest="lib"/>
+     </target>
+     <target name="clean">
+         <delete dir="lib"/>

@@ -1,0 +1,9 @@
+--- websvc.jaxws21/build.xml.orig	2008-02-11 13:19:16.000000000 +0100
++++ websvc.jaxws21/build.xml	2008-02-11 13:19:56.000000000 +0100
+@@ -42,4 +42,6 @@
+ -->
+ <project name="websvc.jaxws21" default="netbeans" basedir=".">
+     <import file="../nbbuild/templates/projectized.xml"/>
++    <target name="release">
++    </target>
+ </project>

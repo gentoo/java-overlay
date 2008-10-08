@@ -1,0 +1,14 @@
+# ChangeLog for dev-util/netbeans
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  08 Oct 2008; Miroslav Šulc <fordfrog@gentoo.org> +files/6.1/config.sh,
+  +files/6.1/o.apache.tools.ant.module-build.xml.patch,
+  +files/6.1/o.apache.tools.ant.module-external-build.xml.patch,
+  +files/6.1/startscript.sh, +files/6.1/websvc.jaxws21-build.xml.patch,
+  +files/6.1/visualweb-JxpsSerializer.java-xerces-2.8.1.patch,
+  +files/6.1/nbbuild-build.xml.patch,
+  +files/6.1/websvc.jaxws21api-build.xml.patch, +metadata.xml,
+  +netbeans-6.1-r1.ebuild:
+  Moved from java-experimental overlay
+

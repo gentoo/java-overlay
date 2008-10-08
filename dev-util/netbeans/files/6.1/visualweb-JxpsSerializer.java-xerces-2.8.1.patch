@@ -1,0 +1,47 @@
+--- JspxSerializer.java.original	2007-04-17 17:15:38.000000000 +0200
++++ JspxSerializer.java	2007-04-17 17:16:10.000000000 +0200
+@@ -1359,7 +1359,7 @@
+             int ch = source.charAt(i);
+             if (!XMLChar.isValid(ch)) {
+                 if (++i < length) {
+-                    surrogates(ch, source.charAt(i));
++                    surrogates(ch, source.charAt(i), true);
+                 } else {
+                     fatalError("The character '" + (char) ch + "' is an invalid XML character");
+                 }
+@@ -1419,7 +1419,7 @@
+                 if (!XMLChar.isValid(ch)) {
+                     // check if it is surrogate
+                     if (++index <length) {
+-                        surrogates(ch, text.charAt(index));
++                        surrogates(ch, text.charAt(index), true);
+                     } else {
+                         fatalError("The character '"+(char)ch+"' is an invalid XML character"); 
+                     }
+@@ -1441,7 +1441,7 @@
+                 if (!XMLChar.isValid(ch)) {
+                     // check if it is surrogate
+                     if (++index <length) {
+-                        surrogates(ch, text.charAt(index));
++                        surrogates(ch, text.charAt(index), true);
+                     } else {
+                         fatalError("The character '"+(char)ch+"' is an invalid XML character"); 
+                     }
+@@ -1473,7 +1473,7 @@
+                 if (!XMLChar.isValid(ch)) {
+                     // check if it is surrogate
+                     if (++start <length) {
+-                        surrogates(ch, chars[start]);
++                        surrogates(ch, chars[start], true);
+                     } else {
+                         fatalError("The character '"+(char)ch+"' is an invalid XML character"); 
+                     }
+@@ -1497,7 +1497,7 @@
+                 if (!XMLChar.isValid(ch)) {
+                     // check if it is surrogate
+                     if (++start <length) {
+-                        surrogates(ch, chars[start]);
++                        surrogates(ch, chars[start], true);
+                     } else {
+                         fatalError("The character '"+(char)ch+"' is an invalid XML character"); 
+                     }
