@@ -1,6 +1,6 @@
 # Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-util/statsvn/statsvn-0.4.1.ebuild,v 1.1 2008/10/03 21:44:32 serkan Exp $
+# $Header: $
 
 EAPI=1
 JAVA_PKG_IUSE="doc source test"
@@ -58,10 +58,10 @@ src_test() {
 src_install() {
 	java-pkg_dojar dist/LanguageTool.jar
 	java-pkg_dojar dist/LanguageToolGUI.jar
-	
+
 	java-pkg_dolauncher ${PN} --main de.danielnaber.languagetool.Main
 	java-pkg_dolauncher ${PN}-gui --main de.danielnaber.languagetool.gui.Main
-	
+
 	use doc && java-pkg_dojavadoc dist/docs/api
 	use source && java-pkg_dosrc src/java/de
 	dodoc {README,CHANGES}.txt

@@ -2,12 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=1
 JAVA_PKG_IUSE="doc source test"
 
 inherit eutils java-pkg-2 java-ant-2
 
-DESCRIPTION="Jaminid is a very small (and fast) daemon meant to embed in Java applications as an add-on HTTP interface."
-HOMEPAGE="http://jaminid.sourceforge.net/"
+DESCRIPTION="Java implementation of a finite-state automaton (FSA) traversal routine"
+HOMEPAGE="http://morfologik.blogspot.com/"
 SRC_URI="mirror://sourceforge/morfologik/${P}-src.zip"
 LICENSE="BSD"
 SLOT="0"
