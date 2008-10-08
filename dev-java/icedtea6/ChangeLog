@@ -2,6 +2,9 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  08 Oct 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.2.ebuild:
+	Depend on gnu-classpath-jdk and icedtea-jdk.
+	
   14 Sep 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> files/enable_fix-1.2.patch:
 	Remove prefix on left file in patch; epatch no longer seems to like this.
 	

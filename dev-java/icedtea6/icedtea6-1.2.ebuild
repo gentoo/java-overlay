@@ -40,7 +40,8 @@ RDEPEND=">=net-print/cups-1.2.12
 #   xalan/xerces: automatic code generation
 #   ant, ecj, jdk: required to build Java code
 DEPEND="${RDEPEND}
-	>=virtual/jdk-1.5
+	|| ( >=virtual/gnu-classpath-jdk-1.5
+		 >=dev-java/icedtea-jdk-1.6 )
 	>=app-arch/unzip-5.52
 	>=dev-java/xalan-2.7.0
 	>=dev-java/xerces-2.9.1
