@@ -44,3 +44,16 @@ dev-java/jboss-commons-logging:log4j - Add support for log4j
 dev-java/jboss-commons-logging:servletapi - Add support for servletapi
 dev-java/jboss-commons-logging:avalon-framework - Add support for avalon-framework
 
+dev-util/netbeans:apisupport - Enables 'apisupport' cluster which enables netbeans module support in netbeans
+dev-util/netbeans:cnd Enables 'cnd' cluster which enables C/C++ development support in netbeans
+dev-util/netbeans:gsf - Enables 'gsf' cluster which enables GNOME Structured File and other web development related support in netbeans needed for some other clusters
+dev-util/netbeans:harness - Enables 'harness' cluster
+dev-util/netbeans:ide - Enables 'ide' cluster which enables IDE support in netbeans
+dev-util/netbeans:identity - Enables 'identity' cluster which enables identity management support in netbeans
+dev-util/netbeans:j2ee - Enables 'j2ee' cluster which enables J2EE development in netbeans
+dev-util/netbeans:mobility - Enables 'mobility' cluster which enables mobility development support in netbeans
+dev-util/netbeans:nb - Enables 'nb' cluster which enables netbeans branding
+dev-util/netbeans:profiler - Enables 'profiler' cluster which enables profiler support in netbeans
+dev-util/netbeans:soa - Enables 'soa' cluster which enables service-oriented architecture development in netbeans
+dev-util/netbeans:uml - Enables 'uml' cluster which enables UML support in netbeans
+dev-util/netbeans:visualweb - Enables 'visualweb' cluster which enables web apps development in netbeans
