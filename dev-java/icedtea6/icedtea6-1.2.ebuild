@@ -89,11 +89,14 @@ src_compile() {
 		# If we are upgrading icedtea, then we don't need to bootstrap.
 		config="${config} --with-icedtea"
 		config="${config} --with-icedtea-home=$(java-config -O)"
-	else
+	elif [[ "$(java-pkg_get-current-vm)" == "gcj-jdk" || "$(java-pkg_get-current-vm)" == "cacao" ]] ; then
 		# For other 1.5 JDKs e.g. GCJ, CACAO, JamVM.
 		config="${config} --with-ecj-jar=$(ls -1r /usr/share/eclipse-ecj-3.[23]/lib/ecj.jar|head -n 1)" \
 		config="${config} --with-libgcj-jar=$(java-config -O)/jre/lib/rt.jar"
 		config="${config} --with-gcj-home=$(java-config -O)"
+	else
+		eerror "IcedTea must be built with either a JDK based on GNU Classpath or an existing build of IcedTea."
+		die "Install a GNU Classpath JDK (gcj-jdk, cacao)"
 	fi
 
 	# OpenJDK-specific parallelism support.
@@ -114,7 +117,7 @@ src_compile() {
 	econf ${config} \
 		--with-openjdk-src-zip="${DISTDIR}/${OPENJDK_TARBALL}" \
 		--with-version-suffix="gentoo" \
-		$(use_enable debug optimizations) \
+		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nsplugin gcjwebplugin) \
 		|| die "configure failed"

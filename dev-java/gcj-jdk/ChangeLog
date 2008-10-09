@@ -2,6 +2,9 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  09 Oct 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3.ebuild:
+  Clean up detritus from old slotting.
+
   06 Oct 2008; Petteri Räty <betelgeuse@gentoo.org> gcj-jdk-4.3.ebuild:
   No need to instruct to emerge gjdoc as we have a PDEPEND on it.
 

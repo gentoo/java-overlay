@@ -98,6 +98,6 @@ pkg_postinst() {
 	ewarn "	# java-config -S ${PN}-${SLOT}"
 	ewarn
 	ewarn "Edit /etc/java-config-2/build/jdk.conf"
-	ewarn "	*=${PN}-${SLOT}"
+	ewarn "	*=${PN}"
 	ewarn
 }
