@@ -19,10 +19,9 @@ SLOT="4.0"
 KEYWORDS="~amd64 ~ppc ~x86"
 IUSE=""
 
-# Minimum GNOME 2.22 dependencies
 RDEPEND=">=dev-libs/glib-2.16.1
-	>=x11-libs/gtk+-2.12.8
-	>=gnome-base/libglade-2.6.2
+	>=x11-libs/gtk+-2.12.11
+	>=gnome-base/libglade-2.6.3
 	>=gnome-base/libgnome-2.22.0
 	>=gnome-base/gnome-desktop-2.22.0
 	>=virtual/jre-1.5
@@ -37,12 +36,6 @@ DEPEND="${RDEPEND}
 RESTRICT="test"
 
 S="${WORKDIR}/${MY_P}"
-
-src_prepare() {
-	epatch "${FILESDIR}/${PN}-4.0.8-disable-doc-snapshots.patch"
-	epatch "${FILESDIR}/${P}-jardir.patch" #sent upstream
-	epatch "${FILESDIR}/${PN}-gtk-214.patch"
-}
 
 src_configure() {
 	# Handwritten in perl so not using econf
