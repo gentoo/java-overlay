@@ -72,10 +72,6 @@ src_unpack() {
 	epatch "${FILESDIR}/motif.patch"
 	epatch "${FILESDIR}/motif-config.patch"
 	epatch "${FILESDIR}/motif-make.patch"
-	# Use Classpath's JAVAC and JAVA tests
-	epatch "${FILESDIR}/javac_fix-${PV}.patch"
-	# Use @JAVAC_MEM_OPT@ in javac.in
-	epatch "${FILESDIR}/javac.in.patch"
 	# Backport security and versioning fixes
 	epatch "${FILESDIR}/security_and_versioning.patch"
 
@@ -84,16 +80,18 @@ src_unpack() {
 
 src_compile() {
 	local config procs
+	local vm=$(java-pkg_get-current-vm)
+	local vmhome="/usr/lib/jvm/${vm}"
 
-	if [[ "$(java-pkg_get-current-vm)" == "icedtea6" || "$(java-pkg_get-current-vm)" == "icedtea" ]] ; then
+	if [[ "${vm}" == "icedtea6" || "${vm}" == "icedtea" ]] ; then
 		# If we are upgrading icedtea, then we don't need to bootstrap.
 		config="${config} --with-icedtea"
 		config="${config} --with-icedtea-home=$(java-config -O)"
-	elif [[ "$(java-pkg_get-current-vm)" == "gcj-jdk" || "$(java-pkg_get-current-vm)" == "cacao" ]] ; then
+	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" ]] ; then
 		# For other 1.5 JDKs e.g. GCJ, CACAO, JamVM.
 		config="${config} --with-ecj-jar=$(ls -1r /usr/share/eclipse-ecj-3.[23]/lib/ecj.jar|head -n 1)" \
-		config="${config} --with-libgcj-jar=$(java-config -O)/jre/lib/rt.jar"
-		config="${config} --with-gcj-home=$(java-config -O)"
+		config="${config} --with-libgcj-jar=${vmhome}/jre/lib/rt.jar"
+		config="${config} --with-gcj-home=${vmhome}"
 	else
 		eerror "IcedTea must be built with either a JDK based on GNU Classpath or an existing build of IcedTea."
 		die "Install a GNU Classpath JDK (gcj-jdk, cacao)"
@@ -117,6 +115,9 @@ src_compile() {
 	econf ${config} \
 		--with-openjdk-src-zip="${DISTDIR}/${OPENJDK_TARBALL}" \
 		--with-version-suffix="gentoo" \
+		--with-java="${vmhome}/bin/java" \
+		--with-javac="${vmhome}/bin/javac" \
+		--with-javah="${vmhome}/bin/javah" \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nsplugin gcjwebplugin) \
