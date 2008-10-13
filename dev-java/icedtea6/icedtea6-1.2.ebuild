@@ -105,9 +105,9 @@ src_compile() {
 	fi
 
 	if use_zero ; then
-		zero="${config} --enable-zero"
+		config="${config} --enable-zero"
 	else
-		zero="${config} --disable-zero"
+		config="${config} --disable-zero"
 	fi
 
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
