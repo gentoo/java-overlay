@@ -48,8 +48,10 @@ DEPEND="${RDEPEND}
 	>=dev-java/xalan-2.7.0
 	>=dev-java/xerces-2.9.1
 	>=dev-java/ant-core-1.7.0-r3
-	|| (	>=dev-java/eclipse-ecj-3.2.1:3.2
-		dev-java/eclipse-ecj:3.3 )
+	|| (	
+		dev-java/eclipse-ecj:3.3
+		>=dev-java/eclipse-ecj-3.2.1:3.2
+	)
 	javascript? ( dev-java/rhino:1.6 )"
 
 pkg_setup() {
