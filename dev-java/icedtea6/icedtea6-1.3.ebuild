@@ -10,7 +10,8 @@ DESCRIPTION="A harness to build the OpenJDK using Free Software build tools and 
 OPENJDK_BUILD="12"
 OPENJDK_DATE="28_aug_2008"
 OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.gz"
-SRC_URI="http://download.java.net/openjdk/jdk6/promoted/b${OPENJDK_BUILD}/${OPENJDK_TARBALL}"
+SRC_URI="http://icedtea.classpath.org/download/source/${P}.tar.gz
+		 http://download.java.net/openjdk/jdk6/promoted/b${OPENJDK_BUILD}/${OPENJDK_TARBALL}"
 HOMEPAGE="http://icedtea.classpath.org"
 
 IUSE="debug doc examples javascript nsplugin zero"
