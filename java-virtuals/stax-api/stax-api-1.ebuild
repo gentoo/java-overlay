@@ -18,10 +18,10 @@ IUSE=""
 DEPEND=""
 RDEPEND="|| (
 			=virtual/jdk-1.6*
-			>=dev-java/stax-1.2.1-r1
+			dev-java/jsr173
 		)
 		>=dev-java/java-config-2.1.6
 		"
 
-JAVA_VIRTUAL_PROVIDES="stax"
-JAVA_VIRTUAL_VM="icedtea6 sun-jdk-1.6 ibm-jdk-bin-1.6"
+JAVA_VIRTUAL_PROVIDES="jsr173"
+JAVA_VIRTUAL_VM="icedtea-jdk-1.6 sun-jdk-1.6 ibm-jdk-bin-1.6"
