@@ -6,10 +6,6 @@
 # NOTE: Please add your entry at the top!
 #
 
-# Serkan Kaba <serkan@gentoo.org> (14 Oct 2008)
-# Uses virtuals available only in java-experimental.
-=dev-java/dom4j-1.6.1-r4
-
 # Alistair Bush. ali_bush@gentoo.org (12 Apr 2008)
 # Masked for removal in 30 days. Dead upstream, use fop instead.
 dev-java/jfor
