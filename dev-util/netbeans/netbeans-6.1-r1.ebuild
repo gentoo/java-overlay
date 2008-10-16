@@ -293,16 +293,6 @@ pkg_postinst() {
 	einfo "${PN}-${SLOT} --locale pt:BR"
 }
 
-pkg_postrm() {
-	if ! test -e /usr/bin/netbeans-${SLOT}; then
-		elog "Because of the way Portage works at the moment"
-		elog "symlinks to the system jars are left to:"
-		elog "${DESTINATION}"
-		elog "If you are uninstalling Netbeans you can safely"
-		elog "remove everything in this directory"
-	fi
-}
-
 # Supporting functions for this ebuild
 
 place_unpack_symlinks() {
