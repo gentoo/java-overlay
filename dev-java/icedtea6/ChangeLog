@@ -2,6 +2,9 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  16 Oct 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.3-r1.ebuild:
+	Allow a CACAO build to build a normal IcedTea.
+
 *icedtea6-1.3-r1 (16 10 2008)
 
   15 Oct 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.3-r1.ebuild:
