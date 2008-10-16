@@ -1,0 +1,73 @@
+diff -r d6d04e2f4333 Makefile.am
+--- a/Makefile.am	Wed Oct 15 13:11:21 2008 -0400
++++ b/Makefile.am	Thu Oct 16 00:49:26 2008 +0100
+@@ -295,7 +295,12 @@
+ endif
+ 
+ NETBEANS_BASIC_CLUSTER_URL = http://nbi.netbeans.org/files/documents/210/2056/
+-NETBEANS_BASIC_CLUSTER_SRC_ZIP = netbeans-6.1-200805300101-basic_cluster-src.zip 
++
++if USE_ALT_NETBEANS_BASIC_CLUSTER_SRC_ZIP
++  NETBEANS_BASIC_CLUSTER_SRC_ZIP = $(ALT_NETBEANS_BASIC_CLUSTER_SRC_ZIP)
++else
++  NETBEANS_BASIC_CLUSTER_SRC_ZIP = netbeans-6.1-200805300101-basic_cluster-src.zip 
++endif
+ 
+ NETBEANS_PROFILER_URL = http://icedtea.classpath.org/visualvm/
+ 
+@@ -343,6 +348,8 @@
+ endif
+ endif
+ if WITH_VISUALVM
++if USE_ALT_NETBEANS_BASIC_CLUSTER_SRC_ZIP
++else
+ 	if ! echo "$(NETBEANS_BASIC_CLUSTER_MD5SUM) $(NETBEANS_BASIC_CLUSTER_SRC_ZIP)" \
+ 	  | $(MD5SUM) --check ; \
+ 	then \
+@@ -353,7 +360,7 @@
+ 	$(WGET) $(NETBEANS_BASIC_CLUSTER_URL)$(NETBEANS_BASIC_CLUSTER_SRC_ZIP) \
+ 	  -O $(NETBEANS_BASIC_CLUSTER_SRC_ZIP) ; \
+ 	fi
+-
++endif
+ if USE_ALT_NETBEANS_PROFILER_SRC_ZIP
+ else
+ 	if ! echo "$(NETBEANS_PROFILER_MD5SUM) $(NETBEANS_PROFILER_SRC_ZIP)" \
+diff -r d6d04e2f4333 acinclude.m4
+--- a/acinclude.m4	Wed Oct 15 13:11:21 2008 -0400
++++ b/acinclude.m4	Thu Oct 16 00:49:26 2008 +0100
+@@ -473,6 +473,23 @@
+   AC_SUBST(ALT_NETBEANS_PROFILER_SRC_ZIP)
+ ])
+ 
++AC_DEFUN([WITH_NETBEANS_BASIC_CLUSTER_SRC_ZIP],
++[
++  AC_MSG_CHECKING(netbeans basic cluster zip)
++  AC_ARG_WITH([netbeans-basic-cluster-src-zip],
++              [AS_HELP_STRING(--with-netbeans-basic-cluster-src-zip, specify the location of the netbeans basic cluster source zip)],
++  [
++    ALT_NETBEANS_BASIC_CLUSTER_SRC_ZIP=${withval}
++    AM_CONDITIONAL(USE_ALT_NETBEANS_BASIC_CLUSTER_SRC_ZIP, test x = x)
++  ],
++  [ 
++    ALT_NETBEANS_BASIC_CLUSTER_SRC_ZIP="not specified"
++    AM_CONDITIONAL(USE_ALT_NETBEANS_BASIC_CLUSTER_SRC_ZIP, test x != x)
++  ])
++  AC_MSG_RESULT(${ALT_NETBEANS_BASIC_CLUSTER_SRC_ZIP})
++  AC_SUBST(ALT_NETBEANS_BASIC_CLUSTER_SRC_ZIP)
++])
++
+ AC_DEFUN([WITH_ALT_JAR_BINARY],
+ [
+   AC_MSG_CHECKING(alternate jar command)
+diff -r d6d04e2f4333 configure.ac
+--- a/configure.ac	Wed Oct 15 13:11:21 2008 -0400
++++ b/configure.ac	Thu Oct 16 00:49:26 2008 +0100
+@@ -247,6 +247,7 @@
+ WITH_OPENJDK_SRC_DIR
+ WITH_VISUALVM_SRC_ZIP
+ WITH_NETBEANS_PROFILER_SRC_ZIP
++WITH_NETBEANS_BASIC_CLUSTER_SRC_ZIP
+ WITH_ALT_JAR_BINARY
+ AC_CHECK_WITH_CACAO
+ AC_CHECK_WITH_CACAO_HOME

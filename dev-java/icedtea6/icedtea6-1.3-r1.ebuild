@@ -10,15 +10,17 @@ DESCRIPTION="A harness to build the OpenJDK using Free Software build tools and 
 OPENJDK_BUILD="12"
 OPENJDK_DATE="28_aug_2008"
 OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.gz"
+CACAO_TARBALL="cacao-0.99.3.tar.gz"
 SRC_URI="http://icedtea.classpath.org/download/source/${P}.tar.gz
-		 http://download.java.net/openjdk/jdk6/promoted/b${OPENJDK_BUILD}/${OPENJDK_TARBALL}"
+		 http://download.java.net/openjdk/jdk6/promoted/b${OPENJDK_BUILD}/${OPENJDK_TARBALL}
+		 cacao? ( http://www.complang.tuwien.ac.at/cacaojvm/download/cacao-0.99.3/${CACAO_TARBALL} )"
 HOMEPAGE="http://icedtea.classpath.org"
 
-IUSE="debug doc examples javascript nsplugin zero"
+IUSE="cacao debug doc examples javascript nsplugin shark zero"
 
 LICENSE="GPL-2-with-linking-exception"
 SLOT="0"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
 
 RDEPEND=">=net-print/cups-1.2.12
 	 >=x11-libs/libX11-1.1.3
@@ -48,17 +50,29 @@ DEPEND="${RDEPEND}
 	>=dev-java/xalan-2.7.0
 	>=dev-java/xerces-2.9.1
 	>=dev-java/ant-core-1.7.0-r3
-	|| (	
+	|| (
 		dev-java/eclipse-ecj:3.3
 		>=dev-java/eclipse-ecj-3.2.1:3.2
 	)
 	javascript? ( dev-java/rhino:1.6 )"
 
 pkg_setup() {
-	if use_zero && ! built_with_use sys-devel/gcc libffi; then
+	if use zero && ! built_with_use sys-devel/gcc libffi; then
 		eerror "Using the zero assembler port requires libffi. Please rebuild sys-devel/gcc"
 		eerror "with USE=\"libffi\" or turn off the zero USE flag on ${PN}."
 		die "Rebuild sys-devel/gcc with libffi support"
+	fi
+
+	if use shark ; then
+	  if ( ! use x86 && ! use sparc && ! use ppc ) ; then
+		eerror "The Shark JIT has known issues on 64-bit platforms.  Please rebuild"
+		errror "without the shark USE flag turned on."
+		die "Rebuild without the shark USE flag on."
+	  fi
+	  if ( ! use zero ) ; then
+		eerror "The use of the Shark JIT is only applicable when used with the zero assembler port.";
+		die "Rebuild without the shark USE flag on or with the zero USE flag turned on."
+	  fi
 	fi
 
 	java-vm-2_pkg_setup
@@ -67,6 +81,12 @@ pkg_setup() {
 
 src_unpack() {
 	unpack ${P}.tar.gz
+	cd "${S}" || die
+
+	# Fix --with-cacao (should be --enable-cacao) (http://icedtea.classpath.org/hg/icedtea6/rev/1c580400c8d9)
+	epatch "${FILESDIR}/cacao-${PV}.patch"
+
+	eautoreconf || die "failed to regenerate autoconf infrastructure"
 }
 
 src_compile() {
@@ -95,10 +115,10 @@ src_compile() {
 		einfo "Configuring using --with-parallel-jobs=${procs}"
 	fi
 
-	if use_zero ; then
-		config="${config} --enable-zero"
+	if use_cacao ; then
+		config="${config} --enable-cacao"
 	else
-		config="${config} --disable-zero"
+		config="${config} --disable-cacao"
 	fi
 
 	if use javascript ; then
@@ -109,6 +129,7 @@ src_compile() {
 
 	econf ${config} \
 		--with-openjdk-src-zip="${DISTDIR}/${OPENJDK_TARBALL}" \
+		--with-cacao-src-zip="${DISTDIR}/${CACAO_TARBALL}" \
 		--with-java="${vmhome}/bin/java" \
 		--with-javac="${vmhome}/bin/javac" \
 		--with-javah="${vmhome}/bin/javah" \
@@ -116,13 +137,15 @@ src_compile() {
 		$(use_enable doc docs) \
 		$(use_enable nsplugin gcjwebplugin) \
 		$(use_with javascript rhino ${rhino_jar}) \
+		$(use_enable zero) \
+		$(use_enable shark) \
 		|| die "configure failed"
 
 	emake -j 1  || die "make failed"
 }
 
 src_install() {
-	local dest="/usr/$(get_libdir)/${P}"
+	local dest="/usr/$(get_libdir)/${PN}"
 	local ddest="${D}/${dest}"
 	dodir "${dest}" || die
 
@@ -163,8 +186,8 @@ src_install() {
 	set_java_env
 }
 
-use_zero() {
-	use zero || ( ! use amd64 && ! use x86 && ! use sparc )
+use_cacao() {
+	use cacao || ( ! use amd64 && ! use x86 && ! use sparc )
 }
 
 pkg_postinst() {

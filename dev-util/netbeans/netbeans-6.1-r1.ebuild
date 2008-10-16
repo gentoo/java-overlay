@@ -19,10 +19,10 @@ KEYWORDS="~amd64 ~x86 ~x86-fbsd"
 IUSE="+apisupport +cnd debug doc +gsf +harness +ide +identity +j2ee +java +mobility +nb +php +profiler +ruby +soa +uml +visualweb +xml linguas_de linguas_es linguas_ja linguas_pt_BR linguas_sq linguas_zh_CN"
 
 RDEPEND=">=virtual/jdk-1.5
-	>=dev-java/ant-core-1.7.1_beta2"
+	>=dev-java/ant-core-1.7.0"
 
 DEPEND="=virtual/jdk-1.5*
-	>=dev-java/ant-core-1.7.1_beta2"
+	>=dev-java/ant-core-1.7.0"
 
 BUILDDESTINATION="${S}/nbbuild/netbeans"
 ENTERPRISE="5"

@@ -8,6 +8,8 @@
 </maintainer>
 <longdescription>The IcedTea project provides a harness to build the source code from OpenJDK6 (http://openjdk.java.net) using Free Software build tools along with additional tools such as a browser plugin and Web Start support via NetX. </longdescription>
 <use>
-  <flag name="zero">Enable the zero assembler port on x86 and amd64 architectures.</flag>
+  <flag name="cacao">Use the CACAO virtual machine instead of HotSpot on x86, amd64 or SPARC architectures.</flag>
+  <flag name="shark">Enable Shark JIT support</flag>
+  <flag name="zero">Enable the zero assembler port of HotSpot.</flag>
 </use>
 </pkgmetadata>
