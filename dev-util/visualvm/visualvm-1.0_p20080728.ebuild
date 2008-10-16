@@ -31,7 +31,8 @@ src_unpack() {
 	unpack ${P}.tar.gz
 	cd "${S}" || die
 
-	# Fix missing --with-netbeans-basic-cluster-src-zip (http://icedtea.classpath.org/hg/icedtea6/rev/1c580400c8d9)
+	# Fix missing --with-netbeans-basic-cluster-src-zip
+	# (http://icedtea.classpath.org/hg/icedtea6?cmd=changeset;node=ce3ea0b5a8c9)
 	epatch "${FILESDIR}/missing_zip-${PV}.patch"
 
 	eautoreconf || die "failed to regenerate autoconf infrastructure"

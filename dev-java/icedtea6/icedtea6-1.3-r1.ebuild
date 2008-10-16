@@ -83,8 +83,12 @@ src_unpack() {
 	unpack ${P}.tar.gz
 	cd "${S}" || die
 
-	# Fix --with-cacao (should be --enable-cacao) (http://icedtea.classpath.org/hg/icedtea6/rev/1c580400c8d9)
+	# Fix --with-cacao (should be --enable-cacao)
+	# (http://icedtea.classpath.org/hg/icedtea6?cmd=changeset;node=839e9e0810ca)
 	epatch "${FILESDIR}/cacao-${PV}.patch"
+	# Fix memory limits so CACAO IcedTeas can build normal IcedTea
+	# (http://icedtea.classpath.org/hg/icedtea6?cmd=changeset;node=c926c9674b4c)
+	epatch "${FILESDIR}/memory_limit-${PV}.patch"
 
 	eautoreconf || die "failed to regenerate autoconf infrastructure"
 }

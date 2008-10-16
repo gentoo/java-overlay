@@ -1,0 +1,19 @@
+diff -r 173e3d40d94b Makefile.am
+--- a/Makefile.am	Thu Oct 16 01:46:18 2008 +0100
++++ b/Makefile.am	Thu Oct 16 02:33:14 2008 +0100
+@@ -932,13 +932,13 @@
+ # ===============
+ 
+ if WITH_ICEDTEA
+-if WITH_CACAO
+   MEMORY_LIMIT = -J-Xmx1024m
+ else
++if WITH_OPENJDK
+   MEMORY_LIMIT = -J-Xmx512m
+-endif
+ else
+   MEMORY_LIMIT =
++endif
+ endif
+ 
+ if WITH_CACAO
