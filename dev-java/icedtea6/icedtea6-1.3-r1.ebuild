@@ -16,7 +16,7 @@ SRC_URI="http://icedtea.classpath.org/download/source/${P}.tar.gz
 		 cacao? ( http://www.complang.tuwien.ac.at/cacaojvm/download/cacao-0.99.3/${CACAO_TARBALL} )"
 HOMEPAGE="http://icedtea.classpath.org"
 
-IUSE="cacao debug doc examples javascript nsplugin shark zero"
+IUSE="cacao debug doc examples javascript nsplugin pulseaudio shark zero"
 
 LICENSE="GPL-2-with-linking-exception"
 SLOT="0"
@@ -37,7 +37,8 @@ RDEPEND=">=net-print/cups-1.2.12
 		www-client/mozilla-firefox
 		net-libs/xulrunner
 		www-client/seamonkey
-	 ) )"
+	 ) )
+	 pulseaudio? (>=media-sound/pulseaudio-0.9.11)"
 
 # Additional dependencies for building:
 #   unzip: extract OpenJDK tarball
@@ -103,6 +104,8 @@ src_compile() {
 		config="${config} --with-icedtea"
 		config="${config} --with-icedtea-home=$(java-config -O)"
 	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" ]] ; then
+		eerror "The IcedTea6 1.3 tarball is broken with respect to bootstrapping."
+		die "IcedTea 1.3 can not be bootstrapped.  You need IcedTea6 1.2 to build this."
 		# For other 1.5 JDKs e.g. GCJ, CACAO, JamVM.
 		config="${config} --with-ecj-jar=$(ls -1r /usr/share/eclipse-ecj-3.[23]/lib/ecj.jar|head -n 1)" \
 		config="${config} --with-libgcj-jar=${vmhome}/jre/lib/rt.jar"
@@ -143,6 +146,7 @@ src_compile() {
 		$(use_with javascript rhino ${rhino_jar}) \
 		$(use_enable zero) \
 		$(use_enable shark) \
+		$(use_enable pulseaudio pulse-java) \
 		|| die "configure failed"
 
 	emake -j 1  || die "make failed"
