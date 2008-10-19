@@ -38,7 +38,7 @@ RDEPEND=">=net-print/cups-1.2.12
 		net-libs/xulrunner
 		www-client/seamonkey
 	 ) )
-	 pulseaudio? (>=media-sound/pulseaudio-0.9.11)"
+	 pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )"
 
 # Additional dependencies for building:
 #   unzip: extract OpenJDK tarball

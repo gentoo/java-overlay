@@ -2,6 +2,9 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  19 Oct 2008; Petteri Räty <betelgeuse@gentoo.org> icedtea6-1.3-r1.ebuild:
+  Fix pulseaudio dependency atom.
+
   19 Oct 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.3-r1.ebuild:
 	Drop out if trying to bootstrap due to the broken tarball issue.
 	Add PulseAudio support.
