@@ -2,6 +2,11 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  20 Oct 2008; Petteri Räty <betelgeuse@gentoo.org>
+  +files/icedtea6-1.3-autoconf.patch, icedtea6-1.3-r1.ebuild:
+  Add patch for autoconf. Fixes bug #242746. Thanks to Alon Bar-Lev
+  <alon.barlev@gmail.com>.
+
   19 Oct 2008; Petteri Räty <betelgeuse@gentoo.org> icedtea6-1.3-r1.ebuild:
   Fix pulseaudio dependency atom.
 

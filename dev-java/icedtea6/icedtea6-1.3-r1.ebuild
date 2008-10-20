@@ -90,6 +90,7 @@ src_unpack() {
 	# Fix memory limits so CACAO IcedTeas can build normal IcedTea
 	# (http://icedtea.classpath.org/hg/icedtea6?cmd=changeset;node=c926c9674b4c)
 	epatch "${FILESDIR}/memory_limit-${PV}.patch"
+	epatch "${FILESDIR}/icedtea6-1.3-autoconf.patch"
 
 	eautoreconf || die "failed to regenerate autoconf infrastructure"
 }
