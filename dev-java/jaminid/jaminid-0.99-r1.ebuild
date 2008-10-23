@@ -26,11 +26,14 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}" || die
 	mv src/com/prolixtech/jaminid_examples . -v
+	sed -i -e 's/config\/MIME.XML/\/usr\/share\/jaminid\/config\/MIME.XML/g' src/com/prolixtech/jaminid/Protocol.java
 	cp -v "${FILESDIR}"/build.xml . || die
 }
 
 src_install() {
 	java-pkg_dojar ${PN}.jar
+	insinto /usr/share/jaminid
+	doins -r config || die "doins failed."
 	use doc && java-pkg_dojavadoc docs
 	use source && java-pkg_dosrc src/com
 	use examples && java-pkg_doexamples jaminid_examples
