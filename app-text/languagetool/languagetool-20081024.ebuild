@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-RESTRICT="test" #Tests fail.
+#RESTRICT="test" #Tests fail.
 
 COMMON_DEPEND="dev-java/jdictrayapi:0
 	dev-java/jaminid:0
@@ -34,25 +34,25 @@ RDEPEND=">=virtual/jre-1.5
 
 EANT_GENTOO_CLASSPATH="jdictrayapi,jaminid,morfologik-stemming,jwordsplitter"
 EANT_BUILD_TARGET="init build"
-JAVA_ANT_REWRITE_CLASSPATH="true"
+#JAVA_ANT_REWRITE_CLASSPATH="true"
 
 src_unpack() {
 	unpack ${A}
 	cd "${S}" || die
 	epatch "${FILESDIR}"/${PN}-0.9.3-build.xml.patch
 	cd libs || die
-	#java-pkg_jar-from jdictrayapi
-	#java-pkg_jar-from jaminid
-	#java-pkg_jar-from morfologik-stemming morfologik-stemming-nodict.jar morfologik-stemming-nodict-1.1.jar
-	#java-pkg_jar-from jwordsplitter
+	java-pkg_jar-from jdictrayapi
+	java-pkg_jar-from jaminid
+	java-pkg_jar-from morfologik-stemming morfologik-stemming-nodict.jar morfologik-stemming-nodict-1.1.jar
+	java-pkg_jar-from jwordsplitter
 }
 
 src_test() {
-	#mkdir libs/build || die
-	#java-pkg_jar-from --into libs/build junit
-	#ANT_TASKS="ant-junit" eant test
-	ANT_TASKS="ant-junit" \
-		eant -Dgentoo.classpath="$(java-pkg_getjars jdictrayapi,jaminid,morfologik-stemming,jwordsplitter):$(java-pkg_getjars --build-only junit)" test
+	mkdir build || die
+	java-pkg_jar-from --into build junit
+	ANT_TASKS="ant-junit" eant test
+	#ANT_TASKS="ant-junit" \
+	#	eant -Dgentoo.classpath="$(java-pkg_getjars jdictrayapi,jaminid,morfologik-stemming,jwordsplitter):$(java-pkg_getjars --build-only junit)" test
 }
 
 src_install() {
