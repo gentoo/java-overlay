@@ -48,7 +48,6 @@ src_unpack() {
 }
 
 src_test() {
-	mkdir build || die
 	java-pkg_jar-from --into build junit
 	ANT_TASKS="ant-junit" eant test
 	#ANT_TASKS="ant-junit" \
