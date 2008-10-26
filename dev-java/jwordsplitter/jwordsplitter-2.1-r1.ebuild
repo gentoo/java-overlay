@@ -19,6 +19,12 @@ DEPEND=">=virtual/jdk-1.4"
 
 EANT_BUILD_TARGET="build"
 
+src_unpack() {
+	unpack ${A}
+	cd "${S}" || die
+	epatch "${FILESDIR}"/${P}-setminimumwordlength.patch
+}
+
 src_install() {
 	java-pkg_dojar dist/jWordSplitter.jar
 	use source && java-pkg_dosrc src/*

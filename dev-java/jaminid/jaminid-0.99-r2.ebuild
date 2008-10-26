@@ -26,6 +26,7 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}" || die
 	mv src/com/prolixtech/jaminid_examples . -v
+	epatch "${FILESDIR}"/${P}-utf8.patch
 	sed -i -e 's/config\/MIME.XML/\/usr\/share\/jaminid\/config\/MIME.XML/g' src/com/prolixtech/jaminid/Protocol.java
 	cp -v "${FILESDIR}"/build.xml . || die
 }
