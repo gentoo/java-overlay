@@ -66,6 +66,7 @@ src_compile() {
 		javac="${gcj} -C"
 		jar="${gccbin}/gjar"
 		java="${gccbin}/gij"
+		gcjdb="${gccbin}/gcj-dbtool"
 	else
 		javac_opts="$(java-pkg_javac-args) -encoding ISO-8859-1"
 		javac="$(java-config -c)"
@@ -92,8 +93,11 @@ src_compile() {
 
 	if use gcj ; then
 		einfo "Building native ${MY_PN} binary ..."
-		${gcj} ${CFLAGS} -findirect-dispatch -Wl,-Bsymbolic -o native_${MY_PN}-${SLOT} \
-			--main=org.eclipse.jdt.internal.compiler.batch.Main ${MY_PN}.jar || die
+		${gcj} ${CFLAGS} -findirect-dispatch -Wl,-Bsymbolic -shared -fPIC \
+			-o native_${MY_PN}-${SLOT}.so ${MY_PN}.jar || die
+		${gcj} ${CFLAGS} -L. -lnative_${MY_PN}-${SLOT} -onative_${MY_PN}-${SLOT} \
+			--main=org.eclipse.jdt.internal.compiler.batch.Main
+		${gcjdb} -a $(${gcjdb} -p) ${MY_PN}.jar native_${MY_PN}-${SLOT}.so
 	fi
 }
 

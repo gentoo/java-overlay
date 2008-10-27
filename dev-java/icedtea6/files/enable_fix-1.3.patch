@@ -1,13 +1,13 @@
-diff -urNp icedtea6-1.3.org/configure.ac icedtea6-1.3/configure.ac
---- icedtea6-1.3.org/configure.ac	2008-10-15 18:33:06.000000000 +0200
-+++ icedtea6-1.3/configure.ac	2008-10-19 13:21:28.000000000 +0200
-@@ -125,13 +125,13 @@ AM_CONDITIONAL(ENABLE_PLUGIN, test "x${e
- AC_ARG_ENABLE([liveconnect],
-               [AS_HELP_STRING([--enable-liveconnect],
-                               [Enable experimental LiveConnect plugin])],
--              [enable_liveconnect="yes"], [enable_liveconnect="no"])
-+              [enable_liveconnect="${enableval}"], [enable_liveconnect="no"])
- AM_CONDITIONAL(ENABLE_LIVECONNECT, test "x${enable_liveconnect}" = "xyes")
+diff -r 6cc69d786ebb configure.ac
+--- a/configure.ac	Sun Oct 19 18:06:54 2008 +0200
++++ b/configure.ac	Mon Oct 20 10:51:00 2008 +0100
+@@ -125,13 +125,13 @@
+ AC_ARG_ENABLE([gcjwebplugin],
+               [AS_HELP_STRING([--enable-gcjwebplugin],
+                               [Build the GCJ Web Plugin plugin (deprecated)])],
+-              [enable_gcjwebplugin="yes"], [enable_gcjwebplugin="no"])
++              [enable_gcjwebplugin="${enableval}"], [enable_gcjwebplugin="no"])
+ AM_CONDITIONAL(ENABLE_GCJWEBPLUGIN, test "x${enable_gcjwebplugin}" = "xyes")
  
  AC_ARG_ENABLE([pulse-java],
                [AS_HELP_STRING([--enable-pulse-java],
@@ -17,7 +17,7 @@ diff -urNp icedtea6-1.3.org/configure.ac icedtea6-1.3/configure.ac
  AM_CONDITIONAL(ENABLE_PULSE_JAVA, test "x${enable_pulse_java}" = "xyes")
  
  AC_ARG_ENABLE([docs],
-@@ -143,7 +143,7 @@ AM_CONDITIONAL([ENABLE_DOCS], [test x$EN
+@@ -143,7 +143,7 @@
  AC_ARG_ENABLE([visualvm],
                [AS_HELP_STRING([--enable-visualvm],
  			                  [Enable compilation of visualvm.])],
