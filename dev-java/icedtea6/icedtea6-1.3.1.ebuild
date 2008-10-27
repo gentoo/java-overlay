@@ -16,7 +16,9 @@ SRC_URI="http://icedtea.classpath.org/download/source/${P}.tar.gz
 		 cacao? ( http://www.complang.tuwien.ac.at/cacaojvm/download/cacao-0.99.3/${CACAO_TARBALL} )"
 HOMEPAGE="http://icedtea.classpath.org"
 
-IUSE="cacao debug doc examples javascript nsplugin pulseaudio shark zero"
+IUSE="cacao debug doc examples gcj javascript nsplugin pulseaudio shark zero"
+# JTReg doesn't pass at present
+RESTRICT="test"
 
 LICENSE="GPL-2-with-linking-exception"
 SLOT="0"
@@ -84,15 +86,9 @@ src_unpack() {
 	unpack ${P}.tar.gz
 	cd "${S}" || die
 
-	# Fix --with-cacao (should be --enable-cacao)
-	# (http://icedtea.classpath.org/hg/icedtea6?cmd=changeset;node=839e9e0810ca)
-	epatch "${FILESDIR}/cacao-${PV}.patch"
-	# Fix memory limits so CACAO IcedTeas can build normal IcedTea
-	# (http://icedtea.classpath.org/hg/icedtea6?cmd=changeset;node=c926c9674b4c)
-	epatch "${FILESDIR}/memory_limit-${PV}.patch"
-	# Fix use of --enable options
-	# (http://icedtea.classpath.org/hg/icedtea6/rev/a4df7fa32706)
-	epatch "${FILESDIR}/enable_fix-${PV}.patch"
+	# Don't hide the HotSpot build number
+	# (http://icedtea.classpath.org/hg/icedtea6/rev/6816e84bfc28)
+	epatch "${FILESDIR}/hotspot-${PV}.patch"
 
 	eautoreconf || die "failed to regenerate autoconf infrastructure"
 }
@@ -107,8 +103,6 @@ src_compile() {
 		config="${config} --with-icedtea"
 		config="${config} --with-icedtea-home=$(java-config -O)"
 	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" ]] ; then
-		eerror "The IcedTea6 1.3 tarball is broken with respect to bootstrapping."
-		die "IcedTea 1.3 can not be bootstrapped.  You need IcedTea6 1.2 to build this."
 		# For other 1.5 JDKs e.g. GCJ, CACAO, JamVM.
 		config="${config} --with-ecj-jar=$(ls -1r /usr/share/eclipse-ecj-3.[23]/lib/ecj.jar|head -n 1)" \
 		config="${config} --with-libgcj-jar=${vmhome}/jre/lib/rt.jar"
@@ -143,6 +137,7 @@ src_compile() {
 		--with-java="${vmhome}/bin/java" \
 		--with-javac="${vmhome}/bin/javac" \
 		--with-javah="${vmhome}/bin/javah" \
+		--with-pkgversion="Gentoo" \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nsplugin gcjwebplugin) \
@@ -150,6 +145,7 @@ src_compile() {
 		$(use_enable zero) \
 		$(use_enable shark) \
 		$(use_enable pulseaudio pulse-java) \
+		$(use_with gcj) \
 		|| die "configure failed"
 
 	emake -j 1  || die "make failed"
