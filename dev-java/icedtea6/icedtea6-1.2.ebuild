@@ -29,6 +29,7 @@ RDEPEND=">=net-print/cups-1.2.12
 	 >=media-libs/giflib-4.1.6
 	 >=sys-libs/zlib-1.2.3
 	 x11-proto/inputproto
+	 x11-proto/xineramaproto
 	 nsplugin? ( || (
 		www-client/mozilla-firefox
 		net-libs/xulrunner
