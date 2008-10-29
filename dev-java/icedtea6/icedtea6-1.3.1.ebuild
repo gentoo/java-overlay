@@ -41,15 +41,24 @@ RDEPEND=">=net-print/cups-1.2.12
 		net-libs/xulrunner
 		www-client/seamonkey
 	 ) )
-	 pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )"
+	 pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
+	 javascript? ( dev-java/rhino:1.6 )"
 
 # Additional dependencies for building:
 #   unzip: extract OpenJDK tarball
 #   xalan/xerces: automatic code generation
 #   ant, ecj, jdk: required to build Java code
+
+# NOTE: we depend directly on dev-java/icedtea6 instead of virtual/icedtea-jdk
+#       because if the virtual is not installed, portage will try to satisfy
+#       gnu-classpath-jdk instead
+#       it would be possible if the order was reversed but then there are
+#       circular deps instead...
+# NOTE: we need to depend also on virtual/jdk unless the eclass won't switch VM
 DEPEND="${RDEPEND}
 	|| ( >=virtual/gnu-classpath-jdk-1.5
-		 >=virtual/icedtea-jdk-1.6 )
+		 dev-java/icedtea6 )
+	>=virtual/jdk-1.5
 	>=app-arch/unzip-5.52
 	>=dev-java/xalan-2.7.0
 	>=dev-java/xerces-2.9.1
@@ -57,8 +66,7 @@ DEPEND="${RDEPEND}
 	|| (
 		dev-java/eclipse-ecj:3.3
 		>=dev-java/eclipse-ecj-3.2.1:3.2
-	)
-	javascript? ( dev-java/rhino:1.6 )"
+	)"
 
 pkg_setup() {
 	if use zero && ! built_with_use sys-devel/gcc libffi; then
@@ -79,6 +87,24 @@ pkg_setup() {
 	  fi
 	fi
 
+	# quite a hack since java-config does not provide a way for a package
+	# to limit supported VM's for building and their preferred order
+	if has_version dev-java/icedtea6; then
+		JAVA_PKG_FORCE_VM="icedtea6"
+	elif has_version dev-java/icedtea; then
+		JAVA_PKG_FORCE_VM="icedtea"
+	elif has_version dev-java/gcj-jdk; then
+		JAVA_PKG_FORCE_VM="gcj-jdk"
+	elif has_version dev-java/cacao; then
+		JAVA_PKG_FORCE_VM="cacao"
+	elif has_version dev-java/jamvm; then
+		JAVA_PKG_FORCE_VM="jamvm"
+	else
+		die "Unable to find supported VM for building"
+	fi
+	
+	einfo "Forced vm ${JAVA_PKG_FORCE_VM}"
+	
 	java-vm-2_pkg_setup
 	java-pkg-2_pkg_setup
 }
@@ -103,7 +129,7 @@ src_compile() {
 		# If we are upgrading icedtea, then we don't need to bootstrap.
 		config="${config} --with-icedtea"
 		config="${config} --with-icedtea-home=$(java-config -O)"
-	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" ]] ; then
+	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" || "${vm}" == "jamvm" ]] ; then
 		# For other 1.5 JDKs e.g. GCJ, CACAO, JamVM.
 		config="${config} --with-ecj-jar=$(ls -1r /usr/share/eclipse-ecj-3.[23]/lib/ecj.jar|head -n 1)" \
 		config="${config} --with-libgcj-jar=${vmhome}/jre/lib/rt.jar"
