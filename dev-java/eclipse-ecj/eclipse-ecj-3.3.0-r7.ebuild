@@ -66,7 +66,6 @@ src_compile() {
 		javac="${gcj} -C"
 		jar="${gccbin}/gjar"
 		java="${gccbin}/gij"
-		gcjdb="${gccbin}/gcj-dbtool"
 	else
 		javac_opts="$(java-pkg_javac-args) -encoding ISO-8859-1"
 		javac="$(java-config -c)"
@@ -93,16 +92,17 @@ src_compile() {
 
 	if use gcj ; then
 		einfo "Building native ${MY_PN} binary ..."
-		${gcj} ${CFLAGS} -findirect-dispatch -Wl,-Bsymbolic -shared -fPIC \
+		${gcj} ${CFLAGS} -findirect-dispatch -shared -fPIC \
 			-o native_${MY_PN}-${SLOT}.so ${MY_PN}.jar || die
-		${gcj} ${CFLAGS} -L. -lnative_${MY_PN}-${SLOT} -onative_${MY_PN}-${SLOT} \
-			--main=org.eclipse.jdt.internal.compiler.batch.Main
-		${gcjdb} -a $(${gcjdb} -p) ${MY_PN}.jar native_${MY_PN}-${SLOT}.so
+		${gcj} ${CFLAGS} -findirect-dispatch -Wl native_${MY_PN}-${SLOT}.so \
+			-onative_${MY_PN}-${SLOT} \
+			--main=org.eclipse.jdt.internal.compiler.batch.Main || die
 	fi
 }
 
 src_install() {
 	if use gcj ; then
+		dolib.so native_${MY_PN}-${SLOT}.so
 		dobin native_${MY_PN}-${SLOT}
 		newbin "${FILESDIR}/ecj-${SLOT}" ${MY_PN}-${SLOT}
 
@@ -125,6 +125,14 @@ pkg_postinst() {
 	einfo " # eselect ecj"
 
 	eselect ecj update ecj-${SLOT}
+
+	if use gcj ; then
+		local gccbin="$(gcc-config -B ${gccver} || die)"
+		local gcjdb="${gccbin}/gcj-dbtool"
+		${gcjdb} -a $(${gcjdb} -p) \
+			$(java-pkg_getjar ${PN}:${SLOT} ${MY_PN}.jar) \
+			/usr/$(get_libdir)/native_${MY_PN}-${SLOT}.so
+	fi
 }
 
 pkg_postrm() {

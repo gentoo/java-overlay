@@ -2,6 +2,10 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  29 Oct 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> eclipse-ecj-3.3.0-r7.ebuild:
+	Switch gcj build to creating a library and registering this using
+	gcj-dbtool.  Bump revision to recognise this change.
+	
   29 Oct 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> eclipse-ecj-3.3.0-r6.ebuild:
 	Remove LD_LIBRARY_PATH change.
 	
