@@ -62,7 +62,7 @@ src_compile() {
 		local gccver="$(ls -1r /etc/env.d/gcc/${CHOST}-* | head -1)"
 		local gccbin="$(gcc-config -B ${gccver} || die)"
 		local gcclib="$(gcc-config -L ${gccver} || die)"
-		local gcj="LD_LIBRARY_PATH=${gcclib} ${gccbin}/gcj"
+		local gcj="${gccbin}/gcj"
 		javac="${gcj} -C"
 		jar="${gccbin}/gjar"
 		java="${gccbin}/gij"
