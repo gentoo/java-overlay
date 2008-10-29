@@ -2,6 +2,9 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  29 Oct 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3-r1.ebuild:
+  Add include directory symlink and bump to revision 1.
+	
   09 Oct 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3.ebuild:
   Clean up detritus from old slotting.
 

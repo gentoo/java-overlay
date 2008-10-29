@@ -36,6 +36,7 @@ src_install() {
 	[ ${ARCH} == x86 ] && libarch="i386"
 	[ ${ARCH} == x86_64 ] && libarch="amd64"
 	local gccbin=$(gcc-config -B)
+	local gcclib=$(gcc-config -L|cut -d':' -f1)
 	local gcjhome="/usr/lib/${P}"
 	local gcc_version=$(${gccbin}/gcc --version|head -n1|sed -r 's/gcc \(.*\) ([0-9.]*).*/\1/')
 	local gccchost=$(echo ${gccbin}|sed -r 's#/usr/([a-z0-9_-]*).*$#\1#')
@@ -63,6 +64,7 @@ src_install() {
 	dodir ${gcjhome}/lib
 	dosym /usr/share/gcc-data/${gccchost}/${gcc_version}/java/libgcj-tools-${gcc_version/_/-}.jar \
 		${gcjhome}/lib/tools.jar
+	dosym ${gcclib}/include ${gcjhome}
 
 	# the /usr/bin/ecj symlink is managed by eselect-ecj
 	dosym /usr/bin/ecj ${gcjhome}/bin/javac;
