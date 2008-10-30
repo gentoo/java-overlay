@@ -14,7 +14,7 @@ SLOT="0"
 IUSE=""
 
 RDEPEND=">=sys-devel/gcc-4.3
-	>=dev-java/eclipse-ecj-3.2.1
+	~dev-java/eclipse-ecj-3.3.0-r7
 	>=dev-java/java-config-2"
 DEPEND="${RDEPEND}"
 PDEPEND="dev-java/gjdoc"

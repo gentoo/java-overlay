@@ -16,7 +16,7 @@ SRC_URI="http://icedtea.classpath.org/download/source/${P}.tar.gz
 		 cacao? ( http://www.complang.tuwien.ac.at/cacaojvm/download/cacao-0.99.3/${CACAO_TARBALL} )"
 HOMEPAGE="http://icedtea.classpath.org"
 
-IUSE="cacao debug doc examples gcj javascript nsplugin pulseaudio shark zero"
+IUSE="cacao debug doc examples javascript nsplugin pulseaudio shark zero"
 # JTReg doesn't pass at present
 RESTRICT="test"
 
@@ -37,36 +37,23 @@ RDEPEND=">=net-print/cups-1.2.12
 	 x11-proto/inputproto
 	 x11-proto/xineramaproto
 	 nsplugin? ( || (
-		www-client/mozilla-firefox
-		net-libs/xulrunner
-		www-client/seamonkey
+		>=www-client/mozilla-firefox-3.0.0
+		>=net-libs/xulrunner-1.9
 	 ) )
-	 pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
-	 javascript? ( dev-java/rhino:1.6 )"
+	 pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )"
 
 # Additional dependencies for building:
 #   unzip: extract OpenJDK tarball
 #   xalan/xerces: automatic code generation
 #   ant, ecj, jdk: required to build Java code
-
-# NOTE: we depend directly on dev-java/icedtea6 instead of virtual/icedtea-jdk
-#       because if the virtual is not installed, portage will try to satisfy
-#       gnu-classpath-jdk instead
-#       it would be possible if the order was reversed but then there are
-#       circular deps instead...
-# NOTE: we need to depend also on virtual/jdk unless the eclass won't switch VM
 DEPEND="${RDEPEND}
 	|| ( >=virtual/gnu-classpath-jdk-1.5
-		 dev-java/icedtea6 )
-	>=virtual/jdk-1.5
+		 >=virtual/icedtea-jdk-1.6 )
 	>=app-arch/unzip-5.52
 	>=dev-java/xalan-2.7.0
 	>=dev-java/xerces-2.9.1
 	>=dev-java/ant-core-1.7.0-r3
-	|| (
-		dev-java/eclipse-ecj:3.3
-		>=dev-java/eclipse-ecj-3.2.1:3.2
-	)"
+	javascript? ( dev-java/rhino:1.6 )"
 
 pkg_setup() {
 	if use zero && ! built_with_use sys-devel/gcc libffi; then
@@ -87,24 +74,6 @@ pkg_setup() {
 	  fi
 	fi
 
-	# quite a hack since java-config does not provide a way for a package
-	# to limit supported VM's for building and their preferred order
-	if has_version dev-java/icedtea6; then
-		JAVA_PKG_FORCE_VM="icedtea6"
-	elif has_version dev-java/icedtea; then
-		JAVA_PKG_FORCE_VM="icedtea"
-	elif has_version dev-java/gcj-jdk; then
-		JAVA_PKG_FORCE_VM="gcj-jdk"
-	elif has_version dev-java/cacao; then
-		JAVA_PKG_FORCE_VM="cacao"
-	elif has_version dev-java/jamvm; then
-		JAVA_PKG_FORCE_VM="jamvm"
-	else
-		die "Unable to find supported VM for building"
-	fi
-	
-	einfo "Forced vm ${JAVA_PKG_FORCE_VM}"
-	
 	java-vm-2_pkg_setup
 	java-pkg-2_pkg_setup
 }
@@ -129,9 +98,9 @@ src_compile() {
 		# If we are upgrading icedtea, then we don't need to bootstrap.
 		config="${config} --with-icedtea"
 		config="${config} --with-icedtea-home=$(java-config -O)"
-	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" || "${vm}" == "jamvm" ]] ; then
+	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" ]] ; then
 		# For other 1.5 JDKs e.g. GCJ, CACAO, JamVM.
-		config="${config} --with-ecj-jar=$(ls -1r /usr/share/eclipse-ecj-3.[23]/lib/ecj.jar|head -n 1)" \
+		config="${config} --with-ecj-jar=$(java-pkg_getjar eclipse-ecj:3.3 ecj.jar)" \
 		config="${config} --with-libgcj-jar=${vmhome}/jre/lib/rt.jar"
 		config="${config} --with-gcj-home=${vmhome}"
 	else
@@ -167,12 +136,11 @@ src_compile() {
 		--with-pkgversion="Gentoo" \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
-		$(use_enable nsplugin gcjwebplugin) \
+		$(use_enable nsplugin liveconnect) \
 		$(use_with javascript rhino ${rhino_jar}) \
 		$(use_enable zero) \
 		$(use_enable shark) \
 		$(use_enable pulseaudio pulse-java) \
-		$(use_with gcj) \
 		|| die "configure failed"
 
 	emake -j 1  || die "make failed"
@@ -214,7 +182,7 @@ src_install() {
 
 	if use nsplugin; then
 		use x86 && arch=i386;
-		install_mozilla_plugin "${dest}/jre/lib/${arch}/gcjwebplugin.so";
+		install_mozilla_plugin "${dest}/jre/lib/${arch}/IcedTeaPlugin.so";
 	fi
 
 	set_java_env

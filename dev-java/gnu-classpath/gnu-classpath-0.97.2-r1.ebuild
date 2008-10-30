@@ -43,7 +43,7 @@ RDEPEND="alsa? ( media-libs/alsa-lib )
 		xml? ( >=dev-libs/libxml2-2.6.8 >=dev-libs/libxslt-1.1.11 )"
 
 DEPEND="app-arch/zip
-		>=dev-java/eclipse-ecj-3.2.1
+		~dev-java/eclipse-ecj-3.3.0-r7
 		gtk? ( || (
 					x11-libs/libXrender
 					x11-proto/xextproto
@@ -83,7 +83,7 @@ src_compile() {
 		--disable-dependency-tracking \
 		--host=${CHOST} \
 		--prefix=/usr/${PN}-${SLOT} \
-		--with-ecj-jar=$(ls -1r /usr/share/eclipse-ecj-3.*/lib/ecj.jar|head -n 1) \
+		--with-ecj-jar=$(java-pkg_getjar eclipse-ecj:3.3 ecj.jar) \
 		--with-vm=java \
 		|| die "configure failed"
 	emake || die "make failed"
