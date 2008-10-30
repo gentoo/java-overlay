@@ -74,6 +74,23 @@ pkg_setup() {
 	  fi
 	fi
 
+	# quite a hack since java-config does not provide a way for a package
+	# to limit supported VM's for building and their preferred order
+	if has_version dev-java/icedtea6; then
+		JAVA_PKG_FORCE_VM="icedtea6"
+	elif has_version dev-java/icedtea; then
+		JAVA_PKG_FORCE_VM="icedtea"
+	elif has_version dev-java/gcj-jdk; then
+		JAVA_PKG_FORCE_VM="gcj-jdk"
+	elif has_version dev-java/cacao; then
+		JAVA_PKG_FORCE_VM="cacao"
+	elif has_version dev-java/jamvm; then
+		JAVA_PKG_FORCE_VM="jamvm"
+	else
+		die "Unable to find supported VM for building"
+	fi
+
+	einfo "Forced vm ${JAVA_PKG_FORCE_VM}"
 	java-vm-2_pkg_setup
 	java-pkg-2_pkg_setup
 }
