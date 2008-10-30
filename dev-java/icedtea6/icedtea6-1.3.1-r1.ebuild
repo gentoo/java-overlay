@@ -47,9 +47,17 @@ RDEPEND=">=net-print/cups-1.2.12
 #   unzip: extract OpenJDK tarball
 #   xalan/xerces: automatic code generation
 #   ant, ecj, jdk: required to build Java code
+
+# NOTE: we depend directly on dev-java/icedtea6 instead of virtual/icedtea-jdk
+#       because if the virtual is not installed, portage will try to satisfy
+#       gnu-classpath-jdk instead
+#       it would be possible if the order was reversed but then there are
+#       circular deps instead...
+# NOTE: we need to depend also on virtual/jdk unless the eclass won't switch VM
 DEPEND="${RDEPEND}
 	|| ( >=virtual/gnu-classpath-jdk-1.5
-		 >=virtual/icedtea-jdk-1.6 )
+		 dev-java/icedtea6 )
+	>=virtual/jdk-1.5
 	>=app-arch/unzip-5.52
 	>=dev-java/xalan-2.7.0
 	>=dev-java/xerces-2.9.1
@@ -116,7 +124,7 @@ src_compile() {
 		# If we are upgrading icedtea, then we don't need to bootstrap.
 		config="${config} --with-icedtea"
 		config="${config} --with-icedtea-home=$(java-config -O)"
-	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" ]] ; then
+	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" || "${vm}" == "jamvm" ]] ; then
 		# For other 1.5 JDKs e.g. GCJ, CACAO, JamVM.
 		config="${config} --with-ecj-jar=$(java-pkg_getjar eclipse-ecj:3.3 ecj.jar)" \
 		config="${config} --with-libgcj-jar=${vmhome}/jre/lib/rt.jar"
@@ -140,7 +148,7 @@ src_compile() {
 	fi
 
 	if use javascript ; then
-		rhino_jar=$(java-pkg_getjar rhino:1.6 js.jar);
+		rhino_jar=$(java-pkg_getjar --build-only rhino:1.6 js.jar);
 	fi
 
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS

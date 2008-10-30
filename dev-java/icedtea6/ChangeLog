@@ -2,6 +2,9 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  30 Oct 2008; Vlastimil Babka <caster@gentoo.org> icedtea6-1.3.1-r1.ebuild:
+  Restore my 1.3.1 modifications in 1.3.1-r1.
+
   30 Oct 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.3.1-r1.ebuild:
 	Add missing libXp dependency.
 	
