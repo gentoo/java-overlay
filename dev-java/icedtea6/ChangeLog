@@ -2,7 +2,10 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
-  29 Oct 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.3.1-r1.ebuild:
+  30 Oct 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.3.1-r1.ebuild:
+	Add missing libXp dependency.
+	
+  30 Oct 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.3.1-r1.ebuild:
 	Add back Caster's JAVA_PKG_FORCE_VM hack.
 	
 *icedtea6-1.3.1-r1 (29 10 2008)
