@@ -58,6 +58,7 @@ src_install() {
 	dosym ${gccbin}/gkeytool ${gcjhome}/jre/bin/keytool
 	dodir ${gcjhome}/jre/lib/${libarch}/client
 	dosym /usr/$(get_libdir)/gcj-${gcc_version}*/libjvm.so ${gcjhome}/jre/lib/${libarch}/client/libjvm.so
+	dosym /usr/$(get_libdir)/gcj-${gcc_version}*/libjvm.so ${gcjhome}/jre/lib/${libarch}/server/libjvm.so
 	dosym /usr/$(get_libdir)/gcj-${gcc_version}*/libjawt.so ${gcjhome}/jre/lib/${libarch}/libjawt.so
 	dosym /usr/share/gcc-data/${gccchost}/${gcc_version}/java/libgcj-${gcc_version/_/-}.jar \
 		${gcjhome}/jre/lib/rt.jar
