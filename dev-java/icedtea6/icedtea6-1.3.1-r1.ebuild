@@ -30,7 +30,6 @@ RDEPEND=">=net-print/cups-1.2.12
 	 >=media-libs/alsa-lib-1.0
 	 >=x11-libs/gtk+-2.8
 	 >=x11-libs/libXinerama-1.0.2
-	 >=x11-libs/libXp-1.0.0
 	 >=media-libs/jpeg-6b
 	 >=media-libs/libpng-1.2
 	 >=media-libs/giflib-4.1.6
@@ -48,16 +47,9 @@ RDEPEND=">=net-print/cups-1.2.12
 #   xalan/xerces: automatic code generation
 #   ant, ecj, jdk: required to build Java code
 
-# NOTE: we depend directly on dev-java/icedtea6 instead of virtual/icedtea-jdk
-#       because if the virtual is not installed, portage will try to satisfy
-#       gnu-classpath-jdk instead
-#       it would be possible if the order was reversed but then there are
-#       circular deps instead...
-# NOTE: we need to depend also on virtual/jdk unless the eclass won't switch VM
 DEPEND="${RDEPEND}
 	|| ( >=virtual/gnu-classpath-jdk-1.5
-		 dev-java/icedtea6 )
-	>=virtual/jdk-1.5
+		 >=virtual/icedtea-jdk-1.6 )
 	>=app-arch/unzip-5.52
 	>=dev-java/xalan-2.7.0
 	>=dev-java/xerces-2.9.1
@@ -148,7 +140,7 @@ src_compile() {
 	fi
 
 	if use javascript ; then
-		rhino_jar=$(java-pkg_getjar --build-only rhino:1.6 js.jar);
+		rhino_jar=$(java-pkg_getjar rhino:1.6 js.jar);
 	fi
 
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
