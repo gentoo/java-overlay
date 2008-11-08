@@ -1,6 +1,7 @@
-diff -Nur Jaminid/src/com/prolixtech/jaminid/Connection.java Jaminid_patched/src/com/prolixtech/jaminid/Connection.java
---- Jaminid/src/com/prolixtech/jaminid/Connection.java	2006-04-22 00:38:43.000000000 +0300
-+++ Jaminid_patched/src/com/prolixtech/jaminid/Connection.java	2008-10-26 20:12:06.000000000 +0200
+Index: src/com/prolixtech/jaminid/Connection.java
+===================================================================
+--- src/com/prolixtech/jaminid/Connection.java	(revision 13)
++++ src/com/prolixtech/jaminid/Connection.java	(working copy)
 @@ -3,10 +3,13 @@
  import java.io.IOException;
  import java.io.InputStream;
@@ -83,10 +84,20 @@ diff -Nur Jaminid/src/com/prolixtech/jaminid/Connection.java Jaminid_patched/src
       * a shortcut method
       * 
       * @param message
-diff -Nur Jaminid/src/com/prolixtech/jaminid/Protocol.java Jaminid_patched/src/com/prolixtech/jaminid/Protocol.java
---- Jaminid/src/com/prolixtech/jaminid/Protocol.java	2006-04-22 00:38:43.000000000 +0300
-+++ Jaminid_patched/src/com/prolixtech/jaminid/Protocol.java	2008-10-26 20:12:06.000000000 +0200
-@@ -280,14 +280,15 @@
+@@ -261,7 +281,7 @@
+     protected void sendString(Object string) throws IOException {
+         if (string == null)
+             return;
+-        socketOutput.write((string.toString()).getBytes());
++        socketOutput.write((string.toString()).getBytes("UTF-8"));
+     }
+ 
+     protected void sendString(byte[] bytes) {
+Index: src/com/prolixtech/jaminid/Protocol.java
+===================================================================
+--- src/com/prolixtech/jaminid/Protocol.java	(revision 13)
++++ src/com/prolixtech/jaminid/Protocol.java	(working copy)
+@@ -280,7 +280,7 @@
          MIME.setProperty(".txt", "text/plain");
  
          
@@ -95,6 +106,7 @@ diff -Nur Jaminid/src/com/prolixtech/jaminid/Protocol.java Jaminid_patched/src/c
          try {
              OutputStream nmim = new FileOutputStream(Protocol.MIMEFILE);  
              MIME.storeToXML(nmim, "\nJAMINID MIMETYPES\n\nThese are the default MIME types for the jaminid daemon. If you had a modified but invalid MIME file here, it may have been reverted to this.");
+@@ -287,7 +287,8 @@
          } catch (IOException e) {
              // TODO Auto-generated catch block
              e.printStackTrace();
@@ -104,9 +116,10 @@ diff -Nur Jaminid/src/com/prolixtech/jaminid/Protocol.java Jaminid_patched/src/c
  
      }
  
-diff -Nur Jaminid/src/com/prolixtech/jaminid/Request.java Jaminid_patched/src/com/prolixtech/jaminid/Request.java
---- Jaminid/src/com/prolixtech/jaminid/Request.java	2006-04-22 00:38:43.000000000 +0300
-+++ Jaminid_patched/src/com/prolixtech/jaminid/Request.java	2008-10-26 20:12:06.000000000 +0200
+Index: src/com/prolixtech/jaminid/Request.java
+===================================================================
+--- src/com/prolixtech/jaminid/Request.java	(revision 13)
++++ src/com/prolixtech/jaminid/Request.java	(working copy)
 @@ -321,8 +321,8 @@
                  try {
                      String hex = s.substring(lastIndex + 1, lastIndex + 3);
