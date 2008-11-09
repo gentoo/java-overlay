@@ -41,7 +41,8 @@ RDEPEND=">=net-print/cups-1.2.12
 		>=www-client/mozilla-firefox-3.0.0
 		>=net-libs/xulrunner-1.9
 	 ) )
-	 pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )"
+	 pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
+	 javascript? ( dev-java/rhino:1.6 )"
 
 # Additional dependencies for building:
 #   unzip: extract OpenJDK tarball
@@ -54,8 +55,7 @@ DEPEND="${RDEPEND}
 	>=app-arch/unzip-5.52
 	>=dev-java/xalan-2.7.0
 	>=dev-java/xerces-2.9.1
-	>=dev-java/ant-core-1.7.0-r3
-	javascript? ( dev-java/rhino:1.6 )"
+	>=dev-java/ant-core-1.7.0-r3"
 
 pkg_setup() {
 	if use zero && ! built_with_use sys-devel/gcc libffi; then
