@@ -51,7 +51,8 @@ RDEPEND=">=net-print/cups-1.2.12
 
 DEPEND="${RDEPEND}
 	|| ( >=virtual/gnu-classpath-jdk-1.5
-		 >=virtual/icedtea-jdk-1.6 )
+		 dev-java/icedtea6 )
+	>=virtual/jdk-1.5
 	>=app-arch/unzip-5.52
 	>=dev-java/xalan-2.7.0
 	>=dev-java/xerces-2.9.1
