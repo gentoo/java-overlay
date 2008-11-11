@@ -37,10 +37,7 @@ RDEPEND=">=net-print/cups-1.2.12
 	 >=sys-libs/zlib-1.2.3
 	 x11-proto/inputproto
 	 x11-proto/xineramaproto
-	 nsplugin? ( || (
-		>=www-client/mozilla-firefox-3.0.0
-		>=net-libs/xulrunner-1.9
-	 ) )
+	 nsplugin? ( >=net-libs/xulrunner-1.9 )
 	 pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
 	 javascript? ( dev-java/rhino:1.6 )"
 

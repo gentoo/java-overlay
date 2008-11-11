@@ -3,6 +3,10 @@
 # $Header: $
 
   10 Nov 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.3.1-r1.ebuild:
+	Depend on xulrunner only; apparently firefox 3 doesn't always provide
+	enough for the XPCOM plugin.
+	
+  10 Nov 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.3.1-r1.ebuild:
 	Restore jdk 1.5 dependency for VM 'magic'.
 	
   08 Nov 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.3.1-r1.ebuild:
