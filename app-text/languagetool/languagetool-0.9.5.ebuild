@@ -20,7 +20,7 @@ RESTRICT="test" #Tests fail.
 COMMON_DEPEND="dev-java/jdictrayapi:0
 	dev-java/jaminid:0
 	dev-java/morfologik-stemming:0
-	dev-java/jwordsplitter:0"
+	>=dev-java/jwordsplitter-2.2:0"
 
 DEPEND=">=virtual/jdk-1.5
 	test?
@@ -41,16 +41,9 @@ src_unpack() {
 	cd "${S}" || die
 	epatch "${FILESDIR}"/${P}-build.xml.patch
 	cd libs || die
-	#java-pkg_jar-from jdictrayapi
-	#java-pkg_jar-from jaminid
-	#java-pkg_jar-from morfologik-stemming morfologik-stemming-nodict.jar morfologik-stemming-nodict-1.1.jar
-	#java-pkg_jar-from jwordsplitter
 }
 
 src_test() {
-	#mkdir libs/build || die
-	#java-pkg_jar-from --into libs/build junit
-	#ANT_TASKS="ant-junit" eant test
 	ANT_TASKS="ant-junit" \
 		eant -Dgentoo.classpath="$(java-pkg_getjars jdictrayapi,jaminid,morfologik-stemming,jwordsplitter):$(java-pkg_getjars --build-only junit)" test
 }

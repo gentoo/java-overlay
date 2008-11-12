@@ -22,7 +22,7 @@ EANT_BUILD_TARGET="build"
 src_unpack() {
 	unpack ${A}
 	cd "${S}" || die
-	epatch "${FILESDIR}"/${P}-setminimumwordlength.patch
+	epatch "${FILESDIR}"/${P}.build.xml.patch
 }
 
 src_install() {

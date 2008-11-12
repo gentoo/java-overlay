@@ -1,0 +1,22 @@
+--- build.xml	2008-07-10 23:33:05.000000000 +0300
++++ build.xml.fixed	2008-11-12 06:19:09.000000000 +0200
+@@ -53,6 +53,10 @@
+       <classpath refid="classpath"/>
+     </javac>
+ 
++  </target>
++  
++  <target name="compile-tests" depends="compile">
++
+   	<javac encoding="${encoding}"
+       target="1.4"
+       source="1.4"
+@@ -66,7 +70,7 @@
+   <!-- ================================================================== -->
+   <!-- TEST -->
+   <!-- ================================================================== -->
+-  <target name="test" depends="compile">
++  <target name="test" depends="compile-tests">
+   	<mkdir dir="${junit.output.dir}"/>
+   	<junit printsummary="on" haltonerror="on" failureproperty="tests.failed">
+   		<formatter type="plain" usefile="false"/>
