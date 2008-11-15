@@ -52,9 +52,9 @@ src_install() {
 
 	use doc && java-pkg_dojavadoc dist/docs/api
 	use source && java-pkg_dosrc src/java/de
-	dodoc {README,CHANGES}.txt
+	dodoc {README,CHANGES}.txt || die "dodoc failed"
 	insinto /usr/share/languagetool
-	doins -r src/{rules,resource} || die
+	doins -r src/{rules,resource} || die "doins failed"
 }
 
 pkg_postinst() {
