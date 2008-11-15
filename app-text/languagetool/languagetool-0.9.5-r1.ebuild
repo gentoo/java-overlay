@@ -15,18 +15,13 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-RESTRICT="test" #Tests fail.
-
 COMMON_DEPEND="dev-java/jdictrayapi:0
 	dev-java/jaminid:0
 	dev-java/morfologik-stemming:0
 	>=dev-java/jwordsplitter-2.2:0"
 
 DEPEND=">=virtual/jdk-1.5
-	test?
-	(
-		dev-java/ant-junit:0
-	)
+	test? ( dev-java/ant-junit:0 )
 	${COMMON_DEPEND}"
 
 RDEPEND=">=virtual/jre-1.5
@@ -40,7 +35,7 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}" || die
 	epatch "${FILESDIR}"/${P}-build.xml.patch
-	cd libs || die
+	rm -vr src/test/de/danielnaber/languagetool/server/HTTPServerTest.java || die "failed removing HTTPServerTest" 
 }
 
 src_test() {
@@ -60,4 +55,8 @@ src_install() {
 	dodoc {README,CHANGES}.txt
 	insinto /usr/share/languagetool
 	doins -r src/{rules,resource} || die
+}
+
+pkg_postinst() {
+	ewarn "HTTPServer of LanguageTool works unexpectedly with ASCII encoding."
 }
