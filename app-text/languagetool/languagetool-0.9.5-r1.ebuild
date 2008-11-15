@@ -12,7 +12,7 @@ HOMEPAGE="http://www.languagetool.org/"
 SRC_URI="http://dev.gentoo.org/~serkan/distfiles/${P}.tar.bz2"
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 COMMON_DEPEND="dev-java/jdictrayapi:0
@@ -35,7 +35,7 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}" || die
 	epatch "${FILESDIR}"/${P}-build.xml.patch
-	rm -vr src/test/de/danielnaber/languagetool/server/HTTPServerTest.java || die "failed removing HTTPServerTest" 
+	rm -vr src/test/de/danielnaber/languagetool/server/HTTPServerTest.java || die "failed removing HTTPServerTest"
 }
 
 src_test() {

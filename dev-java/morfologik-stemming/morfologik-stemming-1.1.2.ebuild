@@ -12,7 +12,7 @@ HOMEPAGE="http://morfologik.blogspot.com/"
 SRC_URI="mirror://sourceforge/morfologik/${P}-src.zip"
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 COMMON_DEPEND="dev-java/stempel:0
