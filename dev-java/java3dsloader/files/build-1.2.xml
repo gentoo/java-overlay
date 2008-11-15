@@ -1,0 +1,30 @@
+<project default="jar" basedir="." name="loader3ds">
+  <property name="build.directory" value="target"/>
+  <property name="build.output" value="${build.directory}/classes"/>
+  <property environment="env"/>
+
+
+  <path id="libs-build-classpath">
+    <fileset dir="${basedir}/lib">
+      <include name="*.jar"/>
+    </fileset>
+  </path>
+
+
+  <target name="compile" description="Compile the code">
+    <mkdir dir="${build.output}"/>
+    <javac destdir="${build.output}" debug="true" deprecation="true" optimize="false">
+      <src>
+        <pathelement location="com"/>
+      </src>
+      <classpath refid="libs-build-classpath"/>
+    </javac>
+    <copy file="EVGREEN.JPG" todir="${build.output}"/>
+    <copy file="bounce.3DS" todir="${build.output}"/>
+  </target>
+
+
+  <target name="jar" depends="compile" description="Create the JAR">
+    <jar jarfile="${build.directory}/${ant.project.name}.jar" basedir="${build.output}"/>
+  </target>
+</project>

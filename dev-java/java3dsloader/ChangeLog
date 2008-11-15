@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/java3dsloader
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  15 Nov 2008; Miroslav Šulc <fordfrog@gentoo.org> +files/build-1.2.xml,
+  +metadata.xml, +java3dsloader-1.2.ebuild:
+  Added new ebuild, bug #232466
+
