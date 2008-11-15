@@ -25,7 +25,7 @@ SRC_URI="http://dev.gentoo.org/~ali_bush/distfiles/${P}.tar.bz2
 
 LICENSE="|| ( sun-jrl sun-jdl )"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 
 IUSE=""
 
