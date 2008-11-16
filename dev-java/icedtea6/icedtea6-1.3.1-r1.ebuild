@@ -45,7 +45,10 @@ RDEPEND=">=net-print/cups-1.2.12
 #   unzip: extract OpenJDK tarball
 #   xalan/xerces: automatic code generation
 #   ant, ecj, jdk: required to build Java code
-
+# Only ant-core-1.7.0-r3 in java-overlay contains
+# a version of Ant that properly respects environment
+# variables.  1.7.1-r2 and on will work if the build
+# sets some environment variables.
 DEPEND="${RDEPEND}
 	|| ( >=virtual/gnu-classpath-jdk-1.5
 		 dev-java/icedtea6 )
@@ -53,7 +56,10 @@ DEPEND="${RDEPEND}
 	>=app-arch/unzip-5.52
 	>=dev-java/xalan-2.7.0
 	>=dev-java/xerces-2.9.1
-	>=dev-java/ant-core-1.7.0-r3"
+	|| (
+	  =dev-java/ant-core-1.7.0-r3
+	  >=dev-java/ant-core-1.7.1-r2
+	)"
 
 pkg_setup() {
 	if use zero && ! built_with_use sys-devel/gcc libffi; then
@@ -159,6 +165,12 @@ src_compile() {
 		$(use_enable shark) \
 		$(use_enable pulseaudio pulse-java) \
 		|| die "configure failed"
+
+	# Newer versions of Gentoo's ant add
+	# an environment variable so it works properly...
+	export ANT_RESPECT_JAVA_HOME=TRUE
+	# Also make sure we don't bring in additional tasks
+	export ANT_TASKS=none
 
 	emake -j 1  || die "make failed"
 }
