@@ -82,6 +82,6 @@ src_unpack() {
 src_install() {
 	java-pkg_dojar ${PN}.jar
 
-	use doc && java-pkg_dohtml -r doc/api
+	use doc && java-pkg_dojavadoc doc/api
 	use source && java-pkg_dosrc src/*
 }
