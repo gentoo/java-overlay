@@ -94,13 +94,13 @@ pkg_postinst() {
 	# Set as default VM if none exists
 	java-vm-2_pkg_postinst
 
-	ewarn "Check if gcj-jdk is set as Java SDK"
-	ewarn "	# java-config -L"
-	ewarn
-	ewarn "Set gcj-jdk as Java SDK"
-	ewarn "	# java-config -S ${PN}-${SLOT}"
-	ewarn
-	ewarn "Edit /etc/java-config-2/build/jdk.conf"
-	ewarn "	*=${PN}"
-	ewarn
+	ewarn "gcj-jdk does not provide all the 1.5 APIs"
+	ewarn "so it does not for example compile code using"
+	ewarn "java.util.Scanner. File bugs for missing APIs"
+	ewarn "to http://gcc.gnu.org/bugzilla/ (check for existing"
+	ewarn "bugs first)."
+
+	einfo "See http://www.gentoo.org/doc/en/java.xml#doc_chap4"
+	einfo "if you want to set gcj as system vm and help testing"
+	einfo "it."
 }

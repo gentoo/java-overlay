@@ -2,6 +2,10 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  19 Nov 2008; Petteri Räty <betelgeuse@gentoo.org> gcj-jdk-4.3-r3.ebuild:
+  Change instructions to set gcj-jdk as system vm to a link to Gentoo Java
+  Guide and warn about missing 1.5 apis.
+
   07 Nov 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3-r2.ebuild:
   Add missing server directory and bump to revision 3.
 	
