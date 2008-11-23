@@ -2,6 +2,15 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  23 Nov 2008; Serkan Kaba <serkan@gentoo.org> -pmd-4.0.ebuild,
+  -files/pmd-4.0-build.xml.patch, -files/pmd-4.0-launcher-pre-commands,
+  -pmd-4.1.ebuild, -files/pmd-4.1-build.xml.patch,
+  -files/pmd-4.1-launcher-pre-commands, -pmd-4.2.2.ebuild,
+  -files/pmd-4.2.2-build.xml.patch, -files/pmd-4.2.2-launcher-pre-commands,
+  +pmd-4.2.4.ebuild, +files/pmd-4.2.4-build.xml.patch,
+  +files/pmd-4.2.4-launcher-pre-commands:
+  Version bump. Remove old.
+
   22 Jun 2008; Miroslav Šulc <fordfrog@gentoo.org> +pmd-4.2.2.ebuild,
   +files/pmd-4.2.2-build.xml.patch, +files/pmd-4.2.2-launcher-pre-commands:
   Version bump.

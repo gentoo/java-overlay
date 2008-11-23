@@ -1,6 +1,7 @@
---- build.xml.original	2007-11-25 16:27:02.000000000 +0100
-+++ build.xml	2007-11-25 16:38:10.000000000 +0100
-@@ -21,11 +21,7 @@
+diff -Nur pmd-4.2.4/bin/build.xml pmd-4.2.4_patched/bin/build.xml
+--- pmd-4.2.4/bin/build.xml	2008-08-31 15:32:20.000000000 +0300
++++ pmd-4.2.4_patched/bin/build.xml	2008-11-23 08:15:09.000000000 +0200
+@@ -22,11 +22,7 @@
  
  	<path id="dependencies.path">
  		<pathelement location="${dir.build}" />
@@ -13,13 +14,16 @@
  	</path>
  
  	<target name="delete" description="Deletes the build directory and the pmd-x.x jar file.">
-@@ -72,22 +68,10 @@
- 		<jar jarfile="${dir.lib}/pmd-${version}.jar" includes="net/sourceforge/pmd/**/**,test/net/sourceforge/pmd/testframework/**/**,rulesets/**" basedir="${dir.build}">
+@@ -76,7 +72,6 @@
+ 			<zipfileset dir="etc" includes="ruleset.dtd,ruleset_xml_schema.xsd" prefix="rulesets"/>
  			<manifest>
  				<attribute name="Main-Class" value="net.sourceforge.pmd.PMD" />
 -				<attribute name="Class-Path" value="jaxen-${jaxen.version}.jar asm-${asm.version}.jar" />
  			</manifest>
  		</jar>
+ 
+@@ -86,17 +81,6 @@
+ 			basedir="${dir.build}" />
  	</target>
  
 -	<taskdef name="retroweaver" classname="net.sourceforge.retroweaver.ant.RetroWeaverTask">
@@ -36,7 +40,7 @@
  	<target name="weavejunit" depends="jar">
  		<path id="retroweaverclasspath">
  			<pathelement location="${dir.lib14}/retroweaver-rt-${retroweaver.version}.jar"/>
-@@ -197,7 +181,7 @@
+@@ -211,7 +195,7 @@
  	<target name="test-execute" description="Runs the unit tests">
  		<delete dir="${test.outputdir}" />
  		<mkdir dir="${test.outputdir}/xml"/>

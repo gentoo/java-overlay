@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2008 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-util/pmd/pmd-3.9.ebuild,v 1.2 2007/05/24 13:38:03 flameeyes Exp $
 
@@ -22,24 +22,24 @@ COMMON_DEPEND="
 RDEPEND=">=virtual/jre-1.5
 	${COMMON_DEPEND}"
 
-# NOTE: they include regression tests in the main jar so junit is needed on the cp even for src_compile
 DEPEND=">=virtual/jdk-1.5
 	app-arch/unzip
-	>=dev-java/junit-4
+	>=dev-java/junit-4.4
 	test? (
 		dev-java/ant-junit
 		dev-java/ant-trax
+		dev-java/hamcrest
 	)
 	${COMMON_DEPEND}"
 
+RESTRICT="test"
+
 src_unpack() {
-	unpack "${A}"
+	unpack ${A}
 
 	# We patch build.xml to include all jars in lib dir
-	cd "${S}/bin"
+	cd "${S}" || die
 	epatch "${FILESDIR}/${P}-build.xml.patch"
-
-	cd "${S}"
 	find -name "*.jar" | xargs rm -v
 
 	cd "${S}/lib"
@@ -47,6 +47,7 @@ src_unpack() {
 	java-pkg_jar-from asm-3 asm.jar
 	java-pkg_jar-from jaxen-1.1 jaxen.jar
 	java-pkg_jar-from --build-only junit-4
+	use test && java-pkg_jar-from --build-only hamcrest
 }
 
 EANT_BUILD_XML="bin/build.xml"
@@ -68,7 +69,7 @@ src_install() {
 	cp -r etc/xslt "${D}"/usr/share/${PN}/etc/
 
 	use doc && java-pkg_dojavadoc docs/api
-	use source && java-pkg_dosrc src/*
+	use source && java-pkg_dosrc src/net
 }
 
 pkg_postinst() {
