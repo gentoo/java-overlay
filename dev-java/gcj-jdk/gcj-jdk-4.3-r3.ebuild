@@ -80,7 +80,7 @@ src_install() {
 		|| die "java wrapper failed"
 
 	# permissions
-	fperms 755 ${gcjhome}/bin/java{,c}
+	fperms 755 ${gcjhome}/bin/java
 
 	set_java_env
 

@@ -2,6 +2,9 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  24 Nov 2008; Petteri Räty <betelgeuse@gentoo.org> gcj-jdk-4.3-r3.ebuild:
+  Don't try to set permissions on the javac symlink to ecj.
+
   19 Nov 2008; Petteri Räty <betelgeuse@gentoo.org> gcj-jdk-4.3-r3.ebuild:
   Change instructions to set gcj-jdk as system vm to a link to Gentoo Java
   Guide and warn about missing 1.5 apis.
