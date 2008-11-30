@@ -2,6 +2,10 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  30 Nov 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.3.1-r1.ebuild files/javac.in.patch:
+	Ensure the native version of ecj is used if available by passing the gcj
+	database to java in javac.in.
+	
   10 Nov 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.3.1-r1.ebuild:
 	Bug 245428;
 	Work with the hack added to the newer Ant builds to properly support environment
