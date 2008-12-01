@@ -41,9 +41,12 @@ src_install() {
 	local gcc_version=$(${gccbin}/gcc --version|head -n1|sed -r 's/gcc \(.*\) ([0-9.]*).*/\1/')
 	local gccchost=$(echo ${gccbin}|sed -r 's#/usr/([a-z0-9_-]*).*$#\1#')
 
+	# correctly install gcj
+	dosym ${gccbin}/gij /usr/bin/gij
+	dosym ${gccbin}/gcj-dbtool /usr/bin/gcj-dbtool
+
 	# links
 	dodir ${gcjhome}/bin
-	dosym ${gccbin}/gij ${gcjhome}/bin/gij
 	dodir ${gcjhome}/jre/bin
 	dosym ${gcjhome}/bin/java ${gcjhome}/jre/bin/java
 	dosym ${gccbin}/gjar ${gcjhome}/bin/jar
@@ -69,24 +72,12 @@ src_install() {
 
 	# the /usr/bin/ecj symlink is managed by eselect-ecj
 	dosym /usr/bin/ecj ${gcjhome}/bin/javac;
+	dosym /usr/bin/gij ${gcjhome}/bin/java;
 
 	# use gjdoc for javadoc
 	dosym /usr/bin/gjdoc ${gcjhome}/bin/javadoc
 
-	# java wrapper
-	sed -e "s:@HOME@:${gcjhome}:g" \
-		< "${FILESDIR}"/java.in \
-		> "${D}"${gcjhome}/bin/java \
-		|| die "java wrapper failed"
-
-	# permissions
-	fperms 755 ${gcjhome}/bin/java
-
 	set_java_env
-
-	# copy scripts
-	exeinto /usr/bin
-	doexe "${FILESDIR}"/rebuild-classmap-db
 }
 
 pkg_postinst() {
@@ -94,11 +85,10 @@ pkg_postinst() {
 	# Set as default VM if none exists
 	java-vm-2_pkg_postinst
 
-	ewarn "gcj-jdk does not provide all the 1.5 APIs"
-	ewarn "so it does not for example compile code using"
-	ewarn "java.util.Scanner. File bugs for missing APIs"
-	ewarn "to http://gcc.gnu.org/bugzilla/ (check for existing"
-	ewarn "bugs first)."
+	ewarn "gcj does not currently provide all the 1.5 APIs."
+	ewarn "See http://builder.classpath.org/japi/libgcj-jdk15.html"
+	ewarn "Check for existing bugs relating to missing APIs and file"
+	ewarn "new ones at http://gcc.gnu.org/bugzilla/"
 
 	einfo "See http://www.gentoo.org/doc/en/java.xml#doc_chap4"
 	einfo "if you want to set gcj as system vm and help testing"

@@ -2,6 +2,12 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+* gcj-jdk-4.3.1-r4 (01 Dec 2008)
+
+  01 Dec 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3-r4.ebuild:
+	Bump to revision 4.  Remove geki's cruft which breaks jar->lib mapping. Add gcj-dbtool
+	and gij to /usr/bin.  Make gcj-jdk API warning more accurate.
+	
   24 Nov 2008; Petteri Räty <betelgeuse@gentoo.org> gcj-jdk-4.3-r3.ebuild:
   Don't try to set permissions on the javac symlink to ecj.
 
@@ -9,7 +15,9 @@
   Change instructions to set gcj-jdk as system vm to a link to Gentoo Java
   Guide and warn about missing 1.5 apis.
 
-  07 Nov 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3-r2.ebuild:
+* gcj-jdk-4.3.1-r3 (07 Nov 2008)
+
+  07 Nov 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3-r3.ebuild:
   Add missing server directory and bump to revision 3.
 	
   29 Oct 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> gcj-jdk-4.3-r2.ebuild:
