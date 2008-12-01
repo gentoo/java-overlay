@@ -24,6 +24,10 @@ RDEPEND=">=net-print/cups-1.2.12
 	 >=media-libs/alsa-lib-1.0
 	 >=x11-libs/gtk+-2.8
 	 >=x11-libs/libXinerama-1.0.2
+	 >=x11-libs/libXp-1.0.0
+	 >=x11-libs/libXi-1.1.3
+	 >=x11-libs/libXau-1.0.3
+	 >=x11-libs/libXdmcp-1.0.2
 	 >=media-libs/jpeg-6b
 	 >=media-libs/libpng-1.2
 	 >=media-libs/giflib-4.1.6
