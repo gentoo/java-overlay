@@ -111,8 +111,8 @@ src_unpack() {
 	# Don't hide the HotSpot build number
 	# (http://icedtea.classpath.org/hg/icedtea6/rev/6816e84bfc28)
 	epatch "${FILESDIR}/hotspot-${PV}.patch"
-	# Run ecj with the gcj database active (Gentoo specific)
-	epatch "${FILESDIR}/javac.in.patch"
+	# Handle CACAO builds when aliases are specified
+	epatch "${FILESDIR}/cacao-alias.patch"
 
 	eautoreconf || die "failed to regenerate autoconf infrastructure"
 }
