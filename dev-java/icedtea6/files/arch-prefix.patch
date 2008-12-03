@@ -38,7 +38,7 @@ diff -ru icedtea6-1.3.1.old/configure.ac icedtea6-1.3.1/configure.ac
  AC_ARG_WITH([gcj-home],
 diff -ru icedtea6-1.3.1.old/Makefile.am icedtea6-1.3.1/Makefile.am
 --- icedtea6-1.3.1.old/Makefile.am	2008-12-03 13:54:26.000000000 +0000
-+++ icedtea6-1.3.1/Makefile.am	2008-12-03 13:57:35.000000000 +0000
++++ icedtea6-1.3.1/Makefile.am	2008-12-03 14:59:14.000000000 +0000
 @@ -967,7 +967,7 @@
  	$(GCJWEBPLUGIN_TARGET) $(ICEDTEAPLUGIN_TARGET) \
  	extra-lib/about.jar stamps/cacao.stamp stamps/visualvm.stamp \
@@ -57,3 +57,46 @@ diff -ru icedtea6-1.3.1.old/Makefile.am icedtea6-1.3.1/Makefile.am
  	  $(ICEDTEA_ENV) \
  	  -C openjdk/control/make \
  	  $(ICEDTEA_DEBUG_BUILD_TARGET)
+@@ -1089,7 +1089,7 @@
+ 	touch stamps/icedtea-debug.stamp
+ 
+ clean-icedtea: stamps/extract.stamp
+-	$(MAKE) \
++	$(ARCH_PREFIX) $(MAKE) \
+ 	  $(ICEDTEA_ENV) \
+ 	  -C openjdk/control/make clobber
+ 	rm -f stamps/icedtea.stamp stamps/icedtea-debug.stamp
+@@ -1115,7 +1115,7 @@
+ 
+ stamps/icedtea-ecj.stamp: stamps/hotspot-tools.stamp stamps/plugs.stamp \
+ 	stamps/ports-ecj.stamp stamps/patch-ecj.stamp stamps/cacao.stamp
+-	$(MAKE) \
++	$(ARCH_PREFIX) $(MAKE) \
+ 	  $(ICEDTEA_ENV_ECJ) \
+ 	  -C openjdk-ecj/control/make \
+ 	  $(ICEDTEA_BUILD_TARGET)
+@@ -1129,7 +1129,7 @@
+ 	rm -f stamps/bootstrap-directory-symlink-ecj.stamp
+ 	rm -f stamps/icedtea-ecj.stamp
+ 	rm -f stamps/icedtea-against-ecj.stamp
+-	$(MAKE) hotspot-helper
++	$(ARCH_PREFIX) $(MAKE) hotspot-helper
+ 	cp $(ECJ_BUILD_OUTPUT_DIR)/$(SERVER_DIR)/libjvm.so \
+ 	   $(ECJ_BUILD_OUTPUT_DIR)/j2sdk-image/jre/lib/$(BUILD_ARCH_DIR)/server
+ 	@echo "Hotspot is served:" $(ECJ_BUILD_OUTPUT_DIR)/j2sdk-image
+@@ -1137,13 +1137,13 @@
+ hotspot-helper: stamps/bootstrap-directory-symlink-ecj.stamp \
+ 	stamps/hotspot-tools.stamp stamps/plugs.stamp \
+ 	stamps/ports-ecj.stamp stamps/patch-ecj.stamp
+-	$(MAKE) \
++	$(ARCH_PREFIX) $(MAKE) \
+ 	  $(ICEDTEA_ENV_ECJ) \
+ 	  -C openjdk-ecj/control/make hotspot
+ 
+ clean-icedtea-ecj: stamps/extract-ecj.stamp
+ 	rm -f stamps/icedtea-ecj.stamp
+-	$(MAKE) \
++	$(ARCH_PREFIX) $(MAKE) \
+ 	  $(ICEDTEA_ENV_ECJ) \
+ 	  -C openjdk-ecj/control/make clobber
+ 
