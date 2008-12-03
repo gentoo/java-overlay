@@ -1,0 +1,7 @@
+# ChangeLog for sys-devel/llvm
+# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  02 Dec 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> llvm-2.4.ebuild files/llvm-2.3-*:
+	Import from http://bugs.gentoo.org/186279 for Shark.
+	

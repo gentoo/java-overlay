@@ -1,0 +1,11 @@
+--- lib/Transforms/Makefile.orig	2008-08-21 12:37:27.000000000 +0300
++++ lib/Transforms/Makefile	2007-12-29 22:09:26.000000000 +0200
+@@ -8,7 +8,7 @@
+ ##===----------------------------------------------------------------------===##
+ 
+ LEVEL = ../..
+-PARALLEL_DIRS = Utils Instrumentation Scalar IPO Hello
++PARALLEL_DIRS = Utils Instrumentation Scalar IPO
+ 
+ include $(LEVEL)/Makefile.common
+ 

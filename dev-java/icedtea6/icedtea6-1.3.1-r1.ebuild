@@ -113,6 +113,8 @@ src_unpack() {
 	epatch "${FILESDIR}/hotspot-${PV}.patch"
 	# Handle CACAO builds when aliases are specified
 	epatch "${FILESDIR}/cacao-alias.patch"
+	# Prefix 32-bit builds with linux32 so e.g. ppc64 with 32bit ul works
+	epatch "${FILESDIR}/arch-prefix.patch"
 
 	eautoreconf || die "failed to regenerate autoconf infrastructure"
 }
