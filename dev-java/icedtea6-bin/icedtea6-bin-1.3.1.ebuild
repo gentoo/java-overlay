@@ -9,12 +9,15 @@ inherit java-vm-2
 dist="http://dev.gentoo.org/~caster/distfiles/"
 DESCRIPTION="A Gentoo-made binary build of the icedtea6 JDK"
 SRC_URI="amd64? ( ${dist}/${PN}-core-${PV}-amd64.tbz2 )
+	x86? ( ${dist}/${PN}-core-${PV}-x86.tbz2 )
 	doc? ( ${dist}/${PN}-doc-${PV}.tbz2 )
 	examples? (
 		amd64? ( ${dist}/${PN}-examples-${PV}-amd64.tbz2 )
+		x86? ( ${dist}/${PN}-examples-${PV}-x86.tbz2 )
 	)
-	nsplugin? ( 
+	nsplugin? (
 		amd64? ( ${dist}/${PN}-nsplugin-${PV}-amd64.tbz2 )
+		x86? ( ${dist}/${PN}-nsplugin-${PV}-x86.tbz2 )
 	)
 	source? ( ${dist}/${PN}-src-${PV}.tbz2 )"
 HOMEPAGE="http://icedtea.classpath.org"
@@ -25,7 +28,7 @@ RESTRICT="strip test"
 
 LICENSE="GPL-2-with-linking-exception"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 
 RDEPEND="
 	>=sys-libs/glibc-2.6.1
