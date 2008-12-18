@@ -55,7 +55,9 @@ RDEPEND=">=net-print/cups-1.2.12
 # sets some environment variables.
 DEPEND="${RDEPEND}
 	|| ( >=virtual/gnu-classpath-jdk-1.5
-		 dev-java/icedtea6 )
+		 dev-java/icedtea6
+		 dev-java/icedtea6-bin
+	)
 	>=virtual/jdk-1.5
 	>=app-arch/unzip-5.52
 	>=dev-java/xalan-2.7.0
@@ -88,6 +90,8 @@ pkg_setup() {
 	# to limit supported VM's for building and their preferred order
 	if has_version dev-java/icedtea6; then
 		JAVA_PKG_FORCE_VM="icedtea6"
+	elif has_version dev-java/icedtea6-bin; then
+		JAVA_PKG_FORCE_VM="icedtea6-bin"
 	elif has_version dev-java/icedtea; then
 		JAVA_PKG_FORCE_VM="icedtea"
 	elif has_version dev-java/gcj-jdk; then
@@ -116,6 +120,8 @@ src_unpack() {
 	epatch "${FILESDIR}/cacao-alias.patch"
 	# Prefix 32-bit builds with linux32 so e.g. ppc64 with 32bit ul works
 	epatch "${FILESDIR}/arch-prefix.patch"
+	# Security updates (2008/12/02)
+	epatch "${FILESDIR}/security-20081202.patch"
 
 	eautoreconf || die "failed to regenerate autoconf infrastructure"
 }
@@ -125,7 +131,7 @@ src_compile() {
 	local vm=$(java-pkg_get-current-vm)
 	local vmhome="/usr/lib/jvm/${vm}"
 
-	if [[ "${vm}" == "icedtea6" || "${vm}" == "icedtea" ]] ; then
+	if [[ "${vm}" == "icedtea6" || "${vm}" == "icedtea" ]] || [[ "${vm}" == "icedtea6-bin" ]] ; then
 		# If we are upgrading icedtea, then we don't need to bootstrap.
 		config="${config} --with-icedtea"
 		config="${config} --with-icedtea-home=$(java-config -O)"

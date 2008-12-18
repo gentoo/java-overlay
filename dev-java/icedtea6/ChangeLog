@@ -2,9 +2,15 @@
 # Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea6-1.3.1-r2 (18 12 2008)
+
+  18 Dec 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.3.1-r2.ebuild files/security-20081202.patch:
+	Security update; bumping revision to ensure this gets out.
+	Also adding support for icedtea6-bin.
+	
   11 Dec 2008; Vlastimil Babka <caster@gentoo.org> icedtea6-1.2.ebuild,
-  icedtea6-1.3.1-r1.ebuild:
-  Add missing libXtst dep.
+	icedtea6-1.3.1-r1.ebuild:
+	Add missing libXtst dep.
 
   03 Dec 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.3.1-r1.ebuild files/arch-prefix.patch:
 	Prefix 32-bit builds with 'linux32'.
