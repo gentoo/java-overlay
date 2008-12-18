@@ -80,6 +80,8 @@ src_unpack() {
 	epatch "${FILESDIR}/motif-make.patch"
 	# Backport security and versioning fixes
 	epatch "${FILESDIR}/security_and_versioning.patch"
+	# Security updates (2008/12/02)
+	epatch "${FILESDIR}/security-20081202-1.2.patch"
 
 	eautoreconf || die "failed to regenerate autoconf infrastructure"
 }

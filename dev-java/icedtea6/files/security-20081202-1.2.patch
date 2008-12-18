@@ -1,0 +1,4046 @@
+diff -Nru icedtea6-1.2.old/acinclude.m4.rej icedtea6-1.2/acinclude.m4.rej
+--- icedtea6-1.2.old/acinclude.m4.rej	2008-12-18 00:26:15.000000000 +0000
++++ icedtea6-1.2/acinclude.m4.rej	1970-01-01 01:00:00.000000000 +0100
+@@ -1,38 +0,0 @@
+-***************
+-*** 664,666 ****
+-    AM_CONDITIONAL(WITH_CACAO, test x"${CACAO}" != "xno")
+-    AC_SUBST(CACAO)
+-  ])
+---- 664,695 ----
+-    AM_CONDITIONAL(WITH_CACAO, test x"${CACAO}" != "xno")
+-    AC_SUBST(CACAO)
+-  ])
+-+ 
+-+ AC_DEFUN([WITH_VERSION_SUFFIX],
+-+ [
+-+   AC_MSG_CHECKING(if a version suffix has been specified)
+-+   AC_ARG_WITH([version-suffix],
+-+               [AS_HELP_STRING(--with-version-suffix,appends the given text to the JDK version)],
+-+   [
+-+     case "${withval}" in
+-+       yes)
+-+ 	version_suffix=
+-+ 	AC_MSG_RESULT([no])
+-+         ;;
+-+       no)
+-+ 	version_suffix=
+-+ 	AC_MSG_RESULT([no])
+-+ 	;;
+-+       *)
+-+         version_suffix=${withval}
+-+ 	AC_MSG_RESULT([${version_suffix}])
+-+         ;;
+-+     esac
+-+   ],
+-+   [
+-+     version_suffix=
+-+     AC_MSG_RESULT([no])
+-+   ])
+-+   AC_SUBST(VERSION_SUFFIX, $version_suffix)
+-+ ])
+-+  
+diff -Nru icedtea6-1.2.old/ChangeLog icedtea6-1.2/ChangeLog
+--- icedtea6-1.2.old/ChangeLog	2008-12-18 00:26:14.000000000 +0000
++++ icedtea6-1.2/ChangeLog	2008-12-18 00:26:31.000000000 +0000
+@@ -1,3 +1,19 @@
++2008-12-02  Lillian Angel  <langel@redhat.com>
++ 
++	* Makefile.am
++	(ICEDTEA_PATCHES): Added new OpenJDK security patches.
++	* patches/icedtea-4486841.patch,
++	patches/icedtea-6484091.patch,
++	patches/icedtea-6497740.patch,
++	patches/icedtea-6588160.patch,
++	patches/icedtea-6592792.patch,
++	patches/icedtea-6721753.patch,
++	patches/icedtea-6726779.patch,
++	patches/icedtea-6733959.patch,
++	patches/icedtea-6734167.patch,
++	patches/icedtea-6755943.patch,
++	patches/icedtea-6766136.patch: New file
++
+ 2008-05-30  Mark Wielaard  <mark@klomp.org>
+ 
+ 	* patches/icedtea-ecj.patch: Use `cat file-list` not gjar -@ stdin.
+diff -Nru icedtea6-1.2.old/configure.ac.rej icedtea6-1.2/configure.ac.rej
+--- icedtea6-1.2.old/configure.ac.rej	2008-12-18 00:26:15.000000000 +0000
++++ icedtea6-1.2/configure.ac.rej	1970-01-01 01:00:00.000000000 +0100
+@@ -1,16 +0,0 @@
+-***************
+-*** 209,214 ****
+-  ENABLE_ZERO_BUILD
+-  ENABLE_NETX_PLUGIN
+-  SET_CORE_BUILD
+-  
+-  dnl pkgconfig cannot be used to finid these headers and libraries.
+-  AC_CHECK_HEADERS([cups/cups.h cups/ppd.h],[]
+---- 209,215 ----
+-  ENABLE_ZERO_BUILD
+-  ENABLE_NETX_PLUGIN
+-  SET_CORE_BUILD
+-+ WITH_VERSION_SUFFIX
+-  
+-  dnl pkgconfig cannot be used to finid these headers and libraries.
+-  AC_CHECK_HEADERS([cups/cups.h cups/ppd.h],[]
+diff -Nru icedtea6-1.2.old/Makefile.am icedtea6-1.2/Makefile.am
+--- icedtea6-1.2.old/Makefile.am	2008-12-18 00:26:15.000000000 +0000
++++ icedtea6-1.2/Makefile.am	2008-12-18 00:27:08.000000000 +0000
+@@ -318,6 +318,17 @@
+ 	patches/icedtea-nomotif-6706121.patch \
+         patches/icedtea-nomotif.patch \
+ 	patches/icedtea-security-updates.patch \
++	patches/icedtea-4486841.patch \
++        patches/icedtea-6484091.patch \
++        patches/icedtea-6497740.patch \
++        patches/icedtea-6588160.patch \
++        patches/icedtea-6592792.patch \
++        patches/icedtea-6721753.patch \
++        patches/icedtea-6726779.patch \
++        patches/icedtea-6733959.patch \
++        patches/icedtea-6734167.patch \
++        patches/icedtea-6755943.patch \
++        patches/icedtea-6766136.patch \
+ 	$(GCC_PATCH) \
+ 	$(DISTRIBUTION_PATCHES)
+ 
+diff -Nru icedtea6-1.2.old/patches/icedtea-4486841.patch icedtea6-1.2/patches/icedtea-4486841.patch
+--- icedtea6-1.2.old/patches/icedtea-4486841.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.2/patches/icedtea-4486841.patch	2008-12-18 00:26:31.000000000 +0000
+@@ -0,0 +1,1234 @@
++--- old/src/share/classes/sun/nio/cs/UTF_8.java	Thu Oct  9 16:02:01 2008
+++++ openjdk/jdk/src/share/classes/sun/nio/cs/UTF_8.java	Thu Oct  9 16:02:01 2008
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2000-2006 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2000-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -25,34 +25,36 @@
++ 
++ package sun.nio.cs;
++ 
+++import java.nio.Buffer;
++ import java.nio.ByteBuffer;
++ import java.nio.CharBuffer;
++-import java.nio.BufferOverflowException;
++-import java.nio.BufferUnderflowException;
++ import java.nio.charset.Charset;
++ import java.nio.charset.CharsetDecoder;
++ import java.nio.charset.CharsetEncoder;
++ import java.nio.charset.CoderResult;
++-import java.nio.charset.CharacterCodingException;
++-import java.nio.charset.MalformedInputException;
++-import java.nio.charset.UnmappableCharacterException;
++ 
++-
++-/*
++- * # Bits   Bit pattern
++- * 1    7   0xxxxxxx
++- * 2   11   110xxxxx 10xxxxxx
++- * 3   16   1110xxxx 10xxxxxx 10xxxxxx
++- * 4   21   11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
++- * 5   26   111110xx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
++- * 6   31   1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
+++/* Legal UTF-8 Byte Sequences
++  *
++- * UCS-2 uses 1-3, UTF-16 uses 1-4, UCS-4 uses 1-6
+++ * #    Code Points      Bits   Bit/Byte pattern
+++ * 1                     7      0xxxxxxx
+++ *      U+0000..U+007F          00..7F
+++ *
+++ * 2                     11     110xxxxx    10xxxxxx
+++ *      U+0080..U+07FF          C2..DF      80..BF
+++ *
+++ * 3                     16     1110xxxx    10xxxxxx    10xxxxxx
+++ *      U+0800..U+0FFF          E0          A0..BF      80..BF
+++ *      U+1000..U+FFFF          E1..EF      80..BF      80..BF
+++ *
+++ * 4                     21     11110xxx    10xxxxxx    10xxxxxx    10xxxxxx
+++ *     U+10000..U+3FFFF         F0          90..BF      80..BF      80..BF
+++ *     U+40000..U+FFFFF         F1..F3      80..BF      80..BF      80..BF
+++ *    U+100000..U10FFFF         F4          80..8F      80..BF      80..BF
+++ *
++  */
++ 
++ class UTF_8 extends Unicode
++ {
++-
++     public UTF_8() {
++         super("UTF-8", StandardCharsets.aliases_UTF_8);
++     }
++@@ -69,6 +71,11 @@
++         return new Encoder(this);
++     }
++ 
+++    static final void updatePositions(Buffer src, int sp,
+++                                      Buffer dst, int dp) {
+++        src.position(sp - src.arrayOffset());
+++        dst.position(dp - dst.arrayOffset());
+++    }
++ 
++     private static class Decoder extends CharsetDecoder {
++         private Decoder(Charset cs) {
++@@ -75,161 +82,182 @@
++             super(cs, 1.0f, 1.0f);
++         }
++ 
++-        private boolean isContinuation(int b) {
++-            return ((b & 0xc0) == 0x80);
+++        private static boolean isNotContinuation(int b) {
+++            return (b & 0xc0) != 0x80;
++         }
++ 
++-        private final Surrogate.Generator sgg = new Surrogate.Generator();
+++        //  [C2..DF] [80..BF]
+++        private static boolean isMalformed2(int b1, int b2) {
+++            return (b1 & 0x1e) == 0x0 || (b2 & 0xc0) != 0x80;
+++        }
++ 
+++        //  [E0]     [A0..BF] [80..BF]
+++        //  [E1..EF] [80..BF] [80..BF]
+++        private static boolean isMalformed3(int b1, int b2, int b3) {
+++            return (b1 == (byte)0xe0 && (b2 & 0xe0) == 0x80) ||
+++                   (b2 & 0xc0) != 0x80 || (b3 & 0xc0) != 0x80;
+++        }
+++
+++        //  [F0]     [90..BF] [80..BF] [80..BF]
+++        //  [F1..F3] [80..BF] [80..BF] [80..BF]
+++        //  [F4]     [80..8F] [80..BF] [80..BF]
+++        //  only check 80-be range here, the [0xf0,0x80...] and [0xf4,0x90-...]
+++        //  will be checked by Surrogate.neededFor(uc)
+++        private static boolean isMalformed4(int b2, int b3, int b4) {
+++            return (b2 & 0xc0) != 0x80 || (b3 & 0xc0) != 0x80 ||
+++                   (b4 & 0xc0) != 0x80;
+++        }
+++
+++        private static CoderResult lookupN(ByteBuffer src, int n)
+++        {
+++            for (int i = 1; i < n; i++) {
+++               if (isNotContinuation(src.get()))
+++                   return CoderResult.malformedForLength(i);
+++            }
+++            return CoderResult.malformedForLength(n);
+++        }
+++
+++        private static CoderResult malformedN(ByteBuffer src, int nb) {
+++            switch (nb) {
+++            case 1:
+++                int b1 = src.get();
+++                if ((b1 >> 2) == -2) {
+++                    // 5 bytes 111110xx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
+++                    if (src.remaining() < 4)
+++                        return CoderResult.UNDERFLOW;
+++                    return lookupN(src, 5);
+++                }
+++                if ((b1 >> 1) == -2) {
+++                    // 6 bytes 1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
+++                    if (src.remaining() < 5)
+++                        return CoderResult.UNDERFLOW;
+++                    return lookupN(src, 6);
+++                }
+++                return CoderResult.malformedForLength(1);
+++            case 2:                    // always 1
+++                return CoderResult.malformedForLength(1);
+++            case 3:
+++                b1 = src.get();
+++                int b2 = src.get();    // no need to lookup b3
+++                return CoderResult.malformedForLength(
+++                    ((b1 == (byte)0xe0 && (b2 & 0xe0) == 0x80) ||
+++                     isNotContinuation(b2))?1:2);
+++            case 4:  // we don't care the speed here
+++                b1 = src.get() & 0xff;
+++                b2 = src.get() & 0xff;
+++                if (b1 > 0xf4 ||
+++                    (b1 == 0xf0 && (b2 < 0x90 || b2 > 0xbf)) ||
+++                    (b1 == 0xf4 && (b2 & 0xf0) != 0x80) ||
+++                    isNotContinuation(b2))
+++                    return CoderResult.malformedForLength(1);
+++                if (isNotContinuation(src.get()))
+++                    return CoderResult.malformedForLength(2);
+++                return CoderResult.malformedForLength(3);
+++            default:
+++                assert false;
+++                return null;
+++            }
+++        }
+++
+++        private static CoderResult malformed(ByteBuffer src, int sp,
+++                                             CharBuffer dst, int dp,
+++                                             int nb)
+++        {
+++            src.position(sp - src.arrayOffset());
+++            CoderResult cr = malformedN(src, nb);
+++            updatePositions(src, sp, dst, dp);
+++            return cr;
+++        }
+++
+++        private static CoderResult malformed(ByteBuffer src,
+++                                             int mark, int nb)
+++        {
+++            src.position(mark);
+++            CoderResult cr = malformedN(src, nb);
+++            src.position(mark);
+++            return cr;
+++        }
+++
+++        private static CoderResult xflow(Buffer src, int sp, int sl,
+++                                         Buffer dst, int dp, int nb) {
+++            updatePositions(src, sp, dst, dp);
+++            return (nb == 0 || sl - sp < nb)
+++                   ?CoderResult.UNDERFLOW:CoderResult.OVERFLOW;
+++        }
+++
+++        private static CoderResult xflow(Buffer src, int mark, int nb) {
+++            CoderResult cr = (nb == 0 || src.remaining() < (nb - 1))
+++                             ?CoderResult.UNDERFLOW:CoderResult.OVERFLOW;
+++            src.position(mark);
+++            return cr;
+++        }
+++
++         private CoderResult decodeArrayLoop(ByteBuffer src,
++                                             CharBuffer dst)
++         {
+++            // This method is optimized for ASCII input.
++             byte[] sa = src.array();
++             int sp = src.arrayOffset() + src.position();
++             int sl = src.arrayOffset() + src.limit();
++-            assert (sp <= sl);
++-            sp = (sp <= sl ? sp : sl);
+++
++             char[] da = dst.array();
++             int dp = dst.arrayOffset() + dst.position();
++             int dl = dst.arrayOffset() + dst.limit();
++-            assert (dp <= dl);
++-            dp = (dp <= dl ? dp : dl);
+++            int dlASCII = dp + Math.min(sl - sp, dl - dp);
++ 
++-            try {
++-                while (sp < sl) {
++-                    int b1 = sa[sp];
++-                    int b2, b3;
++-                    switch ((b1 >> 4) & 0x0f) {
+++            // ASCII only loop
+++            while (dp < dlASCII && sa[sp] >= 0)
+++                da[dp++] = (char)sa[sp++];
++ 
++-                    case 0: case 1: case 2: case 3:
++-                    case 4: case 5: case 6: case 7:
++-                        // 1 byte, 7 bits: 0xxxxxxx
++-                        if (dl - dp < 1)
++-                            return CoderResult.OVERFLOW;
++-                        da[dp++] = (char)(b1 & 0x7f);
++-                        sp++;
++-                        continue;
++-
++-                    case 12: case 13:
++-                        // 2 bytes, 11 bits: 110xxxxx 10xxxxxx
++-                        if (sl - sp < 2)
++-                            return CoderResult.UNDERFLOW;
++-                        if (dl - dp < 1)
++-                            return CoderResult.OVERFLOW;
++-                        if (!isContinuation(b2 = sa[sp + 1]))
++-                            return CoderResult.malformedForLength(1);
++-                        da[dp++] = ((char)(((b1 & 0x1f) << 6) |
++-                                           ((b2 & 0x3f) << 0)));
++-                        sp += 2;
++-                        continue;
++-
++-                    case 14:
++-                        // 3 bytes, 16 bits: 1110xxxx 10xxxxxx 10xxxxxx
++-                        if (sl - sp < 3)
++-                            return CoderResult.UNDERFLOW;
++-                        if (dl - dp < 1)
++-                            return CoderResult.OVERFLOW;
++-                        if (!isContinuation(b2 = sa[sp + 1]))
++-                            return CoderResult.malformedForLength(1);
++-                        if (!isContinuation(b3 = sa[sp + 2]))
++-                            return CoderResult.malformedForLength(2);
++-                        da[dp++] = ((char)(((b1 & 0x0f) << 12) |
++-                                           ((b2 & 0x3f) << 06) |
++-                                           ((b3 & 0x3f) << 0)));
++-                        sp += 3;
++-                        continue;
++-
++-                    case 15:
++-                        // 4, 5, or 6 bytes
++-
++-                        int b4, b5, b6, uc, n;
++-                        switch (b1 & 0x0f) {
++-
++-                        case 0: case 1: case 2: case 3:
++-                        case 4: case 5: case 6: case 7:
++-                            // 4 bytes, 21 bits
++-                            if (sl - sp < 4)
++-                                return CoderResult.UNDERFLOW;
++-                            if (!isContinuation(b2 = sa[sp + 1]))
++-                                return CoderResult.malformedForLength(1);
++-                            if (!isContinuation(b3 = sa[sp + 2]))
++-                                return CoderResult.malformedForLength(2);
++-                            if (!isContinuation(b4 = sa[sp + 3]))
++-                                return CoderResult.malformedForLength(3);
++-                            uc = (((b1 & 0x07) << 18) |
++-                                  ((b2 & 0x3f) << 12) |
++-                                  ((b3 & 0x3f) << 06) |
++-                                  ((b4 & 0x3f) << 00));
++-                            n = 4;
++-                            break;
++-
++-                        case 8: case 9: case 10: case 11:
++-                            // 5 bytes, 26 bits
++-                            if (sl - sp < 5)
++-                                return CoderResult.UNDERFLOW;
++-                            if (!isContinuation(b2 = sa[sp + 1]))
++-                                return CoderResult.malformedForLength(1);
++-                            if (!isContinuation(b3 = sa[sp + 2]))
++-                                return CoderResult.malformedForLength(2);
++-                            if (!isContinuation(b4 = sa[sp + 3]))
++-                                return CoderResult.malformedForLength(3);
++-                            if (!isContinuation(b5 = sa[sp + 4]))
++-                                return CoderResult.malformedForLength(4);
++-                            uc = (((b1 & 0x03) << 24) |
++-                                  ((b2 & 0x3f) << 18) |
++-                                  ((b3 & 0x3f) << 12) |
++-                                  ((b4 & 0x3f) << 06) |
++-                                  ((b5 & 0x3f) << 00));
++-                            n = 5;
++-                            break;
++-
++-                        case 12: case 13:
++-                            // 6 bytes, 31 bits
++-                            if (sl - sp < 6)
++-                                return CoderResult.UNDERFLOW;
++-                            if (!isContinuation(b2 = sa[sp + 1]))
++-                                return CoderResult.malformedForLength(1);
++-                            if (!isContinuation(b3 = sa[sp + 2]))
++-                                return CoderResult.malformedForLength(2);
++-                            if (!isContinuation(b4 = sa[sp + 3]))
++-                                return CoderResult.malformedForLength(3);
++-                            if (!isContinuation(b5 = sa[sp + 4]))
++-                                return CoderResult.malformedForLength(4);
++-                            if (!isContinuation(b6 = sa[sp + 5]))
++-                                return CoderResult.malformedForLength(5);
++-                            uc = (((b1 & 0x01) << 30) |
++-                                  ((b2 & 0x3f) << 24) |
++-                                  ((b3 & 0x3f) << 18) |
++-                                  ((b4 & 0x3f) << 12) |
++-                                  ((b5 & 0x3f) << 06) |
++-                                  ((b6 & 0x3f)));
++-                            n = 6;
++-                            break;
++-
++-                        default:
++-                            return CoderResult.malformedForLength(1);
++-
++-                        }
++-
++-                        int gn = sgg.generate(uc, n, da, dp, dl);
++-                        if (gn < 0)
++-                            return sgg.error();
++-                        dp += gn;
++-                        sp += n;
++-                        continue;
++-
++-                    default:
++-                        return CoderResult.malformedForLength(1);
++-
+++            while (sp < sl) {
+++                int b1 = sa[sp];
+++                if (b1  >= 0) {
+++                    // 1 byte, 7 bits: 0xxxxxxx
+++                    if (dp >= dl)
+++                        return xflow(src, sp, sl, dst, dp, 1);
+++                    da[dp++] = (char)b1;
+++                    sp++;
+++                } else if ((b1 >> 5) == -2) {
+++                    // 2 bytes, 11 bits: 110xxxxx 10xxxxxx
+++                    if (sl - sp < 2 || dp >= dl)
+++                        return xflow(src, sp, sl, dst, dp, 2);
+++                    int b2 = sa[sp + 1];
+++                    if (isMalformed2(b1, b2))
+++                        return malformed(src, sp, dst, dp, 2);
+++                    da[dp++] = (char) (((b1 << 6) ^ b2) ^ 0x0f80);
+++                    sp += 2;
+++                } else if ((b1 >> 4) == -2) {
+++                    // 3 bytes, 16 bits: 1110xxxx 10xxxxxx 10xxxxxx
+++                    if (sl - sp < 3 || dp >= dl)
+++                        return xflow(src, sp, sl, dst, dp, 3);
+++                    int b2 = sa[sp + 1];
+++                    int b3 = sa[sp + 2];
+++                    if (isMalformed3(b1, b2, b3))
+++                        return malformed(src, sp, dst, dp, 3);
+++                    da[dp++] = (char) (((b1 << 12) ^ (b2 << 6) ^ b3) ^ 0x1f80);
+++                    sp += 3;
+++                } else if ((b1 >> 3) == -2) {
+++                    // 4 bytes, 21 bits: 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+++                    if (sl - sp < 4 || dl - dp < 2)
+++                        return xflow(src, sp, sl, dst, dp, 4);
+++                    int b2 = sa[sp + 1];
+++                    int b3 = sa[sp + 2];
+++                    int b4 = sa[sp + 3];
+++                    int uc = ((b1 & 0x07) << 18) |
+++                             ((b2 & 0x3f) << 12) |
+++                             ((b3 & 0x3f) << 06) |
+++                             (b4 & 0x3f);
+++                    if (isMalformed4(b2, b3, b4) ||
+++                        !Surrogate.neededFor(uc)) {
+++                        return malformed(src, sp, dst, dp, 4);
++                     }
++-
++-                }
++-
++-                return CoderResult.UNDERFLOW;
++-            } finally {
++-                src.position(sp - src.arrayOffset());
++-                dst.position(dp - dst.arrayOffset());
+++                    da[dp++] = Surrogate.high(uc);
+++                    da[dp++] = Surrogate.low(uc);
+++                    sp += 4;
+++                } else
+++                    return malformed(src, sp, dst, dp, 1);
++             }
+++            return xflow(src, sp, sl, dst, dp, 0);
++         }
++ 
++         private CoderResult decodeBufferLoop(ByteBuffer src,
++@@ -236,137 +264,57 @@
++                                              CharBuffer dst)
++         {
++             int mark = src.position();
++-            try {
++-                while (src.hasRemaining()) {
++-                    int b1 = src.get();
++-                    int b2, b3;
++-                    switch ((b1 >> 4) & 0x0f) {
++-
++-                    case 0: case 1: case 2: case 3:
++-                    case 4: case 5: case 6: case 7:
++-                        // 1 byte, 7 bits: 0xxxxxxx
++-                        if (dst.remaining() < 1)
++-                            return CoderResult.OVERFLOW;
++-                        dst.put((char)b1);
++-                        mark++;
++-                        continue;
++-
++-                    case 12: case 13:
++-                        // 2 bytes, 11 bits: 110xxxxx 10xxxxxx
++-                        if (src.remaining() < 1)
++-                            return CoderResult.UNDERFLOW;
++-                        if (dst.remaining() < 1)
++-                            return CoderResult.OVERFLOW;
++-                        if (!isContinuation(b2 = src.get()))
++-                            return CoderResult.malformedForLength(1);
++-                        dst.put((char)(((b1 & 0x1f) << 6) |
++-                                       ((b2 & 0x3f) << 0)));
++-                        mark += 2;
++-                        continue;
++-
++-                    case 14:
++-                        // 3 bytes, 16 bits: 1110xxxx 10xxxxxx 10xxxxxx
++-                        if (src.remaining() < 2)
++-                            return CoderResult.UNDERFLOW;
++-                        if (dst.remaining() < 1)
++-                            return CoderResult.OVERFLOW;
++-                        if (!isContinuation(b2 = src.get()))
++-                            return CoderResult.malformedForLength(1);
++-                        if (!isContinuation(b3 = src.get()))
++-                            return CoderResult.malformedForLength(2);
++-                        dst.put((char)(((b1 & 0x0f) << 12) |
++-                                       ((b2 & 0x3f) << 06) |
++-                                       ((b3 & 0x3f) << 0)));
++-                        mark += 3;
++-                        continue;
++-
++-                    case 15:
++-                        // 4, 5, or 6 bytes
++-
++-                        int b4, b5, b6, uc, n;
++-                        switch (b1 & 0x0f) {
++-
++-                        case 0: case 1: case 2: case 3:
++-                        case 4: case 5: case 6: case 7:
++-                            // 4 bytes, 21 bits
++-                            if (src.remaining() < 3)
++-                                return CoderResult.UNDERFLOW;
++-                            if (!isContinuation(b2 = src.get()))
++-                                return CoderResult.malformedForLength(1);
++-                            if (!isContinuation(b3 = src.get()))
++-                                return CoderResult.malformedForLength(2);
++-                            if (!isContinuation(b4 = src.get()))
++-                                return CoderResult.malformedForLength(3);
++-                            uc = (((b1 & 0x07) << 18) |
++-                                  ((b2 & 0x3f) << 12) |
++-                                  ((b3 & 0x3f) << 06) |
++-                                  ((b4 & 0x3f) << 00));
++-                            n = 4;
++-                            break;
++-
++-                        case 8: case 9: case 10: case 11:
++-                            // 5 bytes, 26 bits
++-                            if (src.remaining() < 4)
++-                                return CoderResult.UNDERFLOW;
++-                            if (!isContinuation(b2 = src.get()))
++-                                return CoderResult.malformedForLength(1);
++-                            if (!isContinuation(b3 = src.get()))
++-                                return CoderResult.malformedForLength(2);
++-                            if (!isContinuation(b4 = src.get()))
++-                                return CoderResult.malformedForLength(3);
++-                            if (!isContinuation(b5 = src.get()))
++-                                return CoderResult.malformedForLength(4);
++-                            uc = (((b1 & 0x03) << 24) |
++-                                  ((b2 & 0x3f) << 18) |
++-                                  ((b3 & 0x3f) << 12) |
++-                                  ((b4 & 0x3f) << 06) |
++-                                  ((b5 & 0x3f) << 00));
++-                            n = 5;
++-                            break;
++-
++-                        case 12: case 13:
++-                            // 6 bytes, 31 bits
++-                            if (src.remaining() < 4)
++-                                return CoderResult.UNDERFLOW;
++-                            if (!isContinuation(b2 = src.get()))
++-                                return CoderResult.malformedForLength(1);
++-                            if (!isContinuation(b3 = src.get()))
++-                                return CoderResult.malformedForLength(2);
++-                            if (!isContinuation(b4 = src.get()))
++-                                return CoderResult.malformedForLength(3);
++-                            if (!isContinuation(b5 = src.get()))
++-                                return CoderResult.malformedForLength(4);
++-                            if (!isContinuation(b6 = src.get()))
++-                                return CoderResult.malformedForLength(5);
++-                            uc = (((b1 & 0x01) << 30) |
++-                                  ((b2 & 0x3f) << 24) |
++-                                  ((b3 & 0x3f) << 18) |
++-                                  ((b4 & 0x3f) << 12) |
++-                                  ((b5 & 0x3f) << 06) |
++-                                  ((b6 & 0x3f)));
++-                            n = 6;
++-                            break;
++-
++-                        default:
++-                            return CoderResult.malformedForLength(1);
++-
++-                        }
++-
++-                        if (sgg.generate(uc, n, dst) < 0)
++-                            return sgg.error();
++-                        mark += n;
++-                        continue;
++-
++-                    default:
++-                        return CoderResult.malformedForLength(1);
++-
+++            int limit = src.limit();
+++            while (mark < limit) {
+++                int b1 = src.get();
+++                if (b1 >= 0) {
+++                    // 1 byte, 7 bits: 0xxxxxxx
+++                    if (dst.remaining() < 1)
+++                        return xflow(src, mark, 1);  //overflow
+++                    dst.put((char)b1);
+++                    mark++;
+++                } else if ((b1 >> 5) == -2) {
+++                    // 2 bytes, 11 bits: 110xxxxx 10xxxxxx
+++                    if (limit - mark < 2|| dst.remaining() < 1)
+++                        return xflow(src, mark, 2);
+++                    int b2 = src.get();
+++                    if (isMalformed2(b1, b2))
+++                        return malformed(src, mark, 2);
+++                    dst.put((char) (((b1 << 6) ^ b2) ^ 0x0f80));
+++                    mark += 2;
+++                } else if ((b1 >> 4) == -2) {
+++                    // 3 bytes, 16 bits: 1110xxxx 10xxxxxx 10xxxxxx
+++                    if (limit - mark < 3 || dst.remaining() < 1)
+++                        return xflow(src, mark, 3);
+++                    int b2 = src.get();
+++                    int b3 = src.get();
+++                    if (isMalformed3(b1, b2, b3))
+++                        return malformed(src, mark, 3);
+++                    dst.put((char) (((b1 << 12) ^ (b2 << 6) ^ b3) ^ 0x1f80));
+++                    mark += 3;
+++                } else if ((b1 >> 3) == -2) {
+++                    // 4 bytes, 21 bits: 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+++                    if (limit - mark < 4 || dst.remaining() < 2)
+++                        return xflow(src, mark, 4);
+++                    int b2 = src.get();
+++                    int b3 = src.get();
+++                    int b4 = src.get();
+++                    int uc = ((b1 & 0x07) << 18) |
+++                             ((b2 & 0x3f) << 12) |
+++                             ((b3 & 0x3f) << 06) |
+++                             (b4 & 0x3f);
+++                    if (isMalformed4(b2, b3, b4) ||
+++                        !Surrogate.neededFor(uc)) { // shortest form check
+++                        return malformed(src, mark, 4);
++                     }
++-
+++                    dst.put(Surrogate.high(uc));
+++                    dst.put(Surrogate.low(uc));
+++                    mark += 4;
+++                } else {
+++                    return malformed(src, mark, 1);
++                 }
++-                return CoderResult.UNDERFLOW;
++-            } finally {
++-                src.position(mark);
++             }
+++            return xflow(src, mark, 0);
++         }
++ 
++         protected CoderResult decodeLoop(ByteBuffer src,
++@@ -377,10 +325,8 @@
++             else
++                 return decodeBufferLoop(src, dst);
++         }
++-
++     }
++ 
++-
++     private static class Encoder extends CharsetEncoder {
++ 
++         private Encoder(Charset cs) {
++@@ -391,8 +337,23 @@
++             return !Surrogate.is(c);
++         }
++ 
++-        private final Surrogate.Parser sgp = new Surrogate.Parser();
+++        public boolean isLegalReplacement(byte[] repl) {
+++            return ((repl.length == 1 && repl[0] >= 0) ||
+++                    super.isLegalReplacement(repl));
+++        }
++ 
+++        private static CoderResult overflow(CharBuffer src, int sp,
+++                                            ByteBuffer dst, int dp) {
+++            updatePositions(src, sp, dst, dp);
+++            return CoderResult.OVERFLOW;
+++        }
+++
+++        private static CoderResult overflow(CharBuffer src, int mark) {
+++            src.position(mark);
+++            return CoderResult.OVERFLOW;
+++        }
+++
+++        private Surrogate.Parser sgp;
++         private CoderResult encodeArrayLoop(CharBuffer src,
++                                             ByteBuffer dst)
++         {
++@@ -399,71 +360,56 @@
++             char[] sa = src.array();
++             int sp = src.arrayOffset() + src.position();
++             int sl = src.arrayOffset() + src.limit();
++-            assert (sp <= sl);
++-            sp = (sp <= sl ? sp : sl);
+++
++             byte[] da = dst.array();
++             int dp = dst.arrayOffset() + dst.position();
++             int dl = dst.arrayOffset() + dst.limit();
++-            assert (dp <= dl);
++-            dp = (dp <= dl ? dp : dl);
+++            int dlASCII = dp + Math.min(sl - sp, dl - dp);
++ 
++-            try {
++-                while (sp < sl) {
++-                    char c = sa[sp];
++-
++-                    if (c < 0x80) {
++-                        // Have at most seven bits
++-                        if (dp >= dl)
++-                            return CoderResult.OVERFLOW;
++-                        da[dp++] = (byte)c;
++-                        sp++;
++-                        continue;
++-                    }
++-
++-                    if (!Surrogate.is(c)) {
++-                        // 2 bytes, 11 bits
++-                        if (c < 0x800) {
++-                            if (dl - dp < 2)
++-                                return CoderResult.OVERFLOW;
++-                            da[dp++] = (byte)(0xc0 | ((c >> 06)));
++-                            da[dp++] = (byte)(0x80 | ((c >> 00) & 0x3f));
++-                            sp++;
++-                            continue;
++-                        }
++-                        if (c <= '\uFFFF') {
++-                            // 3 bytes, 16 bits
++-                            if (dl - dp < 3)
++-                                return CoderResult.OVERFLOW;
++-                            da[dp++] = (byte)(0xe0 | ((c >> 12)));
++-                            da[dp++] = (byte)(0x80 | ((c >> 06) & 0x3f));
++-                            da[dp++] = (byte)(0x80 | ((c >> 00) & 0x3f));
++-                            sp++;
++-                            continue;
++-                        }
++-                    }
++-
+++            //ASCII only loop
+++            while (dp < dlASCII && sa[sp] < '\u0080')
+++                da[dp++] = (byte) sa[sp++];
+++            while (sp < sl) {
+++                int c = sa[sp];
+++                if (c < 0x80) {
+++                    // Have at most seven bits
+++                    if (dp >= dl)
+++                        return overflow(src, sp, dst, dp);
+++                    da[dp++] = (byte)c;
+++                } else if (c < 0x800) {
+++                    // 2 bytes, 11 bits
+++                    if (dl - dp < 2)
+++                        return overflow(src, sp, dst, dp);
+++                    da[dp++] = (byte)(0xc0 | ((c >> 06)));
+++                    da[dp++] = (byte)(0x80 | (c & 0x3f));
+++                } else if (Surrogate.is(c)) {
++                     // Have a surrogate pair
++-                    int uc = sgp.parse(c, sa, sp, sl);
++-                    if (uc < 0)
+++                    if (sgp == null)
+++                        sgp = new Surrogate.Parser();
+++                    int uc = sgp.parse((char)c, sa, sp, sl);
+++                    if (uc < 0) {
+++                        updatePositions(src, sp, dst, dp);
++                         return sgp.error();
++-                    if (uc < 0x200000) {
++-                        if (dl - dp < 4)
++-                            return CoderResult.OVERFLOW;
++-                        da[dp++] = (byte)(0xf0 | ((uc >> 18)));
++-                        da[dp++] = (byte)(0x80 | ((uc >> 12) & 0x3f));
++-                        da[dp++] = (byte)(0x80 | ((uc >> 06) & 0x3f));
++-                        da[dp++] = (byte)(0x80 | ((uc >> 00) & 0x3f));
++-                        sp += sgp.increment();
++-                        continue;
++                     }
++-                    assert false;
++-
+++                    if (dl - dp < 4)
+++                        return overflow(src, sp, dst, dp);
+++                    da[dp++] = (byte)(0xf0 | ((uc >> 18)));
+++                    da[dp++] = (byte)(0x80 | ((uc >> 12) & 0x3f));
+++                    da[dp++] = (byte)(0x80 | ((uc >> 06) & 0x3f));
+++                    da[dp++] = (byte)(0x80 | (uc & 0x3f));
+++                    sp++;  // 2 chars
+++                } else {
+++                    // 3 bytes, 16 bits
+++                    if (dl - dp < 3)
+++                        return overflow(src, sp, dst, dp);
+++                    da[dp++] = (byte)(0xe0 | ((c >> 12)));
+++                    da[dp++] = (byte)(0x80 | ((c >> 06) & 0x3f));
+++                    da[dp++] = (byte)(0x80 | (c & 0x3f));
++                 }
++-                return CoderResult.UNDERFLOW;
++-            } finally {
++-                src.position(sp - src.arrayOffset());
++-                dst.position(dp - dst.arrayOffset());
+++                sp++;
++             }
+++            updatePositions(src, sp, dst, dp);
+++            return CoderResult.UNDERFLOW;
++         }
++ 
++         private CoderResult encodeBufferLoop(CharBuffer src,
++@@ -470,62 +416,47 @@
++                                              ByteBuffer dst)
++         {
++             int mark = src.position();
++-            try {
++-                while (src.hasRemaining()) {
++-                    char c = src.get();
++-
++-                    if (c < 0x80) {
++-                        // Have at most seven bits
++-                        if (!dst.hasRemaining())
++-                            return CoderResult.OVERFLOW;
++-                        dst.put((byte)c);
++-                        mark++;
++-                        continue;
++-                    }
++-
++-                    if (!Surrogate.is(c)) {
++-                        if (c < 0x800) {
++-                            // 2 bytes, 11 bits
++-                            if (dst.remaining() < 2)
++-                                return CoderResult.OVERFLOW;
++-                            dst.put((byte)(0xc0 | ((c >> 06))));
++-                            dst.put((byte)(0x80 | ((c >> 00) & 0x3f)));
++-                            mark++;
++-                            continue;
++-                        }
++-                        if (c <= '\uFFFF') {
++-                            // 3 bytes, 16 bits
++-                            if (dst.remaining() < 3)
++-                                return CoderResult.OVERFLOW;
++-                            dst.put((byte)(0xe0 | ((c >> 12))));
++-                            dst.put((byte)(0x80 | ((c >> 06) & 0x3f)));
++-                            dst.put((byte)(0x80 | ((c >> 00) & 0x3f)));
++-                            mark++;
++-                            continue;
++-                        }
++-                    }
++-
+++            while (src.hasRemaining()) {
+++                int c = src.get();
+++                if (c < 0x80) {
+++                    // Have at most seven bits
+++                    if (!dst.hasRemaining())
+++                        return overflow(src, mark);
+++                    dst.put((byte)c);
+++                } else if (c < 0x800) {
+++                    // 2 bytes, 11 bits
+++                    if (dst.remaining() < 2)
+++                        return overflow(src, mark);
+++                    dst.put((byte)(0xc0 | ((c >> 06))));
+++                    dst.put((byte)(0x80 | (c & 0x3f)));
+++                } else if (Surrogate.is(c)) {
++                     // Have a surrogate pair
++-                    int uc = sgp.parse(c, src);
++-                    if (uc < 0)
+++                    if (sgp == null)
+++                        sgp = new Surrogate.Parser();
+++                    int uc = sgp.parse((char)c, src);
+++                    if (uc < 0) {
+++                        src.position(mark);
++                         return sgp.error();
++-                    if (uc < 0x200000) {
++-                        if (dst.remaining() < 4)
++-                            return CoderResult.OVERFLOW;
++-                        dst.put((byte)(0xf0 | ((uc >> 18))));
++-                        dst.put((byte)(0x80 | ((uc >> 12) & 0x3f)));
++-                        dst.put((byte)(0x80 | ((uc >> 06) & 0x3f)));
++-                        dst.put((byte)(0x80 | ((uc >> 00) & 0x3f)));
++-                        mark += sgp.increment();
++-                        continue;
++                     }
++-                    assert false;
++-
+++                    if (dst.remaining() < 4)
+++                        return overflow(src, mark);
+++                    dst.put((byte)(0xf0 | ((uc >> 18))));
+++                    dst.put((byte)(0x80 | ((uc >> 12) & 0x3f)));
+++                    dst.put((byte)(0x80 | ((uc >> 06) & 0x3f)));
+++                    dst.put((byte)(0x80 | (uc & 0x3f)));
+++                    mark++;  //2 chars
+++                } else {
+++                    // 3 bytes, 16 bits
+++                    if (dst.remaining() < 3)
+++                        return overflow(src, mark);
+++                    dst.put((byte)(0xe0 | ((c >> 12))));
+++                    dst.put((byte)(0x80 | ((c >> 06) & 0x3f)));
+++                    dst.put((byte)(0x80 | (c & 0x3f)));
++                 }
++-                return CoderResult.UNDERFLOW;
++-            } finally {
++-                src.position(mark);
+++                mark++;
++             }
+++            src.position(mark);
+++            return CoderResult.UNDERFLOW;
++         }
++ 
++         protected final CoderResult encodeLoop(CharBuffer src,
++@@ -536,7 +467,5 @@
++             else
++                 return encodeBufferLoop(src, dst);
++         }
++-
++     }
++-
++ }
++--- /dev/null	Thu Oct  9 16:02:14 2008
+++++ openjdk/jdk/test/sun/nio/cs/TestUTF8.java	Thu Oct  9 16:02:14 2008
++@@ -0,0 +1,393 @@
+++/*
+++ * Copyright 2008 Sun Microsystems, Inc.  All Rights Reserved.
+++ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+++ *
+++ * This code is free software; you can redistribute it and/or modify it
+++ * under the terms of the GNU General Public License version 2 only, as
+++ * published by the Free Software Foundation.
+++ *
+++ * This code is distributed in the hope that it will be useful, but WITHOUT
+++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+++ * version 2 for more details (a copy is included in the LICENSE file that
+++ * accompanied this code).
+++ *
+++ * You should have received a copy of the GNU General Public License version
+++ * 2 along with this work; if not, write to the Free Software Foundation,
+++ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+++ *
+++ * Please contact Sun Microsystems, Inc., 4150 Network Circle, Santa Clara,
+++ * CA 95054 USA or visit www.sun.com if you need additional information or
+++ * have any questions.
+++ */
+++
+++/*
+++ * @test
+++ * @bug 4486841
+++ * @summary Test UTF-8 charset
+++ */
+++
+++import java.nio.charset.*;
+++import java.nio.*;
+++import java.util.*;
+++
+++public class TestUTF8 {
+++    static char[] decode(byte[] bb, String csn, boolean testDirect)
+++        throws Exception {
+++        CharsetDecoder dec = Charset.forName(csn).newDecoder();
+++        ByteBuffer bbf;
+++        CharBuffer cbf;
+++        if (testDirect) {
+++            bbf = ByteBuffer.allocateDirect(bb.length);
+++            cbf = ByteBuffer.allocateDirect(bb.length*2).asCharBuffer();
+++            bbf.put(bb).flip();
+++        } else {
+++            bbf = ByteBuffer.wrap(bb);
+++            cbf = CharBuffer.allocate(bb.length);
+++        }
+++        CoderResult cr = dec.decode(bbf, cbf, true);
+++        if (cr != CoderResult.UNDERFLOW)
+++            throw new RuntimeException("Decoding err: " + csn);
+++        char[] cc = new char[cbf.position()];
+++        cbf.flip(); cbf.get(cc);
+++        return cc;
+++
+++    }
+++
+++    static CoderResult decodeCR(byte[] bb, String csn, boolean testDirect)
+++        throws Exception {
+++        CharsetDecoder dec = Charset.forName(csn).newDecoder();
+++        ByteBuffer bbf;
+++        CharBuffer cbf;
+++        if (testDirect) {
+++            bbf = ByteBuffer.allocateDirect(bb.length);
+++            cbf = ByteBuffer.allocateDirect(bb.length*2).asCharBuffer();
+++            bbf.put(bb).flip();
+++        } else {
+++            bbf = ByteBuffer.wrap(bb);
+++            cbf = CharBuffer.allocate(bb.length);
+++        }
+++        return dec.decode(bbf, cbf, true);
+++    }
+++
+++    static byte[] encode(char[] cc, String csn, boolean testDirect)
+++        throws Exception {
+++        ByteBuffer bbf;
+++        CharBuffer cbf;
+++        CharsetEncoder enc = Charset.forName(csn).newEncoder();
+++        if (testDirect) {
+++            bbf = ByteBuffer.allocateDirect(cc.length * 4);
+++            cbf = ByteBuffer.allocateDirect(cc.length * 2).asCharBuffer();
+++            cbf.put(cc).flip();
+++        } else {
+++            bbf = ByteBuffer.allocate(cc.length * 4);
+++            cbf = CharBuffer.wrap(cc);
+++        }
+++
+++        CoderResult cr = enc.encode(cbf, bbf, true);
+++        if (cr != CoderResult.UNDERFLOW)
+++            throw new RuntimeException("Encoding err: " + csn);
+++        byte[] bb = new byte[bbf.position()];
+++        bbf.flip(); bbf.get(bb);
+++        return bb;
+++    }
+++
+++    static CoderResult encodeCR(char[] cc, String csn, boolean testDirect)
+++        throws Exception {
+++        ByteBuffer bbf;
+++        CharBuffer cbf;
+++        CharsetEncoder enc = Charset.forName(csn).newEncoder();
+++        if (testDirect) {
+++            bbf = ByteBuffer.allocateDirect(cc.length * 4);
+++            cbf = ByteBuffer.allocateDirect(cc.length * 2).asCharBuffer();
+++            cbf.put(cc).flip();
+++        } else {
+++            bbf = ByteBuffer.allocate(cc.length * 4);
+++            cbf = CharBuffer.wrap(cc);
+++        }
+++        return enc.encode(cbf, bbf, true);
+++    }
+++
+++    static char[] getUTFChars() {
+++        char[] cc = new char[0x10000 - 0xe000 + 0xd800 + //bmp
+++                             (0x110000 - 0x10000) * 2];    //supp
+++        int pos = 0;
+++        int i = 0;
+++        for (i = 0; i < 0xd800; i++)
+++            cc[pos++] = (char)i;
+++        for (i = 0xe000; i < 0x10000; i++)
+++            cc[pos++] = (char)i;
+++        for (i = 0x10000; i < 0x110000; i++) {
+++            pos += Character.toChars(i, cc, pos);
+++        }
+++        return cc;
+++    }
+++
+++    static int to3ByteUTF8(char c, byte[] bb, int pos) {
+++        bb[pos++] = (byte)(0xe0 | ((c >> 12)));
+++        bb[pos++] = (byte)(0x80 | ((c >> 06) & 0x3f));
+++        bb[pos++] = (byte)(0x80 | ((c >> 00) & 0x3f));
+++        return 3;
+++    }
+++
+++    static void checkRoundtrip(String csn) throws Exception {
+++        System.out.printf("    Check roundtrip <%s>...", csn);
+++        char[] cc = getUTFChars();
+++        byte[] bb = encode(cc, csn, false);
+++        char[] ccO = decode(bb, csn, false);
+++
+++        if (!Arrays.equals(cc, ccO)) {
+++            System.out.printf("    non-direct failed");
+++        }
+++        bb = encode(cc, csn, true);
+++        ccO = decode(bb, csn, true);
+++        if (!Arrays.equals(cc, ccO)) {
+++            System.out.printf("    (direct) failed");
+++        }
+++        System.out.println();
+++    }
+++
+++    static void check6ByteSurrs(String csn) throws Exception {
+++        System.out.printf("    Check 6-byte Surrogates <%s>...%n", csn);
+++        byte[] bb = new byte[(0x110000 - 0x10000) * 6];
+++        char[] cc = new char[(0x110000 - 0x10000) * 2];
+++        int bpos = 0;
+++        int cpos = 0;
+++        for (int i = 0x10000; i < 0x110000; i++) {
+++            Character.toChars(i, cc, cpos);
+++            bpos += to3ByteUTF8(cc[cpos], bb, bpos);
+++            bpos += to3ByteUTF8(cc[cpos + 1], bb, bpos);
+++            cpos += 2;
+++        }
+++
+++        char[] ccO = decode(bb, csn, false);
+++        if (!Arrays.equals(cc, ccO)) {
+++            System.out.printf("    decoding failed%n");
+++        }
+++        ccO = decode(bb, csn, true);
+++        if (!Arrays.equals(cc, ccO)) {
+++            System.out.printf("    decoding(direct) failed%n");
+++        }
+++    }
+++
+++    static void compare(String csn1, String csn2) throws Exception {
+++        System.out.printf("    Diff <%s> <%s>...%n", csn1, csn2);
+++        char[] cc = getUTFChars();
+++
+++        byte[] bb1 = encode(cc, csn1, false);
+++        byte[] bb2 = encode(cc, csn2, false);
+++        if (!Arrays.equals(bb1, bb2))
+++            System.out.printf("        encoding failed%n");
+++        char[] cc1 = decode(bb1, csn1, false);
+++        char[] cc2 = decode(bb1, csn2, false);
+++        if (!Arrays.equals(cc1, cc2)) {
+++            System.out.printf("        decoding failed%n");
+++        }
+++
+++        bb1 = encode(cc, csn1, true);
+++        bb2 = encode(cc, csn2, true);
+++        if (!Arrays.equals(bb1, bb2))
+++            System.out.printf("        encoding (direct) failed%n");
+++        cc1 = decode(bb1, csn1, true);
+++        cc2 = decode(bb1, csn2, true);
+++        if (!Arrays.equals(cc1, cc2)) {
+++            System.out.printf("        decoding (direct) failed%n");
+++        }
+++    }
+++
+++    // The first byte is the length of malformed bytes
+++    static byte[][] malformed = {
+++        // One-byte sequences:
+++        {1, (byte)0xFF },
+++        {1, (byte)0xC0 },
+++        {1, (byte)0x80 },
+++
+++        {1, (byte)0xFF, (byte)0xFF}, // all ones
+++        {1, (byte)0xA0, (byte)0x80}, // 101x first byte first nibble
+++
+++        // Two-byte sequences:
+++        {1, (byte)0xC0, (byte)0x80}, // invalid first byte
+++        {1, (byte)0xC1, (byte)0xBF}, // invalid first byte
+++        {1, (byte)0xC2, (byte)0x00}, // invalid second byte
+++        {1, (byte)0xC2, (byte)0xC0}, // invalid second byte
+++        {1, (byte)0xD0, (byte)0x00}, // invalid second byte
+++        {1, (byte)0xD0, (byte)0xC0}, // invalid second byte
+++        {1, (byte)0xDF, (byte)0x00}, // invalid second byte
+++        {1, (byte)0xDF, (byte)0xC0}, // invalid second byte
+++
+++        // Three-byte sequences
+++        {1, (byte)0xE0, (byte)0x80, (byte)0x80},  // 111x first byte first nibble
+++        {1, (byte)0xE0, (byte)0x80, (byte)0x80 }, // U+0000 zero-padded
+++        {1, (byte)0xE0, (byte)0x81, (byte)0xBF }, // U+007F zero-padded
+++        {1, (byte)0xE0, (byte)0x9F, (byte)0xBF }, // U+07FF zero-padded
+++
+++        {1, (byte)0xE0, (byte)0xC0, (byte)0xBF }, // invalid second byte
+++        {2, (byte)0xE0, (byte)0xA0, (byte)0x7F }, // invalid third byte
+++        {2, (byte)0xE0, (byte)0xA0, (byte)0xC0 }, // invalid third byte
+++        {1, (byte)0xFF, (byte)0xFF, (byte)0xFF }, // all ones
+++        {1, (byte)0xE0, (byte)0xC0, (byte)0x80 }, // invalid second byte
+++        {1, (byte)0xE0, (byte)0x80, (byte)0xC0 }, // invalid first byte
+++
+++        // Four-byte sequences
+++        {1, (byte)0xF0, (byte)0x80, (byte)0x80, (byte)0x80 }, // U+0000 zero-padded
+++        {1, (byte)0xF0, (byte)0x80, (byte)0x81, (byte)0xBF }, // U+007F zero-padded
+++        {1, (byte)0xF0, (byte)0x80, (byte)0x9F, (byte)0xBF }, // U+007F zero-padded
+++        {1, (byte)0xF0, (byte)0x8F, (byte)0xBF, (byte)0xBF }, // U+07FF zero-padded
+++
+++        {1, (byte)0xFF, (byte)0xFF, (byte)0xFF, (byte)0xFF }, // all ones
+++        {1, (byte)0xF0, (byte)0x80, (byte)0x80, (byte)0x80},  // invalid second byte
+++        {1, (byte)0xF0, (byte)0xC0, (byte)0x80, (byte)0x80 }, // invalid second byte
+++        {2, (byte)0xF0, (byte)0x90, (byte)0xC0, (byte)0x80 }, // invalid third byte
+++        {3, (byte)0xF0, (byte)0x90, (byte)0x80, (byte)0xC0 }, // invalid third byte
+++
+++        {1, (byte)0xF1, (byte)0xC0, (byte)0x80, (byte)0x80 }, // invalid second byte
+++        {2, (byte)0xF1, (byte)0x80, (byte)0xC0, (byte)0x80 }, // invalid third byte
+++        {3, (byte)0xF1, (byte)0x80, (byte)0x80, (byte)0xC0 }, // invalid forth byte
+++        {1, (byte)0xF4, (byte)0x90, (byte)0x80, (byte)0xC0 }, // out-range 4-byte
+++        {1, (byte)0xF4, (byte)0xC0, (byte)0x80, (byte)0xC0 }, // out-range 4-byte
+++        {1, (byte)0xF5, (byte)0x80, (byte)0x80, (byte)0xC0 }, // out-range 4-byte
+++
+++        // Five-byte sequences
+++        {5, (byte)0xF8, (byte)0x80, (byte)0x80, (byte)0x80, (byte)0x80},  // invalid first byte
+++        {5, (byte)0xF8, (byte)0x80, (byte)0x80, (byte)0x80, (byte)0x80 }, // U+0000 zero-padded
+++        {5, (byte)0xF8, (byte)0x80, (byte)0x80, (byte)0x81, (byte)0xBF }, // U+007F zero-padded
+++        {5, (byte)0xF8, (byte)0x80, (byte)0x80, (byte)0x9F, (byte)0xBF }, // U+07FF zero-padded
+++        {5, (byte)0xF8, (byte)0x80, (byte)0x8F, (byte)0xBF, (byte)0xBF }, // U+FFFF zero-padded
+++
+++        {1, (byte)0xF8, (byte)0xC0, (byte)0x80, (byte)0x80, (byte)0x80},
+++        {2, (byte)0xF8, (byte)0x80, (byte)0xC0, (byte)0x80, (byte)0x80 },
+++        {3, (byte)0xF8, (byte)0x80, (byte)0x80, (byte)0xC1, (byte)0xBF },
+++        {4, (byte)0xF8, (byte)0x80, (byte)0x80, (byte)0x9F, (byte)0xC0 },
+++
+++        // Six-byte sequences
+++        {6, (byte)0xFC, (byte)0x80, (byte)0x80, (byte)0x80, (byte)0x80, (byte)0x80 }, // U+0000 zero-padded
+++        {6, (byte)0xFC, (byte)0x80, (byte)0x80, (byte)0x80, (byte)0x81, (byte)0xBF }, // U+007F zero-padded
+++        {6, (byte)0xFC, (byte)0x80, (byte)0x80, (byte)0x80, (byte)0x9F, (byte)0xBF }, // U+07FF zero-padded
+++        {6, (byte)0xFC, (byte)0x80, (byte)0x80, (byte)0x8F, (byte)0xBF, (byte)0xBF }, // U+FFFF zero-padded
+++        {1, (byte)0xF8, (byte)0xC0, (byte)0x80, (byte)0x80, (byte)0x80, (byte)0x80 },
+++        {2, (byte)0xF8, (byte)0x80, (byte)0xC0, (byte)0x80, (byte)0x80, (byte)0x80 },
+++        {3, (byte)0xF8, (byte)0x80, (byte)0x80, (byte)0xC1, (byte)0xBF, (byte)0x80 },
+++        {4, (byte)0xF8, (byte)0x80, (byte)0x80, (byte)0x9F, (byte)0xC0, (byte)0x80 },
+++        {5, (byte)0xF8, (byte)0x80, (byte)0x80, (byte)0x9F, (byte)0x80, (byte)0xC0 },
+++    };
+++
+++    static void checkMalformed(String csn) throws Exception {
+++        boolean failed = false;
+++        System.out.printf("    Check malformed <%s>...%n", csn);
+++        for (boolean direct: new boolean[] {false, true}) {
+++            for (byte[] bins : malformed) {
+++                int mlen = bins[0];
+++                byte[] bin = Arrays.copyOfRange(bins, 1, bins.length);
+++                CoderResult cr = decodeCR(bin, csn, direct);
+++                String ashex = "";
+++                for (int i = 0; i < bin.length; i++) {
+++                    if (i > 0) ashex += " ";
+++                        ashex += Integer.toBinaryString((int)bin[i] & 0xff);
+++                }
+++                if (!cr.isMalformed()) {
+++                    System.out.printf("        FAIL(direct=%b): [%s] not malformed.\n", direct, ashex);
+++                    failed = true;
+++                } else if (cr.length() != mlen) {
+++                    System.out.printf("        FAIL(direct=%b): [%s] malformed[len=%d].\n", direct, ashex, cr.length());
+++                    failed = true;
+++                }
+++            }
+++        }
+++        if (failed)
+++            throw new RuntimeException("Check malformed failed " + csn);
+++    }
+++
+++    static boolean check(CharsetDecoder dec, byte[] utf8s, boolean direct, int[] flow) {
+++        int inPos = flow[0];
+++        int inLen = flow[1];
+++        int outPos = flow[2];
+++        int outLen = flow[3];
+++        int expedInPos = flow[4];
+++        int expedOutPos = flow[5];
+++        CoderResult expedCR = (flow[6]==0)?CoderResult.UNDERFLOW
+++                                          :CoderResult.OVERFLOW;
+++        ByteBuffer bbf;
+++        CharBuffer cbf;
+++        if (direct) {
+++            bbf = ByteBuffer.allocateDirect(inPos + utf8s.length);
+++            cbf = ByteBuffer.allocateDirect((outPos + outLen)*2).asCharBuffer();
+++        } else {
+++            bbf = ByteBuffer.allocate(inPos + utf8s.length);
+++            cbf = CharBuffer.allocate(outPos + outLen);
+++        }
+++        bbf.position(inPos);
+++        bbf.put(utf8s).flip().position(inPos).limit(inPos + inLen);
+++        cbf.position(outPos);
+++        dec.reset();
+++        CoderResult cr = dec.decode(bbf, cbf, false);
+++        if (cr != expedCR ||
+++            bbf.position() != expedInPos ||
+++            cbf.position() != expedOutPos) {
+++            System.out.printf("Expected(direct=%5b): [", direct);
+++            for (int i:flow) System.out.print(" " + i);
+++            System.out.println("]  CR=" + cr +
+++                               ", inPos=" + bbf.position() +
+++                               ", outPos=" + cbf.position());
+++            return false;
+++        }
+++        return true;
+++    }
+++
+++    static void checkUnderOverflow(String csn) throws Exception {
+++        System.out.printf("    Check under/overflow <%s>...%n", csn);
+++        CharsetDecoder dec = Charset.forName(csn).newDecoder();
+++        boolean failed = false;
+++        byte[] utf8s = new String("\u007f\u07ff\ue000\ud800\udc00").getBytes("UTF-8");
+++        int    inlen = utf8s.length;
+++
+++        for (int inoff = 0; inoff < 20; inoff++) {
+++            for (int outoff = 0; outoff < 20; outoff++) {
+++        int[][] Flows = {
+++            //inpos, inLen, outPos,  outLen, inPosEP,   outposEP,   under(0)/over(1)
+++            {inoff,  inlen, outoff,  1,      inoff + 1, outoff + 1, 1},
+++            {inoff,  inlen, outoff,  2,      inoff + 3, outoff + 2, 1},
+++            {inoff,  inlen, outoff,  3,      inoff + 6, outoff + 3, 1},
+++            {inoff,  inlen, outoff,  4,      inoff + 6, outoff + 3, 1},
+++            {inoff,  inlen, outoff,  5,      inoff + 10,outoff + 5, 0},
+++             // underflow
+++            {inoff,  1,     outoff,  5,      inoff + 1, outoff + 1, 0},
+++            {inoff,  2,     outoff,  5,      inoff + 1, outoff + 1, 0},
+++            {inoff,  3,     outoff,  5,      inoff + 3, outoff + 2, 0},
+++            {inoff,  4,     outoff,  5,      inoff + 3, outoff + 2, 0},
+++            {inoff,  5,     outoff,  5,      inoff + 3, outoff + 2, 0},
+++            {inoff,  6,     outoff,  5,      inoff + 6, outoff + 3, 0},
+++            {inoff,  7,     outoff,  5,      inoff + 6, outoff + 3, 0},
+++            {inoff,  8,     outoff,  5,      inoff + 6, outoff + 3, 0},
+++            {inoff,  9,     outoff,  5,      inoff + 6, outoff + 3, 0},
+++            {inoff,  10,    outoff,  5,      inoff + 10,outoff + 5, 0},
+++             // 2-byte underflow/overflow
+++            {inoff,  2,     outoff,  1,      inoff + 1, outoff + 1, 0},
+++            {inoff,  3,     outoff,  1,      inoff + 1, outoff + 1, 1},
+++             // 3-byte underflow/overflow
+++            {inoff,  4,     outoff,  2,      inoff + 3, outoff + 2, 0},
+++            {inoff,  5,     outoff,  2,      inoff + 3, outoff + 2, 0},
+++            {inoff,  6,     outoff,  2,      inoff + 3, outoff + 2, 1},
+++             // 4-byte underflow/overflow
+++            {inoff,  7,     outoff,  4,      inoff + 6, outoff + 3, 0},
+++            {inoff,  8,     outoff,  4,      inoff + 6, outoff + 3, 0},
+++            {inoff,  9,     outoff,  4,      inoff + 6, outoff + 3, 0},
+++            {inoff,  10,    outoff,  4,      inoff + 6, outoff + 3, 1},
+++        };
+++        for (boolean direct: new boolean[] {false, true}) {
+++            for (int[] flow: Flows) {
+++                if (!check(dec, utf8s, direct, flow))
+++                    failed = true;
+++            }
+++        }}}
+++        if (failed)
+++            throw new RuntimeException("Check under/overflow failed " + csn);
+++    }
+++
+++    public static void main(String[] args) throws Exception {
+++        checkRoundtrip("UTF-8");
+++        check6ByteSurrs("UTF-8");
+++        //compare("UTF-8", "UTF-8-OLD");
+++        checkMalformed("UTF-8");
+++        checkUnderOverflow("UTF-8");
+++    }
+++}
+diff -Nru icedtea6-1.2.old/patches/icedtea-6484091.patch icedtea6-1.2/patches/icedtea-6484091.patch
+--- icedtea6-1.2.old/patches/icedtea-6484091.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.2/patches/icedtea-6484091.patch	2008-12-18 00:26:31.000000000 +0000
+@@ -0,0 +1,129 @@
++--- old/src/share/classes/javax/swing/plaf/metal/MetalFileChooserUI.java	Tue Nov 18 10:35:29 2008
+++++ openjdk/jdk/src/share/classes/javax/swing/plaf/metal/MetalFileChooserUI.java	Tue Nov 18 10:35:29 2008
++@@ -38,6 +38,8 @@
++ import java.io.FileNotFoundException;
++ import java.io.IOException;
++ import java.util.*;
+++import java.security.AccessController;
+++import java.security.PrivilegedAction;
++ import javax.accessibility.*;
++ 
++ import sun.awt.shell.ShellFolder;
++@@ -957,7 +959,11 @@
++ 
++             File[] baseFolders;
++             if (useShellFolder) {
++-                baseFolders = (File[])ShellFolder.get("fileChooserComboBoxFolders");
+++                baseFolders = AccessController.doPrivileged(new PrivilegedAction<File[]>() {
+++                    public File[] run() {
+++                        return (File[]) ShellFolder.get("fileChooserComboBoxFolders");
+++                    }
+++                });
++             } else {
++                 baseFolders = fsv.getRoots();
++             }
++--- old/src/share/classes/sun/swing/plaf/synth/SynthFileChooserUIImpl.java	Tue Nov 18 10:35:30 2008
+++++ openjdk/jdk/src/share/classes/sun/swing/plaf/synth/SynthFileChooserUIImpl.java	Tue Nov 18 10:35:30 2008
++@@ -29,6 +29,8 @@
++ import java.beans.*;
++ import java.io.*;
++ import java.util.*;
+++import java.security.AccessController;
+++import java.security.PrivilegedAction;
++ 
++ import javax.swing.*;
++ import javax.swing.event.*;
++@@ -769,7 +771,11 @@
++ 
++             File[] baseFolders;
++             if (useShellFolder) {
++-                baseFolders = (File[])ShellFolder.get("fileChooserComboBoxFolders");
+++                baseFolders = AccessController.doPrivileged(new PrivilegedAction<File[]>() {
+++                    public File[] run() {
+++                        return (File[]) ShellFolder.get("fileChooserComboBoxFolders");
+++                    }
+++                });
++             } else {
++                 baseFolders = fsv.getRoots();
++             }
++--- old/src/share/classes/com/sun/java/swing/plaf/windows/WindowsFileChooserUI.java	Tue Nov 18 10:35:31 2008
+++++ openjdk/jdk/src/share/classes/com/sun/java/swing/plaf/windows/WindowsFileChooserUI.java	Tue Nov 18 10:35:31 2008
++@@ -39,6 +39,8 @@
++ import java.io.FileNotFoundException;
++ import java.io.IOException;
++ import java.util.*;
+++import java.security.AccessController;
+++import java.security.PrivilegedAction;
++ 
++ import sun.awt.shell.ShellFolder;
++ import sun.awt.OSInfo;
++@@ -1165,7 +1167,11 @@
++ 
++             File[] baseFolders;
++             if (useShellFolder) {
++-                baseFolders = (File[])ShellFolder.get("fileChooserComboBoxFolders");
+++                baseFolders = AccessController.doPrivileged(new PrivilegedAction<File[]>() {
+++                    public File[] run() {
+++                        return (File[]) ShellFolder.get("fileChooserComboBoxFolders");
+++                    }
+++                });
++             } else {
++                 baseFolders = fsv.getRoots();
++             }
++--- old/src/windows/classes/sun/awt/shell/Win32ShellFolder2.java	Tue Nov 18 10:35:32 2008
+++++ openjdk/jdk/src/windows/classes/sun/awt/shell/Win32ShellFolder2.java	Tue Nov 18 10:35:32 2008
++
++@@ -657,6 +657,10 @@
++      *         <code>null</code> if this shellfolder does not denote a directory.
++      */
++     public File[] listFiles(final boolean includeHiddenFiles) {
+++        SecurityManager security = System.getSecurityManager();
+++        if (security != null) {
+++            security.checkRead(getPath());
+++        }
++ 
++         return new ComTask<File[]>() {
++             public File[] call() throws Exception {
++--- /dev/null	Tue Nov 18 10:35:33 2008
+++++ openjdk/jdk/test/javax/swing/JFileChooser/6484091/bug6484091.java	Tue Nov 18 10:35:33 2008
++@@ -0,0 +1,40 @@
+++/* @test @(#)bug6484091.java	1.1 08/11/18
+++ * @bug 6484091
+++ * @summary FileSystemView leaks directory info
+++ * @author Pavel Porvatov
+++   @run main bug6484091
+++ */
+++
+++import java.io.*;
+++import java.security.AccessControlException;
+++import javax.swing.filechooser.FileSystemView;
+++import javax.swing.*;
+++
+++import sun.awt.shell.ShellFolder;
+++
+++public class bug6484091 {
+++    public static void main(String[] args) {
+++        ShellFolder dir = (ShellFolder) FileSystemView.getFileSystemView().getDefaultDirectory();
+++
+++        printDirContent(dir);
+++
+++        System.setSecurityManager(new SecurityManager());
+++
+++        // The next test cases use 'dir' obtained without SecurityManager
+++        try {
+++            printDirContent(dir);
+++
+++            throw new RuntimeException("Dir content was derived bypass SecurityManager");
+++        } catch (AccessControlException e) {
+++            // It's a successful situation
+++        }
+++    }
+++
+++    private static void printDirContent(File dir) {
+++        System.out.println("Files in " + dir.getAbsolutePath() + ":");
+++
+++        for (File file : dir.listFiles()) {
+++            System.out.println(file.getName());
+++        }
+++    }
+++}
+diff -Nru icedtea6-1.2.old/patches/icedtea-6497740.patch icedtea6-1.2/patches/icedtea-6497740.patch
+--- icedtea6-1.2.old/patches/icedtea-6497740.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.2/patches/icedtea-6497740.patch	2008-12-18 00:26:31.000000000 +0000
+@@ -0,0 +1,774 @@
++--- old/src/share/classes/sun/security/pkcs11/P11KeyPairGenerator.java	Fri Aug 22 18:58:20 2008
+++++ openjdk/jdk/src/share/classes/sun/security/pkcs11/P11KeyPairGenerator.java	Fri Aug 22 18:58:20 2008
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2003-2006 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2003-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -38,6 +38,8 @@
++ import sun.security.pkcs11.wrapper.*;
++ import static sun.security.pkcs11.wrapper.PKCS11Constants.*;
++ 
+++import sun.security.rsa.RSAKeyFactory;
+++
++ /**
++  * KeyPairGenerator implementation class. This class currently supports
++  * RSA, DSA, DH, and EC.
++@@ -66,7 +68,7 @@
++     private AlgorithmParameterSpec params;
++ 
++     // for RSA, selected or default value of public exponent, always valid
++-    private BigInteger rsaPublicExponent;
+++    private BigInteger rsaPublicExponent = RSAKeyGenParameterSpec.F4;
++ 
++     // SecureRandom instance, if specified in init
++     private SecureRandom random;
++@@ -88,7 +90,7 @@
++     public void initialize(int keySize, SecureRandom random) {
++         token.ensureValid();
++         try {
++-            checkKeySize(keySize);
+++            checkKeySize(keySize, null);
++         } catch (InvalidAlgorithmParameterException e) {
++             throw new InvalidParameterException(e.getMessage());
++         }
++@@ -95,12 +97,12 @@
++         this.keySize = keySize;
++         this.params = null;
++         this.random = random;
++-        this.rsaPublicExponent = RSAKeyGenParameterSpec.F4;
++         if (algorithm.equals("EC")) {
++             params = P11ECKeyFactory.getECParameterSpec(keySize);
++             if (params == null) {
++-                throw new InvalidParameterException
++-                ("No EC parameters available for key size " + keySize + " bits");
+++                throw new InvalidParameterException(
+++                    "No EC parameters available for key size "
+++                    + keySize + " bits");
++             }
++         }
++     }
++@@ -115,8 +117,10 @@
++                         ("DHParameterSpec required for Diffie-Hellman");
++             }
++             DHParameterSpec dhParams = (DHParameterSpec)params;
++-            this.keySize = dhParams.getP().bitLength();
++-            this.params = params;
+++            int tmpKeySize = dhParams.getP().bitLength();
+++            checkKeySize(tmpKeySize, dhParams);
+++            this.keySize = tmpKeySize;
+++            this.params = dhParams;
++             // XXX sanity check params
++         } else if (algorithm.equals("RSA")) {
++             if (params instanceof RSAKeyGenParameterSpec == false) {
++@@ -124,7 +128,9 @@
++                         ("RSAKeyGenParameterSpec required for RSA");
++             }
++             RSAKeyGenParameterSpec rsaParams = (RSAKeyGenParameterSpec)params;
++-            this.keySize = rsaParams.getKeysize();
+++            int tmpKeySize = rsaParams.getKeysize();
+++            checkKeySize(tmpKeySize, rsaParams);
+++            this.keySize = tmpKeySize;
++             this.params = null;
++             this.rsaPublicExponent = rsaParams.getPublicExponent();
++             // XXX sanity check params
++@@ -134,13 +140,16 @@
++                         ("DSAParameterSpec required for DSA");
++             }
++             DSAParameterSpec dsaParams = (DSAParameterSpec)params;
++-            this.keySize = dsaParams.getP().bitLength();
++-            this.params = params;
+++            int tmpKeySize = dsaParams.getP().bitLength();
+++            checkKeySize(tmpKeySize, dsaParams);
+++            this.keySize = tmpKeySize;
+++            this.params = dsaParams;
++             // XXX sanity check params
++         } else if (algorithm.equals("EC")) {
++             ECParameterSpec ecParams;
++             if (params instanceof ECParameterSpec) {
++-                ecParams = P11ECKeyFactory.getECParameterSpec((ECParameterSpec)params);
+++                ecParams = P11ECKeyFactory.getECParameterSpec(
+++                    (ECParameterSpec)params);
++                 if (ecParams == null) {
++                     throw new InvalidAlgorithmParameterException
++                         ("Unsupported curve: " + params);
++@@ -156,16 +165,17 @@
++                 throw new InvalidAlgorithmParameterException
++                     ("ECParameterSpec or ECGenParameterSpec required for EC");
++             }
++-            this.keySize = ecParams.getCurve().getField().getFieldSize();
+++            int tmpKeySize = ecParams.getCurve().getField().getFieldSize();
+++            checkKeySize(tmpKeySize, ecParams);
+++            this.keySize = tmpKeySize;
++             this.params = ecParams;
++         } else {
++             throw new ProviderException("Unknown algorithm: " + algorithm);
++         }
++         this.random = random;
++-        checkKeySize(keySize);
++     }
++ 
++-    private void checkKeySize(int keySize)
+++    private void checkKeySize(int keySize, AlgorithmParameterSpec params)
++             throws InvalidAlgorithmParameterException {
++         if (algorithm.equals("EC")) {
++             if (keySize < 112) {
++@@ -178,13 +188,28 @@
++                     ("Key size must be at most 2048 bit");
++             }
++             return;
+++        } else if (algorithm.equals("RSA")) {
+++            BigInteger tmpExponent = rsaPublicExponent;
+++            if (params != null) {
+++                // Already tested for instanceof RSAKeyGenParameterSpec above
+++                tmpExponent =
+++                    ((RSAKeyGenParameterSpec)params).getPublicExponent();
+++            }
+++            try {
+++                // This provider supports 64K or less.
+++                RSAKeyFactory.checkKeyLengths(keySize, tmpExponent,
+++                    512, 64 * 1024);
+++            } catch (InvalidKeyException e) {
+++                throw new InvalidAlgorithmParameterException(e.getMessage());
+++            }
+++            return;
++         }
+++
++         if (keySize < 512) {
++             throw new InvalidAlgorithmParameterException
++                 ("Key size must be at least 512 bit");
++         }
++-        if (algorithm.equals("RSA") ||
++-                (algorithm.equals("DH") && (params != null))) {
+++        if (algorithm.equals("DH") && (params != null)) {
++             // sanity check, nobody really wants keys this large
++             if (keySize > 64 * 1024) {
++                 throw new InvalidAlgorithmParameterException
++--- old/src/share/classes/sun/security/pkcs11/P11KeyStore.java	Fri Aug 22 18:58:29 2008
+++++ openjdk/jdk/src/share/classes/sun/security/pkcs11/P11KeyStore.java	Fri Aug 22 18:58:29 2008
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2003-2006 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2003-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -80,6 +80,8 @@
++ import sun.security.pkcs11.wrapper.*;
++ import static sun.security.pkcs11.wrapper.PKCS11Constants.*;
++ 
+++import sun.security.rsa.RSAKeyFactory;
+++
++ final class P11KeyStore extends KeyStoreSpi {
++ 
++     private static final CK_ATTRIBUTE ATTR_CLASS_CERT =
++@@ -1335,6 +1337,15 @@
++             BigInteger modulus = attrs[0].getBigInteger();
++             keyLength = modulus.bitLength();
++ 
+++            // This check will combine our "don't care" values here
+++            // with the system-wide min/max values.
+++            try {
+++                RSAKeyFactory.checkKeyLengths(keyLength, null,
+++                    -1, Integer.MAX_VALUE);
+++            } catch (InvalidKeyException e) {
+++                throw new KeyStoreException(e.getMessage());
+++            }
+++
++             return P11Key.privateKey(session,
++                                 oHandle,
++                                 keyType,
++--- old/src/share/classes/sun/security/pkcs11/P11RSAKeyFactory.java	Fri Aug 22 18:58:37 2008
+++++ openjdk/jdk/src/share/classes/sun/security/pkcs11/P11RSAKeyFactory.java	Fri Aug 22 18:58:37 2008
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2003 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2003-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -35,6 +35,8 @@
++ import sun.security.pkcs11.wrapper.*;
++ import static sun.security.pkcs11.wrapper.PKCS11Constants.*;
++ 
+++import sun.security.rsa.RSAKeyFactory;
+++
++ /**
++  * RSA KeyFactory implemenation.
++  *
++@@ -131,6 +133,9 @@
++         } catch (PKCS11Exception e) {
++             throw new InvalidKeySpecException
++                 ("Could not create RSA public key", e);
+++        } catch (InvalidKeyException e) {
+++            throw new InvalidKeySpecException
+++                ("Could not create RSA public key", e);
++         }
++     }
++ 
++@@ -175,11 +180,15 @@
++         } catch (PKCS11Exception e) {
++             throw new InvalidKeySpecException
++                 ("Could not create RSA private key", e);
+++        } catch (InvalidKeyException e) {
+++            throw new InvalidKeySpecException
+++                ("Could not create RSA private key", e);
++         }
++     }
++ 
++     private PublicKey generatePublic(BigInteger n, BigInteger e)
++-            throws PKCS11Exception {
+++            throws PKCS11Exception, InvalidKeyException {
+++        RSAKeyFactory.checkKeyLengths(n.bitLength(), e, -1, 64 * 1024);
++         CK_ATTRIBUTE[] attributes = new CK_ATTRIBUTE[] {
++             new CK_ATTRIBUTE(CKA_CLASS, CKO_PUBLIC_KEY),
++             new CK_ATTRIBUTE(CKA_KEY_TYPE, CKK_RSA),
++@@ -200,7 +209,8 @@
++     }
++ 
++     private PrivateKey generatePrivate(BigInteger n, BigInteger d)
++-            throws PKCS11Exception {
+++            throws PKCS11Exception, InvalidKeyException {
+++        RSAKeyFactory.checkKeyLengths(n.bitLength(), null, -1, 64 * 1024);
++         CK_ATTRIBUTE[] attributes = new CK_ATTRIBUTE[] {
++             new CK_ATTRIBUTE(CKA_CLASS, CKO_PRIVATE_KEY),
++             new CK_ATTRIBUTE(CKA_KEY_TYPE, CKK_RSA),
++@@ -222,7 +232,9 @@
++ 
++     private PrivateKey generatePrivate(BigInteger n, BigInteger e,
++             BigInteger d, BigInteger p, BigInteger q, BigInteger pe,
++-            BigInteger qe, BigInteger coeff) throws PKCS11Exception {
+++            BigInteger qe, BigInteger coeff) throws PKCS11Exception,
+++            InvalidKeyException {
+++        RSAKeyFactory.checkKeyLengths(n.bitLength(), e, -1, 64 * 1024);
++         CK_ATTRIBUTE[] attributes = new CK_ATTRIBUTE[] {
++             new CK_ATTRIBUTE(CKA_CLASS, CKO_PRIVATE_KEY),
++             new CK_ATTRIBUTE(CKA_KEY_TYPE, CKK_RSA),
++--- old/src/share/classes/sun/security/rsa/RSAKeyFactory.java	Fri Aug 22 18:58:44 2008
+++++ openjdk/jdk/src/share/classes/sun/security/rsa/RSAKeyFactory.java	Fri Aug 22 18:58:43 2008
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2003-2006 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2003-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -31,6 +31,8 @@
++ import java.security.interfaces.*;
++ import java.security.spec.*;
++ 
+++import sun.security.action.GetPropertyAction;
+++
++ /**
++  * KeyFactory for RSA keys. Keys must be instances of PublicKey or PrivateKey
++  * and getAlgorithm() must return "RSA". For such keys, it supports conversion
++@@ -68,6 +70,24 @@
++     private final static Class<?> x509KeySpecClass  = X509EncodedKeySpec.class;
++     private final static Class<?> pkcs8KeySpecClass = PKCS8EncodedKeySpec.class;
++ 
+++    public final static int MIN_MODLEN = 512;
+++    public final static int MAX_MODLEN = 16384;
+++
+++    /*
+++     * If the modulus length is above this value, restrict the size of
+++     * the exponent to something that can be reasonably computed.  We
+++     * could simply hardcode the exp len to something like 64 bits, but
+++     * this approach allows flexibility in case impls would like to use
+++     * larger module and exponent values.
+++     */
+++    public final static int MAX_MODLEN_RESTRICT_EXP = 3072;
+++    public final static int MAX_RESTRICTED_EXPLEN = 64;
+++
+++    private static final boolean restrictExpLen =
+++        "true".equalsIgnoreCase(AccessController.doPrivileged(
+++            new GetPropertyAction(
+++                "sun.security.rsa.restrictRSAExponent", "true")));
+++
++     // instance used for static translateKey();
++     private final static RSAKeyFactory INSTANCE = new RSAKeyFactory();
++ 
++@@ -76,75 +96,80 @@
++     }
++ 
++     /**
++-     * Static method to convert Key into a useable instance of
++-     * RSAPublicKey or RSAPrivate(Crt)Key. Check the key and convert it
++-     * to a SunRsaSign key if necessary. If the key is not an RSA key
++-     * or cannot be used, throw an InvalidKeyException.
+++     * Static method to convert Key into an instance of RSAPublicKeyImpl
+++     * or RSAPrivate(Crt)KeyImpl. If the key is not an RSA key or cannot be
+++     * used, throw an InvalidKeyException.
++      *
++-     * The difference between this method and engineTranslateKey() is that
++-     * we do not convert keys of other providers that are already an
++-     * instance of RSAPublicKey or RSAPrivate(Crt)Key.
++-     *
++      * Used by RSASignature and RSACipher.
++      */
++     public static RSAKey toRSAKey(Key key) throws InvalidKeyException {
++-        if (key instanceof RSAKey) {
++-            RSAKey rsaKey = (RSAKey)key;
++-            checkKey(rsaKey);
++-            return rsaKey;
+++        if ((key instanceof RSAPrivateKeyImpl) ||
+++            (key instanceof RSAPrivateCrtKeyImpl) ||
+++            (key instanceof RSAPublicKeyImpl)) {
+++            return (RSAKey)key;
++         } else {
++             return (RSAKey)INSTANCE.engineTranslateKey(key);
++         }
++     }
++ 
++-    /**
++-     * Check that the given RSA key is valid.
+++    /*
+++     * Single test entry point for all of the mechanisms in the SunRsaSign
+++     * provider (RSA*KeyImpls).  All of the tests are the same.
+++     *
+++     * For compatibility, we round up to the nearest byte here:
+++     * some Key impls might pass in a value within a byte of the
+++     * real value.
++      */
++-    private static void checkKey(RSAKey key) throws InvalidKeyException {
++-        // check for subinterfaces, omit additional checks for our keys
++-        if (key instanceof RSAPublicKey) {
++-            if (key instanceof RSAPublicKeyImpl) {
++-                return;
++-            }
++-        } else if (key instanceof RSAPrivateKey) {
++-            if ((key instanceof RSAPrivateCrtKeyImpl)
++-                    || (key instanceof RSAPrivateKeyImpl)) {
++-                return;
++-            }
++-        } else {
++-            throw new InvalidKeyException("Neither a public nor a private key");
++-        }
++-        // RSAKey does not extend Key, so we need to do a cast
++-        String keyAlg = ((Key)key).getAlgorithm();
++-        if (keyAlg.equals("RSA") == false) {
++-            throw new InvalidKeyException("Not an RSA key: " + keyAlg);
++-        }
++-        BigInteger modulus;
++-        // some providers implement RSAKey for keys where the values are
++-        // not accessible (although they should). Detect those here
++-        // for a more graceful failure.
++-        try {
++-            modulus = key.getModulus();
++-            if (modulus == null) {
++-                throw new InvalidKeyException("Modulus is missing");
++-            }
++-        } catch (RuntimeException e) {
++-            throw new InvalidKeyException(e);
++-        }
++-        checkKeyLength(modulus);
+++    static void checkRSAProviderKeyLengths(int modulusLen, BigInteger exponent)
+++            throws InvalidKeyException {
+++        checkKeyLengths(((modulusLen + 7) & ~7), exponent,
+++            RSAKeyFactory.MIN_MODLEN, Integer.MAX_VALUE);
++     }
++ 
++     /**
++-     * Check the length of the modulus of an RSA key. We only support keys
++-     * at least 505 bits long.
+++     * Check the length of an RSA key modulus/exponent to make sure it
+++     * is not too short or long.  Some impls have their own min and
+++     * max key sizes that may or may not match with a system defined value.
+++     *
+++     * @param modulusLen the bit length of the RSA modulus.
+++     * @param exponent the RSA exponent
+++     * @param minModulusLen if > 0, check to see if modulusLen is at
+++     *        least this long, otherwise unused.
+++     * @param maxModulusLen caller will allow this max number of bits.
+++     *        Allow the smaller of the system-defined maximum and this param.
+++     *
+++     * @throws InvalidKeyException if any of the values are unacceptable.
++      */
++-    static void checkKeyLength(BigInteger modulus) throws InvalidKeyException {
++-        if (modulus.bitLength() < 505) {
++-            // some providers may generate slightly shorter keys
++-            // accept them if the encoding is at least 64 bytes long
++-            throw new InvalidKeyException
++-                ("RSA keys must be at least 512 bits long");
+++     public static void checkKeyLengths(int modulusLen, BigInteger exponent,
+++            int minModulusLen, int maxModulusLen) throws InvalidKeyException {
+++
+++        if ((minModulusLen > 0) && (modulusLen < (minModulusLen))) {
+++            throw new InvalidKeyException( "RSA keys must be at least " +
+++                minModulusLen + " bits long");
++         }
+++
+++        // Even though our policy file may allow this, we don't want
+++        // either value (mod/exp) to be too big.
+++
+++        int maxLen = Math.min(maxModulusLen, MAX_MODLEN);
+++
+++        // If a RSAPrivateKey/RSAPublicKey, make sure the
+++        // modulus len isn't too big.
+++        if (modulusLen > maxLen) {
+++            throw new InvalidKeyException(
+++                "RSA keys must be no longer than " + maxLen + " bits");
+++        }
+++
+++        // If a RSAPublicKey, make sure the exponent isn't too big.
+++        if (restrictExpLen && (exponent != null) &&
+++                (modulusLen > MAX_MODLEN_RESTRICT_EXP) &&
+++                (exponent.bitLength() > MAX_RESTRICTED_EXPLEN)) {
+++            throw new InvalidKeyException(
+++                "RSA exponents can be no longer than " +
+++                MAX_RESTRICTED_EXPLEN + " bits " +
+++                " if modulus is greater than " +
+++                MAX_MODLEN_RESTRICT_EXP + " bits");
+++        }
++     }
++ 
++     /**
++--- old/src/share/classes/sun/security/rsa/RSAKeyPairGenerator.java	Fri Aug 22 18:58:50 2008
+++++ openjdk/jdk/src/share/classes/sun/security/rsa/RSAKeyPairGenerator.java	Fri Aug 22 18:58:49 2008
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2003-2004 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2003-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -47,7 +47,7 @@
++     // public exponent to use
++     private BigInteger publicExponent;
++ 
++-    // size of the key to generate, >= 512
+++    // size of the key to generate, >= RSAKeyFactory.MIN_MODLEN
++     private int keySize;
++ 
++     // PRNG to use
++@@ -60,15 +60,16 @@
++ 
++     // initialize the generator. See JCA doc
++     public void initialize(int keySize, SecureRandom random) {
++-        if (keySize < 512) {
++-            throw new InvalidParameterException
++-                ("Key size must be at least 512 bits");
+++
+++        // do not allow unreasonably small or large key sizes,
+++        // probably user error
+++        try {
+++            RSAKeyFactory.checkKeyLengths(keySize, RSAKeyGenParameterSpec.F4,
+++                512, 64 * 1024);
+++        } catch (InvalidKeyException e) {
+++            throw new InvalidParameterException(e.getMessage());
++         }
++-        if (keySize > 64 * 1024) {
++-            // do not allow unreasonably large key sizes, probably user error
++-            throw new InvalidParameterException
++-                ("Key size must be 65536 bits or less");
++-        }
+++
++         this.keySize = keySize;
++         this.random = random;
++         this.publicExponent = RSAKeyGenParameterSpec.F4;
++@@ -77,35 +78,41 @@
++     // second initialize method. See JCA doc.
++     public void initialize(AlgorithmParameterSpec params, SecureRandom random)
++             throws InvalidAlgorithmParameterException {
+++
++         if (params instanceof RSAKeyGenParameterSpec == false) {
++             throw new InvalidAlgorithmParameterException
++                 ("Params must be instance of RSAKeyGenParameterSpec");
++         }
+++
++         RSAKeyGenParameterSpec rsaSpec = (RSAKeyGenParameterSpec)params;
++-        keySize = rsaSpec.getKeysize();
++-        publicExponent = rsaSpec.getPublicExponent();
++-        this.random = random;
++-        if (keySize < 512) {
++-            throw new InvalidAlgorithmParameterException
++-                ("Key size must be at least 512 bits");
++-        }
++-        if (keySize > 64 * 1024) {
++-            // do not allow unreasonably large key sizes, probably user error
++-            throw new InvalidAlgorithmParameterException
++-                ("Key size must be 65536 bits or less");
++-        }
++-        if (publicExponent == null) {
++-            publicExponent = RSAKeyGenParameterSpec.F4;
+++        int tmpKeySize = rsaSpec.getKeysize();
+++        BigInteger tmpPublicExponent = rsaSpec.getPublicExponent();
+++
+++        if (tmpPublicExponent == null) {
+++            tmpPublicExponent = RSAKeyGenParameterSpec.F4;
++         } else {
++-            if (publicExponent.compareTo(RSAKeyGenParameterSpec.F0) < 0) {
+++            if (tmpPublicExponent.compareTo(RSAKeyGenParameterSpec.F0) < 0) {
++                 throw new InvalidAlgorithmParameterException
++                         ("Public exponent must be 3 or larger");
++             }
++-            if (publicExponent.bitLength() > keySize) {
+++            if (tmpPublicExponent.bitLength() > tmpKeySize) {
++                 throw new InvalidAlgorithmParameterException
++                         ("Public exponent must be smaller than key size");
++             }
++         }
+++
+++        // do not allow unreasonably large key sizes, probably user error
+++        try {
+++            RSAKeyFactory.checkKeyLengths(tmpKeySize, tmpPublicExponent,
+++                512, 64 * 1024);
+++        } catch (InvalidKeyException e) {
+++            throw new InvalidAlgorithmParameterException(
+++                "Invalid key sizes", e);
+++        }
+++
+++        this.keySize = tmpKeySize;
+++        this.publicExponent = tmpPublicExponent;
+++        this.random = random;
++     }
++ 
++     // generate the keypair. See JCA doc
++--- old/src/share/classes/sun/security/rsa/RSAPrivateCrtKeyImpl.java	Fri Aug 22 18:58:56 2008
+++++ openjdk/jdk/src/share/classes/sun/security/rsa/RSAPrivateCrtKeyImpl.java	Fri Aug 22 18:58:56 2008
++
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2003-2005 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2003-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -89,7 +89,7 @@
++      */
++     RSAPrivateCrtKeyImpl(byte[] encoded) throws InvalidKeyException {
++         decode(encoded);
++-        RSAKeyFactory.checkKeyLength(n);
+++        RSAKeyFactory.checkRSAProviderKeyLengths(n.bitLength(), e);
++     }
++ 
++     /**
++@@ -107,7 +107,8 @@
++         this.pe = pe;
++         this.qe = qe;
++         this.coeff = coeff;
++-        RSAKeyFactory.checkKeyLength(n);
+++        RSAKeyFactory.checkRSAProviderKeyLengths(n.bitLength(), e);
+++
++         // generate the encoding
++         algid = rsaId;
++         try {
++--- old/src/share/classes/sun/security/rsa/RSAPrivateKeyImpl.java	Fri Aug 22 18:59:02 2008
+++++ openjdk/jdk/src/share/classes/sun/security/rsa/RSAPrivateKeyImpl.java	Fri Aug 22 18:59:01 2008
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2003 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2003-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -61,7 +61,7 @@
++     RSAPrivateKeyImpl(BigInteger n, BigInteger d) throws InvalidKeyException {
++         this.n = n;
++         this.d = d;
++-        RSAKeyFactory.checkKeyLength(n);
+++        RSAKeyFactory.checkRSAProviderKeyLengths(n.bitLength(), null);
++         // generate the encoding
++         algid = RSAPrivateCrtKeyImpl.rsaId;
++         try {
++--- old/src/share/classes/sun/security/rsa/RSAPublicKeyImpl.java	Fri Aug 22 18:59:07 2008
+++++ openjdk/jdk/src/share/classes/sun/security/rsa/RSAPublicKeyImpl.java	Fri Aug 22 18:59:07 2008
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2003-2005 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2003-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -56,10 +56,11 @@
++      * Construct a key from its components. Used by the
++      * RSAKeyFactory and the RSAKeyPairGenerator.
++      */
++-    public RSAPublicKeyImpl(BigInteger n, BigInteger e) throws InvalidKeyException {
+++    public RSAPublicKeyImpl(BigInteger n, BigInteger e)
+++            throws InvalidKeyException {
++         this.n = n;
++         this.e = e;
++-        RSAKeyFactory.checkKeyLength(n);
+++        RSAKeyFactory.checkRSAProviderKeyLengths(n.bitLength(), e);
++         // generate the encoding
++         algid = RSAPrivateCrtKeyImpl.rsaId;
++         try {
++@@ -80,7 +81,7 @@
++      */
++     public RSAPublicKeyImpl(byte[] encoded) throws InvalidKeyException {
++         decode(encoded);
++-        RSAKeyFactory.checkKeyLength(n);
+++        RSAKeyFactory.checkRSAProviderKeyLengths(n.bitLength(), e);
++     }
++ 
++     // see JCA doc
++--- old/src/windows/classes/sun/security/mscapi/RSAKeyPairGenerator.java	Fri Aug 22 18:59:11 2008
+++++ openjdk/jdk/src/windows/classes/sun/security/mscapi/RSAKeyPairGenerator.java	Fri Aug 22 18:59:11 2008
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2005 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2005-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -31,6 +31,7 @@
++ import java.security.spec.RSAKeyGenParameterSpec;
++ 
++ import sun.security.jca.JCAUtil;
+++import sun.security.rsa.RSAKeyFactory;
++ 
++ /**
++  * RSA keypair generator.
++@@ -43,8 +44,8 @@
++ public final class RSAKeyPairGenerator extends KeyPairGeneratorSpi {
++ 
++     // Supported by Microsoft Base, Strong and Enhanced Cryptographic Providers
++-    private static final int KEY_SIZE_MIN = 512; // disallow MSCAPI min. of 384
++-    private static final int KEY_SIZE_MAX = 16384;
+++    static final int KEY_SIZE_MIN = 512; // disallow MSCAPI min. of 384
+++    static final int KEY_SIZE_MAX = 16384;
++     private static final int KEY_SIZE_DEFAULT = 1024;
++ 
++     // size of the key to generate, KEY_SIZE_MIN <= keySize <= KEY_SIZE_MAX
++@@ -59,7 +60,14 @@
++     // random is always ignored
++     public void initialize(int keySize, SecureRandom random) {
++ 
++-        checkKeySize(keySize);
+++        try {
+++            RSAKeyFactory.checkKeyLengths(keySize, null,
+++                KEY_SIZE_MIN, KEY_SIZE_MAX);
+++        } catch (InvalidKeyException e) {
+++            throw new InvalidParameterException(e.getMessage());
+++        }
+++
+++        this.keySize = keySize;
++     }
++ 
++     // second initialize method. See JCA doc
++@@ -67,9 +75,9 @@
++     public void initialize(AlgorithmParameterSpec params, SecureRandom random)
++             throws InvalidAlgorithmParameterException {
++ 
+++        int tmpSize;
++         if (params == null) {
++-            checkKeySize(KEY_SIZE_DEFAULT);
++-
+++            tmpSize = KEY_SIZE_DEFAULT;
++         } else if (params instanceof RSAKeyGenParameterSpec) {
++ 
++             if (((RSAKeyGenParameterSpec) params).getPublicExponent() != null) {
++@@ -76,12 +84,22 @@
++                 throw new InvalidAlgorithmParameterException
++                     ("Exponent parameter is not supported");
++             }
++-            checkKeySize(((RSAKeyGenParameterSpec) params).getKeysize());
+++            tmpSize = ((RSAKeyGenParameterSpec) params).getKeysize();
++ 
++         } else {
++             throw new InvalidAlgorithmParameterException
++                 ("Params must be an instance of RSAKeyGenParameterSpec");
++         }
+++
+++        try {
+++            RSAKeyFactory.checkKeyLengths(tmpSize, null,
+++                KEY_SIZE_MIN, KEY_SIZE_MAX);
+++        } catch (InvalidKeyException e) {
+++            throw new InvalidAlgorithmParameterException(
+++                "Invalid Key sizes", e);
+++        }
+++
+++        this.keySize = tmpSize;
++     }
++ 
++     // generate the keypair. See JCA doc
++@@ -95,18 +113,6 @@
++         return new KeyPair(keys.getPublic(), keys.getPrivate());
++     }
++ 
++-    private void checkKeySize(int keySize) throws InvalidParameterException {
++-        if (keySize < KEY_SIZE_MIN) {
++-            throw new InvalidParameterException
++-                ("Key size must be at least " + KEY_SIZE_MIN + " bits");
++-        }
++-        if (keySize > KEY_SIZE_MAX) {
++-            throw new InvalidParameterException
++-                ("Key size must be " + KEY_SIZE_MAX + " bits or less");
++-        }
++-        this.keySize = keySize;
++-    }
++-
++     private static native RSAKeyPair generateRSAKeyPair(int keySize,
++         String keyContainerName);
++ }
++--- old/src/windows/classes/sun/security/mscapi/RSASignature.java	Fri Aug 22 18:59:18 2008
+++++ openjdk/jdk/src/windows/classes/sun/security/mscapi/RSASignature.java	Fri Aug 22 18:59:17 2008
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2005 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2005-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -38,7 +38,10 @@
++ import java.security.Signature;
++ import java.security.SignatureSpi;
++ import java.security.SignatureException;
+++import java.math.BigInteger;
++ 
+++import sun.security.rsa.RSAKeyFactory;
+++
++ /**
++  * RSA signature implementation. Supports RSA signing using PKCS#1 v1.5 padding.
++  *
++@@ -124,8 +127,17 @@
++ 
++             // convert key to MSCAPI format
++ 
++-            byte[] modulusBytes = rsaKey.getModulus().toByteArray();
+++            BigInteger modulus = rsaKey.getModulus();
+++            BigInteger exponent =  rsaKey.getPublicExponent();
++ 
+++            // Check against the local and global values to make sure
+++            // the sizes are ok.  Round up to the nearest byte.
+++            RSAKeyFactory.checkKeyLengths(((modulus.bitLength() + 7) & ~7),
+++                exponent, -1, RSAKeyPairGenerator.KEY_SIZE_MAX);
+++
+++            byte[] modulusBytes = modulus.toByteArray();
+++            byte[] exponentBytes = exponent.toByteArray();
+++
++             // Adjust key length due to sign bit
++             int keyBitLength = (modulusBytes[0] == 0)
++                 ? (modulusBytes.length - 1) * 8
++@@ -132,8 +144,7 @@
++                 : modulusBytes.length * 8;
++ 
++             byte[] keyBlob = generatePublicKeyBlob(
++-                keyBitLength, modulusBytes,
++-                rsaKey.getPublicExponent().toByteArray());
+++                keyBitLength, modulusBytes, exponentBytes);
++ 
++             publicKey = importPublicKey(keyBlob, keyBitLength);
++ 
++@@ -166,13 +177,12 @@
++         }
++         privateKey = (sun.security.mscapi.RSAPrivateKey) key;
++ 
++-        // Determine byte length from bit length
++-        int keySize = (privateKey.bitLength() + 7) >> 3;
+++        // Check against the local and global values to make sure
+++        // the sizes are ok.  Round up to nearest byte.
+++        RSAKeyFactory.checkKeyLengths(((privateKey.bitLength() + 7) & ~7),
+++            null, RSAKeyPairGenerator.KEY_SIZE_MIN,
+++            RSAKeyPairGenerator.KEY_SIZE_MAX);
++ 
++-        if (keySize < 64)
++-            throw new InvalidKeyException(
++-                "RSA keys must be at least 512 bits long");
++-
++         if (needsReset) {
++             messageDigest.reset();
++             needsReset = false;
++
+diff -Nru icedtea6-1.2.old/patches/icedtea-6588160.patch icedtea6-1.2/patches/icedtea-6588160.patch
+--- icedtea6-1.2.old/patches/icedtea-6588160.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.2/patches/icedtea-6588160.patch	2008-12-18 00:26:31.000000000 +0000
+@@ -0,0 +1,42 @@
++--- /export/home/max/ws/jdk6-open/jdk/webrev/src/share/classes/sun/security/krb5/KrbKdcReq.java-        Sun Aug 31 20:04:55 2008
+++++ openjdk/jdk/src/share/classes/sun/security/krb5/KrbKdcReq.java      Sun Aug 31 19:33:19 2008
++@@ -271,10 +271,11 @@
++                                +  port +  ", timeout="
++                                + timeout
++                                + ",Attempt =" + i
++                                + ", #bytes=" + obuf.length);
++                     }
+++                    try {
++                     /*
++                      * Send the data to the kdc.
++                      */
++ 
++                     kdcClient.send(obuf);
++@@ -293,11 +294,14 @@
++                         if (i == DEFAULT_KDC_RETRY_LIMIT) {
++                             ibuf = null;
++                             throw se;
++                         }
++                     }
+++                    } finally {
+++                        kdcClient.close();
++                 }
+++                }
++             }
++             return ibuf;
++         }
++     }
++ 
++--- /export/home/max/ws/jdk6-open/jdk/webrev/src/share/classes/sun/security/krb5/internal/UDPClient.java-       Sun Aug 31 20:04:55 2008
+++++ openjdk/jdk/src/share/classes/sun/security/krb5/internal/UDPClient.java      Sun Aug 31 20:02:07 2008
++@@ -90,6 +90,9 @@
++         System.arraycopy(dgPacketIn.getData(), 0, data, 0,
++                          dgPacketIn.getLength());
++         return data;
++     }
++ 
+++    public void close() {
+++        dgSocket.close();
+++    }
++ }
++
+diff -Nru icedtea6-1.2.old/patches/icedtea-6592792.patch icedtea6-1.2/patches/icedtea-6592792.patch
+--- icedtea6-1.2.old/patches/icedtea-6592792.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.2/patches/icedtea-6592792.patch	2008-12-18 00:26:31.000000000 +0000
+@@ -0,0 +1,360 @@
++--- old/src/share/classes/com/sun/xml/internal/ws/spi/ProviderImpl.java	Tue Oct 21 15:06:46 2008
+++++ openjdk/jaxws/src/share/classes/com/sun/xml/internal/ws/spi/ProviderImpl.java	Tue Oct 21 15:06:46 2008
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2005-2006 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2005-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -56,6 +56,8 @@
++ import javax.xml.ws.spi.ServiceDelegate;
++ import javax.xml.ws.wsaddressing.W3CEndpointReference;
++ import java.net.URL;
+++import java.security.AccessController;
+++import java.security.PrivilegedAction;
++ import java.util.List;
++ 
++ /**
++@@ -94,14 +96,20 @@
++         return endpoint;
++     }
++ 
++-    public EndpointReference readEndpointReference(Source eprInfoset) {
++-        Unmarshaller unmarshaller;
++-        try {
++-            unmarshaller = eprjc.createUnmarshaller();
++-            return (EndpointReference) unmarshaller.unmarshal(eprInfoset);
++-        } catch (JAXBException e) {
++-            throw new WebServiceException("Error creating Marshaller or marshalling.", e);
++-        }
+++    public EndpointReference readEndpointReference(final Source eprInfoset) {
+++        // EPR constructors are private, so we need privilege escalation.
+++        // this unmarshalling can only access instances of a fixed, known set of classes,
+++        // so doing that shouldn't introduce security vulnerability.
+++        return AccessController.doPrivileged(new PrivilegedAction<EndpointReference>() {
+++            public EndpointReference run() {
+++                try {
+++                    Unmarshaller unmarshaller = eprjc.createUnmarshaller();
+++                    return (EndpointReference) unmarshaller.unmarshal(eprInfoset);
+++                } catch (JAXBException e) {
+++                    throw new WebServiceException("Error creating Marshaller or marshalling.", e);
+++                }
+++            }
+++        });
++     }
++ 
++     public <T> T getPort(EndpointReference endpointReference, Class<T> clazz, WebServiceFeature... webServiceFeatures) {
++@@ -185,10 +193,17 @@
++     }
++ 
++     private static JAXBContext getEPRJaxbContext() {
++-        try {
++-            return JAXBContext.newInstance(MemberSubmissionEndpointReference.class, W3CEndpointReference.class);
++-        } catch (JAXBException e) {
++-            throw new WebServiceException("Error creating JAXBContext for W3CEndpointReference. ", e);
++-        }
+++        // EPRs have package and private fields, so we need privilege escalation.
+++        // this access only fixed, known set of classes, so doing that
+++        // shouldn't introduce security vulnerability.
+++        return AccessController.doPrivileged(new PrivilegedAction<JAXBContext>() {
+++            public JAXBContext run() {
+++                try {
+++                    return JAXBContext.newInstance(MemberSubmissionEndpointReference.class, W3CEndpointReference.class);
+++                } catch (JAXBException e) {
+++                    throw new WebServiceException("Error creating JAXBContext for W3CEndpointReference. ", e);
+++                }
+++            }
+++        });
++     }
++ }
++--- old/src/share/classes/javax/xml/bind/ContextFinder.java	Tue Oct 21 15:06:50 2008
+++++ openjdk/jaxws/src/share/classes/javax/xml/bind/ContextFinder.java	Tue Oct 21 15:06:49 2008
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2005-2006 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2005-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -130,12 +130,7 @@
++         throws JAXBException
++     {
++         try {
++-            Class spiClass;
++-            if (classLoader == null) {
++-                spiClass = Class.forName(className);
++-            } else {
++-                spiClass = classLoader.loadClass(className);
++-            }
+++            Class spiClass = safeLoadClass(className,classLoader);
++ 
++             /*
++              * javax.xml.bind.context.factory points to a class which has a
++@@ -207,11 +202,7 @@
++         ClassLoader cl = Thread.currentThread().getContextClassLoader();
++         Class spi;
++         try {
++-            logger.fine("Trying to load "+className);
++-            if (cl != null)
++-                spi = cl.loadClass(className);
++-            else
++-                spi = Class.forName(className);
+++            spi = safeLoadClass(className,cl);
++         } catch (ClassNotFoundException e) {
++             throw new JAXBException(e);
++         }
++@@ -488,4 +479,31 @@
++      * For this reason, we have to hard-code the class name into the API.
++      */
++     private static final String PLATFORM_DEFAULT_FACTORY_CLASS = "com.sun.xml.internal.bind.v2.ContextFactory";
+++
+++    /**
+++     * Loads the class, provided that the calling thread has an access to the class being loaded.
+++     */
+++    private static Class safeLoadClass(String className, ClassLoader classLoader) throws ClassNotFoundException {
+++        logger.fine("Trying to load "+className);
+++        try {
+++            // make sure that the current thread has an access to the package of the given name.
+++            SecurityManager s = System.getSecurityManager();
+++            if (s != null) {
+++                int i = className.lastIndexOf('.');
+++                if (i != -1) {
+++                    s.checkPackageAccess(className.substring(0,i));
+++                }
+++            }
+++
+++            if (classLoader == null)
+++                return Class.forName(className);
+++            else
+++                return classLoader.loadClass(className);
+++        } catch (SecurityException se) {
+++            // anyone can access the platform default factory class without permission
+++            if (PLATFORM_DEFAULT_FACTORY_CLASS.equals(className))
+++                return Class.forName(className);
+++            throw se;
+++        }
+++    }
++ }
++--- old/src/share/classes/javax/xml/ws/spi/FactoryFinder.java	Tue Oct 21 15:06:52 2008
+++++ openjdk/jaxws/src/share/classes/javax/xml/ws/spi/FactoryFinder.java	Tue Oct 21 15:06:52 2008
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2005-2006 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2005-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -47,12 +47,7 @@
++                                       ClassLoader classLoader)
++     {
++         try {
++-            Class spiClass;
++-            if (classLoader == null) {
++-                spiClass = Class.forName(className);
++-            } else {
++-                spiClass = classLoader.loadClass(className);
++-            }
+++            Class spiClass = safeLoadClass(className, classLoader);
++             return spiClass.newInstance();
++         } catch (ClassNotFoundException x) {
++             throw new WebServiceException(
++@@ -152,4 +147,33 @@
++ 
++         return newInstance(fallbackClassName, classLoader);
++     }
+++
+++
+++    private static final String PLATFORM_DEFAULT_FACTORY_CLASS = "com.sun.xml.internal.ws.spi.ProviderImpl";
+++
+++    /**
+++     * Loads the class, provided that the calling thread has an access to the class being loaded.
+++     */
+++    private static Class safeLoadClass(String className, ClassLoader classLoader) throws ClassNotFoundException {
+++        try {
+++            // make sure that the current thread has an access to the package of the given name.
+++            SecurityManager s = System.getSecurityManager();
+++            if (s != null) {
+++                int i = className.lastIndexOf('.');
+++                if (i != -1) {
+++                    s.checkPackageAccess(className.substring(0,i));
+++                }
+++            }
+++
+++            if (classLoader == null)
+++                return Class.forName(className);
+++            else
+++                return classLoader.loadClass(className);
+++        } catch (SecurityException se) {
+++            // anyone can access the platform default factory class without permission
+++            if (PLATFORM_DEFAULT_FACTORY_CLASS.equals(className))
+++                return Class.forName(className);
+++            throw se;
+++        }
+++    }
++ }
++--- old/src/share/lib/security/java.security	Tue Oct 21 15:09:46 2008
+++++ openjdk/jdk/src/share/lib/security/java.security	Tue Oct 21 15:09:46 2008
++@@ -127,7 +127,7 @@
++ # passed to checkPackageAccess unless the
++ # corresponding RuntimePermission ("accessClassInPackage."+package) has
++ # been granted.
++-package.access=sun.
+++package.access=sun.,com.sun.xml.internal.ws.,com.sun.xml.internal.bind.
++ 
++ #
++ # List of comma-separated packages that start with or equal this string
++--- old/src/share/lib/security/java.security-solaris	Tue Oct 21 15:09:49 2008
+++++ openjdk/jdk/src/share/lib/security/java.security-solaris	Tue Oct 21 15:09:49 2008
++@@ -128,7 +128,7 @@
++ # passed to checkPackageAccess unless the
++ # corresponding RuntimePermission ("accessClassInPackage."+package) has
++ # been granted.
++-package.access=sun.
+++package.access=sun.,com.sun.xml.internal.ws.,com.sun.xml.internal.bind.
++ 
++ #
++ # List of comma-separated packages that start with or equal this string
++--- old/src/share/lib/security/java.security-windows	Tue Oct 21 15:09:52 2008
+++++ openjdk/jdk/src/share/lib/security/java.security-windows	Tue Oct 21 15:09:52 2008
++@@ -128,7 +128,7 @@
++ # passed to checkPackageAccess unless the
++ # corresponding RuntimePermission ("accessClassInPackage."+package) has
++ # been granted.
++-package.access=sun.
+++package.access=sun.,com.sun.xml.internal.ws.,com.sun.xml.internal.bind.
++ 
++ #
++ # List of comma-separated packages that start with or equal this string
++--- /dev/null	Tue Oct 21 15:09:20 2008
+++++ openjdk/jdk/test/com/sun/org/apache/xml/internal/ws/server/Test.java	Tue Oct 21 15:09:56 2008
++@@ -0,0 +1,65 @@
+++/*
+++ *  @test
+++ *  @bug 6592792
+++ *  @summary Add com.sun.xml.internal to the "package.access" property in $JAVA_HOME/lib/security/java.security
+++ *  @run shell Test6592792.sh
+++ */
+++
+++import java.lang.*;
+++import java.lang.reflect.*;
+++import com.sun.xml.internal.ws.server.*;
+++import com.sun.xml.internal.ws.server.SingletonResolver;
+++import com.sun.xml.internal.ws.api.server.*;
+++
+++public class Test {
+++
+++  public static void main(String[] args) throws Exception{
+++      // Enable the security manager
+++      SecurityManager sm = new SecurityManager();
+++      System.setSecurityManager(sm);
+++      new Test();
+++  }
+++
+++  Object invokeMethod(Object target,Method m,Object args[]) throws Exception {
+++      SingletonResolver r = new SingletonResolver(target);
+++      Invoker invoker = r.createInvoker();
+++      return invoker.invoke(null, m, args);
+++  }
+++
+++  public Test() throws Exception{
+++      try {
+++          Class c=Class.forName("java.lang.Class");
+++
+++          Class ctab[]=new Class[1];
+++          ctab[0]=Class.forName("java.lang.String");
+++          Method forName=c.getMethod("forName",ctab);
+++
+++          Class gtab[]=new Class[2];
+++          gtab[0]=Class.forName("java.lang.String");
+++          gtab[1]=Class[].class;
+++          Method getMethod=c.getMethod("getMethod",gtab);
+++
+++          Method newInstance=c.getMethod("newInstance",(Class[])null);
+++
+++          Object otab[]=new Object[1];
+++          otab[0]="sun.misc.Unsafe";
+++
+++          Object o=invokeMethod(null,forName,otab);
+++          c = (Class)o;		// sun.misc.Unsafe class
+++          // Test FAILED: Should n't have got the reference.   
+++          throw new RuntimeException("Test Failed: Got reference to: "+o);
+++
+++
+++          //o=invokeMethod(c,getMethod, new Object[]{"getUnsafe", (Class[])null});
+++          //System.out.println("Got reference to: "+o);
+++          //throw new RuntimeException("Got reference to: "+o);
+++          //o=invokeMethod(c,(Method)o,null);
+++          //System.out.println("Got reference to: "+o);
+++          //throw new RuntimeException("Got reference to: "+o);
+++   
+++      } catch(java.security.AccessControlException e) {
+++          System.out.println("Test passed");
+++          //e.printStackTrace();
+++      } 
+++   }
+++}
++--- /dev/null	Tue Oct 21 15:09:21 2008
+++++ openjdk/jdk/test/com/sun/org/apache/xml/internal/ws/server/Test6592792.sh	Tue Oct 21 15:09:56 2008
++@@ -0,0 +1,61 @@
+++#!/bin/sh
+++
+++if [ "${TESTSRC}" = "" ]
+++then TESTSRC=.
+++fi
+++
+++if [ "${TESTJAVA}" = "" ]
+++then
+++  PARENT=`dirname \`which java\``
+++  TESTJAVA=`dirname ${PARENT}`
+++  echo "TESTJAVA not set, selecting " ${TESTJAVA}
+++  echo "If this is incorrect, try setting the variable manually."
+++fi
+++
+++if [ "${TESTCLASSES}" = "" ]
+++then
+++  echo "TESTCLASSES not set.  Test cannot execute.  Failed."
+++  exit 1
+++fi
+++
+++BIT_FLAG=""
+++
+++# set platform-dependent variables
+++OS=`uname -s`
+++case "$OS" in
+++  SunOS | Linux )
+++    NULL=/dev/null
+++    PS=":"
+++    FS="/"
+++    ## for solaris, linux it's HOME
+++    FILE_LOCATION=$HOME
+++    if [ -f ${FILE_LOCATION}${FS}JDK64BIT -a ${OS} = "SunOS" ]
+++    then
+++        BIT_FLAG=`cat ${FILE_LOCATION}${FS}JDK64BIT`
+++    fi
+++    ;;
+++  Windows_* )
+++    NULL=NUL
+++    PS=";"
+++    FS="\\"
+++    ;;
+++  * )
+++    echo "Unrecognized system!"
+++    exit 1;
+++    ;;
+++esac
+++
+++JEMMYPATH=${CPAPPEND}
+++CLASSPATH=.${PS}${TESTCLASSES}${PS}${JEMMYPATH} ; export CLASSPATH
+++
+++THIS_DIR=`pwd`
+++
+++${TESTJAVA}${FS}bin${FS}java ${BIT_FLAG} -version
+++
+++${TESTJAVA}${FS}bin${FS}javac ${BIT_FLAG} -d . -cp ${TESTJAVA}${FS}jre${FS}lib${FS}rt.jar ${TESTSRC}${FS}Test.java
+++
+++${TESTJAVA}${FS}bin${FS}java ${BIT_FLAG} -cp . Test
+++
+++STATUS=$?
+++
+++exit $STATUS
+diff -Nru icedtea6-1.2.old/patches/icedtea-6721753.patch icedtea6-1.2/patches/icedtea-6721753.patch
+--- icedtea6-1.2.old/patches/icedtea-6721753.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.2/patches/icedtea-6721753.patch	2008-12-18 00:26:31.000000000 +0000
+@@ -0,0 +1,89 @@
++--- old/src/share/classes/java/io/File.java	Thu Oct  9 16:11:01 2008
+++++ openjdk/jdk/src/share/classes/java/io/File.java	Thu Oct  9 16:10:51 2008
++@@ -32,9 +32,9 @@
++ import java.util.ArrayList;
++ import java.util.Map;
++ import java.util.Hashtable;
++-import java.util.Random;
++ import java.security.AccessController;
++ import java.security.AccessControlException;
+++import java.security.SecureRandom;
++ import sun.security.action.GetPropertyAction;
++ 
++ 
++@@ -1676,30 +1676,30 @@
++ 
++     /* -- Temporary files -- */
++ 
++-    private static final Object tmpFileLock = new Object();
+++    // lazy initialization of SecureRandom and temporary file directory
+++    private static class LazyInitialization {
+++        static final SecureRandom random = new SecureRandom();
++ 
++-    private static int counter = -1; /* Protected by tmpFileLock */
+++        static final String temporaryDirectory = temporaryDirectory();
+++        static String temporaryDirectory() {
+++            return fs.normalize(
+++                AccessController.doPrivileged(
+++                    new GetPropertyAction("java.io.tmpdir")));
+++        }
+++    }
++ 
++     private static File generateFile(String prefix, String suffix, File dir)
++         throws IOException
++     {
++-        if (counter == -1) {
++-            counter = new Random().nextInt() & 0xffff;
+++        long n = LazyInitialization.random.nextLong();
+++        if (n == Long.MIN_VALUE) {
+++            n = 0;      // corner case
+++        } else {
+++            n = Math.abs(n);
++         }
++-        counter++;
++-        return new File(dir, prefix + Integer.toString(counter) + suffix);
+++        return new File(dir, prefix + Long.toString(n) + suffix);
++     }
++ 
++-    private static String tmpdir; /* Protected by tmpFileLock */
++-
++-    private static String getTempDir() {
++-        if (tmpdir == null)
++-            tmpdir = fs.normalize(
++-                AccessController.doPrivileged(
++-                    new GetPropertyAction("java.io.tmpdir")));
++-        return tmpdir;
++-    }
++-
++     private static boolean checkAndCreate(String filename, SecurityManager sm)
++         throws IOException
++     {
++@@ -1793,18 +1793,16 @@
++         if (prefix.length() < 3)
++             throw new IllegalArgumentException("Prefix string too short");
++         String s = (suffix == null) ? ".tmp" : suffix;
++-        synchronized (tmpFileLock) {
++-            if (directory == null) {
++-                String tmpDir = getTempDir();
++-                directory = new File(tmpDir, fs.prefixLength(tmpDir));
++-            }
++-            SecurityManager sm = System.getSecurityManager();
++-            File f;
++-            do {
++-                f = generateFile(prefix, s, directory);
++-            } while (!checkAndCreate(f.getPath(), sm));
++-            return f;
+++        if (directory == null) {
+++            String tmpDir = LazyInitialization.temporaryDirectory();
+++            directory = new File(tmpDir, fs.prefixLength(tmpDir));
++         }
+++        SecurityManager sm = System.getSecurityManager();
+++        File f;
+++        do {
+++            f = generateFile(prefix, s, directory);
+++        } while (!checkAndCreate(f.getPath(), sm));
+++        return f;
++     }
++ 
++     /**
++
+diff -Nru icedtea6-1.2.old/patches/icedtea-6726779.patch icedtea6-1.2/patches/icedtea-6726779.patch
+--- icedtea6-1.2.old/patches/icedtea-6726779.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.2/patches/icedtea-6726779.patch	2008-12-18 00:26:31.000000000 +0000
+@@ -0,0 +1,142 @@
++--- old/src/share/native/sun/awt/medialib/awt_ImagingLib.c	Thu Aug  7 10:06:12 2008
+++++ openjdk/jdk/src/share/native/sun/awt/medialib/awt_ImagingLib.c	Thu Aug  7 10:06:12 2008
++@@ -216,6 +216,16 @@
++ 
++ #endif /* ! DEBUG */
++ 
+++static int
+++getMlibEdgeHint(jint edgeHint) {
+++    switch (edgeHint) {
+++    case java_awt_image_ConvolveOp_EDGE_NO_OP:
+++        return MLIB_EDGE_DST_COPY_SRC;
+++    case java_awt_image_ConvolveOp_EDGE_ZERO_FILL:
+++    default:
+++        return MLIB_EDGE_DST_FILL_ZERO;
+++    }
+++}
++ 
++ /***************************************************************************
++  *                          External Functions                             *
++@@ -400,22 +410,10 @@
++         }
++     }
++ 
++-    if (edgeHint == java_awt_image_ConvolveOp_EDGE_NO_OP) {
++-        int kw2 = kwidth>>1;
++-        int kh2 = kheight>>1;
++-        int bsize = mlib_ImageGetChannels(src)*
++-            (mlib_ImageGetType(src) == MLIB_BYTE ? 1 : 2);
++-
++-        void *dstDataP = mlib_ImageGetData(dst);
++-        void *srcDataP = mlib_ImageGetData(src);
++-        /* REMIND: Copy a smaller area */
++-        memcpy(dstDataP, srcDataP, dst->width*dst->height*bsize);
++-    }
++-
++     cmask = (1<<src->channels)-1;
++     status = (*sMlibFns[MLIB_CONVMxN].fptr)(dst, src, kdata, w, h,
++                                (w-1)/2, (h-1)/2, scale, cmask,
++-                               MLIB_EDGE_DST_NO_WRITE);
+++                               getMlibEdgeHint(edgeHint));
++ 
++     if (status != MLIB_SUCCESS) {
++         printMedialibError(status);
++@@ -660,22 +658,10 @@
++         }
++     }
++ 
++-    if (edgeHint == java_awt_image_ConvolveOp_EDGE_NO_OP) {
++-        int kw2 = kwidth>>1;
++-        int kh2 = kheight>>1;
++-        int bsize = mlib_ImageGetChannels(src)*
++-            (mlib_ImageGetType(src) == MLIB_BYTE ? 1 : 2);
++-
++-        void *dstDataP = mlib_ImageGetData(dst);
++-        void *srcDataP = mlib_ImageGetData(src);
++-        /* REMIND: Copy a smaller area */
++-        memcpy(dstDataP, srcDataP, dst->width*dst->height*bsize);
++-    }
++-
++     cmask = (1<<src->channels)-1;
++     status = (*sMlibFns[MLIB_CONVMxN].fptr)(dst, src, kdata, w, h,
++                                (w-1)/2, (h-1)/2, scale, cmask,
++-                               MLIB_EDGE_DST_NO_WRITE);
+++                               getMlibEdgeHint(edgeHint));
++ 
++     if (status != MLIB_SUCCESS) {
++         printMedialibError(status);
++--- /dev/null	Thu Aug  7 10:06:15 2008
+++++ openjdk/jdk/test/java/awt/image/ConvolveOp/EdgeNoOpCrash.java	Thu Aug  7 10:06:14 2008
++@@ -0,0 +1,72 @@
+++/*
+++ * @test    @(#)EdgeNoOpCrash.java	1.1 08/08/07
+++ * @bug     6726779
+++ * @summary Test verifies that ConvolveOp with the EDGE_NO_OP edge condition
+++ *          does not cause JVM crash if size of source raster elements is
+++ *          greather than size of the destination raster element.
+++ *
+++ * @run     main EdgeNoOpCrash
+++ */
+++import java.awt.Point;
+++import java.awt.image.ConvolveOp;
+++import java.awt.image.DataBuffer;
+++import java.awt.image.ImagingOpException;
+++import java.awt.image.Kernel;
+++import java.awt.image.Raster;
+++import java.awt.image.WritableRaster;
+++import java.util.Arrays;
+++
+++public class EdgeNoOpCrash {
+++    private static final int w = 3000;
+++    private static final int h = 200;
+++    
+++    public static void main(String[] args) {
+++        crashTest();
+++    }
+++    
+++    private static void crashTest() {
+++        Raster src = createSrcRaster();
+++        WritableRaster dst = createDstRaster();
+++        ConvolveOp op = createConvolveOp(ConvolveOp.EDGE_NO_OP);
+++        try {
+++            op.filter(src, dst);
+++        } catch (ImagingOpException e) {
+++            /* 
+++             * The test pair of source and destination rasters
+++             * may cause failure of the medialib convolution routine,
+++             * so this exception is expected.
+++             * 
+++             * The JVM crash is the only manifestation of this
+++             * test failure.
+++             */
+++        }
+++        System.out.println("Test PASSED.");
+++    }
+++    
+++    private static Raster createSrcRaster() {
+++        WritableRaster r = Raster.createInterleavedRaster(DataBuffer.TYPE_USHORT,
+++                w, h, 4, new Point(0, 0));
+++        
+++        return r;
+++    }
+++    
+++    private static WritableRaster createDstRaster() {
+++        WritableRaster r = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE,
+++                w, h, 4, new Point(0, 0));
+++
+++        return r;
+++    }
+++    
+++    private static ConvolveOp createConvolveOp(int edgeHint) {
+++        final int kw = 3;
+++        final int kh = 3;
+++        float[] kdata = new float[kw * kh];
+++        float v = 1f / kdata.length;
+++        Arrays.fill(kdata, v);
+++        
+++        Kernel k = new Kernel(kw, kh, kdata);
+++        ConvolveOp op = new ConvolveOp(k, edgeHint, null);
+++        
+++        return op;
+++    }
+++}
+diff -Nru icedtea6-1.2.old/patches/icedtea-6733959.patch icedtea6-1.2/patches/icedtea-6733959.patch
+--- icedtea6-1.2.old/patches/icedtea-6733959.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.2/patches/icedtea-6733959.patch	2008-12-18 00:26:31.000000000 +0000
+@@ -0,0 +1,231 @@
++--- old/src/share/bin/java.c	Tue Sep 30 13:28:32 2008
+++++ openjdk/jdk/src/share/bin/java.c	Tue Sep 30 13:28:32 2008
++@@ -1056,8 +1056,14 @@
++      * to avoid locating, expanding and parsing the manifest extra
++      * times.
++      */
++-    if (info.main_class != NULL)
++-	(void)strcat(env_entry, info.main_class);
+++    if (info.main_class != NULL) {
+++        if (strlen(info.main_class) <= MAXNAMELEN) {
+++            (void)strcat(env_entry, info.main_class);
+++        } else {
+++            ReportErrorMessage("Error: main-class: attribute exceeds system limits\n", JNI_TRUE);
+++	    exit(1);
+++        }
+++    }
++     (void)putenv(env_entry);
++     ExecJRE(jre, new_argv);
++     JLI_FreeManifest();
++--- /dev/null	Tue Sep 30 13:28:33 2008
+++++ openjdk/jdk/test/tools/launcher/ZipMeUp.java	Tue Sep 30 13:28:33 2008
++@@ -0,0 +1,90 @@
+++/*
+++ * Copyright 2008 Sun Microsystems, Inc.  All Rights Reserved.
+++ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+++ *
+++ * This code is free software; you can redistribute it and/or modify it
+++ * under the terms of the GNU General Public License version 2 only, as
+++ * published by the Free Software Foundation.
+++ *
+++ * This code is distributed in the hope that it will be useful, but WITHOUT
+++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+++ * version 2 for more details (a copy is included in the LICENSE file that
+++ * accompanied this code).
+++ *
+++ * You should have received a copy of the GNU General Public License version
+++ * 2 along with this work; if not, write to the Free Software Foundation,
+++ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+++ *
+++ * Please contact Sun Microsystems, Inc., 4150 Network Circle, Santa Clara,
+++ * CA 95054 USA or visit www.sun.com if you need additional information or
+++ * have any questions.
+++ */
+++
+++/**
+++ * A simple class to create our erring Jar with a very long Main-Class
+++ * attribute in the manifest.
+++ */
+++import java.io.ByteArrayOutputStream;
+++import java.io.FileOutputStream;
+++import java.io.IOException;
+++import java.io.PrintStream;
+++import java.util.zip.CRC32;
+++import java.util.zip.CheckedOutputStream;
+++import java.util.zip.ZipEntry;
+++import java.util.zip.ZipOutputStream;
+++public class ZipMeUp {
+++    
+++    static final CRC32 crc = new CRC32();
+++    
+++    private static String SOME_KLASS = ".Some";
+++    
+++    static byte[] getManifestAsBytes(int nchars) throws IOException {
+++        crc.reset();
+++        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+++        CheckedOutputStream cos = new CheckedOutputStream(baos, crc);
+++        PrintStream ps = new PrintStream(cos);
+++        ps.println("Manifest-Version: 1.0");
+++        ps.print("Main-Class: ");
+++        for (int i = 0 ; i < nchars - SOME_KLASS.length(); i++) {
+++            ps.print(i%10);
+++        }
+++        ps.println(SOME_KLASS);
+++        cos.flush();
+++        cos.close();
+++        ps.close();
+++        return baos.toByteArray();
+++    }
+++    /**
+++     * The arguments are: filename_to_create length
+++     * @param args
+++     * @throws java.lang.Exception
+++     */
+++    public static void main(String...args) throws Exception  {
+++        FileOutputStream fos = new FileOutputStream(args[0]);
+++        ZipOutputStream zos = new ZipOutputStream(fos);
+++        byte[] manifest = getManifestAsBytes(Integer.parseInt(args[1]));
+++        ZipEntry ze = new ZipEntry("META-INF/MANIFEST.MF");
+++        ze.setMethod(ZipEntry.STORED);
+++        ze.setSize(manifest.length);
+++        ze.setCompressedSize(manifest.length);
+++        ze.setCrc(crc.getValue());
+++        ze.setTime(System.currentTimeMillis());
+++        zos.putNextEntry(ze);
+++        zos.write(manifest);
+++        zos.flush();
+++        
+++        // add a zero length class
+++        ze = new ZipEntry(SOME_KLASS + ".class");
+++        ze.setMethod(ZipEntry.STORED);
+++        ze.setSize(0);
+++        ze.setCompressedSize(0);
+++        ze.setCrc(0);
+++        ze.setTime(System.currentTimeMillis());
+++        zos.putNextEntry(ze);
+++        zos.flush();
+++        zos.closeEntry();
+++        zos.close();
+++        System.exit(0);
+++    }
+++}
++--- MultipleJRE.sh	2008-11-21 14:18:54.000000000 -0500
+++++ openjdk/jdk/test/tools/launcher/MultipleJRE.sh	2008-11-21 14:23:48.000000000 -0500
++@@ -2,6 +2,7 @@
++ # @bug 4811102 4953711 4955505 4956301 4991229 4998210 5018605 6387069
++ # @build PrintVersion
++ # @build UglyPrintVersion
+++# @build ZipMeUp
++ # @run shell MultipleJRE.sh
++ # @summary Verify Multiple JRE version support
++ # @author Joseph E. Kowalski 
++@@ -48,10 +48,23 @@
++   exit 1
++ fi
++ 
+++JAVAEXE="$TESTJAVA/bin/java"
++ JAVA="$TESTJAVA/bin/java -classpath $TESTCLASSES"
++ JAR="$TESTJAVA/bin/jar"
++ OS=`uname -s`;
++ 
+++# Tests whether we are on windows (true) or not.
+++IsWindows() {
+++    case "$OS" in
+++        Windows* | CYGWIN* )
+++            printf "true"
+++        ;;
+++        * )
+++            printf "false"
+++        ;;
+++    esac
+++}
+++
++ #
++ # Shell routine to test for the proper rejection of syntactically incorrect
++ # version specifications.
++@@ -261,6 +274,29 @@
++ 	fi
++ }
++ 
+++# Tests very long Main-Class attribute in the jar.
+++TestLongMainClass() {
+++    JVER=$1
+++    if [ "$JVER" = "mklink" ]; then
+++        JVER=XX
+++        JDKXX=jdk/j2re$JVER
+++        rm -rf jdk
+++        mkdir jdk
+++        ln -s $TESTJAVA $JDKXX
+++        JAVA_VERSION_PATH="`pwd`/jdk"
+++        export JAVA_VERSION_PATH
+++    fi
+++    $JAVAEXE -cp $TESTCLASSES ZipMeUp UglyBetty.jar 4097 
+++    message="`$JAVAEXE -version:$JVER -jar UglyBetty.jar 2>&1`"
+++    echo $message | grep "Error: main-class: attribute exceeds system limits" > /dev/null 2>&1
+++    if [ $? -ne 0 ]; then
+++        printf "Long manifest test did not get expected error"
+++        exit 1
+++    fi
+++    unset JAVA_VERSION_PATH
+++    rm -rf jdk
+++}
+++
++ #
++ # Main test sequence starts here
++ #
++@@ -279,14 +315,12 @@
++ LaunchVM "" "${RELEASE}"
++ CreateJar "" "0"
++ LaunchVM "" "${RELEASE}"
++-case "$OS" in
++-	Windows* | CYGWIN* )
++-		MAXIMUM_PATH=255;
++-	;;
++-	*)
++-		MAXIMUM_PATH=1024;
++-	;;
++-esac
+++if [ `IsWindows` = "true" ]; then
+++    MAXIMUM_PATH=115;  # 115 = 255 - 140
+++else
+++    MAXIMUM_PATH=884;  # 884 = 1024 - 140
+++fi
+++
++ 
++ PATH_LENGTH=`printf "%s" "$UGLYCLASS" | wc -c`
++ if [ ${PATH_LENGTH} -lt ${MAXIMUM_PATH} ]; then
++@@ -356,15 +390,28 @@
++ TestSyntax "1.2+.3"				# Embedded modifier
++ TestSyntax "1.2.4+&1.2*&1++"			# Long and invalid
++ 
+++# On windows we see if there is another jre installed, usually
+++# there is, then we test using that, otherwise links are created
+++# to get through to SelectVersion.
+++if [ `IsWindows` = "false" ]; then
+++   TestLongMainClass "mklink"
+++else
+++    $JAVAEXE -version:1.0+
+++    if [ $? -eq 0 ]; then
+++        TestLongMainClass "1.0+"
+++    else
+++        printf  "Warning: TestLongMainClass skipped as there is no"
+++       printf  "viable MJRE installed.\n"
+++    fi
+++fi
+++
++ #
++ # Because scribbling in the registry can be rather destructive, only a
++ # subset of the tests are run on Windows.
++ #
++-case "$OS" in
++-	Windows* | CYGWIN* )
++-		exit 0;
++-	;;
++-esac
+++if [ `IsWindows` = "true" ]; then
+++   exit 0;
+++fi
++ 
++ #
++ # Additional version specifiers containing spaces.  (Sigh, unable to
+diff -Nru icedtea6-1.2.old/patches/icedtea-6734167.patch icedtea6-1.2/patches/icedtea-6734167.patch
+--- icedtea6-1.2.old/patches/icedtea-6734167.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.2/patches/icedtea-6734167.patch	2008-12-18 00:26:31.000000000 +0000
+@@ -0,0 +1,89 @@
++--- old/src/share/classes/java/util/Calendar.java	Fri Oct  3 00:27:50 2008
+++++ openjdk/jdk/src/share/classes/java/util/Calendar.java	Fri Oct  3 00:27:50 2008
++@@ -41,9 +41,14 @@
++ import java.io.IOException;
++ import java.io.ObjectInputStream;
++ import java.io.ObjectOutputStream;
+++import java.io.OptionalDataException;
++ import java.io.Serializable;
+++import java.security.AccessControlContext;
++ import java.security.AccessController;
+++import java.security.PermissionCollection;
+++import java.security.PrivilegedActionException;
++ import java.security.PrivilegedExceptionAction;
+++import java.security.ProtectionDomain;
++ import java.text.DateFormat;
++ import java.text.DateFormatSymbols;
++ import sun.util.BuddhistCalendar;
++@@ -2626,6 +2631,18 @@
++         }
++     }
++ 
+++    private static class CalendarAccessControlContext {
+++        private static final AccessControlContext INSTANCE;
+++        static {
+++            RuntimePermission perm = new RuntimePermission("accessClassInPackage.sun.util.calendar");
+++            PermissionCollection perms = perm.newPermissionCollection();
+++            perms.add(perm);
+++            INSTANCE = new AccessControlContext(new ProtectionDomain[] {
+++                                                    new ProtectionDomain(null, perms)
+++                                                });
+++        }
+++    }
+++
++     /**
++      * Reconstitutes this object from a stream (i.e., deserialize it).
++      */
++@@ -2655,17 +2672,30 @@
++         serialVersionOnStream = currentSerialVersion;
++ 
++         // If there's a ZoneInfo object, use it for zone.
+++        ZoneInfo zi = null;
++         try {
++-            ZoneInfo zi = (ZoneInfo) AccessController.doPrivileged(
++-                new PrivilegedExceptionAction() {
++-                    public Object run() throws Exception {
++-                        return input.readObject();
++-                    }
++-                });
++-            if (zi != null) {
++-                zone = zi;
+++            zi = AccessController.doPrivileged(
+++                    new PrivilegedExceptionAction<ZoneInfo>() {
+++                        public ZoneInfo run() throws Exception {
+++                            return (ZoneInfo) input.readObject();
+++                        }
+++                    },
+++                    CalendarAccessControlContext.INSTANCE);
+++        } catch (PrivilegedActionException pae) {
+++            Exception e = pae.getException();
+++            if (!(e instanceof OptionalDataException)) {
+++                if (e instanceof RuntimeException) {
+++                    throw (RuntimeException) e;
+++                } else if (e instanceof IOException) {
+++                    throw (IOException) e;
+++                } else if (e instanceof ClassNotFoundException) {
+++                    throw (ClassNotFoundException) e;
+++                }
+++                throw new RuntimeException(e);
++             }
++-        } catch (Exception e) {
+++        }
+++        if (zi != null) {
+++            zone = zi;
++         }
++ 
++         // If the deserialized object has a SimpleTimeZone, try to
++@@ -2674,9 +2704,9 @@
++         // implementation as much as possible.
++         if (zone instanceof SimpleTimeZone) {
++             String id = zone.getID();
++-            TimeZone zi = TimeZone.getTimeZone(id);
++-            if (zi != null && zi.hasSameRules(zone) && zi.getID().equals(id)) {
++-                zone = zi;
+++            TimeZone tz = TimeZone.getTimeZone(id);
+++            if (tz != null && tz.hasSameRules(zone) && tz.getID().equals(id)) {
+++                zone = tz;
++             }
++         }
++     }
+diff -Nru icedtea6-1.2.old/patches/icedtea-6755943.patch icedtea6-1.2/patches/icedtea-6755943.patch
+--- icedtea6-1.2.old/patches/icedtea-6755943.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.2/patches/icedtea-6755943.patch	2008-12-18 00:26:31.000000000 +0000
+@@ -0,0 +1,617 @@
++--- old/src/share/native/com/sun/java/util/jar/pack/bytes.cpp	Fri Oct 17 10:50:38 2008
+++++ openjdk/jdk/src/share/native/com/sun/java/util/jar/pack/bytes.cpp	Fri Oct 17 10:50:38 2008
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2001-2003 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2001-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -56,7 +56,7 @@
++     return;
++   }
++   byte* oldptr = ptr;
++-  ptr = (byte*)::realloc(ptr, len_+1);
+++  ptr = (len_ >= PSIZE_MAX) ? null : (byte*)::realloc(ptr, len_+1);
++   if (ptr != null)  {
++     mtrace('r', oldptr, 0);
++     mtrace('m', ptr, len_+1);
++@@ -126,7 +126,7 @@
++ // Make sure there are 'o' bytes beyond the fill pointer,
++ // advance the fill pointer, and return the old fill pointer.
++ byte* fillbytes::grow(size_t s) {
++-  size_t nlen = b.len+s;
+++  size_t nlen = add_size(b.len, s);
++   if (nlen <= allocated) {
++     b.len = nlen;
++     return limit()-s;
++--- old/src/share/native/com/sun/java/util/jar/pack/defines.h	Fri Oct 17 10:50:38 2008
+++++ openjdk/jdk/src/share/native/com/sun/java/util/jar/pack/defines.h	Fri Oct 17 10:50:38 2008
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2001-2004 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2001-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -47,11 +47,13 @@
++ #define NOT_PRODUCT(xxx)
++ #define assert(p) (0)
++ #define printcr false &&
+++#define VERSION_STRING "%s version %s\n"
++ #else
++ #define IF_PRODUCT(xxx)
++ #define NOT_PRODUCT(xxx) xxx
++ #define assert(p) ((p) || (assert_failed(#p), 1))
++ #define printcr u->verbose && u->printcr_if_verbose
+++#define VERSION_STRING "%s version non-product %s\n"
++ extern "C" void breakpoint();
++ extern void assert_failed(const char*);
++ #define BREAK (breakpoint())
++@@ -79,9 +81,9 @@
++ 
++ #define lengthof(array) (sizeof(array)/sizeof(array[0]))
++ 
++-#define NEW(T, n)    (T*) must_malloc(sizeof(T)*(n))
++-#define U_NEW(T, n)  (T*) u->alloc(sizeof(T)*(n))
++-#define T_NEW(T, n)  (T*) u->temp_alloc(sizeof(T)*(n))
+++#define NEW(T, n)    (T*) must_malloc(scale_size(n, sizeof(T)))
+++#define U_NEW(T, n)  (T*) u->alloc(scale_size(n, sizeof(T)))
+++#define T_NEW(T, n)  (T*) u->temp_alloc(scale_size(n, sizeof(T)))
++ 
++ 
++ // bytes and byte arrays
++--- old/src/share/native/com/sun/java/util/jar/pack/main.cpp	Fri Oct 17 10:50:39 2008
+++++ openjdk/jdk/src/share/native/com/sun/java/util/jar/pack/main.cpp	Fri Oct 17 10:50:39 2008
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2003-2005 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2003-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -300,7 +300,7 @@
++     case 'J':  argp += 1; break;  // skip ignored -Jxxx parameter
++ 
++     case 'V':
++-      fprintf(u.errstrm, "%s version %s\n", nbasename(argv[0]), sccsver);
+++      fprintf(u.errstrm, VERSION_STRING, nbasename(argv[0]), sccsver);
++       exit(0);
++ 
++     case 'h':
++--- old/src/share/native/com/sun/java/util/jar/pack/unpack.cpp	Fri Oct 17 10:50:40 2008
+++++ openjdk/jdk/src/share/native/com/sun/java/util/jar/pack/unpack.cpp	Fri Oct 17 10:50:40 2008
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2001-2005 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2001-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -618,18 +618,17 @@
++   if ((archive_options & AO_HAVE_FILE_HEADERS) != 0) {
++     uint hi = hdr.getInt();
++     uint lo = hdr.getInt();
++-    archive_size = band::makeLong(hi, lo);
+++    julong x = band::makeLong(hi, lo);
+++    archive_size = (size_t) x;
+++    if (archive_size != x) {
+++      // Silly size specified; force overflow.
+++      archive_size = PSIZE_MAX+1;
+++    }
++     hdrVals += 2;
++   } else {
++     hdrValsSkipped += 2;
++   }
++ 
++-  if (archive_size != (size_t)archive_size) {
++-    // Silly size specified.
++-    abort("archive too large");
++-    return;
++-  }
++-
++   // Now we can size the whole archive.
++   // Read everything else into a mega-buffer.
++   rp = hdr.rp;
++@@ -643,8 +642,8 @@
++       abort("EOF reading fixed input buffer");
++       return;
++     }
++-  } else if (archive_size > 0) {
++-    input.set(U_NEW(byte, (size_t) header_size_0 + archive_size + C_SLOP),
+++  } else if (archive_size != 0) {
+++    input.set(U_NEW(byte, add_size(header_size_0, archive_size, C_SLOP)),
++               (size_t) header_size_0 + archive_size);
++     assert(input.limit()[0] == 0);
++     // Move all the bytes we read initially into the real buffer.
++@@ -654,7 +653,6 @@
++   } else {
++     // It's more complicated and painful.
++     // A zero archive_size means that we must read until EOF.
++-    assert(archive_size == 0);
++     input.init(CHUNK*2);
++     CHECK;
++     input.b.len = input.allocated;
++@@ -664,7 +662,7 @@
++     rplimit += header_size;
++     while (ensure_input(input.limit() - rp)) {
++       size_t dataSoFar = input_remaining();
++-      size_t nextSize = dataSoFar + CHUNK;
+++      size_t nextSize = add_size(dataSoFar, CHUNK);
++       input.ensureSize(nextSize);
++       CHECK;
++       input.b.len = input.allocated;
++@@ -949,10 +947,12 @@
++   // First band:  Read lengths of shared prefixes.
++   if (len > PREFIX_SKIP_2)
++     cp_Utf8_prefix.readData(len - PREFIX_SKIP_2);
+++    NOT_PRODUCT(else cp_Utf8_prefix.readData(0));  // for asserts
++ 
++   // Second band:  Read lengths of unshared suffixes:
++   if (len > SUFFIX_SKIP_1)
++     cp_Utf8_suffix.readData(len - SUFFIX_SKIP_1);
+++    NOT_PRODUCT(else cp_Utf8_suffix.readData(0));  // for asserts
++ 
++   bytes* allsuffixes = T_NEW(bytes, len);
++   CHECK;
++--- old/src/share/native/com/sun/java/util/jar/pack/unpack.h	Fri Oct 17 10:50:41 2008
+++++ openjdk/jdk/src/share/native/com/sun/java/util/jar/pack/unpack.h	Fri Oct 17 10:50:41 2008
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2002-2005 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2002-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -204,7 +204,7 @@
++ 
++   // archive header fields
++   int      magic, minver, majver;
++-  julong   archive_size;
+++  size_t   archive_size;
++   int      archive_next_count, archive_options, archive_modtime;
++   int      band_headers_size;
++   int      file_count, attr_definition_count, ic_count, class_count;
++--- old/src/share/native/com/sun/java/util/jar/pack/utils.cpp	Fri Oct 17 10:50:41 2008
+++++ openjdk/jdk/src/share/native/com/sun/java/util/jar/pack/utils.cpp	Fri Oct 17 10:50:41 2008
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2001-2004 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2001-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -46,14 +46,13 @@
++ 
++ #include "unpack.h"
++ 
++-void* must_malloc(int size) {
++-  int msize = size;
++-  assert(size >= 0);
+++void* must_malloc(size_t size) {
+++  size_t msize = size;
++   #ifdef USE_MTRACE
++-  if (msize < sizeof(int))
+++  if (msize >= 0 && msize < sizeof(int))
++     msize = sizeof(int);  // see 0xbaadf00d below
++   #endif
++-  void* ptr = malloc(msize);
+++  void* ptr = (msize > PSIZE_MAX) ? null : malloc(msize);
++   if (ptr != null) {
++     memset(ptr, 0, size);
++   } else {
++--- old/src/share/native/com/sun/java/util/jar/pack/utils.h	Fri Oct 17 10:50:42 2008
+++++ openjdk/jdk/src/share/native/com/sun/java/util/jar/pack/utils.h	Fri Oct 17 10:50:42 2008
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright 2001-2003 Sun Microsystems, Inc.  All Rights Reserved.
+++ * Copyright 2001-2008 Sun Microsystems, Inc.  All Rights Reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -25,7 +25,7 @@
++ 
++ //Definitions of our util functions
++ 
++-void* must_malloc(int size);
+++void* must_malloc(size_t size);
++ #ifndef USE_MTRACE
++ #define mtrace(c, ptr, size) (0)
++ #else
++@@ -32,6 +32,24 @@
++ void mtrace(char c, void* ptr, size_t size);
++ #endif
++ 
+++// overflow management
+++#define OVERFLOW ((size_t)-1)
+++#define PSIZE_MAX (OVERFLOW/2)  /* normal size limit */
+++
+++inline size_t scale_size(size_t size, size_t scale) {
+++  return (size > PSIZE_MAX / scale) ? OVERFLOW : size * scale;
+++}
+++
+++inline size_t add_size(size_t size1, size_t size2) {
+++  return ((size1 | size2 | (size1 + size2)) > PSIZE_MAX)
+++    ? OVERFLOW
+++    : size1 + size2;
+++}
+++
+++inline size_t add_size(size_t size1, size_t size2, int size3) {
+++  return add_size(add_size(size1, size2), size3);
+++}
+++
++ // These may be expensive, because they have to go via Java TSD,
++ // if the optional u argument is missing.
++ struct unpacker;
++--- /dev/null	Fri Oct 17 10:50:42 2008
+++++ openjdk/jdk/test/tools/pack200/MemoryAllocatorTest.java	Fri Oct 17 10:50:42 2008
++@@ -0,0 +1,369 @@
+++/*
+++ * Copyright 2008 Sun Microsystems, Inc.  All Rights Reserved.
+++ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+++ *
+++ * This code is free software; you can redistribute it and/or modify it
+++ * under the terms of the GNU General Public License version 2 only, as
+++ * published by the Free Software Foundation.
+++ *
+++ * This code is distributed in the hope that it will be useful, but WITHOUT
+++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+++ * version 2 for more details (a copy is included in the LICENSE file that
+++ * accompanied this code).
+++ *
+++ * You should have received a copy of the GNU General Public License version
+++ * 2 along with this work; if not, write to the Free Software Foundation,
+++ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+++ *
+++ * Please contact Sun Microsystems, Inc., 4150 Network Circle, Santa Clara,
+++ * CA 95054 USA or visit www.sun.com if you need additional information or
+++ * have any questions.
+++ */
+++
+++/*
+++ * @test
+++ * @bug 6755943
+++ * @summary Checks any memory overruns in archive length.
+++ * @run main/timeout=1200 MemoryAllocatorTest
+++ */
+++import java.io.BufferedReader;
+++import java.io.DataOutputStream;
+++import java.io.File;
+++import java.io.FileOutputStream;
+++import java.io.IOException;
+++import java.io.InputStreamReader;
+++import java.io.OutputStream;
+++import java.io.RandomAccessFile;
+++import java.nio.MappedByteBuffer;
+++import java.nio.channels.FileChannel;
+++import java.util.ArrayList;
+++import java.util.List;
+++import java.util.Map;
+++
+++public class MemoryAllocatorTest {
+++
+++    /*
+++     * The smallest possible pack file with 1 empty resource
+++     */
+++    static int[] magic = {
+++        0xCA, 0xFE, 0xD0, 0x0D
+++    };
+++    static int[] version_info = {
+++        0x07, // minor
+++        0x96  // major
+++    };
+++    static int[] option = {
+++        0x10
+++    };
+++    static int[] size_hi = {
+++        0x00
+++    };
+++    static int[] size_lo_ulong = {
+++        0xFF, 0xFC, 0xFC, 0xFC, 0xFC // ULONG_MAX 0xFFFFFFFF
+++    };
+++    static int[] size_lo_correct = {
+++        0x17
+++    };
+++    static int[] data = {
+++        0x00, 0xEC, 0xDA, 0xDE, 0xF8, 0x45, 0x01, 0x02,
+++        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+++        0x00, 0x00, 0x00, 0x01, 0x31, 0x01, 0x00
+++    };
+++    // End of pack file data
+++
+++    static final String JAVA_HOME = System.getProperty("java.home");
+++
+++    static final boolean debug = Boolean.getBoolean("MemoryAllocatorTest.Debug");
+++    static final boolean WINDOWS = System.getProperty("os.name").startsWith("Windows");
+++    static final boolean LINUX = System.getProperty("os.name").startsWith("Linux");
+++    static final boolean SIXTYFOUR_BIT = System.getProperty("sun.arch.data.model", "32").equals("64");
+++    static final private int EXPECTED_EXIT_CODE = (WINDOWS) ? -1 : 255;
+++
+++    static int testExitValue = 0;
+++    
+++    static byte[] bytes(int[] a) {
+++        byte[] b = new byte[a.length];
+++        for (int i = 0; i < b.length; i++) {
+++            b[i] = (byte) a[i];
+++        }
+++        return b;
+++    }
+++    
+++    static void createPackFile(boolean good, File packFile) throws IOException {
+++        FileOutputStream fos = new FileOutputStream(packFile);
+++        fos.write(bytes(magic));
+++        fos.write(bytes(version_info));
+++        fos.write(bytes(option));
+++        fos.write(bytes(size_hi));
+++        if (good) {
+++            fos.write(bytes(size_lo_correct));
+++        } else {
+++            fos.write(bytes(size_lo_ulong));
+++        }
+++        fos.write(bytes(data));
+++    }
+++
+++    /*
+++     * This method modifies the LSB of the size_lo for various wicked
+++     * values between MAXINT-0x3F and MAXINT.
+++     */
+++    static int modifyPackFile(File packFile) throws IOException {
+++        RandomAccessFile raf = new RandomAccessFile(packFile, "rws");
+++        long len = packFile.length();
+++        FileChannel fc = raf.getChannel();
+++        MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_WRITE, 0, len);
+++        int pos = magic.length + version_info.length + option.length +
+++                size_hi.length;
+++        byte value = bb.get(pos);
+++        value--;
+++        bb.position(pos);
+++        bb.put(value);
+++        bb.force();
+++        fc.truncate(len);
+++        fc.close();
+++        return value & 0xFF;
+++    }
+++
+++    static String getUnpack200Cmd() throws Exception {
+++        File binDir = new File(JAVA_HOME, "bin");
+++        File unpack200File = WINDOWS
+++                ? new File(binDir, "unpack200.exe")
+++                : new File(binDir, "unpack200");
+++
+++        String cmd = unpack200File.getAbsolutePath();
+++        if (!unpack200File.canExecute()) {
+++            throw new Exception("please check" +
+++                    cmd + " exists and is executable");
+++        }
+++        return cmd;
+++    }
+++
+++    static TestResult runUnpacker(File packFile) throws Exception {
+++        if (!packFile.exists()) {
+++            throw new Exception("please check" + packFile + " exists");
+++        }
+++        ArrayList<String> alist = new ArrayList<String>();
+++        ProcessBuilder pb = new ProcessBuilder(getUnpack200Cmd(),
+++                packFile.getName(), "testout.jar");
+++        Map<String, String> env = pb.environment();
+++        pb.directory(new File("."));
+++        int retval = 0;
+++        try {
+++            pb.redirectErrorStream(true);
+++            Process p = pb.start();
+++            BufferedReader rd = new BufferedReader(
+++                    new InputStreamReader(p.getInputStream()), 8192);
+++            String in = rd.readLine();
+++            while (in != null) {
+++                alist.add(in);
+++                System.out.println(in);
+++                in = rd.readLine();
+++            }
+++            retval = p.waitFor();
+++            p.destroy();
+++        } catch (Exception ex) {
+++            ex.printStackTrace();
+++            throw new RuntimeException(ex.getMessage());
+++        }
+++        return new TestResult("", retval, alist);
+++    }
+++
+++    /*
+++     * The debug version builds of unpack200 call abort(3) which might set
+++     * an unexpected return value, therefore this test is to determine
+++     * if we are using a product or non-product build and check the
+++     * return value appropriately.
+++     */
+++    static boolean isNonProductVersion() throws Exception {
+++        ArrayList<String> alist = new ArrayList<String>();
+++        ProcessBuilder pb = new ProcessBuilder(getUnpack200Cmd(), "--version");
+++        Map<String, String> env = pb.environment();
+++        pb.directory(new File("."));
+++        int retval = 0;
+++        try {
+++            pb.redirectErrorStream(true);
+++            Process p = pb.start();
+++            BufferedReader rd = new BufferedReader(
+++                    new InputStreamReader(p.getInputStream()), 8192);
+++            String in = rd.readLine();
+++            while (in != null) {
+++                alist.add(in);
+++                System.out.println(in);
+++                in = rd.readLine();
+++            }
+++            retval = p.waitFor();
+++            p.destroy();
+++        } catch (Exception ex) {
+++            ex.printStackTrace();
+++            throw new RuntimeException(ex.getMessage());
+++        }
+++        for (String x : alist) {
+++            if (x.contains("non-product")) {
+++                return true;
+++            }
+++        }
+++        return false;
+++    }
+++
+++    /**
+++     * @param args the command line arguments
+++     * @throws java.lang.Exception 
+++     */
+++    public static void main(String[] args) throws Exception {
+++
+++        File packFile = new File("tiny.pack");
+++        boolean isNPVersion = isNonProductVersion();
+++
+++        // Create a good pack file and test if everything is ok
+++        createPackFile(true, packFile);
+++        TestResult tr = runUnpacker(packFile);
+++        tr.setDescription("a good pack file");
+++        tr.checkPositive();
+++        tr.isOK();
+++        System.out.println(tr);
+++
+++        /*
+++         * jprt systems on windows and linux seem to have abundant memory
+++         * therefore can take a very long time to run, and even if it does
+++         * the error message is not accurate for us to discern if the test
+++         * passes successfully.
+++         */
+++        if (SIXTYFOUR_BIT && (LINUX || WINDOWS)) {
+++            System.out.println("Warning: Windows/Linux 64bit tests passes vacuously");
+++            return;
+++        }
+++        
+++        /*
+++         * debug builds call abort, the exit code under these conditions
+++         * are not really relevant.
+++         */
+++        if (isNPVersion) {
+++            System.out.println("Warning: non-product build: exit values not checked");
+++        }
+++    
+++        // create a bad pack file
+++        createPackFile(false, packFile);
+++        tr = runUnpacker(packFile);
+++        tr.setDescription("a wicked pack file");
+++        tr.contains("Native allocation failed");
+++        if(!isNPVersion) {
+++            tr.checkValue(EXPECTED_EXIT_CODE);
+++        }
+++        System.out.println(tr);
+++        int value = modifyPackFile(packFile);
+++        tr.setDescription("value=" + value);
+++
+++        // continue creating bad pack files by modifying the specimen pack file.
+++        while (value >= 0xc0) {
+++            tr = runUnpacker(packFile);
+++            tr.contains("Native allocation failed");
+++            if (!isNPVersion) {
+++                tr.checkValue(EXPECTED_EXIT_CODE);
+++            }
+++            tr.setDescription("wicked value=0x" +
+++                    Integer.toHexString(value & 0xFF));
+++            System.out.println(tr);
+++            value = modifyPackFile(packFile);
+++        }
+++        if (testExitValue != 0) {
+++            throw new Exception("Pack200 archive length tests(" +
+++                    testExitValue + ") failed ");
+++        } else {
+++            System.out.println("All tests pass");
+++        }
+++    }
+++
+++    /*
+++     * A class to encapsulate the test results and stuff, with some ease
+++     * of use methods to check the test results.
+++     */
+++    static class TestResult {
+++
+++        StringBuilder status;
+++        int exitValue;
+++        List<String> testOutput;
+++        String description;
+++
+++        public TestResult(String str, int rv, List<String> oList) {
+++            status = new StringBuilder(str);
+++            exitValue = rv;
+++            testOutput = oList;
+++        }
+++
+++        void setDescription(String description) {
+++            this.description = description;
+++        }
+++
+++        void checkValue(int value) {
+++            if (exitValue != value) {
+++                status =
+++                        status.append("  Error: test expected exit value " +
+++                        value + "got " + exitValue);
+++                testExitValue++;
+++            }
+++        }
+++
+++        void checkNegative() {
+++            if (exitValue == 0) {
+++                status = status.append(
+++                        "  Error: test did not expect 0 exit value");
+++
+++                testExitValue++;
+++            }
+++        }
+++
+++        void checkPositive() {
+++            if (exitValue != 0) {
+++                status = status.append(
+++                        "  Error: test did not return 0 exit value");
+++                testExitValue++;
+++            }
+++        }
+++
+++        boolean isOK() {
+++            return exitValue == 0;
+++        }
+++
+++        boolean isZeroOutput() {
+++            if (!testOutput.isEmpty()) {
+++                status = status.append("  Error: No message from cmd please");
+++                testExitValue++;
+++                return false;
+++            }
+++            return true;
+++        }
+++
+++        boolean isNotZeroOutput() {
+++            if (testOutput.isEmpty()) {
+++                status = status.append("  Error: Missing message");
+++                testExitValue++;
+++                return false;
+++            }
+++            return true;
+++        }
+++
+++        public String toString() {
+++            if (debug) {
+++                for (String x : testOutput) {
+++                    status = status.append(x + "\n");
+++                }
+++            }
+++            if (description != null) {
+++                status.insert(0, description);
+++            }
+++            return status.append("\nexitValue = " + exitValue).toString();
+++        }
+++
+++        boolean contains(String str) {
+++            for (String x : testOutput) {
+++                if (x.contains(str)) {
+++                    return true;
+++                }
+++            }
+++            status = status.append("   Error: string <" + str + "> not found ");
+++            testExitValue++;
+++            return false;
+++        }
+++    }
+++}
+diff -Nru icedtea6-1.2.old/patches/icedtea-6766136.patch icedtea6-1.2/patches/icedtea-6766136.patch
+--- icedtea6-1.2.old/patches/icedtea-6766136.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.2/patches/icedtea-6766136.patch	2008-12-18 00:26:31.000000000 +0000
+@@ -0,0 +1,189 @@
++--- old/src/share/native/sun/awt/splashscreen/splashscreen_gfx_impl.h	Wed Nov 12 12:25:11 2008
+++++ openjdk/jdk/src/share/native/sun/awt/splashscreen/splashscreen_gfx_impl.h	Wed Nov 12 12:25:11 2008
++@@ -31,7 +31,7 @@
++ /* here come some very simple macros */
++ 
++ /* advance a pointer p by sizeof(type)*n bytes */
++-#define INCPN(type,p,n) ((p) = (type*)(p)+n)
+++#define INCPN(type,p,n) ((p) = (type*)(p)+(n))
++ 
++ /* advance a pointer by sizeof(type) */
++ #define INCP(type,p) INCPN(type,(p),1)
++--- old/src/share/native/sun/awt/splashscreen/splashscreen_gif.c	Wed Nov 12 12:25:12 2008
+++++ openjdk/jdk/src/share/native/sun/awt/splashscreen/splashscreen_gif.c	Wed Nov 12 12:25:12 2008
++@@ -53,6 +53,10 @@
++ // convert libungif samples to our ones
++ #define MAKE_QUAD_GIF(c,a) MAKE_QUAD((c).Red, (c).Green, (c).Blue, (a))
++ 
+++#define SAFE_TO_ALLOC(c, sz)                                               \
+++    (((c) > 0) && ((sz) > 0) &&                                            \
+++     ((0xffffffffu / ((unsigned int)(c))) > (unsigned int)(sz)))
+++
++ /* stdio FILE* and memory input functions for libungif */
++ int
++ SplashStreamGifInputFunc(GifFileType * gif, GifByteType * buf, int n)
++@@ -62,6 +66,15 @@
++     return rc;
++ }
++ 
+++/* These macro help to ensure that we only take part of frame that fits into 
+++   logical screen. */
+++
+++/* Ensure that p belongs to [pmin, pmax) interval. Returns fixed point (if fix is needed) */
+++#define FIX_POINT(p, pmin, pmax) ( ((p) < (pmin)) ? (pmin) : (((p) > (pmax)) ? (pmax) : (p)))
+++/* Ensures that line starting at point p does not exceed boundary pmax.
+++   Returns fixed length (if fix is needed) */
+++#define FIX_LENGTH(p, len, pmax) ( ((p) + (len)) > (pmax) ? ((pmax) - (p)) : (len))
+++
++ int
++ SplashDecodeGif(Splash * splash, GifFileType * gif)
++ {
++@@ -70,6 +83,7 @@
++     byte_t *pBitmapBits, *pOldBitmapBits;
++     int i, j;
++     int imageIndex;
+++    int cx, cy, cw, ch; /* clamped coordinates */
++     const int interlacedOffset[] = { 0, 4, 2, 1, 0 };   /* The way Interlaced image should. */
++     const int interlacedJumps[] = { 8, 8, 4, 2, 1 };    /* be read - offsets and jumps... */
++ 
++@@ -79,14 +93,31 @@
++ 
++     SplashCleanup(splash);
++ 
+++    if (!SAFE_TO_ALLOC(gif->SWidth, splash->imageFormat.depthBytes)) {
+++        return 0;
+++    }
++     stride = gif->SWidth * splash->imageFormat.depthBytes;
++     if (splash->byteAlignment > 1)
++         stride =
++             (stride + splash->byteAlignment - 1) & ~(splash->byteAlignment - 1);
++ 
+++    if (!SAFE_TO_ALLOC(gif->SHeight, stride)) {
+++        return 0;
+++    }
+++
+++    if (!SAFE_TO_ALLOC(gif->ImageCount, sizeof(SplashImage*))) {
+++        return 0;
+++    }
++     bufferSize = stride * gif->SHeight;
++     pBitmapBits = (byte_t *) malloc(bufferSize);
+++    if (!pBitmapBits) {
+++        return 0;
+++    }
++     pOldBitmapBits = (byte_t *) malloc(bufferSize);
+++    if (!pOldBitmapBits) {
+++        free(pBitmapBits);
+++        return 0;
+++    }
++     memset(pBitmapBits, 0, bufferSize);
++ 
++     splash->width = gif->SWidth;
++@@ -94,6 +125,11 @@
++     splash->frameCount = gif->ImageCount;
++     splash->frames = (SplashImage *)
++         malloc(sizeof(SplashImage) * gif->ImageCount);
+++    if (!splash->frames) {
+++      free(pBitmapBits);
+++      free(pOldBitmapBits);
+++      return 0;
+++    } 
++     memset(splash->frames, 0, sizeof(SplashImage) * gif->ImageCount);
++     splash->loopCount = 1;
++ 
++@@ -109,6 +145,11 @@
++         int colorCount = 0;
++         rgbquad_t colorMapBuf[SPLASH_COLOR_MAP_SIZE];
++ 
+++	cx = FIX_POINT(desc->Left, 0, gif->SWidth);
+++	cy = FIX_POINT(desc->Top, 0, gif->SHeight);
+++	cw = FIX_LENGTH(desc->Left, desc->Width, gif->SWidth);
+++	ch = FIX_LENGTH(desc->Top, desc->Height, gif->SHeight);
+++
++         if (colorMap) {
++             if (colorMap->ColorCount <= SPLASH_COLOR_MAP_SIZE) {
++                 colorCount = colorMap->ColorCount;
++@@ -195,13 +236,24 @@
++             for (; pass < npass; ++pass) {
++                 int jump = interlacedJumps[pass];
++                 int ofs = interlacedOffset[pass];
++-                int numLines = (desc->Height + jump - 1 - ofs) / jump;
+++                /* Number of source lines for current pass */
+++                int numPassLines = (desc->Height + jump - ofs - 1) / jump;
+++                /* Number of lines that fits to dest buffer */
+++                int numLines = (ch + jump - ofs - 1) / jump;
++ 
+++
++                 initRect(&srcRect, 0, 0, desc->Width, numLines, 1,
++                     desc->Width, pSrc, &srcFormat);
++-                initRect(&dstRect, desc->Left, desc->Top + ofs, desc->Width,
++-                    numLines, jump, stride, pBitmapBits, &splash->imageFormat);
++-                pSrc += convertRect(&srcRect, &dstRect, CVT_ALPHATEST);
+++
+++                if (numLines > 0) {
+++                    initRect(&dstRect, cx, cy + ofs, cw,
+++                             numLines, jump, stride, pBitmapBits,
+++                             &splash->imageFormat);
+++
+++                    pSrc += convertRect(&srcRect, &dstRect, CVT_ALPHATEST);
+++                }
+++                // skip extra source data
+++                pSrc += (numPassLines - numLines) * srcRect.stride;
++             }
++         }
++ 
++@@ -209,6 +261,12 @@
++ 
++         splash->frames[imageIndex].bitmapBits =
++             (rgbquad_t *) malloc(bufferSize);
+++	if (!splash->frames[imageIndex].bitmapBits) {
+++	  free(pBitmapBits);
+++	  free(pOldBitmapBits);
+++          /* Assuming that callee will take care of splash frames we have already allocated */
+++	  return 0;
+++	}
++         memcpy(splash->frames[imageIndex].bitmapBits, pBitmapBits, bufferSize);
++ 
++         SplashInitFrameShape(splash, imageIndex);
++@@ -224,27 +282,29 @@
++             {
++                 ImageRect dstRect;
++                 rgbquad_t fillColor = 0;                        // 0 is transparent
++-                if (transparentColor < 0) {
+++
+++                if (transparentColor > 0) {
++                     fillColor= MAKE_QUAD_GIF(
++                         colorMap->Colors[gif->SBackGroundColor], 0xff);
++                 }
++-                initRect(&dstRect, desc->Left, desc->Top,
++-                    desc->Width, desc->Height, 1, stride,
++-                    pBitmapBits, &splash->imageFormat);
+++                initRect(&dstRect,
+++                         cx, cy, cw, ch,
+++                         1, stride,
+++                         pBitmapBits, &splash->imageFormat);
++                 fillRect(fillColor, &dstRect);
++             }
++             break;
++         case GIF_DISPOSE_RESTORE:
++             {
++-
++-                int lineSize = desc->Width * splash->imageFormat.depthBytes;
++-
++-                for (j = 0; j < desc->Height; j++) {
++-                    int lineIndex = stride * (j + desc->Top) +
++-                        desc->Left * splash->imageFormat.depthBytes;
++-
++-                    memcpy(pBitmapBits + lineIndex, pOldBitmapBits + lineIndex,
++-                        lineSize);
+++                int lineSize = cw * splash->imageFormat.depthBytes;
+++                if (lineSize > 0) {
+++                    int lineOffset = cx * splash->imageFormat.depthBytes;
+++                    int lineIndex = cy * stride + lineOffset;
+++                    for (j=0; j<ch; j++) {
+++                        memcpy(pBitmapBits + lineIndex, pOldBitmapBits + lineIndex,
+++                               lineSize);
+++                        lineIndex += stride;
+++                    }
++                 }
++             }
++             break;
