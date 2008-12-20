@@ -13,6 +13,7 @@ IUSE=""
 
 # Keeps this and java-virtuals/jaf in sync
 RDEPEND="|| (
+		dev-java/icedtea6-bin
 		=virtual/icedtea-jdk-1.6
 		=dev-java/sun-jdk-1.6.0*
 		=dev-java/ibm-jdk-bin-1.6.0*
