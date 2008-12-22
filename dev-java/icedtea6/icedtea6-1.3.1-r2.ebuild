@@ -98,10 +98,8 @@ pkg_setup() {
 		JAVA_PKG_FORCE_VM="gcj-jdk"
 	elif has_version dev-java/cacao; then
 		JAVA_PKG_FORCE_VM="cacao"
-	elif has_version dev-java/jamvm; then
-		JAVA_PKG_FORCE_VM="jamvm"
 	else
-		die "Unable to find supported VM for building"
+		die "Unable to find a supported VM for building"
 	fi
 
 	einfo "Forced vm ${JAVA_PKG_FORCE_VM}"
@@ -135,8 +133,8 @@ src_compile() {
 		# If we are upgrading icedtea, then we don't need to bootstrap.
 		config="${config} --with-icedtea"
 		config="${config} --with-icedtea-home=$(java-config -O)"
-	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" || "${vm}" == "jamvm" ]] ; then
-		# For other 1.5 JDKs e.g. GCJ, CACAO, JamVM.
+	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" ]] ; then
+		# For other 1.5 JDKs e.g. GCJ, CACAO.
 		config="${config} --with-ecj-jar=$(java-pkg_getjar eclipse-ecj:3.3 ecj.jar)" \
 		config="${config} --with-libgcj-jar=${vmhome}/jre/lib/rt.jar"
 		config="${config} --with-gcj-home=${vmhome}"
