@@ -26,9 +26,9 @@ pkg_setup() {
 src_compile() {
 	# A compiler can be forced with the JAVAC variable if needed
 	unset JAVAC
-	econf --bindir=/usr/${P}/bin \
-		--libdir=/usr/${P}/lib \
-		--datarootdir=/usr/${P}/share \
+	econf --bindir=/usr/${PN}/bin \
+		--libdir=/usr/${PN}/lib \
+		--datarootdir=/usr/${PN}/share \
 		--disable-dependency-tracking \
 		--with-java-runtime-library-prefix=${CLASSPATH_DIR}
 	emake || die "emake failed"
@@ -37,24 +37,24 @@ src_compile() {
 src_install() {
 	make DESTDIR="${D}" install || die "make install failed"
 	dodir /usr/bin
-	dosym /usr/${P}/bin/cacao /usr/bin/cacao
+	dosym /usr/${PN}/bin/cacao /usr/bin/cacao
 	dodoc AUTHORS ChangeLog* NEWS README || die "failed to install docs"
 
 	for files in ${CLASSPATH_DIR}/bin/g*;
 	  do
-	  dosym $files /usr/${P}/bin/$(echo $files|sed "s#$(dirname $files)/g##");
+	  dosym $files /usr/${PN}/bin/$(echo $files|sed "s#$(dirname $files)/g##");
 	done
 
-	dodir /usr/${P}/jre/lib
-	dosym ${CLASSPATH_DIR}/share/classpath/glibj.zip /usr/${P}/jre/lib/rt.jar
-	dodir /usr/${P}/lib
-	dosym ${CLASSPATH_DIR}/share/classpath/tools.zip /usr/${P}/lib/tools.jar
+	dodir /usr/${PN}/jre/lib
+	dosym ${CLASSPATH_DIR}/share/classpath/glibj.zip /usr/${PN}/jre/lib/rt.jar
+	dodir /usr/${PN}/lib
+	dosym ${CLASSPATH_DIR}/share/classpath/tools.zip /usr/${PN}/lib/tools.jar
 
 	# use ecj for javac
 	if [ -e /usr/bin/ecj ]; then
-		dosym /usr/bin/ecj /usr/${P}/bin/javac;
+		dosym /usr/bin/ecj /usr/${PN}/bin/javac;
 	else
-		dosym /usr/bin/ecj-3.3 /usr/${P}/bin/javac;
+		dosym /usr/bin/ecj-3.3 /usr/${PN}/bin/javac;
 	fi
 
 	set_java_env
