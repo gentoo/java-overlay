@@ -1,0 +1,9 @@
+# ChangeLog for dev-java/jrosetta
+# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  30 Dec 2008; Serkan Kaba <serkan@gentoo.org> +jrosetta-1.0.1.ebuild,
+  +metadata.xml:
+  Add jrosetta based on ebuild in bug #253108. Thanks to Nico Schlömer
+  <nico.schloemer@gmx.net> for the submission.
+
