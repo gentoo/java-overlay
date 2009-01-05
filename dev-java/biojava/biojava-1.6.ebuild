@@ -16,7 +16,7 @@ inherit eutils java-pkg-2 java-ant-2
 
 DESCRIPTION="Biojava bytecode manipulation library"
 HOMEPAGE="http://biojava.org"
-SRC_URI="http://www.biojava.org/download/bj${PN/./}/all/${P}-all.jar"
+SRC_URI="http://www.biojava.org/download/bj16/all/${P}-all.jar"
 LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -52,7 +52,6 @@ src_prepare() {
 	java-pkg_jar-from commons-dbcp commons-dbcp.jar commons-dbcp-1.1.jar
 	java-pkg_jar-from commons-pool commons-pool.jar commons-pool-1.1.jar
 	java-pkg_jar-from bytecode
-	java-pkg_jar-from --build-only junit-4 junit.jar junit-4.4.jar
 }
 
 src_compile() {
@@ -69,5 +68,6 @@ src_install() {
 }
 
 src_test() {
+	java-pkg_jar-from junit-4 junit.jar junit-4.4.jar
 	ANT_TASKS="ant-junit4" eant runtests
 }
