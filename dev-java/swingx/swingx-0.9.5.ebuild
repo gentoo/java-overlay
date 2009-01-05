@@ -2,6 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+# TODO: The following optionals are probably not compiled
+# * Possibly unneeded dependencies found
+# * 	jmock-1.0
+# * 	swing-layout-1
+# * 	filters
 
 WANT_ANT_TASKS="ant-nodeps"
 JAVA_PKG_IUSE="doc source examples"
@@ -10,7 +15,7 @@ inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="A collection of powerful, useful, and just plain fun Swing components."
 HOMEPAGE="http://swinglabs.org/index.jsp"
-SRC_URI="https://swingx.dev.java.net/files/documents/2981/99654/${P}-src.zip"
+SRC_URI="https://swingx.dev.java.net/files/documents/2981/121928/${P}-src.zip"
 
 LICENSE="LGPL-2.1"
 SLOT="0.9"
@@ -20,7 +25,7 @@ IUSE=""
 COMMON_DEPEND=">=dev-java/jmock-1.1.0
 	dev-java/swing-worker
 	dev-java/swing-layout:1
-	dev-java/batik:1.6
+	dev-java/batik:1.7
 	dev-java/filters
 	dev-java/jmock"
 
@@ -45,7 +50,7 @@ src_unpack(){
 
 	java-pkg_jar-from swing-worker
 	java-pkg_jar-from swing-layout-1
-	java-pkg_jar-from batik-1.6 batik-awt-util.jar MultipleGradientPaint.jar
+	java-pkg_jar-from batik-1.7 batik-all.jar MultipleGradientPaint.jar
 	java-pkg_jar-from filters filters.jar Filters.jar
 }
 
