@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -23,7 +23,7 @@ IUSE=""
 RDEPEND=">=virtual/jre-1.5
 		>=dev-java/jmock-1.1.0
 		dev-java/swing-worker
-		>=dev-java/batik-1.6
+		dev-java/batik:1.6
 		dev-java/ant-core
 		dev-java/filters
 		dev-java/emma
