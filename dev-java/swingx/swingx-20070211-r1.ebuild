@@ -21,7 +21,7 @@ IUSE=""
 
 RDEPEND=">=virtual/jre-1.5
 		dev-java/swing-worker:0
-		dev-java/batik:1.6"
+		dev-java/batik:1.7"
 DEPEND=">=virtual/jdk-1.5
 		app-arch/unzip
 		${RDEPEND}"
@@ -35,7 +35,7 @@ src_unpack(){
 	rm -v *.jar */*.jar || die
 }
 
-EANT_GENTOO_CLASSPATH="batik-1.6,swing-worker"
+EANT_GENTOO_CLASSPATH="batik-1.7,swing-worker"
 
 src_install() {
 	java-pkg_dojar "dist/${PN}.jar"

@@ -46,7 +46,7 @@ src_unpack(){
 
 	java-pkg_jar-from swing-worker
 
-	java-pkg_jar-from batik-1.6 batik-awt-util.jar MultipleGradientPaint.jar
+	java-pkg_jar-from batik batik-awt-util.jar MultipleGradientPaint.jar
 
 	java-pkg_jar-from filters filters.jar Filters.jar
 
