@@ -1,8 +1,8 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="1"
+EAPI="2"
 
 inherit autotools pax-utils java-pkg-2 java-vm-2
 
@@ -43,7 +43,8 @@ RDEPEND=">=net-print/cups-1.2.12
 	 x11-proto/xineramaproto
 	 nsplugin? ( >=net-libs/xulrunner-1.9 )
 	 pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
-	 javascript? ( dev-java/rhino:1.6 )"
+	 javascript? ( dev-java/rhino:1.6 )
+	 zero? ( sys-devel/gcc[libffi] )"
 
 # Additional dependencies for building:
 #   unzip: extract OpenJDK tarball
@@ -68,12 +69,6 @@ DEPEND="${RDEPEND}
 	)"
 
 pkg_setup() {
-	if use zero && ! built_with_use sys-devel/gcc libffi; then
-		eerror "Using the zero assembler port requires libffi. Please rebuild sys-devel/gcc"
-		eerror "with USE=\"libffi\" or turn off the zero USE flag on ${PN}."
-		die "Rebuild sys-devel/gcc with libffi support"
-	fi
-
 	if use shark ; then
 	  if ( ! use x86 && ! use sparc && ! use ppc ) ; then
 		eerror "The Shark JIT has known issues on 64-bit platforms.  Please rebuild"
@@ -107,10 +102,7 @@ pkg_setup() {
 	java-pkg-2_pkg_setup
 }
 
-src_unpack() {
-	unpack ${P}.tar.gz
-	cd "${S}" || die
-
+src_prepare() {
 	# Don't hide the HotSpot build number
 	# (http://icedtea.classpath.org/hg/icedtea6/rev/6816e84bfc28)
 	epatch "${FILESDIR}/hotspot-${PV}.patch"
