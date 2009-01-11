@@ -1,6 +1,8 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+
+EAPI="2"
 
 inherit java-vm-2 multilib
 
@@ -13,22 +15,13 @@ KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 SLOT="0"
 IUSE=""
 
-RDEPEND=">=sys-devel/gcc-4.3
+RDEPEND=">=sys-devel/gcc-4.3[gcj]
 	~dev-java/eclipse-ecj-3.3.0-r7
 	>=dev-java/java-config-2"
 DEPEND="${RDEPEND}"
 PDEPEND="dev-java/gjdoc"
 
 JAVA_PROVIDE="jdbc-stdext jdbc2-stdext gnu-jaxp"
-
-pkg_setup() {
-	if ! built_with_use sys-devel/gcc gcj; then
-		eerror "Using gcj as a jdk requires that gcj was compiled as part of gcc.";
-		eerror "Please rebuild sys-devel/gcc with USE=\"gcj\"";
-		die "Rebuild sys-devel/gcc with gcj support"
-	fi
-	java-vm-2_pkg_setup
-}
 
 src_install() {
 	# jre lib paths ...
