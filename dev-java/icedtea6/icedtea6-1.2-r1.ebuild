@@ -166,7 +166,7 @@ src_install() {
 	cp src.zip "${ddest}" || die
 
 	# Fix the permissions.
-	find "${ddest}" -perm +111 -exec chmod 755 {} \; -o -exec chmod 644 {} \; || die
+	find "${ddest}" \! -type l \( -perm /111 -exec chmod 755 {} \; -o -exec chmod 644 {} \; \) || die
 
 	if use nsplugin; then
 		use x86 && arch=i386
