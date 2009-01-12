@@ -116,7 +116,7 @@ src_prepare() {
 	eautoreconf || die "failed to regenerate autoconf infrastructure"
 }
 
-src_compile() {
+src_configure() {
 	local config procs rhino_jar
 	local vm=$(java-pkg_get-current-vm)
 	local vmhome="/usr/lib/jvm/${vm}"
@@ -169,7 +169,9 @@ src_compile() {
 		$(use_enable shark) \
 		$(use_enable pulseaudio pulse-java) \
 		|| die "configure failed"
+}
 
+src_compile() {
 	# Newer versions of Gentoo's ant add
 	# an environment variable so it works properly...
 	export ANT_RESPECT_JAVA_HOME=TRUE
