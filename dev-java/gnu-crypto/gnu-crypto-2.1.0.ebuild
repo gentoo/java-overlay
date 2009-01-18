@@ -1,6 +1,6 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/gnu-crypto/gnu-crypto-2.0.1-r1.ebuild,v 1.3 2005/07/25 11:16:21 dholm Exp $
+# $Header: $
 
 inherit java-pkg-2 eutils
 
@@ -10,7 +10,7 @@ SRC_URI="ftp://ftp.gnu.org/gnu/${PN}/${P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="-*"
+KEYWORDS=""
 # doc
 IUSE="source"
 
@@ -42,7 +42,7 @@ src_compile() {
 
 src_install() {
 	einstall || die
-	rm ${D}/usr/share/*.jar || die
+	rm "${D}"/usr/share/*.jar || die
 
 	java-pkg_dojar source/*.jar
 
