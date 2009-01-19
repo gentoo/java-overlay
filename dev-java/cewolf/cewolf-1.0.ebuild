@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -10,7 +10,7 @@ SRC_URI="mirror://sourceforge/${PN}/${P}-bin-src.zip"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS=""
 IUSE="doc source"
 
 DEPEND=">=virtual/jdk-1.4
@@ -31,13 +31,13 @@ RDEPEND=">=virtual/jre-1.4
 src_unpack() {
 	unpack ${A}
 
-	cp ${FILESDIR}/${P}-build.xml ${S}/build.xml
+	cp "${FILESDIR}/${P}-build.xml" "${S}/build.xml"
 
-	cd ${S}/lib
+	cd "${S}/lib"
 	rm $(ls *.jar|grep -v demo)
 
 	for module in awt-util dom svggen util xml; do
-		java-pkg_jar-from batik-1.6 batik-${module}.jar
+		java-pkg_jar-from batik-1.6 "batik-${module}.jar"
 	done
 	java-pkg_jar-from commons-logging
 	java-pkg_jar-from crimson-1
@@ -55,7 +55,7 @@ src_compile() {
 }
 
 src_install() {
-	java-pkg_dojar target/${PN}.jar
+	java-pkg_dojar "target/${PN}.jar"
 	dodoc LICENSE.txt RELEASE.txt
 
 	use doc && java-pkg_dohtml -r javadoc docs/*

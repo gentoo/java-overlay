@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -10,7 +10,7 @@ SRC_URI="mirror://apache/jakarta/commons/chain/source/${P}-src.tar.gz"
 
 LICENSE="Apache-1.1"
 SLOT="1.1"
-KEYWORDS="~x86 ~ppc ~amd64 ~ppc64"
+KEYWORDS="~amd64 ~x86"
 IUSE="doc source test"
 
 SKIP_JAR_GET="-Dnoget=true"
@@ -37,7 +37,7 @@ S="${WORKDIR}/${P}-src"
 src_unpack() {
 	unpack ${A}
 
-	cd ${S}
+	cd "${S}"
 	sed -i 's/depends="compile,test"/depends="compile"/' \
 		build.xml || die "Failed to disable tests"
 

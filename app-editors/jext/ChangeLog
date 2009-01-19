@@ -1,6 +1,9 @@
 # ChangeLog for app-editors/jext
-# Copyright 2000-2006 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 2000-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/app-editors/jext/ChangeLog,v 1.11 2006/07/31 04:02:18 nichoj Exp $
+
+  19 Jan 2009; Alistair Bush <ali_bush@gentoo.org> jext-5.0.ebuild:
+  Drop ~spac keyword as not supported.
 
 *jext-3.2_pre3-r1 (31 Jul 2006)
 
