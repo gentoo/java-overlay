@@ -1,6 +1,6 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/dom4j/dom4j-1.6.1-r3.ebuild,v 1.3 2008/03/26 16:33:47 corsair Exp $
+# $Header: $
 
 EAPI=1
 JAVA_PKG_IUSE="doc source test"
@@ -13,7 +13,7 @@ SRC_URI="mirror://sourceforge/dom4j/${P}.tar.gz
 	mirror://gentoo/${P}-java5.patch.bz2"
 LICENSE="dom4j"
 SLOT="1"
-KEYWORDS="~amd64 ~ia64 ~ppc ~ppc64 ~x86"
+KEYWORDS="~amd64 ~ppc ~x86"
 IUSE=""
 RDEPEND=">=virtual/jre-1.4
 	java-virtuals/jaxb-virtual:1
