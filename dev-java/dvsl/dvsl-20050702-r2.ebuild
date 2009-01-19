@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -13,9 +13,9 @@ HOMEPAGE="http://jakarta.apache.org/velocity/dvsl/index.html"
 SRC_URI="http://gentooexperimental.org/distfiles/${P}.tar.bz2"
 
 # I'm guessing some sort of apache-ness
-LICENSE=""
+LICENSE="Apache-1.1"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="doc"
 
 COMMON_DEPEND="=dev-java/crimson-1*
@@ -33,7 +33,7 @@ RDEPEND=">=virtual/jre-1.4
 
 src_unpack() {
 	unpack ${A}
-	cd ${S}
+	cd "${S}"
 	rm -r lib/*.jar
 
 	local classpath
