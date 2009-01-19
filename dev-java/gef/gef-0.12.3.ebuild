@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -10,7 +10,7 @@ DESCRIPTION="Java Graph Editing Framework"
 HOMEPAGE="http://gef.tigris.org"
 
 MY_PN="GEF"
-SRC_URI="http://${PN}.tigris.org/files/documents/9/23799/${MY_PN}-${PV}-src.zip"
+SRC_URI="http://${PN}.tigris.org/files/documents/9/43167/${MY_PN}-${PV}-src.zip"
 
 LICENSE="BSD"
 SLOT="0"
@@ -20,7 +20,7 @@ IUSE=""
 
 COMMON_DEP="
 	dev-java/commons-logging
-	dev-java/jmol-acme
+	sci-libs/jmol-acme
 	"
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEP}"

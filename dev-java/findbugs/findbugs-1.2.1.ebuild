@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -17,7 +17,7 @@ IUSE=""
 
 CDEPEND="dev-java/ant-core
 	dev-java/apple-java-extensions-bin
-	=dev-java/dom4j-1.4
+	~dev-java/dom4j-1.4
 	dev-java/findbugs-bcel
 	=dev-java/asm-3*
 	test? ( =dev-java/junit-3.8* )"

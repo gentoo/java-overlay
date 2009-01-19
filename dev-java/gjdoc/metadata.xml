@@ -7,4 +7,9 @@
   <name>Andrew John Hughes</name>
 </maintainer>
 <longdescription>A documentation generation framework for Java source files.</longdescription>
+<use>
+	<flag name="xmldoclet">
+	
+	</flag>
+</use>
 </pkgmetadata>

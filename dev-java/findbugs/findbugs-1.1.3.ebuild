@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -15,7 +15,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="doc source"
 
 RDEPEND="dev-java/apple-java-extensions-bin
-		=dev-java/dom4j-1.4
+		~dev-java/dom4j-1.4
 		=dev-java/junit-3.8*
 		=dev-java/asm-3*
 		>=virtual/jre-1.5"
