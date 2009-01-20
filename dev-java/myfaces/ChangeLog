@@ -1,6 +1,10 @@
 # ChangeLog for dev-java/myfaces
-# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  20 Jan 2009; Alistair Bush <ali_bush@gentoo.org> myfaces-1.1.4.ebuild,
+  myfaces-1.1.4-r1.ebuild:
+  QA Fixes.
 
   07 Feb 2007; kiorky <kiorky@cryptelium.net> myfaces-1.1.4-r1.ebuild:
   * Corrected  Year in copyright for 1.1.4

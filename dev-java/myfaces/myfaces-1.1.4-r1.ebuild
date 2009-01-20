@@ -1,6 +1,8 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+
+EAPI="1"
 
 inherit java-pkg-2
 
@@ -20,6 +22,7 @@ SRC_URI="
 	http://dev.gentooexperimental.org/~kiorky/${BUILD_TOOLS_PF}.tar.gz
 "
 
+IUSE=""
 LICENSE="Apache-2.0"
 SLOT="1"
 KEYWORDS="~x86"
@@ -31,7 +34,7 @@ COMMON_DEP="
 	=dev-java/commons-beanutils-1.7*
 	=dev-java/commons-codec-1.3*
 	=dev-java/portletapi-1*
-	=dev-java/commons-lang-2.1*
+	dev-java/commons-lang:2.1
 	>=dev-java/commons-digester-1.6
 	>=dev-java/commons-collections-3.1
 	>=dev-java/jakarta-jstl-1.1.0
@@ -51,7 +54,7 @@ S="${WORKDIR}/${PF//-${PR}/}"
 
 src_unpack() {
 	unpack ${A} ${BUILD_TOOLS_PF}.tar.gz ${MYFACES_SHARED_IMPL_PF}.tar.gz
-	cd ${S}/api || die "src_unpack: cant cd to ${S}"
+	"cd ${S}/api" || die "src_unpack: cant cd to ${S}"
 	# for ant (api part)
 	java-pkg_jar-from log4j
 	java-pkg_jar-from commons-collections
@@ -164,6 +167,6 @@ src_compile() {
 }
 
 src_install() {
-	java-pkg_dojar 	${WORKDIR}/dist/${PN}-impl/${PN}-impl.jar \
-					${WORKDIR}/dist/${PN}-api/${PN}-api.jar
+	java-pkg_dojar 	"${WORKDIR}/dist/${PN}-impl/${PN}-impl.jar" \
+					"${WORKDIR}/dist/${PN}-api/${PN}-api.jar"
 }
