@@ -1,6 +1,6 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/struts/struts-1.1-r5.ebuild,v 1.2 2007/05/17 20:38:39 betelgeuse Exp $
+# $Header: $
 
 WANT_ANT_TASKS="ant-trax"
 JAVA_PKG_IUSE="doc source"
@@ -26,7 +26,7 @@ RDEPEND=">=virtual/jre-1.4
 DEPEND=">=virtual/jdk-1.4
 	${COMMON_DEP}"
 IUSE=""
-KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
+KEYWORDS="~amd64 ~ppc64 ~x86"
 
 S=${WORKDIR}/jakarta-${P}-src
 

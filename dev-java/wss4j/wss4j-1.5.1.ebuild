@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -10,7 +10,7 @@ SRC_URI="http://dev.gentooexperimental.org/~kiorky/${P}.tar.bz2"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~x86 "
+KEYWORDS=""
 IUSE="doc source"
 
 DEPEND=">=virtual/jdk-1.5
@@ -45,11 +45,11 @@ src_unpack(){
 	epatch "${FILESDIR}/WSSPolicyProcessor.java.patch"
 	epatch "${FILESDIR}/build.xml.patch"
 
-	cd ${S}/endorsed || die "cd failed"
+	cd "${S}/endorsed" || die "cd failed"
 	java-pkg_jar-from xerces-2.6
 	java-pkg_jar-from xml-commons-external-1.3
 
-	cd ${S}/lib || die "cd failed"
+	cd "${S}/lib" || die "cd failed"
 	java-pkg_jar-from apache-addressing    addressing.jar         addressing-1.0.jar
 	java-pkg_jar-from xml-security-1.3     xmlsec.jar             xmlsec-1.3.0.jar
 	java-pkg_jar-from xalan                xalan.jar              xalan-2.7.0.jar
@@ -69,7 +69,7 @@ src_unpack(){
 	java-pkg_jar-from log4j                log4j.jar              log4j-1.2.9.jar
 	java-pkg_jar-from opensaml             opensaml.jar           opensaml-1.0.1.jar
 	java-pkg_jar-from neethi-2             neethi.jar             neethi-SNAPSHOT.jar
-	for i in $(find ${S}/build*xml);do
+	for i in $(find "${S}"/build*xml);do
 		java-ant_rewrite-classpath "$i"
 	done
 }

@@ -1,6 +1,6 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/struts/struts-1.2.9.ebuild,v 1.1 2006/03/31 15:49:34 karltk Exp $
+# $Header: $
 
 inherit java-pkg-2 java-ant-2
 
@@ -10,7 +10,7 @@ HOMEPAGE="http://struts.apache.org/"
 LICENSE="Apache-2.0"
 SLOT="1.3"
 IUSE="doc source"
-KEYWORDS="~amd64 ~ppc ~x86"
+KEYWORDS="~amd64 ~x86"
 
 COMMON_DEP="
 	>=dev-java/antlr-2.7.2

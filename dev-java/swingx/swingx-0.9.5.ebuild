@@ -8,6 +8,7 @@
 # * 	swing-layout-1
 # * 	filters
 
+EAPI="1"
 WANT_ANT_TASKS="ant-nodeps"
 JAVA_PKG_IUSE="doc source examples"
 
@@ -39,9 +40,9 @@ DEPEND=">=virtual/jdk-1.5
 S="${WORKDIR}/${P}-src"
 
 src_unpack(){
-	unpack "${A}"
+	unpack ${A}
 	cd "${S}/lib" || die
-	
+
 	find . -name "*.jar" $(use doc && echo -not -name demo-taglet.jar) -print -delete || die "bundled jar cleanup failed."
 
 	#jmock-1.1.0 seems to be slotted in 1.0

@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -8,9 +8,9 @@ DESCRIPTION="A command-pattern framework that is used to power WebWork as well a
 HOMEPAGE="http://opensymphony.com/xwork/"
 SRC_URI="https://${PN}.dev.java.net/files/documents/709/28621/${P}.zip"
 
-LICENSE=""
+LICENSE="OpenSymphony-1.1"
 SLOT="1.1"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="doc java5 source"
 
 DEPEND="java5? ( >=virtual/jdk-1.5 )
@@ -31,7 +31,7 @@ S="${WORKDIR}"
 
 src_unpack() {
 	unpack ${A}
-	cd ${S}
+	cd "${S}"
 
 	rm *.jar
 	cd lib
