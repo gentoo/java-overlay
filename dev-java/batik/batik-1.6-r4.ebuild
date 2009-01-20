@@ -1,6 +1,6 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/batik/batik-1.6-r3.ebuild,v 1.8 2008/01/20 22:27:27 caster Exp $
+# $Header: $
 
 JAVA_PKG_IUSE="doc"
 EAPI=1
@@ -93,7 +93,7 @@ src_install() {
 		java-pkg_dolauncher batik-${launcher}-${SLOT} \
 			--main org.apache.batik.apps.${launcher}.Main
 	done
-	
+
 	# Install and register the ant task.
 	java-pkg_dojar contrib/rasterizertask/build/lib/RasterizerTask.jar
 	java-pkg_register-ant-task
