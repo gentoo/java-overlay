@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -12,7 +12,7 @@ SRC_URI="mirror://sourceforge/tuxguitar/${MY_PN}-${PV}-src.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 
 RDEPEND=">=virtual/jre-1.5
 	 	dev-java/swt
@@ -24,7 +24,7 @@ DEPEND=">=virtual/jdk-1.5
 
 IUSE=""
 
-S=${WORKDIR}/${MY_PN}-${PV}-src
+S="${WORKDIR}/${MY_PN}-${PV}-src"
 
 src_unpack() {
 	unpack ${A}
@@ -37,12 +37,12 @@ src_unpack() {
 }
 
 src_compile() {
-	cd ${S}/src
+	cd "${S}/src"
 	gcc -shared jni_ReceiverJNI.c -o libReceiverJNI.so -lasound \
 	    -I/usr/lib/jvm/${GENTOO_VM}/include/ \
 	    -I/usr/lib/jvm/${GENTOO_VM}/include/linux/
 
-	cd ${S}
+	cd "${S}"
 	eant
 }
 
