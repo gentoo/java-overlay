@@ -1,17 +1,17 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 JAVA_PKG_IUSE="doc"
 inherit java-pkg-2 java-ant-2 eutils
 
-DESCRIPTION="A collection of Velocity subprojects with a common goal of creating tools and infrastructure for building both web and non-web applications using the Velocity template engine."
+DESCRIPTION="A collection of Velocity subprojects for web and non-web apps using the Velocity template engine."
 HOMEPAGE="http://jakarta.apache.org/velocity/tools/"
 SRC_URI="http://archive.apache.org/dist/jakarta/${PN}/source/${P}-src.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE=""
 COMMON_DEPEND="
 =dev-java/commons-beanutils-1.6*
