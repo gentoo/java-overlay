@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -15,6 +15,7 @@ SRC_URI="mirror://sourceforge/${PN}/${MY_P}.zip"
 LICENSE="Artistic"
 SLOT="0"
 KEYWORDS="~x86"
+IUSE=""
 
 RDEPEND=">=virtual/jre-1.4"
 DEPEND=">=virtual/jdk-1.4

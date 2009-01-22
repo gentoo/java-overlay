@@ -1,6 +1,10 @@
 # ChangeLog for dev-java/cornerstone-sockets
-# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  22 Jan 2009; Alistair Bush <ali_bush@gentoo.org>
+  cornerstone-sockets-2.1.ebuild:
+  QA Fixes.
 
   26 May 2007; kiorky <kiorky@cryptelium.net>
   cornerstone-sockets-2.1.ebuild:

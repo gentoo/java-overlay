@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/aspectwerkz/aspectwerkz-2.0_rc2.ebuild,v 1.5 2005/07/15 18:04:56 axxo Exp $
 
@@ -12,6 +12,7 @@ HOMEPAGE="http://aspectwerkz.codehaus.org"
 LICENSE="LGPL-2.1"
 SLOT="2"
 KEYWORDS="~x86 ~amd64 ~ppc"
+IUSE=""
 
 COMMON_DEP="
 	=dev-java/asm-1.5*
@@ -39,8 +40,8 @@ src_unpack() {
 
 	cd "${S}"
 	# unit tests need this
-	chmod +x bin/${PN} || die
-	epatch ${FILESDIR}/${P}-gentoo.patch
+	chmod +x "bin/${PN}" || die
+	epatch "${FILESDIR}/${P}-gentoo.patch"
 
 	find . -name '*.jar' -exec rm {} \; || die
 

@@ -1,6 +1,6 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/excalibur-logger/excalibur-logger-2.1.ebuild,v 1.2 2006/12/22 18:12:09 betelgeuse Exp $
+# $Header: $
 
 inherit excalibur
 
@@ -8,6 +8,7 @@ SRC_URI="mirror://apache/excalibur/${PN}/source/${P}-src.tar.gz"
 
 SLOT="0"
 KEYWORDS="~x86"
+IUSE=""
 
 DEPEND="
 	=dev-java/avalon-framework-4.2*

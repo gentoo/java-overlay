@@ -1,6 +1,6 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/excalibur-logger/excalibur-logger-2.1.ebuild,v 1.2 2006/12/22 18:12:09 betelgeuse Exp $
+# $Header: $
 
 EXCALIBUR_MODULES="
 	${PN}-api
@@ -18,7 +18,8 @@ KEYWORDS="~x86"
 RDEPEND="dev-java/excalibur-thread dev-java/junit dev-java/junitperf"
 DEPEND="${RDEPEND}"
 
-S=${WORKDIR}
+S="${WORKDIR}"
+IUSE=""
 
 EXCALIBUR_JAR_FROM="excalibur-thread"
 EXCALIBUR_TEST_JAR_FROM="excalibur-thread junit junitperf"
