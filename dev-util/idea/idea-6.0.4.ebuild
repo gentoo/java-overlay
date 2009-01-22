@@ -1,4 +1,4 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -13,7 +13,7 @@ SRC_URI="http://download.jetbrains.com/${PN}/${P}.tar.gz"
 SLOT="0"
 LICENSE="IntelliJ-IDEA"
 KEYWORDS="~amd64 ~x86"
-RESTRICT="nomirror nostrip"
+RESTRICT="mirror strip"
 IUSE="eclipse"
 
 DEPEND=""
@@ -44,21 +44,21 @@ src_install () {
 	# Install pixmaps
 	insinto /usr/share/pixmaps
 	doins bin/*.png
-	
+
 	# Install documentation
 	dodoc *.txt
 
 	# Launchers are necessary as IDEA depends on the fact being called from its
 	# homedir.
 	for i in idea inspect; do
-		cat >${D}/opt/${P}/bin/$i-run.sh <<-EOF
+		cat >"${D}/opt/${P}/bin/$i-run.sh" <<-EOF
 #!/bin/sh
 export IDEA_JDK=\`java-config -O\`
 exec /opt/${P}/bin/$i.sh \$@
 EOF
 		fperms 755 /opt/${P}/bin/$i-run.sh
 
-		ln -s ${D}/opt/${P}/bin/$i-run.sh ${D}/usr/bin/$i
+		ln -s "${D}/opt/${P}/bin/$i-run.sh" "${D}/usr/bin/$i"
 	done
 
 	make_desktop_entry idea "Intellij IDEA" idea32.png "Development;IDE"

@@ -2,5 +2,8 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<herd>java</herd>
+	<use>
+		<flag name="eclipse">TODO: Add support for eclipse?</flag>
+	</use>
 </pkgmetadata>
 
