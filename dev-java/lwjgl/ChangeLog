@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/lwjgl
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  22 Jan 2009; Alistair Bush <ali_bush@gentoo.org> metadata.xml,
+  lwjgl-1.0.ebuild:
+  QA Fixes.
+

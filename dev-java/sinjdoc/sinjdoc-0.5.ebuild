@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -13,6 +13,7 @@ SRC_URI="http://www.cag.lcs.mit.edu/~cananian/Projects/GJ/sinjdoc-latest/sinjdoc
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
+IUSE=""
 
 CDEPEND="dev-java/javacup"
 RDEPEND=">=virtual/jre-1.5

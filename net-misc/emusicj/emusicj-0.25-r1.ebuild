@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -12,6 +12,7 @@ SRC_URI="http://www.kallisti.net.nz/wikifiles/EMusicJ/emusicj-source-${PV}.tar.b
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE=""
 
 CDEPEND="dev-java/commons-codec:0
 	dev-java/commons-httpclient:3

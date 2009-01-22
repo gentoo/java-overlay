@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -19,6 +19,7 @@ SRC_URI="mirror://sourceforge/java-game-lib/${PN}-source-${PV}.zip"
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS=""
+IUSE=""
 
 CDEPEND="virtual/opengl
 		media-libs/openal

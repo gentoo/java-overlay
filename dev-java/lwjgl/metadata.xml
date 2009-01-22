@@ -13,5 +13,6 @@ games to be written in Java. LWJGL provides developers access to high
 performance crossplatform libraries such as OpenGL (Open Graphics Library) and
 OpenAL (Open Audio Library) allowing for state of the art 3D games and 3D sound
 </longdescription>
+<use><flag name="devil">TODO describe this use flag</flag></use>
 </pkgmetadata>
 
