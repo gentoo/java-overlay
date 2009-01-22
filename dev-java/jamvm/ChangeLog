@@ -1,6 +1,10 @@
 # ChangeLog for dev-java/jamvm
-# Copyright 2000-2008 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 2000-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/jamvm/ChangeLog,v 1.32 2008/04/13 22:14:22 betelgeuse Exp $
+
+  22 Jan 2009; Alistair Bush <ali_bush@gentoo.org> metadata.xml,
+  jamvm-1.5.0-r3.ebuild, jamvm-1.5.1.ebuild:
+  QA Fixes.
 
   06 Jul 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> jamvm-1.5.0-r3.ebuild, jamvm-1.5.1.ebuild -files/classes-location.patch: 
   Remove unnecessary classes patch.

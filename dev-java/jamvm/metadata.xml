@@ -3,4 +3,7 @@
 
 <pkgmetadata>
 	<herd>java</herd>
+	<use>
+		<flag name="libffi">TODO describe use flag</flag>
+	</use>
 </pkgmetadata>

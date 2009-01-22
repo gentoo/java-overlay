@@ -2,5 +2,9 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<herd>java</herd>
+	<use>
+		<flag name="dssi">TODO describe use flag</flag>
+		<flag name="gconf">TODO describe use flag</flag>
+	</use>
 </pkgmetadata>
 
