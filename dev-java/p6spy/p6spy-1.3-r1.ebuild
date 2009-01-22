@@ -1,10 +1,10 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 inherit java-pkg-2 java-ant-2 eutils
 
-DESCRIPTION="P6Spy is a framework that enables database data to be seamlessly intercepted and manipulated with no code changes to existing application"
+DESCRIPTION="A framework that enables database data to be intercepted and manipulated with no code changes."
 HOMEPAGE="http://www.p6spy.com/"
 SRC_URI="mirror://sourceforge/${PN}/${PN}-src.zip"
 
@@ -32,9 +32,9 @@ S=${WORKDIR}
 
 src_unpack() {
 	unpack ${A}
-	
+
 	# fixes the names of some jboss packages referenced
-	epatch ${FILESDIR}/${P}-gentoo.patch
+	epatch "${FILESDIR}/${P}-gentoo.patch"
 
 	mkdir lib
 	cd lib
@@ -48,7 +48,7 @@ src_unpack() {
 }
 
 src_compile() {
-	eant clean jar $(use_doc docs -Djavadocs=dist/api) 
+	eant clean jar $(use_doc docs -Djavadocs=dist/api)
 }
 
 src_install() {
