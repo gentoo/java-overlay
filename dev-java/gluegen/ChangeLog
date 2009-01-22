@@ -1,6 +1,10 @@
 # ChangeLog for dev-java/gluegen
-# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  22 Jan 2009; Alistair Bush <ali_bush@gentoo.org> gluegen-20070220.ebuild,
+  gluegen-20080727.ebuild:
+  QA Fixes.
 
   27 Jul 2008; Alistair Bush <ali_bush@gentoo.org> +gluegen-20080727.ebuild:
   "Version" Bump gluegen.

@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -16,6 +16,7 @@ KEYWORDS="~amd64 ~x86"
 
 DEPEND=">=virtual/jdk-1.4"
 RDEPEND=">=virtual/jre-1.4"
+IUSE=""
 
 S="${WORKDIR}"
 
@@ -23,7 +24,7 @@ src_unpack() {
 	unpack ${A}
 	mkdir src
 	mv org src/ || die
-	cp ${FILESDIR}/build.xml . || die
+	cp "${FILESDIR}/build.xml" . || die
 }
 
 EANT_BUILD_TARGET="dist"

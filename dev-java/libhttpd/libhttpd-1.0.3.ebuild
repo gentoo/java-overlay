@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -21,6 +21,7 @@ RDEPEND=">=virtual/jre-1.4"
 DEPEND=">=virtual/jdk-1.4
 	app-arch/unzip
 	test? ( dev-java/junit )"
+IUSE=""
 
 S="${WORKDIR}"
 
