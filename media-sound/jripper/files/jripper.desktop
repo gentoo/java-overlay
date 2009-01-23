@@ -6,5 +6,5 @@ Exec=jripper
 Terminal=false
 Type=Application
 Icon=jripper
-Categories=Application;AudioVideo;Multimedia
+Categories=Application;AudioVideo;Multimedia;
 Encoding=UTF-8
