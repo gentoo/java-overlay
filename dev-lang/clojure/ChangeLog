@@ -1,6 +1,10 @@
 # ChangeLog for dev-lang/clojure
-# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  23 Jan 2009; Serkan Kaba <serkan@gentoo.org> ++, -clojure-20080916.ebuild:
+  Version bump based on ebuild in bug #255140. Thanks to Ravi Nanavati
+  <ravi_n+gentoo@alum.mit.edu> for the ebuild.
 
   19 Oct 2008; Serkan Kaba <serkan@gentoo.org> +clojure-20080916.ebuild,
   +metadata.xml:
