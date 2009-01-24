@@ -1,6 +1,10 @@
 # ChangeLog for dev-java/icedtea6
-# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  23 Jan 2009; Alistair Bush <ali_bush@gentoo.org>
+  visualvm-1.0_p20080728.ebuild:
+  Drop keywords due to missing deps.
 
 *visualvm-1.0_p20080728 (16 10 2008)
 

@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -8,12 +8,12 @@ DESCRIPTION="Java Simple Arguments Parser (JSAP)"
 HOMEPAGE="http://sourceforge.net/projects/jsap"
 SRC_URI="mirror://sourceforge/${PN}/JSAP-1.03a-src.tar.gz"
 
-LICENSE="LGPL"
+LICENSE="LGPL-2.1"
 SLOT="0"
 KEYWORDS="~x86"
 IUSE="doc test"
 
-DEPEND=">=virtual/jdk-1.4 
+DEPEND=">=virtual/jdk-1.4
 	>=dev-java/ant-core-1.5.4
 	=dev-java/snip-0.11
 	=dev-java/rundoc-0.11
@@ -26,24 +26,24 @@ src_unpack()
 {
 	unpack ${A}
 
-	cd ${S}
+	cd "${S}"
 	epatch "${FILESDIR}/${P}-build.xml.patch"
 
-	cd ${S}/lib
+	cd "${S}/lib"
 
 	rm ant.jar
 	rm junit.jar
 	java-pkg_jar-from --build-only snip snip.jar snip-0.11.jar
 	java-pkg_jar-from --build-only rundoc rundoc.jar rundoc-0.11.jar
 	if use test ; then
-		java-pkg_jar-from --build-only junit junit.jar 
+		java-pkg_jar-from --build-only junit junit.jar
 	fi
-	cd ${S}
+	cd "${S}"
 	eant clean
 }
 
 src_compile()
-{	
+{
 	eant jar $(use_doc javadoc manual)
 }
 

@@ -11,7 +11,11 @@ DESCRIPTION="An intelligent Java IDE intensely focused on developer productivity
 HOMEPAGE="http://www.jetbrains.com/idea/index.html"
 SRC_URI="http://download.jetbrains.com/${PN}/${P}.tar.gz"
 SLOT="0"
-LICENSE="IntelliJ-IDEA"
+LICENSE="|| (
+	IntelliJ-IDEA-academic
+	IntelliJ-IDEA-classroom
+	IntelliJ-IDEA-commercial
+	IntelliJ-IDEA-opensource )"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror strip"
 IUSE="eclipse"

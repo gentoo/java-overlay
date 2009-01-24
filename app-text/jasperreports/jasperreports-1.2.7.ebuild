@@ -1,6 +1,6 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-text/jasperreports/jasperreports-1.0.1.ebuild,v 1.4 2006/07/22 21:28:44 dertobi123 Exp $
+# $Header: $
 
 inherit java-pkg-2 java-ant-2
 
@@ -44,12 +44,12 @@ RDEPEND=">=virtual/jre-1.4
 
 src_unpack() {
 	unpack ${A}
-	cd ${S}
+	cd "${S}"
 
-	rm -fr ${S}/dist/*.jar
-	rm -fr ${S}/lib/*.jar
+	rm -fr "${S}/dist/*.jar"
+	rm -fr "${S}/lib/*.jar"
 
-	cd ${S}/lib
+	cd "${S}/lib"
 	java-pkg_jar-from ant-core ant.jar
 	java-pkg_jar-from antlr
 	java-pkg_jar-from asm-3 asm.jar

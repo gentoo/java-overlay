@@ -1,6 +1,9 @@
 # ChangeLog for dev-java/jhighlight
-# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  22 Jan 2009; Alistair Bush <ali_bush@gentoo.org> jhighlight-1.0.ebuild:
+  Fixed LICENSE and EAPI.
 
   18 Dec 2008; Serkan Kaba <serkan@gentoo.org> ChangeLog:
   Initial commit. Will be in dependency tree of jubler-4.0

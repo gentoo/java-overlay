@@ -1,9 +1,10 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 WANT_ANT_TASKS="dev-java/jflex:0"
 JAVA_PKG_IUSE="doc source"
+EAPI="1"
 
 inherit eutils java-pkg-2 java-ant-2
 
@@ -12,7 +13,7 @@ MY_P="${P}-src"
 DESCRIPTION="Small embeddable pure Java library for syntax highlighting"
 HOMEPAGE="https://jhighlight.dev.java.net/"
 SRC_URI="https://jhighlight.dev.java.net/files/documents/3366/30845/${MY_P}.zip"
-LICENSE="|| ( CDDL-1.0 LGPL-2.1 )"
+LICENSE="|| ( CDDL LGPL-2.1 )"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""

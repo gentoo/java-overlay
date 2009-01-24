@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  23 Jan 2009; Alistair Bush <ali_bush@gentoo.org> idea-6.0.2.ebuild,
+  idea-6.0.4.ebuild:
+  QA Fix licenses.
+
   22 Jan 2009; Alistair Bush <ali_bush@gentoo.org> metadata.xml,
   idea-6.0.2.ebuild, idea-6.0.4.ebuild:
   QA Fixes.

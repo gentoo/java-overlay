@@ -1,6 +1,9 @@
 # ChangeLog for dev-java/jsap
-# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  23 Jan 2009; Alistair Bush <ali_bush@gentoo.org> jsap-1.03a.ebuild:
+  QA Fixes.
 
   21 Apr 2007; Miroslav Šulc <fordfrog@gentoo.org>
   -files/2.1-test-target.patch, -jsap-2.1.ebuild:
