@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  24 Jan 2009; Serkan Kaba <serkan@gentoo.org> clojure-20081217.ebuild:
+  Keyworded for x86.
+
   23 Jan 2009; Serkan Kaba <serkan@gentoo.org> ++, -clojure-20080916.ebuild:
   Version bump based on ebuild in bug #255140. Thanks to Ravi Nanavati
   <ravi_n+gentoo@alum.mit.edu> for the ebuild.
