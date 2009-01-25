@@ -1,4 +1,4 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -9,8 +9,7 @@ DESCRIPTION="A set of interfaces used to recognize well known design patterns in
 HOMEPAGE="http://www.gjt.org/pkgdoc/org/gjt/lindfors/pattern/"
 SRC_URI="http://mirrors.dotsrc.org/jpackage/1.6/generic/free/SRPMS/${P}-2jpp.src.rpm"
 
-# license 'unspecified' according to website
-LICENSE=""
+LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc"
@@ -23,8 +22,8 @@ S=${WORKDIR}/${MY_PN}
 
 src_unpack() {
 	rpm_src_unpack
-	cd ${S}
-	cp ${FILESDIR}/build-${PV}.xml build.xml
+	cd "${S}"
+	cp "${FILESDIR}/build-${PV}.xml" build.xml
 	mkdir -p src/org/gjt/lindfors/${MY_PN}
 	mv *.java src/org/gjt/lindfors/${MY_PN}
 }

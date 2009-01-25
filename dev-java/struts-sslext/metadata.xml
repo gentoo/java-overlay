@@ -2,5 +2,11 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<herd>java</herd>
+	<longdescription>
+		Extension to the Apache Jakarta Struts framework that allows developers
+		to configure web applications to automatically switch between the http
+		and https protocols. Configuration is performed within the Struts config
+		xml file.
+	</longdescription>
 </pkgmetadata>
 

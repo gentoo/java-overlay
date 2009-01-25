@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  25 Jan 2009; Alistair Bush <ali_bush@gentoo.org> metadata.xml,
+  struts-sslext-1.10-r1.ebuild:
+  QA Fixes.
+
   22 Jan 2009; Alistair Bush <ali_bush@gentoo.org> ChangeLog:
   Add ChangeLog for QA.
 

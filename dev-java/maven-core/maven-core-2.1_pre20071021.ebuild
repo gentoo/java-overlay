@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -10,6 +10,7 @@ MY_PN=maven
 DESCRIPTION="The core of Maven"
 HOMEPAGE="http://maven.apache.org"
 SRC_URI="http://dev.gentooexperimental.org/~kiorky/${PF}.tar.bz2"
+LICENSE="Apache-2.0"
 COMMON_DEPS="
 =dev-java/classworlds-1.1*
 =dev-java/commons-cli-1*

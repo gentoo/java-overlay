@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -6,12 +6,11 @@ inherit java-pkg-2 java-ant-2
 
 MY_PN="sslext"
 MY_A="sslext-struts${PV}-src"
-DESCRIPTION=""
-HOMEPAGE=""
+DESCRIPTION="Extension to Struts that allows automatically switching between the http and https."
+HOMEPAGE="http://sslext.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${MY_PN}/${MY_A}.tar.gz"
 
-# FIXME need to find the license
-LICENSE=""
+LICENSE="Apache-2.0"
 SLOT="1.1"
 KEYWORDS="~amd64 ~x86"
 IUSE="doc"
@@ -27,12 +26,12 @@ RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEPEND}"
 
 src_unpack() {
-	mkdir -p ${S}/src
-	cd ${S}/src
+	mkdir -p "${S}/src"
+	cd "${S}/src"
 	unpack ${A}
 
-	cd ${S}
-	cp ${FILESDIR}/build-${PV}.xml build.xml
+	cd "${S}"
+	cp "${FILESDIR}/build-${PV}.xml" build.xml
 	local classpath
 	classpath=$(java-pkg_getjars struts-1.1,servletapi-2.4,commons-digester,commons-logging)
 	echo "classpath=${classpath}" > build.properties

@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -6,11 +6,11 @@ inherit java-pkg-2 java-ant-2
 
 MY_PV=${PV/_rc/-rc-}
 MY_P="${PN}-${MY_PV}"
-DESCRIPTION=""
-HOMEPAGE=""
+DESCRIPTION="A Java mock object framework to use with jUnit"
+HOMEPAGE="http://rmock.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}-all.zip"
 
-LICENSE=""
+LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="doc source"
@@ -29,7 +29,7 @@ src_unpack() {
 	cd ${MY_P}
 	unzip -qq ${MY_P}-src.zip
 
-	cd ${S}
+	cd "${S}"
 	mkdir -p target/lib && cd target/lib
 	java-pkg_jar-from junit
 	java-pkg_jar-from cglib-2.1 cglib.jar
