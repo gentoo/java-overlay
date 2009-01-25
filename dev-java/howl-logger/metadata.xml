@@ -2,5 +2,10 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<herd>java</herd>
+	<longdescription>
+		HOWL is a logger implementation providing features required by the
+		ObjectWeb JOTM project, with a public API that is generally usable by
+		any Transaction Manager.
+	</longdescription>
 </pkgmetadata>
 
