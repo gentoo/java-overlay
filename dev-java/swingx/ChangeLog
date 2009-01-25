@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  25 Jan 2009; weaver <weaver@gentoo.org> ChangeLog:
+  Restore previous version, dep of cytoscape in java-experimental
+
   20 Jan 2009; Alistair Bush <ali_bush@gentoo.org> swingx-0.9.5.ebuild,
   -swingx-20070211-r1.ebuild, -swingx-20070304.ebuild,
   -swingx-20070408.ebuild:
