@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -6,9 +6,9 @@ inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="An action-based web framework for Java"
 HOMEPAGE="http://opensymphony.com/webwork"
-SRC_URI="https://webwork.dev.java.net/files/documents/693/28623/webwork-2.2.1.zip"
+SRC_URI="https://webwork.dev.java.net/files/documents/693/62430/${P}.zip"
 
-LICENSE=""
+LICENSE="Apache-2.0"
 SLOT="2.2"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
@@ -18,8 +18,6 @@ DEPEND="
 	app-arch/unzip
 	"
 RDEPEND=">=virtual/jre-1.4"
-
-S="${WORKDIR}"
 
 src_unpack() {
 	unpack ${A}
