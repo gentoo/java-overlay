@@ -61,8 +61,8 @@ DEPEND="${RDEPEND}
 	)
 	>=virtual/jdk-1.5
 	>=app-arch/unzip-5.52
-	>=dev-java/xalan-2.7.0
-	>=dev-java/xerces-2.9.1
+	>=dev-java/xalan-2.7.0:0
+	>=dev-java/xerces-2.9.1:2
 	|| (
 	  =dev-java/ant-core-1.7.0-r3
 	  >=dev-java/ant-core-1.7.1-r2
