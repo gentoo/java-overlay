@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -13,7 +13,7 @@ HOMEPAGE="http://annotations.hibernate.org"
 SRC_URI="mirror://sourceforge/hibernate/${MY_P}.tar.gz mirror://sourceforge/hibernate/${HIBERNATE_P}.tar.gz"
 LICENSE="LGPL-2.1"
 SLOT="3.2"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE="doc source"
 
 COMMON_DEPS="
@@ -33,8 +33,8 @@ COMMON_DEPS="
 	dev-java/oscache
 	dev-java/proxool
 	=dev-java/swarmcache-1*
-	=dev-java/xerces-2*
-	"
+	=dev-java/xerces-2*"
+
 DEPEND=">=virtual/jdk-1.5
 	dev-java/ant-antlr
 	dev-java/commons-collections
