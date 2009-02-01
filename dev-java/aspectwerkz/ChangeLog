@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  01 Feb 2009; <nelchael@gentoo.org> Manifest:
+  Fix digest.
+
   22 Jan 2009; Alistair Bush <ali_bush@gentoo.org> aspectwerkz-2.0.ebuild:
   QA Fixes.
 
