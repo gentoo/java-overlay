@@ -36,8 +36,8 @@ src_unpack() {
 	cd "${S}"
 }
 
-EANT_BUILD_TARGET="
-EANT_DOC_TARGET="
+EANT_BUILD_TARGET=""
+EANT_DOC_TARGET=""
 
 src_install() {
 	java-pkg_dojar
