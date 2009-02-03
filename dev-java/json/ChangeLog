@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  03 Feb 2009; Alistair Bush <ali_bush@gentoo.org> Manifest:
+  Fixed manifest.
+
   22 Jan 2009; Alistair Bush <ali_bush@gentoo.org> json-20080426.ebuild:
   QA Fixes.
 
