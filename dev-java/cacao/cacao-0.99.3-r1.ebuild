@@ -57,6 +57,14 @@ src_install() {
 		dosym /usr/bin/ecj-3.3 /usr/${PN}/bin/javac;
 	fi
 
+	local libarch="${ARCH}"
+	[ ${ARCH} == x86 ] && libarch="i386"
+	[ ${ARCH} == x86_64 ] && libarch="amd64"
+	dodir /usr/${PN}/jre/lib/${libarch}/client
+	dodir /usr/${PN}/jre/lib/${libarch}/server
+	dosym /usr/${PN}/lib/libjvm.so /usr/${PN}/jre/lib/${libarch}/client/libjvm.so
+	dosym /usr/${PN}/lib/libjvm.so /usr/${PN}/jre/lib/${libarch}/server/libjvm.so
+	dosym ${CLASSPATH_DIR}/lib/classpath/libjawt.so /usr/${PN}/jre/lib/${libarch}/libjawt.so
 	set_java_env
 }
 

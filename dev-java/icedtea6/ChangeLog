@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  04 Feb 2009; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.3.1-r2.ebuild icedtea6-1.4.ebuild:
+	Add HotSpot tarball to sources, only unpack icedtea6 (regression from 1.2).
+	
 * icedtea6-1.4 (03 02 2009)
 
   03 Feb 2009; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.4.ebuild:

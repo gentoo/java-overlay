@@ -102,6 +102,10 @@ pkg_setup() {
 	java-pkg-2_pkg_setup
 }
 
+src_unpack() {
+	unpack ${P}.tar.gz
+}
+
 src_prepare() {
 	# Don't hide the HotSpot build number
 	# (http://icedtea.classpath.org/hg/icedtea6/rev/6816e84bfc28)

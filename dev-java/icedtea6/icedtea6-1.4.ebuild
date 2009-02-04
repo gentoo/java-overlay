@@ -10,9 +10,11 @@ DESCRIPTION="A harness to build the OpenJDK using Free Software build tools and 
 OPENJDK_BUILD="14"
 OPENJDK_DATE="25_nov_2008"
 OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.gz"
+HOTSPOT_TARBALL="f9d938ede196.tar.gz"
 CACAO_TARBALL="cacao-0.99.3.tar.gz"
 SRC_URI="http://icedtea.classpath.org/download/source/${P}.tar.gz
 		 http://download.java.net/openjdk/jdk6/promoted/b${OPENJDK_BUILD}/${OPENJDK_TARBALL}
+		 http://hg.openjdk.java.net/jdk7/hotspot/hotspot/archive/${HOTSPOT_TARBALL}
 		 cacao? ( http://www.complang.tuwien.ac.at/cacaojvm/download/cacao-0.99.3/${CACAO_TARBALL} )"
 HOMEPAGE="http://icedtea.classpath.org"
 
@@ -103,6 +105,10 @@ pkg_setup() {
 	java-pkg-2_pkg_setup
 }
 
+src_unpack() {
+	unpack ${P}.tar.gz
+}
+
 src_configure() {
 	local config procs rhino_jar
 	local vm=$(java-pkg_get-current-vm)
@@ -143,6 +149,7 @@ src_configure() {
 
 	econf ${config} \
 		--with-openjdk-src-zip="${DISTDIR}/${OPENJDK_TARBALL}" \
+		--with-hotspot-src-zip="${DISTDIR}/${HOTSPOT_TARBALL}" \
 		--with-cacao-src-zip="${DISTDIR}/${CACAO_TARBALL}" \
 		--with-java="${vmhome}/bin/java" \
 		--with-javac="${vmhome}/bin/javac" \
