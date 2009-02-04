@@ -10,6 +10,7 @@
 <use>
   <flag name="cacao">Use the CACAO virtual machine instead of HotSpot on x86, amd64 or SPARC architectures.</flag>
   <flag name="shark">Enable Shark JIT support</flag>
+  <flag name="xrender">Enable support for using XRender with the AWT libraries.</flag>
   <flag name="zero">Enable the zero assembler port of HotSpot.</flag>
 </use>
 </pkgmetadata>

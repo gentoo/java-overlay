@@ -2,9 +2,13 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
-  28 Jan 2009; Petteri Räty <betelgeuse@gentoo.org>
-  icedtea6-1.3.1-r2.ebuild:
-  Add slot deps to xerces and xalan atoms.
+* icedtea6-1.4 (03 02 2009)
+
+  03 Feb 2009; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.4.ebuild:
+	Added.
+	
+  28 Jan 2009; Petteri Räty <betelgeuse@gentoo.org> icedtea6-1.3.1-r2.ebuild:
+	Add slot deps to xerces and xalan atoms.
 
   18 Dec 2008; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.3.1-r2.ebuild icedtea6-1.2-r1.ebuild:
 	Remove ~sparc from 1.3, correct copyright headers.
