@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -8,7 +8,7 @@ JAVA_PKG_IUSE="source"
 inherit java-pkg-2 java-ant-2
 
 MY_PV=$(replace_all_version_separators -)
-MY_P="${P}-GPL"
+MY_P="${P}-gpl"
 
 DESCRIPTION="Provides a common base for graphical component to build a graphical console."
 HOMEPAGE="http://dev.artenum.com/projects/JRosetta"
