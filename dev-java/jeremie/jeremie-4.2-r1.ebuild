@@ -1,4 +1,4 @@
-# Copyright 1999-2005 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -23,7 +23,7 @@ RDEPEND=">=virtual/jre-1.4
 	=dev-java/jonathan-core-4*
 	=dev-java/kilim-2*
 	dev-java/monolog
-	dev-java/nanoxml*"
+	dev-java/nanoxml"
 
 S="${WORKDIR}/${PN}"
 
