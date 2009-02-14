@@ -43,6 +43,7 @@ dev-java/jboss-commons-logging:avalon-logkit - Add support for avalon-logkit
 dev-java/jboss-commons-logging:log4j - Add support for log4j
 dev-java/jboss-commons-logging:servletapi - Add support for servletapi
 dev-java/jboss-commons-logging:avalon-framework - Add support for avalon-framework
+media-sound/tuxguitar:fluidsynth - compile with support for fluidsynth
 
 dev-util/netbeans:apisupport - Enables 'apisupport' cluster which enables netbeans module support in netbeans
 dev-util/netbeans:cnd Enables 'cnd' cluster which enables C/C++ development support in netbeans
