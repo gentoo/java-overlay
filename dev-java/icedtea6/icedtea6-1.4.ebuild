@@ -109,6 +109,10 @@ src_unpack() {
 	unpack ${P}.tar.gz
 }
 
+unset_vars() {
+	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
+}
+
 src_configure() {
 	local config procs rhino_jar
 	local vm=$(java-pkg_get-current-vm)
@@ -145,7 +149,7 @@ src_configure() {
 		rhino_jar=$(java-pkg_getjar rhino:1.6 js.jar);
 	fi
 
-	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
+	unset_vars
 
 	econf ${config} \
 		--with-openjdk-src-zip="${DISTDIR}/${OPENJDK_TARBALL}" \
@@ -173,6 +177,8 @@ src_compile() {
 	# Also make sure we don't bring in additional tasks
 	export ANT_TASKS=none
 
+	# Paludis does not respect unset from src_configure
+	unset_vars
 	emake -j 1  || die "make failed"
 }
 
