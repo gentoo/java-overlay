@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=1
+
 inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="An implementation of the Chain of Responsibility pattern"
@@ -16,7 +18,7 @@ IUSE="doc source test"
 SKIP_JAR_GET="-Dnoget=true"
 
 COMMON_DEP="
-	=dev-java/commons-beanutils-1.7*
+	dev-java/commons-beanutils:1.7
 	>=dev-java/commons-digester-1.6
 	>=dev-java/commons-logging-1.0.3
 	=dev-java/portletapi-1*
