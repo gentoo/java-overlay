@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=1
+
 inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="A powerful Model View Controller Framework for JSP/Servlets"
@@ -14,7 +16,7 @@ KEYWORDS="~amd64 ~x86"
 
 COMMON_DEP="
 	>=dev-java/antlr-2.7.2
-	=dev-java/commons-beanutils-1.7*
+	dev-java/commons-beanutils:1.7
 	=dev-java/commons-chain-1.1*
 	>=dev-java/jakarta-jstl-1
 	>=dev-java/commons-logging-1
