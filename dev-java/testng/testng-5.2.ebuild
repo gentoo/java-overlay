@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -23,9 +23,9 @@ S=${WORKDIR}
 
 src_unpack() {
 	unpack ${A}
-	cd ${S}
+	cd "${S}"
 
-	epatch ${FILESDIR}/testng-build.diff
+	epatch "${FILESDIR}/testng-build.diff"
 
 	java-pkg_jar-from ant-core ant.jar 3rdparty/ant.jar
 	java-pkg_jar-from junit junit.jar 3rdparty/junit.jar
