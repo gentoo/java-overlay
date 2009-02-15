@@ -25,7 +25,7 @@ COMMON_DEP="
 	>=dev-java/commons-logging-1.0.4
 	=dev-java/commons-el-1.0*
 	=dev-java/servletapi-2.4*
-	=dev-java/commons-beanutils-1.7*
+	dev-java/commons-beanutils:1.7
 	=dev-java/commons-codec-1.3*
 	=dev-java/portletapi-1*
 	dev-java/commons-lang:2.1

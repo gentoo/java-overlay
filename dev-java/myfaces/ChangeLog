@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  15 Feb 2009; Vlastimil Babka <caster@gentoo.org> myfaces-1.1.4.ebuild,
+  myfaces-1.1.4-r1.ebuild:
+  slot dep for commons-beanutils.
+
   20 Jan 2009; Alistair Bush <ali_bush@gentoo.org> myfaces-1.1.4.ebuild,
   myfaces-1.1.4-r1.ebuild:
   QA Fixes.
