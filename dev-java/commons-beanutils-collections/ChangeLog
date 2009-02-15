@@ -1,6 +1,10 @@
 # ChangeLog for dev-java/commons-beanutils
-# Copyright 2002-2007 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 2002-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/commons-beanutils/ChangeLog,v 1.36 2007/02/11 12:23:26 caster Exp $
+
+  15 Feb 2009; Vlastimil Babka <caster@gentoo.org>
+  commons-beanutils-collections-1.7.0.ebuild:
+  Restrict commons-beanutils dep to ~1.7.0.
 
   17 May 2007; Petteri Räty <betelgeuse@gentoo.org>
   +commons-beanutils-collections-1.7.0.ebuild, +metadata.xml:

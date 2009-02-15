@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/commons-beanutils/commons-beanutils-1.7.0-r2.ebuild,v 1.10 2007/02/10 19:04:08 nixnut Exp $
 
@@ -20,7 +20,7 @@ IUSE=""
 COMMON_DEP="
 	>=dev-java/commons-collections-2.1
 	>=dev-java/commons-logging-1.0.2
-	>=dev-java/commons-beanutils-1.7"
+	~dev-java/commons-beanutils-1.7.0"
 RDEPEND=">=virtual/jre-1.4
 	${COMMON_DEP}"
 
