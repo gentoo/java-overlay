@@ -29,8 +29,8 @@ S="${WORKDIR}/${PN}"
 
 src_unpack() {
 	unpack ${A}
-	cd ${S}
-	epatch ${FILESDIR}/${P}-classpath.patch
+	cd "${S}"
+	epatch "${FILESDIR}/${P}-classpath.patch"
 
 	cd externals
 	rm *.jar
@@ -39,7 +39,7 @@ src_unpack() {
 	java-pkg_jar-from monolog ow_monolog.jar
 	java-pkg_jar-from nanoxml nanoxml-lite.jar nanoxml-lite-2.2.1.jar
 	java-pkg_jar-from ant-core ant.jar
-	
+
 	# the jar from my ow-util-ant-tasks seems to slightly not work
 	cd ../config
 	rm *.jar
@@ -52,6 +52,5 @@ src_compile() {
 
 src_install() {
 	java-pkg_dojar output/dist/lib/*.jar
-	
 	use doc && java-pkg_dojavadoc output/dist/doc/javadoc/user
 }
