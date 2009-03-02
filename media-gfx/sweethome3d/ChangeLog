@@ -1,6 +1,10 @@
 # ChangeLog for media-gfx/sweethome3d
-# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  02 Mar 2009; Miroslav Šulc <fordfrog@gentoo.org> -sweethome3d-1.4.ebuild,
+  +sweethome3d-1.6.ebuild:
+  Version bump
 
   20 Nov 2008; Miroslav Šulc <fordfrog@gentoo.org> sweethome3d-1.4.ebuild:
   Fixed the problem with application startup
