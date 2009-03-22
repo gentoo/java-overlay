@@ -36,7 +36,7 @@ weka_get_max_memory() {
 	fi
 }
 
-EANT_EXTRA_ARGS="-Djavac_max_memory=$(weka_get_max_memory) -Ddebug=true"
+EANT_EXTRA_ARGS="-Djavac_max_memory=$(weka_get_max_memory)"
 
 src_prepare() {
 	unzip -qq "${PN}-src.jar" -d . || die "Failed to unpack the source"
