@@ -1,0 +1,20 @@
+--- build.xml	2009-01-18 12:47:49.000000000 +0200
++++ build.xml.fixed	2009-01-18 12:51:21.000000000 +0200
+@@ -20,7 +20,7 @@
+   <property name="src.dir" value="src" />
+   <property name="javadoc.dir" value="doc/api" />
+   
+-  <property name="vldocking.version" value="2.1.4" />
++  <property name="vldocking.version" value="2.1.5" />
+ 
+   <!-- ===================================================================== -->
+   <!-- PREPARE BUILD                                                         -->
+@@ -74,7 +74,7 @@
+ 
+   </target>
+ 
+-<target name="javadoc" depends="prepare">
++<target name="javadoc">
+   <javadoc destdir="${javadoc.dir}"
+            author="false"
+            version="false"
