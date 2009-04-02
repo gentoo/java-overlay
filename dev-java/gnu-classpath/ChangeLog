@@ -2,6 +2,9 @@
 # Copyright 2000-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/gnu-classpath/ChangeLog,v 1.81 2008/05/17 11:36:40 nixnut Exp $
 
+  12 Feb 2009; Andrew John Hughes <ahughes@redhat.com> metadata.xml, gnu-classpath-0.98.ebuild:
+	Explain non-trivial USE flags, shorten description.
+	
 *gnu-classpath-0.98 (11 Feb 2009)
 
   11 Feb 2009; Andrew John Hughes <ahughes@redhat.com> gnu-classpath-0.98.ebuild:

@@ -1,4 +1,5 @@
-# Copyright 2008-2009 Andrew John Hughes
+# Copyright 1999-2008 Gentoo Foundation
+# Build written by Andrew John Hughes
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
