@@ -1,6 +1,11 @@
 # ChangeLog for media-sound/tuxguitar
-# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  05 Apr 2009; Serkan Kaba <serkan@gentoo.org> tuxguitar-1.0, tuxguitar-1.1:
+  Version bump. Remove unneeded comments. Migrate to EAPI 2 and use USE
+  dependencies when needed. Add new tuner plugin. Thanks to Raphaël Droz
+  <gibboris@gmail.com> for improvements.
 
   31 Aug 2008; Serkan Kaba <serkan@gentoo.org> tuxguitar-1.0.ebuild,
   +files/tuxguitar-1.0-ftp.patch:

@@ -1,8 +1,8 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=1
+EAPI="2"
 JAVA_PKG_IUSE="source"
 
 inherit eutils java-pkg-2 java-ant-2 toolchain-funcs flag-o-matic fdo-mime gnome2-utils
@@ -16,18 +16,16 @@ SLOT="0"
 IUSE="alsa fluidsynth oss pdf"
 
 # Test notes
-# FTP plugin seems to connect but it doesn't list my files at FTP.
 # Couldn't get JSA plugin working out of the box with IcedTea.
 
 KEYWORDS="~amd64"
-# FIXME: Are these X dependencies really needed to be here explicitly?
-CDEPEND="dev-java/swt:3
+CDEPEND="dev-java/swt:3[cairo]
 	alsa? ( media-libs/alsa-lib )
 	fluidsynth? ( media-sound/fluidsynth )
 	pdf? ( dev-java/itext:0 )"
 RDEPEND=">=virtual/jre-1.5
-	alsa? ( media-sound/timidity++ )
-	oss? ( media-sound/timidity++ )
+	alsa? ( media-sound/timidity++[alsa] )
+	oss? ( media-sound/timidity++[oss] )
 	${CDEPEND}"
 
 DEPEND=">=virtual/jdk-1.5
@@ -35,20 +33,9 @@ DEPEND=">=virtual/jdk-1.5
 
 S="${WORKDIR}/${MY_P}"
 
-pkg_setup() {
-	if ! built_with_use 'dev-java/swt' 'cairo'; then
-		eerror "You must build dev-java/swt with cairo support"
-		die "dev-java/swt built without cairo"
-	fi
-	java-pkg-2_pkg_setup
-}
-
-src_unpack() {
-	unpack ${A}
-	cd "${S}" || die
-	epatch "${FILESDIR}"/${P}-ftp.patch
-	cd "${S}"/TuxGuitar/lib || die
-	java-pkg_jar-from swt-3
+src_prepare() {
+	java-pkg_jar-from --into TuxGuitar/lib swt-3
+	java-pkg-2_src_prepare
 }
 
 src_compile() {
@@ -71,7 +58,7 @@ src_install() {
 	# TODO: Decide if plugin sources should be installed
 	java-pkg_dolauncher ${PN} \
 		--main org.herac.tuxguitar.gui.TGMain \
-		--java_args "-Xms128m -Xmx128m"
+		--java_args "-Xms128m -Xmx128m  -Dtuxguitar.share.path=/usr/share/${PN}/lib/share"
 	# Images and Files
 	insinto /usr/share/${PN}/lib
 	doins -r share || die "doins failed"
@@ -109,12 +96,10 @@ plugin_install() {
 }
 
 #Return list of plugins to compile/install
-#Removed FTP plugin from list as it's not working now.
-#Check to see if it's working while bumping. 
 list_plugins() {
 	echo \
-		$(usev alsa) ascii browser-ftp compat converter $(usev fluidsynth) \
-		gtp jsa lilypond midi musicxml $(usev oss) $(usev pdf) ptb tef tray
+		$(usev alsa) ascii browser-ftp compat converter $(usev fluidsynth) gtp \
+		jsa lilypond midi musicxml $(usev oss) $(usev pdf) ptb tef tray tuner
 }
 
 pkg_postinst() {
