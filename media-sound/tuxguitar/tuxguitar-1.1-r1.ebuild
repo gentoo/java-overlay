@@ -19,7 +19,7 @@ IUSE="alsa fluidsynth oss pdf"
 # Couldn't get JSA plugin working out of the box with IcedTea.
 
 KEYWORDS="~amd64"
-CDEPEND="dev-java/swt:3[cairo]
+CDEPEND="dev-java/swt:3.4[cairo]
 	alsa? ( media-libs/alsa-lib )
 	fluidsynth? ( media-sound/fluidsynth )
 	pdf? ( dev-java/itext:0 )"
@@ -34,7 +34,7 @@ DEPEND=">=virtual/jdk-1.5
 S="${WORKDIR}/${MY_P}"
 
 src_prepare() {
-	java-pkg_jar-from --into TuxGuitar/lib swt-3
+	java-pkg_jar-from --into TuxGuitar/lib swt-3.4
 	java-pkg-2_src_prepare
 }
 
@@ -42,7 +42,7 @@ src_compile() {
 	if use pdf; then
 		echo "" >> TuxGuitar-pdf/build.properties || die
 		echo "path.itext=$(java-pkg_getjar itext iText.jar)" >> TuxGuitar-pdf/build.properties || die "Error adding itext path"
-		echo "path.swt=$(java-pkg_getjar swt-3 swt.jar)" >> TuxGuitar-pdf/build.properties || die "Error adding swt path"
+		echo "path.swt=$(java-pkg_getjar swt-3.4 swt.jar)" >> TuxGuitar-pdf/build.properties || die "Error adding swt path"
 	fi
 	cd TuxGuitar || die "cd failed"
 	eant all
