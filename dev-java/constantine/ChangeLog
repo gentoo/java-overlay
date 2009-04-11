@@ -2,6 +2,13 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*constantine-0.5 (22 Mar 2009)
+
+  22 Mar 2009; James Le Cuirot <chewi@aura-online.co.uk>
+  -constantine-0.4.ebuild, +constantine-0.5.ebuild:
+  Bump. Version 0.4 is too old for jruby-1.2.0. Didn't realise that 0.5 had
+  been released without a tarball.
+
 *constantine-0.4 (22 Mar 2009)
 
   22 Mar 2009; James Le Cuirot <chewi@aura-online.co.uk>

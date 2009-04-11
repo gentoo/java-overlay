@@ -7,7 +7,7 @@ inherit base java-pkg-2 java-ant-2
 
 DESCRIPTION="Provides Java values for common platform C constants"
 HOMEPAGE="http://kenai.com/projects/constantine"
-SRC_URI="http://kenai.com/downloads/constantine/${PN}-src-${PV}.zip"
+SRC_URI="http://dev.gentooexperimental.org/~chewi/distfiles/${P}.tbz2"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
