@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -14,11 +14,11 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="bsf java6 ssl"
 
-CDEPEND=">=dev-java/jline-0.9.91
-	>=dev-java/joni-1.0.2-r1
+CDEPEND="~dev-java/bytelist-1.0
+	~dev-java/joni-1.0.2
+	>=dev-java/jline-0.9.91
 	>=dev-java/jvyamlb-0.2
 	dev-java/asm:3
-	dev-java/bytelist
 	dev-java/jna
 	dev-java/jna-posix
 	dev-java/joda-time
@@ -29,7 +29,6 @@ RDEPEND="${CDEPEND}
 
 DEPEND="${CDEPEND}
 	>=virtual/jdk-1.5
-	>=dev-java/javatoolkit-0.3.0
 	bsf? ( >=dev-java/bsf-2.3 )
 	test? (
 		dev-java/ant-junit
@@ -46,9 +45,12 @@ SITE_RUBY=${RUBY_HOME}/site_ruby
 GEMS=${RUBY_HOME}/gems
 
 JAVA_ANT_REWRITE_CLASSPATH="true"
+EANT_GENTOO_CLASSPATH="asm-3 bytelist jline joda-time joni jna jna-posix jvyamlb"
+EANT_NEEDS_TOOLS="true"
 
 pkg_setup() {
 	java-pkg-2_pkg_setup
+	use java6 || EANT_GENTOO_CLASSPATH="${EANT_GENTOO_CLASSPATH} backport-util-concurrent"
 
 	if [[ -d "${GEMS}" && ! -L "${GEMS}" ]]; then
 		ewarn "dev-java/jruby now uses dev-lang/ruby's gems directory by creating symlinks."
@@ -60,30 +62,19 @@ src_unpack() {
 	unpack ${A}
 	cd "${S}"
 
-	# We don't need to use Retroweaver.
-	sed -i "/RetroWeaverTask/d" build.xml
-
-	# Remove jarjar stuff.
-	/usr/$(get_libdir)/javatoolkit/bin/jarjarclean || die
+	# We don't need to use Retroweaver. There is a jarjar and a regular jar
+	# target but even with jarjarclean, both are a pain. The latter target
+	# is slightly easier so go with this one.
+	sed -r -i \
+		-e "/RetroWeaverTask/d" \
+		-e "/<zipfileset .+\/>/d" \
+		build.xml || die
 
 	# Search only lib, kills jdk1.5+ property, which we set manually.
 	java-ant_ignore-system-classes
 
-	cd "${S}/build_lib" || die
-	rm -vf *.jar || die
-
-	# tools.jar must be symlinked manually.
-	ln -s `java-config --tools` || die
-
-	# This must be named anything but joni.jar because it is excluded from the tests.
-	java-pkg_jar-from joni joni.jar joni_.jar
-
-	# Collect the other JARs.
-	java-pkg_jar-from asm-3,bytelist,jline,joda-time,jna,jna-posix,jvyamlb
-	use java6 || java-pkg_jar-from backport-util-concurrent
-
-	cd "${S}/lib" || die
-	rm -vf *.jar || die
+	# Delete the bundled JARs.
+	rm -vf "${S}"/{build_,}lib/*.jar || die
 
 	if ! use bsf; then
 		# Remove BSF test cases.
@@ -100,14 +91,20 @@ src_compile() {
 }
 
 src_test() {
-	# Tests will fail if this isn't present.
-	mkdir -p spec
+	if [ ${UID} == 0 ] ; then
+		ewarn 'The tests will fail if run as root so skipping them.'
+		ewarn 'Enable FEATURES="userpriv" if you want to run them.'
+		return
+	fi
 
 	# BSF is a compile-time only dependency because it's just the adapter
 	# classes and they won't be used unless invoked from BSF itself.
 	use bsf && java-pkg_jar-from --into build_lib --with-dependencies bsf-2.3
 
-	ANT_TASKS="ant-junit ant-trax" eant test -Djdk1.5+=true
+	# Our jruby.jar is unbundled so we need to add the classpath to this test.
+	sed -i "s:java -jar:java -Xbootclasspath/a\:#{ENV['JRUBY_CP']} -jar:g" test/test_load_compiled_ruby_class_from_classpath.rb || die
+
+	ANT_TASKS="ant-junit ant-trax" JRUBY_CP=`java-pkg_getjars ${EANT_GENTOO_CLASSPATH// /,}` JRUBY_OPTS="" eant test -Djdk1.5+=true
 }
 
 src_install() {
