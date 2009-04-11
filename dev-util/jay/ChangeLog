@@ -1,0 +1,10 @@
+# ChangeLog for dev-java/joni
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*jay-1.1.1 (22 Mar 2009)
+
+  22 Mar 2009; James Le Cuirot <chewi@aura-online.co.uk> +jay-1.1.1.ebuild:
+  Initial import. Only builds jay binary and yydebug.jar, not jay.jar or any of
+  the C# stuff, for the sake of my sanity.
+
