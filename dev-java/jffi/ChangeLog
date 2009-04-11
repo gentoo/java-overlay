@@ -1,0 +1,9 @@
+# ChangeLog for dev-java/jffi
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*jffi-0.3 (22 Mar 2009)
+
+  22 Mar 2009; James Le Cuirot <chewi@aura-online.co.uk> +jffi-0.3.ebuild:
+  Initial import. Not sure exactly what version of GCC4 is required but JNA
+  requires 4.3.
