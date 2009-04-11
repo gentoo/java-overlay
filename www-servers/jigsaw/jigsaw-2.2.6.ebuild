@@ -14,8 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-CDEPEND="java-virtuals/jdk-tools
-	dev-java/jakarta-oro:2.0
+CDEPEND="dev-java/jakarta-oro:2.0
 	dev-java/saxon:6.5
 	dev-java/servletapi:2.3
 	dev-java/xerces:2
@@ -32,7 +31,8 @@ S="${WORKDIR}/Jigsaw"
 
 JAVA_ANT_REWRITE_CLASSPATH="true"
 EANT_DOC_TARGET="javadocs"
-EANT_GENTOO_CLASSPATH="jdk-tools jakarta-oro-2.0 saxon-6.5 servletapi-2.3 xerces-2 jtidy xp"
+EANT_GENTOO_CLASSPATH="jakarta-oro-2.0 saxon-6.5 servletapi-2.3 xerces-2 jtidy xp"
+EANT_NEEDS_TOOLS="true"
 
 src_unpack() {
 	unpack ${A}
