@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-inherit java-pkg-2
+inherit java-pkg-2 toolchain-funcs
 
 DESCRIPTION="A LALR(1) parser generator: Berkeley yacc retargeted to C# and Java"
 HOMEPAGE="http://www.cs.rit.edu/~ats/projects/lp/doc/jay/package-summary.html"
@@ -18,13 +18,17 @@ DEPEND=">=virtual/jdk-1.4"
 
 S="${WORKDIR}/jay"
 
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
-
+java_prepare() {
 	# Fix up ugly makefiles.
-	sed -i -r '/^CFLAGS =/d' src/makefile || die
-	sed -i -r 's:^v4 =.*:v4 = ${JAVA_HOME}/bin:' yydebug/makefile || die
+	sed -i -r \
+		-e "s:^CC\s*=.*:CC = `tc-getCC`:" \
+		-e '/^CFLAGS\s*=/d' \
+		 src/makefile || die
+
+	sed -i -r \
+		-e 's:^v4\s*=.*:v4 = ${JAVA_HOME}/bin:' \
+		-e 's:JAVAC\s*=.*:\0 ${JAVACFLAGS}:' \
+		yydebug/makefile || die
 }
 
 src_compile() {
