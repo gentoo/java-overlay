@@ -1,6 +1,11 @@
 # ChangeLog for dev-java/echo2extras
-# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  12 Apr 2009; Serkan Kaba <serkan@gentoo.org> -echo2extras-0.9.1.ebuild,
+  +echo2extras-2.1.0.ebuild:
+  Version bump. Migrate to EAPI 2 to use SRC_URI arrows. Migrate to
+  servlet-api virtual. Fix homepage.
 
   12 Apr 2008; Serkan Kaba <serkan_kaba@yahoo.com> echo2extras-0.9.1.ebuild:
   Fixed echo2 dependency.
