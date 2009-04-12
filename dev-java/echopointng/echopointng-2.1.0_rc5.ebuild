@@ -3,6 +3,7 @@
 # $Header: $
 
 EAPI=1
+JAVA_PKG_IUSE="doc source"
 inherit java-pkg-2 java-ant-2 eutils
 
 DESCRIPTION="A rich collection of web components which seamlessly integrate with the Echo Web Framework"
@@ -18,11 +19,6 @@ COMMON_DEP="java-virtuals/servlet-api:2.4
 	>=dev-java/echo2-2.1.0_beta5"
 
 DEPEND=">=virtual/jdk-1.4
-	dev-java/junit
-	source? (
-		app-arch/zip
-		app-arch/unzip
-	)
 	${COMMON_DEP}"
 
 RDEPEND=">=virtual/jre-1.4
