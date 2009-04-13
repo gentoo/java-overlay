@@ -11,7 +11,7 @@ HOMEPAGE="http://echopoint.sourceforge.net/"
 SRC_URI="mirror://sourceforge/echopoint/${PN}-src-${PV/_/}.zip"
 
 LICENSE="MPL-1.1 GPL-2 LGPL-2.1"
-SLOT="0"
+SLOT="2.1"
 KEYWORDS="~amd64"
 IUSE="doc source"
 
@@ -31,6 +31,8 @@ src_unpack() {
 	cd "${S}" || die
 	
 	epatch "${FILESDIR}"/${P}-disabletestcompile.patch
+	sed -i -e "s/toUpperCase()/toUpperCase(java.util.Locale.ENGLISH)/g" $(find . -name "*.java") || die "fixing toUpperCase usage failed"
+	sed -i -e "s/toLoweCase()/toLowerCase(java.util.Locale.ENGLISH)/g" $(find . -name "*.java") || die "fixing toLowerCase usage failed"
 
 	echo "javax_servlet_jar=$(java-pkg_getjar servlet-api-2.4 servlet-api.jar)" >> build.properties
 	echo "javax_jsp_jar=$(java-pkg_getjar servlet-api-2.4 jsp-api.jar)" >> build.properties
