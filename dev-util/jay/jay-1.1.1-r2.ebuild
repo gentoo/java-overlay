@@ -22,6 +22,7 @@ java_prepare() {
 	# Fix up ugly makefiles.
 	sed -i -r \
 		-e "s:^CC\s*=.*:CC = `tc-getCC`:" \
+		-e 's/^jay:.* \$e /\0$(LDFLAGS) /' \
 		-e '/^CFLAGS\s*=/d' \
 		 src/makefile || die
 
