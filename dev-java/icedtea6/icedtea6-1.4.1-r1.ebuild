@@ -164,7 +164,7 @@ src_configure() {
 		--with-java="${vmhome}/bin/java" \
 		--with-javac="${vmhome}/bin/javac" \
 		--with-javah="${vmhome}/bin/javah" \
-		--with-pkgversion="Gentoo" \
+		--with-pkgversion="Gentoo-icedtea6-bin-1.4.1" \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nsplugin liveconnect) \
