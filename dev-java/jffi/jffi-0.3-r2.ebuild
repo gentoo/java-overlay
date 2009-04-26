@@ -7,14 +7,14 @@
 
 EAPI="2"
 JAVA_PKG_IUSE="source test"
-inherit base java-pkg-2 java-ant-2 toolchain-funcs
+inherit base java-vm-2 java-pkg-2 java-ant-2 toolchain-funcs
 
 DESCRIPTION="An optimized Java interface to libffi"
 HOMEPAGE="http://kenai.com/projects/jffi"
 SRC_URI="http://dev.gentooexperimental.org/~chewi/distfiles/${P}.tbz2"
 LICENSE="LGPL-3"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND=">=virtual/jre-1.5
@@ -39,8 +39,8 @@ java_prepare() {
 	find lib -name "*.jar" -delete || die
 
 	# Fetch our own prebuilt libffi.
-	mkdir -p "build/jni/libffi-$(tc-arch)-linux/.libs" || die
-	ln -snf "${ROOT}`_gcc-install-dir`/libffi.so" "build/jni/libffi-$(tc-arch)-linux/.libs/libffi_convenience.a" || die
+	mkdir -p "build/jni/libffi-$(get_system_arch)-linux/.libs" || die
+	ln -snf "${ROOT}`_gcc-install-dir`/libffi.so" "build/jni/libffi-$(get_system_arch)-linux/.libs/libffi_convenience.a" || die
 
 	# Don't include prebuilt files for other archs.
 	sed -i '/<zipfileset src="archive\//d' custom-build.xml || die

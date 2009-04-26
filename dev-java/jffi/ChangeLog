@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  26 Apr 2009; James Le Cuirot <chewi@aura-online.co.uk> -jffi-0.3.ebuild,
+  -jffi-0.3-r1.ebuild, +jffi-0.3-r2.ebuild:
+  Use get_system_arch instead of tc-arch. The latter doesn't work on x86. Now
+  keywording ~x86.
+
   12 Apr 2009; Alistair Bush <ali_bush@gentoo.org> +jffi-0.3-r1.ebuild:
   Bump to fix build rewriting and to use java_prepare instead of src_unpack.
 
