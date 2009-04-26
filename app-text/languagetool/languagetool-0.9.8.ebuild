@@ -17,7 +17,7 @@ IUSE="openoffice"
 
 COMMON_DEPEND="dev-java/jdictrayapi:0
 	dev-java/jaminid:0
-	dev-java/morfologik-stemming:0
+	>=dev-java/morfologik-stemming-1.1.4:0
 	>=dev-java/jwordsplitter-2.2:0
 	openoffice? ( >=virtual/ooo-3.0.1[java] )"
 

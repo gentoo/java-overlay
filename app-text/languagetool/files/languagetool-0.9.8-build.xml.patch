@@ -1,7 +1,6 @@
-diff -Nur languagetool-0.9.7/build.xml languagetool-0.9.7_patched/build.xml
---- languagetool-0.9.7/build.xml	2009-02-27 16:29:26.000000000 +0200
-+++ languagetool-0.9.7_patched/build.xml	2009-03-14 11:04:44.000000000 +0200
-@@ -18,10 +18,14 @@
+--- build.xml	2009-04-26 01:01:33.000000000 +0300
++++ build.xml.fixed	2009-04-26 22:28:05.000000000 +0300
+@@ -18,10 +18,15 @@
      <pathelement location="${ext.jaminid.lib}"/>
      <pathelement location="${ext.jwordsplitter.lib}"/>
    	<!-- -->
@@ -9,27 +8,28 @@ diff -Nur languagetool-0.9.7/build.xml languagetool-0.9.7_patched/build.xml
 -    <pathelement location="${ext.ooo.unoil.lib}"/>
 -    <pathelement location="${ext.ooo.ridl.lib}"/>
 -    <pathelement location="${ext.ooo.jurt.lib}"/>
-+    	<fileset dir="${openoffice.root.dir}/ure/share/java">
-+		<include name="**/*.jar" />
-+		<include name="**/*.zip" />
-+	</fileset>
-+	<fileset dir="${openoffice.root.dir}/basis3.0/program/classes">
-+		<include name="**/*.jar" />
-+		<include name="**/*.zip" />
-+	</fileset>
++    <fileset dir="${openoffice.root.dir}/basis-link/ure-link/share/java">
++      <include name="**/*.jar" />
++      <include name="**/*.zip" />
++    </fileset>
++    <fileset dir="${openoffice.root.dir}/basis-link/program/classes">
++      <include name="**/*.jar" />
++      <include name="**/*.zip" />
++    </fileset>
++
  	<!-- -->
      <pathelement location="${dist.dir}/resource"/>
      <pathelement location="${dist.dir}/rules"/>
-@@ -78,7 +82,7 @@
+@@ -79,7 +84,7 @@
    <!-- TEST -->
    <!-- ================================================================== -->
  
--  <target name="test" depends="clean,init,build" description="Runs unit tests">
+-  <target name="test" depends="clean,init,build,ooo-build" description="Runs unit tests">
 +  <target name="test" description="Runs unit tests">
- 
+   	
  	<mkdir dir="${junit.classes.dir}"/>
  	<mkdir dir="${dist.dir}/report/tests"/>
-@@ -239,17 +243,6 @@
+@@ -241,16 +246,6 @@
  	  debug="${debug}">
        <classpath refid="classpath"/>
      </javac>
@@ -43,14 +43,14 @@ diff -Nur languagetool-0.9.7/build.xml languagetool-0.9.7_patched/build.xml
 -	  debug="${debug}">
 -      <classpath refid="classpath"/>
 -    </javac>
--
+ 
    </target>
  
-   <!-- ================================================================== -->
-@@ -262,6 +255,14 @@
+@@ -264,14 +259,21 @@
  	  		<include name="*.properties" />
  	  	</fileset>
  	</copy>
+-
 +	
 +	<copy todir="${build.classes}/resource">
 +	  	<fileset dir="src/resource"/>
@@ -59,28 +59,27 @@ diff -Nur languagetool-0.9.7/build.xml languagetool-0.9.7_patched/build.xml
 +	<copy todir="${build.classes}/rules">
 +	  	<fileset dir="src/rules"/>
 +	</copy>
- 
  	<jar
  		jarfile="${dist.dir}/${final.name}.jar"
-@@ -269,7 +270,7 @@
+ 		basedir="${build.classes}"
  		excludes="**/*.java">
  		<manifest>
  			<attribute name="Main-Class" value="de.danielnaber.languagetool.Main" />
--			<attribute name="Class-Path" value="./ ./rules ./resource ./${stempelator.lib}  ./jdic.jar ./jaminid.jar ./jWordSplitter.jar" />
-+			<attribute name="Class-Path" value="./ ../rules ../resource ./${stempelator.lib}  ./jdic.jar ./jaminid.jar ./jWordSplitter.jar" />
+-			<attribute name="Class-Path" value="./ ./rules ./resource ./${stempelator.lib} ./jWordSplitter.jar" />
++			<attribute name="Class-Path" value="../ ../rules ../resource ./${stempelator.lib} ./jWordSplitter.jar" />
  			<attribute name="Implementation-Version" value="${version}" />
  			<attribute name="Implementation-Date" value="${date}" />
  		</manifest>
-@@ -281,7 +282,7 @@
+@@ -283,7 +285,7 @@
  		includes="de/danielnaber/languagetool/gui/*.class">
  		<manifest>
  			<attribute name="Main-Class" value="de.danielnaber.languagetool.gui.Main" />
 -			<attribute name="Class-Path" value="./LanguageTool.jar ./ ./resource ./rules ./${stempelator.lib}  ./jdic.jar ./jaminid.jar ./jWordSplitter.jar" />
-+			<attribute name="Class-Path" value="./LanguageTool.jar ../ ../resource ./rules ../${stempelator.lib}  ./jdic.jar ./jaminid.jar ./jWordSplitter.jar" />
++			<attribute name="Class-Path" value="./LanguageTool.jar ../ ../resource ../rules ./${stempelator.lib}  ./jdic.jar ./jaminid.jar ./jWordSplitter.jar" />
  			<attribute name="Implementation-Version" value="${version}" />
  			<attribute name="Implementation-Date" value="${date}" />
  		</manifest>
-@@ -348,12 +349,12 @@
+@@ -350,12 +352,12 @@
    	<jar
  		jarfile="${dist.dir}/LanguageTool.uno.jar"
  		basedir="${build.classes}"
@@ -95,7 +94,7 @@ diff -Nur languagetool-0.9.7/build.xml languagetool-0.9.7_patched/build.xml
  			<attribute name="Uno-Type-Path" value="" />
    		</manifest>
  	</jar>
-@@ -391,14 +392,14 @@
+@@ -393,14 +395,14 @@
    	<zip compress="yes" destfile="${dist.dir}/LanguageTool-${version}.oxt"
    		basedir="${dist.dir}"
    		includes="**"
@@ -112,7 +111,7 @@ diff -Nur languagetool-0.9.7/build.xml languagetool-0.9.7_patched/build.xml
    </target>
  
    <target name="ooo-internal" depends="clean,init,build,ooo-build">
-@@ -435,97 +436,6 @@
+@@ -437,103 +439,6 @@
      <copy todir="${dist.dir}/">
          <fileset dir="openoffice/" includes="images/**" />
      </copy>
@@ -206,6 +205,12 @@ diff -Nur languagetool-0.9.7/build.xml languagetool-0.9.7_patched/build.xml
 -	<copy file="${resource.dir}/ru/compounds_ru.txt" todir="${dist.dir}/resource/ru" />
 -	<copy file="${resource.dir}/ro/romanian.dict" todir="${dist.dir}/resource/ro" />
 -  	<copy file="${resource.dir}/ro/romanian.info" todir="${dist.dir}/resource/ro" />
+-	<copy file="${resource.dir}/ro/romanian_synth.dict" todir="${dist.dir}/resource/ro" />  	
+-	<copy file="${resource.dir}/ro/romanian_synth.info" todir="${dist.dir}/resource/ro" />
+-  	<copy file="${resource.dir}/ro/romanian_tags.txt" todir="${dist.dir}/resource/ro" />
+-  	<copy file="${resource.dir}/ro/disambiguation.xml" todir="${dist.dir}/resource/ro" />
+-  	<copy file="${resource.dir}/sk/slovak.dict" todir="${dist.dir}/resource/sk" />  	
+-	<copy file="${resource.dir}/sk/compounds.txt" todir="${dist.dir}/resource/sk" />
 -  	<copy file="${resource.dir}/xx/dummy.dict" tofile="${dist.dir}/resource/cs/czech.dict" />
    </target>
  
