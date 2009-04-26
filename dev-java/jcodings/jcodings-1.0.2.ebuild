@@ -11,7 +11,7 @@ HOMEPAGE="http://jruby.codehaus.org/"
 SRC_URI="http://svn.jruby.codehaus.org/browse/~tarball=tbz2/jruby/${PN}/tags/${PV}/${PV}.tbz2 -> ${P}.tbz2"
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND=">=virtual/jre-1.4"

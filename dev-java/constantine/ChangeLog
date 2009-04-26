@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  26 Apr 2009; James Le Cuirot <chewi@aura-online.co.uk>
+  constantine-0.5.ebuild:
+  Keywording ~x86.
+
 *constantine-0.5 (22 Mar 2009)
 
   22 Mar 2009; James Le Cuirot <chewi@aura-online.co.uk>
