@@ -11,7 +11,7 @@ HOMEPAGE="http://jruby.codehaus.org/"
 SRC_URI="http://dev.gentooexperimental.org/~chewi/distfiles/${P}.tbz2"
 LICENSE="MIT"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 CDEPEND="dev-java/asm:3

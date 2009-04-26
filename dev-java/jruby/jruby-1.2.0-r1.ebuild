@@ -2,26 +2,30 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="1"
+EAPI="2"
 JAVA_PKG_IUSE="doc source test"
-inherit java-pkg-2 java-ant-2
+inherit eutils java-pkg-2 java-ant-2
 
 DESCRIPTION="Java-based Ruby interpreter implementation"
 HOMEPAGE="http://jruby.codehaus.org/"
-SRC_URI="http://dist.codehaus.org/${PN}/${PN}-src-${PV}.tar.gz"
+SRC_URI="http://dist.codehaus.org/${PN}/${PV}/${PN}-src-${PV}.tar.gz"
 LICENSE="|| ( CPL-1.0 GPL-2 LGPL-2.1 )"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="bsf java6 ssl"
 
-CDEPEND="~dev-java/bytelist-1.0
-	~dev-java/joni-1.0.2
-	>=dev-java/jline-0.9.91
-	>=dev-java/jvyamlb-0.2
+CDEPEND=">=dev-java/bytelist-1.0.2
+	>=dev-java/constantine-0.5
+	>=dev-java/jline-0.9.94
+	>=dev-java/joni-1.1.3
+	>=dev-java/jna-posix-1.0
+	>=dev-java/jvyamlb-0.2.5
 	dev-java/asm:3
+	dev-java/jcodings
+	dev-java/jffi
 	dev-java/jna
-	dev-java/jna-posix
 	dev-java/joda-time
+	dev-util/jay
 	!java6? ( dev-java/backport-util-concurrent )"
 
 RDEPEND="${CDEPEND}
@@ -45,7 +49,8 @@ SITE_RUBY=${RUBY_HOME}/site_ruby
 GEMS=${RUBY_HOME}/gems
 
 JAVA_ANT_REWRITE_CLASSPATH="true"
-EANT_GENTOO_CLASSPATH="asm-3 bytelist jline joda-time joni jna jna-posix jvyamlb"
+JAVA_ANT_IGNORE_SYSTEM_CLASSES="true"
+EANT_GENTOO_CLASSPATH="asm-3 bytelist constantine jay jcodings jffi jline joda-time joni jna jna-posix jvyamlb"
 EANT_NEEDS_TOOLS="true"
 
 pkg_setup() {
@@ -58,23 +63,22 @@ pkg_setup() {
 	fi
 }
 
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
+java_prepare() {
+	epatch "${FILESDIR}/ftype-test-fixes.patch"
+	epatch "${FILESDIR}/user-test-fixes.patch"
 
 	# We don't need to use Retroweaver. There is a jarjar and a regular jar
 	# target but even with jarjarclean, both are a pain. The latter target
 	# is slightly easier so go with this one.
 	sed -r -i \
+		-e 's/maxmemory="128m"/maxmemory="192m"/' \
 		-e "/RetroWeaverTask/d" \
 		-e "/<zipfileset .+\/>/d" \
 		build.xml || die
 
-	# Search only lib, kills jdk1.5+ property, which we set manually.
-	java-ant_ignore-system-classes
-
-	# Delete the bundled JARs.
-	rm -vf "${S}"/{build_,}lib/*.jar || die
+	# Delete the bundled JARs but keep invokedynamic.jar.
+	# No source is available and it's only a dummy anyway.
+	find build_lib lib -name "*.jar" ! -name "invokedynamic.jar" -delete || die
 
 	if ! use bsf; then
 		# Remove BSF test cases.

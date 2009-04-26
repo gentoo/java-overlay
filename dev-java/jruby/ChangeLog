@@ -2,6 +2,19 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*jruby-1.1.6 (26 Apr 2009)
+
+  26 Apr 2008; James Le Cuirot <chewi@aura-online.co.uk>
+  -jruby-1.1.4.ebuild, -jruby-1.2.0.ebuild, +jruby-1.1.6.ebuild,
+  +jruby-1.2.0-r1.ebuild, +files/user-test-fixes.patch,
+  +files/rdt-1.1.6/AbstractVisitor.java.patch,
+  +files/rdt-1.1.6/ReaderLexerSource.java,
+  +files/rdt-1.1.6/LexerSource.java.patch, +files/ftype-test-fixes.patch,
+  +files/joni-1.1.6.patch:
+  Bump version 1.1 to 1.1.6. All tests pass. Broken tests fixed in 1.2.0.
+  javadoc memory problem also fixed in 1.2.0. Both versions now produce valid
+  bytecode.
+
 *jruby-1.2.0 (11 Apr 2009)
 *jruby-1.1.4 (11 Apr 2009)
 
