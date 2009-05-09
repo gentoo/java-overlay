@@ -4,12 +4,13 @@
 
 WANT_ANT_TASKS="ant-antlr"
 JAVA_PKG_IUSE="cg source doc"
+EAPI="2"
 
 inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="Java(TM) Binding fot the OpenGL(TM) API"
 HOMEPAGE="https://jogl.dev.java.net"
-SRC_URI="http://download.java.net/media/jogl/builds/archive/jsr-231-${PV}/${P}-src.zip"
+SRC_URI="http://download.java.net/media/${PN}/builds/archive/jsr-231-1.1.1/${P}-src.zip"
 
 LICENSE="BSD"
 SLOT="0"
@@ -17,7 +18,7 @@ KEYWORDS="~amd64"
 
 COMMON_DEPEND="dev-java/ant-core
 	>=dev-java/cpptasks-1.0_beta4-r2
-	dev-java/gluegen
+	=dev-java/gluegen-20080421
 	cg? ( media-gfx/nvidia-cg-toolkit )
 	virtual/opengl
 	x11-libs/libX11
@@ -33,16 +34,13 @@ IUSE=""
 
 S="${WORKDIR}/${PN}"
 
-src_unpack() {
-	unpack ${A}
-	epatch \
-		"${FILESDIR}/${PV}/uncouple-gluegen.patch" \
-		"${FILESDIR}/${PV}/fix-solaris-compiler.patch"
-
+java_prepare() {
+	epatch "${FILESDIR}/1.1.0/uncouple-gluegen.patch"
 	cd "${S}/make"
 	mv build.xml build.xml.bak
 
 	sed 's_/usr/X11R6_/usr_g' build.xml.bak > build.xml
+	sed -i -e 's/suncc/gcc/g' build.xml ../../gluegen/make/gluegen-cpptasks.xml
 
 	rm -R "${S}/build/gensrc/classes/javax"
 
@@ -53,7 +51,8 @@ src_unpack() {
 
 src_compile() {
 	cd make/
-	local antflags="-Dantlr.jar=$(java-pkg_getjars --build-only antlr)"
+	local antflags="-Dgluegen.prebuild=true"
+	antflags="${antflags} -Dantlr.jar=$(java-pkg_getjars --build-only antlr)"
 	local gcp="$(java-pkg_getjars ant-core):$(java-config --tools)"
 
 	local gluegen="-Dgluegen.jar=$(java-pkg_getjar gluegen gluegen.jar)"
@@ -65,7 +64,7 @@ src_compile() {
 	export ANT_OPTS="-Xmx1g"
 	eant \
 		-Dgentoo.classpath="${gcp}" \
-		"${antflags}" "${gluegen}" "${gluegenrt}" \
+		${antflags} "${gluegen}" "${gluegenrt}" \
 		all $(use_doc)
 }
 

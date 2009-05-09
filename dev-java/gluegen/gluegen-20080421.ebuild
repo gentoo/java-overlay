@@ -2,7 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+# svn export -r "{2009-05-09}" https://gluegen.dev.java.net/svn/gluegen/trunk
+# gluegen --username xxx --password xxx
+
 WANT_ANT_TASKS="ant-antlr"
+EAPI="2"
 JAVA_PKG_IUSE=""
 
 inherit java-pkg-2 java-ant-2
@@ -10,29 +14,25 @@ inherit java-pkg-2 java-ant-2
 DESCRIPTION="GlueGen is a tool which automatically generates the Java and JNI
 code necessary to call C libraries"
 HOMEPAGE="https://gluegen.dev.java.net"
-SRC_URI="http://www.counties.co.nz/alistair/distfiles/${P}.tar.gz"
+SRC_URI="http://dev.gentoo.org/~ali_bush/distfiles/${P}.tar.bz2"
 
 LICENSE="BSD"
 SLOT="0"
 KEYWORDS="~amd64"
 
-COMMON_DEP="dev-java/ant-core
-	dev-java/antlr"
+RDEPEND=">=virtual/jre-1.4"
 
-RDEPEND=">=virtual/jre-1.4
-	${COMMON_DEP}
-	"
 DEPEND=">=virtual/jdk-1.4
-	app-arch/unzip
-	${COMMON_DEP}"
+	dev-java/ant-core:0
+	dev-java/antlr:0
+	dev-java/cpptasks:0"
 IUSE=""
 
-S="${WORKDIR}/${PN}"
-
-src_unpack() {
-	unpack ${A}
-
-	java-ant_rewrite-classpath "${PN}/make/build.xml"
+java_prepare() {
+	rm make/lib/{cdc_fp,cpptasks,}.jar
+	java-pkg_jar-from --build-only --into make/lib cpptasks
+	sed -i -e 's/suncc/sunc89/g' make/${PN}-cpptasks.xml
+	java-ant_rewrite-classpath "make/build.xml"
 }
 
 src_compile() {

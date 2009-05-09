@@ -2,6 +2,14 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*gluegen-20090509 (09 May 2009)
+*gluegen-20080421 (09 May 2009)
+
+  09 May 2009; Alistair Bush <ali_bush@gentoo.org> -gluegen-20070220.ebuild,
+  +gluegen-20080421.ebuild, -gluegen-20080727.ebuild,
+  +gluegen-20090509.ebuild:
+  Version bump and cleanup.
+
   22 Jan 2009; Alistair Bush <ali_bush@gentoo.org> gluegen-20070220.ebuild,
   gluegen-20080727.ebuild:
   QA Fixes.
