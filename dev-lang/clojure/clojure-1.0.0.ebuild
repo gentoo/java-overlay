@@ -20,16 +20,15 @@ IUSE=""
 RDEPEND=">=virtual/jre-1.5"
 DEPEND=">=virtual/jdk-1.5"
 
-S="${WORKDIR}/${PN}"
+S="${WORKDIR}"
 
-src_prepare() {
-	rm -v ${PN}.jar || die
-	java-pkg-2_src_prepare
+java_prepare() {
+	rm -v ${P}.jar || die
 }
 
 src_install() {
-	java-pkg_dojar ${PN}.jar
+	java-pkg_newjar ${P}.jar
 	java-pkg_dolauncher  ${PN} --main clojure.lang.Repl
-	dodoc {readme,changes}.txt || die "dodoc failed"
+	dodoc readme.txt || die "dodoc failed"
 	use source && java-pkg_dosrc src/jvm/closure
 }
