@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*jripper-1.0 (14 May 2009)
+
+  14 May 2009; Hanno Meyer-Thurow <h.mth@web.de> +jripper-1.0.ebuild,
+  -jripper-2008.06.ebuild:
+  Bump to version 1.0.
+
   22 Jan 2009; Alistair Bush <ali_bush@gentoo.org> ChangeLog:
   Add ChangeLog for QA.
 

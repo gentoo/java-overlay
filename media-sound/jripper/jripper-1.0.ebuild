@@ -2,12 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
+
 inherit java-pkg-2
 
 IUSE="aac cddb flac gtk mp3 vorbis"
 
 DESCRIPTION="jRipper, a Java frontend to CD ripper and encoder tools"
-SRC_URI="http://dronten.googlepages.com/${P}.zip"
+SRC_URI="http://dronten.googlepages.com/${PN}.zip"
 HOMEPAGE="http://dronten.googlepages.com/jripper"
 
 LICENSE="GPL-2"
@@ -31,13 +33,9 @@ src_unpack() {
 	unpack ${A}
 	unzip -q "${WORKDIR}/${PN}.jar"
 	rm "${WORKDIR}/${PN}.jar"
-	cd "${S}"
+}
 
-	# delete testcode
-	rm -rf junit com/googlepages/dronten/jripper/test
-	# delete junit license
-	rm -rf license.junit.html
-
+src_prepare() {
 	# delete pre-built code
 	find . -type f -name '*.class' | xargs rm
 }
@@ -45,7 +43,7 @@ src_unpack() {
 src_compile() {
 	ejavac $(find com/ -name '*.java') || die "compile failed"
 	find . -type f -name '*.java' | xargs rm
-	find com | xargs jar cf ${PN}.jar
+	find com/ -type f | xargs jar cf ${PN}.jar
 }
 
 src_install() {
@@ -54,6 +52,6 @@ src_install() {
 	java-pkg_dolauncher "${PN}" \
 		--main com.googlepages.dronten.jripper.JRipper
 
-	doicon "${FILESDIR}/${PN}.png"
+	doicon "${S}/com/googlepages/dronten/jripper/resource/jRipper.icon.png"
 	domenu "${FILESDIR}/${PN}.desktop"
 }
