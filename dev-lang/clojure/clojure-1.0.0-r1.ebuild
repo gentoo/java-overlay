@@ -28,7 +28,7 @@ java_prepare() {
 
 src_install() {
 	java-pkg_newjar ${P}.jar
-	java-pkg_dolauncher  ${PN} --main clojure.lang.Repl
+	java-pkg_dolauncher  ${PN} --main clojure.main
 	dodoc readme.txt || die "dodoc failed"
 	use source && java-pkg_dosrc src/jvm/closure
 }
