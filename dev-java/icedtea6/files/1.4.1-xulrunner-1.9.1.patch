@@ -1,0 +1,93 @@
+
+# HG changeset patch
+# User Deepak Bhole <dbhole@redhat.com>
+# Date 1241557477 14400
+# Node ID 19e655aeb5fb54f20229d78bc832790ab5a5ea95
+# Parent a5006e51afe46b6e7dff089b4075ddd1a0e55923
+Add conditional compilation to accomodate changed api in xulrunner 1.9.1
+
+backported to 1.4.1
+
+--- a/IcedTeaPlugin.cc	Tue May 05 14:42:36 2009 -0400
++++ b/IcedTeaPlugin.cc	Tue May 05 17:04:37 2009 -0400
+@@ -3938,7 +3938,11 @@ IcedTeaPluginFactory::StartAppletviewer 
+     }
+   PLUGIN_DEBUG_TWO ("created output fifo:", out_pipe_name);
+ 
++#if MOZILLA_VERSION_COLLAPSED < 1090100
+   result = applet_viewer_process->Run (PR_FALSE, args, numArgs, nsnull);
++#else
++  result = applet_viewer_process->Run (PR_FALSE, args, numArgs);
++#endif
+   PLUGIN_CHECK_RETURN ("run process", result);
+ 
+   out_to_appletviewer = g_io_channel_new_file (out_pipe_name,
+--- a/Makefile.am	Tue May 05 14:42:36 2009 -0400
++++ b/Makefile.am	Tue May 05 17:04:37 2009 -0400
+@@ -1656,6 +1656,7 @@ IcedTeaPlugin.o: IcedTeaPlugin.cc
+ 	$(CXX) $(CXXFLAGS) \
+ 	  -DPACKAGE_VERSION="\"$(PACKAGE_VERSION)\"" \
+ 	  -DPLUGIN_VERSION="\"$$plugin_version\"" \
++	  -DMOZILLA_VERSION_COLLAPSED="$(MOZILLA_VERSION_COLLAPSED)" \
+ 	  $(GTK_CFLAGS) \
+ 	  $(XULRUNNER_CFLAGS) \
+ 	  -fPIC -c -o $@ $<
+--- a/configure.ac	Tue May 05 14:42:36 2009 -0400
++++ b/configure.ac	Tue May 05 17:04:37 2009 -0400
+@@ -460,6 +460,56 @@
+   fi
+ fi
+ 
++
++AC_LANG_PUSH([C++])
++OLDCPPFLAGS="$CPPFLAGS"
++CPPFLAGS="$CPPFLAGS $XULRUNNER_CFLAGS"
++
++AC_CACHE_CHECK([for xulrunner version], [xulrunner_cv_collapsed_version],
++    [AC_RUN_IFELSE(
++      [AC_LANG_PROGRAM([[
++#include <mozilla-config.h>
++#include <math.h>
++#include <string.h>
++#include <stdlib.h>
++#include <stdio.h>
++]],[[
++int version = 0;
++const char* token = NULL;
++int power=6;
++FILE *datafile;
++
++datafile = fopen ("conftest.vdata", "w");
++if (!datafile) return 1;
++
++// 32 chars is more than enough to hold version
++char* mozilla_version = (char*) malloc(32*sizeof(char));
++snprintf(mozilla_version, 32, "%s", MOZILLA_VERSION);
++
++token = strtok(mozilla_version, ".");
++while (token)
++{
++    version += atoi(token)*(pow(10, power));
++    power -=2;
++    token = strtok(NULL, ".");
++}
++
++fprintf (datafile, "%d\n", version);
++free(mozilla_version);
++if (fclose(datafile)) return 1;
++
++return EXIT_SUCCESS;
++]])],
++    [xulrunner_cv_collapsed_version="$(cat conftest.vdata)"],
++    [AC_MSG_FAILURE([cannot determine xulrunner version])])],
++  [xulrunner_cv_collapsed_version="190000"])
++
++CPPFLAGS="$OLDCPPFLAGS"
++AC_LANG_POP([C++])
++
++AC_SUBST(MOZILLA_VERSION_COLLAPSED, $xulrunner_cv_collapsed_version)
++
++
+ if test "x${ZERO_BUILD_TRUE}" = x; then
+   dnl Check for libffi headers and libraries.
+   PKG_CHECK_MODULES(LIBFFI, libffi,[LIBFFI_FOUND=yes],[LIBFFI_FOUND=no])

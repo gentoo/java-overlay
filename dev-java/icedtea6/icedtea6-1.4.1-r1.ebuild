@@ -117,6 +117,8 @@ unset_vars() {
 src_prepare() {
 	# fix broken nsplugin
 	epatch "${FILESDIR}/1.4.1-plugin.patch"
+	# compatibility with xulrunner 1.9.1
+	epatch "${FILESDIR}/1.4.1-xulrunner-1.9.1.patch"
 }
 
 src_configure() {
