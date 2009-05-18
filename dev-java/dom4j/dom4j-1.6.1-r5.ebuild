@@ -16,7 +16,7 @@ SLOT="1"
 KEYWORDS="~amd64 ~ppc ~x86"
 IUSE=""
 RDEPEND=">=virtual/jre-1.4
-	java-virtuals/jaxb-virtual:1
+	dev-java/jaxme:0
 	java-virtuals/stax-api
 	>=dev-java/msv-20050627-r2:0
 	dev-java/xpp2:0
