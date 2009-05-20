@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  20 May 2009; Vlastimil Babka <caster@gentoo.org> -batik-1.6-r4.ebuild:
+  1.6 moved to tree.
+
   20 Jan 2009; Alistair Bush <ali_bush@gentoo.org> +metadata.xml,
   batik-1.6-r4.ebuild:
   QA Fixes.
