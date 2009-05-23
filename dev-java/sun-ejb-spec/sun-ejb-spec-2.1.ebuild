@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/sun-ejb-spec/sun-ejb-spec-2.1.ebuild,v 1.2 2006/01/22 14:58:33 nichoj Exp $
 
@@ -11,7 +11,7 @@ At="${MY_P}-fr-spec-api.zip"
 DESCRIPTION="Sun's Enterprise Java Beans specification"
 HOMEPAGE="http://java.sun.com/products/ejb/"
 SRC_URI="${At}"
-DOWNLOAD_URL="http://javashoplm.sun.com/ECom/docs/Welcome.jsp?StoreId=22&PartDetailId=ejb-${PV}-fr-class-oth-JSpec&SiteId=JSC&TransactionId=noreg"
+DOWNLOAD_URL="https://cds.sun.com/is-bin/INTERSHOP.enfinity/WFS/CDS-CDS_Developer-Site/en_US/-/USD/ViewProductDetail-Start?ProductRef=ejb-2.1-fr-class-oth-JSpec@CDS-CDS_Developer"
 
 LICENSE="sun-ejb-spec-2.1"
 SLOT="0"
