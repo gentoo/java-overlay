@@ -49,7 +49,7 @@ src_unpack() {
 	cd "${S}/lib"
 	#circular deps with jaxen
 	rm -f $(echo *.jar | sed 's/jaxen[^ ]\+//')
-	java-pkg_jar-from jaxb-virtual-1
+	java-pkg_jar-from jaxme
 	java-pkg_jar-from stax-api
 	java-pkg_jar-from msv
 	java-pkg_jar-from xpp2

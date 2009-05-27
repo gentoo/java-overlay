@@ -2,6 +2,9 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/dom4j/ChangeLog,v 1.40 2007/01/10 03:11:01 caster Exp $
 
+  27 May 2009; Serkan Kaba <serkan@gentoo.org> dom4j-1.6.1-r5.ebuild:
+  Migrated jar-from call back to jaxme as well.
+
 *dom4j-1.6.1-r5 (18 May 2009)
 
   18 May 2009; Serkan Kaba <serkan@gentoo.org> -dom4j-1.6.1-r4.ebuild,
