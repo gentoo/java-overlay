@@ -116,6 +116,11 @@ src_unpack() {
 	unpack ${P}.tar.gz
 }
 
+src_prepare() {
+	# Fix CACAO build on GCC 4.4
+	epatch "${FILESDIR}/${PV}-cacao-gcc-4.4.patch"
+}
+
 unset_vars() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 }
