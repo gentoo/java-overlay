@@ -2,6 +2,12 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*jackson-0.9.4 (21 Jun 2009)
+
+  21 Jun 2009; Robin H. Johnson <robbat2@gentoo.org> +jackson-0.9.4.ebuild,
+  +files/jackson-0.9.4-minimal.patch:
+  Add SLOT=0 of older jackson for jersey.
+
   21 Jun 2009; Robin H. Johnson <robbat2@gentoo.org> jackson-1.0.1.ebuild:
   Move slot to 1 so we can add jackson-0.9.4 for jersey as well.
 
