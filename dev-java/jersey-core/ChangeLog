@@ -10,6 +10,10 @@
 
   21 Jun 2009; Robin H. Johnson <robbat2@gentoo.org>
   jersey-core-1.1.0.ebuild:
+  Cleanup tarball and ebuild dependancies.
+
+  21 Jun 2009; Robin H. Johnson <robbat2@gentoo.org>
+  jersey-core-1.1.0.ebuild:
   Fix whitespace.
 
 *jersey-core-1.1.0 (21 Jun 2009)
