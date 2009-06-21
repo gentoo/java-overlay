@@ -25,8 +25,8 @@ KEYWORDS="~amd64 ~ppc ~x86"
 IUSE=""
 
 COMMON_DEPEND=">=dev-java/jsr311-api-1.1
-			  java-virtuals/jaxb-api:2
-			  java-virtuals/stax-api
+			  dev-java/jaxb:2
+			  dev-java/stax
 			  dev-java/jersey-core
 			  java-virtuals/jaf"
 DEPEND=">=virtual/jdk-1.5
@@ -47,9 +47,9 @@ java_prepare() {
 		>build.xml
 
 	java-pkg_jar-from jsr311-api
-	java-pkg_jar-from jaxb-api-2
+	java-pkg_jar-from jaxb-2 jaxb-api.jar
 	java-pkg_jar-from jaf
-	java-pkg_jar-from stax-api
+	java-pkg_jar-from stax stax-api.jar
 	java-pkg_jar-from jersey-core
 }
 
