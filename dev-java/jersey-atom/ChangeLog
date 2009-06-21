@@ -3,6 +3,10 @@
 # $Header: $
 
   21 Jun 2009; Robin H. Johnson <robbat2@gentoo.org>
+  jersey-atom-1.1.0.ebuild:
+  Cleanup tarball and ebuild dependancies.
+
+  21 Jun 2009; Robin H. Johnson <robbat2@gentoo.org>
   -files/jersey-core-1.1.0-maven-ant-convert.patch:
   Remove junk
 
