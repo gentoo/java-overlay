@@ -40,22 +40,7 @@ RDEPEND=">=virtual/jre-1.5
 
 S="${WORKDIR}/${PROJ_P}/${PROJ_PN}/${PN}"
 
-# Helper to generate the tarball :-)
-# ( PN=jersey ; PV=1.1.0 ; . ${PN}*-${PV}.ebuild  ; src_tarball )
-src_tarball() {
-	SVN_SRC_URI="${HOMEPAGE}/svn/${PROJ_PN}/tags/${PROJ_P}"
-	tarball="${PROJ_P}"
-	svn export \
-		--username guest --password '' --non-interactive \
-		${SVN_SRC_URI} ${tarball} \
-		&& \
-	tar cvjf ${SRC_FILE} ${tarball} \
-		&& \
-	echo "New tarball located at ${SRC_FILE}" \
-	echo "Now you should make ${SRC_FILE/src/src-generated}.tar.bz2 using the"
-	echo "generate-sources maven targets, and symlink back to the real src"
-	echo "directories. It's not automated yet :-("
-}
+# src_tarball is ONLY available in jersey-core
 
 java_prepare() {
 	sed \
@@ -64,12 +49,10 @@ java_prepare() {
 		<"${FILESDIR}"/generic-maven-build.xml \
 		>build.xml
 
-	java-pkg_jar-from javamail
 	java-pkg_jar-from jsr311-api
 	java-pkg_jar-from jaxb-2
 	java-pkg_jar-from jaf
 	java-pkg_jar-from stax stax-api.jar
-	java-pkg_jar-from istack-commons-runtime-1.1
 	java-pkg_jar-from jersey-core
 	java-pkg_jar-from fastinfoset
 }
