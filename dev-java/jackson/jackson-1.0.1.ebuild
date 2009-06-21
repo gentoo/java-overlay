@@ -13,7 +13,7 @@ HOMEPAGE="http://jackson.codehaus.org"
 SRC_DIR="${PN}-src-${PV}"
 SRC_URI="http://jackson.codehaus.org/${PV}/${SRC_DIR}.tar.gz"
 LICENSE="|| ( Apache-2.0 LGPL-2.1 )"
-SLOT="0"
+SLOT="1"
 KEYWORDS="~amd64 ~ppc ~x86"
 IUSE=""
 RDEPEND=">=virtual/jre-1.5
