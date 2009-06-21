@@ -15,9 +15,9 @@ HOMEPAGE="https://jersey.dev.java.net/"
 
 SRC_FILE="${PROJ_P}-src.tar.bz2"
 SRC_URI="mirror://gentoo/${SRC_FILE}
-         mirror://gentoo/${SRC_FILE/src/src-generated}
+		 mirror://gentoo/${SRC_FILE/src/src-generated}
 		 http://dev.gentoo.org/~robbat2/java/${SRC_FILE}
-         http://dev.gentoo.org/~robbat2/java/${SRC_FILE/src/src-generated}"
+		 http://dev.gentoo.org/~robbat2/java/${SRC_FILE/src/src-generated}"
 
 LICENSE="|| ( CDDL GPL-2 )"
 SLOT="0"
