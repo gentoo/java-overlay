@@ -1,0 +1,10 @@
+# ChangeLog for dev-java/jackson
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*jackson-1.0.1 (21 Jun 2009)
+
+  21 Jun 2009; Robin H. Johnson <robbat2@gentoo.org> +jackson-1.0.1.ebuild,
+  +files/jackson-1.0.1-minimal.patch, +metadata.xml:
+  Initial commit. Ebuild by Robin H. Johnson <robbat2@gentoo.org>.
+
