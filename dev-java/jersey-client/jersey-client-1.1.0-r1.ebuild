@@ -26,8 +26,8 @@ IUSE=""
 
 COMMON_DEPEND=">=dev-java/jsr311-api-1.1
 			  java-virtuals/javamail
-			  dev-java/jaxb:2
-			  dev-java/stax
+			  java-virtuals/jaxb-api:2
+			  java-virtuals/stax-api
 			  dev-java/istack-commons-runtime:1.1
 			  dev-java/jersey-core
 			  java-virtuals/jaf"
@@ -65,9 +65,9 @@ java_prepare() {
 
 	java-pkg_jar-from javamail
 	java-pkg_jar-from jsr311-api
-	java-pkg_jar-from jaxb-2 jaxb-api.jar
+	java-pkg_jar-from jaxb-api-2
 	java-pkg_jar-from jaf
-	java-pkg_jar-from stax stax-api.jar
+	java-pkg_jar-from stax-api
 	java-pkg_jar-from istack-commons-runtime-1.1
 	java-pkg_jar-from jersey-core
 }
