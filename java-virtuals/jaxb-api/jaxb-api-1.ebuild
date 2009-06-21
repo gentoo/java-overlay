@@ -11,7 +11,7 @@ HOMEPAGE="http://www.gentoo.org"
 SRC_URI=""
 
 LICENSE="GPL-2"
-SLOT="0"
+SLOT="1"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 IUSE=""
 
