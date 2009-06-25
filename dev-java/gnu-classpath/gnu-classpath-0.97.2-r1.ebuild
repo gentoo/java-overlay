@@ -2,6 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=1
+
 inherit eutils flag-o-matic multilib
 
 MY_P=${P/gnu-/}
@@ -39,7 +41,7 @@ RDEPEND="alsa? ( media-libs/alsa-lib )
 				www-client/seamonkey
 			)
 		)
-		qt4? ( >=x11-libs/qt-4.0 )
+		qt4? ( x11-libs/qt-gui:4 )
 		xml? ( >=dev-libs/libxml2-2.6.8 >=dev-libs/libxslt-1.1.11 )"
 
 DEPEND="app-arch/zip

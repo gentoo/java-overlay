@@ -49,7 +49,7 @@ RDEPEND="alsa? ( media-libs/alsa-lib )
 				www-client/seamonkey
 			)
 		)
-		qt4? ( || ( x11-libs/qt-gui:4 >=x11-libs/qt-4.0 ) )
+		qt4? ( x11-libs/qt-gui:4 )
 		xml? ( >=dev-libs/libxml2-2.6.8 >=dev-libs/libxslt-1.1.11 )
 		dev-java/eclipse-ecj:3.3
 		sys-apps/file"
