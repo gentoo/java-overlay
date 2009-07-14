@@ -91,6 +91,7 @@ src_compile() {
 		--host=${CHOST} \
 		--prefix=/usr/${PN}-${SLOT} \
 		--with-ecj-jar=$(java-pkg_getjar eclipse-ecj:3.3 ecj.jar) \
+		--disable-Werror \
 		|| die "configure failed"
 	emake || die "make failed"
 }
