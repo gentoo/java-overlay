@@ -68,6 +68,12 @@ DEPEND="${RDEPEND}
 		 dev-java/icedtea6
 		 dev-java/icedtea6-bin
 	)
+	|| (
+		dev-java/icedtea6-bin
+		dev-java/icedtea6
+		dev-java/icedtea
+		dev-java/eclipse-ecj:3.3
+	)
 	>=virtual/jdk-1.5
 	>=app-arch/unzip-5.52
 	>=dev-java/xalan-2.7.0:0
@@ -138,7 +144,7 @@ src_configure() {
 		config="${config} --with-icedtea-home=$(java-config -O)"
 	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" ]] ; then
 		# For other 1.5 JDKs e.g. GCJ, CACAO.
-		config="${config} --with-ecj-jar=$(java-pkg_getjar eclipse-ecj:3.3 ecj.jar)" \
+		config="${config} --with-ecj-jar=$(java-pkg_getjar --build-only eclipse-ecj:3.3 ecj.jar)" \
 		config="${config} --with-libgcj-jar=${vmhome}/jre/lib/rt.jar"
 		config="${config} --with-gcj-home=${vmhome}"
 	else
