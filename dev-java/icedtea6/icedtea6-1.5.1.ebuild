@@ -124,7 +124,7 @@ src_unpack() {
 
 src_prepare() {
 	# Fix CACAO build on GCC 4.4
-	epatch "${FILESDIR}/${PV}-cacao-gcc-4.4.patch"
+	epatch "${FILESDIR}/1.5-cacao-gcc-4.4.patch"
 
 	eautoreconf || die "failed to regenerate autoconf infrastructure"
 }
