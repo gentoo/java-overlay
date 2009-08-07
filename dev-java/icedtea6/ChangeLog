@@ -2,6 +2,11 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+* icedtea6-1.5.1 (07 08 2009)
+
+  07 Aug 2009; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.5.1.ebuild:
+	Security update.
+
   20 Jul 2009; Petteri Räty <betelgeuse@gentoo.org> icedtea6-1.5.ebuild:
   Make JAVA_PKG_STRICT happy by adding a DEPEND atom on either ecj or
   icedtea.
