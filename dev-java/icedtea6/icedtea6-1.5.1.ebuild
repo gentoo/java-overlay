@@ -65,8 +65,8 @@ RDEPEND=">=net-print/cups-1.2.12
 # sets some environment variables.
 DEPEND="${RDEPEND}
 	|| ( >=virtual/gnu-classpath-jdk-1.5
-		 dev-java/icedtea6
 		 dev-java/icedtea6-bin
+		 dev-java/icedtea6
 	)
 	|| (
 		dev-java/icedtea6-bin
