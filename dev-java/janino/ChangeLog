@@ -1,0 +1,10 @@
+# ChangeLog for dev-java/janino
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*janino-2.5.15 (15 Aug 2009)
+
+  15 Aug 2009; Alistair Bush <ali_bush@gentoo.org> +janino-2.5.15.ebuild,
+  +metadata.xml:
+  Add janino.
+
