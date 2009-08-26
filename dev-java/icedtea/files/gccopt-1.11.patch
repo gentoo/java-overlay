@@ -1,0 +1,26 @@
+diff -Nru icedtea-1.11.orig/Makefile.am icedtea-1.11/Makefile.am
+--- icedtea-1.11.orig/Makefile.am	2009-08-06 11:23:34.000000000 +0100
++++ icedtea-1.11/Makefile.am	2009-08-26 02:26:50.000000000 +0100
+@@ -2070,6 +2070,7 @@
+ 	patches/icedtea-xml-encodinginfo.patch \
+ 	patches/icedtea-cc-interp-backedge.patch \
+ 	patches/icedtea-netx.patch \
++	patches/hotspot/$(HSBUILD)/icedtea-gcc-opt.patch \
+ 	$(DISTRIBUTION_PATCHES)
+ 
+ if WITH_RHINO
+diff -Nru icedtea-1.11.orig/patches/hotspot/default/icedtea-gcc-opt.patch icedtea-1.11/patches/hotspot/default/icedtea-gcc-opt.patch
+--- icedtea-1.11.orig/patches/hotspot/default/icedtea-gcc-opt.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea-1.11/patches/hotspot/default/icedtea-gcc-opt.patch	2009-08-26 02:30:46.000000000 +0100
+@@ -0,0 +1,11 @@
++--- openjdk.orig/hotspot/src/share/vm/adlc/archDesc.cpp	2009-08-26 00:19:16.000000000 +0100
+++++ openjdk/hotspot/src/share/vm/adlc/archDesc.cpp	2009-08-24 22:41:17.000000000 +0100
++@@ -1031,7 +1031,7 @@
++ //---------------------------addSUNcopyright-------------------------------
++ // output SUN copyright info
++ void ArchDesc::addSunCopyright(char* legal, int size, FILE *fp) {
++-  fwrite(legal, size, 1, fp);
+++  size_t count = fwrite(legal, size, 1, fp);
++   fprintf(fp,"\n");
++   fprintf(fp,"// Machine Generated File.  Do Not Edit!\n");
++   fprintf(fp,"\n");
