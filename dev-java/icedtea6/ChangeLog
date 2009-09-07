@@ -2,6 +2,16 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+* icedtea6-1.5.2 (04 09 2009)
+
+  04 Sep 2009; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.5.2.ebuild:
+	Bug fix update:
+	- Timezone fix: http://icedtea.classpath.org/bugzilla/show_bug.cgi?id=377
+	- Stackoverflow error fix: http://icedtea.classpath.org/bugzilla/show_bug.cgi?id=381
+	- Backport regression (NPE) fix for AccessControlContext fix:
+	  http://icedtea.classpath.org/bugzilla/show_bug.cgi?id=364
+	- Bump to hs14b16
+
   12 Aug 2009; Petteri Räty <betelgeuse@gentoo.org> icedtea6-1.5.1.ebuild:
   Prefer icedtea6-bin over icedtea6 to avoid circular deps.
 
