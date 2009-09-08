@@ -15,7 +15,7 @@ JAXWS_TARBALL="c37936a72332.tar.gz"
 CORBA_TARBALL="1741ea5cb854.tar.gz"
 JDK_TARBALL="51fcc41d8b24.tar.gz"
 HOTSPOT_TARBALL="945fcffdbcab.tar.gz"
-CACAO_TARBALL="cacao-0.99.4.tar.gz"
+CACAO_TARBALL="cacao-0.99.4.tar.bz2"
 SRC_URI="http://icedtea.classpath.org/download/source/${P}.tar.gz
 		 http://hg.openjdk.java.net/icedtea/jdk7/archive/${OPENJDK_TARBALL}
 		 http://hg.openjdk.java.net/icedtea/jdk7/corba/archive/${CORBA_TARBALL}
