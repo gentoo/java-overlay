@@ -2,6 +2,34 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+* icedtea6-1.6.1 (21 09 2009)
+
+  21 Sep 2009; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.6.1.ebuild:
+	New major release (1.6):
+	- Added java method tracing using systemtap version 0.9.9+.
+	- Security fixes for:
+	CVE-2009-2670 - OpenJDK Untrusted applet System properties access
+	CVE-2009-2671 CVE-2009-2672 - OpenJDK Proxy mechanism information leaks
+	CVE-2009-2673 - OpenJDK proxy mechanism allows non-authorized socket connections
+	CVE-2009-2674 - Java Web Start Buffer JPEG processing integer overflow
+	CVE-2009-2675 - Java Web Start Buffer unpack200 processing integer overflow
+	CVE-2009-2625 - OpenJDK XML parsing Denial-Of-Service
+	CVE-2009-2475 - OpenJDK information leaks in mutable variables
+	CVE-2009-2476 - OpenJDK OpenType checks can be bypassed
+	CVE-2009-2689 - OpenJDK JDK13Services grants unnecessary privileges
+	CVE-2009-2690 - OpenJDK private variable information disclosure
+	- FAST interpreter for ARM
+	- Timezone fix: http://icedtea.classpath.org/bugzilla/show_bug.cgi?id=377
+	- Stackoverflow error fix: 
+	http://icedtea.classpath.org/bugzilla/show_bug.cgi?id=381
+	- Backport regression (NPE) fix for AccessControlContext fix
+	- Bump to hs14b16
+	- The plugin has been updated to improve stability and cookie support.
+	Support for certificates with mismatched CNs has been added as well.
+	Bug fix update (1.6.1):
+	- Fix no-plugin build
+	- JAR performance improvement (http://hg.openjdk.java.net/jdk6/jdk6/jdk/rev/b35f1e5075a4)
+	
 * icedtea6-1.5.2 (04 09 2009)
 
   04 Sep 2009; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.5.2.ebuild:
