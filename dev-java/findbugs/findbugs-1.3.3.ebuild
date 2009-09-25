@@ -2,8 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
 WANT_ANT_TASKS="ant-nodeps"
 JAVA_PKG_IUSE="doc source test"
+
 inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="Find Bugs in Java Programs"
@@ -15,12 +17,12 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-CDEPEND="dev-java/ant-core
-	dev-java/apple-java-extensions-bin
-	>=dev-java/asm-3.1
-	~dev-java/dom4j-1.4
-	dev-java/findbugs-bcel
-	dev-java/jsr305
+CDEPEND="dev-java/ant-core:0
+	dev-java/apple-java-extensions-bin:0
+	>=dev-java/asm-3.1:3
+	dev-java/dom4j:1.4
+	dev-java/findbugs-bcel:0
+	dev-java/jsr305:0
 	test? (
 		dev-java/ant-junit
 		=dev-java/junit-3.8*
@@ -31,6 +33,7 @@ DEPEND="=virtual/jdk-1.5*
 	app-arch/unzip
 	${CDEPEND}"
 
+JAVA_ANT_REWRITE_CLASSPATH="true"
 EANT_DOC_TARGET="apiJavadoc"
 EANT_BUILD_TARGET="jars anttask"
 EANT_GENTOO_CLASSPATH="ant-core"
@@ -42,10 +45,7 @@ pkg_setup() {
 	java-pkg-2_pkg_setup
 }
 
-src_unpack(){
-	unpack ${A}
-
-	cd "${S}"
+java_prepare() {
 	find -name "*.jar" | xargs rm -v
 	cd "${S}"/lib
 	java-pkg_jarfrom findbugs-bcel findbugs-bcel.jar bcel.jar
@@ -59,9 +59,6 @@ src_unpack(){
 	java-pkg_jarfrom dom4j-1.4 dom4j-full.jar dom4j-full.jar
 	java-pkg_jarfrom jsr305
 	use test && java-pkg_jarfrom junit
-
-	cd "${S}"
-	java-ant_rewrite-classpath
 }
 
 src_test() {
