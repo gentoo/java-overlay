@@ -1,0 +1,25 @@
+# Patch by Vlastimil Babka <caster@gentoo.orG>
+# 
+# Makes it work with jpeg-7: https://bugs.gentoo.org/show_bug.cgi?id=283248
+# Note that we cannot put just 'libjpeg.so' there because library
+# of such name is already part of the JDK (and does something else).
+--- patches/icedtea-libraries.patch	2009-10-11 21:45:48.000000000 +0200
++++ patches/icedtea-libraries.patch	2009-10-11 21:45:56.000000000 +0200
+@@ -25052,7 +25052,7 @@
+ +METHODDEF(void)
+ +initIDs()
+ +{
+-+    void *handle = dlopen("libjpeg.so.62", RTLD_LAZY | RTLD_GLOBAL);
+++    void *handle = dlopen("libjpeg.so.7", RTLD_LAZY | RTLD_GLOBAL);
+ +    
+ +    jpegstderror = (fn_jpegstderror)dlsym(handle, "jpeg_std_error");
+ +    if (jpegstderror == NULL) {
+@@ -25343,7 +25343,7 @@
+  Java_sun_awt_image_JPEGImageDecoder_initIDs(JNIEnv *env, jclass cls,
+                                              jclass InputStreamClass)
+  {
+-+    void *handle = dlopen("libjpeg.so.62", RTLD_LAZY | RTLD_GLOBAL);
+++    void *handle = dlopen("libjpeg.so.7", RTLD_LAZY | RTLD_GLOBAL);
+ + 
+ +    jpegstderror = (fn_jpegstderror)dlsym(handle, "jpeg_std_error");
+ +    if (jpegstderror == NULL) {
