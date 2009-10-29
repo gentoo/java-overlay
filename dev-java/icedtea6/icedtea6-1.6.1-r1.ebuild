@@ -63,6 +63,7 @@ RDEPEND=">=net-print/cups-1.2.12
 # properly respects environment variables, if the build
 # sets some environment variables.
 #   ca-certificates, perl and openssl are used for the cacerts keystore generation
+#   xext headers have two variants depending on version - bug #288855
 DEPEND="${RDEPEND}
 	|| ( >=virtual/gnu-classpath-jdk-1.5
 		 dev-java/icedtea6-bin
@@ -82,6 +83,14 @@ DEPEND="${RDEPEND}
 	app-misc/ca-certificates
 	dev-lang/perl
 	dev-libs/openssl
+	|| (
+		(
+			>=x11-libs/libXext-1.1.1
+			>=x11-proto/xextproto-7.1.1
+			x11-proto/xproto
+		)
+		<x11-libs/libXext-1.1.1
+	)
 	"
 
 pkg_setup() {
@@ -130,6 +139,14 @@ unset_vars() {
 src_prepare() {
 	# bug #283248
 	epatch "${FILESDIR}/1.6.1-jpeg7.patch"
+
+	# bug #288855 - ABI is the same, just definitions moved between headers
+	# conditional patching should be thus safe
+	if has_version ">=x11-libs/libXext-1.1.1"; then
+		epatch "${FILESDIR}/1.6.1-shmproto.patch"
+
+		eautoreconf || die "eautoreconf failed"
+	fi
 }
 
 src_configure() {

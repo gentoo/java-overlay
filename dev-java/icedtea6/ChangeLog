@@ -2,6 +2,10 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  29 Oct 2009; Vlastimil Babka <caster@gentoo.org>
+  +files/1.6.1-shmproto.patch, icedtea6-1.6.1-r1.ebuild:
+  Fix building with new libXext - bug #288855.
+
   11 Oct 2009; Vlastimil Babka <caster@gentoo.org> +files/1.6.1-jpeg7.patch,
   +icedtea6-1.6.1-r1.ebuild, +files/generate-cacerts.pl:
   Revbump that fixes issues with jpeg-7 (bug #283248), generates cacerts file
