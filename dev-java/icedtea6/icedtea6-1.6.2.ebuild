@@ -1,7 +1,7 @@
 # Copyright 1999-2009 Gentoo Foundation
-# Build written by Andrew John Hughes
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+# Build written by Andrew John Hughes
 
 EAPI="2"
 
@@ -160,7 +160,6 @@ src_configure() {
 	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" ]] ; then
 		# For other 1.5 JDKs e.g. GCJ, CACAO.
 		config="${config} --with-ecj-jar=$(java-pkg_getjar --build-only eclipse-ecj:3.3 ecj.jar)" \
-		config="${config} --with-libgcj-jar=${vmhome}/jre/lib/rt.jar"
 		config="${config} --with-gcj-home=${vmhome}"
 	else
 		eerror "IcedTea must be built with either a JDK based on GNU Classpath or an existing build of IcedTea."

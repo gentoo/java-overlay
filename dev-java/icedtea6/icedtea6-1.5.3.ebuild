@@ -1,25 +1,29 @@
 # Copyright 1999-2009 Gentoo Foundation
-# Build written by Andrew John Hughes
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+# Build written by Andrew John Hughes
 
 EAPI="2"
 
 inherit autotools pax-utils java-pkg-2 java-vm-2
 
 DESCRIPTION="A harness to build the OpenJDK using Free Software build tools and dependencies"
-OPENJDK_BUILD="14"
-OPENJDK_DATE="25_nov_2008"
+OPENJDK_BUILD="16"
+OPENJDK_DATE="24_apr_2009"
 OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.gz"
-HOTSPOT_TARBALL="f9d938ede196.tar.gz"
-CACAO_TARBALL="cacao-0.99.3.tar.gz"
+HOTSPOT_TARBALL="09f7962b8b44.tar.gz"
+CACAO_TARBALL="cacao-0.99.4.tar.gz"
 SRC_URI="http://icedtea.classpath.org/download/source/${P}.tar.gz
 		 http://download.java.net/openjdk/jdk6/promoted/b${OPENJDK_BUILD}/${OPENJDK_TARBALL}
-		 http://hg.openjdk.java.net/jdk7/hotspot/hotspot/archive/${HOTSPOT_TARBALL}
-		 cacao? ( http://www.complang.tuwien.ac.at/cacaojvm/download/cacao-0.99.3/${CACAO_TARBALL} )"
+		 http://hg.openjdk.java.net/hsx/hsx14/master/archive/${HOTSPOT_TARBALL}
+		 cacao? ( http://www.complang.tuwien.ac.at/cacaojvm/download/cacao-0.99.4/${CACAO_TARBALL} )"
 HOMEPAGE="http://icedtea.classpath.org"
 
-IUSE="cacao debug doc examples javascript nsplugin pulseaudio shark xrender zero"
+# Missing options:
+# shark - still experimental, requires llvm which is not yet packaged
+# visualvm - requries netbeans which would cause major bootstrap issues
+IUSE="cacao debug doc examples javascript nio2 nsplugin pulseaudio systemtap xrender zero"
+
 # JTReg doesn't pass at present
 RESTRICT="test"
 
@@ -48,7 +52,8 @@ RDEPEND=">=net-print/cups-1.2.12
 	 pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
 	 javascript? ( dev-java/rhino:1.6 )
 	 zero? ( sys-devel/gcc[libffi] )
-	 xrender? ( >=x11-libs/libXrender-0.9.4 )"
+	 xrender? ( >=x11-libs/libXrender-0.9.4 )
+	 systemtap? ( >=dev-util/systemtap-0.9.5 ) "
 
 # Additional dependencies for building:
 #   unzip: extract OpenJDK tarball
@@ -60,8 +65,14 @@ RDEPEND=">=net-print/cups-1.2.12
 # sets some environment variables.
 DEPEND="${RDEPEND}
 	|| ( >=virtual/gnu-classpath-jdk-1.5
-		 dev-java/icedtea6
 		 dev-java/icedtea6-bin
+		 dev-java/icedtea6
+	)
+	|| (
+		dev-java/icedtea6-bin
+		dev-java/icedtea6
+		dev-java/icedtea
+		dev-java/eclipse-ecj:3.3
 	)
 	>=virtual/jdk-1.5
 	>=app-arch/unzip-5.52
@@ -73,17 +84,18 @@ DEPEND="${RDEPEND}
 	)"
 
 pkg_setup() {
-	if use shark ; then
-	  if ( ! use x86 && ! use sparc && ! use ppc ) ; then
-		eerror "The Shark JIT has known issues on 64-bit platforms.  Please rebuild"
-		errror "without the shark USE flag turned on."
-		die "Rebuild without the shark USE flag on."
-	  fi
-	  if ( ! use zero ) ; then
-		eerror "The use of the Shark JIT is only applicable when used with the zero assembler port.";
-		die "Rebuild without the shark USE flag on or with the zero USE flag turned on."
-	  fi
-	fi
+# Shark support disabled for now - still experimental and needs sys-devel/llvm
+#	if use shark ; then
+#	  if ( ! use x86 && ! use sparc && ! use ppc ) ; then
+#		eerror "The Shark JIT has known issues on 64-bit platforms.  Please rebuild"
+#		errror "without the shark USE flag turned on."
+#		die "Rebuild without the shark USE flag on."
+#	  fi
+#	  if ( ! use zero ) ; then
+#		eerror "The use of the Shark JIT is only applicable when used with the zero assembler port.";
+#		die "Rebuild without the shark USE flag on or with the zero USE flag turned on."
+#	  fi
+#	fi
 
 	# quite a hack since java-config does not provide a way for a package
 	# to limit supported VM's for building and their preferred order
@@ -110,15 +122,15 @@ src_unpack() {
 	unpack ${P}.tar.gz
 }
 
-unset_vars() {
-	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
+src_prepare() {
+	# Fix CACAO build on GCC 4.4
+	epatch "${FILESDIR}/1.5-cacao-gcc-4.4.patch"
+
+	eautoreconf || die "failed to regenerate autoconf infrastructure"
 }
 
-src_prepare() {
-	# fix broken nsplugin
-	epatch "${FILESDIR}/1.4.1-plugin.patch"
-	# compatibility with xulrunner 1.9.1
-	epatch "${FILESDIR}/1.4.1-xulrunner-1.9.1.patch"
+unset_vars() {
+	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 }
 
 src_configure() {
@@ -132,8 +144,7 @@ src_configure() {
 		config="${config} --with-icedtea-home=$(java-config -O)"
 	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" ]] ; then
 		# For other 1.5 JDKs e.g. GCJ, CACAO.
-		config="${config} --with-ecj-jar=$(java-pkg_getjar eclipse-ecj:3.3 ecj.jar)" \
-		config="${config} --with-libgcj-jar=${vmhome}/jre/lib/rt.jar"
+		config="${config} --with-ecj-jar=$(java-pkg_getjar --build-only eclipse-ecj:3.3 ecj.jar)" \
 		config="${config} --with-gcj-home=${vmhome}"
 	else
 		eerror "IcedTea must be built with either a JDK based on GNU Classpath or an existing build of IcedTea."
@@ -167,14 +178,16 @@ src_configure() {
 		--with-javac="${vmhome}/bin/javac" \
 		--with-javah="${vmhome}/bin/javah" \
 		--with-pkgversion="Gentoo" \
+		--with-abs-install-dir=/usr/$(get_libdir)/${PN} \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
-		$(use_enable nsplugin liveconnect) \
+		$(use_enable nsplugin plugin) \
 		$(use_with javascript rhino ${rhino_jar}) \
 		$(use_enable zero) \
-		$(use_enable shark) \
 		$(use_enable pulseaudio pulse-java) \
 		$(use_enable xrender) \
+		$(use_enable systemtap) \
+		$(use_enable nio2) \
 		|| die "configure failed"
 }
 
@@ -198,7 +211,7 @@ src_install() {
 	local arch=${ARCH}
 	use x86 && arch=i586
 
-	cd "${S}/openjdk/control/build/linux-${arch}/j2sdk-image" || die
+	cd "${S}/openjdk/build/linux-${arch}/j2sdk-image" || die
 
 	if use doc ; then
 		dohtml -r ../docs/* || die "Failed to install documentation"

@@ -2,6 +2,29 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+* icedtea6-1.6.2 (09 11 2009)
+* icedtea6-1.5.3 (09 11 2009)
+
+  09 Nov 2009; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.6.2.ebuild
+	icedtea6-1.5.3.ebuild:
+	New security releases (1.5.3, 1.6.2):
+	- (CVE-2009-3728) ICC_Profile file existence detection information leak (6631533)
+	- (CVE-2009-3885) BMP parsing DoS with UNC ICC links (6632445)
+	- (CVE-2009-3881) resurrected classloaders can still have children (6636650) 
+	- (CVE-2009-3882) Numerous static security flaws in Swing (findbugs) (6657026)
+	- (CVE-2009-3883) Mutable statics in Windows PL&F (findbugs) (6657138)
+	- (CVE-2009-3880) UI logging information leakage (6664512)
+	- (CVE-2009-3879) GraphicsConfiguration information leak (6822057)
+	- (CVE-2009-3884) zoneinfo file existence information leak (6824265)
+	- (CVE-2009-2409) deprecate MD2 in SSL cert validation (Kaminsky) (6861062)
+	- (CVE-2009-3873) JPEG Image Writer quantization problem (6862968)
+	- (CVE-2009-3875) MessageDigest.isEqual introduces timing attack vulnerabilities (6863503)
+	- (CVE-2009-3876, CVE-2009-3877) OpenJDK ASN.1/DER input stream parser denial of service (6864911)
+	- (CVE-2009-3869) JRE AWT setDifflCM stack overflow (6872357)
+	- (CVE-2009-3874) ImageI/O JPEG heap overflow (6874643
+	- (CVE-2009-3871) JRE AWT setBytePixels heap overflow (6872358)
+	Drop 1.2, 1.3 and 1.4 releases and associated patches.
+	
   29 Oct 2009; Vlastimil Babka <caster@gentoo.org>
   +files/1.6.1-shmproto.patch, icedtea6-1.6.1-r1.ebuild:
   Fix building with new libXext - bug #288855.
