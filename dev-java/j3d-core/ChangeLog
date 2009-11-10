@@ -1,6 +1,10 @@
 # ChangeLog for dev-java/j3d-core
-# Copyright 1999-2008 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  10 Nov 2009; Vlastimil Babka <caster@gentoo.org> -j3d-core-1.5.0.ebuild,
+  -j3d-core-1.5.0-r1.ebuild, j3d-core-1.5.1.ebuild:
+  Switch to ecj-3.5, so that 3.2 can be removed.
 
   15 Nov 2008; Vlastimil Babka <caster@gentoo.org> j3d-core-1.5.1.ebuild:
   Add ~x86.
