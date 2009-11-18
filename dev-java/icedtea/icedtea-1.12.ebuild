@@ -8,14 +8,17 @@ EAPI="2"
 inherit autotools pax-utils java-pkg-2 java-vm-2 flag-o-matic
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
-OPENJDK_TARBALL="e7eeeda332ec.tar.gz"
-LANGTOOLS_TARBALL="634f519d6f9a.tar.gz"
-JAXP_TARBALL="b3d2bf4c255d.tar.gz"
-JAXWS_TARBALL="c37936a72332.tar.gz"
-CORBA_TARBALL="1741ea5cb854.tar.gz"
-JDK_TARBALL="51fcc41d8b24.tar.gz"
-HOTSPOT_TARBALL="945fcffdbcab.tar.gz"
+OPENJDK_TARBALL="f0bfd9bd1a0e.tar.gz"
+LANGTOOLS_TARBALL="83367f01297b.tar.gz"
+JAXP_TARBALL="fb68fd18eb9f.tar.gz"
+JAXWS_TARBALL="0dc08d528c99.tar.gz"
+CORBA_TARBALL="d728db3889da.tar.gz"
+JDK_TARBALL="fb2ee5e96b17.tar.gz"
+HOTSPOT_TARBALL="b4ab978ce52c.tar.gz"
 CACAO_TARBALL="cacao-0.99.4.tar.bz2"
+JAXP_DROP="jdk7-jaxp-m5.zip"
+JAXWS_DROP="jdk7-jaxws-2009_09_28.zip"
+JAF_DROP="jdk7-jaf-2009_08_28.zip"
 SRC_URI="http://icedtea.classpath.org/download/source/${P}.tar.gz
 		 http://hg.openjdk.java.net/icedtea/jdk7/archive/${OPENJDK_TARBALL}
 		 http://hg.openjdk.java.net/icedtea/jdk7/corba/archive/${CORBA_TARBALL}
@@ -24,6 +27,9 @@ SRC_URI="http://icedtea.classpath.org/download/source/${P}.tar.gz
 		 http://hg.openjdk.java.net/icedtea/jdk7/jdk/archive/${JDK_TARBALL}
 		 http://hg.openjdk.java.net/icedtea/jdk7/hotspot/archive/${HOTSPOT_TARBALL}
 		 http://hg.openjdk.java.net/icedtea/jdk7/langtools/archive/${LANGTOOLS_TARBALL}
+		 https://jaxp.dev.java.net/files/documents/913/144160/${JAXP_DROP}
+		 http://kenai.com/projects/jdk7-drops/downloads/download/${JAXWS_DROP}
+		 http://kenai.com/projects/jdk7-drops/downloads/download/${JAF_DROP}
 		 cacao? ( http://www.complang.tuwien.ac.at/cacaojvm/download/cacao-0.99.4/${CACAO_TARBALL} )"
 HOMEPAGE="http://icedtea.classpath.org"
 
@@ -83,7 +89,8 @@ DEPEND="${RDEPEND}
 	|| (
 	  =dev-java/ant-core-1.7.0-r3
 	  >=dev-java/ant-core-1.7.1-r2
-	)"
+	)
+	>=dev-java/ant-nodeps-1.7.0"
 
 pkg_setup() {
 # Shark support disabled for now - still experimental and needs sys-devel/llvm
@@ -128,12 +135,6 @@ unset_vars() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 }
 
-src_prepare() {
-	# Fix build issue with optimisation and GCC >= 4.3
-	epatch "${FILESDIR}/gccopt-${PV}.patch"
-	eautoreconf || die "failed to regenerate autoconf infrastructure"
-}
-
 src_configure() {
 	local config procs rhino_jar
 	local vm=$(java-pkg_get-current-vm)
@@ -173,6 +174,9 @@ src_configure() {
 		--with-jdk-src-zip="${DISTDIR}/${JDK_TARBALL}" \
 		--with-hotspot-src-zip="${DISTDIR}/${HOTSPOT_TARBALL}" \
 		--with-langtools-src-zip="${DISTDIR}/${LANGTOOLS_TARBALL}" \
+		--with-jaxp-drop-zip="${DISTDIR}/${JAXP_DROP}" \
+		--with-jaxws-drop-zip="${DISTDIR}/${JAXWS_DROP}" \
+		--with-jaf-drop-zip="${DISTDIR}/${JAF_DROP}" \
 		--with-cacao-src-zip="${DISTDIR}/${CACAO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-pkgversion="Gentoo" \
@@ -192,8 +196,6 @@ src_compile() {
 	# Newer versions of Gentoo's ant add
 	# an environment variable so it works properly...
 	export ANT_RESPECT_JAVA_HOME=TRUE
-	# Also make sure we don't bring in additional tasks
-	export ANT_TASKS=none
 
 	# Paludis does not respect unset from src_configure
 	unset_vars

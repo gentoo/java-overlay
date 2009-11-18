@@ -2,15 +2,20 @@
 # Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
-  08 Sep 2009; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea-1.11.ebuild:
+* icedtea-1.12 (17 11 2009)
+
+26 Aug 2009; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea-1.12.ebuild:
+	Bump.
+	
+08 Sep 2009; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea-1.11.ebuild:
 	CACAO should be a tar.bz2 not a tar.gz
 	
 * icedtea-1.11 (26 08 2009)
 
-  26 Aug 2009; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea-1.11.ebuild:
+26 Aug 2009; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea-1.11.ebuild:
 	Bump.  Thanks to Ruediger Gad for reporting the GCC warning failure.
 
 * icedtea-1.10 (02 06 2009)
 
-  02 Jun 2009; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea-1.10.ebuild:
+02 Jun 2009; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea-1.10.ebuild:
 	Bump.
