@@ -131,6 +131,16 @@ src_unpack() {
 	unpack ${P}.tar.gz
 }
 
+src_prepare() {
+	# bug #288855 - ABI is the same, just definitions moved between headers
+	# conditional patching should be thus safe
+	if has_version ">=x11-libs/libXext-1.1.1"; then
+		epatch "${FILESDIR}/1.12-shmproto.patch"
+
+		eautoreconf || die "eautoreconf failed"
+	fi
+}
+
 unset_vars() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 }
