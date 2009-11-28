@@ -1,0 +1,8 @@
+# ChangeLog for dev-java/jalopy
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*jalopy-1.5_rc3 (28 Nov 2009)
+
+  28 Nov 2009; James Le Cuirot <chewi@aura-online.co.uk> +jalopy-1.5_rc3.ebuild
+  New package.
