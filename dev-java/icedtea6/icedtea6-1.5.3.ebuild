@@ -71,7 +71,6 @@ DEPEND="${RDEPEND}
 	|| (
 		dev-java/icedtea6-bin
 		dev-java/icedtea6
-		dev-java/icedtea
 		dev-java/eclipse-ecj:3.3
 	)
 	>=virtual/jdk-1.5
@@ -103,8 +102,6 @@ pkg_setup() {
 		JAVA_PKG_FORCE_VM="icedtea6"
 	elif has_version dev-java/icedtea6-bin; then
 		JAVA_PKG_FORCE_VM="icedtea6-bin"
-	elif has_version dev-java/icedtea; then
-		JAVA_PKG_FORCE_VM="icedtea"
 	elif has_version dev-java/gcj-jdk; then
 		JAVA_PKG_FORCE_VM="gcj-jdk"
 	elif has_version dev-java/cacao; then
@@ -138,7 +135,8 @@ src_configure() {
 	local vm=$(java-pkg_get-current-vm)
 	local vmhome="/usr/lib/jvm/${vm}"
 
-	if [[ "${vm}" == "icedtea6" || "${vm}" == "icedtea" ]] || [[ "${vm}" == "icedtea6-bin" ]] ; then
+	# IcedTea6 can't be built using IcedTea7; its class files are too new
+	if [[ "${vm}" == "icedtea6" ]] || [[ "${vm}" == "icedtea6-bin" ]] ; then
 		# If we are upgrading icedtea, then we don't need to bootstrap.
 		config="${config} --with-icedtea"
 		config="${config} --with-icedtea-home=$(java-config -O)"
@@ -147,7 +145,7 @@ src_configure() {
 		config="${config} --with-ecj-jar=$(java-pkg_getjar --build-only eclipse-ecj:3.3 ecj.jar)" \
 		config="${config} --with-gcj-home=${vmhome}"
 	else
-		eerror "IcedTea must be built with either a JDK based on GNU Classpath or an existing build of IcedTea."
+		eerror "IcedTea6 must be built with either a JDK based on GNU Classpath or an existing build of IcedTea6."
 		die "Install a GNU Classpath JDK (gcj-jdk, cacao)"
 	fi
 

@@ -81,6 +81,7 @@ DEPEND="${RDEPEND}
 	|| ( >=virtual/gnu-classpath-jdk-1.5
 		 dev-java/icedtea6
 		 dev-java/icedtea6-bin
+		 dev-java/icedtea
 	)
 	>=virtual/jdk-1.5
 	>=app-arch/unzip-5.52
