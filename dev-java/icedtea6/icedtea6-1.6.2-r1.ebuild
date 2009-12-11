@@ -136,6 +136,7 @@ unset_vars() {
 src_prepare() {
 	# bug #283248
 	epatch "${FILESDIR}/1.6.1-jpeg7.patch"
+	epatch "${FILESDIR}/splitdebug.patch"
 
 	# bug #288855 - ABI is the same, just definitions moved between headers
 	# conditional patching should be thus safe
