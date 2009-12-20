@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2009 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -20,7 +20,6 @@ KEYWORDS="~amd64"
 
 IUSE=""
 
-
 RDEPEND=">=virtual/jre-1.5"
 DEPEND=">=virtual/jdk-1.5
 		app-arch/unzip"
@@ -30,7 +29,7 @@ S="${WORKDIR}"
 src_compile() {
 	mkdir -p build
 	ejavac -d build $(find net -name '*.java')
-	jar -cf "${PN}.jar" build/*
+	jar -cf "${PN}.jar" -C build net
 }
 src_install() {
 	java-pkg_dojar "${PN}.jar"
