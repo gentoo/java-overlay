@@ -5,7 +5,7 @@
 MY_PV="${PV//./-}"
 
 JAVA_PKG_IUSE="source"
-inherit base java-pkg-2
+inherit base eutils java-pkg-2
 
 DESCRIPTION="MusicXML player that can output MIDI files"
 HOMEPAGE="http://www.xenoage.com/xenoplay.html"
@@ -35,6 +35,7 @@ src_install() {
 	java-pkg_dojar "${PN}.jar"
 	java-pkg_dojar skin.jar
 	java-pkg_dolauncher "${PN}" --main com.xenoage.player.PlayerFrame --pwd "${share}"
+	make_desktop_entry "${PN}" "Xenoage Player" "/usr/share/${PN}/data/images/icon.png" || die
 
 	insinto "${share}/data"
 	doins -r data/images || die
