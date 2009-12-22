@@ -1,0 +1,11 @@
+# ChangeLog for dev-java/jai-imageio
+# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*jai-imageio-1.1 (22 Dec 2009)
+
+  22 Dec 2009; James Le Cuirot <chewi@aura-online.co.uk>
+  +jai-imageio-1.1.ebuild:
+  New package. Needed by Audiveris, which I will add soon. Unfortunately the
+  source is only available from CVS and the codec library is closed source.
+  At least this ebuild is much nicer than the one in bug #252249. :)
