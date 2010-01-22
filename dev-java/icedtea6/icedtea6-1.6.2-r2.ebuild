@@ -42,7 +42,7 @@ RDEPEND=">=net-print/cups-1.2.12
 	 >=x11-libs/libXau-1.0.3
 	 >=x11-libs/libXdmcp-1.0.2
 	 >=x11-libs/libXtst-1.0.3
-	 =media-libs/jpeg-7:0
+	 =media-libs/jpeg-8*
 	 >=media-libs/libpng-1.2
 	 >=media-libs/giflib-4.1.6
 	 >=sys-libs/zlib-1.2.3
@@ -135,7 +135,7 @@ unset_vars() {
 
 src_prepare() {
 	# bug #283248
-	epatch "${FILESDIR}/1.6.1-jpeg7.patch"
+	epatch "${FILESDIR}/1.6.2-jpeg8.patch"
 	epatch "${FILESDIR}/splitdebug.patch"
 
 	# bug #288855 - ABI is the same, just definitions moved between headers

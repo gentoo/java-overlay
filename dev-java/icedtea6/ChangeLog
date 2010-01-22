@@ -1,6 +1,10 @@
 # ChangeLog for dev-java/icedtea6
-# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  22 Jan 2010; Vlastimil Babka <caster@gentoo.org> +files/1.6.2-jpeg8.patch,
+  icedtea6-1.6.2-r1.ebuild, +icedtea6-1.6.2-r2.ebuild:
+  Revbump that builds against jpeg-8.
 
 * icedtea6-1.6.2-r1 (11 12 2009)
 * icedtea6-1.5.3-r1 (11 12 2009)
