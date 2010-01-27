@@ -8,21 +8,21 @@ EAPI="2"
 inherit autotools pax-utils java-pkg-2 java-vm-2
 
 DESCRIPTION="A harness to build the OpenJDK using Free Software build tools and dependencies"
-OPENJDK_BUILD="16"
-OPENJDK_DATE="24_apr_2009"
+OPENJDK_BUILD="17"
+OPENJDK_DATE="14_oct_2009"
 OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.gz"
-HOTSPOT_TARBALL="09f7962b8b44.tar.gz"
+HOTSPOT_TARBALL="62926c7f67a3.tar.gz"
 CACAO_TARBALL="cacao-0.99.4.tar.gz"
 SRC_URI="http://icedtea.classpath.org/download/source/${P}.tar.gz
 		 http://download.java.net/openjdk/jdk6/promoted/b${OPENJDK_BUILD}/${OPENJDK_TARBALL}
-		 http://hg.openjdk.java.net/hsx/hsx14/master/archive/${HOTSPOT_TARBALL}
+		 http://hg.openjdk.java.net/hsx/hsx16/master/archive/${HOTSPOT_TARBALL}
 		 cacao? ( http://www.complang.tuwien.ac.at/cacaojvm/download/cacao-0.99.4/${CACAO_TARBALL} )"
 HOMEPAGE="http://icedtea.classpath.org"
 
 # Missing options:
 # shark - still experimental, requires llvm which is not yet packaged
 # visualvm - requries netbeans which would cause major bootstrap issues
-IUSE="cacao debug doc examples javascript nio2 nsplugin pulseaudio systemtap xrender zero"
+IUSE="cacao debug doc examples javascript nio2 +npplugin nsplugin pulseaudio systemtap xrender zero"
 
 # JTReg doesn't pass at present
 RESTRICT="test"
@@ -42,7 +42,7 @@ RDEPEND=">=net-print/cups-1.2.12
 	 >=x11-libs/libXau-1.0.3
 	 >=x11-libs/libXdmcp-1.0.2
 	 >=x11-libs/libXtst-1.0.3
-	 >=media-libs/jpeg-6b
+	 >=media-libs/jpeg-7
 	 >=media-libs/libpng-1.2
 	 >=media-libs/giflib-4.1.6
 	 >=sys-libs/zlib-1.2.3
@@ -59,10 +59,11 @@ RDEPEND=">=net-print/cups-1.2.12
 #   unzip: extract OpenJDK tarball
 #   xalan/xerces: automatic code generation
 #   ant, ecj, jdk: required to build Java code
-# Only ant-core-1.7.0-r3 in java-overlay contains
-# a version of Ant that properly respects environment
-# variables.  1.7.1-r2 and on will work if the build
+# Only ant-core-1.7.1-r2 contains a version of Ant that
+# properly respects environment variables, if the build
 # sets some environment variables.
+#   ca-certificates, perl and openssl are used for the cacerts keystore generation
+#   xext headers have two variants depending on version - bug #288855
 DEPEND="${RDEPEND}
 	|| ( >=virtual/gnu-classpath-jdk-1.5
 		 dev-java/icedtea6-bin
@@ -77,10 +78,19 @@ DEPEND="${RDEPEND}
 	>=app-arch/unzip-5.52
 	>=dev-java/xalan-2.7.0:0
 	>=dev-java/xerces-2.9.1:2
+	>=dev-java/ant-core-1.7.1-r2
+	app-misc/ca-certificates
+	dev-lang/perl
+	dev-libs/openssl
 	|| (
-	  =dev-java/ant-core-1.7.0-r3
-	  >=dev-java/ant-core-1.7.1-r2
-	)"
+		(
+			>=x11-libs/libXext-1.1.1
+			>=x11-proto/xextproto-7.1.1
+			x11-proto/xproto
+		)
+		<x11-libs/libXext-1.1.1
+	)
+   sys-apps/lsb-release"
 
 pkg_setup() {
 # Shark support disabled for now - still experimental and needs sys-devel/llvm
@@ -95,6 +105,11 @@ pkg_setup() {
 #		die "Rebuild without the shark USE flag on or with the zero USE flag turned on."
 #	  fi
 #	fi
+
+	if ( use nsplugin && ! use npplugin && has_version ">=net-libs/xulrunner-1.9.2" ) ; then
+		eerror "The old plugin will not work with xulrunner >= 1.9.2 / Firefox >= 3.6.";
+		die "Rebuild with the npplugin USE flag enabled."
+	fi
 
 	# quite a hack since java-config does not provide a way for a package
 	# to limit supported VM's for building and their preferred order
@@ -119,14 +134,6 @@ src_unpack() {
 	unpack ${P}.tar.gz
 }
 
-src_prepare() {
-	# Fix CACAO build on GCC 4.4
-	epatch "${FILESDIR}/1.5-cacao-gcc-4.4.patch"
-	epatch "${FILESDIR}/splitdebug.patch"
-
-	eautoreconf || die "failed to regenerate autoconf infrastructure"
-}
-
 unset_vars() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 }
@@ -139,8 +146,7 @@ src_configure() {
 	# IcedTea6 can't be built using IcedTea7; its class files are too new
 	if [[ "${vm}" == "icedtea6" ]] || [[ "${vm}" == "icedtea6-bin" ]] ; then
 		# If we are upgrading icedtea, then we don't need to bootstrap.
-		config="${config} --with-icedtea"
-		config="${config} --with-icedtea-home=$(java-config -O)"
+		config="${config} --with-openjdk=$(java-config -O)"
 	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" ]] ; then
 		# For other 1.5 JDKs e.g. GCJ, CACAO.
 		config="${config} --with-ecj-jar=$(java-pkg_getjar --build-only eclipse-ecj:3.3 ecj.jar)" \
@@ -157,14 +163,18 @@ src_configure() {
 		einfo "Configuring using --with-parallel-jobs=${procs}"
 	fi
 
-	if use_cacao ; then
-		config="${config} --enable-cacao"
+	if use_zero ; then
+		config="${config} --enable-zero"
 	else
-		config="${config} --disable-cacao"
+		config="${config} --disable-zero"
 	fi
 
 	if use javascript ; then
 		rhino_jar=$(java-pkg_getjar rhino:1.6 js.jar);
+	fi
+
+	if use nsplugin && use npplugin ; then
+		config="${config} --enable-npplugin"
 	fi
 
 	unset_vars
@@ -176,13 +186,13 @@ src_configure() {
 		--with-java="${vmhome}/bin/java" \
 		--with-javac="${vmhome}/bin/javac" \
 		--with-javah="${vmhome}/bin/javah" \
-		--with-pkgversion="Gentoo" \
 		--with-abs-install-dir=/usr/$(get_libdir)/${PN} \
+		--with-hotspot-build=hs16 \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nsplugin plugin) \
 		$(use_with javascript rhino ${rhino_jar}) \
-		$(use_enable zero) \
+		$(use_enable cacao) \
 		$(use_enable pulseaudio pulse-java) \
 		$(use_enable xrender) \
 		$(use_enable systemtap) \
@@ -224,7 +234,6 @@ src_install() {
 	pax-mark m $(list-paxables "${ddest}"{,/jre}/bin/*)
 
 	dodoc ASSEMBLY_EXCEPTION THIRD_PARTY_README || die
-	dohtml README.html || die
 
 	if use examples; then
 		dodir "${dest}/share";
@@ -238,17 +247,40 @@ src_install() {
 
 	if use nsplugin; then
 		use x86 && arch=i386;
-		install_mozilla_plugin "${dest}/jre/lib/${arch}/IcedTeaPlugin.so";
+		if use npplugin; then
+		   install_mozilla_plugin "${dest}/jre/lib/${arch}/IcedTeaNPPlugin.so";
+		else
+		   install_mozilla_plugin "${dest}/jre/lib/${arch}/IcedTeaPlugin.so";
+		fi
 	fi
+
+	# We need to generate keystore - bug #273306
+	einfo "Generating cacerts file from certificates in /usr/share/ca-certificates/"
+	mkdir "${T}/certgen" && cd "${T}/certgen" || die
+	cp "${FILESDIR}/generate-cacerts.pl" . && chmod +x generate-cacerts.pl || die
+	for c in /usr/share/ca-certificates/*/*.crt; do
+		openssl x509 -text -in "${c}" >> all.crt || die
+	done
+	./generate-cacerts.pl "${ddest}/bin/keytool" all.crt || die
+	cp -vRP cacerts "${ddest}/jre/lib/security/" || die
+	chmod 644 "${ddest}/jre/lib/security/cacerts" || die
 
 	set_java_env
 }
 
-use_cacao() {
-	use cacao || ( ! use amd64 && ! use x86 && ! use sparc )
+use_zero() {
+	use zero || ( ! use amd64 && ! use x86 && ! use sparc )
 }
 
 pkg_postinst() {
 	# Set as default VM if none exists
 	java-vm-2_pkg_postinst
+
+	if use nsplugin; then
+		elog "The icedtea6 browser plugin can be enabled using eselect java-nsplugin"
+		elog "Note that the plugin works only in browsers based on xulrunner-1.9"
+		elog "such as Firefox 3 or Epiphany 2.24 and not in older versions!"
+		elog "Also note that you need to recompile icedtea6 if you upgrade"
+		elog "from xulrunner-1.9.0 to 1.9.1."
+	fi
 }

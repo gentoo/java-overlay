@@ -91,7 +91,8 @@ DEPEND="${RDEPEND}
 	  =dev-java/ant-core-1.7.0-r3
 	  >=dev-java/ant-core-1.7.1-r2
 	)
-	>=dev-java/ant-nodeps-1.7.0"
+	>=dev-java/ant-nodeps-1.7.0
+	sys-apps/lsb-release"
 
 pkg_setup() {
 # Shark support disabled for now - still experimental and needs sys-devel/llvm
@@ -190,7 +191,6 @@ src_configure() {
 		--with-jaf-drop-zip="${DISTDIR}/${JAF_DROP}" \
 		--with-cacao-src-zip="${DISTDIR}/${CACAO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
-		--with-pkgversion="Gentoo" \
 		--with-abs-install-dir=/usr/$(get_libdir)/${PN} \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
