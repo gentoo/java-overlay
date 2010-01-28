@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
@@ -122,15 +122,24 @@ pkg_setup() {
 	elif has_version dev-java/cacao; then
 		JAVA_PKG_FORCE_VM="cacao"
 	else
-		die "Unable to find a supported VM for building"
+		JAVA_PKG_FORCE_VM=""
+		# don't die just yet if merging a binpkg - bug #258423
+		DIE_IF_NOT_BINPKG=true
 	fi
 
-	einfo "Forced vm ${JAVA_PKG_FORCE_VM}"
-	java-vm-2_pkg_setup
-	java-pkg-2_pkg_setup
+	# if the previous failed, don't even run java eclasses pkg_setup
+	# as it might also die when no VM is present
+	if [[ -n ${JAVA_PKG_FORCE_VM} ]]; then
+		einfo "Forced vm ${JAVA_PKG_FORCE_VM}"
+		java-vm-2_pkg_setup
+		java-pkg-2_pkg_setup
+	fi
 }
 
 src_unpack() {
+	if [[ -n ${DIE_IF_NOT_BINPKG} ]]; then
+		die "Unable to find a supported VM for building"
+	fi
 	unpack ${P}.tar.gz
 }
 
