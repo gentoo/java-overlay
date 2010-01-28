@@ -22,7 +22,7 @@ HOMEPAGE="http://icedtea.classpath.org"
 # Missing options:
 # shark - still experimental, requires llvm which is not yet packaged
 # visualvm - requries netbeans which would cause major bootstrap issues
-IUSE="cacao debug doc examples javascript nio2 +npplugin nsplugin pulseaudio systemtap xrender zero"
+IUSE="cacao debug doc examples +hs16 javascript nio2 +npplugin nsplugin pulseaudio systemtap xrender zero"
 
 # JTReg doesn't pass at present
 RESTRICT="test"
@@ -186,6 +186,10 @@ src_configure() {
 		config="${config} --enable-npplugin"
 	fi
 
+	if use hs16 ; then
+		config="${config} --with-hotspot-build=hs16"
+	fi
+
 	unset_vars
 
 	econf ${config} \
@@ -196,7 +200,6 @@ src_configure() {
 		--with-javac="${vmhome}/bin/javac" \
 		--with-javah="${vmhome}/bin/javah" \
 		--with-abs-install-dir=/usr/$(get_libdir)/${PN} \
-		--with-hotspot-build=hs16 \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nsplugin plugin) \

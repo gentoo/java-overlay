@@ -9,6 +9,7 @@
 <longdescription>The IcedTea project provides a harness to build the source code from OpenJDK6 (http://openjdk.java.net) using Free Software build tools along with additional tools such as a browser plugin and Web Start support via NetX. </longdescription>
 <use>
   <flag name="cacao">Use the CACAO virtual machine instead of HotSpot on x86, amd64 or SPARC architectures.</flag>
+  <flag name="hs16">Use the new version of HotSpot (16).</flag>
   <flag name="nio2">Enable backport of NIO2 to OpenJDK6.</flag>
   <flag name="npplugin">Enable the new alpha-quality plugin which works with Firefox 3.6+ and Chromium.</flag>
   <flag name="shark">Enable Shark JIT support</flag>

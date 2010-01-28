@@ -2,8 +2,11 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  28 Jan 2010; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.7.ebuild
+	Add hs16 USE flag so HotSpot 16 can be turned off.
+	
   28 Jan 2010; Vlastimil Babka <caster@gentoo.org> icedtea6-1.7.ebuild:
-  Fix issue with merging binpkg as mentioned in bug #258423.
+	Fix issue with merging binpkg as mentioned in bug #258423.
 
 * icedtea6-1.7 (27 01 2010)
 
