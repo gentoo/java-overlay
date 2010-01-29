@@ -1,13 +1,23 @@
-# Copyright 1999-2009 Gentoo Foundation
-# Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+# Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
+
+# *********************************************************
+# * IF YOU CHANGE THIS EBUILD, CHANGE ICEDTEA-6.* AS WELL *
+# *********************************************************
 
 EAPI="2"
 
-inherit autotools pax-utils java-pkg-2 java-vm-2 flag-o-matic
+inherit autotools flag-o-matic java-pkg-2 java-vm-2 pax-utils
+
+LICENSE="GPL-2-with-linking-exception"
+SLOT="7"
+#KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
+ICEDTEA_VER="1.12"
+ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 OPENJDK_TARBALL="f0bfd9bd1a0e.tar.gz"
 LANGTOOLS_TARBALL="83367f01297b.tar.gz"
 JAXP_TARBALL="fb68fd18eb9f.tar.gz"
@@ -19,7 +29,7 @@ CACAO_TARBALL="cacao-0.99.4.tar.bz2"
 JAXP_DROP="jdk7-jaxp-m5.zip"
 JAXWS_DROP="jdk7-jaxws-2009_09_28.zip"
 JAF_DROP="jdk7-jaf-2009_08_28.zip"
-SRC_URI="http://icedtea.classpath.org/download/source/${P}.tar.gz
+SRC_URI="http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
 		 http://hg.openjdk.java.net/icedtea/jdk7/archive/${OPENJDK_TARBALL}
 		 http://hg.openjdk.java.net/icedtea/jdk7/corba/archive/${CORBA_TARBALL}
 		 http://hg.openjdk.java.net/icedtea/jdk7/jaxp/archive/${JAXP_TARBALL}
@@ -32,6 +42,7 @@ SRC_URI="http://icedtea.classpath.org/download/source/${P}.tar.gz
 		 http://kenai.com/projects/jdk7-drops/downloads/download/${JAF_DROP}
 		 cacao? ( http://www.complang.tuwien.ac.at/cacaojvm/download/cacao-0.99.4/${CACAO_TARBALL} )"
 HOMEPAGE="http://icedtea.classpath.org"
+S=${WORKDIR}/${ICEDTEA_PKG}
 
 # Missing options:
 # shark - still experimental, requires llvm which is not yet packaged
@@ -40,10 +51,6 @@ IUSE="cacao debug doc examples javascript nsplugin pulseaudio systemtap xrender 
 
 # JTReg doesn't pass at present
 RESTRICT="test"
-
-LICENSE="GPL-2-with-linking-exception"
-SLOT="0"
-#KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
 RDEPEND=">=net-print/cups-1.2.12
 	 >=x11-libs/libX11-1.1.3
@@ -77,6 +84,8 @@ RDEPEND=">=net-print/cups-1.2.12
 # a version of Ant that properly respects environment
 # variables.  1.7.1-r2 and on will work if the build
 # sets some environment variables.
+# ca-certificates, perl and openssl are used for the cacerts keystore generation
+# xext headers have two variants depending on version - bug #288855
 DEPEND="${RDEPEND}
 	|| ( >=virtual/gnu-classpath-jdk-1.5
 		 dev-java/icedtea6
@@ -91,6 +100,9 @@ DEPEND="${RDEPEND}
 	  =dev-java/ant-core-1.7.0-r3
 	  >=dev-java/ant-core-1.7.1-r2
 	)
+	app-misc/ca-certificates
+	dev-lang/perl
+	dev-libs/openssl
 	>=dev-java/ant-nodeps-1.7.0
 	sys-apps/lsb-release"
 
@@ -121,16 +133,30 @@ pkg_setup() {
 	elif has_version dev-java/cacao; then
 		JAVA_PKG_FORCE_VM="cacao"
 	else
-		die "Unable to find a supported VM for building"
+		JAVA_PKG_FORCE_VM=""
+		# don't die just yet if merging a binpkg - bug #258423
+		DIE_IF_NOT_BINPKG=true
 	fi
 
+	# if the previous failed, don't even run java eclasses pkg_setup
+	# as it might also die when no VM is present
+	if [[ -n ${JAVA_PKG_FORCE_VM} ]]; then
+		einfo "Forced vm ${JAVA_PKG_FORCE_VM}"
+		java-vm-2_pkg_setup
+		java-pkg-2_pkg_setup
+	fi
 	einfo "Forced vm ${JAVA_PKG_FORCE_VM}"
 	java-vm-2_pkg_setup
 	java-pkg-2_pkg_setup
+
+	VMHANDLE="icedtea${SLOT}"
 }
 
 src_unpack() {
-	unpack ${P}.tar.gz
+	if [[ -n ${DIE_IF_NOT_BINPKG} ]]; then
+		die "Unable to find a supported VM for building"
+	fi
+	unpack ${ICEDTEA_PKG}.tar.gz
 }
 
 src_prepare() {
@@ -166,10 +192,10 @@ src_configure() {
 		einfo "Configuring using --with-parallel-jobs=${procs}"
 	fi
 
-	if use_cacao ; then
-		config="${config} --enable-cacao"
+	if use_zero ; then
+		config="${config} --enable-zero"
 	else
-		config="${config} --disable-cacao"
+		config="${config} --disable-zero"
 	fi
 
 	if use javascript ; then
@@ -191,7 +217,7 @@ src_configure() {
 		--with-jaf-drop-zip="${DISTDIR}/${JAF_DROP}" \
 		--with-cacao-src-zip="${DISTDIR}/${CACAO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
-		--with-abs-install-dir=/usr/$(get_libdir)/${PN} \
+		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nsplugin plugin) \
@@ -214,7 +240,7 @@ src_compile() {
 }
 
 src_install() {
-	local dest="/usr/$(get_libdir)/${PN}"
+	local dest="/usr/$(get_libdir)/icedtea${SLOT}"
 	local ddest="${D}/${dest}"
 	dodir "${dest}" || die
 
@@ -251,14 +277,36 @@ src_install() {
 		install_mozilla_plugin "${dest}/jre/lib/${arch}/IcedTeaPlugin.so";
 	fi
 
-	set_java_env
+	# We need to generate keystore - bug #273306
+	einfo "Generating cacerts file from certificates in /usr/share/ca-certificates/"
+	mkdir "${T}/certgen" && cd "${T}/certgen" || die
+	cp "${FILESDIR}/generate-cacerts.pl" . && chmod +x generate-cacerts.pl || die
+	for c in /usr/share/ca-certificates/*/*.crt; do
+		openssl x509 -text -in "${c}" >> all.crt || die
+	done
+	./generate-cacerts.pl "${ddest}/bin/keytool" all.crt || die
+	cp -vRP cacerts "${ddest}/jre/lib/security/" || die
+	chmod 644 "${ddest}/jre/lib/security/cacerts" || die
+
+	sed -e "s/@SLOT@/${SLOT}/g" \
+		-e "s/@PV@/${ICEDTEA_VER}/g" \
+		< ${FILESDIR}/icedtea.env > ${T}/icedtea.env
+	set_java_env ${T}/icedtea.env
 }
 
-use_cacao() {
-	use cacao || ( ! use amd64 && ! use x86 && ! use sparc )
+use_zero() {
+	use zero || ( ! use amd64 && ! use x86 && ! use sparc )
 }
 
 pkg_postinst() {
 	# Set as default VM if none exists
 	java-vm-2_pkg_postinst
+
+	if use nsplugin; then
+		elog "The icedtea${SLOT} browser plugin can be enabled using eselect java-nsplugin"
+		elog "Note that the plugin works only in browsers based on xulrunner-1.9"
+		elog "such as Firefox 3 or Epiphany 2.24 and not in older versions!"
+		elog "Also note that you need to recompile icedtea${SLOT} if you upgrade"
+		elog "from xulrunner-1.9.0 to 1.9.1."
+	fi
 }
