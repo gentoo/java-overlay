@@ -1,6 +1,10 @@
 # ChangeLog for dev-java/jackson
-# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  01 Feb 2010; Robin H. Johnson <robbat2@gentoo.org> metadata.xml:
+  Jersey was a failure for me, I do not need this package anymore. Free to
+  evict or anybody take it over.
 
 *jackson-0.9.4 (21 Jun 2009)
 
