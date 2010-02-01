@@ -2,6 +2,9 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  01 Feb 2010; Vlastimil Babka <caster@gentoo.org> jdk-1.6.0-r2.ebuild:
+  Support the new icedtea:6 variant
+
   25 Jan 2010; Vlastimil Babka <caster@gentoo.org> jdk-1.5.0-r1.ebuild,
   jdk-1.5.0-r2.ebuild, jdk-1.6.0-r1.ebuild, jdk-1.6.0-r2.ebuild:
   Add JDK variants and keywords that were added to the ebuilds in main tree.
