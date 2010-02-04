@@ -1,6 +1,14 @@
 # ChangeLog for dev-java/icedtea
-# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  04 Feb 2010; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.7.ebuild,
+  icedtea-7.1.12.ebuild:
+  Depend on virtual/libffi - bug #302692. For icedtea:6, use slot deps where
+  appropriate, block on icedtea6 due to file collisions, and add more
+  information in postinst message about plugins. or icedtea:7, also use slot
+  deps, block on icedtea:0 and add missing slot variants to the VM choosing
+  logic.
 
 29 Jan 2010; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea-6.1.7.ebuild:
 	Lower jpeg requirement; 1.7 works with 6b, 7 and 8 properly.

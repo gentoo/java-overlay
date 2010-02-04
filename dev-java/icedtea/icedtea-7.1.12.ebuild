@@ -72,9 +72,10 @@ RDEPEND=">=net-print/cups-1.2.12
 	 nsplugin? ( >=net-libs/xulrunner-1.9 )
 	 pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
 	 javascript? ( dev-java/rhino:1.6 )
-	 zero? ( sys-devel/gcc[libffi] )
+	 zero? ( virtual/libffi )
 	 xrender? ( >=x11-libs/libXrender-0.9.4 )
-	 systemtap? ( >=dev-util/systemtap-0.9.5 ) "
+	 systemtap? ( >=dev-util/systemtap-1 )
+	 !dev-java/icedtea:0"
 
 # Additional dependencies for building:
 #   unzip: extract OpenJDK tarball
@@ -87,10 +88,12 @@ RDEPEND=">=net-print/cups-1.2.12
 # ca-certificates, perl and openssl are used for the cacerts keystore generation
 # xext headers have two variants depending on version - bug #288855
 DEPEND="${RDEPEND}
-	|| ( >=virtual/gnu-classpath-jdk-1.5
-		 dev-java/icedtea6
-		 dev-java/icedtea6-bin
-		 dev-java/icedtea
+	|| (
+		>=virtual/gnu-classpath-jdk-1.5
+		dev-java/icedtea6-bin
+		dev-java/icedtea:7
+		dev-java/icedtea:6
+		dev-java/icedtea6
 	)
 	>=virtual/jdk-1.5
 	>=app-arch/unzip-5.52
@@ -124,9 +127,13 @@ pkg_setup() {
 	# to limit supported VM's for building and their preferred order
 	if has_version dev-java/icedtea6; then
 		JAVA_PKG_FORCE_VM="icedtea6"
+	elif has_version dev-java/icedtea:6; then
+		JAVA_PKG_FORCE_VM="icedtea6"
 	elif has_version dev-java/icedtea6-bin; then
 		JAVA_PKG_FORCE_VM="icedtea6-bin"
-	elif has_version dev-java/icedtea; then
+	elif has_version dev-java/icedtea:7; then
+		JAVA_PKG_FORCE_VM="icedtea7"
+	elif has_version dev-java/icedtea:0; then
 		JAVA_PKG_FORCE_VM="icedtea"
 	elif has_version dev-java/gcj-jdk; then
 		JAVA_PKG_FORCE_VM="gcj-jdk"
@@ -177,7 +184,7 @@ src_configure() {
 	local config procs rhino_jar
 	local vm=$(java-pkg_get-current-vm)
 
-	if [[ "${vm}" == "icedtea6" || "${vm}" == "icedtea" ]] || [[ "${vm}" == "icedtea6-bin" ]] ; then
+	if [[ "${vm}" == "icedtea6" || "${vm}" == "icedtea" ]] || "${vm}" == "icedtea7" || [[ "${vm}" == "icedtea6-bin" ]] ; then
 		# We can't currently bootstrap with a Sun-based JVM :(
 		config="${config} --disable-bootstrap"
 	elif [[ "${vm}" != "gcj-jdk" && "${vm}" != "cacao" ]] ; then

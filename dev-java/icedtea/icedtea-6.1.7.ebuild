@@ -9,7 +9,7 @@
 
 EAPI="2"
 
-inherit autotools pax-utils java-pkg-2 java-vm-2
+inherit pax-utils java-pkg-2 java-vm-2
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="6"
@@ -58,9 +58,10 @@ RDEPEND=">=net-print/cups-1.2.12
 	 nsplugin? ( >=net-libs/xulrunner-1.9 )
 	 pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
 	 javascript? ( dev-java/rhino:1.6 )
-	 zero? ( sys-devel/gcc[libffi] )
+	 zero? ( virtual/libffi )
 	 xrender? ( >=x11-libs/libXrender-0.9.4 )
-	 systemtap? ( >=dev-util/systemtap-0.9.5 ) "
+	 systemtap? ( >=dev-util/systemtap-1 )
+	 !dev-java/icedtea6"
 
 # Additional dependencies for building:
 #   unzip: extract OpenJDK tarball
@@ -72,15 +73,14 @@ RDEPEND=">=net-print/cups-1.2.12
 #   ca-certificates, perl and openssl are used for the cacerts keystore generation
 #   xext headers have two variants depending on version - bug #288855
 DEPEND="${RDEPEND}
-	|| ( >=virtual/gnu-classpath-jdk-1.5
-		 dev-java/icedtea6-bin
-		 dev-java/icedtea6
-		 <dev-java/icedtea-7
+	|| (
+		>=virtual/gnu-classpath-jdk-1.5
+		dev-java/icedtea6-bin
+		dev-java/icedtea:${SLOT}
 	)
 	|| (
 		dev-java/icedtea6-bin
-		dev-java/icedtea6
-		<dev-java/icedtea-7
+		dev-java/icedtea:${SLOT}
 		dev-java/eclipse-ecj:3.3
 	)
 	>=virtual/jdk-1.5
@@ -115,14 +115,14 @@ pkg_setup() {
 #	  fi
 #	fi
 
-	if ( use nsplugin && ! use npplugin && has_version ">=net-libs/xulrunner-1.9.2" ) ; then
-		eerror "The old plugin will not work with xulrunner >= 1.9.2 / Firefox >= 3.6.";
+	if use nsplugin && ! use npplugin && has_version ">=net-libs/xulrunner-1.9.2"; then
+		eerror "The old plugin will not work with xulrunner >= 1.9.2 / Firefox >= 3.6."
 		die "Rebuild with the npplugin USE flag enabled."
 	fi
 
 	# quite a hack since java-config does not provide a way for a package
 	# to limit supported VM's for building and their preferred order
-	if has_version "<=dev-java/icedtea-${PV}"; then
+	if has_version "dev-java/icedtea:${SLOT}"; then
 		JAVA_PKG_FORCE_VM="icedtea6"
 	elif has_version dev-java/icedtea6; then
 		JAVA_PKG_FORCE_VM="icedtea6"
@@ -306,9 +306,17 @@ pkg_postinst() {
 
 	if use nsplugin; then
 		elog "The icedtea${SLOT} browser plugin can be enabled using eselect java-nsplugin"
-		elog "Note that the plugin works only in browsers based on xulrunner-1.9"
-		elog "such as Firefox 3 or Epiphany 2.24 and not in older versions!"
-		elog "Also note that you need to recompile icedtea${SLOT} if you upgrade"
-		elog "from xulrunner-1.9.0 to 1.9.1."
+		if use npplugin; then
+			elog "Note that the IcedTeaNPPlugin works only in browsers based on xulrunner-1.9.1 or later"
+			elog "such as Firefox 3.5+, Chromium and perhaps some others too, and it is considered"
+			elog "alpha quality by upstream. The older plugin can be built with USE=\"-nnplugin\""
+			elog "but it does not support xulrunner-1.9.2 (Firefox 3.6) or Chromium."
+		else
+			elog "Note that the IcedTeaPlugin works only in browsers based on xulrunner-1.9.0 or 1.9.1"
+			elog "such as Firefox 3 or 3.5, Epiphany 2.24 and not in older versions!"
+			elog "Also note that you need to recompile icedtea${SLOT} if you upgrade"
+			elog "from xulrunner-1.9.0 to 1.9.1."
+			elog "To support xulrunner-1.9.2 (Firefox 3.6) and Chromium, enable USE=npplugin"
+		fi
 	fi
 }
