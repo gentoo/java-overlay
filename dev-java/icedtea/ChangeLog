@@ -2,6 +2,11 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  04 Feb 2010; Vlastimil Babka <caster@gentoo.org> icedtea-7.1.12.ebuild:
+  Reorder VM forcing to place icedtea:6 last (seems not work, might kill it
+  completely), fix checking for rebuild with icedtea:7, remove double
+  java-*_pkg_setup calls.
+
   04 Feb 2010; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.7.ebuild,
   icedtea-7.1.12.ebuild:
   Depend on virtual/libffi - bug #302692. For icedtea:6, use slot deps where

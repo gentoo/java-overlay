@@ -125,18 +125,18 @@ pkg_setup() {
 
 	# quite a hack since java-config does not provide a way for a package
 	# to limit supported VM's for building and their preferred order
-	if has_version dev-java/icedtea6; then
-		JAVA_PKG_FORCE_VM="icedtea6"
-	elif has_version dev-java/icedtea:6; then
-		JAVA_PKG_FORCE_VM="icedtea6"
-	elif has_version dev-java/icedtea6-bin; then
-		JAVA_PKG_FORCE_VM="icedtea6-bin"
-	elif has_version dev-java/icedtea:7; then
+	if has_version dev-java/icedtea:7; then
 		JAVA_PKG_FORCE_VM="icedtea7"
 	elif has_version dev-java/icedtea:0; then
 		JAVA_PKG_FORCE_VM="icedtea"
 	elif has_version dev-java/gcj-jdk; then
 		JAVA_PKG_FORCE_VM="gcj-jdk"
+	elif has_version dev-java/icedtea6; then
+		JAVA_PKG_FORCE_VM="icedtea6"
+	elif has_version dev-java/icedtea:6; then
+		JAVA_PKG_FORCE_VM="icedtea6"
+	elif has_version dev-java/icedtea6-bin; then
+		JAVA_PKG_FORCE_VM="icedtea6-bin"
 	elif has_version dev-java/cacao; then
 		JAVA_PKG_FORCE_VM="cacao"
 	else
@@ -152,9 +152,6 @@ pkg_setup() {
 		java-vm-2_pkg_setup
 		java-pkg-2_pkg_setup
 	fi
-	einfo "Forced vm ${JAVA_PKG_FORCE_VM}"
-	java-vm-2_pkg_setup
-	java-pkg-2_pkg_setup
 
 	VMHANDLE="icedtea${SLOT}"
 }
@@ -184,7 +181,7 @@ src_configure() {
 	local config procs rhino_jar
 	local vm=$(java-pkg_get-current-vm)
 
-	if [[ "${vm}" == "icedtea6" || "${vm}" == "icedtea" ]] || "${vm}" == "icedtea7" || [[ "${vm}" == "icedtea6-bin" ]] ; then
+	if [[ "${vm}" == "icedtea6" || "${vm}" == "icedtea" ]] || [[ "${vm}" == "icedtea7" ]] || [[ "${vm}" == "icedtea6-bin" ]] ; then
 		# We can't currently bootstrap with a Sun-based JVM :(
 		config="${config} --disable-bootstrap"
 	elif [[ "${vm}" != "gcj-jdk" && "${vm}" != "cacao" ]] ; then
