@@ -69,7 +69,7 @@ RDEPEND=">=net-print/cups-1.2.12
 	 >=sys-libs/zlib-1.2.3
 	 x11-proto/inputproto
 	 x11-proto/xineramaproto
-	 nsplugin? ( >=net-libs/xulrunner-1.9 )
+	 nsplugin? ( <net-libs/xulrunner-1.9.2:1.9 )
 	 pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
 	 javascript? ( dev-java/rhino:1.6 )
 	 zero? ( virtual/libffi )
@@ -87,6 +87,7 @@ RDEPEND=">=net-print/cups-1.2.12
 # sets some environment variables.
 # ca-certificates, perl and openssl are used for the cacerts keystore generation
 # xext headers have two variants depending on version - bug #288855
+# autoconf - as long as we use eautoreconf, version restrictions for bug #294918
 DEPEND="${RDEPEND}
 	|| (
 		>=virtual/gnu-classpath-jdk-1.5
@@ -107,7 +108,8 @@ DEPEND="${RDEPEND}
 	dev-lang/perl
 	dev-libs/openssl
 	>=dev-java/ant-nodeps-1.7.0
-	sys-apps/lsb-release"
+	sys-apps/lsb-release
+	 || ( >=sys-devel/autoconf-2.65:2.5 <sys-devel/autoconf-2.64:2.5 )"
 
 pkg_setup() {
 # Shark support disabled for now - still experimental and needs sys-devel/llvm
@@ -125,7 +127,9 @@ pkg_setup() {
 
 	# quite a hack since java-config does not provide a way for a package
 	# to limit supported VM's for building and their preferred order
-	if has_version dev-java/icedtea:7; then
+	if [[ -n "${JAVA_PKG_FORCE_VM}" ]]; then
+		einfo "Honoring user-set JAVA_PKG_FORCE_VM"
+	elif has_version dev-java/icedtea:7; then
 		JAVA_PKG_FORCE_VM="icedtea7"
 	elif has_version dev-java/icedtea:0; then
 		JAVA_PKG_FORCE_VM="icedtea"
@@ -147,7 +151,7 @@ pkg_setup() {
 
 	# if the previous failed, don't even run java eclasses pkg_setup
 	# as it might also die when no VM is present
-	if [[ -n ${JAVA_PKG_FORCE_VM} ]]; then
+	if [[ -n "${JAVA_PKG_FORCE_VM}" ]]; then
 		einfo "Forced vm ${JAVA_PKG_FORCE_VM}"
 		java-vm-2_pkg_setup
 		java-pkg-2_pkg_setup

@@ -122,7 +122,9 @@ pkg_setup() {
 
 	# quite a hack since java-config does not provide a way for a package
 	# to limit supported VM's for building and their preferred order
-	if has_version "dev-java/icedtea:${SLOT}"; then
+	if [[ -n "${JAVA_PKG_FORCE_VM}" ]]; then
+		einfo "Honoring user-set JAVA_PKG_FORCE_VM"
+	elif has_version "dev-java/icedtea:${SLOT}"; then
 		JAVA_PKG_FORCE_VM="icedtea6"
 	elif has_version dev-java/icedtea6; then
 		JAVA_PKG_FORCE_VM="icedtea6"
@@ -140,7 +142,7 @@ pkg_setup() {
 
 	# if the previous failed, don't even run java eclasses pkg_setup
 	# as it might also die when no VM is present
-	if [[ -n ${JAVA_PKG_FORCE_VM} ]]; then
+	if [[ -n "${JAVA_PKG_FORCE_VM}" ]]; then
 		einfo "Forced vm ${JAVA_PKG_FORCE_VM}"
 		java-vm-2_pkg_setup
 		java-pkg-2_pkg_setup

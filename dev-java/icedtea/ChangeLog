@@ -2,6 +2,17 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  05 Feb 2010; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.7.ebuild,
+  icedtea-7.1.12.ebuild:
+  Honor user-set JAVA_PKG_FORCE_VM for easier troubleshooting as suggested by
+  Dennis Schridde <devurandom@gmx.net> in bug #294027.
+
+  05 Feb 2010; Vlastimil Babka <caster@gentoo.org> icedtea-7.1.12.ebuild:
+  Restrict autoconf dependency to avoid 2.64 for bug #257596.
+
+  05 Feb 2010; Vlastimil Babka <caster@gentoo.org> icedtea-7.1.12.ebuild:
+  Restrict xulrunner dependency to <1.9.2 for bug #303535.
+
   04 Feb 2010; Vlastimil Babka <caster@gentoo.org> icedtea-7.1.12.ebuild:
   Reorder VM forcing to place icedtea:6 last (seems not work, might kill it
   completely), fix checking for rebuild with icedtea:7, remove double
