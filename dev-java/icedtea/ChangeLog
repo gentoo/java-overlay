@@ -2,6 +2,10 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  06 Feb 2010; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.7.ebuild,
+  icedtea-7.1.12.ebuild:
+  Add missing package-list files - bug #302654.
+
   05 Feb 2010; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.7.ebuild,
   icedtea-7.1.12.ebuild:
   Honor user-set JAVA_PKG_FORCE_VM for easier troubleshooting as suggested by

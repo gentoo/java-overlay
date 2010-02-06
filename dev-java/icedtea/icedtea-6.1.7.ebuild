@@ -250,7 +250,8 @@ src_install() {
 	cd "${S}/openjdk/build/linux-${arch}/j2sdk-image" || die
 
 	if use doc ; then
-		dohtml -r ../docs/* || die "Failed to install documentation"
+		# java-pkg_dohtml needed for package-list #302654
+		java-pkg_dohtml -r ../docs/* || die "Failed to install documentation"
 	fi
 
 	# doins can't handle symlinks.
