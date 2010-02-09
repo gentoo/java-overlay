@@ -78,7 +78,7 @@ RDEPEND=">=net-print/cups-1.2.12
 	 !dev-java/icedtea:0"
 
 # Additional dependencies for building:
-#   unzip: extract OpenJDK tarball
+#   zip: extract OpenJDK tarball, and needed by configure
 #   xalan/xerces: automatic code generation
 #   ant, ecj, jdk: required to build Java code
 # Only ant-core-1.7.0-r3 in java-overlay contains
@@ -97,7 +97,7 @@ DEPEND="${RDEPEND}
 		dev-java/icedtea6
 	)
 	>=virtual/jdk-1.5
-	>=app-arch/unzip-5.52
+	app-arch/zip
 	>=dev-java/xalan-2.7.0:0
 	>=dev-java/xerces-2.9.1:2
 	|| (
@@ -299,8 +299,8 @@ src_install() {
 
 	sed -e "s/@SLOT@/${SLOT}/g" \
 		-e "s/@PV@/${ICEDTEA_VER}/g" \
-		< ${FILESDIR}/icedtea.env > ${T}/icedtea.env
-	set_java_env ${T}/icedtea.env
+		< "${FILESDIR}/icedtea.env" > "${T}/icedtea.env"
+	set_java_env "${T}/icedtea.env"
 }
 
 use_zero() {

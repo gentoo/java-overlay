@@ -64,7 +64,7 @@ RDEPEND=">=net-print/cups-1.2.12
 	 !dev-java/icedtea6"
 
 # Additional dependencies for building:
-#   unzip: extract OpenJDK tarball
+#   zip: extract OpenJDK tarball, and needed by configure
 #   xalan/xerces: automatic code generation
 #   ant, ecj, jdk: required to build Java code
 # Only ant-core-1.7.1-r2 contains a version of Ant that
@@ -84,7 +84,7 @@ DEPEND="${RDEPEND}
 		dev-java/eclipse-ecj:3.3
 	)
 	>=virtual/jdk-1.5
-	>=app-arch/unzip-5.52
+	app-arch/zip
 	>=dev-java/xalan-2.7.0:0
 	>=dev-java/xerces-2.9.1:2
 	>=dev-java/ant-core-1.7.1-r2
@@ -99,7 +99,7 @@ DEPEND="${RDEPEND}
 		)
 		<x11-libs/libXext-1.1.1
 	)
-   sys-apps/lsb-release"
+	sys-apps/lsb-release"
 
 pkg_setup() {
 # Shark support disabled for now - still experimental and needs sys-devel/llvm
@@ -295,8 +295,8 @@ src_install() {
 
 	sed -e "s/@SLOT@/${SLOT}/g" \
 		-e "s/@PV@/${ICEDTEA_VER}/g" \
-		< ${FILESDIR}/icedtea.env > ${T}/icedtea.env
-	set_java_env ${T}/icedtea.env
+		< "${FILESDIR}/icedtea.env" > "${T}/icedtea.env"
+	set_java_env "${T}/icedtea.env"
 }
 
 use_zero() {
