@@ -2,6 +2,14 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.1.12-r1 (23 Feb 2010)
+*icedtea-6.1.7-r1 (23 Feb 2010)
+
+  23 Feb 2010; Andrew John Hughes <andrew@gentoo.org> -icedtea-6.1.7.ebuild,
+  +icedtea-6.1.7-r1.ebuild, -icedtea-7.1.12.ebuild,
+  +icedtea-7.1.12-r1.ebuild:
+  Bump. Install README, NEWS, AUTHORS and THANKYOU from IcedTea.
+
   09 Feb 2010; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.7.ebuild,
   icedtea-7.1.12.ebuild:
   Add missing app-arch/zip dependency for #258423 and fix some repoman warnings.
@@ -39,10 +47,10 @@
 
 29 Jan 2010; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea-6.1.7.ebuild icedtea-7.1.12.ebuild:
 	Fix LICENSE to include all licenses used by OpenJDK.
-	
+
 29 Jan 2010; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea-6.1.7.ebuild icedtea-7.1.12.ebuild:
 	Combine IcedTea6 and IcedTea ebuilds, prefixing 6 or 7 to version number.
-	
+
 28 Jan 2010; Andrew John Hughes <gnu_andrew@member.fsf.org> icedtea6-1.7.ebuild
 	Add hs16 USE flag so HotSpot 16 can be turned off.
 	

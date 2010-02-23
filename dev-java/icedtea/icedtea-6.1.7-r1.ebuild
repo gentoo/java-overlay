@@ -4,42 +4,28 @@
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
 # *********************************************************
-# * IF YOU CHANGE THIS EBUILD, CHANGE ICEDTEA-6.* AS WELL *
+# * IF YOU CHANGE THIS EBUILD, CHANGE ICEDTEA-7.* AS WELL *
 # *********************************************************
 
 EAPI="2"
 
-inherit autotools flag-o-matic java-pkg-2 java-vm-2 pax-utils
+inherit pax-utils java-pkg-2 java-vm-2
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
-SLOT="7"
-#KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
+SLOT="6"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
-DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
-ICEDTEA_VER="1.12"
-ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-OPENJDK_TARBALL="f0bfd9bd1a0e.tar.gz"
-LANGTOOLS_TARBALL="83367f01297b.tar.gz"
-JAXP_TARBALL="fb68fd18eb9f.tar.gz"
-JAXWS_TARBALL="0dc08d528c99.tar.gz"
-CORBA_TARBALL="d728db3889da.tar.gz"
-JDK_TARBALL="fb2ee5e96b17.tar.gz"
-HOTSPOT_TARBALL="b4ab978ce52c.tar.gz"
-CACAO_TARBALL="cacao-0.99.4.tar.bz2"
-JAXP_DROP="jdk7-jaxp-m5.zip"
-JAXWS_DROP="jdk7-jaxws-2009_09_28.zip"
-JAF_DROP="jdk7-jaf-2009_08_28.zip"
+DESCRIPTION="A harness to build the OpenJDK using Free Software build tools and dependencies"
+ICEDTEA_VER="1.7"
+ICEDTEA_PKG=icedtea${SLOT}-${ICEDTEA_VER}
+OPENJDK_BUILD="17"
+OPENJDK_DATE="14_oct_2009"
+OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.gz"
+HOTSPOT_TARBALL="62926c7f67a3.tar.gz"
+CACAO_TARBALL="cacao-0.99.4.tar.gz"
 SRC_URI="http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
-		 http://hg.openjdk.java.net/icedtea/jdk7/archive/${OPENJDK_TARBALL}
-		 http://hg.openjdk.java.net/icedtea/jdk7/corba/archive/${CORBA_TARBALL}
-		 http://hg.openjdk.java.net/icedtea/jdk7/jaxp/archive/${JAXP_TARBALL}
-		 http://hg.openjdk.java.net/icedtea/jdk7/jaxws/archive/${JAXWS_TARBALL}
-		 http://hg.openjdk.java.net/icedtea/jdk7/jdk/archive/${JDK_TARBALL}
-		 http://hg.openjdk.java.net/icedtea/jdk7/hotspot/archive/${HOTSPOT_TARBALL}
-		 http://hg.openjdk.java.net/icedtea/jdk7/langtools/archive/${LANGTOOLS_TARBALL}
-		 https://jaxp.dev.java.net/files/documents/913/144160/${JAXP_DROP}
-		 http://kenai.com/projects/jdk7-drops/downloads/download/${JAXWS_DROP}
-		 http://kenai.com/projects/jdk7-drops/downloads/download/${JAF_DROP}
+		 http://download.java.net/openjdk/jdk6/promoted/b${OPENJDK_BUILD}/${OPENJDK_TARBALL}
+		 http://hg.openjdk.java.net/hsx/hsx16/master/archive/${HOTSPOT_TARBALL}
 		 cacao? ( http://www.complang.tuwien.ac.at/cacaojvm/download/cacao-0.99.4/${CACAO_TARBALL} )"
 HOMEPAGE="http://icedtea.classpath.org"
 S=${WORKDIR}/${ICEDTEA_PKG}
@@ -47,7 +33,7 @@ S=${WORKDIR}/${ICEDTEA_PKG}
 # Missing options:
 # shark - still experimental, requires llvm which is not yet packaged
 # visualvm - requries netbeans which would cause major bootstrap issues
-IUSE="cacao debug doc examples javascript nsplugin pulseaudio systemtap xrender zero"
+IUSE="cacao debug doc examples +hs16 javascript nio2 +npplugin nsplugin pulseaudio systemtap xrender zero"
 
 # JTReg doesn't pass at present
 RESTRICT="test"
@@ -69,47 +55,51 @@ RDEPEND=">=net-print/cups-1.2.12
 	 >=sys-libs/zlib-1.2.3
 	 x11-proto/inputproto
 	 x11-proto/xineramaproto
-	 nsplugin? ( <net-libs/xulrunner-1.9.2:1.9 )
+	 nsplugin? ( >=net-libs/xulrunner-1.9 )
 	 pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
 	 javascript? ( dev-java/rhino:1.6 )
 	 zero? ( virtual/libffi )
 	 xrender? ( >=x11-libs/libXrender-0.9.4 )
 	 systemtap? ( >=dev-util/systemtap-1 )
-	 !dev-java/icedtea:0"
+	 !dev-java/icedtea6"
 
 # Additional dependencies for building:
 #   zip: extract OpenJDK tarball, and needed by configure
 #   xalan/xerces: automatic code generation
 #   ant, ecj, jdk: required to build Java code
-# Only ant-core-1.7.0-r3 in java-overlay contains
-# a version of Ant that properly respects environment
-# variables.  1.7.1-r2 and on will work if the build
+# Only ant-core-1.7.1-r2 contains a version of Ant that
+# properly respects environment variables, if the build
 # sets some environment variables.
-# ca-certificates, perl and openssl are used for the cacerts keystore generation
-# xext headers have two variants depending on version - bug #288855
-# autoconf - as long as we use eautoreconf, version restrictions for bug #294918
+#   ca-certificates, perl and openssl are used for the cacerts keystore generation
+#   xext headers have two variants depending on version - bug #288855
 DEPEND="${RDEPEND}
 	|| (
 		>=virtual/gnu-classpath-jdk-1.5
 		dev-java/icedtea6-bin
-		dev-java/icedtea:7
-		dev-java/icedtea:6
-		dev-java/icedtea6
+		dev-java/icedtea:${SLOT}
+	)
+	|| (
+		dev-java/icedtea6-bin
+		dev-java/icedtea:${SLOT}
+		dev-java/eclipse-ecj:3.3
 	)
 	>=virtual/jdk-1.5
 	app-arch/zip
 	>=dev-java/xalan-2.7.0:0
 	>=dev-java/xerces-2.9.1:2
-	|| (
-	  =dev-java/ant-core-1.7.0-r3
-	  >=dev-java/ant-core-1.7.1-r2
-	)
+	>=dev-java/ant-core-1.7.1-r2
 	app-misc/ca-certificates
 	dev-lang/perl
 	dev-libs/openssl
-	>=dev-java/ant-nodeps-1.7.0
-	sys-apps/lsb-release
-	 || ( >=sys-devel/autoconf-2.65:2.5 <sys-devel/autoconf-2.64:2.5 )"
+	|| (
+		(
+			>=x11-libs/libXext-1.1.1
+			>=x11-proto/xextproto-7.1.1
+			x11-proto/xproto
+		)
+		<x11-libs/libXext-1.1.1
+	)
+	sys-apps/lsb-release"
 
 pkg_setup() {
 # Shark support disabled for now - still experimental and needs sys-devel/llvm
@@ -125,22 +115,23 @@ pkg_setup() {
 #	  fi
 #	fi
 
+	if use nsplugin && ! use npplugin && has_version ">=net-libs/xulrunner-1.9.2"; then
+		eerror "The old plugin will not work with xulrunner >= 1.9.2 / Firefox >= 3.6."
+		die "Rebuild with the npplugin USE flag enabled."
+	fi
+
 	# quite a hack since java-config does not provide a way for a package
 	# to limit supported VM's for building and their preferred order
 	if [[ -n "${JAVA_PKG_FORCE_VM}" ]]; then
 		einfo "Honoring user-set JAVA_PKG_FORCE_VM"
-	elif has_version dev-java/icedtea:7; then
-		JAVA_PKG_FORCE_VM="icedtea7"
-	elif has_version dev-java/icedtea:0; then
-		JAVA_PKG_FORCE_VM="icedtea"
-	elif has_version dev-java/gcj-jdk; then
-		JAVA_PKG_FORCE_VM="gcj-jdk"
-	elif has_version dev-java/icedtea6; then
+	elif has_version "dev-java/icedtea:${SLOT}"; then
 		JAVA_PKG_FORCE_VM="icedtea6"
-	elif has_version dev-java/icedtea:6; then
+	elif has_version dev-java/icedtea6; then
 		JAVA_PKG_FORCE_VM="icedtea6"
 	elif has_version dev-java/icedtea6-bin; then
 		JAVA_PKG_FORCE_VM="icedtea6-bin"
+	elif has_version dev-java/gcj-jdk; then
+		JAVA_PKG_FORCE_VM="gcj-jdk"
 	elif has_version dev-java/cacao; then
 		JAVA_PKG_FORCE_VM="cacao"
 	else
@@ -167,16 +158,6 @@ src_unpack() {
 	unpack ${ICEDTEA_PKG}.tar.gz
 }
 
-src_prepare() {
-	# bug #288855 - ABI is the same, just definitions moved between headers
-	# conditional patching should be thus safe
-	if has_version ">=x11-libs/libXext-1.1.1"; then
-		epatch "${FILESDIR}/1.12-shmproto.patch"
-
-		eautoreconf || die "eautoreconf failed"
-	fi
-}
-
 unset_vars() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 }
@@ -184,12 +165,18 @@ unset_vars() {
 src_configure() {
 	local config procs rhino_jar
 	local vm=$(java-pkg_get-current-vm)
+	local vmhome="/usr/lib/jvm/${vm}"
 
-	if [[ "${vm}" == "icedtea6" || "${vm}" == "icedtea" ]] || [[ "${vm}" == "icedtea7" ]] || [[ "${vm}" == "icedtea6-bin" ]] ; then
-		# We can't currently bootstrap with a Sun-based JVM :(
-		config="${config} --disable-bootstrap"
-	elif [[ "${vm}" != "gcj-jdk" && "${vm}" != "cacao" ]] ; then
-		eerror "IcedTea must be built with either a JDK based on GNU Classpath or an existing build of IcedTea."
+	# IcedTea6 can't be built using IcedTea7; its class files are too new
+	if [[ "${vm}" == "icedtea6" ]] || [[ "${vm}" == "icedtea6-bin" ]] ; then
+		# If we are upgrading icedtea, then we don't need to bootstrap.
+		config="${config} --with-openjdk=$(java-config -O)"
+	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" ]] ; then
+		# For other 1.5 JDKs e.g. GCJ, CACAO.
+		config="${config} --with-ecj-jar=$(java-pkg_getjar --build-only eclipse-ecj:3.3 ecj.jar)" \
+		config="${config} --with-gcj-home=${vmhome}"
+	else
+		eerror "IcedTea${SLOT} must be built with either a JDK based on GNU Classpath or an existing build of IcedTea${SLOT}."
 		die "Install a GNU Classpath JDK (gcj-jdk, cacao)"
 	fi
 
@@ -210,30 +197,33 @@ src_configure() {
 		rhino_jar=$(java-pkg_getjar rhino:1.6 js.jar);
 	fi
 
+	if use nsplugin && use npplugin ; then
+		config="${config} --enable-npplugin"
+	fi
+
+	if use hs16 ; then
+		config="${config} --with-hotspot-build=hs16"
+	fi
+
 	unset_vars
 
 	econf ${config} \
 		--with-openjdk-src-zip="${DISTDIR}/${OPENJDK_TARBALL}" \
-		--with-corba-src-zip="${DISTDIR}/${CORBA_TARBALL}" \
-		--with-jaxp-src-zip="${DISTDIR}/${JAXP_TARBALL}" \
-		--with-jaxws-src-zip="${DISTDIR}/${JAXWS_TARBALL}" \
-		--with-jdk-src-zip="${DISTDIR}/${JDK_TARBALL}" \
 		--with-hotspot-src-zip="${DISTDIR}/${HOTSPOT_TARBALL}" \
-		--with-langtools-src-zip="${DISTDIR}/${LANGTOOLS_TARBALL}" \
-		--with-jaxp-drop-zip="${DISTDIR}/${JAXP_DROP}" \
-		--with-jaxws-drop-zip="${DISTDIR}/${JAXWS_DROP}" \
-		--with-jaf-drop-zip="${DISTDIR}/${JAF_DROP}" \
 		--with-cacao-src-zip="${DISTDIR}/${CACAO_TARBALL}" \
-		--with-jdk-home="$(java-config -O)" \
+		--with-java="${vmhome}/bin/java" \
+		--with-javac="${vmhome}/bin/javac" \
+		--with-javah="${vmhome}/bin/javah" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nsplugin plugin) \
 		$(use_with javascript rhino ${rhino_jar}) \
-		$(use_enable zero) \
+		$(use_enable cacao) \
 		$(use_enable pulseaudio pulse-java) \
 		$(use_enable xrender) \
 		$(use_enable systemtap) \
+		$(use_enable nio2) \
 		|| die "configure failed"
 }
 
@@ -241,6 +231,8 @@ src_compile() {
 	# Newer versions of Gentoo's ant add
 	# an environment variable so it works properly...
 	export ANT_RESPECT_JAVA_HOME=TRUE
+	# Also make sure we don't bring in additional tasks
+	export ANT_TASKS=none
 
 	# Paludis does not respect unset from src_configure
 	unset_vars
@@ -254,6 +246,8 @@ src_install() {
 
 	local arch=${ARCH}
 	use x86 && arch=i586
+
+	dodoc README NEWS AUTHORS THANKYOU
 
 	cd "${S}/openjdk/build/linux-${arch}/j2sdk-image" || die
 
@@ -283,7 +277,11 @@ src_install() {
 
 	if use nsplugin; then
 		use x86 && arch=i386;
-		install_mozilla_plugin "${dest}/jre/lib/${arch}/IcedTeaPlugin.so";
+		if use npplugin; then
+		   install_mozilla_plugin "${dest}/jre/lib/${arch}/IcedTeaNPPlugin.so";
+		else
+		   install_mozilla_plugin "${dest}/jre/lib/${arch}/IcedTeaPlugin.so";
+		fi
 	fi
 
 	# We need to generate keystore - bug #273306
@@ -313,9 +311,17 @@ pkg_postinst() {
 
 	if use nsplugin; then
 		elog "The icedtea${SLOT} browser plugin can be enabled using eselect java-nsplugin"
-		elog "Note that the plugin works only in browsers based on xulrunner-1.9"
-		elog "such as Firefox 3 or Epiphany 2.24 and not in older versions!"
-		elog "Also note that you need to recompile icedtea${SLOT} if you upgrade"
-		elog "from xulrunner-1.9.0 to 1.9.1."
+		if use npplugin; then
+			elog "Note that the IcedTeaNPPlugin works only in browsers based on xulrunner-1.9.1 or later"
+			elog "such as Firefox 3.5+, Chromium and perhaps some others too, and it is considered"
+			elog "alpha quality by upstream. The older plugin can be built with USE=\"-nnplugin\""
+			elog "but it does not support xulrunner-1.9.2 (Firefox 3.6) or Chromium."
+		else
+			elog "Note that the IcedTeaPlugin works only in browsers based on xulrunner-1.9.0 or 1.9.1"
+			elog "such as Firefox 3 or 3.5, Epiphany 2.24 and not in older versions!"
+			elog "Also note that you need to recompile icedtea${SLOT} if you upgrade"
+			elog "from xulrunner-1.9.0 to 1.9.1."
+			elog "To support xulrunner-1.9.2 (Firefox 3.6) and Chromium, enable USE=npplugin"
+		fi
 	fi
 }
