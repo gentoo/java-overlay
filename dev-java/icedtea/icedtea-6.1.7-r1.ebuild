@@ -247,7 +247,7 @@ src_install() {
 	local arch=${ARCH}
 	use x86 && arch=i586
 
-	dodoc README NEWS AUTHORS THANKYOU || die
+	dodoc README NEWS AUTHORS || die
 
 	cd "${S}/openjdk/build/linux-${arch}/j2sdk-image" || die
 

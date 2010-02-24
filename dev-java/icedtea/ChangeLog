@@ -4,6 +4,11 @@
 
   24 Feb 2010; Andrew John Hughes <andrew@gentoo.org>
   icedtea-6.1.7-r1.ebuild, icedtea-7.1.12-r1.ebuild:
+  Remove THANKYOU as not distributed by IcedTea (upstream bug rectified in
+  new releases)
+
+  24 Feb 2010; Andrew John Hughes <andrew@gentoo.org>
+  icedtea-6.1.7-r1.ebuild, icedtea-7.1.12-r1.ebuild:
   Add an die clause to the new dodoc invocation.
 
 *icedtea-7.1.12-r1 (23 Feb 2010)
