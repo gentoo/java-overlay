@@ -16,7 +16,7 @@ SLOT="6"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
 DESCRIPTION="A harness to build the OpenJDK using Free Software build tools and dependencies"
-ICEDTEA_VER="1.7"
+ICEDTEA_VER="1.7.1"
 ICEDTEA_PKG=icedtea${SLOT}-${ICEDTEA_VER}
 OPENJDK_BUILD="17"
 OPENJDK_DATE="14_oct_2009"
@@ -247,7 +247,7 @@ src_install() {
 	local arch=${ARCH}
 	use x86 && arch=i586
 
-	dodoc README NEWS AUTHORS || die
+	dodoc README NEWS AUTHORS THANKYOU || die
 
 	cd "${S}/openjdk/build/linux-${arch}/j2sdk-image" || die
 
