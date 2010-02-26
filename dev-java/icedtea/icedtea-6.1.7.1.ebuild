@@ -33,7 +33,7 @@ S=${WORKDIR}/${ICEDTEA_PKG}
 # Missing options:
 # shark - still experimental, requires llvm which is not yet packaged
 # visualvm - requries netbeans which would cause major bootstrap issues
-IUSE="cacao debug doc examples +hs16 javascript nio2 +npplugin nsplugin pulseaudio systemtap xrender zero"
+IUSE="cacao debug doc examples +hs16 javascript nio2 +npplugin nsplugin +nss pulseaudio systemtap +xrender zero"
 
 # JTReg doesn't pass at present
 RESTRICT="test"
@@ -61,7 +61,8 @@ RDEPEND=">=net-print/cups-1.2.12
 	 zero? ( virtual/libffi )
 	 xrender? ( >=x11-libs/libXrender-0.9.4 )
 	 systemtap? ( >=dev-util/systemtap-1 )
-	 !dev-java/icedtea6"
+	 !dev-java/icedtea6
+	 nss? ( >=dev-libs/nss-3.12.5-r1 )"
 
 # Additional dependencies for building:
 #   zip: extract OpenJDK tarball, and needed by configure
@@ -224,6 +225,7 @@ src_configure() {
 		$(use_enable xrender) \
 		$(use_enable systemtap) \
 		$(use_enable nio2) \
+		$(use_enable nss) \
 		|| die "configure failed"
 }
 
