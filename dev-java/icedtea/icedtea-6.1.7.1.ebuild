@@ -66,13 +66,11 @@ RDEPEND=">=net-print/cups-1.2.12
 
 # Additional dependencies for building:
 #   zip: extract OpenJDK tarball, and needed by configure
-#   xalan/xerces: automatic code generation
+#   xalan/xerces: automatic code generation (also needed for Ant 1.8.0 to work properly)
 #   ant, ecj, jdk: required to build Java code
 # Only ant-core-1.7.1-r2 and later contain a version of Ant that
 # properly respects environment variables, if the build
 # sets some environment variables.
-# Ant 1.8.0 needs xerces and xalan due to a bug in ant -diagnostics
-# that causes the build to fail otherwise.
 #   ca-certificates, perl and openssl are used for the cacerts keystore generation
 #   xext headers have two variants depending on version - bug #288855
 DEPEND="${RDEPEND}
@@ -235,13 +233,9 @@ src_compile() {
 	# Newer versions of Gentoo's ant add
 	# an environment variable so it works properly...
 	export ANT_RESPECT_JAVA_HOME=TRUE
-	# Workaround for an ant -diagnostics failure killing the build
-	if has_version '~dev-java/ant-core-1.8.0'; then
-		export ANT_TASKS="xerces-2 xalan"
-	else
-		# Make sure we don't bring in additional tasks
-		export ANT_TASKS="none"
-	fi
+	# ant -diagnostics in Ant 1.8.0 fails without these
+	# otherwise we try to load the least that's needed to avoid possible classpath collisions
+	export ANT_TASKS="xerces-2 xalan"
 
 	# Paludis does not respect unset from src_configure
 	unset_vars
