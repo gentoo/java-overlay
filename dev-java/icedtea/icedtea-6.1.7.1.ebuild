@@ -90,14 +90,7 @@ DEPEND="${RDEPEND}
 	app-arch/zip
 	>=dev-java/xalan-2.7.0:0
 	>=dev-java/xerces-2.9.1:2
-	|| (
-		(
-			>=dev-java/ant-core-1.8.0
-			dev-java/xerces:2
-			dev-java/xalan:0
-		)
-		>=dev-java/ant-core-1.7.1-r2
-	)
+	>=dev-java/ant-core-1.7.1-r2
 	app-misc/ca-certificates
 	dev-lang/perl
 	dev-libs/openssl
