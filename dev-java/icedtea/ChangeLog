@@ -2,6 +2,12 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  04 Mar 2010; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.7.1.ebuild,
+  icedtea-7.1.12-r1.ebuild:
+  Depend on gcj-jdk or cacao directly instead of gnu-classpath-jdk, as
+  gnu-classpath-jdk could pull jamvm which the ebuild no longer supports.
+  Sync the recent ant changes in icedtea:6 to icedtea:7
+
   01 Mar 2010; Vlastimil Babka <caster@gentoo.org> ChangeLog:
   Put xerces and xalan in ANT_TASK unconditionally since they are always in
   DEPEND anyway.

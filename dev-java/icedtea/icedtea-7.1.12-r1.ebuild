@@ -81,18 +81,18 @@ RDEPEND=">=net-print/cups-1.2.12
 #   zip: extract OpenJDK tarball, and needed by configure
 #   xalan/xerces: automatic code generation
 #   ant, ecj, jdk: required to build Java code
-# Only ant-core-1.7.0-r3 in java-overlay contains
-# a version of Ant that properly respects environment
-# variables.  1.7.1-r2 and on will work if the build
+# Only ant-core-1.7.1-r2 and later contain a version of Ant that
+# properly respects environment variables, if the build
 # sets some environment variables.
 # ca-certificates, perl and openssl are used for the cacerts keystore generation
 # xext headers have two variants depending on version - bug #288855
 # autoconf - as long as we use eautoreconf, version restrictions for bug #294918
 DEPEND="${RDEPEND}
 	|| (
-		>=virtual/gnu-classpath-jdk-1.5
-		dev-java/icedtea6-bin
+		>=dev-java/gcj-jdk-4.3
+		>=dev-java/cacao-0.99.2
 		dev-java/icedtea:7
+		dev-java/icedtea6-bin
 		dev-java/icedtea:6
 		dev-java/icedtea6
 	)
@@ -100,14 +100,11 @@ DEPEND="${RDEPEND}
 	app-arch/zip
 	>=dev-java/xalan-2.7.0:0
 	>=dev-java/xerces-2.9.1:2
-	|| (
-	  =dev-java/ant-core-1.7.0-r3
-	  >=dev-java/ant-core-1.7.1-r2
-	)
+	>=dev-java/ant-core-1.7.1-r2
+	dev-java/ant-nodeps
 	app-misc/ca-certificates
 	dev-lang/perl
 	dev-libs/openssl
-	>=dev-java/ant-nodeps-1.7.0
 	sys-apps/lsb-release
 	 || ( >=sys-devel/autoconf-2.65:2.5 <sys-devel/autoconf-2.64:2.5 )"
 
@@ -241,6 +238,10 @@ src_compile() {
 	# Newer versions of Gentoo's ant add
 	# an environment variable so it works properly...
 	export ANT_RESPECT_JAVA_HOME=TRUE
+
+	# ant -diagnostics in Ant 1.8.0 fails without xerces+xalan
+	# otherwise we try to load the least that's needed to avoid possible classpath collisions
+	export ANT_TASKS="xerces-2 xalan ant-nodeps"
 
 	# Paludis does not respect unset from src_configure
 	unset_vars

@@ -75,14 +75,10 @@ RDEPEND=">=net-print/cups-1.2.12
 #   xext headers have two variants depending on version - bug #288855
 DEPEND="${RDEPEND}
 	|| (
-		>=virtual/gnu-classpath-jdk-1.5
+		( >=dev-java/gcj-jdk-4.3 dev-java/eclipse-ecj:3.3 )
+		( >=dev-java/cacao-0.99.2 dev-java/eclipse-ecj:3.3 )
 		dev-java/icedtea6-bin
 		dev-java/icedtea:${SLOT}
-	)
-	|| (
-		dev-java/icedtea6-bin
-		dev-java/icedtea:${SLOT}
-		dev-java/eclipse-ecj:3.3
 	)
 	>=virtual/jdk-1.5
 	app-arch/zip
