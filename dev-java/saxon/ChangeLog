@@ -1,6 +1,16 @@
 # ChangeLog for dev-java/saxon
-# Copyright 1999-2006 Gentoo Foundation; Distributed under the GPL v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/saxon/ChangeLog,v 1.20 2006/09/02 13:40:52 blubb Exp $
+# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*saxon-9.2.0.6 (11 Mar 2010)
+
+  11 Mar 2010; <h.mth@web.de> +saxon-9.2.0.6.ebuild, +files/9.2-build.xml,
+  +files/9.2-edition.properties:
+  initial work based on fedora spec.
+  - someone please fix:
+      references to external javadoc in files/9.2-build.xml
+      package.env:DEPEND holds classpath twice
+  - did not add manpages, neither fedora nor ubuntu version up to date
 
   02 Sep 2006; <blubb@gentoo.org> saxon-8.4b.ebuild:
   stable on amd64
