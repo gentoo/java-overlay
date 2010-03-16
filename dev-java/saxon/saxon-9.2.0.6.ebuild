@@ -23,6 +23,10 @@ KEYWORDS="~amd64 ~x86"
 
 IUSE=""
 
+# sub-optimal, but o well:
+#
+# if you change the jdk and/or jdom slots
+# update their javadoc links in build.xml!
 CDEPEND="dev-java/ant-core
 	dev-java/dom4j:1
 	dev-java/jdom:1.0
