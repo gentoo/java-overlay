@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -15,7 +15,7 @@ LICENSE="GPL-2-with-linking-exception"
 SLOT="0.97"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
-IUSE="alsa debug doc dssi examples gconf gtk gstreamer nsplugin qt4 xml"
+IUSE="alsa debug doc dssi examples gconf gtk gstreamer qt4 xml"
 
 GTK_DEPS="
 		>=x11-libs/gtk+-2.8
@@ -33,14 +33,6 @@ RDEPEND="alsa? ( media-libs/alsa-lib )
 		dssi? ( >=media-libs/dssi-0.9 )
 		gconf? ( gnome-base/gconf )
 		gtk? ( ${GTK_DEPS} )
-		nsplugin? (
-			${GTK_DEPS}
-			|| (
-				www-client/mozilla-firefox
-				net-libs/xulrunner
-				www-client/seamonkey
-			)
-		)
 		qt4? ( x11-libs/qt-gui:4 )
 		xml? ( >=dev-libs/libxml2-2.6.8 >=dev-libs/libxslt-1.1.11 )"
 
@@ -75,7 +67,6 @@ src_compile() {
 		$(use_enable gconf gconf-peer) \
 		$(use_enable gtk gtk-peer) \
 		$(use_enable gstreamer gstreamer-peer) \
-		$(use_enable nsplugin plugin) \
 		$(use_enable qt4 qt-peer) \
 		$(use_enable xml xmlj) \
 		$(use_enable dssi ) \
@@ -83,6 +74,7 @@ src_compile() {
 		${myconf} \
 		--enable-jni \
 		--disable-dependency-tracking \
+		--disable-plugin \
 		--host=${CHOST} \
 		--prefix=/usr/${PN}-${SLOT} \
 		--with-ecj-jar=$(java-pkg_getjar eclipse-ecj:3.3 ecj.jar) \
