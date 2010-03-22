@@ -1,0 +1,9 @@
+# ChangeLog for dev-java/ecj-gcj
+# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  22 Mar 2010; Vlastimil Babka <caster@gentoo.org> +ecj-gcj-3.5.2.ebuild,
+  +files/ecj-gcj, +metadata.xml:
+  New package, a subset of eclipse-ecj that can be compiled and used with
+  gcj-jdk.
+
