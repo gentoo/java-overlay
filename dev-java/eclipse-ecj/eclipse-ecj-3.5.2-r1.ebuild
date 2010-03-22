@@ -7,7 +7,7 @@ EAPI=2
 inherit java-pkg-2
 
 MY_PN="ecj"
-DMF="R-${PV}-200909170800"
+DMF="R-${PV}-201002111343"
 S="${WORKDIR}"
 
 DESCRIPTION="Eclipse Compiler for Java"
@@ -65,7 +65,10 @@ src_compile() {
 
 	einfo "bootstrapping ${MY_PN} with ${javac} ..."
 	${javac} ${javac_opts} @../sources-1.4 || die
-	${javac} -encoding ISO-8859-1 -source 1.6 -target 1.6 @../sources-1.6 || die
+
+	if ! use gcj ; then
+		${javac} -encoding ISO-8859-1 -source 1.6 -target 1.6 @../sources-1.6 || die
+	fi
 
 	find org/ -name '*.class' -o -name '*.properties' -o -name '*.rsc' \
 		| xargs ${jar} cf ${MY_PN}.jar
@@ -75,9 +78,12 @@ src_compile() {
 	${java} -classpath bootstrap/${MY_PN}.jar \
 		org.eclipse.jdt.internal.compiler.batch.Main \
 		${javac_opts} -nowarn @sources-1.4 || die
-	${java} -classpath bootstrap/${MY_PN}.jar \
-		org.eclipse.jdt.internal.compiler.batch.Main \
-		-encoding ISO-8859-1 -source 1.6 -target 1.6 -nowarn @sources-1.6 || die
+
+	if ! use gcj ; then
+		${java} -classpath bootstrap/${MY_PN}.jar \
+			org.eclipse.jdt.internal.compiler.batch.Main \
+			-encoding ISO-8859-1 -source 1.6 -target 1.6 -nowarn @sources-1.6 || die
+	fi
 
 	find org/ -name '*.class' -o -name '*.properties' -o -name '*.rsc' \
 		| xargs ${jar} cf ${MY_PN}.jar
@@ -108,9 +114,10 @@ pkg_postinst() {
 
 	eselect ecj update ecj-${SLOT}
 
-	if use ecj; then
+	if use gcj; then
 		$(gcc-config -B)/gcj-dbtool -a $(gcj-dbtool -p) \
-			${MY_PN}.jar /usr/lib/${MY_PN}-${SLOT}.so
+			/usr/share/${PN}-${SLOT}/lib/ecj.jar \
+			/usr/$(get_libdir)/${MY_PN}-${SLOT}.so
 	fi
 }
 
