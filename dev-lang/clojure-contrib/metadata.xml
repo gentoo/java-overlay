@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<herd>java</herd>
+	<maintainer>
+		<email>gentoo@sattvik.com</email>
+		<name>Daniel Solano Gómez</name>
+	</maintainer>
+	<longdescription>
+		The user contributions library, clojure.contrib, is a collection of
+		namespaces each of which implements features that we believe may be
+		useful to a large part of the clojure community.
+	</longdescription>
+</pkgmetadata>

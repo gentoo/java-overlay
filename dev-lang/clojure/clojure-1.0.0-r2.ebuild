@@ -30,5 +30,21 @@ src_install() {
 	java-pkg_newjar ${P}.jar
 	java-pkg_dolauncher  ${PN} --main clojure.main
 	dodoc readme.txt || die "dodoc failed"
-	use source && java-pkg_dosrc src/jvm/closure
+
+	if use source; then
+		local zip_name="${PN}-src.zip"
+		local zip_path="${T}/${zip_name}"
+		pushd src/jvm >/dev/null || die "Problem entering Java source directory"
+		zip -q -r ${zip_path} . -i '*.java'
+		popd >/dev/null
+		pushd src/clj >/dev/null || die "Problem entering Clojure source directory"
+		zip -q -r ${zip_path} . -i '*.clj'
+		popd >/dev/null
+
+		INSDESTTREE=${JAVA_PKG_SOURCESPATH} \
+			doins ${zip_path} || die "Failed to install source"
+
+		JAVA_SOURCES="${JAVA_PKG_SOURCESPATH}/${zip_name}"
+		java-pkg_do_write_
+	fi
 }
