@@ -2,10 +2,13 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  23 Mar 2010; Hanno Meyer-Thurow <h.mth@web.de> saxon-9.2.0.6.ebuild:
+  fix external javadoc; package.env:DEPEND still bogus.
+
 *saxon-9.2.0.6 (11 Mar 2010)
 
-  11 Mar 2010; <h.mth@web.de> +saxon-9.2.0.6.ebuild, +files/9.2-build.xml,
-  +files/9.2-edition.properties:
+  11 Mar 2010; Hanno Meyer-Thurow <h.mth@web.de> +saxon-9.2.0.6.ebuild,
+  +files/9.2-build.xml, +files/9.2-edition.properties:
   initial work based on fedora spec.
   - someone please fix:
       references to external javadoc in files/9.2-build.xml

@@ -4,13 +4,24 @@
 
 EAPI="3"
 
+# prepare eclass variables
 JAVA_ANT_REWRITE_CLASSPATH="yes"
 JAVA_ANT_CLASSPATH_TAGS="javac javadoc"
 JAVA_PKG_IUSE="doc source"
 
 inherit versionator java-pkg-2 java-ant-2
 
+# fix tarball version string
 MY_PV="$(replace_all_version_separators -)"
+
+# virtual/jdk slot for external javadoc
+JDK_VER="6"
+
+# dev-java/jdom slot for external javadoc
+JDOM_VER="1.0"
+
+# dev-java/dom4j slot
+DOM4J_VER="1"
 
 DESCRIPTION="Saxon - The XSLT and XQuery Processor"
 HOMEPAGE="http://saxon.sourceforge.net/"
@@ -23,23 +34,19 @@ KEYWORDS="~amd64 ~x86"
 
 IUSE=""
 
-# sub-optimal, but o well:
-#
-# if you change the jdk and/or jdom slots
-# update their javadoc links in build.xml!
 CDEPEND="dev-java/ant-core
-	dev-java/dom4j:1
-	dev-java/jdom:1.0
+	dev-java/dom4j:${DOM4J_VER}
+	dev-java/jdom:${JDOM_VER}
 	dev-java/xom"
-RDEPEND=">=virtual/jre-1.6
+RDEPEND=">=virtual/jre-1.${JDK_VER}
 	${CDEPEND}"
-DEPEND=">=virtual/jdk-1.6
+DEPEND=">=virtual/jdk-1.${JDK_VER}
 	app-arch/unzip
 	${CDEPEND}"
 
 S="${WORKDIR}"
 
-EANT_GENTOO_CLASSPATH="ant-core,dom4j-1,jdom-1.0,xom"
+EANT_GENTOO_CLASSPATH="ant-core,dom4j-${DOM4J_VER},jdom-${JDOM_VER},xom"
 EANT_BUILD_TARGET="jar"
 EANT_DOC_TARGET="javadoc"
 
@@ -63,10 +70,12 @@ src_unpack() {
 
 	### end
 
-	# copy data
-	for f in build.xml; do # manpages: ${PN}.1 ${PN}q.1; do
-		cp -v "${FILESDIR}/${version}-${f}" "${S}/${f}"
-	done
+	# generate build.xml with external javadoc links
+	sed -e "s:@JDK@:${JDK_VER}:" \
+		-e "s:@JDOM@:${JDOM_VER}:" \
+		< "${FILESDIR}/${version}-build.xml" \
+		> "${S}/build.xml" \
+		|| die "build.xml generation failed!"
 }
 
 java_prepare() {
@@ -94,7 +103,4 @@ src_install() {
 
 	# source
 	use source && java-pkg_dosrc src
-
-	# manual
-	#doman *.1
 }
