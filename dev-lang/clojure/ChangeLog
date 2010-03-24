@@ -2,6 +2,10 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  24 Mar 2010; Daniel Solano Gómez <gentoo@sattvik.com>
+  clojure-1.0.0-r2.ebuild, clojure-1.1.0.ebuild:
+  Clojure ebuilds now use clojure eclass, so they can use clojure_dosrc
+
 *clojure-1.1.0 (23 Mar 2010)
 *clojure-1.0.0-r2 (23 Mar 2010)
 

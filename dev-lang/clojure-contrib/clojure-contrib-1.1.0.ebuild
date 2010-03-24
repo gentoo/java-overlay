@@ -23,5 +23,5 @@ src_test() {
 
 src_install() {
 	java-pkg_dojar ${PN}.jar
-	clojure_dosrc src
+	use source && clojure_dosrc src
 }

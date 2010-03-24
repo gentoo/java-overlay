@@ -4,8 +4,9 @@
 
 EAPI=2
 JAVA_PKG_IUSE="source"
+CLOJURE_BOOTSTRAP_MODE=1
 
-inherit java-pkg-2 java-ant-2
+inherit java-pkg-2 java-ant-2 clojure
 
 DESCRIPTION="Clojure is a dynamic programming language that targets the Java Virtual Machine."
 HOMEPAGE="http://clojure.org/"
@@ -30,21 +31,5 @@ src_install() {
 	java-pkg_newjar ${P}.jar
 	java-pkg_dolauncher  ${PN} --main clojure.main
 	dodoc readme.txt || die "dodoc failed"
-
-	if use source; then
-		local zip_name="${PN}-src.zip"
-		local zip_path="${T}/${zip_name}"
-		pushd src/jvm >/dev/null || die "Problem entering Java source directory"
-		zip -q -r ${zip_path} . -i '*.java'
-		popd >/dev/null
-		pushd src/clj >/dev/null || die "Problem entering Clojure source directory"
-		zip -q -r ${zip_path} . -i '*.clj'
-		popd >/dev/null
-
-		INSDESTTREE=${JAVA_PKG_SOURCESPATH} \
-			doins ${zip_path} || die "Failed to install source"
-
-		JAVA_SOURCES="${JAVA_PKG_SOURCESPATH}/${zip_name}"
-		java-pkg_do_write_
-	fi
+	use source && clojure_dosrc src/jvm src/clj
 }

@@ -47,17 +47,28 @@ WANT_CLOJURE_CONTRIB=${WANT_CLOJURE_CONTRIB:-}
 # CLOJURE_VERSION.
 CLOJURE_CONTRIB_VERSION=${CLOJURE_CONTRIB_VERSION:-${CLOJURE_VERSION}}
 
+# @ECLASS-VARIABLE: CLOJURE_BOOTSTRAP_MODE
+# @DESCRIPTION:
+# If set, the eclass will not pull in any Clojure dependencies or export the
+# compile function.  This should be used only for the ebuilds that build
+# Clojure itself.
+[[ -n "${CLOJURE_BOOTSTRAP_MODE}" ]] && CLOJURE_VERSION="bootstrap"
+
 # Check and normalise Clojure version
 case "${CLOJURE_VERSION}" in
 	1.0*)
 		CLOJURE_SLOT="0"
-		[[ -n JAVA_PKG_DEBUG && "${EBUILD_PHASE}" == "setup" ]] \
+		[[ -n "${JAVA_PKG_DEBUG}" && "${EBUILD_PHASE}" == "setup" ]] \
 			&& einfo "Building with Clojure 1.0"
 		;;
 	1.1*)
 		CLOJURE_SLOT="1.1"
-		[[ -n JAVA_PKG_DEBUG && "${EBUILD_PHASE}" == "setup" ]] \
+		[[ -n "${JAVA_PKG_DEBUG}" && "${EBUILD_PHASE}" == "setup" ]] \
 			&& einfo "Building with Clojure 1.1"
+		;;
+	bootstrap)
+		[[ -n "${JAVA_PKG_DEBUG}" && "${EBUILD_PHASE}" == "setup" ]] \
+			&& einfo "Bootstrapping Clojure"
 		;;
 	*)
 		die "Clojure version ${CLOJURE_VERSION} is not currently supported by this eclass"
@@ -77,17 +88,21 @@ ECLOJURE_DEPEND="${ECLOJURE_DEPEND} >=virtual/jdk-1.5"
 ECLOJURE_RDEPEND="${ECLOJURE_RDEPEND} >=virtual/jre-1.5"
 
 # set up Clojure depends
-ECLOJURE_CDEPEND="${ECLOJURE_CDEPEND} dev-lang/clojure:${CLOJURE_SLOT}"
-if [[ -n ${WANT_CLOJURE_CONTRIB} ]]; then
-	ECLOJURE_CDEPEND="${ECLOJURE_CDEPEND} \
-		dev-lang/clojure-contrib:${CLOJURE_SLOT}"
+if [[ "${CLOJURE_VERSION}" != "bootstrap" ]]; then
+	ECLOJURE_CDEPEND="${ECLOJURE_CDEPEND} dev-lang/clojure:${CLOJURE_SLOT}"
+	if [[ -n ${WANT_CLOJURE_CONTRIB} ]]; then
+		ECLOJURE_CDEPEND="${ECLOJURE_CDEPEND} \
+			dev-lang/clojure-contrib:${CLOJURE_SLOT}"
+	fi
 fi
 
 # finalise depends
 DEPEND="${ECLOJURE_CDEPEND} ${ECLOJURE_DEPEND}"
 RDEPEND="${ECLOJURE_CDEPEND} ${ECLOJURE_RDEPEND}"
 
-EXPORT_FUNCTIONS src_compile
+if [[ "${CLOJURE_VERSION}" != "bootstrap" ]]; then
+	EXPORT_FUNCTIONS src_compile
+fi
 
 # @FUNCTION: clojure_src_compile
 # @USAGE:
@@ -123,7 +138,7 @@ clojure_dosrc() {
 	[[ ${#} -lt 1 ]] && die "${FUNCNAME}: At least one argument needed"
 
 	local zip_name="${PN}-src.zip"
-	local javaincl="-i '*.java'"
+	local javaincl="-i *.java"
 	while [[ ${1} == --* ]]; do
 		if [[ ${1} == "--zip-name" ]]; then
 			[[ ${#} -lt 2 ]] && die "${FUNCNAME}: --zip-name requires an argument"
