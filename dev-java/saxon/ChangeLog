@@ -2,6 +2,10 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  28 Mar 2010; Vlastimil Babka <caster@gentoo.org> -files/9.2-build.xml,
+  -saxon-9.2.0.6.ebuild, -files/9.2-edition.properties:
+  Moved to main tree.
+
   23 Mar 2010; Hanno Meyer-Thurow <h.mth@web.de> saxon-9.2.0.6.ebuild:
   fix external javadoc; package.env:DEPEND still bogus.
 
