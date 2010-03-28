@@ -1,6 +1,12 @@
 # ChangeLog for dev-java/gluegen
-# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  28 Mar 2010; Alistair Bush <ali_bush@gentoo.org> gluegen-20080421.ebuild:
+  Fix compile error on amd64
+
+  19 Feb 2010; Alistair Bush <ali_bush@gentoo.org> gluegen-20080421.ebuild:
+  Fix build-only dep errors.
 
 *gluegen-20090509 (09 May 2009)
 *gluegen-20080421 (09 May 2009)
