@@ -2,6 +2,14 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.7.3 (31 Mar 2010)
+
+  31 Mar 2010; Andrew John Hughes <andrew@gentoo.org>
+  -files/1.7.2-free.patch, -icedtea-6.1.7.2-r1.ebuild,
+  +icedtea-6.1.7.3.ebuild:
+  Bump to 1.7.3; same as 1.7.2-r1 i.e. 1.7.2 with
+  https://bugzilla.mozilla.org/show_bug.cgi?id=555342 fix.
+
 *icedtea-6.1.7.2-r1 (31 Mar 2010)
 
   31 Mar 2010; Andrew John Hughes <andrew@gentoo.org>
