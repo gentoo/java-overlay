@@ -155,6 +155,10 @@ src_unpack() {
 	unpack ${ICEDTEA_PKG}.tar.gz
 }
 
+src_prepare() {
+	epatch "${FILESDIR}/1.7.2-free.patch"
+}
+
 unset_vars() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 }

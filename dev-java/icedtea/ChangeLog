@@ -2,6 +2,13 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.7.2-r1 (31 Mar 2010)
+
+  31 Mar 2010; Andrew John Hughes <andrew@gentoo.org>
+  +files/1.7.2-free.patch, -icedtea-6.1.7.2.ebuild,
+  +icedtea-6.1.7.2-r1.ebuild:
+  Fix buffer overflow bug in plugin.
+
 *icedtea-6.1.7.2 (31 Mar 2010)
 
   31 Mar 2010; Andrew John Hughes <andrew@gentoo.org>
