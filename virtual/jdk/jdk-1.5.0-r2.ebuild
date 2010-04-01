@@ -12,7 +12,9 @@ KEYWORDS="~amd64 ~ia64 ~ppc ~ppc64 ~x86 ~ppc-aix ~x86-fbsd ~x86-freebsd ~amd64-l
 IUSE=""
 
 RDEPEND="|| (
-		=virtual/gnu-classpath-jdk-1.5
+		>=dev-java/gcj-jdk-4.3
+		=dev-java/jamvm-1.5*
+		>=dev-java/cacao-0.99.2
 		=dev-java/sun-jdk-1.5.0*
 		=dev-java/ibm-jdk-bin-1.5.0*
 		=dev-java/jrockit-jdk-bin-1.5.0*

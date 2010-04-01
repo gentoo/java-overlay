@@ -17,7 +17,6 @@ IUSE=""
 RDEPEND="|| (
 		dev-java/icedtea6-bin
 		dev-java/icedtea:6
-		dev-java/icedtea6
 		=dev-java/sun-jdk-1.6.0*
 		=dev-java/ibm-jdk-bin-1.6.0*
 		=dev-java/hp-jdk-bin-1.6.0*

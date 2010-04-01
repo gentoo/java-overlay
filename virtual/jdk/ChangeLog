@@ -2,6 +2,12 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  01 Apr 2010; Vlastimil Babka <caster@gentoo.org> -jdk-1.5.0-r1.ebuild,
+  jdk-1.5.0-r2.ebuild, -jdk-1.6.0-r1.ebuild, jdk-1.6.0-r2.ebuild:
+  Instead of gnu-classpath-jdk, list all its alternatives directly. The
+  extra dep indirection was only causing dependency resolution troubles.
+  Remove the old icedtea6 name.
+
   22 Feb 2010; Vlastimil Babka <caster@gentoo.org> jdk-1.4.2-r1.ebuild:
   Add 1.4 from main tree.
 
