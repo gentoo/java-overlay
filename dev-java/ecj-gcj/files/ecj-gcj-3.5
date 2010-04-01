@@ -10,4 +10,4 @@ if [[ ! -f ${GIJ_BIN} ]]; then
 	exit 1
 fi
 # calling java-config would be an unnecessary slowdown here
-${GIJ_BIN} -classpath /usr/share/ecj-gcj/lib/ecj.jar org.eclipse.jdt.internal.compiler.batch.Main "${@}"
+${GIJ_BIN} -classpath /usr/share/ecj-gcj-3.5/lib/ecj.jar org.eclipse.jdt.internal.compiler.batch.Main "${@}"

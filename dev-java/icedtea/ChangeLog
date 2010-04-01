@@ -2,6 +2,10 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  01 Apr 2010; Andrew John Hughes <andrew@gentoo.org>
+  icedtea-6.1.7.3.ebuild:
+  Depend on new eselect-ecj for ecj.jar, not a specific ecj.
+
 *icedtea-6.1.7.3 (31 Mar 2010)
 
   31 Mar 2010; Andrew John Hughes <andrew@gentoo.org>

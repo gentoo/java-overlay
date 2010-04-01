@@ -75,8 +75,8 @@ RDEPEND=">=net-print/cups-1.2.12
 #   xext headers have two variants depending on version - bug #288855
 DEPEND="${RDEPEND}
 	|| (
-		( >=dev-java/gcj-jdk-4.3 dev-java/eclipse-ecj:3.3 )
-		( >=dev-java/cacao-0.99.2 dev-java/eclipse-ecj:3.3 )
+		( >=dev-java/gcj-jdk-4.3 =app-admin/eselect-ecj-0.5-r1 )
+		( >=dev-java/cacao-0.99.2 =app-admin/eselect-ecj-0.5-r1 )
 		dev-java/icedtea6-bin
 		dev-java/icedtea:${SLOT}
 	)
@@ -170,7 +170,7 @@ src_configure() {
 		config="${config} --with-openjdk=$(java-config -O)"
 	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" ]] ; then
 		# For other 1.5 JDKs e.g. GCJ, CACAO.
-		config="${config} --with-ecj-jar=$(java-pkg_getjar --build-only eclipse-ecj:3.3 ecj.jar)" \
+		config="${config} --with-ecj-jar=/usr/share/eclipse-ecj/ecj.jar" \
 		config="${config} --with-gcj-home=${vmhome}"
 	else
 		eerror "IcedTea${SLOT} must be built with either a JDK based on GNU Classpath or an existing build of IcedTea${SLOT}."
