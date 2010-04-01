@@ -15,8 +15,10 @@ KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 SLOT="0"
 IUSE=""
 
+ECJ_GCJ_SLOT="3.5"
+
 RDEPEND="~sys-devel/gcc-${PV}[gcj]
-	dev-java/ecj-gcj"
+	dev-java/ecj-gcj:${ECJ_GCJ_SLOT}"
 DEPEND="${RDEPEND}"
 
 JAVA_PROVIDE="jdbc-stdext jdbc2-stdext gnu-jaxp"
@@ -71,7 +73,7 @@ src_install() {
 		${gcjhome}/lib/tools.jar
 	dosym ${gcclib}/include ${gcjhome}
 
-	dosym /usr/bin/ecj-gcj ${gcjhome}/bin/javac;
+	dosym /usr/bin/ecj-gcj-${ECJ_GCJ_SLOT} ${gcjhome}/bin/javac;
 	dosym /usr/bin/gij ${gcjhome}/bin/java;
 
 	set_java_env

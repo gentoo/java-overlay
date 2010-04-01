@@ -2,6 +2,10 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  01 Apr 2010; Vlastimil Babka <caster@gentoo.org> -gcj-jdk-4.3-r4.ebuild,
+  +gcj-jdk-4.3-r5.ebuild, -gcj-jdk-4.4.3.ebuild, +gcj-jdk-4.4.3-r1.ebuild:
+  Update to ecj-gcj:3.5
+
   22 Mar 2010; Vlastimil Babka <caster@gentoo.org> +gcj-jdk-4.4.3.ebuild:
   Version bump - match exact gcc version, as the symlinks get broken on each
   gcc update anyway. Use the new ecj-gcj package as javac to remove dependency

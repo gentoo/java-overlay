@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2010 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -16,7 +16,7 @@ SLOT="0"
 IUSE=""
 
 RDEPEND=">=sys-devel/gcc-4.3[gcj]
-	~dev-java/eclipse-ecj-3.3.0-r7
+	dev-java/ecj-gcj:3.5
 	>=dev-java/java-config-2"
 DEPEND="${RDEPEND}"
 PDEPEND="dev-java/gjdoc"
@@ -63,8 +63,7 @@ src_install() {
 		${gcjhome}/lib/tools.jar
 	dosym ${gcclib}/include ${gcjhome}
 
-	# the /usr/bin/ecj symlink is managed by eselect-ecj
-	dosym /usr/bin/ecj ${gcjhome}/bin/javac;
+	dosym /usr/bin/ecj-gcj-3.5 ${gcjhome}/bin/javac;
 	dosym /usr/bin/gij ${gcjhome}/bin/java;
 
 	# use gjdoc for javadoc
