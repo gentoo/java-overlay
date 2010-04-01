@@ -2,6 +2,10 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  01 Apr 2010; Vlastimil Babka <caster@gentoo.org> ecj-gcj-3.5.2-r1.ebuild:
+  Block the former eclipse-ecj:3.5[gcj] ebuild to prevent file collisions.
+  Downgrade eclipse-ecj:3.5 to the main tree version if you hit the block.
+
   01 Apr 2010; Vlastimil Babka <caster@gentoo.org> +ecj-gcj-3.5.2-r1.ebuild:
   Revbump to ensure everyone gets the changes. Remove dependencies on jdk/jre
   and use gcj manually to compile, to break circular deps. Put back the native

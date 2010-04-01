@@ -30,7 +30,8 @@ CDEPEND="sys-devel/gcc[gcj]
 	>=app-admin/eselect-ecj-0.5-r1"
 DEPEND="${CDEPEND}
 	app-arch/unzip
-	userland_GNU? ( sys-apps/findutils )"
+	userland_GNU? ( sys-apps/findutils )
+	!dev-java/eclipse-ecj:3.5[gcj]"
 RDEPEND="${CDEPEND}"
 
 src_unpack() {
