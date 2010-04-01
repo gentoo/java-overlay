@@ -96,7 +96,6 @@ DEPEND="${RDEPEND}
 		dev-java/icedtea:6
 		dev-java/icedtea6
 	)
-	>=virtual/jdk-1.5
 	app-arch/zip
 	>=dev-java/xalan-2.7.0:0
 	>=dev-java/xerces-2.9.1:2
@@ -107,6 +106,11 @@ DEPEND="${RDEPEND}
 	dev-libs/openssl
 	sys-apps/lsb-release
 	 || ( >=sys-devel/autoconf-2.65:2.5 <sys-devel/autoconf-2.64:2.5 )"
+
+# a bit of hack so the VM switching is triggered without causing dependency troubles
+JAVA_PKG_NV_DEPEND=">=virtual/jdk-1.5"
+JAVA_PKG_WANT_SOURCE="1.5"
+JAVA_PKG_WANT_TARGET="1.5"
 
 pkg_setup() {
 # Shark support disabled for now - still experimental and needs sys-devel/llvm
