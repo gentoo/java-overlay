@@ -49,6 +49,7 @@ src_unpack() {
 	cd "${S}"
 	mkdir -p build/tmp-xbean
 	touch build/tmp-xbean/xbean.zip
+	touch lib/jsr173_1.0_api.jar
 }
 
 src_install() {
