@@ -43,6 +43,7 @@ src_unpack() {
 
 	mkdir lib/ && cd lib/ || die
 	java-pkg_jar-from xml-xmlbeans-1 xbean.jar
+	touch jsr173_1.0_api.jar
 
 	# Stop downloading of deps
 	cd "${S}"
