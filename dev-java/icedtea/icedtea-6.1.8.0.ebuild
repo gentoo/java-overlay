@@ -13,7 +13,7 @@ inherit pax-utils java-pkg-2 java-vm-2
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="6"
-#KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
 DESCRIPTION="A harness to build the OpenJDK using Free Software build tools and dependencies"
 ICEDTEA_VER="1.8"
@@ -39,7 +39,7 @@ S=${WORKDIR}/${ICEDTEA_PKG}
 # Missing options:
 # shark - still experimental, requires llvm which is not yet packaged
 # visualvm - requries netbeans which would cause major bootstrap issues
-IUSE="cacao debug doc examples +hs16 javascript nio2 +npplugin nsplugin +nss pulseaudio systemtap +xrender zero"
+IUSE="cacao debug doc examples +hs16 javascript nio2 nsplugin +nss pulseaudio systemtap +xrender zero"
 
 # JTReg doesn't pass at present
 RESTRICT="test"
@@ -61,7 +61,7 @@ RDEPEND=">=net-print/cups-1.2.12
 	 >=sys-libs/zlib-1.2.3
 	 x11-proto/inputproto
 	 x11-proto/xineramaproto
-	 nsplugin? ( >=net-libs/xulrunner-1.9 )
+	 nsplugin? ( >=net-libs/xulrunner-1.9.1 )
 	 pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
 	 javascript? ( dev-java/rhino:1.6 )
 	 zero? ( virtual/libffi )
@@ -121,11 +121,6 @@ pkg_setup() {
 #		die "Rebuild without the shark USE flag on or with the zero USE flag turned on."
 #	  fi
 #	fi
-
-	if use nsplugin && ! use npplugin && has_version ">=net-libs/xulrunner-1.9.2"; then
-		eerror "The old plugin will not work with xulrunner >= 1.9.2 / Firefox >= 3.6."
-		die "Rebuild with the npplugin USE flag enabled."
-	fi
 
 	# quite a hack since java-config does not provide a way for a package
 	# to limit supported VM's for building and their preferred order
@@ -202,10 +197,6 @@ src_configure() {
 
 	if use javascript ; then
 		rhino_jar=$(java-pkg_getjar rhino:1.6 js.jar);
-	fi
-
-	if use nsplugin && use npplugin ; then
-		config="${config} --enable-npplugin"
 	fi
 
 	if use hs16 ; then
@@ -289,11 +280,7 @@ src_install() {
 
 	if use nsplugin; then
 		use x86 && arch=i386;
-		if use npplugin; then
-		   install_mozilla_plugin "${dest}/jre/lib/${arch}/IcedTeaNPPlugin.so";
-		else
-		   install_mozilla_plugin "${dest}/jre/lib/${arch}/IcedTeaPlugin.so";
-		fi
+		install_mozilla_plugin "${dest}/jre/lib/${arch}/IcedTeaPlugin.so";
 	fi
 
 	# We need to generate keystore - bug #273306
@@ -322,18 +309,8 @@ pkg_postinst() {
 	java-vm-2_pkg_postinst
 
 	if use nsplugin; then
-		elog "The icedtea${SLOT} browser plugin can be enabled using eselect java-nsplugin"
-		if use npplugin; then
-			elog "Note that the IcedTeaNPPlugin works only in browsers based on xulrunner-1.9.1 or later"
-			elog "such as Firefox 3.5+, Chromium and perhaps some others too, and it is considered"
-			elog "alpha quality by upstream. The older plugin can be built with USE=\"-nnplugin\""
-			elog "but it does not support xulrunner-1.9.2 (Firefox 3.6) or Chromium."
-		else
-			elog "Note that the IcedTeaPlugin works only in browsers based on xulrunner-1.9.0 or 1.9.1"
-			elog "such as Firefox 3 or 3.5, Epiphany 2.24 and not in older versions!"
-			elog "Also note that you need to recompile icedtea${SLOT} if you upgrade"
-			elog "from xulrunner-1.9.0 to 1.9.1."
-			elog "To support xulrunner-1.9.2 (Firefox 3.6) and Chromium, enable USE=npplugin"
-		fi
+		elog "The icedtea${SLOT} browser plugin (NPPlugin) can be enabled using eselect java-nsplugin"
+		elog "Note that the plugin works only in browsers based on xulrunner-1.9.1 or later"
+		elog "such as Firefox 3.5+, Chromium and perhaps some others too."
 	fi
 }
