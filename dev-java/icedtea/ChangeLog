@@ -2,6 +2,10 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  15 Apr 2010; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.8.0.ebuild:
+  Add ant-nodeps to DEPEND since it's used in ANT_TASKS variable. Bug
+  #315457.
+
   14 Apr 2010; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.8.0.ebuild:
   Restore keywords and redigest for the final 1.8 release. Remove the
   npplugin flag as upstream removed to old plugin - the npplugin is now

@@ -90,6 +90,7 @@ DEPEND="${RDEPEND}
 	>=dev-java/xalan-2.7.0:0
 	>=dev-java/xerces-2.9.1:2
 	>=dev-java/ant-core-1.7.1-r2
+	dev-java/ant-nodeps
 	app-misc/ca-certificates
 	dev-lang/perl
 	dev-libs/openssl
