@@ -9,7 +9,7 @@
 
 EAPI="2"
 
-inherit pax-utils java-pkg-2 java-vm-2
+inherit autotools pax-utils java-pkg-2 java-vm-2
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="6"
@@ -157,6 +157,15 @@ src_unpack() {
 		die "Unable to find a supported VM for building"
 	fi
 	unpack ${ICEDTEA_PKG}.tar.gz
+}
+
+src_prepare() {
+	# Fix build with SystemTap + gcc 4.5
+	# http://icedtea.classpath.org/bugzilla/show_bug.cgi?id=476
+	if use systemtap; then
+		epatch "${FILESDIR}/${PV}-systemtap-gcc-4.5.patch"
+		eautoreconf || die "eautoreconf failed"
+	fi
 }
 
 unset_vars() {
