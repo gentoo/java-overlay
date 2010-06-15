@@ -2,6 +2,11 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*gcj-jdk-4.4.4 (15 Jun 2010)
+
+  15 Jun 2010; Vlastimil Babka <caster@gentoo.org> +gcj-jdk-4.4.4.ebuild:
+  Bump 4.4 to latest version.
+
   27 Apr 2010; Andrew John Hughes <andrew@gentoo.org> gcj-jdk-4.5.0.ebuild:
   Remove keywords from gcj-jdk-4.5.0 until it is available in the main tree.
 
