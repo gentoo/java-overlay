@@ -6,6 +6,11 @@
 # NOTE: Please add your entry at the top!
 #
 
+# Vlastimil Babka <caster@gentoo.org) (30 Jun 2010)
+# Unmask sun-jdk-1.5 that is masked in the main tree, as the
+# overlays are not ready for its removal yet.
+-=dev-java/sun-jdk-1.5*
+
 # Vlastimil Babka <caster@gentoo.org) (2 Feb 2010)
 # Instruction for migration from icedtea6 to new slotted icedtea:6
 # It is a bit tricky due to a blocker needed to prevent file collisions.
