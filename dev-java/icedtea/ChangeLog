@@ -2,9 +2,134 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
-  28 Apr 2010; Andrew John Hughes <andrew@gentoo.org>
-  +files/6.1.8.0-systemtap-gcc-4.5.patch,
-  +files/6.1.7.3-systemtap-gcc-4.5.patch, icedtea-6.1.7.3.ebuild,
+*icedtea-6.1.8.1 (28 Jul 2010)
+*icedtea-6.1.7.4 (28 Jul 2010)
+
+  28 Jul 2010; Andrew John Hughes <andrew@gentoo.org>
+  -files/6.1.8.0-systemtap-gcc-4.5.patch, -icedtea-6.1.7.3.ebuild,
+  +icedtea-6.1.7.4.ebuild, -icedtea-6.1.8.0.ebuild, +icedtea-6.1.8.1.ebuild:
+  Bump to new 1.7.4 and 1.8.1 security releases.
+
+  New in release 1.7.4 (2010-07-28):
+
+  * NetX security issues:
+  - (CVE-2010-2783, RH616895): IcedTea 'Extended JNLP Services' arbitrary
+  file access
+  - (CVE-2010-2548, RH616893): IcedTea Incomplete property access check for
+  unsigned applications
+  * Backport --with-tzdata-dir support from IcedTea6 1.8 to ensure
+  that external timezone data works again.
+  * Restore icedtea-override-metacity.patch to allow full screen apps and
+  other expected behavioral improvements.
+  * S6678385, RH551835: Fixes JVM crashes when window is resized.
+  * S6668231: Presence of a critical subjectAltName causes JSSE's SunX509 to
+  fail trusted checks.
+  * S6963870: Eliminate NullPointerEx in swing class CompoundBorder method
+  getBorderInsets.
+  * S4891262: API spec, javax/accessibility: few invalid javadoc tags.
+  * S6737212: Fixed javadoc warning messages in RowSet classes.
+  * S6875861: javadoc build warning on java.util.Properites from
+  unconventional @see ordering.
+  * S6909563: Javadoc build warnings in rmi, security, management.
+  * S6879689: Fix warning about ignored return value when compiling with -O2
+  * S6917485: Corba doc warnings.
+  * S6921068: Remove javadoc build warnings from specdefault tag.
+  * PR453, OJ100142: Fix policy evaluation to match the proprietary JDK.
+  * Make the new plugin the default. This is now the main supported
+  plugin. Use --disable-npplugin to use the old one.
+  * New plugin:
+  - Added support for JSObject.finalize()
+  - Liveconnect message processing design changes.
+  - Message protocol overhaul to fix race conditions
+  - PR166: Create FIFO pies in temp dir instead of ~/.icedteaplugin
+  - Profiled memory usage and implemented proper cleanup for C++ side.
+  - Update debug output string and function/structure names to
+  change 'GCJ' references to ITNP/IcedTea NP Plugin
+  - PR461: plugin working for NSS enabled builds with firefox including a
+  private NSS copy
+  - Removed unncessary debug and trace output
+  - PR474: Patch from Paulo Cesar Pereira de Andrade, incrementing malloc
+ size to account for NULL terminator.
+  - RH524387: javax.net.ssl.SSLKeyException: RSA premaster secret error
+  - Set context classloader for all threads in an applet's threadgroup
+  - PR436: Close all applet threads on exit
+  - PR480: NPPlugin with NoScript extension.
+  - PR488: Question mark changing into underscore in URL.
+  - RH592553: Fix bug causing 100% CPU usage.
+  - Don't generate a random pointer from a pthread_t in the debug output.
+  - Add ForbiddenTargetException for legacy support.
+  - Use variadic macro for plugin debug message printing.
+  - Don't link the plugin with libxul libraries.
+  - Fix race conditions in plugin initialization code that were causing
+ hangs.
+  - RH506730: BankID (Norwegian common online banking authentication system)
+ applet fails to load.
+  - PR491: pass java_{code,codebase,archive} parameters to Java.
+  - Adds javawebstart.version property and give user permission to read that
+ property.
+ * NetX:
+  - Make path sanitization consistent; use a blacklisting approach.
+  - Make the SingleInstanceServer thread a daemon thread.
+  - Handle JNLP files which use native libraries but do not indicate it
+  - Allow JNLP classloaders to share native libraries
+  - Added encoding support
+ * PulseAudio provider:
+  - Eliminate spurious exception throwing.
+ * SystemTap support:
+  - PR476: Enable building SystemTap support on GCC 4.5.
+  - Fix HotSpot tapset object_alloc size variable.
+ * NIO2 support:
+  - Fix UnixNativeDispatcher to build on all systems, not just x86 and
+ x86_64.
+
+  New in release 1.8.1 (2010-07-28):
+
+ * OpenJDK:
+  - 6678385: Fixes jvm crashes when window is resized.
+  - Produces the "expected" behavior for full screen applications, when
+  running the Metacity window manager.
+ * IcedTeaNPPlugin.
+  - RH524387: javax.net.ssl.SSLKeyException: RSA premaster secret error
+  - Set context classloader for all threads in an applet's threadgroup
+  - PR436: Close all applet threads on exit
+  - PR480: NPPlugin with NoScript extension.
+  - PR488: Question mark changing into underscore in URL.
+  - RH592553: Fix bug causing 100% CPU usage.
+  - Don't generate a random pointer from a pthread_t in the debug output.
+  - Add ForbiddenTargetException for legacy support.
+  - Use variadic macro for plugin debug message printing.
+  - Don't link the plugin with libxul libraries.
+  - Fix race conditions in plugin initialization code that were causing
+ hangs.
+  - RH506730: BankID (Norwegian common online banking authentication system)
+ applet fails to load.
+  - Fix policy evaluation to match the proprietary JDK.
+  - PR491: pass java_{code,codebase,archive} parameters to Java.
+  - Adds javawebstart.version property and give user permission to read that
+ property.
+ * NetX:
+  - Fix security flaw in NetX that allows arbitrary unsigned apps to set
+  any java property.
+  - Fix a flaw that allows unsigned code to access any file on the
+  machine (accessible to the user) and write to it.
+  - Make path sanitization consistent; use a blacklisting approach.
+  - Make the SingleInstanceServer thread a daemon thread.
+  - Handle JNLP files which use native libraries but do not indicate it
+  - Allow JNLP classloaders to share native libraries
+  - Added encoding support
+ - PulseAudio:
+  - Eliminate spurious exception throwing.
+ - Zero/Shark:
+  - PR shark/483: Fix miscompilation of sun.misc.Unsafe::getByte.
+  - PR PR icedtea/324, icedtea/481: Fix Shark VM crash.
+  - Fix Zero build on Hitachi SH.
+ * SystemTap support:
+  - PR476: Enable building SystemTap support on GCC 4.5.
+
+	28 Apr 2010; Andrew John Hughes <andrew@gentoo.org>
+
+	+files/6.1.8.0-systemtap-gcc-4.5.patch,
+ +files/6.1.7.3-systemtap-gcc-4.5.patch, icedtea-6.1.7.3.ebuild,
   -icedtea-6.1.8.0.ebuild:
   PR146: Fix build with GCC 4.5 & SystemTap
 
