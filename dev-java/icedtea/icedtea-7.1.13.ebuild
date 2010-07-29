@@ -16,17 +16,17 @@ SLOT="7"
 #KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
-ICEDTEA_VER="1.12"
+ICEDTEA_VER="1.13"
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-OPENJDK_TARBALL="f0bfd9bd1a0e.tar.gz"
-LANGTOOLS_TARBALL="83367f01297b.tar.gz"
-JAXP_TARBALL="fb68fd18eb9f.tar.gz"
-JAXWS_TARBALL="0dc08d528c99.tar.gz"
-CORBA_TARBALL="d728db3889da.tar.gz"
-JDK_TARBALL="fb2ee5e96b17.tar.gz"
-HOTSPOT_TARBALL="b4ab978ce52c.tar.gz"
-CACAO_TARBALL="cacao-0.99.4.tar.bz2"
-JAXP_DROP="jdk7-jaxp-m5.zip"
+OPENJDK_TARBALL="195fcceefddc.tar.gz"
+LANGTOOLS_TARBALL="681f1f51926f.tar.gz"
+JAXP_TARBALL="826bafcb6c4a.tar.gz"
+JAXWS_TARBALL="1661166c82dc.tar.gz"
+CORBA_TARBALL="e805b4155d76.tar.gz"
+JDK_TARBALL="2017795af50a.tar.gz"
+HOTSPOT_TARBALL="a393ff93e7e5.tar.gz"
+CACAO_TARBALL="66e762d869dd.tar.bz2"
+JAXP_DROP="jdk7-jaxp-m6.zip"
 JAXWS_DROP="jdk7-jaxws-2009_09_28.zip"
 JAF_DROP="jdk7-jaf-2009_08_28.zip"
 SRC_URI="http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
@@ -37,10 +37,10 @@ SRC_URI="http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
 		 http://hg.openjdk.java.net/icedtea/jdk7/jdk/archive/${JDK_TARBALL}
 		 http://hg.openjdk.java.net/icedtea/jdk7/hotspot/archive/${HOTSPOT_TARBALL}
 		 http://hg.openjdk.java.net/icedtea/jdk7/langtools/archive/${LANGTOOLS_TARBALL}
-		 https://jaxp.dev.java.net/files/documents/913/144160/${JAXP_DROP}
+		 https://jaxp.dev.java.net/files/documents/913/147490/${JAXP_DROP}
 		 http://kenai.com/projects/jdk7-drops/downloads/download/${JAXWS_DROP}
 		 http://kenai.com/projects/jdk7-drops/downloads/download/${JAF_DROP}
-		 cacao? ( http://www.complang.tuwien.ac.at/cacaojvm/download/cacao-0.99.4/${CACAO_TARBALL} )"
+		 cacao? ( http://mips.complang.tuwien.ac.at/hg/cacao/archive/${CACAO_TARBALL} )"
 HOMEPAGE="http://icedtea.classpath.org"
 S=${WORKDIR}/${ICEDTEA_PKG}
 
@@ -48,9 +48,6 @@ S=${WORKDIR}/${ICEDTEA_PKG}
 # shark - still experimental, requires llvm which is not yet packaged
 # visualvm - requries netbeans which would cause major bootstrap issues
 IUSE="cacao debug doc examples javascript nsplugin pulseaudio systemtap xrender zero"
-
-# JTReg doesn't pass at present
-RESTRICT="test"
 
 RDEPEND=">=net-print/cups-1.2.12
 	 >=x11-libs/libX11-1.1.3
@@ -168,16 +165,6 @@ src_unpack() {
 	unpack ${ICEDTEA_PKG}.tar.gz
 }
 
-src_prepare() {
-	# bug #288855 - ABI is the same, just definitions moved between headers
-	# conditional patching should be thus safe
-	if has_version ">=x11-libs/libXext-1.1.1"; then
-		epatch "${FILESDIR}/1.12-shmproto.patch"
-
-		eautoreconf || die "eautoreconf failed"
-	fi
-}
-
 unset_vars() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 }
@@ -227,6 +214,7 @@ src_configure() {
 		--with-cacao-src-zip="${DISTDIR}/${CACAO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
+		--disable-jdk-tests \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nsplugin plugin) \
@@ -258,11 +246,10 @@ src_install() {
 	dodir "${dest}" || die
 
 	local arch=${ARCH}
-	use x86 && arch=i586
 
 	dodoc README NEWS AUTHORS || die
 
-	cd "${S}/openjdk/build/linux-${arch}/j2sdk-image" || die
+	cd "${S}/openjdk.build/j2sdk-image" || die
 
 	if use doc ; then
 		# java-pkg_dohtml needed for package-list #302654
@@ -290,7 +277,7 @@ src_install() {
 
 	if use nsplugin; then
 		use x86 && arch=i386;
-		install_mozilla_plugin "${dest}/jre/lib/${arch}/IcedTeaPlugin.so";
+		install_mozilla_plugin "${dest}/jre/lib/${arch}/IcedTeaNPPlugin.so";
 	fi
 
 	# We need to generate keystore - bug #273306
@@ -319,10 +306,8 @@ pkg_postinst() {
 	java-vm-2_pkg_postinst
 
 	if use nsplugin; then
-		elog "The icedtea${SLOT} browser plugin can be enabled using eselect java-nsplugin"
-		elog "Note that the plugin works only in browsers based on xulrunner-1.9"
-		elog "such as Firefox 3 or Epiphany 2.24 and not in older versions!"
-		elog "Also note that you need to recompile icedtea${SLOT} if you upgrade"
-		elog "from xulrunner-1.9.0 to 1.9.1."
+		elog "The icedtea${SLOT} browser plugin (NPPlugin) can be enabled using eselect java-nsplugin"
+		elog "Note that the plugin works only in browsers based on xulrunner-1.9.1 or later"
+		elog "such as Firefox 3.5+, Chromium and perhaps some others too."
 	fi
 }

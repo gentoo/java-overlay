@@ -2,6 +2,15 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.1.13 (29 Jul 2010)
+
+  29 Jul 2010; Andrew John Hughes <andrew@gentoo.org>
+  -files/1.12-shmproto.patch, -icedtea-7.1.12-r1.ebuild,
+  +icedtea-7.1.13.ebuild:
+  Move to IcedTea7 1.13 release.
+
+  See http://blog.fuseyism.com/index.php/2010/07/29/icedtea7-113-released/
+
 *icedtea-6.1.8.1 (28 Jul 2010)
 *icedtea-6.1.7.4 (28 Jul 2010)
 
