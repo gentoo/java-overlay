@@ -2,6 +2,15 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.7.4-r1 (06 Aug 2010)
+
+  06 Aug 2010; Andrew John Hughes <andrew@gentoo.org>
+  -files/6.1.7.3-systemtap-gcc-4.5.patch, -icedtea-6.1.7.4.ebuild,
+  +icedtea-6.1.7.4-r1.ebuild, +files/6.1.7.4-244901.patch,
+  +files/6.1.7.4-266295.patch:
+  Revision bump. Add patches to fix bug #244901 and #266295. Remove unused
+  patch.
+
 *icedtea-7.1.13 (29 Jul 2010)
 
   29 Jul 2010; Andrew John Hughes <andrew@gentoo.org>
