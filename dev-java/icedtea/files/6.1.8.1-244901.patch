@@ -1,0 +1,238 @@
+# HG changeset patch
+# User Andrew John Hughes <ahughes@redhat.com>
+# Date 1281557050 -3600
+# Node ID 3fd44a9bb9a3cdad8870f320a577d298e1703fc8
+# Parent  4a022b4a3319647794470efc9a49d2e0455c4f90
+G244901: Skip test_gamma on hardened (PaX-enabled) kernels
+
+2010-08-06  Andrew John Hughes  <ahughes@redhat.com>
+
+	Fix build on PAX-enabled kernels.
+	https://bugs.gentoo.org/244901
+	* Makefile.am:
+	(ICEDTEA_PATCHES): Add test_gamma patch
+	if PAX is enabled.
+	(ICEDTEA_ECJ_PATCHES): Add test_gamma patch
+	if PAX not enabled (and thus not already patched).
+	* NEWS: Mention new bug fix.
+	* acinclude.m4:
+	(IT_CHECK_FOR_PAX): Check for a PaX-enabled kernel.
+	* configure.ac: Call above macro.
+	* patches/ecj/icedtea-hotspot.patch: Remove
+	test_gamma segment into separate patch.
+	* patches/ecj/no-test_gamma.patch: test_gamma
+	patch for non-PaX-enabled kernels (i.e. bootstrap
+	build only).
+	* patches/no-test_gamma.patch: test_gamma patch
+	for PaX-enabled kernels.
+
+diff -r 4a022b4a3319 -r 3fd44a9bb9a3 Makefile.am
+--- a/Makefile.am	Mon Aug 09 11:30:52 2010 -0400
++++ b/Makefile.am	Wed Aug 11 21:04:10 2010 +0100
+@@ -399,6 +399,10 @@
+ 	patches/openjdk/6822370-reentrantreadwritelock.patch
+ endif
+ 
++if HAS_PAX
++ICEDTEA_PATCHES += patches/no-test_gamma.patch
++endif
++
+ ICEDTEA_PATCHES += $(DISTRIBUTION_PATCHES)
+ 
+ # Bootstrapping patches
+@@ -419,6 +423,10 @@
+ 
+ ICEDTEA_ECJ_PATCHES += $(DISTRIBUTION_ECJ_PATCHES)
+ 
++if !HAS_PAX
++ICEDTEA_ECJ_PATCHES += patches/ecj/no-test_gamma.patch
++endif
++
+ # OpenJDK build environment.
+ if ZERO_BUILD
+   ICEDTEA_ZERO_BUILD = true
+diff -r 4a022b4a3319 -r 3fd44a9bb9a3 acinclude.m4
+--- a/acinclude.m4	Mon Aug 09 11:30:52 2010 -0400
++++ b/acinclude.m4	Wed Aug 11 21:04:10 2010 +0100
+@@ -1485,6 +1485,17 @@
+ fi
+ ])
+ 
++AC_DEFUN_ONCE([IT_CHECK_FOR_PAX],[
++AC_CACHE_CHECK([if a PaX-enabled kernel is running], it_cv_pax, [
++if grep '^PaX:' /proc/self/status >&AS_MESSAGE_LOG_FD 2>&1; then
++  it_cv_pax=yes;
++else
++  it_cv_pax=no;
++fi
++])
++AM_CONDITIONAL([HAS_PAX], test x"${it_cv_pax}" = "xyes")
++AC_PROVIDE([$0])dnl
++])
+ AC_DEFUN_ONCE([IT_OBTAIN_DEFAULT_LIBDIR],
+ [
+ dnl find the system library directory
+diff -r 4a022b4a3319 -r 3fd44a9bb9a3 configure.ac
+--- a/configure.ac	Mon Aug 09 11:30:52 2010 -0400
++++ b/configure.ac	Wed Aug 11 21:04:10 2010 +0100
+@@ -50,6 +50,7 @@
+ AC_CHECK_GCC_VERSION
+ AC_CHECK_FOR_OPENJDK
+ IT_CHECK_NUMBER_OF_PARALLEL_JOBS
++IT_CHECK_FOR_PAX
+ 
+ AC_MSG_CHECKING([for a NetBeans installation])
+ AC_ARG_WITH([netbeans-home],
+diff -r 4a022b4a3319 -r 3fd44a9bb9a3 patches/ecj/icedtea-hotspot.patch
+--- a/patches/ecj/icedtea-hotspot.patch	Mon Aug 09 11:30:52 2010 -0400
++++ b/patches/ecj/icedtea-hotspot.patch	Wed Aug 11 21:04:10 2010 +0100
+@@ -1,49 +1,3 @@
+-diff -Nru openjdk-ecj.orig/hotspot/make/linux/Makefile openjdk-ecj/hotspot/make/linux/Makefile
+---- openjdk-ecj.orig/hotspot/make/linux/Makefile	2008-10-24 10:16:06.000000000 +0100
+-+++ openjdk-ecj/hotspot/make/linux/Makefile	2008-10-24 13:32:48.000000000 +0100
+-@@ -287,42 +287,36 @@
+- 
+- $(TARGETS_C2):  $(SUBDIRS_C2)
+- 	cd $(OSNAME)_$(BUILDARCH)_compiler2/$@ && $(MAKE) $(MFLAGS)
+--	cd $(OSNAME)_$(BUILDARCH)_compiler2/$@ && ./test_gamma
+- ifdef INSTALL
+- 	cd $(OSNAME)_$(BUILDARCH)_compiler2/$@ && $(MAKE) $(MFLAGS) install
+- endif
+- 
+- $(TARGETS_TIERED):  $(SUBDIRS_TIERED)
+- 	cd $(OSNAME)_$(BUILDARCH)_tiered/$(patsubst %tiered,%,$@) && $(MAKE) $(MFLAGS)
+--	cd $(OSNAME)_$(BUILDARCH)_tiered/$(patsubst %tiered,%,$@) && ./test_gamma
+- ifdef INSTALL
+- 	cd $(OSNAME)_$(BUILDARCH)_tiered/$(patsubst %tiered,%,$@) && $(MAKE) $(MFLAGS) install
+- endif
+- 
+- $(TARGETS_C1):  $(SUBDIRS_C1)
+- 	cd $(OSNAME)_$(BUILDARCH)_compiler1/$(patsubst %1,%,$@) && $(MAKE) $(MFLAGS)
+--	cd $(OSNAME)_$(BUILDARCH)_compiler1/$(patsubst %1,%,$@) && ./test_gamma
+- ifdef INSTALL
+- 	cd $(OSNAME)_$(BUILDARCH)_compiler1/$(patsubst %1,%,$@) && $(MAKE) $(MFLAGS) install
+- endif
+- 
+- $(TARGETS_CORE):  $(SUBDIRS_CORE)
+- 	cd $(OSNAME)_$(BUILDARCH)_core/$(patsubst %core,%,$@) && $(MAKE) $(MFLAGS)
+--	cd $(OSNAME)_$(BUILDARCH)_core/$(patsubst %core,%,$@) && ./test_gamma
+- ifdef INSTALL
+- 	cd $(OSNAME)_$(BUILDARCH)_core/$(patsubst %core,%,$@) && $(MAKE) $(MFLAGS) install
+- endif
+- 
+- $(TARGETS_ZERO):  $(SUBDIRS_ZERO)
+- 	cd $(OSNAME)_$(VARIANTARCH)_zero/$(patsubst %zero,%,$@) && $(MAKE) $(MFLAGS)
+--	cd $(OSNAME)_$(VARIANTARCH)_zero/$(patsubst %zero,%,$@) && ./test_gamma
+- ifdef INSTALL
+- 	cd $(OSNAME)_$(VARIANTARCH)_zero/$(patsubst %zero,%,$@) && $(MAKE) $(MFLAGS) install
+- endif
+- 
+- $(TARGETS_SHARK):  $(SUBDIRS_SHARK)
+- 	cd $(OSNAME)_$(VARIANTARCH)_shark/$(patsubst %shark,%,$@) && $(MAKE) $(MFLAGS)
+--	cd $(OSNAME)_$(VARIANTARCH)_shark/$(patsubst %shark,%,$@) && ./test_gamma
+- ifdef INSTALL
+- 	cd $(OSNAME)_$(VARIANTARCH)_shark/$(patsubst %shark,%,$@) && $(MAKE) $(MFLAGS) install
+- endif
+ diff -Nru openjdk-ecj.orig/hotspot/make/linux/makefiles/sa.make openjdk-ecj/hotspot/make/linux/makefiles/sa.make
+ --- openjdk-ecj.orig/hotspot/make/linux/makefiles/sa.make	2008-10-24 10:16:06.000000000 +0100
+ +++ openjdk-ecj/hotspot/make/linux/makefiles/sa.make	2008-10-24 13:32:48.000000000 +0100
+diff -r 4a022b4a3319 -r 3fd44a9bb9a3 patches/ecj/no-test_gamma.patch
+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
++++ b/patches/ecj/no-test_gamma.patch	Wed Aug 11 21:04:10 2010 +0100
+@@ -0,0 +1,46 @@
++diff -Nru openjdk-ecj.orig/hotspot/make/linux/Makefile openjdk-ecj/hotspot/make/linux/Makefile
++--- openjdk-ecj.orig/hotspot/make/linux/Makefile	2010-03-29 21:34:14.000000000 +0100
+++++ openjdk-ecj/hotspot/make/linux/Makefile	2010-03-29 21:40:39.000000000 +0100
++@@ -287,42 +287,36 @@
++ 
++ $(TARGETS_C2):  $(SUBDIRS_C2)
++ 	cd $(OSNAME)_$(BUILDARCH)_compiler2/$@ && $(MAKE) $(MFLAGS)
++-	cd $(OSNAME)_$(BUILDARCH)_compiler2/$@ && ./test_gamma
++ ifdef INSTALL
++ 	cd $(OSNAME)_$(BUILDARCH)_compiler2/$@ && $(MAKE) $(MFLAGS) install
++ endif
++ 
++ $(TARGETS_TIERED):  $(SUBDIRS_TIERED)
++ 	cd $(OSNAME)_$(BUILDARCH)_tiered/$(patsubst %tiered,%,$@) && $(MAKE) $(MFLAGS)
++-	cd $(OSNAME)_$(BUILDARCH)_tiered/$(patsubst %tiered,%,$@) && ./test_gamma
++ ifdef INSTALL
++ 	cd $(OSNAME)_$(BUILDARCH)_tiered/$(patsubst %tiered,%,$@) && $(MAKE) $(MFLAGS) install
++ endif
++ 
++ $(TARGETS_C1):  $(SUBDIRS_C1)
++ 	cd $(OSNAME)_$(BUILDARCH)_compiler1/$(patsubst %1,%,$@) && $(MAKE) $(MFLAGS)
++-	cd $(OSNAME)_$(BUILDARCH)_compiler1/$(patsubst %1,%,$@) && ./test_gamma
++ ifdef INSTALL
++ 	cd $(OSNAME)_$(BUILDARCH)_compiler1/$(patsubst %1,%,$@) && $(MAKE) $(MFLAGS) install
++ endif
++ 
++ $(TARGETS_CORE):  $(SUBDIRS_CORE)
++ 	cd $(OSNAME)_$(BUILDARCH)_core/$(patsubst %core,%,$@) && $(MAKE) $(MFLAGS)
++-	cd $(OSNAME)_$(BUILDARCH)_core/$(patsubst %core,%,$@) && ./test_gamma
++ ifdef INSTALL
++ 	cd $(OSNAME)_$(BUILDARCH)_core/$(patsubst %core,%,$@) && $(MAKE) $(MFLAGS) install
++ endif
++ 
++ $(TARGETS_ZERO):  $(SUBDIRS_ZERO)
++ 	cd $(OSNAME)_$(VARIANTARCH)_zero/$(patsubst %zero,%,$@) && $(MAKE) $(MFLAGS)
++-	cd $(OSNAME)_$(VARIANTARCH)_zero/$(patsubst %zero,%,$@) && ./test_gamma
++ ifdef INSTALL
++ 	cd $(OSNAME)_$(VARIANTARCH)_zero/$(patsubst %zero,%,$@) && $(MAKE) $(MFLAGS) install
++ endif
++ 
++ $(TARGETS_SHARK):  $(SUBDIRS_SHARK)
++ 	cd $(OSNAME)_$(VARIANTARCH)_shark/$(patsubst %shark,%,$@) && $(MAKE) $(MFLAGS)
++-	cd $(OSNAME)_$(VARIANTARCH)_shark/$(patsubst %shark,%,$@) && ./test_gamma
++ ifdef INSTALL
++ 	cd $(OSNAME)_$(VARIANTARCH)_shark/$(patsubst %shark,%,$@) && $(MAKE) $(MFLAGS) install
++ endif
+diff -r 4a022b4a3319 -r 3fd44a9bb9a3 patches/no-test_gamma.patch
+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
++++ b/patches/no-test_gamma.patch	Wed Aug 11 21:04:10 2010 +0100
+@@ -0,0 +1,46 @@
++diff -Nru openjdk-ecj.orig/hotspot/make/linux/Makefile openjdk-ecj/hotspot/make/linux/Makefile
++--- openjdk.orig/hotspot/make/linux/Makefile	2010-03-29 21:34:14.000000000 +0100
+++++ openjdk/hotspot/make/linux/Makefile	2010-03-29 21:40:39.000000000 +0100
++@@ -287,42 +287,36 @@
++ 
++ $(TARGETS_C2):  $(SUBDIRS_C2)
++ 	cd $(OSNAME)_$(BUILDARCH)_compiler2/$@ && $(MAKE) $(MFLAGS)
++-	cd $(OSNAME)_$(BUILDARCH)_compiler2/$@ && ./test_gamma
++ ifdef INSTALL
++ 	cd $(OSNAME)_$(BUILDARCH)_compiler2/$@ && $(MAKE) $(MFLAGS) install
++ endif
++ 
++ $(TARGETS_TIERED):  $(SUBDIRS_TIERED)
++ 	cd $(OSNAME)_$(BUILDARCH)_tiered/$(patsubst %tiered,%,$@) && $(MAKE) $(MFLAGS)
++-	cd $(OSNAME)_$(BUILDARCH)_tiered/$(patsubst %tiered,%,$@) && ./test_gamma
++ ifdef INSTALL
++ 	cd $(OSNAME)_$(BUILDARCH)_tiered/$(patsubst %tiered,%,$@) && $(MAKE) $(MFLAGS) install
++ endif
++ 
++ $(TARGETS_C1):  $(SUBDIRS_C1)
++ 	cd $(OSNAME)_$(BUILDARCH)_compiler1/$(patsubst %1,%,$@) && $(MAKE) $(MFLAGS)
++-	cd $(OSNAME)_$(BUILDARCH)_compiler1/$(patsubst %1,%,$@) && ./test_gamma
++ ifdef INSTALL
++ 	cd $(OSNAME)_$(BUILDARCH)_compiler1/$(patsubst %1,%,$@) && $(MAKE) $(MFLAGS) install
++ endif
++ 
++ $(TARGETS_CORE):  $(SUBDIRS_CORE)
++ 	cd $(OSNAME)_$(BUILDARCH)_core/$(patsubst %core,%,$@) && $(MAKE) $(MFLAGS)
++-	cd $(OSNAME)_$(BUILDARCH)_core/$(patsubst %core,%,$@) && ./test_gamma
++ ifdef INSTALL
++ 	cd $(OSNAME)_$(BUILDARCH)_core/$(patsubst %core,%,$@) && $(MAKE) $(MFLAGS) install
++ endif
++ 
++ $(TARGETS_ZERO):  $(SUBDIRS_ZERO)
++ 	cd $(OSNAME)_$(VARIANTARCH)_zero/$(patsubst %zero,%,$@) && $(MAKE) $(MFLAGS)
++-	cd $(OSNAME)_$(VARIANTARCH)_zero/$(patsubst %zero,%,$@) && ./test_gamma
++ ifdef INSTALL
++ 	cd $(OSNAME)_$(VARIANTARCH)_zero/$(patsubst %zero,%,$@) && $(MAKE) $(MFLAGS) install
++ endif
++ 
++ $(TARGETS_SHARK):  $(SUBDIRS_SHARK)
++ 	cd $(OSNAME)_$(VARIANTARCH)_shark/$(patsubst %shark,%,$@) && $(MAKE) $(MFLAGS)
++-	cd $(OSNAME)_$(VARIANTARCH)_shark/$(patsubst %shark,%,$@) && ./test_gamma
++ ifdef INSTALL
++ 	cd $(OSNAME)_$(VARIANTARCH)_shark/$(patsubst %shark,%,$@) && $(MAKE) $(MFLAGS) install
++ endif

@@ -2,6 +2,13 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.8.1-r1 (11 Aug 2010)
+
+  11 Aug 2010; Andrew John Hughes <andrew@gentoo.org>
+  -icedtea-6.1.8.1.ebuild, +icedtea-6.1.8.1-r1.ebuild,
+  +files/6.1.8.1-244901.patch, +files/6.1.8.1-266295.patch:
+  Revision bump. Add patches to 1.8.1 to fix bug #244901 and #266295.
+
 *icedtea-6.1.7.4-r1 (06 Aug 2010)
 
   06 Aug 2010; Andrew John Hughes <andrew@gentoo.org>

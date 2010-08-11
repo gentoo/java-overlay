@@ -161,6 +161,14 @@ src_unpack() {
 	unpack ${ICEDTEA_PKG}.tar.gz
 }
 
+src_prepare() {
+	# http://bugs.gentoo.org/show_bug.cgi?id=244901
+	epatch "${FILESDIR}/${PV}-244901.patch"
+	# http://bugs.gentoo.org/show_bug.cgi?id=266295
+	epatch "${FILESDIR}/${PV}-266295.patch"
+	eautoreconf || die "eautoreconf failed"
+}
+
 unset_vars() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 }
