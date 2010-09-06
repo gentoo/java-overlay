@@ -241,13 +241,14 @@ src_compile() {
 }
 
 src_install() {
-	local dest="/usr/$(get_libdir)/icedtea${SLOT}"
+	local dest="${ROOT}usr/$(get_libdir)/icedtea${SLOT}"
 	local ddest="${D}/${dest}"
 	dodir "${dest}" || die
 
 	local arch=${ARCH}
 
 	dodoc README NEWS AUTHORS || die
+	dosym "${ROOT}usr/share/doc/${PF}" "${ROOT}usr/share/doc/${PN}${SLOT}"
 
 	cd "${S}/openjdk.build/j2sdk-image" || die
 

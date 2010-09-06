@@ -242,7 +242,7 @@ src_compile() {
 }
 
 src_install() {
-	local dest="/usr/$(get_libdir)/icedtea${SLOT}"
+	local dest="${ROOT}usr/$(get_libdir)/icedtea${SLOT}"
 	local ddest="${D}/${dest}"
 	dodir "${dest}" || die
 
@@ -250,6 +250,7 @@ src_install() {
 	use x86 && arch=i586
 
 	dodoc README NEWS AUTHORS THANKYOU || die
+	dosym "${ROOT}usr/share/doc/${PF}" "${ROOT}usr/share/doc/${PN}${SLOT}"
 
 	cd "${S}/openjdk/build/linux-${arch}/j2sdk-image" || die
 
