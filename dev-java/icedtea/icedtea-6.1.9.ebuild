@@ -271,6 +271,7 @@ src_install() {
 	find "${ddest}" \! -type l \( -perm /111 -exec chmod 755 {} \; -o -exec chmod 644 {} \; \) || die
 
 	if use nsplugin; then
+		local arch=${ARCH};
 		use x86 && arch=i386;
 		install_mozilla_plugin "${dest}/jre/lib/${arch}/IcedTeaPlugin.so";
 	fi
