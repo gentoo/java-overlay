@@ -2,6 +2,11 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  09 Sep 2010; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.9.ebuild,
+  icedtea-7.1.13.ebuild, metadata.xml:
+  Remove autotools from inherit where not used. Remove unused USE flags
+  descriptions.
+
   07 Sep 2010; Andrew John Hughes <andrew@gentoo.org> icedtea-6.1.9.ebuild:
   Fix missing arch value for plugin builds.
 

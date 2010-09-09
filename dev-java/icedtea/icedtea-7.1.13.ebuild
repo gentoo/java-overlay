@@ -9,7 +9,7 @@
 
 EAPI="2"
 
-inherit autotools flag-o-matic java-pkg-2 java-vm-2 pax-utils
+inherit flag-o-matic java-pkg-2 java-vm-2 pax-utils
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="7"
