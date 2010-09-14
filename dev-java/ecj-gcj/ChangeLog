@@ -2,6 +2,10 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  14 Sep 2010; Vlastimil Babka <caster@gentoo.org> +files/ecj-gcj-3.5-r1,
+  +ecj-gcj-3.5.2-r2.ebuild:
+  Revbump to fix CLASSPATH handling, fixes e.g. build of ant-core.
+
   01 Apr 2010; Vlastimil Babka <caster@gentoo.org> ecj-gcj-3.5.2-r1.ebuild:
   Block the former eclipse-ecj:3.5[gcj] ebuild to prevent file collisions.
   Downgrade eclipse-ecj:3.5 to the main tree version if you hit the block.
