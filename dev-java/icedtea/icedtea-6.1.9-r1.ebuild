@@ -9,7 +9,7 @@
 
 EAPI="2"
 
-inherit pax-utils java-pkg-2 java-vm-2
+inherit autotools pax-utils java-pkg-2 java-vm-2
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="6"
@@ -24,19 +24,21 @@ OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.gz"
 JAXP_TARBALL="jdk6-jaxp-b20.zip"
 JAXWS_TARBALL="jdk6-jaxws-b20.zip"
 JAF_TARBALL="jdk6-jaf-b20.zip"
+HOTSPOT_TARBALL="0803c0f69b51.tar.gz"
 CACAO_TARBALL="e321b101a9ee.tar.bz2"
 SRC_URI="http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
 		 http://download.java.net/openjdk/jdk6/promoted/b${OPENJDK_BUILD}/${OPENJDK_TARBALL}
 		 https://jax-ws.dev.java.net/files/documents/4202/150724/${JAXWS_TARBALL}
 		 https://jax-ws.dev.java.net/files/documents/4202/150725/${JAF_TARBALL}
 		 https://jaxp.dev.java.net/files/documents/913/150648/${JAXP_TARBALL}
+		 http://hg.openjdk.java.net/hsx/hsx19/master/archive/${HOTSPOT_TARBALL}
 		 cacao? ( http://mips.complang.tuwien.ac.at/hg/cacao/archive/${CACAO_TARBALL} )"
 HOMEPAGE="http://icedtea.classpath.org"
 S=${WORKDIR}/${ICEDTEA_PKG}
 
 # Missing options:
 # shark - needs adding
-IUSE="cacao debug doc examples javascript nio2 nsplugin +nss pulseaudio systemtap +xrender zero"
+IUSE="cacao debug doc examples +hs19 javascript nio2 nsplugin +nss pulseaudio systemtap +xrender zero"
 
 # JTReg doesn't pass at present
 RESTRICT="test"
@@ -158,6 +160,11 @@ src_unpack() {
 	unpack ${ICEDTEA_PKG}.tar.gz
 }
 
+src_prepare() {
+	epatch "${FILESDIR}/hs19.patch"
+	eautoreconf || die "eautoreconf failed"
+}
+
 unset_vars() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 }
@@ -195,6 +202,10 @@ src_configure() {
 
 	if use javascript ; then
 		rhino_jar=$(java-pkg_getjar rhino:1.6 js.jar);
+	fi
+
+	if use hs19 ; then
+		config="${config} --with-hotspot-build=hs19"
 	fi
 
 	unset_vars

@@ -1,0 +1,1361 @@
+# HG changeset patch
+# User Andrew John Hughes <ahughes@redhat.com>
+# Date 1284933646 -3600
+# Node ID ed033548219c82a21ea70c85341b2fd11a0e6efb
+# Parent  f9af7b6a08ebd165a2df27af909a91718cfb9503
+Support HotSpot 19.
+
+2010-09-19  Andrew John Hughes  <ahughes@redhat.com>
+
+	Support HotSpot 19.
+	* patches/icedtea-alpha-fixes.patch,
+	* patches/icedtea-gcc-suffix-hotspot.patch,
+	* patches/icedtea-print-lsb-release.patch,
+	* patches/params-cast-size_t.patch,
+	* patches/update-bootclasspath.patch:
+	Split into original and hs19 versions.
+	* Makefile.am: Apply some patches only when
+	hs17 is built.  Apply different variants of
+	above patches depending on HotSpot build used.
+	* hotspot.map: Add hs19.
+	* patches/hotspot/hs19/alpha-fixes.patch,
+	* patches/hotspot/hs19/gcc-suffix.patch,
+	* patches/hotspot/hs19/params-cast-size_t.patch,
+	* patches/hotspot/hs19/print_lsb_release.patch,
+	* patches/hotspot/hs19/update-bootclasspath.patch:
+	HotSpot 19 variants of patches moved above.
+	* patches/hotspot/original/alpha-fixes.patch,
+	* patches/hotspot/original/gcc-suffix.patch,
+	* patches/hotspot/original/params-cast-size_t.patch,
+	* patches/hotspot/original/print_lsb_release.patch,
+	* patches/hotspot/original/update-bootclasspath.patch:
+	HotSpot 17 patches moved from patches above.
+
+diff -Nru icedtea6-1.9.orig/ChangeLog icedtea6-1.9/ChangeLog
+--- icedtea6-1.9.orig/ChangeLog	2010-09-07 15:15:51.314461561 +0100
++++ icedtea6-1.9/ChangeLog	2010-09-20 00:59:33.239441637 +0100
+@@ -1,3 +1,29 @@
++2010-09-19  Andrew John Hughes  <ahughes@redhat.com>
++
++	Support HotSpot 19.
++	* patches/icedtea-alpha-fixes.patch,
++	* patches/icedtea-gcc-suffix-hotspot.patch,
++	* patches/icedtea-print-lsb-release.patch,
++	* patches/params-cast-size_t.patch,
++	* patches/update-bootclasspath.patch:
++	Split into original and hs19 versions.
++	* Makefile.am: Apply some patches only when
++	hs17 is built.  Apply different variants of
++	above patches depending on HotSpot build used.
++	* hotspot.map: Add hs19.
++	* patches/hotspot/hs19/alpha-fixes.patch,
++	* patches/hotspot/hs19/gcc-suffix.patch,
++	* patches/hotspot/hs19/params-cast-size_t.patch,
++	* patches/hotspot/hs19/print_lsb_release.patch,
++	* patches/hotspot/hs19/update-bootclasspath.patch:
++	HotSpot 19 variants of patches moved above.
++	* patches/hotspot/original/alpha-fixes.patch,
++	* patches/hotspot/original/gcc-suffix.patch,
++	* patches/hotspot/original/params-cast-size_t.patch,
++	* patches/hotspot/original/print_lsb_release.patch,
++	* patches/hotspot/original/update-bootclasspath.patch:
++	HotSpot 17 patches moved from patches above.
++
+ 2010-09-07  Andrew John Hughes  <ahughes@redhat.com>
+ 
+ 	* NEWS: Yet more updates.
+diff -Nru icedtea6-1.9.orig/hotspot.map icedtea6-1.9/hotspot.map
+--- icedtea6-1.9.orig/hotspot.map	2010-08-06 12:05:05.986374571 +0100
++++ icedtea6-1.9/hotspot.map	2010-09-20 00:57:51.731125114 +0100
+@@ -1 +1,2 @@
+ # version url changeset md5sum
++hs19 http://hg.openjdk.java.net/hsx/hsx19/master 0803c0f69b51 f174d20d004c5e1ad08929895dbee21c
+diff -Nru icedtea6-1.9.orig/Makefile.am icedtea6-1.9/Makefile.am
+--- icedtea6-1.9.orig/Makefile.am	2010-09-07 12:40:19.641271677 +0100
++++ icedtea6-1.9/Makefile.am	2010-09-20 00:59:13.927381435 +0100
+@@ -200,7 +200,6 @@
+ ICEDTEA_FSG_PATCHES =
+ 
+ ICEDTEA_PATCHES = \
+-	patches/shark_do_nothing_on_stub_frame.patch \
+ 	patches/icedtea-notice-safepoints.patch \
+ 	patches/icedtea-parisc-opt.patch \
+ 	patches/icedtea-lucene-crash.patch \
+@@ -214,7 +213,7 @@
+ 	patches/icedtea-headers.patch \
+ 	patches/icedtea-headers-hotspot.patch \
+ 	patches/icedtea-gcc-suffix.patch \
+-	patches/icedtea-gcc-suffix-hotspot.patch \
++	patches/hotspot/$(HSBUILD)/gcc-suffix.patch \
+ 	patches/icedtea-bytebuffer-compact.patch \
+ 	patches/memory-limits.patch \
+ 	patches/icedtea-sunsrc.patch \
+@@ -223,22 +222,19 @@
+ 	patches/icedtea-jvmtiEnv.patch \
+ 	patches/icedtea-lcms.patch \
+ 	patches/icedtea-timerqueue.patch \
+-	patches/icedtea-print-lsb-release.patch \
++	patches/hotspot/$(HSBUILD)/print_lsb_release.patch \
+ 	patches/icedtea-jpegclasses.patch \
+ 	patches/icedtea-uname.patch \
+ 	patches/icedtea-freetypeversion.patch \
+-	patches/icedtea-shark-build.patch \
+-	patches/icedtea-shark-build-hotspot.patch \
+ 	patches/icedtea-nomotif-6706121.patch \
+ 	patches/icedtea-nomotif.patch \
+ 	patches/icedtea-nomotif-mtoolkit.patch \
+-	patches/icedtea-alpha-fixes.patch \
++	patches/hotspot/$(HSBUILD)/alpha-fixes.patch \
+ 	patches/icedtea-alt-jar.patch \
+ 	patches/icedtea-jdk-use-ssize_t.patch \
+ 	patches/icedtea-use-idx_t.patch \
+-	patches/params-cast-size_t.patch \
++	patches/hotspot/$(HSBUILD)/params-cast-size_t.patch \
+ 	patches/icedtea-clean-crypto.patch \
+-	patches/icedtea-shark.patch \
+ 	patches/icedtea-arch.patch \
+ 	patches/icedtea-lc_ctype.patch \
+ 	patches/icedtea-xjc.patch \
+@@ -266,18 +262,15 @@
+ 	patches/icedtea-explicit-target-arch.patch \
+ 	patches/icedtea-gcc-stack-markings.patch \
+ 	patches/icedtea-no-precompiled.patch \
+-	patches/icedtea-linux-separate-debuginfo.patch \
+ 	patches/icedtea-parisc.patch \
+ 	patches/icedtea-sh4-support.patch \
+ 	patches/icedtea-policy-evaluation.patch \
+-	patches/update-bootclasspath.patch \
++	patches/hotspot/$(HSBUILD)/update-bootclasspath.patch \
+ 	patches/libpng.patch \
+-	patches/shark.patch \
+ 	patches/extensions/netx.patch \
+ 	patches/extensions/netx-umask.patch \
+ 	patches/icedtea-jtreg-httpTest.patch \
+ 	patches/arm.patch \
+-	patches/shark-debug-option.patch \
+ 	patches/openjdk/6678385-window_movement_crasher.patch \
+ 	patches/openjdk/6961732-negative_leading.patch \
+ 	patches/debug-dir.patch \
+@@ -290,12 +283,23 @@
+ 	patches/fonts-gentoo.patch \
+ 	patches/ipv4-mapped-ipv6-addresses.patch \
+ 	patches/openjdk/6795060-icu_crash.patch \
+-	patches/openjdk/6951319-sparc_build_fixes.patch \
+ 	patches/icedtea-too-many-args.patch \
+ 	patches/icedtea-jtreg-OpenGLContextInit.patch \
+ 	patches/openjdk/6969395-net_bugs.patch \
+ 	patches/openjdk/6510892-httpserver_test.patch
+ 
++if !WITH_ALT_HSBUILD
++ICEDTEA_PATCHES += \
++	patches/shark_do_nothing_on_stub_frame.patch \
++	patches/icedtea-shark-build.patch \
++	patches/icedtea-shark-build-hotspot.patch \
++	patches/shark.patch \
++	patches/shark-debug-option.patch \
++	patches/icedtea-shark.patch \
++	patches/icedtea-linux-separate-debuginfo.patch \
++	patches/openjdk/6951319-sparc_build_fixes.patch
++endif
++
+ if WITH_RHINO
+ ICEDTEA_PATCHES += \
+ 	patches/icedtea-rhino.patch
+diff -Nru icedtea6-1.9.orig/patches/hotspot/hs19/alpha-fixes.patch icedtea6-1.9/patches/hotspot/hs19/alpha-fixes.patch
+--- icedtea6-1.9.orig/patches/hotspot/hs19/alpha-fixes.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.9/patches/hotspot/hs19/alpha-fixes.patch	2010-09-20 00:57:51.731125114 +0100
+@@ -0,0 +1,21 @@
++diff -Nru openjdk.orig/hotspot/agent/src/os/linux/Makefile openjdk/hotspot/agent/src/os/linux/Makefile
++--- openjdk.orig/hotspot/agent/src/os/linux/Makefile	2010-09-19 14:44:40.000000000 +0100
+++++ openjdk/hotspot/agent/src/os/linux/Makefile	2010-09-19 15:34:47.064793576 +0100
++@@ -40,7 +40,7 @@
++ 
++ LIBS     = -lthread_db
++ 
++-CFLAGS   = -c -fPIC -g -D_GNU_SOURCE -D$(ARCH) $(INCLUDES)
+++CFLAGS   = -c -fPIC -g -D_GNU_SOURCE -D_$(ARCH)_ $(if $(filter $(ARCH),alpha),,-D$(ARCH)) $(INCLUDES)
++ 
++ LIBSA = $(ARCH)/libsaproc.so
++ 
++@@ -73,7 +73,7 @@
++ 	$(GCC) -shared $(LFLAGS_LIBSA) -o $(LIBSA) $(OBJS) $(LIBS)
++ 
++ test.o: test.c
++-	$(GCC) -c -o test.o -g -D_GNU_SOURCE -D$(ARCH) $(INCLUDES) test.c
+++	$(GCC) -c -o test.o -g -D_GNU_SOURCE -D_$(ARCH)_ $(if $(filter $(ARCH),alpha),,-D$(ARCH)) $(INCLUDES) test.c
++ 
++ test: test.o
++ 	$(GCC) -o test test.o -L$(ARCH) -lsaproc $(LIBS)
+diff -Nru icedtea6-1.9.orig/patches/hotspot/hs19/gcc-suffix.patch icedtea6-1.9/patches/hotspot/hs19/gcc-suffix.patch
+--- icedtea6-1.9.orig/patches/hotspot/hs19/gcc-suffix.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.9/patches/hotspot/hs19/gcc-suffix.patch	2010-09-20 00:57:51.731125114 +0100
+@@ -0,0 +1,31 @@
++diff -Nru openjdk.orig/hotspot/agent/src/os/linux/Makefile openjdk/hotspot/agent/src/os/linux/Makefile
++--- openjdk.orig/hotspot/agent/src/os/linux/Makefile	2010-09-01 01:23:45.000000000 +0100
+++++ openjdk/hotspot/agent/src/os/linux/Makefile	2010-09-19 14:09:17.907131214 +0100
++@@ -23,7 +23,7 @@
++ #
++ 
++ ARCH := $(shell if ([ `uname -m` = "ia64" ])  ; then echo ia64 ; elif ([ `uname -m` = "x86_64" ]) ; then echo amd64; elif ([ `uname -m` = "sparc64" ]) ; then echo sparc; else echo i386 ; fi )
++-GCC      = gcc
+++GCC      = gcc$(GCC_SUFFIX)
++ 
++ JAVAH    = ${JAVA_HOME}/bin/javah
++ 
++diff -Nru openjdk.orig/hotspot/make/linux/makefiles/gcc.make openjdk/hotspot/make/linux/makefiles/gcc.make
++--- openjdk.orig/hotspot/make/linux/makefiles/gcc.make	2010-09-19 14:07:15.000000000 +0100
+++++ openjdk/hotspot/make/linux/makefiles/gcc.make	2010-09-19 14:09:58.015272246 +0100
++@@ -26,11 +26,11 @@
++ # CC, CPP & AS
++ 
++ ifdef ALT_COMPILER_PATH
++-CPP = $(ALT_COMPILER_PATH)/g++
++-CC  = $(ALT_COMPILER_PATH)/gcc
+++CPP = $(ALT_COMPILER_PATH)/g++$(GCC_SUFFIX)
+++CC  = $(ALT_COMPILER_PATH)/gcc$(GCC_SUFFIX)
++ else
++-CPP = g++
++-CC  = gcc
+++CPP = g++$(GCC_SUFFIX)
+++CC  = gcc$(GCC_SUFFIX)
++ endif
++ 
++ AS  = $(CC) -c
+diff -Nru icedtea6-1.9.orig/patches/hotspot/hs19/params-cast-size_t.patch icedtea6-1.9/patches/hotspot/hs19/params-cast-size_t.patch
+--- icedtea6-1.9.orig/patches/hotspot/hs19/params-cast-size_t.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.9/patches/hotspot/hs19/params-cast-size_t.patch	2010-09-20 00:57:51.731125114 +0100
+@@ -0,0 +1,264 @@
++diff -Nru openjdk.orig/hotspot/src/share/vm/gc_implementation/concurrentMarkSweep/compactibleFreeListSpace.cpp openjdk/hotspot/src/share/vm/gc_implementation/concurrentMarkSweep/compactibleFreeListSpace.cpp
++--- openjdk.orig/hotspot/src/share/vm/gc_implementation/concurrentMarkSweep/compactibleFreeListSpace.cpp	2010-09-01 01:23:45.000000000 +0100
+++++ openjdk/hotspot/src/share/vm/gc_implementation/concurrentMarkSweep/compactibleFreeListSpace.cpp	2010-09-19 16:07:14.939307365 +0100
++@@ -2619,7 +2619,7 @@
++   if (ResizeOldPLAB && CMSOldPLABResizeQuicker) {
++     size_t multiple = _num_blocks[word_sz]/(CMSOldPLABToleranceFactor*CMSOldPLABNumRefills*n_blks);
++     n_blks +=  CMSOldPLABReactivityFactor*multiple*n_blks;
++-    n_blks = MIN2(n_blks, CMSOldPLABMax);
+++    n_blks = MIN2(n_blks, (size_t)CMSOldPLABMax);
++   }
++   assert(n_blks > 0, "Error");
++   _cfls->par_get_chunk_of_blocks(word_sz, n_blks, fl);
++diff -Nru openjdk.orig/hotspot/src/share/vm/gc_implementation/concurrentMarkSweep/concurrentMarkSweepGeneration.cpp openjdk/hotspot/src/share/vm/gc_implementation/concurrentMarkSweep/concurrentMarkSweepGeneration.cpp
++--- openjdk.orig/hotspot/src/share/vm/gc_implementation/concurrentMarkSweep/concurrentMarkSweepGeneration.cpp	2010-09-01 01:23:45.000000000 +0100
+++++ openjdk/hotspot/src/share/vm/gc_implementation/concurrentMarkSweep/concurrentMarkSweepGeneration.cpp	2010-09-19 16:07:14.915307286 +0100
++@@ -967,7 +967,7 @@
++   if (free_percentage < desired_free_percentage) {
++     size_t desired_capacity = (size_t)(used() / ((double) 1 - desired_free_percentage));
++     assert(desired_capacity >= capacity(), "invalid expansion size");
++-    expand_bytes = MAX2(desired_capacity - capacity(), MinHeapDeltaBytes);
+++    expand_bytes = MAX2((long unsigned int) (desired_capacity - capacity()), (long unsigned int) MinHeapDeltaBytes);
++   }
++   if (expand_bytes > 0) {
++     if (PrintGCDetails && Verbose) {
++@@ -6191,7 +6191,7 @@
++     HeapWord* curAddr = _markBitMap.startWord();
++     while (curAddr < _markBitMap.endWord()) {
++       size_t remaining  = pointer_delta(_markBitMap.endWord(), curAddr);
++-      MemRegion chunk(curAddr, MIN2(CMSBitMapYieldQuantum, remaining));
+++      MemRegion chunk(curAddr, MIN2((size_t) CMSBitMapYieldQuantum, remaining));
++       _markBitMap.clear_large_range(chunk);
++       if (ConcurrentMarkSweepThread::should_yield() &&
++           !foregroundGCIsActive() &&
++@@ -6484,7 +6484,7 @@
++     return;
++   }
++   // Double capacity if possible
++-  size_t new_capacity = MIN2(_capacity*2, MarkStackSizeMax);
+++  size_t new_capacity = MIN2((size_t) (_capacity*2), (size_t) MarkStackSizeMax);
++   // Do not give up existing stack until we have managed to
++   // get the double capacity that we desired.
++   ReservedSpace rs(ReservedSpace::allocation_align_size_up(
++diff -Nru openjdk.orig/hotspot/src/share/vm/gc_implementation/g1/concurrentMark.cpp openjdk/hotspot/src/share/vm/gc_implementation/g1/concurrentMark.cpp
++--- openjdk.orig/hotspot/src/share/vm/gc_implementation/g1/concurrentMark.cpp	2010-09-19 15:38:16.000000000 +0100
+++++ openjdk/hotspot/src/share/vm/gc_implementation/g1/concurrentMark.cpp	2010-09-19 16:07:14.915307286 +0100
++@@ -452,7 +452,7 @@
++   _regionStack(),
++   // _finger set in set_non_marking_state
++ 
++-  _max_task_num(MAX2(ParallelGCThreads, (size_t)1)),
+++  _max_task_num(MAX2((size_t)ParallelGCThreads, (size_t)1)),
++   // _active_tasks set in set_non_marking_state
++   // _tasks set inside the constructor
++   _task_queues(new CMTaskQueueSet((int) _max_task_num)),
++@@ -503,7 +503,7 @@
++   SATBMarkQueueSet& satb_qs = JavaThread::satb_mark_queue_set();
++   satb_qs.set_buffer_size(G1SATBBufferSize);
++ 
++-  int size = (int) MAX2(ParallelGCThreads, (size_t)1);
+++  int size = (int) MAX2((size_t)ParallelGCThreads, (size_t)1);
++   _par_cleanup_thread_state = NEW_C_HEAP_ARRAY(ParCleanupThreadState*, size);
++   for (int i = 0 ; i < size; i++) {
++     _par_cleanup_thread_state[i] = new ParCleanupThreadState;
++@@ -562,7 +562,7 @@
++       _sleep_factor             = sleep_factor;
++       _marking_task_overhead    = marking_task_overhead;
++     } else {
++-      _parallel_marking_threads = MAX2((ParallelGCThreads + 2) / 4, (size_t)1);
+++      _parallel_marking_threads = MAX2((size_t)((ParallelGCThreads + 2) / 4), (size_t)1);
++       _sleep_factor             = 0.0;
++       _marking_task_overhead    = 1.0;
++     }
++@@ -689,7 +689,7 @@
++ }
++ 
++ ConcurrentMark::~ConcurrentMark() {
++-  int size = (int) MAX2(ParallelGCThreads, (size_t)1);
+++  int size = (int) MAX2((size_t)ParallelGCThreads, (size_t)1);
++   for (int i = 0; i < size; i++) delete _par_cleanup_thread_state[i];
++   FREE_C_HEAP_ARRAY(ParCleanupThreadState*,
++                     _par_cleanup_thread_state);
++@@ -1781,7 +1781,7 @@
++   if (has_aborted()) return;
++ 
++   int first = 0;
++-  int last = (int)MAX2(ParallelGCThreads, (size_t)1);
+++  int last = (int)MAX2((size_t)ParallelGCThreads, (size_t)1);
++   for (int t = 0; t < last; t++) {
++     UncleanRegionList* list = &_par_cleanup_thread_state[t]->list;
++     assert(list->well_formed(), "Inv");
++@@ -3281,7 +3281,7 @@
++   // of things to do) or totally (at the very end).
++   size_t target_size;
++   if (partially)
++-    target_size = MIN2((size_t)_task_queue->max_elems()/3, GCDrainStackTargetSize);
+++    target_size = MIN2((size_t)_task_queue->max_elems()/3, (size_t)GCDrainStackTargetSize);
++   else
++     target_size = 0;
++ 
++diff -Nru openjdk.orig/hotspot/src/share/vm/gc_implementation/g1/heapRegionRemSet.cpp openjdk/hotspot/src/share/vm/gc_implementation/g1/heapRegionRemSet.cpp
++--- openjdk.orig/hotspot/src/share/vm/gc_implementation/g1/heapRegionRemSet.cpp	2010-09-01 01:23:45.000000000 +0100
+++++ openjdk/hotspot/src/share/vm/gc_implementation/g1/heapRegionRemSet.cpp	2010-09-19 16:07:14.915307286 +0100
++@@ -1066,7 +1066,7 @@
++ // This can be done by either mutator threads together with the
++ // concurrent refinement threads or GC threads.
++ int HeapRegionRemSet::num_par_rem_sets() {
++-  return (int)MAX2(DirtyCardQueueSet::num_par_ids() + ConcurrentG1Refine::thread_num(), ParallelGCThreads);
+++  return (int)MAX2(DirtyCardQueueSet::num_par_ids() + ConcurrentG1Refine::thread_num(), (size_t)ParallelGCThreads);
++ }
++ 
++ HeapRegionRemSet::HeapRegionRemSet(G1BlockOffsetSharedArray* bosa,
++diff -Nru openjdk.orig/hotspot/src/share/vm/gc_implementation/parallelScavenge/psParallelCompact.cpp openjdk/hotspot/src/share/vm/gc_implementation/parallelScavenge/psParallelCompact.cpp
++--- openjdk.orig/hotspot/src/share/vm/gc_implementation/parallelScavenge/psParallelCompact.cpp	2010-09-01 01:23:45.000000000 +0100
+++++ openjdk/hotspot/src/share/vm/gc_implementation/parallelScavenge/psParallelCompact.cpp	2010-09-19 16:07:14.915307286 +0100
++@@ -864,8 +864,8 @@
++ void PSParallelCompact::initialize_dead_wood_limiter()
++ {
++   const size_t max = 100;
++-  _dwl_mean = double(MIN2(ParallelOldDeadWoodLimiterMean, max)) / 100.0;
++-  _dwl_std_dev = double(MIN2(ParallelOldDeadWoodLimiterStdDev, max)) / 100.0;
+++  _dwl_mean = double(MIN2((size_t) ParallelOldDeadWoodLimiterMean, max)) / 100.0;
+++  _dwl_std_dev = double(MIN2((size_t) ParallelOldDeadWoodLimiterStdDev, max)) / 100.0;
++   _dwl_first_term = 1.0 / (sqrt(2.0 * M_PI) * _dwl_std_dev);
++   DEBUG_ONLY(_dwl_initialized = true;)
++   _dwl_adjustment = normal_distribution(1.0);
++diff -Nru openjdk.orig/hotspot/src/share/vm/gc_implementation/parallelScavenge/psPermGen.cpp openjdk/hotspot/src/share/vm/gc_implementation/parallelScavenge/psPermGen.cpp
++--- openjdk.orig/hotspot/src/share/vm/gc_implementation/parallelScavenge/psPermGen.cpp	2010-09-01 01:23:45.000000000 +0100
+++++ openjdk/hotspot/src/share/vm/gc_implementation/parallelScavenge/psPermGen.cpp	2010-09-19 16:07:14.915307286 +0100
++@@ -63,7 +63,7 @@
++   _last_used = current_live;
++ 
++   // We have different alignment constraints than the rest of the heap.
++-  const size_t alignment = MAX2(MinPermHeapExpansion,
+++  const size_t alignment = MAX2((size_t) MinPermHeapExpansion,
++                                 virtual_space()->alignment());
++ 
++   // Compute the desired size:
++diff -Nru openjdk.orig/hotspot/src/share/vm/memory/collectorPolicy.cpp openjdk/hotspot/src/share/vm/memory/collectorPolicy.cpp
++--- openjdk.orig/hotspot/src/share/vm/memory/collectorPolicy.cpp	2010-09-01 01:23:45.000000000 +0100
+++++ openjdk/hotspot/src/share/vm/memory/collectorPolicy.cpp	2010-09-19 16:07:14.939307365 +0100
++@@ -297,7 +297,7 @@
++     // yield a size that is too small) and bound it by MaxNewSize above.
++     // Ergonomics plays here by previously calculating the desired
++     // NewSize and MaxNewSize.
++-    max_new_size = MIN2(MAX2(max_new_size, NewSize), MaxNewSize);
+++    max_new_size = MIN2(MAX2(max_new_size, (size_t)NewSize), (size_t)MaxNewSize);
++   }
++   assert(max_new_size > 0, "All paths should set max_new_size");
++ 
++@@ -324,7 +324,7 @@
++       // generally small compared to the NewRatio calculation.
++       _min_gen0_size = NewSize;
++       desired_new_size = NewSize;
++-      max_new_size = MAX2(max_new_size, NewSize);
+++      max_new_size = MAX2(max_new_size, (size_t) NewSize);
++     } else {
++       // For the case where NewSize is the default, use NewRatio
++       // to size the minimum and initial generation sizes.
++@@ -332,10 +332,10 @@
++       // NewRatio is overly large, the resulting sizes can be too
++       // small.
++       _min_gen0_size = MAX2(scale_by_NewRatio_aligned(min_heap_byte_size()),
++-                          NewSize);
+++                          (size_t) NewSize);
++       desired_new_size =
++         MAX2(scale_by_NewRatio_aligned(initial_heap_byte_size()),
++-             NewSize);
+++             (size_t) NewSize);
++     }
++ 
++     assert(_min_gen0_size > 0, "Sanity check");
++@@ -390,14 +390,14 @@
++       // Adjust gen0 down to accomodate OldSize
++       *gen0_size_ptr = heap_size - min_gen0_size;
++       *gen0_size_ptr =
++-        MAX2((uintx)align_size_down(*gen0_size_ptr, min_alignment()),
+++        MAX2((size_t)align_size_down(*gen0_size_ptr, min_alignment()),
++              min_alignment());
++       assert(*gen0_size_ptr > 0, "Min gen0 is too large");
++       result = true;
++     } else {
++       *gen1_size_ptr = heap_size - *gen0_size_ptr;
++       *gen1_size_ptr =
++-        MAX2((uintx)align_size_down(*gen1_size_ptr, min_alignment()),
+++        MAX2((size_t)align_size_down(*gen1_size_ptr, min_alignment()),
++                        min_alignment());
++     }
++   }
++@@ -421,7 +421,7 @@
++   // for setting the gen1 maximum.
++   _max_gen1_size = max_heap_byte_size() - _max_gen0_size;
++   _max_gen1_size =
++-    MAX2((uintx)align_size_down(_max_gen1_size, min_alignment()),
+++    MAX2((size_t)align_size_down(_max_gen1_size, min_alignment()),
++          min_alignment());
++   // If no explicit command line flag has been set for the
++   // gen1 size, use what is left for gen1.
++@@ -435,11 +435,11 @@
++       "gen0 has an unexpected minimum size");
++     set_min_gen1_size(min_heap_byte_size() - min_gen0_size());
++     set_min_gen1_size(
++-      MAX2((uintx)align_size_down(_min_gen1_size, min_alignment()),
+++      MAX2((size_t)align_size_down(_min_gen1_size, min_alignment()),
++            min_alignment()));
++     set_initial_gen1_size(initial_heap_byte_size() - initial_gen0_size());
++     set_initial_gen1_size(
++-      MAX2((uintx)align_size_down(_initial_gen1_size, min_alignment()),
+++      MAX2((size_t)align_size_down(_initial_gen1_size, min_alignment()),
++            min_alignment()));
++ 
++   } else {
++diff -Nru openjdk.orig/hotspot/src/share/vm/memory/threadLocalAllocBuffer.cpp openjdk/hotspot/src/share/vm/memory/threadLocalAllocBuffer.cpp
++--- openjdk.orig/hotspot/src/share/vm/memory/threadLocalAllocBuffer.cpp	2010-09-01 01:23:45.000000000 +0100
+++++ openjdk/hotspot/src/share/vm/memory/threadLocalAllocBuffer.cpp	2010-09-19 16:07:14.939307365 +0100
++@@ -221,7 +221,7 @@
++   size_t init_sz;
++ 
++   if (TLABSize > 0) {
++-    init_sz = MIN2(TLABSize / HeapWordSize, max_size());
+++    init_sz = MIN2((size_t) (TLABSize / HeapWordSize), max_size());
++   } else if (global_stats() == NULL) {
++     // Startup issue - main thread initialized before heap initialized.
++     init_sz = min_size();
++diff -Nru openjdk.orig/hotspot/src/share/vm/runtime/arguments.cpp openjdk/hotspot/src/share/vm/runtime/arguments.cpp
++--- openjdk.orig/hotspot/src/share/vm/runtime/arguments.cpp	2010-09-19 15:38:15.000000000 +0100
+++++ openjdk/hotspot/src/share/vm/runtime/arguments.cpp	2010-09-19 16:07:14.939307365 +0100
++@@ -1073,7 +1073,7 @@
++     // NewSize was set on the command line and it is larger than
++     // preferred_max_new_size.
++     if (!FLAG_IS_DEFAULT(NewSize)) {   // NewSize explicitly set at command-line
++-      FLAG_SET_ERGO(uintx, MaxNewSize, MAX2(NewSize, preferred_max_new_size));
+++      FLAG_SET_ERGO(uintx, MaxNewSize, MAX2((size_t) NewSize, preferred_max_new_size));
++     } else {
++       FLAG_SET_ERGO(uintx, MaxNewSize, preferred_max_new_size);
++     }
++@@ -1092,7 +1092,7 @@
++     // there was no obvious reason.  Also limit to the case where
++     // MaxNewSize has not been set.
++ 
++-    FLAG_SET_ERGO(intx, NewRatio, MAX2(NewRatio, new_ratio));
+++    FLAG_SET_ERGO(intx, NewRatio, MAX2((intx) NewRatio, new_ratio));
++ 
++     // Code along this path potentially sets NewSize and OldSize
++ 
++@@ -1134,8 +1134,8 @@
++       // Unless explicitly requested otherwise, make young gen
++       // at least min_new, and at most preferred_max_new_size.
++       if (FLAG_IS_DEFAULT(NewSize)) {
++-        FLAG_SET_ERGO(uintx, NewSize, MAX2(NewSize, min_new));
++-        FLAG_SET_ERGO(uintx, NewSize, MIN2(preferred_max_new_size, NewSize));
+++	FLAG_SET_ERGO(uintx, NewSize, MAX2((size_t) NewSize, min_new));
+++        FLAG_SET_ERGO(uintx, NewSize, MIN2(preferred_max_new_size, (size_t) NewSize));
++         if (PrintGCDetails && Verbose) {
++           // Too early to use gclog_or_tty
++           tty->print_cr("Ergo set NewSize: " SIZE_FORMAT, NewSize);
++@@ -1146,7 +1146,7 @@
++       // later NewRatio will decide how it grows; see above.
++       if (FLAG_IS_DEFAULT(OldSize)) {
++         if (max_heap > NewSize) {
++-          FLAG_SET_ERGO(uintx, OldSize, MIN2(3*NewSize, max_heap - NewSize));
+++	  FLAG_SET_ERGO(uintx, OldSize, MIN2((size_t) 3*NewSize, max_heap - (size_t) NewSize));
++           if (PrintGCDetails && Verbose) {
++             // Too early to use gclog_or_tty
++             tty->print_cr("Ergo set OldSize: " SIZE_FORMAT, OldSize);
+diff -Nru icedtea6-1.9.orig/patches/hotspot/hs19/print_lsb_release.patch icedtea6-1.9/patches/hotspot/hs19/print_lsb_release.patch
+--- icedtea6-1.9.orig/patches/hotspot/hs19/print_lsb_release.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.9/patches/hotspot/hs19/print_lsb_release.patch	2010-09-20 00:57:51.731125114 +0100
+@@ -0,0 +1,49 @@
++diff -Nru openjdk.orig/hotspot/src/os/linux/vm/os_linux.cpp openjdk/hotspot/src/os/linux/vm/os_linux.cpp
++--- openjdk.orig/hotspot/src/os/linux/vm/os_linux.cpp	2010-09-01 01:23:45.000000000 +0100
+++++ openjdk/hotspot/src/os/linux/vm/os_linux.cpp	2010-09-19 14:41:48.029975576 +0100
++@@ -1888,6 +1888,37 @@
++   return true;
++ }
++ 
+++bool _print_lsb_file(const char* filename, outputStream* st) {
+++  int fd = open(filename, O_RDONLY);
+++  if (fd == -1) {
+++     return false;
+++  }
+++
+++  char buf[512], *d_i, *d_r, *d_c;
+++  int bytes;
+++
+++  if ((bytes = read(fd, buf, sizeof(buf)-1)) == sizeof(buf)-1) {
+++     close(fd);
+++     return false;
+++  }
+++  close(fd);
+++
+++  buf[bytes] = '\n';
+++  buf[bytes+1] = '\0';
+++  d_i = strstr(buf, "DISTRIB_ID=");
+++  d_r = strstr(buf, "DISTRIB_RELEASE=");
+++  d_c = strstr(buf, "DISTRIB_CODENAME=");
+++  if (!d_i || !d_r || !d_c) {
+++     return false;
+++  }
+++  d_i = strchr(d_i, '=') + 1;  *strchrnul(d_i, '\n') = '\0';
+++  d_r = strchr(d_r, '=') + 1;  *strchrnul(d_r, '\n') = '\0';
+++  d_c = strchr(d_c, '=') + 1;  *strchrnul(d_c, '\n') = '\0';
+++  st->print("%s %s (%s)", d_i, d_r, d_c);
+++
+++  return true;
+++}
+++
++ void os::print_dll_info(outputStream *st) {
++    st->print_cr("Dynamic libraries:");
++ 
++@@ -1916,6 +1947,7 @@
++       !_print_ascii_file("/etc/SuSE-release", st) &&
++       !_print_ascii_file("/etc/turbolinux-release", st) &&
++       !_print_ascii_file("/etc/gentoo-release", st) &&
+++      !_print_lsb_file("/etc/lsb-release", st) &&
++       !_print_ascii_file("/etc/debian_version", st) &&
++       !_print_ascii_file("/etc/ltib-release", st) &&
++       !_print_ascii_file("/etc/angstrom-version", st)) {
+diff -Nru icedtea6-1.9.orig/patches/hotspot/hs19/update-bootclasspath.patch icedtea6-1.9/patches/hotspot/hs19/update-bootclasspath.patch
+--- icedtea6-1.9.orig/patches/hotspot/hs19/update-bootclasspath.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.9/patches/hotspot/hs19/update-bootclasspath.patch	2010-09-20 00:57:51.731125114 +0100
+@@ -0,0 +1,13 @@
++diff -Nru openjdk.orig/hotspot/src/share/vm/runtime/os.cpp openjdk/hotspot/src/share/vm/runtime/os.cpp
++--- openjdk.orig/hotspot/src/share/vm/runtime/os.cpp	2010-09-01 01:23:45.000000000 +0100
+++++ openjdk/hotspot/src/share/vm/runtime/os.cpp	2010-09-19 17:34:30.859345954 +0100
++@@ -1032,6 +1032,9 @@
++         "%/lib/jsse.jar:"
++         "%/lib/jce.jar:"
++         "%/lib/charsets.jar:"
+++        "%/lib/netx.jar:"
+++        "%/lib/plugin.jar:"
+++        "%/lib/rhino.jar:"
++ 
++         // ## TEMPORARY hack to keep the legacy launcher working when
++         // ## only the boot module is installed (cf. j.l.ClassLoader)
+diff -Nru icedtea6-1.9.orig/patches/hotspot/original/alpha-fixes.patch icedtea6-1.9/patches/hotspot/original/alpha-fixes.patch
+--- icedtea6-1.9.orig/patches/hotspot/original/alpha-fixes.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.9/patches/hotspot/original/alpha-fixes.patch	2010-09-20 00:57:51.731125114 +0100
+@@ -0,0 +1,31 @@
++--- openjdk/hotspot/agent/src/os/linux/Makefile.orig	2008-07-26 23:29:45.244786863 +0200
+++++ openjdk/hotspot/agent/src/os/linux/Makefile	2008-07-26 23:38:26.632651880 +0200
++@@ -40,7 +40,7 @@
++ 
++ LIBS     = -lthread_db
++ 
++-CFLAGS   = -c -fPIC -g -D_GNU_SOURCE -D$(ARCH) $(INCLUDES)
+++CFLAGS   = -c -fPIC -g -D_GNU_SOURCE -D_$(ARCH)_ $(if $(filter $(ARCH),alpha),,-D$(ARCH)) $(INCLUDES)
++ 
++ LIBSA = $(ARCH)/libsaproc.so
++ 
++@@ -65,7 +65,7 @@
++ 	$(GCC) -shared $(LFLAGS_LIBSA) -o $(LIBSA) $(OBJS) $(LIBS)
++ 
++ test.o: test.c
++-	$(GCC) -c -o test.o -g -D_GNU_SOURCE -D$(ARCH) $(INCLUDES) test.c
+++	$(GCC) -c -o test.o -g -D_GNU_SOURCE -D_$(ARCH)_ $(if $(filter $(ARCH),alpha),,-D$(ARCH)) $(INCLUDES) test.c
++ 
++ test: test.o
++ 	$(GCC) -o test test.o -L$(ARCH) -lsaproc $(LIBS)
++--- openjdk/hotspot/src/share/vm/oops/generateOopMap.cpp.orig	2008-07-10 22:04:33.000000000 +0200
+++++ openjdk/hotspot/src/share/vm/oops/generateOopMap.cpp	2008-07-26 23:38:26.632651880 +0200
++@@ -2128,7 +2128,7 @@
++   // We do not distinguish between different types of errors for verification
++   // errors.  Let the verifier give a better message.
++   const char *msg = "Illegal class file encountered. Try running with -Xverify:all";
++-  error_work(msg, NULL);
+++  report_error(msg, NULL);
++ }
++ 
++ //
+diff -Nru icedtea6-1.9.orig/patches/hotspot/original/gcc-suffix.patch icedtea6-1.9/patches/hotspot/original/gcc-suffix.patch
+--- icedtea6-1.9.orig/patches/hotspot/original/gcc-suffix.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.9/patches/hotspot/original/gcc-suffix.patch	2010-09-20 00:57:51.731125114 +0100
+@@ -0,0 +1,25 @@
++--- openjdk/hotspot/agent/src/os/linux/Makefile~	2007-08-02 09:16:50.000000000 +0200
+++++ openjdk/hotspot/agent/src/os/linux/Makefile	2007-08-08 17:00:11.204338801 +0200
++@@ -23,7 +23,7 @@
++ #
++ 
++ ARCH := $(shell if ([ `uname -m` = "ia64" ])  ; then echo ia64 ; elif ([ `uname -m` = "x86_64" ]) ; then echo amd64; elif ([ `uname -m` = "sparc64" ]) ; then echo sparc; else echo i386 ; fi )
++-GCC      = gcc
+++GCC      = gcc$(GCC_SUFFIX)
++ 
++ JAVAH    = ${JAVA_HOME}/bin/javah
++ 
++--- openjdk/hotspot/make/linux/makefiles/gcc.make~	2007-08-08 16:13:12.281815996 +0200
+++++ openjdk/hotspot/make/linux/makefiles/gcc.make	2007-08-08 16:36:52.573240769 +0200
++@@ -25,8 +25,8 @@
++ #------------------------------------------------------------------------
++ # CC, CPP & AS
++ 
++-CPP = g++
++-CC  = gcc
+++CPP = g++$(GCC_SUFFIX)
+++CC  = gcc$(GCC_SUFFIX)
++ AS  = $(CC) -c
++ 
++ # -dumpversion in gcc-2.91 shows "egcs-2.91.66". In later version, it only
++
+diff -Nru icedtea6-1.9.orig/patches/hotspot/original/params-cast-size_t.patch icedtea6-1.9/patches/hotspot/original/params-cast-size_t.patch
+--- icedtea6-1.9.orig/patches/hotspot/original/params-cast-size_t.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.9/patches/hotspot/original/params-cast-size_t.patch	2010-09-20 00:57:51.731125114 +0100
+@@ -0,0 +1,274 @@
++diff -Nru openjdk.orig/hotspot/src/share/vm/gc_implementation/concurrentMarkSweep/concurrentMarkSweepGeneration.cpp openjdk/hotspot/src/share/vm/gc_implementation/concurrentMarkSweep/concurrentMarkSweepGeneration.cpp
++--- openjdk.orig/hotspot/src/share/vm/gc_implementation/concurrentMarkSweep/concurrentMarkSweepGeneration.cpp	2010-04-09 00:03:58.000000000 +0100
+++++ openjdk/hotspot/src/share/vm/gc_implementation/concurrentMarkSweep/concurrentMarkSweepGeneration.cpp	2010-04-10 02:29:45.000000000 +0100
++@@ -963,7 +963,7 @@
++   if (free_percentage < desired_free_percentage) {
++     size_t desired_capacity = (size_t)(used() / ((double) 1 - desired_free_percentage));
++     assert(desired_capacity >= capacity(), "invalid expansion size");
++-    expand_bytes = MAX2(desired_capacity - capacity(), MinHeapDeltaBytes);
+++    expand_bytes = MAX2((long unsigned int) (desired_capacity - capacity()), (long unsigned int) MinHeapDeltaBytes);
++   }
++   if (expand_bytes > 0) {
++     if (PrintGCDetails && Verbose) {
++@@ -6150,7 +6150,7 @@
++     HeapWord* curAddr = _markBitMap.startWord();
++     while (curAddr < _markBitMap.endWord()) {
++       size_t remaining  = pointer_delta(_markBitMap.endWord(), curAddr);
++-      MemRegion chunk(curAddr, MIN2(CMSBitMapYieldQuantum, remaining));
+++      MemRegion chunk(curAddr, MIN2((size_t) CMSBitMapYieldQuantum, remaining));
++       _markBitMap.clear_large_range(chunk);
++       if (ConcurrentMarkSweepThread::should_yield() &&
++           !foregroundGCIsActive() &&
++@@ -6438,7 +6438,7 @@
++     return;
++   }
++   // Double capacity if possible
++-  size_t new_capacity = MIN2(_capacity*2, MarkStackSizeMax);
+++  size_t new_capacity = MIN2((size_t) (_capacity*2), (size_t) MarkStackSizeMax);
++   // Do not give up existing stack until we have managed to
++   // get the double capacity that we desired.
++   ReservedSpace rs(ReservedSpace::allocation_align_size_up(
++diff -Nru openjdk.orig/hotspot/src/share/vm/gc_implementation/g1/concurrentMark.cpp openjdk/hotspot/src/share/vm/gc_implementation/g1/concurrentMark.cpp
++--- openjdk.orig/hotspot/src/share/vm/gc_implementation/g1/concurrentMark.cpp	2010-04-10 01:52:13.000000000 +0100
+++++ openjdk/hotspot/src/share/vm/gc_implementation/g1/concurrentMark.cpp	2010-04-10 02:28:51.000000000 +0100
++@@ -452,7 +452,7 @@
++   _regionStack(),
++   // _finger set in set_non_marking_state
++ 
++-  _max_task_num(MAX2(ParallelGCThreads, (size_t)1)),
+++  _max_task_num(MAX2((size_t)ParallelGCThreads, (size_t)1)),
++   // _active_tasks set in set_non_marking_state
++   // _tasks set inside the constructor
++   _task_queues(new CMTaskQueueSet((int) _max_task_num)),
++@@ -503,7 +503,7 @@
++   SATBMarkQueueSet& satb_qs = JavaThread::satb_mark_queue_set();
++   satb_qs.set_buffer_size(G1SATBBufferSize);
++ 
++-  int size = (int) MAX2(ParallelGCThreads, (size_t)1);
+++  int size = (int) MAX2((size_t)ParallelGCThreads, (size_t)1);
++   _par_cleanup_thread_state = NEW_C_HEAP_ARRAY(ParCleanupThreadState*, size);
++   for (int i = 0 ; i < size; i++) {
++     _par_cleanup_thread_state[i] = new ParCleanupThreadState;
++@@ -562,7 +562,7 @@
++       _sleep_factor             = sleep_factor;
++       _marking_task_overhead    = marking_task_overhead;
++     } else {
++-      _parallel_marking_threads = MAX2((ParallelGCThreads + 2) / 4, (size_t)1);
+++      _parallel_marking_threads = MAX2((size_t)((ParallelGCThreads + 2) / 4), (size_t)1);
++       _sleep_factor             = 0.0;
++       _marking_task_overhead    = 1.0;
++     }
++@@ -689,7 +689,7 @@
++ }
++ 
++ ConcurrentMark::~ConcurrentMark() {
++-  int size = (int) MAX2(ParallelGCThreads, (size_t)1);
+++  int size = (int) MAX2((size_t)ParallelGCThreads, (size_t)1);
++   for (int i = 0; i < size; i++) delete _par_cleanup_thread_state[i];
++   FREE_C_HEAP_ARRAY(ParCleanupThreadState*,
++                     _par_cleanup_thread_state);
++@@ -1778,7 +1778,7 @@
++   if (has_aborted()) return;
++ 
++   int first = 0;
++-  int last = (int)MAX2(ParallelGCThreads, (size_t)1);
+++  int last = (int)MAX2((size_t)ParallelGCThreads, (size_t)1);
++   for (int t = 0; t < last; t++) {
++     UncleanRegionList* list = &_par_cleanup_thread_state[t]->list;
++     assert(list->well_formed(), "Inv");
++@@ -3276,7 +3276,7 @@
++   // of things to do) or totally (at the very end).
++   size_t target_size;
++   if (partially)
++-    target_size = MIN2((size_t)_task_queue->max_elems()/3, GCDrainStackTargetSize);
+++    target_size = MIN2((size_t)_task_queue->max_elems()/3, (size_t)GCDrainStackTargetSize);
++   else
++     target_size = 0;
++ 
++diff -Nru openjdk.orig/hotspot/src/share/vm/gc_implementation/g1/heapRegionRemSet.cpp openjdk/hotspot/src/share/vm/gc_implementation/g1/heapRegionRemSet.cpp
++--- openjdk.orig/hotspot/src/share/vm/gc_implementation/g1/heapRegionRemSet.cpp	2010-04-09 00:03:58.000000000 +0100
+++++ openjdk/hotspot/src/share/vm/gc_implementation/g1/heapRegionRemSet.cpp	2010-04-10 02:28:51.000000000 +0100
++@@ -1068,7 +1068,7 @@
++ // This can be done by either mutator threads together with the
++ // concurrent refinement threads or GC threads.
++ int HeapRegionRemSet::num_par_rem_sets() {
++-  return (int)MAX2(DirtyCardQueueSet::num_par_ids() + ConcurrentG1Refine::thread_num(), ParallelGCThreads);
+++  return (int)MAX2(DirtyCardQueueSet::num_par_ids() + ConcurrentG1Refine::thread_num(), (size_t)ParallelGCThreads);
++ }
++ 
++ HeapRegionRemSet::HeapRegionRemSet(G1BlockOffsetSharedArray* bosa,
++diff -Nru openjdk.orig/hotspot/src/share/vm/gc_implementation/parallelScavenge/psParallelCompact.cpp openjdk/hotspot/src/share/vm/gc_implementation/parallelScavenge/psParallelCompact.cpp
++--- openjdk.orig/hotspot/src/share/vm/gc_implementation/parallelScavenge/psParallelCompact.cpp	2010-04-09 00:03:58.000000000 +0100
+++++ openjdk/hotspot/src/share/vm/gc_implementation/parallelScavenge/psParallelCompact.cpp	2010-04-10 02:28:51.000000000 +0100
++@@ -863,8 +863,8 @@
++ void PSParallelCompact::initialize_dead_wood_limiter()
++ {
++   const size_t max = 100;
++-  _dwl_mean = double(MIN2(ParallelOldDeadWoodLimiterMean, max)) / 100.0;
++-  _dwl_std_dev = double(MIN2(ParallelOldDeadWoodLimiterStdDev, max)) / 100.0;
+++  _dwl_mean = double(MIN2((size_t) ParallelOldDeadWoodLimiterMean, max)) / 100.0;
+++  _dwl_std_dev = double(MIN2((size_t) ParallelOldDeadWoodLimiterStdDev, max)) / 100.0;
++   _dwl_first_term = 1.0 / (sqrt(2.0 * M_PI) * _dwl_std_dev);
++   DEBUG_ONLY(_dwl_initialized = true;)
++   _dwl_adjustment = normal_distribution(1.0);
++diff -Nru openjdk.orig/hotspot/src/share/vm/gc_implementation/parallelScavenge/psPermGen.cpp openjdk/hotspot/src/share/vm/gc_implementation/parallelScavenge/psPermGen.cpp
++--- openjdk.orig/hotspot/src/share/vm/gc_implementation/parallelScavenge/psPermGen.cpp	2010-04-09 00:03:58.000000000 +0100
+++++ openjdk/hotspot/src/share/vm/gc_implementation/parallelScavenge/psPermGen.cpp	2010-04-10 02:28:51.000000000 +0100
++@@ -63,7 +63,7 @@
++   _last_used = current_live;
++ 
++   // We have different alignment constraints than the rest of the heap.
++-  const size_t alignment = MAX2(MinPermHeapExpansion,
+++  const size_t alignment = MAX2((size_t) MinPermHeapExpansion,
++                                 virtual_space()->alignment());
++ 
++   // Compute the desired size:
++diff -Nru openjdk.orig/hotspot/src/share/vm/memory/collectorPolicy.cpp openjdk/hotspot/src/share/vm/memory/collectorPolicy.cpp
++--- openjdk.orig/hotspot/src/share/vm/memory/collectorPolicy.cpp	2010-04-09 00:03:58.000000000 +0100
+++++ openjdk/hotspot/src/share/vm/memory/collectorPolicy.cpp	2010-04-10 02:28:51.000000000 +0100
++@@ -281,7 +281,7 @@
++     // yield a size that is too small) and bound it by MaxNewSize above.
++     // Ergonomics plays here by previously calculating the desired
++     // NewSize and MaxNewSize.
++-    max_new_size = MIN2(MAX2(max_new_size, NewSize), MaxNewSize);
+++    max_new_size = MIN2(MAX2(max_new_size, (size_t)NewSize), (size_t)MaxNewSize);
++   }
++   assert(max_new_size > 0, "All paths should set max_new_size");
++ 
++@@ -308,7 +308,7 @@
++       // generally small compared to the NewRatio calculation.
++       _min_gen0_size = NewSize;
++       desired_new_size = NewSize;
++-      max_new_size = MAX2(max_new_size, NewSize);
+++      max_new_size = MAX2(max_new_size, (size_t) NewSize);
++     } else {
++       // For the case where NewSize is the default, use NewRatio
++       // to size the minimum and initial generation sizes.
++@@ -316,10 +316,10 @@
++       // NewRatio is overly large, the resulting sizes can be too
++       // small.
++       _min_gen0_size = MAX2(scale_by_NewRatio_aligned(min_heap_byte_size()),
++-                          NewSize);
+++                          (size_t) NewSize);
++       desired_new_size =
++         MAX2(scale_by_NewRatio_aligned(initial_heap_byte_size()),
++-             NewSize);
+++             (size_t) NewSize);
++     }
++ 
++     assert(_min_gen0_size > 0, "Sanity check");
++@@ -374,14 +374,14 @@
++       // Adjust gen0 down to accomodate OldSize
++       *gen0_size_ptr = heap_size - min_gen0_size;
++       *gen0_size_ptr =
++-        MAX2((uintx)align_size_down(*gen0_size_ptr, min_alignment()),
+++        MAX2((size_t)align_size_down(*gen0_size_ptr, min_alignment()),
++              min_alignment());
++       assert(*gen0_size_ptr > 0, "Min gen0 is too large");
++       result = true;
++     } else {
++       *gen1_size_ptr = heap_size - *gen0_size_ptr;
++       *gen1_size_ptr =
++-        MAX2((uintx)align_size_down(*gen1_size_ptr, min_alignment()),
+++        MAX2((size_t)align_size_down(*gen1_size_ptr, min_alignment()),
++                        min_alignment());
++     }
++   }
++@@ -405,7 +405,7 @@
++   // for setting the gen1 maximum.
++   _max_gen1_size = max_heap_byte_size() - _max_gen0_size;
++   _max_gen1_size =
++-    MAX2((uintx)align_size_down(_max_gen1_size, min_alignment()),
+++    MAX2((size_t)align_size_down(_max_gen1_size, min_alignment()),
++          min_alignment());
++   // If no explicit command line flag has been set for the
++   // gen1 size, use what is left for gen1.
++@@ -419,11 +419,11 @@
++       "gen0 has an unexpected minimum size");
++     set_min_gen1_size(min_heap_byte_size() - min_gen0_size());
++     set_min_gen1_size(
++-      MAX2((uintx)align_size_down(_min_gen1_size, min_alignment()),
+++      MAX2((size_t)align_size_down(_min_gen1_size, min_alignment()),
++            min_alignment()));
++     set_initial_gen1_size(initial_heap_byte_size() - initial_gen0_size());
++     set_initial_gen1_size(
++-      MAX2((uintx)align_size_down(_initial_gen1_size, min_alignment()),
+++      MAX2((size_t)align_size_down(_initial_gen1_size, min_alignment()),
++            min_alignment()));
++ 
++   } else {
++diff -Nru openjdk.orig/hotspot/src/share/vm/memory/threadLocalAllocBuffer.cpp openjdk/hotspot/src/share/vm/memory/threadLocalAllocBuffer.cpp
++--- openjdk.orig/hotspot/src/share/vm/memory/threadLocalAllocBuffer.cpp	2010-04-09 00:03:58.000000000 +0100
+++++ openjdk/hotspot/src/share/vm/memory/threadLocalAllocBuffer.cpp	2010-04-10 02:28:51.000000000 +0100
++@@ -221,7 +221,7 @@
++   size_t init_sz;
++ 
++   if (TLABSize > 0) {
++-    init_sz = MIN2(TLABSize / HeapWordSize, max_size());
+++    init_sz = MIN2((size_t) (TLABSize / HeapWordSize), max_size());
++   } else if (global_stats() == NULL) {
++     // Startup issue - main thread initialized before heap initialized.
++     init_sz = min_size();
++diff -Nru openjdk.orig/hotspot/src/share/vm/runtime/arguments.cpp openjdk/hotspot/src/share/vm/runtime/arguments.cpp
++--- openjdk.orig/hotspot/src/share/vm/runtime/arguments.cpp	2010-04-10 01:52:10.000000000 +0100
+++++ openjdk/hotspot/src/share/vm/runtime/arguments.cpp	2010-04-10 02:28:51.000000000 +0100
++@@ -1071,7 +1071,7 @@
++     // NewSize was set on the command line and it is larger than
++     // preferred_max_new_size.
++     if (!FLAG_IS_DEFAULT(NewSize)) {   // NewSize explicitly set at command-line
++-      FLAG_SET_ERGO(uintx, MaxNewSize, MAX2(NewSize, preferred_max_new_size));
+++      FLAG_SET_ERGO(uintx, MaxNewSize, MAX2((size_t) NewSize, preferred_max_new_size));
++     } else {
++       FLAG_SET_ERGO(uintx, MaxNewSize, preferred_max_new_size);
++     }
++@@ -1090,7 +1090,7 @@
++     // there was no obvious reason.  Also limit to the case where
++     // MaxNewSize has not been set.
++ 
++-    FLAG_SET_ERGO(intx, NewRatio, MAX2(NewRatio, new_ratio));
+++    FLAG_SET_ERGO(intx, NewRatio, MAX2((intx) NewRatio, new_ratio));
++ 
++     // Code along this path potentially sets NewSize and OldSize
++ 
++@@ -1132,8 +1132,8 @@
++       // Unless explicitly requested otherwise, make young gen
++       // at least min_new, and at most preferred_max_new_size.
++       if (FLAG_IS_DEFAULT(NewSize)) {
++-        FLAG_SET_ERGO(uintx, NewSize, MAX2(NewSize, min_new));
++-        FLAG_SET_ERGO(uintx, NewSize, MIN2(preferred_max_new_size, NewSize));
+++	FLAG_SET_ERGO(uintx, NewSize, MAX2((size_t) NewSize, min_new));
+++        FLAG_SET_ERGO(uintx, NewSize, MIN2(preferred_max_new_size, (size_t) NewSize));
++         if (PrintGCDetails && Verbose) {
++           // Too early to use gclog_or_tty
++           tty->print_cr("Ergo set NewSize: " SIZE_FORMAT, NewSize);
++@@ -1144,7 +1144,7 @@
++       // later NewRatio will decide how it grows; see above.
++       if (FLAG_IS_DEFAULT(OldSize)) {
++         if (max_heap > NewSize) {
++-          FLAG_SET_ERGO(uintx, OldSize, MIN2(3*NewSize, max_heap - NewSize));
+++	  FLAG_SET_ERGO(uintx, OldSize, MIN2((size_t) 3*NewSize, max_heap - (size_t) NewSize));
++           if (PrintGCDetails && Verbose) {
++             // Too early to use gclog_or_tty
++             tty->print_cr("Ergo set OldSize: " SIZE_FORMAT, OldSize);
++--- openjdk/hotspot/src/share/vm/gc_implementation/concurrentMarkSweep/compactibleFreeListSpace.cpp.orig	2010-06-21 23:12:18.000000000 +0200
+++++ openjdk/hotspot/src/share/vm/gc_implementation/concurrentMarkSweep/compactibleFreeListSpace.cpp	2010-09-09 10:48:01.909691035 +0200
++@@ -2882,7 +2882,7 @@
++   if (ResizeOldPLAB && CMSOldPLABResizeQuicker) {
++     size_t multiple = _num_blocks[word_sz]/(CMSOldPLABToleranceFactor*CMSOldPLABNumRefills*n_blks);
++     n_blks +=  CMSOldPLABReactivityFactor*multiple*n_blks;
++-    n_blks = MIN2(n_blks, CMSOldPLABMax);
+++    n_blks = MIN2(n_blks, (size_t)CMSOldPLABMax);
++   }
++   assert(n_blks > 0, "Error");
++   _cfls->par_get_chunk_of_blocks(word_sz, n_blks, fl);
++--- openjdk/hotspot/src/share/vm/gc_implementation/parNew/parNewGeneration.cpp.orig	2010-06-21 21:12:18.000000000 +0000
+++++ openjdk/hotspot/src/share/vm/gc_implementation/parNew/parNewGeneration.cpp	2010-09-09 12:55:45.000000000 +0000
++@@ -160,7 +160,7 @@
++   const size_t num_overflow_elems = of_stack->size();
++   const size_t space_available = queue->max_elems() - queue->size();
++   const size_t num_take_elems = MIN3(space_available / 4,
++-                                     ParGCDesiredObjsFromOverflowList,
+++                                     (size_t)ParGCDesiredObjsFromOverflowList,
++                                      num_overflow_elems);
++   // Transfer the most recent num_take_elems from the overflow
++   // stack to our work queue.
+diff -Nru icedtea6-1.9.orig/patches/hotspot/original/print_lsb_release.patch icedtea6-1.9/patches/hotspot/original/print_lsb_release.patch
+--- icedtea6-1.9.orig/patches/hotspot/original/print_lsb_release.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.9/patches/hotspot/original/print_lsb_release.patch	2010-09-20 00:57:51.731125114 +0100
+@@ -0,0 +1,48 @@
++--- openjdk/hotspot/src/os/linux/vm/os_linux.cpp~	2007-12-14 08:57:02.000000000 +0100
+++++ openjdk/hotspot/src/os/linux/vm/os_linux.cpp	2008-01-19 16:20:24.206979233 +0100
++@@ -1757,6 +1757,37 @@
++   return true;
++ }
++ 
+++bool _print_debian_lsb_file(const char* filename, outputStream* st) {
+++  int fd = open(filename, O_RDONLY);
+++  if (fd == -1) {
+++     return false;
+++  }
+++
+++  char buf[512], *d_i, *d_r, *d_c;
+++  int bytes;
+++
+++  if ((bytes = read(fd, buf, sizeof(buf)-1)) == sizeof(buf)-1) {
+++     close(fd);
+++     return false;
+++  }
+++  close(fd);
+++
+++  buf[bytes] = '\n';
+++  buf[bytes+1] = '\0';
+++  d_i = strstr(buf, "DISTRIB_ID=");
+++  d_r = strstr(buf, "DISTRIB_RELEASE=");
+++  d_c = strstr(buf, "DISTRIB_CODENAME=");
+++  if (!d_i || !d_r || !d_c) {
+++     return false;
+++  }
+++  d_i = strchr(d_i, '=') + 1;  *strchrnul(d_i, '\n') = '\0';
+++  d_r = strchr(d_r, '=') + 1;  *strchrnul(d_r, '\n') = '\0';
+++  d_c = strchr(d_c, '=') + 1;  *strchrnul(d_c, '\n') = '\0';
+++  st->print("%s %s (%s)", d_i, d_r, d_c);
+++
+++  return true;
+++}
+++
++ void os::print_dll_info(outputStream *st) {
++    st->print_cr("Dynamic libraries:");
++ 
++@@ -1785,6 +1816,7 @@
++       !_print_ascii_file("/etc/SuSE-release", st) &&
++       !_print_ascii_file("/etc/turbolinux-release", st) &&
++       !_print_ascii_file("/etc/gentoo-release", st) &&
+++      !_print_debian_lsb_file("/etc/lsb-release", st) &&
++       !_print_ascii_file("/etc/debian_version", st)) {
++       st->print("Linux");
++   }
+diff -Nru icedtea6-1.9.orig/patches/hotspot/original/update-bootclasspath.patch icedtea6-1.9/patches/hotspot/original/update-bootclasspath.patch
+--- icedtea6-1.9.orig/patches/hotspot/original/update-bootclasspath.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.9/patches/hotspot/original/update-bootclasspath.patch	2010-09-20 00:57:51.731125114 +0100
+@@ -0,0 +1,13 @@
++diff -ur openjdk.orig/hotspot/src/share/vm/runtime/os.cpp openjdk/hotspot/src/share/vm/runtime/os.cpp
++--- openjdk.orig/hotspot/src/share/vm/runtime/os.cpp	2010-06-21 17:12:21.000000000 -0400
+++++ openjdk/hotspot/src/share/vm/runtime/os.cpp	2010-08-06 15:48:48.338599142 -0400
++@@ -884,6 +884,9 @@
++         "%/lib/jsse.jar:"
++         "%/lib/jce.jar:"
++         "%/lib/charsets.jar:"
+++        "%/lib/netx.jar:"
+++        "%/lib/plugin.jar:"
+++        "%/lib/rhino.jar:"
++         "%/classes";
++     char* sysclasspath = format_boot_path(classpath_format, home, home_len, fileSep, pathSep);
++     if (sysclasspath == NULL) return false;
+diff -Nru icedtea6-1.9.orig/patches/icedtea-alpha-fixes.patch icedtea6-1.9/patches/icedtea-alpha-fixes.patch
+--- icedtea6-1.9.orig/patches/icedtea-alpha-fixes.patch	2010-08-06 12:05:19.308440550 +0100
++++ icedtea6-1.9/patches/icedtea-alpha-fixes.patch	1970-01-01 01:00:00.000000000 +0100
+@@ -1,31 +0,0 @@
+---- openjdk/hotspot/agent/src/os/linux/Makefile.orig	2008-07-26 23:29:45.244786863 +0200
+-+++ openjdk/hotspot/agent/src/os/linux/Makefile	2008-07-26 23:38:26.632651880 +0200
+-@@ -40,7 +40,7 @@
+- 
+- LIBS     = -lthread_db
+- 
+--CFLAGS   = -c -fPIC -g -D_GNU_SOURCE -D$(ARCH) $(INCLUDES)
+-+CFLAGS   = -c -fPIC -g -D_GNU_SOURCE -D_$(ARCH)_ $(if $(filter $(ARCH),alpha),,-D$(ARCH)) $(INCLUDES)
+- 
+- LIBSA = $(ARCH)/libsaproc.so
+- 
+-@@ -65,7 +65,7 @@
+- 	$(GCC) -shared $(LFLAGS_LIBSA) -o $(LIBSA) $(OBJS) $(LIBS)
+- 
+- test.o: test.c
+--	$(GCC) -c -o test.o -g -D_GNU_SOURCE -D$(ARCH) $(INCLUDES) test.c
+-+	$(GCC) -c -o test.o -g -D_GNU_SOURCE -D_$(ARCH)_ $(if $(filter $(ARCH),alpha),,-D$(ARCH)) $(INCLUDES) test.c
+- 
+- test: test.o
+- 	$(GCC) -o test test.o -L$(ARCH) -lsaproc $(LIBS)
+---- openjdk/hotspot/src/share/vm/oops/generateOopMap.cpp.orig	2008-07-10 22:04:33.000000000 +0200
+-+++ openjdk/hotspot/src/share/vm/oops/generateOopMap.cpp	2008-07-26 23:38:26.632651880 +0200
+-@@ -2128,7 +2128,7 @@
+-   // We do not distinguish between different types of errors for verification
+-   // errors.  Let the verifier give a better message.
+-   const char *msg = "Illegal class file encountered. Try running with -Xverify:all";
+--  error_work(msg, NULL);
+-+  report_error(msg, NULL);
+- }
+- 
+- //
+diff -Nru icedtea6-1.9.orig/patches/icedtea-gcc-suffix-hotspot.patch icedtea6-1.9/patches/icedtea-gcc-suffix-hotspot.patch
+--- icedtea6-1.9.orig/patches/icedtea-gcc-suffix-hotspot.patch	2010-08-06 12:05:19.520238887 +0100
++++ icedtea6-1.9/patches/icedtea-gcc-suffix-hotspot.patch	1970-01-01 01:00:00.000000000 +0100
+@@ -1,25 +0,0 @@
+---- openjdk/hotspot/agent/src/os/linux/Makefile~	2007-08-02 09:16:50.000000000 +0200
+-+++ openjdk/hotspot/agent/src/os/linux/Makefile	2007-08-08 17:00:11.204338801 +0200
+-@@ -23,7 +23,7 @@
+- #
+- 
+- ARCH := $(shell if ([ `uname -m` = "ia64" ])  ; then echo ia64 ; elif ([ `uname -m` = "x86_64" ]) ; then echo amd64; elif ([ `uname -m` = "sparc64" ]) ; then echo sparc; else echo i386 ; fi )
+--GCC      = gcc
+-+GCC      = gcc$(GCC_SUFFIX)
+- 
+- JAVAH    = ${JAVA_HOME}/bin/javah
+- 
+---- openjdk/hotspot/make/linux/makefiles/gcc.make~	2007-08-08 16:13:12.281815996 +0200
+-+++ openjdk/hotspot/make/linux/makefiles/gcc.make	2007-08-08 16:36:52.573240769 +0200
+-@@ -25,8 +25,8 @@
+- #------------------------------------------------------------------------
+- # CC, CPP & AS
+- 
+--CPP = g++
+--CC  = gcc
+-+CPP = g++$(GCC_SUFFIX)
+-+CC  = gcc$(GCC_SUFFIX)
+- AS  = $(CC) -c
+- 
+- # -dumpversion in gcc-2.91 shows "egcs-2.91.66". In later version, it only
+-
+diff -Nru icedtea6-1.9.orig/patches/icedtea-print-lsb-release.patch icedtea6-1.9/patches/icedtea-print-lsb-release.patch
+--- icedtea6-1.9.orig/patches/icedtea-print-lsb-release.patch	2010-08-06 12:05:20.444783807 +0100
++++ icedtea6-1.9/patches/icedtea-print-lsb-release.patch	1970-01-01 01:00:00.000000000 +0100
+@@ -1,48 +0,0 @@
+---- openjdk/hotspot/src/os/linux/vm/os_linux.cpp~	2007-12-14 08:57:02.000000000 +0100
+-+++ openjdk/hotspot/src/os/linux/vm/os_linux.cpp	2008-01-19 16:20:24.206979233 +0100
+-@@ -1757,6 +1757,37 @@
+-   return true;
+- }
+- 
+-+bool _print_debian_lsb_file(const char* filename, outputStream* st) {
+-+  int fd = open(filename, O_RDONLY);
+-+  if (fd == -1) {
+-+     return false;
+-+  }
+-+
+-+  char buf[512], *d_i, *d_r, *d_c;
+-+  int bytes;
+-+
+-+  if ((bytes = read(fd, buf, sizeof(buf)-1)) == sizeof(buf)-1) {
+-+     close(fd);
+-+     return false;
+-+  }
+-+  close(fd);
+-+
+-+  buf[bytes] = '\n';
+-+  buf[bytes+1] = '\0';
+-+  d_i = strstr(buf, "DISTRIB_ID=");
+-+  d_r = strstr(buf, "DISTRIB_RELEASE=");
+-+  d_c = strstr(buf, "DISTRIB_CODENAME=");
+-+  if (!d_i || !d_r || !d_c) {
+-+     return false;
+-+  }
+-+  d_i = strchr(d_i, '=') + 1;  *strchrnul(d_i, '\n') = '\0';
+-+  d_r = strchr(d_r, '=') + 1;  *strchrnul(d_r, '\n') = '\0';
+-+  d_c = strchr(d_c, '=') + 1;  *strchrnul(d_c, '\n') = '\0';
+-+  st->print("%s %s (%s)", d_i, d_r, d_c);
+-+
+-+  return true;
+-+}
+-+
+- void os::print_dll_info(outputStream *st) {
+-    st->print_cr("Dynamic libraries:");
+- 
+-@@ -1785,6 +1816,7 @@
+-       !_print_ascii_file("/etc/SuSE-release", st) &&
+-       !_print_ascii_file("/etc/turbolinux-release", st) &&
+-       !_print_ascii_file("/etc/gentoo-release", st) &&
+-+      !_print_debian_lsb_file("/etc/lsb-release", st) &&
+-       !_print_ascii_file("/etc/debian_version", st)) {
+-       st->print("Linux");
+-   }
+diff -Nru icedtea6-1.9.orig/patches/params-cast-size_t.patch icedtea6-1.9/patches/params-cast-size_t.patch
+--- icedtea6-1.9.orig/patches/params-cast-size_t.patch	2010-08-06 12:05:21.650149277 +0100
++++ icedtea6-1.9/patches/params-cast-size_t.patch	1970-01-01 01:00:00.000000000 +0100
+@@ -1,252 +0,0 @@
+-diff -Nru openjdk.orig/hotspot/src/share/vm/gc_implementation/concurrentMarkSweep/concurrentMarkSweepGeneration.cpp openjdk/hotspot/src/share/vm/gc_implementation/concurrentMarkSweep/concurrentMarkSweepGeneration.cpp
+---- openjdk.orig/hotspot/src/share/vm/gc_implementation/concurrentMarkSweep/concurrentMarkSweepGeneration.cpp	2010-04-09 00:03:58.000000000 +0100
+-+++ openjdk/hotspot/src/share/vm/gc_implementation/concurrentMarkSweep/concurrentMarkSweepGeneration.cpp	2010-04-10 02:29:45.000000000 +0100
+-@@ -963,7 +963,7 @@
+-   if (free_percentage < desired_free_percentage) {
+-     size_t desired_capacity = (size_t)(used() / ((double) 1 - desired_free_percentage));
+-     assert(desired_capacity >= capacity(), "invalid expansion size");
+--    expand_bytes = MAX2(desired_capacity - capacity(), MinHeapDeltaBytes);
+-+    expand_bytes = MAX2((long unsigned int) (desired_capacity - capacity()), (long unsigned int) MinHeapDeltaBytes);
+-   }
+-   if (expand_bytes > 0) {
+-     if (PrintGCDetails && Verbose) {
+-@@ -6150,7 +6150,7 @@
+-     HeapWord* curAddr = _markBitMap.startWord();
+-     while (curAddr < _markBitMap.endWord()) {
+-       size_t remaining  = pointer_delta(_markBitMap.endWord(), curAddr);
+--      MemRegion chunk(curAddr, MIN2(CMSBitMapYieldQuantum, remaining));
+-+      MemRegion chunk(curAddr, MIN2((size_t) CMSBitMapYieldQuantum, remaining));
+-       _markBitMap.clear_large_range(chunk);
+-       if (ConcurrentMarkSweepThread::should_yield() &&
+-           !foregroundGCIsActive() &&
+-@@ -6438,7 +6438,7 @@
+-     return;
+-   }
+-   // Double capacity if possible
+--  size_t new_capacity = MIN2(_capacity*2, MarkStackSizeMax);
+-+  size_t new_capacity = MIN2((size_t) (_capacity*2), (size_t) MarkStackSizeMax);
+-   // Do not give up existing stack until we have managed to
+-   // get the double capacity that we desired.
+-   ReservedSpace rs(ReservedSpace::allocation_align_size_up(
+-diff -Nru openjdk.orig/hotspot/src/share/vm/gc_implementation/g1/concurrentMark.cpp openjdk/hotspot/src/share/vm/gc_implementation/g1/concurrentMark.cpp
+---- openjdk.orig/hotspot/src/share/vm/gc_implementation/g1/concurrentMark.cpp	2010-04-10 01:52:13.000000000 +0100
+-+++ openjdk/hotspot/src/share/vm/gc_implementation/g1/concurrentMark.cpp	2010-04-10 02:28:51.000000000 +0100
+-@@ -452,7 +452,7 @@
+-   _regionStack(),
+-   // _finger set in set_non_marking_state
+- 
+--  _max_task_num(MAX2(ParallelGCThreads, (size_t)1)),
+-+  _max_task_num(MAX2((size_t)ParallelGCThreads, (size_t)1)),
+-   // _active_tasks set in set_non_marking_state
+-   // _tasks set inside the constructor
+-   _task_queues(new CMTaskQueueSet((int) _max_task_num)),
+-@@ -503,7 +503,7 @@
+-   SATBMarkQueueSet& satb_qs = JavaThread::satb_mark_queue_set();
+-   satb_qs.set_buffer_size(G1SATBBufferSize);
+- 
+--  int size = (int) MAX2(ParallelGCThreads, (size_t)1);
+-+  int size = (int) MAX2((size_t)ParallelGCThreads, (size_t)1);
+-   _par_cleanup_thread_state = NEW_C_HEAP_ARRAY(ParCleanupThreadState*, size);
+-   for (int i = 0 ; i < size; i++) {
+-     _par_cleanup_thread_state[i] = new ParCleanupThreadState;
+-@@ -562,7 +562,7 @@
+-       _sleep_factor             = sleep_factor;
+-       _marking_task_overhead    = marking_task_overhead;
+-     } else {
+--      _parallel_marking_threads = MAX2((ParallelGCThreads + 2) / 4, (size_t)1);
+-+      _parallel_marking_threads = MAX2((size_t)((ParallelGCThreads + 2) / 4), (size_t)1);
+-       _sleep_factor             = 0.0;
+-       _marking_task_overhead    = 1.0;
+-     }
+-@@ -689,7 +689,7 @@
+- }
+- 
+- ConcurrentMark::~ConcurrentMark() {
+--  int size = (int) MAX2(ParallelGCThreads, (size_t)1);
+-+  int size = (int) MAX2((size_t)ParallelGCThreads, (size_t)1);
+-   for (int i = 0; i < size; i++) delete _par_cleanup_thread_state[i];
+-   FREE_C_HEAP_ARRAY(ParCleanupThreadState*,
+-                     _par_cleanup_thread_state);
+-@@ -1778,7 +1778,7 @@
+-   if (has_aborted()) return;
+- 
+-   int first = 0;
+--  int last = (int)MAX2(ParallelGCThreads, (size_t)1);
+-+  int last = (int)MAX2((size_t)ParallelGCThreads, (size_t)1);
+-   for (int t = 0; t < last; t++) {
+-     UncleanRegionList* list = &_par_cleanup_thread_state[t]->list;
+-     assert(list->well_formed(), "Inv");
+-@@ -3276,7 +3276,7 @@
+-   // of things to do) or totally (at the very end).
+-   size_t target_size;
+-   if (partially)
+--    target_size = MIN2((size_t)_task_queue->max_elems()/3, GCDrainStackTargetSize);
+-+    target_size = MIN2((size_t)_task_queue->max_elems()/3, (size_t)GCDrainStackTargetSize);
+-   else
+-     target_size = 0;
+- 
+-diff -Nru openjdk.orig/hotspot/src/share/vm/gc_implementation/g1/heapRegionRemSet.cpp openjdk/hotspot/src/share/vm/gc_implementation/g1/heapRegionRemSet.cpp
+---- openjdk.orig/hotspot/src/share/vm/gc_implementation/g1/heapRegionRemSet.cpp	2010-04-09 00:03:58.000000000 +0100
+-+++ openjdk/hotspot/src/share/vm/gc_implementation/g1/heapRegionRemSet.cpp	2010-04-10 02:28:51.000000000 +0100
+-@@ -1068,7 +1068,7 @@
+- // This can be done by either mutator threads together with the
+- // concurrent refinement threads or GC threads.
+- int HeapRegionRemSet::num_par_rem_sets() {
+--  return (int)MAX2(DirtyCardQueueSet::num_par_ids() + ConcurrentG1Refine::thread_num(), ParallelGCThreads);
+-+  return (int)MAX2(DirtyCardQueueSet::num_par_ids() + ConcurrentG1Refine::thread_num(), (size_t)ParallelGCThreads);
+- }
+- 
+- HeapRegionRemSet::HeapRegionRemSet(G1BlockOffsetSharedArray* bosa,
+-diff -Nru openjdk.orig/hotspot/src/share/vm/gc_implementation/parallelScavenge/psParallelCompact.cpp openjdk/hotspot/src/share/vm/gc_implementation/parallelScavenge/psParallelCompact.cpp
+---- openjdk.orig/hotspot/src/share/vm/gc_implementation/parallelScavenge/psParallelCompact.cpp	2010-04-09 00:03:58.000000000 +0100
+-+++ openjdk/hotspot/src/share/vm/gc_implementation/parallelScavenge/psParallelCompact.cpp	2010-04-10 02:28:51.000000000 +0100
+-@@ -863,8 +863,8 @@
+- void PSParallelCompact::initialize_dead_wood_limiter()
+- {
+-   const size_t max = 100;
+--  _dwl_mean = double(MIN2(ParallelOldDeadWoodLimiterMean, max)) / 100.0;
+--  _dwl_std_dev = double(MIN2(ParallelOldDeadWoodLimiterStdDev, max)) / 100.0;
+-+  _dwl_mean = double(MIN2((size_t) ParallelOldDeadWoodLimiterMean, max)) / 100.0;
+-+  _dwl_std_dev = double(MIN2((size_t) ParallelOldDeadWoodLimiterStdDev, max)) / 100.0;
+-   _dwl_first_term = 1.0 / (sqrt(2.0 * M_PI) * _dwl_std_dev);
+-   DEBUG_ONLY(_dwl_initialized = true;)
+-   _dwl_adjustment = normal_distribution(1.0);
+-diff -Nru openjdk.orig/hotspot/src/share/vm/gc_implementation/parallelScavenge/psPermGen.cpp openjdk/hotspot/src/share/vm/gc_implementation/parallelScavenge/psPermGen.cpp
+---- openjdk.orig/hotspot/src/share/vm/gc_implementation/parallelScavenge/psPermGen.cpp	2010-04-09 00:03:58.000000000 +0100
+-+++ openjdk/hotspot/src/share/vm/gc_implementation/parallelScavenge/psPermGen.cpp	2010-04-10 02:28:51.000000000 +0100
+-@@ -63,7 +63,7 @@
+-   _last_used = current_live;
+- 
+-   // We have different alignment constraints than the rest of the heap.
+--  const size_t alignment = MAX2(MinPermHeapExpansion,
+-+  const size_t alignment = MAX2((size_t) MinPermHeapExpansion,
+-                                 virtual_space()->alignment());
+- 
+-   // Compute the desired size:
+-diff -Nru openjdk.orig/hotspot/src/share/vm/memory/collectorPolicy.cpp openjdk/hotspot/src/share/vm/memory/collectorPolicy.cpp
+---- openjdk.orig/hotspot/src/share/vm/memory/collectorPolicy.cpp	2010-04-09 00:03:58.000000000 +0100
+-+++ openjdk/hotspot/src/share/vm/memory/collectorPolicy.cpp	2010-04-10 02:28:51.000000000 +0100
+-@@ -281,7 +281,7 @@
+-     // yield a size that is too small) and bound it by MaxNewSize above.
+-     // Ergonomics plays here by previously calculating the desired
+-     // NewSize and MaxNewSize.
+--    max_new_size = MIN2(MAX2(max_new_size, NewSize), MaxNewSize);
+-+    max_new_size = MIN2(MAX2(max_new_size, (size_t)NewSize), (size_t)MaxNewSize);
+-   }
+-   assert(max_new_size > 0, "All paths should set max_new_size");
+- 
+-@@ -308,7 +308,7 @@
+-       // generally small compared to the NewRatio calculation.
+-       _min_gen0_size = NewSize;
+-       desired_new_size = NewSize;
+--      max_new_size = MAX2(max_new_size, NewSize);
+-+      max_new_size = MAX2(max_new_size, (size_t) NewSize);
+-     } else {
+-       // For the case where NewSize is the default, use NewRatio
+-       // to size the minimum and initial generation sizes.
+-@@ -316,10 +316,10 @@
+-       // NewRatio is overly large, the resulting sizes can be too
+-       // small.
+-       _min_gen0_size = MAX2(scale_by_NewRatio_aligned(min_heap_byte_size()),
+--                          NewSize);
+-+                          (size_t) NewSize);
+-       desired_new_size =
+-         MAX2(scale_by_NewRatio_aligned(initial_heap_byte_size()),
+--             NewSize);
+-+             (size_t) NewSize);
+-     }
+- 
+-     assert(_min_gen0_size > 0, "Sanity check");
+-@@ -374,14 +374,14 @@
+-       // Adjust gen0 down to accomodate OldSize
+-       *gen0_size_ptr = heap_size - min_gen0_size;
+-       *gen0_size_ptr =
+--        MAX2((uintx)align_size_down(*gen0_size_ptr, min_alignment()),
+-+        MAX2((size_t)align_size_down(*gen0_size_ptr, min_alignment()),
+-              min_alignment());
+-       assert(*gen0_size_ptr > 0, "Min gen0 is too large");
+-       result = true;
+-     } else {
+-       *gen1_size_ptr = heap_size - *gen0_size_ptr;
+-       *gen1_size_ptr =
+--        MAX2((uintx)align_size_down(*gen1_size_ptr, min_alignment()),
+-+        MAX2((size_t)align_size_down(*gen1_size_ptr, min_alignment()),
+-                        min_alignment());
+-     }
+-   }
+-@@ -405,7 +405,7 @@
+-   // for setting the gen1 maximum.
+-   _max_gen1_size = max_heap_byte_size() - _max_gen0_size;
+-   _max_gen1_size =
+--    MAX2((uintx)align_size_down(_max_gen1_size, min_alignment()),
+-+    MAX2((size_t)align_size_down(_max_gen1_size, min_alignment()),
+-          min_alignment());
+-   // If no explicit command line flag has been set for the
+-   // gen1 size, use what is left for gen1.
+-@@ -419,11 +419,11 @@
+-       "gen0 has an unexpected minimum size");
+-     set_min_gen1_size(min_heap_byte_size() - min_gen0_size());
+-     set_min_gen1_size(
+--      MAX2((uintx)align_size_down(_min_gen1_size, min_alignment()),
+-+      MAX2((size_t)align_size_down(_min_gen1_size, min_alignment()),
+-            min_alignment()));
+-     set_initial_gen1_size(initial_heap_byte_size() - initial_gen0_size());
+-     set_initial_gen1_size(
+--      MAX2((uintx)align_size_down(_initial_gen1_size, min_alignment()),
+-+      MAX2((size_t)align_size_down(_initial_gen1_size, min_alignment()),
+-            min_alignment()));
+- 
+-   } else {
+-diff -Nru openjdk.orig/hotspot/src/share/vm/memory/threadLocalAllocBuffer.cpp openjdk/hotspot/src/share/vm/memory/threadLocalAllocBuffer.cpp
+---- openjdk.orig/hotspot/src/share/vm/memory/threadLocalAllocBuffer.cpp	2010-04-09 00:03:58.000000000 +0100
+-+++ openjdk/hotspot/src/share/vm/memory/threadLocalAllocBuffer.cpp	2010-04-10 02:28:51.000000000 +0100
+-@@ -221,7 +221,7 @@
+-   size_t init_sz;
+- 
+-   if (TLABSize > 0) {
+--    init_sz = MIN2(TLABSize / HeapWordSize, max_size());
+-+    init_sz = MIN2((size_t) (TLABSize / HeapWordSize), max_size());
+-   } else if (global_stats() == NULL) {
+-     // Startup issue - main thread initialized before heap initialized.
+-     init_sz = min_size();
+-diff -Nru openjdk.orig/hotspot/src/share/vm/runtime/arguments.cpp openjdk/hotspot/src/share/vm/runtime/arguments.cpp
+---- openjdk.orig/hotspot/src/share/vm/runtime/arguments.cpp	2010-04-10 01:52:10.000000000 +0100
+-+++ openjdk/hotspot/src/share/vm/runtime/arguments.cpp	2010-04-10 02:28:51.000000000 +0100
+-@@ -1071,7 +1071,7 @@
+-     // NewSize was set on the command line and it is larger than
+-     // preferred_max_new_size.
+-     if (!FLAG_IS_DEFAULT(NewSize)) {   // NewSize explicitly set at command-line
+--      FLAG_SET_ERGO(uintx, MaxNewSize, MAX2(NewSize, preferred_max_new_size));
+-+      FLAG_SET_ERGO(uintx, MaxNewSize, MAX2((size_t) NewSize, preferred_max_new_size));
+-     } else {
+-       FLAG_SET_ERGO(uintx, MaxNewSize, preferred_max_new_size);
+-     }
+-@@ -1090,7 +1090,7 @@
+-     // there was no obvious reason.  Also limit to the case where
+-     // MaxNewSize has not been set.
+- 
+--    FLAG_SET_ERGO(intx, NewRatio, MAX2(NewRatio, new_ratio));
+-+    FLAG_SET_ERGO(intx, NewRatio, MAX2((intx) NewRatio, new_ratio));
+- 
+-     // Code along this path potentially sets NewSize and OldSize
+- 
+-@@ -1132,8 +1132,8 @@
+-       // Unless explicitly requested otherwise, make young gen
+-       // at least min_new, and at most preferred_max_new_size.
+-       if (FLAG_IS_DEFAULT(NewSize)) {
+--        FLAG_SET_ERGO(uintx, NewSize, MAX2(NewSize, min_new));
+--        FLAG_SET_ERGO(uintx, NewSize, MIN2(preferred_max_new_size, NewSize));
+-+	FLAG_SET_ERGO(uintx, NewSize, MAX2((size_t) NewSize, min_new));
+-+        FLAG_SET_ERGO(uintx, NewSize, MIN2(preferred_max_new_size, (size_t) NewSize));
+-         if (PrintGCDetails && Verbose) {
+-           // Too early to use gclog_or_tty
+-           tty->print_cr("Ergo set NewSize: " SIZE_FORMAT, NewSize);
+-@@ -1144,7 +1144,7 @@
+-       // later NewRatio will decide how it grows; see above.
+-       if (FLAG_IS_DEFAULT(OldSize)) {
+-         if (max_heap > NewSize) {
+--          FLAG_SET_ERGO(uintx, OldSize, MIN2(3*NewSize, max_heap - NewSize));
+-+	  FLAG_SET_ERGO(uintx, OldSize, MIN2((size_t) 3*NewSize, max_heap - (size_t) NewSize));
+-           if (PrintGCDetails && Verbose) {
+-             // Too early to use gclog_or_tty
+-             tty->print_cr("Ergo set OldSize: " SIZE_FORMAT, OldSize);
+diff -Nru icedtea6-1.9.orig/patches/update-bootclasspath.patch icedtea6-1.9/patches/update-bootclasspath.patch
+--- icedtea6-1.9.orig/patches/update-bootclasspath.patch	2010-09-07 12:39:53.007523406 +0100
++++ icedtea6-1.9/patches/update-bootclasspath.patch	1970-01-01 01:00:00.000000000 +0100
+@@ -1,13 +0,0 @@
+-diff -ur openjdk.orig/hotspot/src/share/vm/runtime/os.cpp openjdk/hotspot/src/share/vm/runtime/os.cpp
+---- openjdk.orig/hotspot/src/share/vm/runtime/os.cpp	2010-06-21 17:12:21.000000000 -0400
+-+++ openjdk/hotspot/src/share/vm/runtime/os.cpp	2010-08-06 15:48:48.338599142 -0400
+-@@ -884,6 +884,9 @@
+-         "%/lib/jsse.jar:"
+-         "%/lib/jce.jar:"
+-         "%/lib/charsets.jar:"
+-+        "%/lib/netx.jar:"
+-+        "%/lib/plugin.jar:"
+-+        "%/lib/rhino.jar:"
+-         "%/classes";
+-     char* sysclasspath = format_boot_path(classpath_format, home, home_len, fileSep, pathSep);
+-     if (sysclasspath == NULL) return false;

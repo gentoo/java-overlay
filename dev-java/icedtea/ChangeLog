@@ -2,6 +2,12 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.9-r1 (20 Sep 2010)
+
+  20 Sep 2010; Andrew John Hughes <andrew@gentoo.org> +files/hs19.patch,
+  -icedtea-6.1.9.ebuild, +icedtea-6.1.9-r1.ebuild:
+  Backport support for HotSpot 19.
+
   09 Sep 2010; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.9.ebuild,
   icedtea-7.1.13.ebuild, metadata.xml:
   Remove autotools from inherit where not used. Remove unused USE flags
