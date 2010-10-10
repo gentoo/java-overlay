@@ -9,8 +9,10 @@ inherit java-pkg-2
 IUSE="aac cddb flac gtk mp3 vorbis"
 
 DESCRIPTION="jRipper, a Java frontend to CD ripper and encoder tools"
-SRC_URI="http://dronten.googlepages.com/${PN}.zip"
-HOMEPAGE="http://dronten.googlepages.com/jripper"
+#SRC_URI="http://dronten.googlepages.com/${PN}.zip"
+#HOMEPAGE="http://dronten.googlepages.com/jripper"
+HOMEPAGE="http://www.rbri.org/jripper/jripper.html"
+SRC_URI="http://www.rbri.org/${PN}/${PN}_$(replace_all_version_separators _).jar"
 
 LICENSE="GPL-2"
 KEYWORDS="~amd64"
@@ -27,13 +29,7 @@ RDEPEND=">=virtual/jre-1.5
 DEPEND=">=virtual/jdk-1.5
 	app-arch/unzip"
 
-S=${WORKDIR}
-
-src_unpack() {
-	unpack ${A}
-	unzip -q "${WORKDIR}/${PN}.jar"
-	rm "${WORKDIR}/${PN}.jar"
-}
+S="${WORKDIR}"
 
 src_prepare() {
 	# delete pre-built code
@@ -43,7 +39,7 @@ src_prepare() {
 src_compile() {
 	ejavac $(find com/ -name '*.java') || die "compile failed"
 	find . -type f -name '*.java' | xargs rm
-	find com/ -type f | xargs jar cf ${PN}.jar
+	find com/ -type f | xargs jar cfm ${PN}.jar META-INF/MANIFEST.MF
 }
 
 src_install() {
