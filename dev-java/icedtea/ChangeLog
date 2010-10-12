@@ -2,6 +2,20 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.9.1 (12 Oct 2010)
+*icedtea-6.1.8.2 (12 Oct 2010)
+*icedtea-6.1.7.5 (12 Oct 2010)
+
+  12 Oct 2010; Andrew John Hughes <andrew@gentoo.org>
+  -icedtea-6.1.7.4-r1.ebuild, +icedtea-6.1.7.5.ebuild,
+  -icedtea-6.1.8.1-r1.ebuild, +icedtea-6.1.8.2.ebuild,
+  -icedtea-6.1.9-r1.ebuild, +icedtea-6.1.9.1.ebuild,
+  -files/6.1.8.1-244901.patch, -files/6.1.7.4-244901.patch,
+  -files/6.1.8.1-266295.patch, -files/hs19.patch,
+  -files/6.1.7.4-266295.patch:
+  IcedTea6 security updates.
+  http://mail.openjdk.java.net/pipermail/distro-pkg-dev/2010-October/010478.html
+
 *icedtea-6.1.9-r1 (20 Sep 2010)
 
   20 Sep 2010; Andrew John Hughes <andrew@gentoo.org> +files/hs19.patch,

@@ -9,37 +9,36 @@
 
 EAPI="2"
 
-inherit autotools pax-utils java-pkg-2 java-vm-2
+inherit pax-utils java-pkg-2 java-vm-2
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="6"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
 DESCRIPTION="A harness to build the OpenJDK using Free Software build tools and dependencies"
-ICEDTEA_VER="1.8.1"
+ICEDTEA_VER="1.9.1"
 ICEDTEA_PKG=icedtea${SLOT}-${ICEDTEA_VER}
-OPENJDK_BUILD="18"
-OPENJDK_DATE="16_feb_2010"
+OPENJDK_BUILD="20"
+OPENJDK_DATE="21_jun_2010"
 OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.gz"
-HOTSPOT_TARBALL="62926c7f67a3.tar.gz"
-JAXP_TARBALL="jdk6-jaxp-2009_10_13.zip"
-JAXWS_TARBALL="jdk6-jaxws-2009_10_27.zip"
-JAF_TARBALL="jdk6-jaf-2009_10_27.zip"
-CACAO_TARBALL="cacao-0.99.4.tar.gz"
+JAXP_TARBALL="jdk6-jaxp-b20.zip"
+JAXWS_TARBALL="jdk6-jaxws-b20.zip"
+JAF_TARBALL="jdk6-jaf-b20.zip"
+HOTSPOT_TARBALL="0803c0f69b51.tar.gz"
+CACAO_TARBALL="e321b101a9ee.tar.bz2"
 SRC_URI="http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
 		 http://download.java.net/openjdk/jdk6/promoted/b${OPENJDK_BUILD}/${OPENJDK_TARBALL}
-		 http://hg.openjdk.java.net/hsx/hsx16/master/archive/${HOTSPOT_TARBALL}
-		 https://jaxp.dev.java.net/files/documents/913/147329/${JAXP_TARBALL}
-		 http://kenai.com/projects/jdk6-drops/downloads/download/${JAXWS_TARBALL}
-		 http://kenai.com/projects/jdk6-drops/downloads/download/${JAF_TARBALL}
-		 cacao? ( http://www.complang.tuwien.ac.at/cacaojvm/download/cacao-0.99.4/${CACAO_TARBALL} )"
+		 https://jax-ws.dev.java.net/files/documents/4202/150724/${JAXWS_TARBALL}
+		 https://jax-ws.dev.java.net/files/documents/4202/150725/${JAF_TARBALL}
+		 https://jaxp.dev.java.net/files/documents/913/150648/${JAXP_TARBALL}
+		 http://hg.openjdk.java.net/hsx/hsx19/master/archive/${HOTSPOT_TARBALL}
+		 cacao? ( http://mips.complang.tuwien.ac.at/hg/cacao/archive/${CACAO_TARBALL} )"
 HOMEPAGE="http://icedtea.classpath.org"
 S=${WORKDIR}/${ICEDTEA_PKG}
 
 # Missing options:
-# shark - still experimental, requires llvm which is not yet packaged
-# visualvm - requries netbeans which would cause major bootstrap issues
-IUSE="cacao debug doc examples +hs16 javascript nio2 nsplugin +nss pulseaudio systemtap +xrender zero"
+# shark - needs adding
+IUSE="cacao debug doc examples +hs19 javascript nio2 nsplugin +nss pulseaudio systemtap +xrender zero"
 
 # JTReg doesn't pass at present
 RESTRICT="test"
@@ -161,14 +160,6 @@ src_unpack() {
 	unpack ${ICEDTEA_PKG}.tar.gz
 }
 
-src_prepare() {
-	# http://bugs.gentoo.org/show_bug.cgi?id=244901
-	epatch "${FILESDIR}/${PV}-244901.patch"
-	# http://bugs.gentoo.org/show_bug.cgi?id=266295
-	epatch "${FILESDIR}/${PV}-266295.patch"
-	eautoreconf || die "eautoreconf failed"
-}
-
 unset_vars() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 }
@@ -208,8 +199,8 @@ src_configure() {
 		rhino_jar=$(java-pkg_getjar rhino:1.6 js.jar);
 	fi
 
-	if use hs16 ; then
-		config="${config} --with-hotspot-build=hs16"
+	if use hs19 ; then
+		config="${config} --with-hotspot-build=hs19"
 	fi
 
 	unset_vars
@@ -256,13 +247,10 @@ src_install() {
 	local ddest="${D}/${dest}"
 	dodir "${dest}" || die
 
-	local arch=${ARCH}
-	use x86 && arch=i586
-
 	dodoc README NEWS AUTHORS THANKYOU || die
 	dosym "${ROOT}usr/share/doc/${PF}" "${ROOT}usr/share/doc/${PN}${SLOT}"
 
-	cd "${S}/openjdk/build/linux-${arch}/j2sdk-image" || die
+	cd "${S}/openjdk.build/j2sdk-image" || die
 
 	if use doc ; then
 		# java-pkg_dohtml needed for package-list #302654
@@ -289,6 +277,7 @@ src_install() {
 	find "${ddest}" \! -type l \( -perm /111 -exec chmod 755 {} \; -o -exec chmod 644 {} \; \) || die
 
 	if use nsplugin; then
+		local arch=${ARCH};
 		use x86 && arch=i386;
 		install_mozilla_plugin "${dest}/jre/lib/${arch}/IcedTeaPlugin.so";
 	fi
