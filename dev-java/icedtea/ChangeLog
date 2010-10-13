@@ -2,6 +2,9 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  13 Oct 2010; Vlastimil Babka <caster@gentoo.org> metadata.xml:
+  Describe hs19 flag.
+
 *icedtea-6.1.9.1 (12 Oct 2010)
 *icedtea-6.1.8.2 (12 Oct 2010)
 *icedtea-6.1.7.5 (12 Oct 2010)
