@@ -47,7 +47,7 @@ RDEPEND="alsa? ( media-libs/alsa-lib )
 # java-config >2.1.11 needed for ecj version globbing
 # We should make the build not pickup the wrong antlr binary from pccts
 DEPEND="app-arch/zip
-		=app-admin/eselect-ecj-0.5-r1
+		>=app-admin/eselect-ecj-0.5-r1
 		>=dev-java/java-config-2.1.11
 		gjdoc? ( !!dev-util/pccts )
 		gtk? (

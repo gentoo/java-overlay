@@ -2,6 +2,10 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/gnu-classpath/ChangeLog,v 1.109 2010/04/29 19:50:01 caster Exp $
 
+  06 Nov 2010; Vlastimil Babka <caster@gentoo.org>
+  gnu-classpath-0.98-r3.ebuild:
+  Fix eselect-ecj dep to '>=0.5-r1' instead of exact version.
+
   02 May 2010; Andrew John Hughes <andrew@gentoo.org>
   +gnu-classpath-0.98-r3.ebuild, +metadata.xml:
   Support ecj using eselect-ecj so ecj-gcj can be used.
