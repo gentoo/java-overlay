@@ -80,8 +80,8 @@ RDEPEND=">=net-print/cups-1.2.12
 #   xext headers have two variants depending on version - bug #288855
 DEPEND="${RDEPEND}
 	|| (
-		( >=dev-java/gcj-jdk-4.3 =app-admin/eselect-ecj-0.5-r1 )
-		( >=dev-java/cacao-0.99.2 =app-admin/eselect-ecj-0.5-r1 )
+		( >=dev-java/gcj-jdk-4.3 >=app-admin/eselect-ecj-0.5-r1 )
+		( >=dev-java/cacao-0.99.2 >=app-admin/eselect-ecj-0.5-r1 )
 		dev-java/icedtea6-bin
 		dev-java/icedtea:${SLOT}
 	)
