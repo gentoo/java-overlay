@@ -81,15 +81,18 @@ src_install() {
 
 pkg_postinst() {
 
-	# Set as default VM if none exists
-	java-vm-2_pkg_postinst
+	# Do not set as system VM (see below)
+	# java-vm-2_pkg_postinst
 
 	ewarn "gcj does not currently provide all the 1.5 APIs."
 	ewarn "See http://builder.classpath.org/japi/libgcj-jdk15.html"
 	ewarn "Check for existing bugs relating to missing APIs and file"
 	ewarn "new ones at http://gcc.gnu.org/bugzilla/"
+	ewarn
+	ewarn "Due to this and limited manpower, we currently cannot support"
+	ewarn "using gcj-jdk as a system VM. Its main purpose is to bootstrap"
+	ewarn "Icedtea without prior binary VM installation. To do that, execute:"
+	ewarn
+	ewarn "emerge -o icedtea && emerge icedtea"
 
-	einfo "See http://www.gentoo.org/doc/en/java.xml#doc_chap4"
-	einfo "if you want to set gcj as system vm and help testing"
-	einfo "it."
 }
