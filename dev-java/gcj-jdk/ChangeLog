@@ -2,6 +2,11 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  14 Nov 2010; Vlastimil Babka <caster@gentoo.org> -gcj-jdk-4.3-r5.ebuild,
+  -gcj-jdk-4.5.0.ebuild:
+  Remove 4.3 which is fragile to gcc updates anyway, and 4.5.0 whose gcc
+  version was removed.
+
   21 Oct 2010; Andrew John Hughes <andrew@gentoo.org> gcj-jdk-4.5.1.ebuild:
   Enable keywords on gcj-jdk-4.5.1 now gcc-4.5.1 is keyworded.
 
