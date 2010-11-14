@@ -2,6 +2,10 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  14 Nov 2010; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.7.5.ebuild,
+  icedtea-6.1.8.2.ebuild:
+  Fix eselect-ecj dep
+
   13 Nov 2010; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.9.1.ebuild:
   Fix eselect-ecj dep
 
