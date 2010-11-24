@@ -2,6 +2,17 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.9.2 (24 Nov 2010)
+*icedtea-6.1.8.3 (24 Nov 2010)
+*icedtea-6.1.7.6 (24 Nov 2010)
+
+  24 Nov 2010; Andrew John Hughes <andrew@gentoo.org> -icedtea-6.1.7.5.ebuild,
+  +icedtea-6.1.7.6.ebuild, -icedtea-6.1.8.2.ebuild, +icedtea-6.1.8.3.ebuild,
+  -icedtea-6.1.9.1.ebuild, +icedtea-6.1.9.2.ebuild, metadata.xml:
+  Latest security updates:
+  http://blog.fuseyism.com/index.php/2010/11/24/icedtea6-176-183-and-192-releas
+  ed/
+
   14 Nov 2010; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.7.5.ebuild,
   icedtea-6.1.8.2.ebuild:
   Fix eselect-ecj dep
