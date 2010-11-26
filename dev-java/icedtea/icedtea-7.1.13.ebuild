@@ -9,14 +9,14 @@
 
 EAPI="2"
 
-inherit flag-o-matic java-pkg-2 java-vm-2 pax-utils
+inherit flag-o-matic java-pkg-2 java-vm-2 pax-utils versionator
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="7"
 #KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
-ICEDTEA_VER="1.13"
+ICEDTEA_VER="$(get_version_component_range 2-3)"
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 OPENJDK_TARBALL="195fcceefddc.tar.gz"
 LANGTOOLS_TARBALL="681f1f51926f.tar.gz"

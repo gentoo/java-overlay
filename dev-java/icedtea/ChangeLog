@@ -2,6 +2,11 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  26 Nov 2010; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.7.6.ebuild,
+  icedtea-6.1.8.3.ebuild, icedtea-6.1.9.2.ebuild, icedtea-7.1.13.ebuild:
+  Derive ICEDTEA_VER from PV by versionator's get_version_component_range to
+  avoid manual updates on version bumps.
+
 *icedtea-6.1.9.2 (24 Nov 2010)
 *icedtea-6.1.8.3 (24 Nov 2010)
 *icedtea-6.1.7.6 (24 Nov 2010)
