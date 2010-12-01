@@ -2,6 +2,13 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.9.3 (01 Dec 2010)
+
+  01 Dec 2010; Andrew John Hughes <andrew@gentoo.org> -icedtea-6.1.9.2.ebuild,
+  +icedtea-6.1.9.3.ebuild:
+  Bump to 1.9.3, which fixes and re-enables compressed oops, increasing performance:
+  http://blog.fuseyism.com/index.php/2010/12/01/icedtea6-193-released/
+
   26 Nov 2010; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.7.6.ebuild,
   icedtea-6.1.8.3.ebuild, icedtea-6.1.9.2.ebuild, icedtea-7.1.13.ebuild:
   Derive ICEDTEA_VER from PV by versionator's get_version_component_range to
