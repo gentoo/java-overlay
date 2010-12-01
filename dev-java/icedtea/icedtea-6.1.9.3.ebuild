@@ -16,7 +16,7 @@ SLOT="6"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
 DESCRIPTION="A harness to build the OpenJDK using Free Software build tools and dependencies"
-ICEDTEA_VER="1.9.3"
+ICEDTEA_VER="$(get_version_component_range 2-4)"
 ICEDTEA_PKG=icedtea${SLOT}-${ICEDTEA_VER}
 OPENJDK_BUILD="20"
 OPENJDK_DATE="21_jun_2010"
