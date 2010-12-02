@@ -13,6 +13,7 @@
   <flag name="hs19">Use the new version of HotSpot (19).</flag>
   <flag name="nio2">Enable backport of NIO2 to OpenJDK6.</flag>
   <flag name="nss">Enable NSS security provider support.</flag>
+  <flag name="nsplugin">Enable browser plugin (NPPlugin), requires also the webstart flag to be enabled.</flag>
 <!--  <flag name="shark">Enable Shark JIT support</flag> -->
   <flag name="systemtap">Enable SystemTap probes in HotSpot.</flag>
   <flag name="webstart">Enable Web Start support (via NetX).</flag>

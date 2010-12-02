@@ -2,6 +2,9 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  02 Dec 2010; Vlastimil Babka <caster@gentoo.org> metadata.xml:
+  Document the nsplugin flag in metadata.xml
+
   02 Dec 2010; Andrew John Hughes <andrew@gentoo.org> icedtea-6.1.7.6.ebuild,
   icedtea-6.1.8.3.ebuild, icedtea-6.1.9.3.ebuild:
   Fail early if the user tries to build the plugin without webstart enabled.
