@@ -123,6 +123,11 @@ pkg_setup() {
 #	  fi
 #	fi
 
+	if use nsplugin && ! use webstart ; then
+		eerror "WebStart is required if building the plugin."
+		die 'Re-try with USE="webstart"'
+	fi
+
 	# quite a hack since java-config does not provide a way for a package
 	# to limit supported VM's for building and their preferred order
 	if [[ -n "${JAVA_PKG_FORCE_VM}" ]]; then
