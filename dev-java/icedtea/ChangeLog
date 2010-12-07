@@ -3,6 +3,10 @@
 # $Header: $
 
   07 Dec 2010; Andrew John Hughes <andrew@gentoo.org>
+  +files/6.1.9.3-sparc.patch, icedtea-6.1.9.3.ebuild, icedtea-7.1.13.ebuild:
+  Apply patch from #344659
+
+  07 Dec 2010; Andrew John Hughes <andrew@gentoo.org>
   +files/7.1.13-alsa-sane-headers.patch, icedtea-7.1.13.ebuild:
   Fix failure in IcedTea7 with make 3.82.
 
