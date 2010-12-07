@@ -1,0 +1,62 @@
+diff -Nru icedtea-1.13.orig/Makefile.am icedtea-1.13/Makefile.am
+--- icedtea-1.13.orig/Makefile.am	2010-07-29 02:21:16.333285511 +0100
++++ icedtea-1.13/Makefile.am	2010-12-07 11:42:23.245910198 +0000
+@@ -340,7 +340,8 @@
+ 	patches/extensions/netx.patch \
+ 	patches/extensions/netx-dist.patch \
+ 	patches/extensions/netx-umask.patch \
+-	patches/jtreg-httpTest.patch
++	patches/jtreg-httpTest.patch \
++	patches/alsa-sane-headers.patch
+ 
+ # Conditional patches
+ 
+diff -Nru icedtea-1.13.orig/patches/alsa-sane-headers.patch icedtea-1.13/patches/alsa-sane-headers.patch
+--- icedtea-1.13.orig/patches/alsa-sane-headers.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea-1.13/patches/alsa-sane-headers.patch	2010-12-07 11:43:09.262452934 +0000
+@@ -0,0 +1,45 @@
++# HG changeset patch
++# User andrew
++# Date 1290462909 0
++# Node ID c981a387cd86a62e265232fa21ab91db1048dd08
++# Parent  e1fe34150ff6ca30987a71f08ddd5e4640b3af1a
++Fix broken alsa-sane-headers check: http://mail.openjdk.java.net/pipermail/build-dev/2010-November/003613.html
++
++diff -r e1fe34150ff6 -r c981a387cd86 make/common/shared/Sanity.gmk
++--- openjdk.orig/jdk/make/common/shared/Sanity.gmk	Thu Nov 11 11:45:40 2010 +0000
+++++ openjdk/jdk/make/common/shared/Sanity.gmk	Mon Nov 22 21:55:09 2010 +0000
++@@ -1397,20 +1397,21 @@
++ endif
++ sane-alsa-headers:
++ ifdef REQUIRED_ALSA_VERSION
++-        if [ "$(ALSA_CHECK)" != "same" -a "$(ALSA_CHECK)" != "newer"  ] ; then \
++-	    $(ECHO) "ERROR: The ALSA version must be $(REQUIRED_ALSA_VERSION) or higher. \n" \
++-	      "      You have the following ALSA version installed: $${alsa_version) \n" \
++-	      "      Please reinstall ALSA (drivers and lib). You can download \n" \
++-	      "      the source distribution from http://www.alsa-project.org \n" \
++-	      "      or go to http://www.freshrpms.net/docs/alsa/ for precompiled RPM packages. \n" \
++-	      "" >> $(ERROR_FILE) ; \
++-	  fi \
+++	@if [ "$(ALSA_CHECK)" != "missing" ] ; then \
+++	    if [ "$(ALSA_CHECK)" != "same" -a "$(ALSA_CHECK)" != "newer"  ] ; then \
+++		$(ECHO) "ERROR: The ALSA version must be $(REQUIRED_ALSA_VERSION) or higher. \n" \
+++		"      You have the following ALSA version installed: $${alsa_version} \n" \
+++		"      Please reinstall ALSA (drivers and lib). You can download \n" \
+++		"      the source distribution from http://www.alsa-project.org \n" \
+++		"      or go to http://www.freshrpms.net/docs/alsa/ for precompiled RPM packages. \n" \
+++		"" >> $(ERROR_FILE) ; \
+++	    fi ; \
++ 	else \
++-	  $(ECHO) "ERROR: You seem to not have installed ALSA $(REQUIRED_ALSA_VERSION) or higher. \n" \
++-	  "      Please install ALSA (drivers and lib). You can download the \n" \
++-	  "      source distribution from http://www.alsa-project.org or go to \n" \
++-	  "      http://www.freshrpms.net/docs/alsa/ for precompiled RPM packages. \n" \
++-	  "" >> $(ERROR_FILE) ; \
+++	    $(ECHO) "ERROR: You seem to not have installed ALSA $(REQUIRED_ALSA_VERSION) or higher. \n" \
+++	    "      Please install ALSA (drivers and lib). You can download the \n" \
+++	    "      source distribution from http://www.alsa-project.org or go to \n" \
+++	    "      http://www.freshrpms.net/docs/alsa/ for precompiled RPM packages. \n" \
+++	    "" >> $(ERROR_FILE) ; \
++ 	fi
++ endif
++ 

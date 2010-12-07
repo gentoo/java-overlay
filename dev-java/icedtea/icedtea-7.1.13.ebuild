@@ -168,6 +168,11 @@ unset_vars() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 }
 
+src_prepare() {
+	epatch "${FILESDIR}/${PV}-alsa-sane-headers.patch"
+	autoreconf
+}
+
 src_configure() {
 	local config procs rhino_jar
 	local vm=$(java-pkg_get-current-vm)
