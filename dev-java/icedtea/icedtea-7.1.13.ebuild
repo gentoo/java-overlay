@@ -37,16 +37,15 @@ SRC_URI="http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
 		 http://hg.openjdk.java.net/icedtea/jdk7/jdk/archive/${JDK_TARBALL}
 		 http://hg.openjdk.java.net/icedtea/jdk7/hotspot/archive/${HOTSPOT_TARBALL}
 		 http://hg.openjdk.java.net/icedtea/jdk7/langtools/archive/${LANGTOOLS_TARBALL}
-		 https://jaxp.dev.java.net/files/documents/913/147490/${JAXP_DROP}
-		 http://kenai.com/projects/jdk7-drops/downloads/download/${JAXWS_DROP}
-		 http://kenai.com/projects/jdk7-drops/downloads/download/${JAF_DROP}
+		 http://icedtea.classpath.org/download/drops/${JAXP_DROP}
+		 http://icedtea.classpath.org/download/drops/${JAXWS_DROP}
+		 http://icedtea.classpath.org/download/drops/${JAF_DROP}
 		 cacao? ( http://mips.complang.tuwien.ac.at/hg/cacao/archive/${CACAO_TARBALL} )"
 HOMEPAGE="http://icedtea.classpath.org"
 S=${WORKDIR}/${ICEDTEA_PKG}
 
 # Missing options:
-# shark - still experimental, requires llvm which is not yet packaged
-# visualvm - requries netbeans which would cause major bootstrap issues
+# shark - needs adding
 IUSE="cacao debug doc examples javascript nsplugin pulseaudio systemtap xrender zero"
 
 RDEPEND=">=net-print/cups-1.2.12
@@ -66,7 +65,7 @@ RDEPEND=">=net-print/cups-1.2.12
 	 >=sys-libs/zlib-1.2.3
 	 x11-proto/inputproto
 	 x11-proto/xineramaproto
-	 nsplugin? ( <net-libs/xulrunner-1.9.2:1.9 )
+	 nsplugin? ( >=net-libs/xulrunner-1.9.1 )
 	 pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
 	 javascript? ( dev-java/rhino:1.6 )
 	 zero? ( virtual/libffi )
