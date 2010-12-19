@@ -1,8 +1,13 @@
 # ChangeLog for dev-java/lwjgl
-# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  19 Dec 2010; James Le Cuirot <chewi@aura-online.co.uk>
+  +lwjgl-2.4.2.ebuild, +lwjgl-2.6.ebuild:
+  Version bump and major cleanup. 2.4.2 is provided for Minecraft. Not sure
+  why it takes so long to build the native part. Seems to just sit there for
+  most of it. Did look at tests but they all require X or certain hardware.
 
   22 Jan 2009; Alistair Bush <ali_bush@gentoo.org> metadata.xml,
   lwjgl-1.0.ebuild:
   QA Fixes.
-
