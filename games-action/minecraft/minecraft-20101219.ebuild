@@ -16,8 +16,9 @@ RESTRICT="mirror"
 
 # The latest lwjgl may work but, to be on the safe side, we use the same
 # version as Minecraft does officially. You can determine what version
-# this is by unpacking lwjgl.jar and looking for the version number near
-# the top of "javap -classpath . -c org.lwjgl.Sys".
+# this is by looking for the version number near the top of...
+#
+#  javap -classpath lwjgl.jar -c org.lwjgl.Sys
 
 DEPEND="virtual/jdk:1.6"
 
