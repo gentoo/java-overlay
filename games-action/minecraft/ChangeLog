@@ -1,0 +1,14 @@
+# ChangeLog for games-action/minecraft
+# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  20 Dec 2010; James Le Cuirot <chewi@aura-online.co.uk>
+  +minecraft-20101219.ebuild, +files/minecraft.png,
+  +files/native-symlinks.sh:
+  Initial import. Minecraft is not open source yet but its web site indicates
+  it may be in the future. In the meantime, its dependencies are open source
+  so we can build those at least. This ebuild uses a couple of hacky tricks
+  to avoid using the bundled dependencies but they work well. The upstream
+  Minecraft.jar has no version but this JAR merely logs you in and downloads
+  the rest of the game so it shouldn't change very often. This is just as well
+  because the game itself is updated frequently.
