@@ -1,0 +1,11 @@
+# ChangeLog for games-server/minecraft-server
+# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+  21 Dec 2010; James Le Cuirot <chewi@aura-online.co.uk>
+  +minecraft-server-20101220.ebuild, +files/mkdir.sh:
+  Initial import. Packaging this separately from the game because it has no
+  dependencies and the classes clash with the game's classes. Unlike the game,
+  the download is the actual software itself, not just a launcher so it may
+  have to be bumped fairly frequently. The version scheme isn't compatible
+  with ours so I'm just using the date.
