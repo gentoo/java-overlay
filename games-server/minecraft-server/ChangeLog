@@ -2,6 +2,10 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  22 Dec 2010; James Le Cuirot <chewi@aura-online.co.uk>
+  -minecraft-server-20101220.ebuild, +minecraft-server-20101222.ebuild:
+  Version bump. I waited one day for an update but one came the next day!
+
   21 Dec 2010; James Le Cuirot <chewi@aura-online.co.uk>
   +minecraft-server-20101220.ebuild, +files/mkdir.sh:
   Initial import. Packaging this separately from the game because it has no
