@@ -2,6 +2,11 @@
 # Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  30 Dec 2010; James Le Cuirot <chewi@aura-online.co.uk>
+  -lwjgl-2.4.2.ebuild, -lwjgl-2.6.ebuild, +lwjgl-2.4.2-r1.ebuild,
+  +lwjgl-2.6-r1.ebuild:
+  The xrandr application is required at run-time, as well as libXrandr.
+
   19 Dec 2010; James Le Cuirot <chewi@aura-online.co.uk>
   +lwjgl-2.4.2.ebuild, +lwjgl-2.6.ebuild:
   Version bump and major cleanup. 2.4.2 is provided for Minecraft. Not sure

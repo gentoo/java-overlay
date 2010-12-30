@@ -34,7 +34,8 @@ DEPEND="${CDEPEND}
 RDEPEND="${CDEPEND}
 	>=virtual/jre-1.5
 	media-libs/openal
-	virtual/opengl"
+	virtual/opengl
+	x11-apps/xrandr"
 
 S="${WORKDIR}"
 
