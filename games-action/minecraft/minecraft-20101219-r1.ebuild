@@ -23,7 +23,7 @@ RESTRICT="mirror"
 DEPEND="virtual/jdk:1.6"
 
 RDEPEND=">=dev-java/jinput-1_pre20100416
-	>=dev-java/lwjgl-2.4.2:2.4
+	>=dev-java/lwjgl-2.4.2-r1:2.4
 	|| ( dev-java/icedtea6-bin[X]
 		dev-java/icedtea:6
 		dev-java/sun-jre-bin:1.6[X]
@@ -48,7 +48,7 @@ src_install() {
 	# Launching with -jar seems to create classpath problems.
 	java-pkg_dolauncher "${PN}" -into "${GAMES_PREFIX}" \
 		-pre "${FILESDIR}/native-symlinks.sh" \
-		--java_args "-Xmx1024M -Xms512M" \
+		--java_args "-Xmx1024M -Xms512M -Djava.net.preferIPv4Stack=true" \
 		--main net.minecraft.MinecraftLauncher
 
 	doicon "${FILESDIR}/${PN}.png" || die
