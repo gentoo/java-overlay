@@ -1,6 +1,12 @@
 # ChangeLog for games-server/minecraft-server
-# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  3 Jan 2011; James Le Cuirot <chewi@aura-online.co.uk>
+  -minecraft-server-20101222.ebuild, +minecraft-server-20101222-r1.ebuild:
+  Add multiple instances and server-wide instances via tmux. Also optional
+  hMod support but this will probably be removed before long because it is
+  being superseded by Bukkit.
 
   22 Dec 2010; James Le Cuirot <chewi@aura-online.co.uk>
   -minecraft-server-20101220.ebuild, +minecraft-server-20101222.ebuild:
