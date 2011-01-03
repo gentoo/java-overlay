@@ -1,0 +1,30 @@
+# These minor but important fixes are applied to p7zip in sevenzipjbinding's
+# source tree. We should always check for other changes when dealing with
+# future releases.
+
+diff -NaurwbB p7zip_4.65/CPP/7zip/Archive/Zip/ZipHandler.cpp p7zip/CPP/7zip/Archive/Zip/ZipHandler.cpp
+--- p7zip_4.65/CPP/7zip/Archive/Zip/ZipHandler.cpp	2009-02-07 16:44:56.000000000 +0000
++++ p7zip/CPP/7zip/Archive/Zip/ZipHandler.cpp		2011-01-02 20:43:29.414839455 +0000
+@@ -805,6 +805,11 @@
+ 
+     RINOK(extractCallback->PrepareOperation(askMode));
+ 
++// SevenZipJBinding BUGFIX
++#ifndef COMPRESS_MT
++    UInt32 _numThreads = 1;
++#endif
++
+     Int32 res;
+     RINOK(myDecoder.Decode(
+         EXTERNAL_CODECS_VARS
+diff -NaurwbB p7zip_4.65/CPP/7zip/UI/Common/LoadCodecs.cpp p7zip/CPP/7zip/UI/Common/LoadCodecs.cpp
+--- p7zip_4.65/CPP/7zip/UI/Common/LoadCodecs.cpp	2009-02-07 20:58:57.000000000 +0000
++++ p7zip/CPP/7zip/UI/Common/LoadCodecs.cpp		2011-01-02 20:43:29.428839718 +0000
+@@ -230,6 +230,7 @@
+ void CArcInfoEx::AddExts(const wchar_t* ext, const wchar_t* addExt)
+ {
+   UStringVector exts, addExts;
++  if (ext)
+   SplitString(ext, exts);
+   if (addExt != 0)
+     SplitString(addExt, addExts);

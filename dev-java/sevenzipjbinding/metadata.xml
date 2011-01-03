@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>java</herd>
+<maintainer>
+<email>chewi at aura-online.co.uk</email>
+<name>James Le Cuirot</name>
+</maintainer>
+<longdescription lang="en">
+A Java wrapper around the native 7-Zip library, allowing fast
+extraction of a wide variety of archive formats.
+</longdescription>
+</pkgmetadata>
