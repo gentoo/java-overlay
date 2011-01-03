@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -32,8 +32,6 @@ RDEPEND=">=dev-java/jinput-1_pre20100416
 S="${WORKDIR}"
 
 src_prepare() {
-	java-pkg_register-dependency jinput,lwjgl-2.4
-
 	# Don't download or install JAR libraries. Hacky but works.
 	sed -i "s/lwjgl.jar, jinput.jar, lwjgl_util.jar,/                                      /g" \
 		net/minecraft/GameUpdater.class || die
@@ -43,6 +41,7 @@ src_prepare() {
 }
 
 src_install() {
+	java-pkg_register-dependency jinput,lwjgl-2.4
 	java-pkg_dojar "${PN}.jar"
 
 	# Launching with -jar seems to create classpath problems.
