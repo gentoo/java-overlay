@@ -24,6 +24,11 @@ S="${WORKDIR}"
 DIR="/var/lib/minecraft"
 PID="/var/run/minecraft"
 
+pkg_setup() {
+	java-pkg-2_pkg_setup
+	games_pkg_setup
+}
+
 src_unpack() {
 	true # NOOP!
 }
