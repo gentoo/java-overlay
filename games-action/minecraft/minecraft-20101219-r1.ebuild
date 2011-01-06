@@ -31,6 +31,11 @@ RDEPEND=">=dev-java/jinput-1_pre20100416
 
 S="${WORKDIR}"
 
+pkg_setup() {
+	java-pkg-2_pkg_setup
+	games_pkg_setup
+}
+
 src_prepare() {
 	# Don't download or install JAR libraries. Hacky but works.
 	sed -i "s/lwjgl.jar, jinput.jar, lwjgl_util.jar,/                                      /g" \
