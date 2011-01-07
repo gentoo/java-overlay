@@ -5,7 +5,7 @@
   7 Jan 2011; James Le Cuirot <chewi@aura-online.co.uk>
   -gdata-1.30.0.ebuild, -files/gdata.core.build.patch, +gdata-1.42.0.ebuild:
   Version bump and complete rewrite. Nice enough to be moved out of
-  java-experimental now. No tests because they require some hefty packages.
+  java-experimental now.
 
   11 Apr 2009; Alistair Bush <ali_bush@gentoo.org>
   +files/gdata.core.build.patch, +metadata.xml, +gdata-1.30.0.ebuild:
