@@ -2,6 +2,10 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  14 Jan 2011; James Le Cuirot <chewi@aura-online.co.uk>
+  -minecraft-server-20101222-r1.ebuild, +minecraft-server-20110114.ebuild:
+  Version bump to upstream version 1.2_01.
+
   6 Jan 2011; James Le Cuirot <chewi@aura-online.co.uk>
   minecraft-server-20101222-r1.ebuild:
   Remember to call pkg_setup for games as well as java-pkg-2.
