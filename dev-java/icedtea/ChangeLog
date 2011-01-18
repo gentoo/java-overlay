@@ -1,6 +1,31 @@
 # ChangeLog for dev-java/icedtea
-# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+*icedtea-6.1.9.4 (18 Jan 2011)
+*icedtea-6.1.8.4 (18 Jan 2011)
+*icedtea-6.1.7.7 (18 Jan 2011)
+
+  18 Jan 2011; Andrew John Hughes <andrew@gentoo.org>
+  +files/6.1.9.4-sparc.patch, -files/6.1.9.3-sparc.patch,
+  -icedtea-6.1.7.6.ebuild, +icedtea-6.1.7.7.ebuild, -icedtea-6.1.8.3.ebuild,
+  +icedtea-6.1.8.4.ebuild, -icedtea-6.1.9.3.ebuild, +icedtea-6.1.9.4.ebuild:
+  New security releases:
+  http://blog.fuseyism.com/index.php/2011/01/18/security-icedtea6-177-184-194-r
+  eleased/
+  * Security updates
+    - RH663680, CVE-2010-4351: IcedTea JNLP SecurityManager bypass
+  * Backports
+    - S4356282: RFE: JDK should support OpenType/CFF fonts
+    - S6954424, RH525870: Support OpenType/CFF fonts in JDK 7
+    - S6795356, PR590: Leak caused by javax.swing.UIDefaults.ProxyLazyValue.acc
+    - S6967436, RH597227: lines longer than 2^15 can fill window.
+    - S6967433: dashed lines broken when using scaling transforms.
+    - S6976265: No STROKE_CONTROL
+    - S6967434, PR450, RH530642: Round joins/caps of scaled up lines have poor quality.
+    - S6438179, RH569121: XToolkit.isTraySupported() result has nothing to do with the system tray
+  * Fixes
+    - S7003777, RH647674: JTextPane produces incorrect content after parsing the html text
 
   07 Dec 2010; Andrew John Hughes <andrew@gentoo.org>
   +files/6.1.9.3-sparc.patch, icedtea-6.1.9.3.ebuild, icedtea-7.1.13.ebuild:

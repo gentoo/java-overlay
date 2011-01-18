@@ -1,0 +1,30 @@
+diff -Nru icedtea6-1.9.4.old/Makefile.am icedtea6-1.9.4/Makefile.am
+--- icedtea6-1.9.4.old/Makefile.am	2010-12-16 19:16:41.134748413 +0000
++++ icedtea6-1.9.4/Makefile.am	2010-12-20 21:06:38.564730121 +0000
+@@ -323,7 +323,9 @@
+ 	patches/openjdk/6438179-systray_check.patch \
+ 	patches/openjdk/4356282-opentype.patch \
+ 	patches/openjdk/6954424-opentype_javadoc.patch \
+-	patches/openjdk/6795356-proxylazyvalue-leak.patch
++	patches/openjdk/6795356-proxylazyvalue-leak.patch \
++	patches/g344659-sparc_fscanf_fix.patch
++
+ 
+ if WITH_ALT_HSBUILD
+ ICEDTEA_PATCHES += \
+diff -Nru icedtea6-1.9.4.old/patches/g344659-sparc_fscanf_fix.patch icedtea6-1.9.4/patches/g344659-sparc_fscanf_fix.patch
+--- icedtea6-1.9.4.old/patches/g344659-sparc_fscanf_fix.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.9.4/patches/g344659-sparc_fscanf_fix.patch	2010-12-20 21:06:16.094886394 +0000
+@@ -0,0 +1,12 @@
++diff -uNr openjdk.orig/hotspot/src/os_cpu/linux_sparc/vm/vm_version_linux_sparc.cpp openjdk/hotspot/src/os_cpu/linux_sparc/vm/vm_version_linux_sparc.cpp
++--- openjdk.orig/hotspot/src/os_cpu/linux_sparc/vm/vm_version_linux_sparc.cpp	2010-06-21 22:12:15.000000000 +0100
+++++ openjdk/hotspot/src/os_cpu/linux_sparc/vm/vm_version_linux_sparc.cpp	2010-11-29 20:15:36.179541001 +0000
++@@ -35,7 +35,7 @@
++   }
++ 
++   while (!feof(fp)) {
++-    if (fscanf(fp, "cpu\t\t: %100[^\n]", &cpu) == 1) {
+++    if (fscanf(fp, "cpu\t\t: %100[^\n]", &cpu[0]) == 1) {
++       if (strstr(cpu, "Niagara") != NULL) {
++         rv = true;
++       }
