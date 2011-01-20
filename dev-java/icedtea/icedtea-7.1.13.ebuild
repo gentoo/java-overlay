@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
@@ -217,7 +217,7 @@ src_configure() {
 		--with-jaf-drop-zip="${DISTDIR}/${JAF_DROP}" \
 		--with-cacao-src-zip="${DISTDIR}/${CACAO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
-		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
+		--with-abs-install-dir=${ROOT}usr/$(get_libdir)/icedtea${SLOT} \
 		--disable-jdk-tests \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
@@ -286,18 +286,20 @@ src_install() {
 	fi
 
 	# We need to generate keystore - bug #273306
-	einfo "Generating cacerts file from certificates in /usr/share/ca-certificates/"
+	einfo "Generating cacerts file from certificates in ${ROOT}usr/share/ca-certificates/"
 	mkdir "${T}/certgen" && cd "${T}/certgen" || die
 	cp "${FILESDIR}/generate-cacerts.pl" . && chmod +x generate-cacerts.pl || die
-	for c in /usr/share/ca-certificates/*/*.crt; do
+	for c in ${ROOT}usr/share/ca-certificates/*/*.crt; do
 		openssl x509 -text -in "${c}" >> all.crt || die
 	done
 	./generate-cacerts.pl "${ddest}/bin/keytool" all.crt || die
 	cp -vRP cacerts "${ddest}/jre/lib/security/" || die
 	chmod 644 "${ddest}/jre/lib/security/cacerts" || die
 
-	sed -e "s/@SLOT@/${SLOT}/g" \
-		-e "s/@PV@/${ICEDTEA_VER}/g" \
+	sed -e "s#@SLOT@#${SLOT}#g" \
+		-e "s#@PV@#${ICEDTEA_VER}#g" \
+		-e "s#@ROOT@#${ROOT}#g" \
+		-e "s#@LIBDIR@#$(get_libdir)#g" \
 		< "${FILESDIR}/icedtea.env" > "${T}/icedtea.env"
 	set_java_env "${T}/icedtea.env"
 }

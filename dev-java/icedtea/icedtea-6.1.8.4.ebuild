@@ -173,7 +173,7 @@ unset_vars() {
 src_configure() {
 	local config procs rhino_jar
 	local vm=$(java-pkg_get-current-vm)
-	local vmhome="/usr/lib/jvm/${vm}"
+	local vmhome="${ROOT}usr/$(get_libdir)/jvm/${vm}"
 
 	# IcedTea6 can't be built using IcedTea7; its class files are too new
 	if [[ "${vm}" == "icedtea6" ]] || [[ "${vm}" == "icedtea6-bin" ]] ; then
@@ -181,7 +181,7 @@ src_configure() {
 		config="${config} --with-openjdk=$(java-config -O)"
 	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" ]] ; then
 		# For other 1.5 JDKs e.g. GCJ, CACAO.
-		config="${config} --with-ecj-jar=/usr/share/eclipse-ecj/ecj.jar" \
+		config="${config} --with-ecj-jar=${ROOT}usr/share/eclipse-ecj/ecj.jar" \
 		config="${config} --with-gcj-home=${vmhome}"
 	else
 		eerror "IcedTea${SLOT} must be built with either a JDK based on GNU Classpath or an existing build of IcedTea${SLOT}."
@@ -221,7 +221,7 @@ src_configure() {
 		--with-java="${vmhome}/bin/java" \
 		--with-javac="${vmhome}/bin/javac" \
 		--with-javah="${vmhome}/bin/javah" \
-		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
+		--with-abs-install-dir=${ROOT}usr/$(get_libdir)/icedtea${SLOT} \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nsplugin plugin) \
@@ -292,18 +292,20 @@ src_install() {
 	fi
 
 	# We need to generate keystore - bug #273306
-	einfo "Generating cacerts file from certificates in /usr/share/ca-certificates/"
+	einfo "Generating cacerts file from certificates in ${ROOT}usr/share/ca-certificates/"
 	mkdir "${T}/certgen" && cd "${T}/certgen" || die
 	cp "${FILESDIR}/generate-cacerts.pl" . && chmod +x generate-cacerts.pl || die
-	for c in /usr/share/ca-certificates/*/*.crt; do
+	for c in ${ROOT}usr/share/ca-certificates/*/*.crt; do
 		openssl x509 -text -in "${c}" >> all.crt || die
 	done
 	./generate-cacerts.pl "${ddest}/bin/keytool" all.crt || die
 	cp -vRP cacerts "${ddest}/jre/lib/security/" || die
 	chmod 644 "${ddest}/jre/lib/security/cacerts" || die
 
-	sed -e "s/@SLOT@/${SLOT}/g" \
-		-e "s/@PV@/${ICEDTEA_VER}/g" \
+	sed -e "s#@SLOT@#${SLOT}#g" \
+		-e "s#@PV@#${ICEDTEA_VER}#g" \
+		-e "s#@ROOT@#${ROOT}#g" \
+		-e "s#@LIBDIR@#$(get_libdir)#g" \
 		< "${FILESDIR}/icedtea.env" > "${T}/icedtea.env"
 	set_java_env "${T}/icedtea.env"
 }
