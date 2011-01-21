@@ -217,7 +217,7 @@ src_configure() {
 		--with-jaf-drop-zip="${DISTDIR}/${JAF_DROP}" \
 		--with-cacao-src-zip="${DISTDIR}/${CACAO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
-		--with-abs-install-dir=${ROOT}usr/$(get_libdir)/icedtea${SLOT} \
+		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
 		--disable-jdk-tests \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
@@ -245,14 +245,14 @@ src_compile() {
 }
 
 src_install() {
-	local dest="${ROOT}usr/$(get_libdir)/icedtea${SLOT}"
+	local dest="/usr/$(get_libdir)/icedtea${SLOT}"
 	local ddest="${D}/${dest}"
 	dodir "${dest}" || die
 
 	local arch=${ARCH}
 
 	dodoc README NEWS AUTHORS || die
-	dosym "${ROOT}usr/share/doc/${PF}" "${ROOT}usr/share/doc/${PN}${SLOT}"
+	dosym "/usr/share/doc/${PF}" "/usr/share/doc/${PN}${SLOT}"
 
 	cd "${S}/openjdk.build/j2sdk-image" || die
 
@@ -286,10 +286,10 @@ src_install() {
 	fi
 
 	# We need to generate keystore - bug #273306
-	einfo "Generating cacerts file from certificates in ${ROOT}usr/share/ca-certificates/"
+	einfo "Generating cacerts file from certificates in /usr/share/ca-certificates/"
 	mkdir "${T}/certgen" && cd "${T}/certgen" || die
 	cp "${FILESDIR}/generate-cacerts.pl" . && chmod +x generate-cacerts.pl || die
-	for c in ${ROOT}usr/share/ca-certificates/*/*.crt; do
+	for c in /usr/share/ca-certificates/*/*.crt; do
 		openssl x509 -text -in "${c}" >> all.crt || die
 	done
 	./generate-cacerts.pl "${ddest}/bin/keytool" all.crt || die
@@ -298,7 +298,6 @@ src_install() {
 
 	sed -e "s#@SLOT@#${SLOT}#g" \
 		-e "s#@PV@#${ICEDTEA_VER}#g" \
-		-e "s#@ROOT@#${ROOT}#g" \
 		-e "s#@LIBDIR@#$(get_libdir)#g" \
 		< "${FILESDIR}/icedtea.env" > "${T}/icedtea.env"
 	set_java_env "${T}/icedtea.env"
