@@ -54,7 +54,7 @@ RDEPEND=">=net-print/cups-1.2.12
 	 >=x11-libs/libXau-1.0.3
 	 >=x11-libs/libXdmcp-1.0.2
 	 >=x11-libs/libXtst-1.0.3
-	 >=media-libs/jpeg-6b
+	 virtual/jpeg
 	 >=media-libs/libpng-1.2
 	 >=media-libs/giflib-4.1.6
 	 >=sys-libs/zlib-1.2.3
