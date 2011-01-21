@@ -7,7 +7,7 @@ inherit eutils games java-pkg-2
 
 DESCRIPTION="A game about placing blocks while running from skeletons. Or something like that..."
 HOMEPAGE="http://www.minecraft.net"
-SRC_URI="http://www.minecraft.net/download/Minecraft.jar -> $P.jar"
+SRC_URI="http://www.minecraft.net/download/minecraft.jar -> $P.jar"
 LICENSE="as-is"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
