@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -10,7 +10,7 @@ inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="An embedded compiler for run-time compilation purposes"
 HOMEPAGE="http://www.janino.net/index.html"
-SRC_URI="http://www.janino.net/download/${P}.zip"
+SRC_URI="http://dist.codehaus.org/janino/${P}.zip"
 
 LICENSE="BSD"
 SLOT="0"
