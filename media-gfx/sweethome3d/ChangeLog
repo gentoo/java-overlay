@@ -1,6 +1,12 @@
 # ChangeLog for media-gfx/sweethome3d
-# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+*sweethome3d-3.0 (30 Jan 2011)
+
+  30 Jan 2011; Miroslav Šulc <fordfrog@gentoo.org> +sweethome3d-3.0.ebuild:
+  Version bump. Still need to unbundle sunflow jar for which I cannot find
+  sources for the latest version so far.
 
   02 Mar 2009; Miroslav Šulc <fordfrog@gentoo.org> -sweethome3d-1.4.ebuild,
   +sweethome3d-1.6.ebuild:
