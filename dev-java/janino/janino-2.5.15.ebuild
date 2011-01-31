@@ -14,7 +14,7 @@ SRC_URI="http://dist.codehaus.org/janino/${P}.zip"
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 
 IUSE=""
 
@@ -41,4 +41,3 @@ src_install() {
 
 	java-pkg_dolauncher "${PN}c" --main org.codehaus.janino.Compiler
 }
-
