@@ -3,14 +3,15 @@
 # $Header: $
 
 EAPI="3"
-inherit eutils java-pkg-2 java-ant-2
+inherit eutils java-pkg-2 java-ant-2 java-pkg-simple
 
 MY_PN="SweetHome3D"
 
 DESCRIPTION="Sweet Home 3D is a free interior design application."
 HOMEPAGE="http://${PN}.sourceforge.net/"
 SRC_URI="mirror://sourceforge/${PN}/${MY_PN}-${PV}-src.zip
-	http://dev.gentoo.org/~fordfrog/distfiles/${PN}.png"
+	http://dev.gentoo.org/~fordfrog/distfiles/${PN}.png
+	http://www.polyquark.com/opensource/download/binariesAndSources.zip -> sunflow-0.7.3.zip"
 LICENSE="GPL-3"
 IUSE=""
 SLOT="0"
@@ -24,10 +25,10 @@ COMMON_DEPEND="
 	dev-java/freehep-util:0
 	dev-java/itext:0
 	dev-java/j3d-core:0
+	dev-java/janino:0
 	dev-java/java3dsloader:0
 	dev-java/jmf-bin:0
 	dev-java/vecmath:0"
-#	>=media-gfx/sunflow-0.7.3e:0
 
 DEPEND=">=virtual/jdk-1.5
 	app-arch/unzip
@@ -37,23 +38,32 @@ RDEPEND=">=virtual/jre-1.5
 	${COMMON_DEPEND}"
 
 S="${WORKDIR}/${MY_PN}-${PV}-src"
+SUNFLOW_PATCH="sunflow-0.07.3e-src-diff"
 
+# sunflow variables
+JAVA_GENTOO_CLASSPATH="janino"
+JAVA_SRC_DIR="${WORKDIR}/${SUNFLOW_PATCH}/src"
+
+# sweethome variables
 EANT_BUILD_TARGET="build furniture textures help"
 
 src_unpack() {
 	unpack ${MY_PN}-${PV}-src.zip
 
-	cd "${S}" || die "Can not change directory to ${S}"
+	# prepare modified sources of sunflow
+	mkdir ${SUNFLOW_PATCH} || die
+	pushd ${SUNFLOW_PATCH} >/dev/null || die
+	unpack sunflow-0.7.3.zip
+	popd >/dev/null || die
+	unpack ./SweetHome3D-3.0-src/${SUNFLOW_PATCH}.zip
 
-	# clean lib directory
-	# keeping sunflow*jar as we do not have any replacement for it for now
-	cp lib/sunflow*.jar "${T}" || die
-	rm -frv lib/* || die "Cannot remove files in lib directory"
-	rm -frv libtest/*.jar || die "Cannot remove files in libtest directory"
-	cp "${T}"/sunflow*.jar lib/ || die
+	einfo "Removing bundled jars..."
+	find -name "*.jar" -type f | xargs rm -v
+}
 
+java_prepare() {
 	# add dependencies into the lib dir
-	cd "${S}"/lib || die "Cannot cd to lib directory"
+	pushd "${S}"/lib >/dev/null || die
 	java-pkg_jar-from freehep-graphics2d
 	java-pkg_jar-from freehep-graphicsio
 	java-pkg_jar-from freehep-graphicsio-svg
@@ -62,15 +72,33 @@ src_unpack() {
 	java-pkg_jar-from j3d-core
 	java-pkg_jar-from java3dsloader
 	java-pkg_jar-from jmf-bin
-	#java-pkg_jar-from sunflow
 	java-pkg_jar-from vecmath
-	cd "${S}"/libtest || die "Cannot cd to libtest directory"
+	popd >/dev/null || die
+	pushd "${S}"/libtest >/dev/null || die
 	java-pkg_jar-from apple-java-extensions-bin
+	popd >/dev/null || die
+
+	# add dependency for sunflow
+	java-pkg_jar-from --into "${WORKDIR}"/${SUNFLOW_PATCH} janino
+}
+
+src_compile() {
+	# to prevent QA warning, renaming build.xml for a while
+	mv build.xml build.xml.bak || die
+
+	# compile and link sunflow
+	java-pkg-simple_src_compile
+	mv "${S}"/${PN}.jar "${S}"/lib/sunflow.jar || die
+
+	# rename build.xml back
+	mv build.xml.bak build.xml || die
+
+	java-pkg-2_src_compile
 }
 
 src_install() {
 	java-pkg_dojar build/*.jar
-	java-pkg_newjar lib/sunflow*.jar sunflow.jar
+	java-pkg_dojar lib/sunflow.jar
 
 	# create SweetHome3D wrapper script
 	java-pkg_dolauncher ${MY_PN} --main com.eteks.sweethome3d.SweetHome3D \

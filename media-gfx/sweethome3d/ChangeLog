@@ -2,6 +2,12 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*sweethome3d-3.0-r2 (31 Jan 2011)
+
+  31 Jan 2011; Miroslav Šulc <fordfrog@gentoo.org> -sweethome3d-3.0-r1.ebuild,
+  +sweethome3d-3.0-r2.ebuild:
+  Unbundled sunflow
+
 *sweethome3d-3.0-r1 (31 Jan 2011)
 
   31 Jan 2011; Miroslav Šulc <fordfrog@gentoo.org> -sweethome3d-3.0.ebuild,
