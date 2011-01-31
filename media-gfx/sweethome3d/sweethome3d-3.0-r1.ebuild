@@ -9,7 +9,8 @@ MY_PN="SweetHome3D"
 
 DESCRIPTION="Sweet Home 3D is a free interior design application."
 HOMEPAGE="http://${PN}.sourceforge.net/"
-SRC_URI="mirror://sourceforge/${PN}/${MY_PN}-${PV}-src.zip"
+SRC_URI="mirror://sourceforge/${PN}/${MY_PN}-${PV}-src.zip
+	http://dev.gentoo.org/~fordfrog/distfiles/${PN}.png"
 LICENSE="GPL-3"
 IUSE=""
 SLOT="0"
@@ -40,7 +41,7 @@ S="${WORKDIR}/${MY_PN}-${PV}-src"
 EANT_BUILD_TARGET="build furniture textures help"
 
 src_unpack() {
-	unpack ${A}
+	unpack ${MY_PN}-${PV}-src.zip
 
 	cd "${S}" || die "Can not change directory to ${S}"
 
@@ -74,4 +75,7 @@ src_install() {
 	# create SweetHome3D wrapper script
 	java-pkg_dolauncher ${MY_PN} --main com.eteks.sweethome3d.SweetHome3D \
 		-Djava.library.path=/usr/$(get_libdir)/${PN} -Xmx256m
+
+	doicon "${DISTDIR}"/${PN}.png || die
+	make_desktop_entry SweetHome3D "Sweet Home 3D" ${PN} Graphics
 }
