@@ -2,6 +2,18 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.9.5 (01 Feb 2011)
+*icedtea-6.1.8.5 (01 Feb 2011)
+*icedtea-6.1.7.8 (01 Feb 2011)
+
+  01 Feb 2011; Andrew John Hughes <andrew@gentoo.org>
+  +files/6.1.9.5-sparc.patch, -files/6.1.9.4-sparc.patch,
+  -icedtea-6.1.7.7.ebuild, +icedtea-6.1.7.8.ebuild, -icedtea-6.1.8.4.ebuild,
+  +icedtea-6.1.8.5.ebuild, -icedtea-6.1.9.4.ebuild, +icedtea-6.1.9.5.ebuild:
+  Security update:
+  http://blog.fuseyism.com/index.php/2011/02/01/security-icedtea6-178-185-195-released/
+  RH672262, CVE-2011-0025: IcedTea jarfile signature verification bypass
+
   21 Jan 2011; Andrew John Hughes <andrew@gentoo.org> files/icedtea.env:
   Revert @ROOT@ additions in icedtea.env.
 
