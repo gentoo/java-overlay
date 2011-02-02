@@ -1,0 +1,10 @@
+# ChangeLog for dev-java/icedtea-web
+# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*icedtea-web-1.0 (02 Feb 2011)
+
+  02 Feb 2011; Andrew John Hughes <andrew@gentoo.org> +icedtea-web-1.0.ebuild:
+  Initial release:
+  http://blog.fuseyism.com/index.php/2011/02/02/icedtea-web-10-released/
+
