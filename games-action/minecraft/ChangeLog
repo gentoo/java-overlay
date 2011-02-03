@@ -2,6 +2,11 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  3 Feb 2011; James Le Cuirot <chewi@aura-online.co.uk>
+  -minecraft-20101219-r1.ebuild, +minecraft-20101219-r2.ebuild:
+  Use lwgjl 2.6 instead of 2.4 because of reports that it fixes a bug where
+  keyboard controls get stuck.
+
   21 Jan 2011; James Le Cuirot <chewi@aura-online.co.uk>
   minecraft-20101219-r1.ebuild:
   Remote filename has changed from Minecraft.jar to minecraft.jar.

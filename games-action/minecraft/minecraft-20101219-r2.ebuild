@@ -14,16 +14,17 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 RESTRICT="mirror"
 
-# The latest lwjgl may work but, to be on the safe side, we use the same
-# version as Minecraft does officially. You can determine what version
-# this is by looking for the version number near the top of...
+# lwjgl 2.4 is used by upstream but we're using 2.6 because of reports
+# that it fixes a bug where keyboard controls get stuck. You can
+# determine what version upstream uses by looking for the version number
+# near the top of...
 #
 #  javap -classpath lwjgl.jar -c org.lwjgl.Sys
 
 DEPEND="virtual/jdk:1.6"
 
 RDEPEND=">=dev-java/jinput-1_pre20100416
-	>=dev-java/lwjgl-2.4.2-r1:2.4
+	>=dev-java/lwjgl-2.6-r1:2.6
 	|| ( dev-java/icedtea6-bin[X]
 		dev-java/icedtea:6
 		dev-java/sun-jre-bin:1.6[X]
@@ -46,7 +47,7 @@ src_prepare() {
 }
 
 src_install() {
-	java-pkg_register-dependency jinput,lwjgl-2.4
+	java-pkg_register-dependency jinput,lwjgl-2.6
 	java-pkg_dojar "${PN}.jar"
 
 	# Launching with -jar seems to create classpath problems.
