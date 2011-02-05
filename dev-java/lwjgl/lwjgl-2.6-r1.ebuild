@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -43,22 +43,24 @@ JAVA_PKG_BSFIX_NAME="build.xml build-generator.xml"
 JAVA_ANT_REWRITE_CLASSPATH="true"
 
 EANT_GENTOO_CLASSPATH="apple-java-extensions-bin apt-mirror jinput jutils"
-EANT_BUILD_TARGET="all"
+EANT_BUILD_TARGET="jars headers"
 
-src_prepare() {
-	# libXext isn't actually needed. Respect CFLAGS and LDFLAGS. Don't
-	# prestrip. Gentoo doesn't have a static version of libXxf86vm.
-	sed -i \
-		-e 's/-lXext//g' \
-		-e "s/-O[0-9]/${CFLAGS} ${LDFLAGS}/g" \
-		-e '/<apply .*executable="strip"/,/<\/apply>/d' \
-		-e "s/-Wl,-static,-lXxf86vm,-call_shared/-lXxf86vm/g" \
-		platform_build/linux_ant/build.xml || die
+src_compile() {
+	# Build the JARs and headers.
+	java-pkg-2_src_compile
+
+	# Add "64" for amd64.
+	local BITS=
+	use amd64 && BITS=64
+
+	# Their native build script sucks.
+	cd "${S}/src/native" || die
+	LIBRARY_PATH="$(java-config -g LDPATH)" gcc -shared -fPIC -std=c99 -pthread -Wall -Wl,--version-script=linux/${PN}.map -Wl,-z -Wl,defs ${CFLAGS} ${LDFLAGS} $(java-pkg_get-jni-cflags) -I{common,linux} {linux,generated,common}/*.c -lm -lX11 -lXcursor -lXrandr -lXxf86vm -ljawt -ldl -o lib${PN}${BITS}.so || die
 }
 
 src_install() {
-	java-pkg_dojar libs/lwjgl*jar
-	java-pkg_doso libs/linux/*.so
+	java-pkg_dojar libs/${PN}*.jar
+	java-pkg_doso src/native/lib${PN}*.so
 
 	use doc && java-pkg_dojavadoc doc/javadoc
 	use source && java-pkg_dosrc src/java/org
