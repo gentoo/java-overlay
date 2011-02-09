@@ -1,7 +1,7 @@
-diff -Nru icedtea6-1.9.5.orig/Makefile.am icedtea6-1.9.5/Makefile.am
---- icedtea6-1.9.5.orig/Makefile.am	2011-01-18 15:15:22.228649098 +0000
-+++ icedtea6-1.9.5/Makefile.am	2011-01-26 11:41:09.648533950 +0000
-@@ -326,7 +326,8 @@
+diff -Nru icedtea6-1.9.6.orig/Makefile.am icedtea6-1.9.6/Makefile.am
+--- icedtea6-1.9.6.orig/Makefile.am	2011-02-09 10:48:29.464832314 +0000
++++ icedtea6-1.9.6/Makefile.am	2011-02-09 13:01:39.430490143 +0000
+@@ -327,7 +327,8 @@
  	patches/openjdk/6795356-proxylazyvalue-leak.patch \
  	patches/openjdk/6687968-pngimagereader_mem_leak.patch \
  	patches/openjdk/6541476-png-iTXt-chunk.patch \
@@ -11,9 +11,9 @@ diff -Nru icedtea6-1.9.5.orig/Makefile.am icedtea6-1.9.5/Makefile.am
  
  if WITH_ALT_HSBUILD
  ICEDTEA_PATCHES += \
-diff -Nru icedtea6-1.9.5.orig/patches/g344659-sparc_fscanf_fix.patch icedtea6-1.9.5/patches/g344659-sparc_fscanf_fix.patch
---- icedtea6-1.9.5.orig/patches/g344659-sparc_fscanf_fix.patch	1970-01-01 01:00:00.000000000 +0100
-+++ icedtea6-1.9.5/patches/g344659-sparc_fscanf_fix.patch	2011-01-26 11:40:50.136332933 +0000
+diff -Nru icedtea6-1.9.6.orig/patches/g344659-sparc_fscanf_fix.patch icedtea6-1.9.6/patches/g344659-sparc_fscanf_fix.patch
+--- icedtea6-1.9.6.orig/patches/g344659-sparc_fscanf_fix.patch	1970-01-01 01:00:00.000000000 +0100
++++ icedtea6-1.9.6/patches/g344659-sparc_fscanf_fix.patch	2011-02-09 13:01:39.430490143 +0000
 @@ -0,0 +1,12 @@
 +diff -uNr openjdk.orig/hotspot/src/os_cpu/linux_sparc/vm/vm_version_linux_sparc.cpp openjdk/hotspot/src/os_cpu/linux_sparc/vm/vm_version_linux_sparc.cpp
 +--- openjdk.orig/hotspot/src/os_cpu/linux_sparc/vm/vm_version_linux_sparc.cpp	2010-06-21 22:12:15.000000000 +0100
