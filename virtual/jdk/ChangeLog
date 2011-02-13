@@ -1,6 +1,10 @@
 # ChangeLog for virtual/jdk
-# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  13 Feb 2011; Vlastimil Babka <caster@gentoo.org> -jdk-1.6.0-r2.ebuild:
+  Remove the 1.6 ebuild, as it's outdated and the one in main tree supports
+  everything needed.
 
   01 Apr 2010; Vlastimil Babka <caster@gentoo.org> -jdk-1.5.0-r1.ebuild,
   jdk-1.5.0-r2.ebuild, -jdk-1.6.0-r1.ebuild, jdk-1.6.0-r2.ebuild:
