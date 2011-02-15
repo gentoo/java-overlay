@@ -2,6 +2,18 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.9.7 (15 Feb 2011)
+*icedtea-6.1.8.7 (15 Feb 2011)
+*icedtea-6.1.7.10 (15 Feb 2011)
+
+  15 Feb 2011; Andrew John Hughes <andrew@gentoo.org>
+  -files/6.1.9.6-sparc.patch, -icedtea-6.1.7.9.ebuild,
+  +icedtea-6.1.7.10.ebuild, -icedtea-6.1.8.6.ebuild, +icedtea-6.1.8.7.ebuild,
+  -icedtea-6.1.9.6.ebuild, +icedtea-6.1.9.7.ebuild:
+  Security update:
+  http://blog.fuseyism.com/index.php/2011/02/15/security-icedtea6-1710-187-and-197-released/
+  Fix for SPARC issue (#344659) included upstream.
+
 *icedtea-6.1.9.6 (09 Feb 2011)
 *icedtea-6.1.8.6 (09 Feb 2011)
 *icedtea-6.1.7.9 (09 Feb 2011)
@@ -11,8 +23,7 @@
   -icedtea-6.1.7.8.ebuild, +icedtea-6.1.7.9.ebuild, -icedtea-6.1.8.5.ebuild,
   +icedtea-6.1.8.6.ebuild, -icedtea-6.1.9.5.ebuild, +icedtea-6.1.9.6.ebuild:
   Security update for floating point issue:
-  http://blog.fuseyism.com/index.php/2011/02/09/security-icedtea6-179-186-196-r
-  eleased/
+  http://blog.fuseyism.com/index.php/2011/02/09/security-icedtea6-179-186-196-released/
 
 *icedtea-6.1.9.5 (01 Feb 2011)
 *icedtea-6.1.8.5 (01 Feb 2011)
