@@ -5,7 +5,7 @@
 
 EAPI="2"
 
-inherit eutils java-vm-2
+inherit eutils java-pkg-2 java-vm-2
 
 LICENSE="GPL-2 GPL-2-with-linking-exception LGPL-2"
 SLOT="6"
@@ -20,11 +20,45 @@ IUSE="doc +nsplugin"
 RDEPEND="dev-java/icedtea"
 DEPEND="${RDEPEND}"
 
+# a bit of hack so the VM switching is triggered without causing dependency troubles
+JAVA_PKG_NV_DEPEND=">=virtual/jdk-1.6"
 JAVA_PKG_WANT_SOURCE="1.6"
 JAVA_PKG_WANT_TARGET="1.6"
 
+pkg_setup() {
+	# quite a hack since java-config does not provide a way for a package
+	# to limit supported VM's for building and their preferred order
+	if [[ -n "${JAVA_PKG_FORCE_VM}" ]]; then
+		einfo "Honoring user-set JAVA_PKG_FORCE_VM"
+	elif has_version dev-java/icedtea:6; then
+		JAVA_PKG_FORCE_VM="icedtea6"
+	elif has_version dev-java/icedtea:7; then
+		JAVA_PKG_FORCE_VM="icedtea7"
+	else
+		JAVA_PKG_FORCE_VM=""
+		# don't die just yet if merging a binpkg - bug #258423
+		DIE_IF_NOT_BINPKG=true
+	fi
+
+	# if the previous failed, don't even run java eclasses pkg_setup
+	# as it might also die when no VM is present
+	if [[ -n "${JAVA_PKG_FORCE_VM}" ]]; then
+		einfo "Forced vm ${JAVA_PKG_FORCE_VM}"
+		java-vm-2_pkg_setup
+		java-pkg-2_pkg_setup
+	fi
+}
+
 unset_vars() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
+}
+
+src_unpack() {
+	if [[ -n ${DIE_IF_NOT_BINPKG} ]]; then
+		die "Unable to find a supported VM for building"
+	fi
+
+	default
 }
 
 src_configure() {
@@ -34,14 +68,14 @@ src_configure() {
 
 	unset_vars
 
-	if [ ${vmhome} == ${icedtea6dir} ] ; then
+	if [[ ${vmhome} == ${icedtea6dir} ]] ; then
 		installdir=${vmhome}
 		VMHANDLE="icedtea6"
-	else if [ ${vmhome} == ${icedtea7dir} ] ; then
+	else if [[ ${vmhome} == ${icedtea7dir} ]] ; then
 		installdir=${vmhome}
 		VMHANDLE="icedtea7"
 	else
-		ewarn "No IcedTea JDK selected.  Assuming IcedTea6."
+		ewarn "No IcedTea JDK selected. Assuming IcedTea6."
 		installdir=${icedtea6dir}
 		VMHANDLE="icedtea6"
 	fi
@@ -80,4 +114,9 @@ pkg_postinst() {
 		elog "Note that the plugin works only in browsers based on xulrunner-1.9.1 or later"
 		elog "such as Firefox 3.5+, Chromium and perhaps some others too."
 	fi
+}
+
+pkg_prerm() {
+	# override the java-vm-2 eclass check for removing a system VM, as it doesn't make sense here
+	:;
 }
