@@ -8,8 +8,8 @@ EAPI="2"
 inherit eutils java-pkg-2 java-vm-2
 
 LICENSE="GPL-2 GPL-2-with-linking-exception LGPL-2"
-SLOT="6"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
+SLOT="7"
+#KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
 DESCRIPTION="FOSS Java browser plugin and Web Start implementation"
 SRC_URI="http://icedtea.classpath.org/download/source/${P}.tar.gz"
@@ -17,7 +17,7 @@ HOMEPAGE="http://icedtea.classpath.org"
 
 IUSE="doc +nsplugin"
 
-RDEPEND="dev-java/icedtea:6"
+RDEPEND="dev-java/icedtea:7"
 DEPEND="${RDEPEND}"
 
 # a bit of hack so the VM switching is triggered without causing dependency troubles
@@ -30,8 +30,8 @@ pkg_setup() {
 	# to limit supported VM's for building and their preferred order
 	if [[ -n "${JAVA_PKG_FORCE_VM}" ]]; then
 		einfo "Honoring user-set JAVA_PKG_FORCE_VM"
-	elif has_version dev-java/icedtea:6; then
-		JAVA_PKG_FORCE_VM="icedtea6"
+	elif has_version dev-java/icedtea:7; then
+		JAVA_PKG_FORCE_VM="icedtea7"
 	else
 		JAVA_PKG_FORCE_VM=""
 		# don't die just yet if merging a binpkg - bug #258423
@@ -61,15 +61,15 @@ src_unpack() {
 
 src_configure() {
 	local vmhome=$(java-config -O)
-	local icedtea6dir="${ROOT}usr/$(get_libdir)/icedtea6"
+	local icedtea7dir="${ROOT}usr/$(get_libdir)/icedtea7"
 
 	unset_vars
 
-	if [[ ${vmhome} == ${icedtea6dir} ]] ; then
+	if [[ ${vmhome} == ${icedtea7dir} ]] ; then
 		installdir=${vmhome}
-		VMHANDLE="icedtea6"
+		VMHANDLE="icedtea7"
 	else
-		die "Unexpected install location of IcedTea6"
+		die "Unexpected install location of IcedTea7"
 	fi
 
 	elog "Installing IcedTea-Web in ${installdir}"
