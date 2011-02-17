@@ -3,6 +3,12 @@
 # $Header: $
 
   17 Feb 2011; Vlastimil Babka <caster@gentoo.org>
+  icedtea-6.1.7.10-r1.ebuild, icedtea-6.1.8.7-r1.ebuild,
+  icedtea-6.1.9.7-r1.ebuild, +icedtea-7.1.13-r1.ebuild:
+  Use slot deps for icedtea-web, port the changes to icedtea7 as well (uses
+  separate slot of icedtea-web).
+
+  17 Feb 2011; Vlastimil Babka <caster@gentoo.org>
   +icedtea-6.1.7.10-r1.ebuild, +icedtea-6.1.8.7-r1.ebuild,
   icedtea-6.1.9.7-r1.ebuild:
   Revbump the remaining icedtea6 branches to use icedtea-web

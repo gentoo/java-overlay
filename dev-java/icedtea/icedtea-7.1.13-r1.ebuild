@@ -4,39 +4,49 @@
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
 # *********************************************************
-# * IF YOU CHANGE THIS EBUILD, CHANGE ICEDTEA-7.* AS WELL *
+# * IF YOU CHANGE THIS EBUILD, CHANGE ICEDTEA-6.* AS WELL *
 # *********************************************************
 
 EAPI="2"
 
-inherit pax-utils java-pkg-2 java-vm-2 versionator
+inherit autotools flag-o-matic java-pkg-2 java-vm-2 pax-utils versionator
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
-SLOT="6"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
+SLOT="7"
+#KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
-DESCRIPTION="A harness to build the OpenJDK using Free Software build tools and dependencies"
-ICEDTEA_VER="$(get_version_component_range 2-4)"
-ICEDTEA_PKG=icedtea${SLOT}-${ICEDTEA_VER}
-OPENJDK_BUILD="17"
-OPENJDK_DATE="14_oct_2009"
-OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.gz"
-HOTSPOT_TARBALL="62926c7f67a3.tar.gz"
-CACAO_TARBALL="cacao-0.99.4.tar.gz"
+DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
+ICEDTEA_VER="$(get_version_component_range 2-3)"
+ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
+OPENJDK_TARBALL="195fcceefddc.tar.gz"
+LANGTOOLS_TARBALL="681f1f51926f.tar.gz"
+JAXP_TARBALL="826bafcb6c4a.tar.gz"
+JAXWS_TARBALL="1661166c82dc.tar.gz"
+CORBA_TARBALL="e805b4155d76.tar.gz"
+JDK_TARBALL="2017795af50a.tar.gz"
+HOTSPOT_TARBALL="a393ff93e7e5.tar.gz"
+CACAO_TARBALL="66e762d869dd.tar.bz2"
+JAXP_DROP="jdk7-jaxp-m6.zip"
+JAXWS_DROP="jdk7-jaxws-2009_09_28.zip"
+JAF_DROP="jdk7-jaf-2009_08_28.zip"
 SRC_URI="http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
-		 http://download.java.net/openjdk/jdk6/promoted/b${OPENJDK_BUILD}/${OPENJDK_TARBALL}
-		 http://hg.openjdk.java.net/hsx/hsx16/master/archive/${HOTSPOT_TARBALL}
-		 cacao? ( http://www.complang.tuwien.ac.at/cacaojvm/download/cacao-0.99.4/${CACAO_TARBALL} )"
+		 http://hg.openjdk.java.net/icedtea/jdk7/archive/${OPENJDK_TARBALL}
+		 http://hg.openjdk.java.net/icedtea/jdk7/corba/archive/${CORBA_TARBALL}
+		 http://hg.openjdk.java.net/icedtea/jdk7/jaxp/archive/${JAXP_TARBALL}
+		 http://hg.openjdk.java.net/icedtea/jdk7/jaxws/archive/${JAXWS_TARBALL}
+		 http://hg.openjdk.java.net/icedtea/jdk7/jdk/archive/${JDK_TARBALL}
+		 http://hg.openjdk.java.net/icedtea/jdk7/hotspot/archive/${HOTSPOT_TARBALL}
+		 http://hg.openjdk.java.net/icedtea/jdk7/langtools/archive/${LANGTOOLS_TARBALL}
+		 http://icedtea.classpath.org/download/drops/${JAXP_DROP}
+		 http://icedtea.classpath.org/download/drops/${JAXWS_DROP}
+		 http://icedtea.classpath.org/download/drops/${JAF_DROP}
+		 cacao? ( http://mips.complang.tuwien.ac.at/hg/cacao/archive/${CACAO_TARBALL} )"
 HOMEPAGE="http://icedtea.classpath.org"
 S=${WORKDIR}/${ICEDTEA_PKG}
 
 # Missing options:
-# shark - still experimental, requires llvm which is not yet packaged
-# visualvm - requries netbeans which would cause major bootstrap issues
-IUSE="cacao debug doc examples +hs16 javascript nio2 +nsplugin +nss pulseaudio systemtap +webstart +xrender zero"
-
-# JTReg doesn't pass at present
-RESTRICT="test"
+# shark - needs adding
+IUSE="cacao debug doc examples javascript +nsplugin pulseaudio systemtap +webstart +xrender zero"
 
 RDEPEND=">=net-print/cups-1.2.12
 	 >=x11-libs/libX11-1.1.3
@@ -60,44 +70,40 @@ RDEPEND=">=net-print/cups-1.2.12
 	 zero? ( virtual/libffi )
 	 xrender? ( >=x11-libs/libXrender-0.9.4 )
 	 systemtap? ( >=dev-util/systemtap-1 )
-	 !dev-java/icedtea6
-	 nss? ( >=dev-libs/nss-3.12.5-r1 )"
+	 !dev-java/icedtea:0"
 
 # Additional dependencies for building:
 #   zip: extract OpenJDK tarball, and needed by configure
-#   xalan/xerces: automatic code generation (also needed for Ant 1.8.0 to work properly)
+#   xalan/xerces: automatic code generation
 #   ant, ecj, jdk: required to build Java code
 # Only ant-core-1.7.1-r2 and later contain a version of Ant that
 # properly respects environment variables, if the build
 # sets some environment variables.
-#   ca-certificates, perl and openssl are used for the cacerts keystore generation
-#   xext headers have two variants depending on version - bug #288855
+# ca-certificates, perl and openssl are used for the cacerts keystore generation
+# xext headers have two variants depending on version - bug #288855
+# autoconf - as long as we use eautoreconf, version restrictions for bug #294918
 DEPEND="${RDEPEND}
 	|| (
-		( >=dev-java/gcj-jdk-4.3 >=app-admin/eselect-ecj-0.5-r1 )
-		( >=dev-java/cacao-0.99.2 >=app-admin/eselect-ecj-0.5-r1 )
+		>=dev-java/gcj-jdk-4.3
+		>=dev-java/cacao-0.99.2
+		dev-java/icedtea:7
 		dev-java/icedtea6-bin
-		dev-java/icedtea:${SLOT}
+		dev-java/icedtea:6
+		dev-java/icedtea6
 	)
 	app-arch/zip
 	>=dev-java/xalan-2.7.0:0
 	>=dev-java/xerces-2.9.1:2
 	>=dev-java/ant-core-1.7.1-r2
+	dev-java/ant-nodeps
 	app-misc/ca-certificates
 	dev-lang/perl
 	dev-libs/openssl
-	|| (
-		(
-			>=x11-libs/libXext-1.1.1
-			>=x11-proto/xextproto-7.1.1
-			x11-proto/xproto
-		)
-		<x11-libs/libXext-1.1.1
-	)
-	sys-apps/lsb-release"
+	sys-apps/lsb-release
+	 || ( >=sys-devel/autoconf-2.65:2.5 <sys-devel/autoconf-2.64:2.5 )"
 
-PDEPEND="webstart? ( dev-java/icedtea-web:6 )
-	nsplugin? ( dev-java/icedtea-web:6[nsplugin] )"
+PDEPEND="webstart? ( dev-java/icedtea-web:7 )
+	nsplugin? ( dev-java/icedtea-web:7[nsplugin] )"
 
 # a bit of hack so the VM switching is triggered without causing dependency troubles
 JAVA_PKG_NV_DEPEND=">=virtual/jdk-1.5"
@@ -119,6 +125,8 @@ pkg_setup() {
 #	fi
 
 	if use nsplugin && ! use webstart ; then
+		eerror "WebStart is required if building the plugin."
+		die 'Re-try with USE="webstart"'
 		elog "Note that the nsplugin flag implies the webstart flag. Enable it to remove this message."
 	fi
 
@@ -126,14 +134,18 @@ pkg_setup() {
 	# to limit supported VM's for building and their preferred order
 	if [[ -n "${JAVA_PKG_FORCE_VM}" ]]; then
 		einfo "Honoring user-set JAVA_PKG_FORCE_VM"
-	elif has_version "dev-java/icedtea:${SLOT}"; then
-		JAVA_PKG_FORCE_VM="icedtea6"
+	elif has_version dev-java/icedtea:7; then
+		JAVA_PKG_FORCE_VM="icedtea7"
+	elif has_version dev-java/icedtea:0; then
+		JAVA_PKG_FORCE_VM="icedtea"
+	elif has_version dev-java/gcj-jdk; then
+		JAVA_PKG_FORCE_VM="gcj-jdk"
 	elif has_version dev-java/icedtea6; then
+		JAVA_PKG_FORCE_VM="icedtea6"
+	elif has_version dev-java/icedtea:6; then
 		JAVA_PKG_FORCE_VM="icedtea6"
 	elif has_version dev-java/icedtea6-bin; then
 		JAVA_PKG_FORCE_VM="icedtea6-bin"
-	elif has_version dev-java/gcj-jdk; then
-		JAVA_PKG_FORCE_VM="gcj-jdk"
 	elif has_version dev-java/cacao; then
 		JAVA_PKG_FORCE_VM="cacao"
 	else
@@ -164,21 +176,20 @@ unset_vars() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 }
 
+src_prepare() {
+	epatch "${FILESDIR}/${PV}-alsa-sane-headers.patch"
+	eautoreconf
+}
+
 src_configure() {
 	local config procs rhino_jar
 	local vm=$(java-pkg_get-current-vm)
-	local vmhome="/usr/$(get_libdir)/jvm/${vm}"
 
-	# IcedTea6 can't be built using IcedTea7; its class files are too new
-	if [[ "${vm}" == "icedtea6" ]] || [[ "${vm}" == "icedtea6-bin" ]] ; then
-		# If we are upgrading icedtea, then we don't need to bootstrap.
-		config="${config} --with-openjdk=$(java-config -O)"
-	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" ]] ; then
-		# For other 1.5 JDKs e.g. GCJ, CACAO.
-		config="${config} --with-ecj-jar=/usr/share/eclipse-ecj/ecj.jar" \
-		config="${config} --with-gcj-home=${vmhome}"
-	else
-		eerror "IcedTea${SLOT} must be built with either a JDK based on GNU Classpath or an existing build of IcedTea${SLOT}."
+	if [[ "${vm}" == "icedtea6" || "${vm}" == "icedtea" ]] || [[ "${vm}" == "icedtea7" ]] || [[ "${vm}" == "icedtea6-bin" ]] ; then
+		# We can't currently bootstrap with a Sun-based JVM :(
+		config="${config} --disable-bootstrap"
+	elif [[ "${vm}" != "gcj-jdk" && "${vm}" != "cacao" ]] ; then
+		eerror "IcedTea must be built with either a JDK based on GNU Classpath or an existing build of IcedTea."
 		die "Install a GNU Classpath JDK (gcj-jdk, cacao)"
 	fi
 
@@ -199,29 +210,30 @@ src_configure() {
 		rhino_jar=$(java-pkg_getjar rhino:1.6 js.jar);
 	fi
 
-	if use hs16 ; then
-		config="${config} --with-hotspot-build=hs16"
-	fi
-
 	unset_vars
 
 	econf ${config} \
 		--with-openjdk-src-zip="${DISTDIR}/${OPENJDK_TARBALL}" \
+		--with-corba-src-zip="${DISTDIR}/${CORBA_TARBALL}" \
+		--with-jaxp-src-zip="${DISTDIR}/${JAXP_TARBALL}" \
+		--with-jaxws-src-zip="${DISTDIR}/${JAXWS_TARBALL}" \
+		--with-jdk-src-zip="${DISTDIR}/${JDK_TARBALL}" \
 		--with-hotspot-src-zip="${DISTDIR}/${HOTSPOT_TARBALL}" \
+		--with-langtools-src-zip="${DISTDIR}/${LANGTOOLS_TARBALL}" \
+		--with-jaxp-drop-zip="${DISTDIR}/${JAXP_DROP}" \
+		--with-jaxws-drop-zip="${DISTDIR}/${JAXWS_DROP}" \
+		--with-jaf-drop-zip="${DISTDIR}/${JAF_DROP}" \
 		--with-cacao-src-zip="${DISTDIR}/${CACAO_TARBALL}" \
-		--with-java="${vmhome}/bin/java" \
-		--with-javac="${vmhome}/bin/javac" \
-		--with-javah="${vmhome}/bin/javah" \
+		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
+		--disable-jdk-tests \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_with javascript rhino ${rhino_jar}) \
-		$(use_enable cacao) \
+		$(use_enable zero) \
 		$(use_enable pulseaudio pulse-java) \
 		$(use_enable xrender) \
 		$(use_enable systemtap) \
-		$(use_enable nio2) \
-		$(use_enable nss) \
 		--disable-webstart \
 		--disable-plugin \
 		|| die "configure failed"
@@ -231,9 +243,10 @@ src_compile() {
 	# Newer versions of Gentoo's ant add
 	# an environment variable so it works properly...
 	export ANT_RESPECT_JAVA_HOME=TRUE
-	# ant -diagnostics in Ant 1.8.0 fails without these
+
+	# ant -diagnostics in Ant 1.8.0 fails without xerces+xalan
 	# otherwise we try to load the least that's needed to avoid possible classpath collisions
-	export ANT_TASKS="xerces-2 xalan"
+	export ANT_TASKS="xerces-2 xalan ant-nodeps"
 
 	# Paludis does not respect unset from src_configure
 	unset_vars
@@ -246,12 +259,11 @@ src_install() {
 	dodir "${dest}" || die
 
 	local arch=${ARCH}
-	use x86 && arch=i586
 
-	dodoc README NEWS AUTHORS THANKYOU || die
+	dodoc README NEWS AUTHORS || die
 	dosym "/usr/share/doc/${PF}" "/usr/share/doc/${PN}${SLOT}"
 
-	cd "${S}/openjdk/build/linux-${arch}/j2sdk-image" || die
+	cd "${S}/openjdk.build/j2sdk-image" || die
 
 	if use doc ; then
 		# java-pkg_dohtml needed for package-list #302654

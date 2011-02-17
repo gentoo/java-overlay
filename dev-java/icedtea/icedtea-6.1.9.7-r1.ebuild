@@ -102,8 +102,8 @@ DEPEND="${RDEPEND}
 	)
 	sys-apps/lsb-release"
 
-PDEPEND="webstart? ( dev-java/icedtea-web )
-	nsplugin? ( dev-java/icedtea-web[nsplugin] )"
+PDEPEND="webstart? ( dev-java/icedtea-web:6 )
+	nsplugin? ( dev-java/icedtea-web:6[nsplugin] )"
 
 # a bit of hack so the VM switching is triggered without causing dependency troubles
 JAVA_PKG_NV_DEPEND=">=virtual/jdk-1.5"
