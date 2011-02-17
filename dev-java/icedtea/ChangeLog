@@ -3,6 +3,11 @@
 # $Header: $
 
   17 Feb 2011; Vlastimil Babka <caster@gentoo.org>
+  +icedtea-6.1.7.10-r1.ebuild, +icedtea-6.1.8.7-r1.ebuild,
+  icedtea-6.1.9.7-r1.ebuild:
+  Revbump the remaining icedtea6 branches to use icedtea-web
+
+  17 Feb 2011; Vlastimil Babka <caster@gentoo.org>
   +icedtea-6.1.9.7-r1.ebuild:
   Revbump to PDEPEND on icedtea-web instead of building webstart/nsplugin as
   part of the whole icedtea build. Fixes bug #355175.

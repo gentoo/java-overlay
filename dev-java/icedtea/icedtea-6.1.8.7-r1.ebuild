@@ -18,27 +18,28 @@ KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 DESCRIPTION="A harness to build the OpenJDK using Free Software build tools and dependencies"
 ICEDTEA_VER="$(get_version_component_range 2-4)"
 ICEDTEA_PKG=icedtea${SLOT}-${ICEDTEA_VER}
-OPENJDK_BUILD="20"
-OPENJDK_DATE="21_jun_2010"
+OPENJDK_BUILD="18"
+OPENJDK_DATE="16_feb_2010"
 OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.gz"
-JAXP_TARBALL="jdk6-jaxp-b20.zip"
-JAXWS_TARBALL="jdk6-jaxws-b20.zip"
-JAF_TARBALL="jdk6-jaf-b20.zip"
-HOTSPOT_TARBALL="13edc857b967.tar.gz"
-CACAO_TARBALL="e321b101a9ee.tar.bz2"
+HOTSPOT_TARBALL="62926c7f67a3.tar.gz"
+JAXP_TARBALL="jdk6-jaxp-2009_10_13.zip"
+JAXWS_TARBALL="jdk6-jaxws-2009_10_27.zip"
+JAF_TARBALL="jdk6-jaf-2009_10_27.zip"
+CACAO_TARBALL="cacao-0.99.4.tar.gz"
 SRC_URI="http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
 		 http://download.java.net/openjdk/jdk6/promoted/b${OPENJDK_BUILD}/${OPENJDK_TARBALL}
+		 http://hg.openjdk.java.net/hsx/hsx16/master/archive/${HOTSPOT_TARBALL}
 		 http://icedtea.classpath.org/download/drops/${JAXWS_TARBALL}
 		 http://icedtea.classpath.org/download/drops/${JAF_TARBALL}
 		 http://icedtea.classpath.org/download/drops/${JAXP_TARBALL}
-		 http://hg.openjdk.java.net/hsx/hsx19/master/archive/${HOTSPOT_TARBALL}
-		 cacao? ( http://mips.complang.tuwien.ac.at/hg/cacao/archive/${CACAO_TARBALL} )"
+		 cacao? ( http://www.complang.tuwien.ac.at/cacaojvm/download/cacao-0.99.4/${CACAO_TARBALL} )"
 HOMEPAGE="http://icedtea.classpath.org"
 S=${WORKDIR}/${ICEDTEA_PKG}
 
 # Missing options:
-# shark - needs adding
-IUSE="cacao debug doc examples +hs19 javascript nio2 +nsplugin +nss pulseaudio systemtap +webstart +xrender zero"
+# shark - still experimental, requires llvm which is not yet packaged
+# visualvm - requries netbeans which would cause major bootstrap issues
+IUSE="cacao debug doc examples +hs16 javascript nio2 +nsplugin +nss pulseaudio systemtap +webstart +xrender zero"
 
 # JTReg doesn't pass at present
 RESTRICT="test"
@@ -205,8 +206,8 @@ src_configure() {
 		rhino_jar=$(java-pkg_getjar rhino:1.6 js.jar);
 	fi
 
-	if use hs19 ; then
-		config="${config} --with-hotspot-build=hs19"
+	if use hs16 ; then
+		config="${config} --with-hotspot-build=hs16"
 	fi
 
 	unset_vars
@@ -254,10 +255,13 @@ src_install() {
 	local ddest="${D}/${dest}"
 	dodir "${dest}" || die
 
+	local arch=${ARCH}
+	use x86 && arch=i586
+
 	dodoc README NEWS AUTHORS THANKYOU || die
 	dosym "/usr/share/doc/${PF}" "/usr/share/doc/${PN}${SLOT}"
 
-	cd "${S}/openjdk.build/j2sdk-image" || die
+	cd "${S}/openjdk/build/linux-${arch}/j2sdk-image" || die
 
 	if use doc ; then
 		# java-pkg_dohtml needed for package-list #302654
