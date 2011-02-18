@@ -2,6 +2,10 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  18 Feb 2011; Vlastimil Babka <caster@gentoo.org> icedtea-web-1.0.1.ebuild,
+  icedtea-web-1.0.1-r7.ebuild:
+  Install with emake -j1 due to experienced error.
+
   17 Feb 2011; Vlastimil Babka <caster@gentoo.org> icedtea-web-1.0.1.ebuild,
   +icedtea-web-1.0.1-r7.ebuild:
   Add a -r7 revision with SLOT=7 intended for icedtea7.

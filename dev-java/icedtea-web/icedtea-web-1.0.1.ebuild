@@ -86,7 +86,7 @@ src_configure() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die "Install failed"
+	emake -j1 DESTDIR="${D}" install || die "Install failed"
 	dodoc AUTHORS README NEWS || die
 
 	if use nsplugin; then
