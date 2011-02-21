@@ -2,6 +2,10 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  21 Feb 2011; James Le Cuirot <chewi@aura-online.co.uk>
+  -minecraft-20101219-r2.ebuild, +minecraft-20110221.ebuild:
+  Version bump for the new launcher. I can't believe the same hack still works!
+
   3 Feb 2011; James Le Cuirot <chewi@aura-online.co.uk>
   -minecraft-20101219-r1.ebuild, +minecraft-20101219-r2.ebuild:
   Use lwgjl 2.6 instead of 2.4 because of reports that it fixes a bug where
