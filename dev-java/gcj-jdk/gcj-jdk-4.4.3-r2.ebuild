@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -33,7 +33,7 @@ pkg_setup() {
 
 	java-vm-2_pkg_setup
 }
- 
+
 src_install() {
 	# jre lib paths ...
 	local libarch="$(get_system_arch)"
@@ -62,6 +62,14 @@ src_install() {
 	dosym ${gccbin}/grmiregistry ${gcjhome}/jre/bin/rmiregistry
 	dosym ${gccbin}/gkeytool ${gcjhome}/bin/keytool
 	dosym ${gccbin}/gkeytool ${gcjhome}/jre/bin/keytool
+	dosym ${gccbin}/gnative2ascii ${gcjhome}/bin/native2ascii
+	dosym ${gccbin}/gorbd ${gcjhome}/bin/orbd
+	dosym ${gccbin}/gorbd ${gcjhome}/jre/bin/orbd
+	dosym ${gccbin}/grmid ${gcjhome}/bin/rmid
+	dosym ${gccbin}/grmid ${gcjhome}/jre/bin/rmid
+	dosym ${gccbin}/gserialver ${gcjhome}/bin/serialver
+	dosym ${gccbin}/gtnameserv ${gcjhome}/bin/tnameserv
+	dosym ${gccbin}/gtnameserv ${gcjhome}/jre/bin/tnameserv
 	dodir ${gcjhome}/jre/lib/${libarch}/client
 	dosym /usr/$(get_libdir)/gcj-${gcc_version}*/libjvm.so ${gcjhome}/jre/lib/${libarch}/client/libjvm.so
 	dosym /usr/$(get_libdir)/gcj-${gcc_version}*/libjvm.so ${gcjhome}/jre/lib/${libarch}/server/libjvm.so

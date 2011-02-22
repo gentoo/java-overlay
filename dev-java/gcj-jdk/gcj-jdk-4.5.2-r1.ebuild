@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -62,6 +62,14 @@ src_install() {
 	dosym ${gccbin}/grmiregistry ${gcjhome}/jre/bin/rmiregistry
 	dosym ${gccbin}/gkeytool ${gcjhome}/bin/keytool
 	dosym ${gccbin}/gkeytool ${gcjhome}/jre/bin/keytool
+	dosym ${gccbin}/gnative2ascii ${gcjhome}/bin/native2ascii
+	dosym ${gccbin}/gorbd ${gcjhome}/bin/orbd
+	dosym ${gccbin}/gorbd ${gcjhome}/jre/bin/orbd
+	dosym ${gccbin}/grmid ${gcjhome}/bin/rmid
+	dosym ${gccbin}/grmid ${gcjhome}/jre/bin/rmid
+	dosym ${gccbin}/gserialver ${gcjhome}/bin/serialver
+	dosym ${gccbin}/gtnameserv ${gcjhome}/bin/tnameserv
+	dosym ${gccbin}/gtnameserv ${gcjhome}/jre/bin/tnameserv
 	dodir ${gcjhome}/jre/lib/${libarch}/client
 	dosym /usr/$(get_libdir)/gcj-${gcc_version}*/libjvm.so ${gcjhome}/jre/lib/${libarch}/client/libjvm.so
 	dosym /usr/$(get_libdir)/gcj-${gcc_version}*/libjvm.so ${gcjhome}/jre/lib/${libarch}/server/libjvm.so
@@ -91,7 +99,7 @@ pkg_postinst() {
 	ewarn
 	ewarn "Due to this and limited manpower, we currently cannot support"
 	ewarn "using gcj-jdk as a system VM. Its main purpose is to bootstrap"
-	ewarn "Icedtea without prior binary VM installation. To do that, execute:"
+	ewarn "IcedTea without prior binary VM installation. To do that, execute:"
 	ewarn
 	ewarn "emerge -o icedtea && emerge icedtea"
 
