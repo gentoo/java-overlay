@@ -2,6 +2,10 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  23 Feb 2011; James Le Cuirot <chewi@aura-online.co.uk>
+  -minecraft-20110221.ebuild, +minecraft-20110223.ebuild:
+  Damn, they've updated the launcher again already.
+
   21 Feb 2011; James Le Cuirot <chewi@aura-online.co.uk>
   -minecraft-20101219-r2.ebuild, +minecraft-20110221.ebuild:
   Version bump for the new launcher. I can't believe the same hack still works!
