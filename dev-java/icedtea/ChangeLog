@@ -2,6 +2,12 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.10 (02 Mar 2011)
+
+  02 Mar 2011; Andrew John Hughes <andrew@gentoo.org> +icedtea-6.1.10.ebuild:
+  New IcedTea6 1.10 release:
+  http://blog.fuseyism.com/index.php/2011/03/02/icedtea6-110-released/
+
   17 Feb 2011; Vlastimil Babka <caster@gentoo.org>
   icedtea-6.1.7.10-r1.ebuild, icedtea-6.1.8.7-r1.ebuild,
   icedtea-6.1.9.7-r1.ebuild, +icedtea-7.1.13-r1.ebuild:
