@@ -17,7 +17,8 @@ RESTRICT="mirror"
 DEPEND="virtual/jdk:1.6"
 
 RDEPEND="virtual/jre:1.6
-	app-misc/tmux"
+	app-misc/tmux
+	sys-apps/openrc"
 
 S="${WORKDIR}"
 
