@@ -47,7 +47,7 @@ RDEPEND=">=net-print/cups-1.2.12
 	 >=x11-libs/libX11-1.1.3
 	 >=media-libs/freetype-2.3.5
 	 >=media-libs/alsa-lib-1.0
-	 >=x11-libs/gtk+-2.8
+	 >=x11-libs/gtk+-2.8:2
 	 >=x11-libs/libXinerama-1.0.2
 	 >=x11-libs/libXp-1.0.0
 	 >=x11-libs/libXi-1.1.3
