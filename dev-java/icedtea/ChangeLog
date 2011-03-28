@@ -2,6 +2,10 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  28 Mar 2011; Andrew John Hughes <andrew@gentoo.org> -icedtea-6.1.7.10.ebuild,
+  -icedtea-6.1.8.7.ebuild, -icedtea-6.1.9.7.ebuild, -icedtea-7.1.13.ebuild:
+  Remove old versions of ebuilds.
+
   05 Mar 2011; <caster@gentoo.org> metadata.xml:
   Update maintainer info from the main tree. Describe the hs20 and jamvm USE
   flags.
