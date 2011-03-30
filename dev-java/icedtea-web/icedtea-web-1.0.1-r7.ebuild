@@ -86,6 +86,11 @@ src_configure() {
 		|| die "configure failed"
 }
 
+src_compile() {
+	# we need this to override the src_compile from java-pkg-2
+	default
+}
+
 src_install() {
 	emake -j1 DESTDIR="${D}" install || die "Install failed"
 	dodoc AUTHORS README NEWS || die
