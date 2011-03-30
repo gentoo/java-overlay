@@ -4,6 +4,11 @@
 
   30 Mar 2011; Vlastimil Babka <caster@gentoo.org> icedtea-web-1.0.1.ebuild,
   icedtea-web-1.0.1-r7.ebuild:
+  Remove -j1 from src_install as there should be no problem now that
+  compilation is properly in src_compile.
+
+  30 Mar 2011; Vlastimil Babka <caster@gentoo.org> icedtea-web-1.0.1.ebuild,
+  icedtea-web-1.0.1-r7.ebuild:
   Add src_compile() phase to override the one from java-pkg-2.
 
   18 Feb 2011; Vlastimil Babka <caster@gentoo.org> icedtea-web-1.0.1.ebuild,
