@@ -274,6 +274,9 @@ src_install() {
 	# http://icedtea.classpath.org/bugzilla/show_bug.cgi?id=633
 	rm -fv man/man1/javaws.1 man/ja_JP.eucJP/man1/javaws.1
 
+	# Collides with icedtea-web, workaround until --disable-webstart works for icedtea7, bug #355849
+	rm -fv bin/javaws jre/bin/javaws
+
 	# doins can't handle symlinks.
 	cp -vRP bin include jre lib man "${ddest}" || die "failed to copy"
 
