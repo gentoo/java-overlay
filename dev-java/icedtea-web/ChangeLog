@@ -2,6 +2,15 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-web-1.0.2-r7 (04 Apr 2011)
+*icedtea-web-1.0.2 (04 Apr 2011)
+
+  04 Apr 2011; Andrew John Hughes <andrew@gentoo.org>
+  -icedtea-web-1.0.1.ebuild, -icedtea-web-1.0.1-r7.ebuild,
+  +icedtea-web-1.0.2.ebuild, +icedtea-web-1.0.2-r7.ebuild:
+  Bump to 1.0.2:
+  https://dbhole.wordpress.com/2011/04/04/icedtea-web-1-0-2-released/
+
   30 Mar 2011; Vlastimil Babka <caster@gentoo.org> icedtea-web-1.0.1.ebuild,
   icedtea-web-1.0.1-r7.ebuild:
   Remove -j1 from src_install as there should be no problem now that
