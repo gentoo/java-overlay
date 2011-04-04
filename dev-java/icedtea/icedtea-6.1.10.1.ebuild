@@ -24,9 +24,9 @@ OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.gz"
 JAXP_TARBALL="jaxp144_01.zip"
 JAXWS_TARBALL="jdk6-jaxws-b20.zip"
 JAF_TARBALL="jdk6-jaf-b20.zip"
-HOTSPOT_TARBALL="f46354849fb3.tar.gz"
-CACAO_TARBALL="6a5eda011e49.tar.gz"
-JAMVM_TARBALL="jamvm-30c4a6b93ffa385833360921bfc613829fb081c9.tar.gz"
+HOTSPOT_TARBALL="f0f676c5a2c6.tar.gz"
+CACAO_TARBALL="c7bf150bfa46.tar.gz"
+JAMVM_TARBALL="jamvm-a95ca049d3bb257d730535a5d5ec3f73a943d0aa.tar.gz"
 SRC_URI="http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
 		 http://download.java.net/openjdk/jdk6/promoted/b${OPENJDK_BUILD}/${OPENJDK_TARBALL}
 		 http://icedtea.classpath.org/download/drops/${JAXWS_TARBALL}
