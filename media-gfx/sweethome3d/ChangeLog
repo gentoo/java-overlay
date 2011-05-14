@@ -2,6 +2,11 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*sweethome3d-3.2 (14 May 2011)
+
+  14 May 2011; Miroslav Šulc <fordfrog@gentoo.org> +sweethome3d-3.2.ebuild:
+  Bumped to version 3.2
+
 *sweethome3d-3.1 (10 Mar 2011)
 
   10 Mar 2011; Miroslav Šulc <fordfrog@gentoo.org> +sweethome3d-3.1.ebuild:
