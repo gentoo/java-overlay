@@ -3,6 +3,10 @@
 # $Header: $
 
   26 May 2011; James Le Cuirot <chewi@aura-online.co.uk>
+  -minecraft-server-20110526.ebuild, +minecraft-server-20110526.2.ebuild:
+  Version bump to upstream version 1.6.2. I should be less hasty!
+
+  26 May 2011; James Le Cuirot <chewi@aura-online.co.uk>
   -minecraft-server-20110420.ebuild, +minecraft-server-20110526.ebuild:
   Version bump to upstream version 1.6.
 
