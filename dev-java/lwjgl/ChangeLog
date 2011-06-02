@@ -2,6 +2,12 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*lwjgl-2.7.1 (2 Jun 2011)
+
+  2 Jun 2011: James Le Cuirot <chewi@aura-online.co.uk>
+  +lwjgl-2.7.1.ebuild:
+  Version bump to 2.7.1. Seems to work with Minecraft.
+
   5 Feb 2011; James Le Cuirot <chewi@aura-online.co.uk>
   -lwjgl-2.4.2-r1.ebuild, lwjgl-2.6-r1.ebuild:
   Remove 2.4 now that 2.6 has been confirmed to work better with Minecraft. I
@@ -9,10 +15,16 @@
   call to "uname" so now we just build it manually instead, avoiding that and
   all the other issues.
 
+*lwjgl-2.4.2-r1 (30 Dec 2010)
+*lwjgl-2.6-r1 (30 Dec 2010)
+
   30 Dec 2010; James Le Cuirot <chewi@aura-online.co.uk>
   -lwjgl-2.4.2.ebuild, -lwjgl-2.6.ebuild, +lwjgl-2.4.2-r1.ebuild,
   +lwjgl-2.6-r1.ebuild:
   The xrandr application is required at run-time, as well as libXrandr.
+
+*lwjgl-2.4.2 (19 Dec 2010)
+*lwjgl-2.6 (19 Dec 2010)
 
   19 Dec 2010; James Le Cuirot <chewi@aura-online.co.uk>
   +lwjgl-2.4.2.ebuild, +lwjgl-2.6.ebuild:
