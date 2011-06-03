@@ -1,0 +1,9 @@
+# ChangeLog for dev-java/htmlcleaner
+# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*htmlcleaner-2.2 (3 Jun 2011)
+
+  3 Jun 2011: James Le Cuirot <chewi@aura-online.co.uk>
+  +htmlcleaner-2.2.ebuild:
+  Initial import. Required by davmail. All tests passing.
