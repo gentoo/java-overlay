@@ -20,11 +20,11 @@ CDEPEND="dev-java/relaxng-datatype:0
 	dev-java/xerces:2"
 
 RDEPEND="${CDEPEND}
-	>=virtual/jre-1.5"
+	>=virtual/jre-1.4"
 
 DEPEND="${CDEPEND}
 	app-arch/unzip
-	>=virtual/jdk-1.5"
+	>=virtual/jdk-1.4"
 
 S="${WORKDIR}/${P}"
 
