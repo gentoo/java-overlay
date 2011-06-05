@@ -1,0 +1,11 @@
+# ChangeLog for dev-java/stax2-api
+# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*stax2-api-3.1.1 (5 Jun 2011)
+
+  5 Jun 2011; James Le Cuirot <chewi@aura-online.co.uk>
+  +stax2-api-3.1.1.ebuild:
+  Initial import. Required by wstx-4.1 and davmail. Used to be packaged
+  together with wstx but upstream indicates some degree of separation.
+  Also some packages, including davmail, require stax2-api but not wstx.
