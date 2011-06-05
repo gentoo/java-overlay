@@ -2,6 +2,13 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*minecraft-20110223-r2 (5 Jun 2011)
+
+  5 Jun 2011; James Le Cuirot <chewi@aura-online.co.uk>
+  -minecraft-20110223-r1.ebuild, +minecraft-20110223-r2.ebuild:
+  Create a dummy lwjgl.jar to fool MCPatcher. Not sure why it checks for this
+  but the trick seems to work.
+
 *minecraft-20110223-r1 (2 Jun 2011)
 
   2 Jun 2011; James Le Cuirot <chewi@aura-online.co.uk>

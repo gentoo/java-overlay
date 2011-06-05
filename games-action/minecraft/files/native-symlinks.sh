@@ -18,3 +18,6 @@ ln -snf liblwjgl.so "${NATIVES}"/liblwjgl64.so
 
 chmod a-w "${NATIVES}"
 
+# Create a dummy lwjgl.jar to fool MCPatcher.
+touch "${HOME}/.minecraft/bin/lwjgl.jar"
+
