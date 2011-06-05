@@ -58,10 +58,9 @@ src_test() {
 	local CP="${DIR}:${JAR}:$(java-pkg_getjars junit-4,${EANT_GENTOO_CLASSPATH})"
 	ejavac -classpath "${CP}" -d "${DIR}" $(find "${DIR}" -name "*.java")
 
-	local TEST; for TEST in src/test/java/org/htmlcleaner/*Test.java; do
-		TEST="${TEST#src/test/java/}"
-		TEST="${TEST%.java}"
-		TEST="${TEST//\//.}"
-		ejunit4 -classpath "${CP}" "${TEST}"
-	done
+	local TESTS=$(find "${DIR}" -name *Test.java)
+	TESTS="${TESTS//src\/test\/java\/}"
+	TESTS="${TESTS//.java}"
+	TESTS="${TESTS//\//.}"
+	ejunit4 -classpath "${CP}" ${TESTS}
 }
