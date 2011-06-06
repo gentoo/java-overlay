@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+WSTX_PV="4.1.1"
 JAVA_PKG_IUSE="doc source"
 
 EAPI="1"
@@ -9,7 +10,7 @@ inherit java-pkg-2 java-pkg-simple
 
 DESCRIPTION="Experimental extended Stax API, used by Woodstox"
 HOMEPAGE="http://woodstox.codehaus.org/"
-SRC_URI="http://woodstox.codehaus.org/${PV}/${PN}-src-${PV}.tar.gz"
+SRC_URI="http://woodstox.codehaus.org/${WSTX_PV}/${PN}-src-${PV}.tar.gz"
 
 LICENSE="Apache-2.0 LGPL-2.1"
 SLOT="0"
