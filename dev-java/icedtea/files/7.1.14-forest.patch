@@ -1,0 +1,11 @@
+--- Makefile.am~	2011-06-08 13:53:25.000000000 +0100
++++ Makefile.am	2011-06-08 13:54:51.000000000 +0100
+@@ -40,7 +40,7 @@
+ JAXP_DROP_ZIP = jaxp-1_4_5-dev1.zip
+ JAXP_DROP_SHA256SUM = 050cba755c2632dc5ec5ffcdb17f2f4d36a018306c357fdd5c8996d877954de5
+ 
+-ICEDTEA_PREFIX = icedtea7-forest
++ICEDTEA_PREFIX = jdk7
+ ICEDTEA_HG_URL = http://icedtea.classpath.org/hg/$(ICEDTEA_PREFIX)
+ OPENJDK_HG_URL = http://hg.openjdk.java.net/jdk7/jdk7
+ CVMI_HG_URL = http://hg.openjdk.java.net/cvmi/cvmi/
