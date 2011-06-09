@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -16,5 +16,12 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 DEPEND=">=virtual/jdk-1.4 ${DEP}"
 RDEPEND=">=virtual/jre-1.4 ${DEP}"
+
+src_unpack() {
+	java-maven-2_src_unpack
+	cd "${S}" || die
+	einfo "Fixing ebuild"
+	sed -i -e '/refid="build.classpath"/d' build.xml
+}
 
 

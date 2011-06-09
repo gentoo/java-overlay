@@ -1,6 +1,10 @@
-# ChangeLog for dev-java/plexus-utils
-# Copyright 1999-2007 Gentoo Foundation; Distributed under the GPL v2
+# ChangeLog for dev-java/plexus-classworlds
+# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  09 Jun 2011; Alistair Bush <ali_bush@gentoo.org>
+  plexus-classworlds-1.2.ebuild:
+  Fix build.
 
   29 May 2007; kiorky <kiorky@cryptelium.net> plexus-classworlds-1.2.ebuild:
   Adding maven bootstrap flag
