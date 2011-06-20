@@ -2,6 +2,11 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  20 Jun 2011; Vlastimil Babka <caster@gentoo.org> icedtea-web-1.1.ebuild,
+  icedtea-web-1.1-r7.ebuild:
+  Add 'build' USE flag for building icedtea-web for icedtea6-bin. Disable
+  parallel make install until bug #372235 is resolved.
+
   13 Jun 2011; Vlastimil Babka <caster@gentoo.org> +icedtea-web-1.1.ebuild,
   +icedtea-web-1.1-r7.ebuild:
   Version bump, security bug #370787.

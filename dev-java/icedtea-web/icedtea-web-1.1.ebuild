@@ -15,7 +15,7 @@ DESCRIPTION="FOSS Java browser plugin and Web Start implementation"
 SRC_URI="http://icedtea.classpath.org/download/source/${P}.tar.gz"
 HOMEPAGE="http://icedtea.classpath.org"
 
-IUSE="doc +nsplugin"
+IUSE="build doc +nsplugin"
 
 RDEPEND="dev-java/icedtea:${SLOT}
 	 nsplugin? ( >=net-libs/xulrunner-1.9.1 )"
@@ -62,18 +62,25 @@ src_unpack() {
 
 src_configure() {
 	local vmhome=$(java-config -O)
-	icedteadir="/usr/$(get_libdir)/icedtea${SLOT}"
+
+	if use build; then
+		icedteadir="${ICEDTEA_BIN_DIR}"
+		installdir="/opt/icedtea${SLOT}-web-bin"
+	else
+		icedteadir="/usr/$(get_libdir)/icedtea${SLOT}"
+		installdir="/usr/$(get_libdir)/icedtea${SLOT}-web"
+	fi
 
 	unset_vars
 
-	if [[ ${vmhome} == ${icedteadir} ]] ; then
-		installdir="/usr/$(get_libdir)/icedtea${SLOT}-web"
+	if use build || [[ ${vmhome} == ${icedteadir} ]] ; then
 		VMHANDLE="icedtea${SLOT}"
 	else
 		die "Unexpected install location of IcedTea${SLOT}"
 	fi
 
-	elog "Installing IcedTea-Web in ${installdir}"
+	einfo "Installing IcedTea-Web in ${installdir}"
+	einfo "Installing IcedTea-Web for Icedtea${SLOT} in ${icedteadir}"
 	if [ ! -e ${vmhome} ] ; then
 		eerror "Could not find JDK install directory ${vmhome}."
 		die
@@ -84,7 +91,7 @@ src_configure() {
 	# the suffix the man page will end up compressed with, anyway
 	econf \
 		--prefix=${installdir} --mandir=${icedteadir}/man --infodir=${installdir}/share/info --datadir=${installdir}/share \
-		--with-jdk-home=${vmhome} \
+		--with-jdk-home=${icedteadir} \
 		$(use_enable doc docs) \
 		$(use_enable nsplugin plugin) \
 		|| die "configure failed"
@@ -96,7 +103,8 @@ src_compile() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" install || die "Install failed"
+	# parallel make problem bug #372235
+	emake -j1 DESTDIR="${D}" install || die "Install failed"
 	dodoc AUTHORS README NEWS || die
 
 	if use nsplugin; then
