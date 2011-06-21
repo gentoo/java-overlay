@@ -23,7 +23,7 @@ diff -Nru icedtea6-1.10.2.orig/patches/linux_version.patch icedtea6-1.10.2/patch
 + # Disable this check by setting DISABLE_HOTSPOT_OS_VERSION_CHECK=ok.
 + 
 +-SUPPORTED_OS_VERSION = 2.4% 2.5% 2.6% 2.7%
-++SUPPORTED_OS_VERSION = 2.4% 2.5% 2.6% 3.0%
+++SUPPORTED_OS_VERSION = 2.4% 2.5% 2.6% 3%
 + OS_VERSION := $(shell uname -r)
 + EMPTY_IF_NOT_SUPPORTED = $(filter $(SUPPORTED_OS_VERSION),$(OS_VERSION))
 + 

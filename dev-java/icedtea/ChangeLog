@@ -2,6 +2,10 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  21 Jun 2011; Andrew John Hughes <andrew@gentoo.org>
+  files/6.1.10.2-371405-linux_version.patch:
+  Match any kernel version beginning with 3 rather than just 3.0*.
+
   13 Jun 2011; Andrew John Hughes <andrew@gentoo.org> icedtea-6.1.10.2.ebuild,
   +files/6.1.10.2-371405-linux_version.patch:
   Fix Bug #371405 so IcedTea6 1.10.2 can be built on Linux 3.0.
