@@ -2,6 +2,10 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  30 Jun 2011; James Le Cuirot <chewi@aura-online.co.uk>
+  -minecraft-server-20110531.ebuild, +minecraft-server-20110630.ebuild:
+  Version bump to upstream version 1.7_01.
+
   1 Jun 2011; James Le Cuirot <chewi@aura-online.co.uk>
   -minecraft-server-20110526.4.ebuild, +minecraft-server-20110531.ebuild:
   Version bump to upstream version 1.6.6.
