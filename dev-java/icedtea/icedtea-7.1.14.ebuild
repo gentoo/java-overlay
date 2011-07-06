@@ -64,6 +64,7 @@ RDEPEND=">=net-print/cups-1.2.12
 	 virtual/jpeg
 	 >=media-libs/libpng-1.2
 	 >=media-libs/giflib-4.1.6
+	 >=media-libs/lcms-2.2
 	 >=sys-libs/zlib-1.2.3
 	 x11-proto/inputproto
 	 x11-proto/xineramaproto
@@ -76,7 +77,6 @@ RDEPEND=">=net-print/cups-1.2.12
 
 # Additional dependencies for building:
 #   zip: extract OpenJDK tarball, and needed by configure
-#   xalan/xerces: automatic code generation
 #   ant, ecj, jdk: required to build Java code
 # Only ant-core-1.7.1-r2 and later contain a version of Ant that
 # properly respects environment variables, if the build
@@ -94,8 +94,7 @@ DEPEND="${RDEPEND}
 		dev-java/icedtea6
 	)
 	app-arch/zip
-	>=dev-java/xalan-2.7.0:0
-	>=dev-java/xerces-2.9.1:2
+	>=dev-libs/libxslt-1.1.26
 	>=dev-java/ant-core-1.7.1-r2
 	dev-java/ant-nodeps
 	app-misc/ca-certificates

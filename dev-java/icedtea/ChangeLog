@@ -2,6 +2,9 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  06 Jul 2011; Andrew John Hughes <andrew@gentoo.org> icedtea-7.1.14.ebuild:
+  Update dependencies to include lcms2 and replace xalan/xerces with libxslt.
+
   21 Jun 2011; Andrew John Hughes <andrew@gentoo.org>
   files/6.1.10.2-371405-linux_version.patch:
   Match any kernel version beginning with 3 rather than just 3.0*.
