@@ -2,6 +2,13 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*minecraft-20110223-r3 (11 Jul 2011)
+
+  11 Jul 2011; James Le Cuirot <chewi@aura-online.co.uk>
+  -minecraft-20110223-r2.ebuild, +minecraft-20110223-r3.ebuild:
+  Make -Djava.net.preferIPv4Stack=true optional as the game officially
+  supports IPv6 now. Thanks to xmw.
+
 *minecraft-20110223-r2 (5 Jun 2011)
 
   5 Jun 2011; James Le Cuirot <chewi@aura-online.co.uk>

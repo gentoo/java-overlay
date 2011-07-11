@@ -11,7 +11,7 @@ SRC_URI="http://www.minecraft.net/download/minecraft.jar -> $P.jar"
 LICENSE="as-is"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="ipv6"
 RESTRICT="mirror"
 
 # lwjgl 2.4 is used by upstream but we're using 2.6+ because of reports
@@ -50,10 +50,13 @@ src_install() {
 	java-pkg_register-dependency jinput,lwjgl-2.7
 	java-pkg_dojar "${PN}.jar"
 
+	local ARGS
+	use ipv6 || ARGS="-Djava.net.preferIPv4Stack=true"
+
 	# Launching with -jar seems to create classpath problems.
 	java-pkg_dolauncher "${PN}" -into "${GAMES_PREFIX}" \
 		-pre "${FILESDIR}/native-symlinks.sh" \
-		--java_args "-Xmx1024M -Xms512M -Djava.net.preferIPv4Stack=true" \
+		--java_args "-Xmx1024M -Xms512M ${ARGS}" \
 		--main net.minecraft.MinecraftLauncher
 
 	doicon "${FILESDIR}/${PN}.png" || die
