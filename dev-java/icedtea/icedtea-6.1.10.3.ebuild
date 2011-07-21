@@ -9,7 +9,7 @@
 
 EAPI="2"
 
-inherit autotools pax-utils java-pkg-2 java-vm-2 versionator
+inherit pax-utils java-pkg-2 java-vm-2 versionator
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="6"
@@ -170,11 +170,6 @@ src_unpack() {
 
 unset_vars() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
-}
-
-src_prepare() {
-	epatch "${FILESDIR}/${PV}-371405-linux_version.patch"
-	eautoreconf
 }
 
 src_configure() {
