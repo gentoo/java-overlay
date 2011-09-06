@@ -1,6 +1,11 @@
 # ChangeLog for dev-java/swt
-# Copyright 2002-2008 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 2002-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  06 Sep 2011; Vlastimil Babka <caster@gentoo.org> +swt-3.3.1.1-r1.ebuild,
+  +files/swt-3.3-manifest, +files/as-needed-and-flag-fixes.patch:
+  Move swt:3 from tree, as only some overlay ebuilds now depend on it. Remove
+  firefox and xulrunner flags from it due to deps gone.
 
 *swt-3.4.1 (29 Sep 2008)
 
