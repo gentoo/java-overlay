@@ -1,0 +1,38 @@
+From 7544a3364642a820737ba8d943e8deb2e39b6aa6 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Micha=C5=82=20G=C3=B3rny?= <mgorny@gentoo.org>
+Date: Mon, 5 Sep 2011 00:26:38 +0200
+Subject: [PATCH] Support using NPAPI-SDK headers instead of whole xulrunner.
+
+The first NPAPI-SDK header package with npapi-sdk.pc comes with libxul 2.0
+headers, thus hardcoded that version into it. But the code should be modified
+to use NPAPI versioning rather than Mozilla one. Or just drop compat with
+ancient versions.
+---
+ acinclude.m4 |   11 +++++++++--
+ 1 files changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/acinclude.m4 b/acinclude.m4
+index 3c3803b..58482f1 100644
+--- a/acinclude.m4
++++ b/acinclude.m4
+@@ -346,8 +346,15 @@ if test "x${enable_plugin}" = "xyes" ; then
+   AC_SUBST(GTK_CFLAGS)
+   AC_SUBST(GTK_LIBS)
+ 
+-  PKG_CHECK_MODULES(MOZILLA, mozilla-plugin)
+-    
++  PKG_CHECK_MODULES(MOZILLA, npapi-sdk, [
++    AC_CACHE_CHECK([for xulrunner version], [xulrunner_cv_collapsed_version],[
++      # XXX: use NPAPI versions instead
++      xulrunner_cv_collapsed_version=20000000
++    ])
++  ], [
++    PKG_CHECK_MODULES(MOZILLA, mozilla-plugin)
++  ])
++
+   AC_SUBST(MOZILLA_CFLAGS)
+   AC_SUBST(MOZILLA_LIBS)
+ fi
+-- 
+1.7.6.1
+

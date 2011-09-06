@@ -2,6 +2,15 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  06 Sep 2011; Vlastimil Babka <caster@gentoo.org> icedtea-web-1.0.4.ebuild,
+  icedtea-web-1.0.4-r7.ebuild,
+  +files/0001-Support-using-NPAPI-SDK-headers-instead-of-whole-xul.patch,
+  icedtea-web-1.1.1.ebuild, icedtea-web-1.1.1-r7.ebuild,
+  +icedtea-web-1.1.2.ebuild, +icedtea-web-1.1.2-r7.ebuild:
+  Version bump. Support building against npapi-sdk instead of xulrunner, bug
+  #381957. Also remove xulrunner from RDEPEND in all older versions, bug
+  #381147.
+
 *icedtea-web-1.1.1-r7 (20 Jul 2011)
 *icedtea-web-1.1.1 (20 Jul 2011)
 *icedtea-web-1.0.4-r7 (20 Jul 2011)

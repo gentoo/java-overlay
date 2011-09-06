@@ -5,10 +5,10 @@
 
 EAPI="2"
 
-inherit eutils java-pkg-2 java-vm-2
+inherit autotools eutils java-pkg-2 java-vm-2
 
 LICENSE="GPL-2 GPL-2-with-linking-exception LGPL-2"
-SLOT="7"
+SLOT="6"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
 DESCRIPTION="FOSS Java browser plugin and Web Start implementation"
@@ -19,7 +19,9 @@ IUSE="build doc +nsplugin"
 
 RDEPEND="dev-java/icedtea:${SLOT}"
 DEPEND="${RDEPEND}
-	 nsplugin? ( >=net-libs/xulrunner-1.9.1 )"
+	nsplugin? (
+		|| ( net-misc/npapi-sdk
+			>=net-libs/xulrunner-1.9.1 ) )"
 
 # a bit of hack so the VM switching is triggered without causing dependency troubles
 JAVA_PKG_NV_DEPEND=">=virtual/jdk-1.6"
@@ -58,6 +60,11 @@ src_unpack() {
 	fi
 
 	default
+}
+
+src_prepare() {
+	epatch "${FILESDIR}"/0001-Support-using-NPAPI-SDK-headers-instead-of-whole-xul.patch
+	eautoreconf
 }
 
 src_configure() {

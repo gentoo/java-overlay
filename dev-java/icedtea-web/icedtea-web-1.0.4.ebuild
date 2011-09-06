@@ -17,9 +17,9 @@ HOMEPAGE="http://icedtea.classpath.org"
 
 IUSE="doc +nsplugin"
 
-RDEPEND="dev-java/icedtea:6
+RDEPEND="dev-java/icedtea:6"
+DEPEND="${RDEPEND}
 	 nsplugin? ( >=net-libs/xulrunner-1.9.1 )"
-DEPEND="${RDEPEND}"
 
 # a bit of hack so the VM switching is triggered without causing dependency troubles
 JAVA_PKG_NV_DEPEND=">=virtual/jdk-1.6"
