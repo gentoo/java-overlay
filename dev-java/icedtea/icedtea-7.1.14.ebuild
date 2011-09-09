@@ -13,7 +13,7 @@ inherit autotools flag-o-matic java-pkg-2 java-vm-2 pax-utils versionator
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="7"
-#KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
+KEYWORDS="~amd64"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 ICEDTEA_VER="$(get_version_component_range 2-3)"

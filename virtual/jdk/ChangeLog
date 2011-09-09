@@ -2,6 +2,11 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*jdk-1.7.0 (09 Sep 2011)
+
+  09 Sep 2011; Andrew John Hughes <andrew@gentoo.org> +jdk-1.7.0.ebuild:
+  Add a version of jdk 1.7 which allows IcedTea7 to be used.
+
   13 Feb 2011; Vlastimil Babka <caster@gentoo.org> -jdk-1.6.0-r2.ebuild:
   Remove the 1.6 ebuild, as it's outdated and the one in main tree supports
   everything needed.
