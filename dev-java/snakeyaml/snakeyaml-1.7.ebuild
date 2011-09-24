@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-CDEPEND="dev-java/gdata"
+CDEPEND="dev-java/gdata:0"
 
 DEPEND="${CDEPEND}
 	>=virtual/jdk-1.5"
