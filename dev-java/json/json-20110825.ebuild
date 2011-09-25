@@ -24,7 +24,7 @@ RDEPEND=">=virtual/jre-1.4"
 S="${WORKDIR}/douglascrockford-JSON-java-${COMMIT}"
 JAVA_SRC_DIR="src"
 
-src_prepare() {
+java_prepare() {
 	chmod a-x *.java || die
 	mkdir -p src test || die
 	cd src || die
