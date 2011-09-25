@@ -1,9 +1,17 @@
 # ChangeLog for dev-java/json
-# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+*json-20110825 (25 Sep 2011)
+
+  25 Sep 2011; James Le Cuirot <chewi@aura-online.co.uk>
+  -json-20080426.ebuild, -files/build.xml, +json-20110825.ebuild:
+  Version bump, SRC_URI change and rewrite using java-pkg-simple with tests.
 
   03 Feb 2009; Alistair Bush <ali_bush@gentoo.org> Manifest:
   Fixed manifest.
+
+*json-20080426 (22 Jan 2009)
 
   22 Jan 2009; Alistair Bush <ali_bush@gentoo.org> json-20080426.ebuild:
   QA Fixes.
