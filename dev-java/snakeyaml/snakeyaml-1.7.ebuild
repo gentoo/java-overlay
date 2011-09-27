@@ -26,7 +26,7 @@ RDEPEND="${CDEPEND}
 S="${WORKDIR}/${PN}"
 JAVA_SRC_DIR="src/main/java"
 
-src_prepare() {
+java_prepare() {
 	# Remove bundled stuff.
 	rm -r target "${JAVA_SRC_DIR}/com" || die
 }
