@@ -2,6 +2,9 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  29 Sep 2011; Miroslav Šulc <fordfrog@gentoo.org> icedtea-7.2.0_pre.ebuild:
+  Fixed issue with sandbox access violation
+
   29 Sep 2011; Andrew John Hughes <andrew@gentoo.org> icedtea-7.2.0_pre.ebuild:
   Temporarily disable bootstrapping with IcedTea7 until fixed.
 

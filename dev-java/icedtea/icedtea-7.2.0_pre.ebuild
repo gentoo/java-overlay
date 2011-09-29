@@ -160,6 +160,9 @@ pkg_setup() {
 		java-pkg-2_pkg_setup
 	fi
 
+	# without this, access violation is thrown
+	addpredict "/proc/self/coredump_filter"
+
 	VMHANDLE="icedtea${SLOT}"
 }
 
