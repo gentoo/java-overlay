@@ -1,6 +1,9 @@
-# ChangeLog for dev-java/findbugs
+# ChangeLog for dev-util/findbugs
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  29 Sep 2011; Ralph Sennhauser <gentoo.sera@bluewin.ch> findbugs-0.8.4.ebuild:
+  Adjust category to match the one in main tree
 
   29 Sep 2011; Ralph Sennhauser <gentoo.sera@bluewin.ch>
   -findbugs-1.1.3.ebuild, -findbugs-1.2.1.ebuild, -findbugs-1.3.0.ebuild,

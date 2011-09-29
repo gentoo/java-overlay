@@ -1,8 +1,10 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI=4
 WANT_ANT_TASKS="ant-nodeps"
+
 inherit java-pkg-2 java-ant-2
 
 DESCRIPTION="Find Bugs in Java Programs"
@@ -21,6 +23,7 @@ RDEPEND="dev-java/apple-java-extensions-bin
 		>=virtual/jre-1.5"
 
 DEPEND=">=virtual/jdk-1.5
+		!!dev-java/findbugs
 		app-arch/unzip
 		source? ( app-arch/zip )
 		${RDEPEND}"
