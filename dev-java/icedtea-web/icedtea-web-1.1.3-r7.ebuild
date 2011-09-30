@@ -48,6 +48,9 @@ pkg_setup() {
 		java-vm-2_pkg_setup
 		java-pkg-2_pkg_setup
 	fi
+
+	# without this sandbox access violation occurs
+	addpredict /proc/self/coredump_filter
 }
 
 unset_vars() {
