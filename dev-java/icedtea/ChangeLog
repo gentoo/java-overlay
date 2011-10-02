@@ -2,6 +2,13 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  30 Sep 2011; Andrew John Hughes <andrew@gentoo.org>
+  +files/7.2.0_pre-bytecode_check.patch, -files/7.1.13-alsa-sane-headers.patch,
+  -files/7.1.14-checksums.patch, icedtea-7.2.0_pre.ebuild,
+  -files/7.1.14-forest.patch:
+  Fix bootstrap build with IcedTea7 by detecting level of bytecode supported
+  before applying patches.
+
   29 Sep 2011; Miroslav Šulc <fordfrog@gentoo.org> icedtea-7.2.0_pre.ebuild:
   Fixed issue with sandbox access violation
 

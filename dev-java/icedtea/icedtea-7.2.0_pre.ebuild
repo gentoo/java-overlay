@@ -19,12 +19,13 @@ DESCRIPTION="A harness to build OpenJDK using Free Software build tools and depe
 ICEDTEA_VER="$(get_version_component_range 2-3)"
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}pre
 OPENJDK_TARBALL="3defd24c2671.tar.gz"
-LANGTOOLS_TARBALL="fb7fb3071b64.tar.gz"
-JAXP_TARBALL="b8d01501956a.tar.gz"
-JAXWS_TARBALL="e6cd09c7ef22.tar.gz"
-CORBA_TARBALL="d034cc90ecc2.tar.gz"
-JDK_TARBALL="7ec1845521ed.tar.gz"
-HOTSPOT_TARBALL="7693eb0fce1f.tar.gz"
+CORBA_TARBALL="953de8c7bccb.tar.gz"
+HOTSPOT_TARBALL="b28ae681bae0.tar.gz"
+JAXP_TARBALL="948e734135ea.tar.gz"
+JAXWS_TARBALL="5d3734549424.tar.gz"
+JDK_TARBALL="d9fca71ba183.tar.gz"
+LANGTOOLS_TARBALL="9b85f1265346.tar.gz"
+OPENJDK_TARBALL="0a76e5390e68.tar.gz"
 CACAO_TARBALL="d6264eb66506.tar.bz2"
 JAMVM_TARBALL="310c491ddc14e92a6ffff27030a1a1821e6395a8.tar.gz"
 SRC_URI="http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
@@ -69,7 +70,7 @@ RDEPEND=">=net-print/cups-1.2.12
 	 systemtap? ( >=dev-util/systemtap-1 )
 	 !dev-java/icedtea:0
 	 sys-apps/attr
-	 >=dev-libs/glib-2.15
+	 >=dev-libs/glib-2.26
 	 media-libs/fontconfig"
 
 # Additional dependencies for building:
@@ -177,11 +178,17 @@ unset_vars() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 }
 
+src_prepare() {
+	epatch "${FILESDIR}/${PV}-bytecode_check.patch"
+	epatch "${FILESDIR}/${PV}-no_werror.patch"
+	eautoreconf
+}
+
 src_configure() {
 	local config procs rhino_jar
 	local vm=$(java-pkg_get-current-vm)
 
-	if [[ "${vm}" == "icedtea6" || "${vm}" == "icedtea" ]] || [[ "${vm}" == "icedtea6-bin" ]] || [[ "${vm}" == "icedtea7" ]]; then
+	if [[ "${vm}" == "icedtea6" || "${vm}" == "icedtea" ]] || [[ "${vm}" == "icedtea6-bin" ]] ; then
 		# We can't currently bootstrap with a IcedTea6 JVM :(
 		config="${config} --disable-bootstrap"
 	elif [[ "${vm}" != "gcj-jdk" && "${vm}" != "cacao" && "${vm}" != "icedtea7" ]] ; then
