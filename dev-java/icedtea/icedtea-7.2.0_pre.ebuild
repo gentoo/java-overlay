@@ -26,7 +26,7 @@ JAXWS_TARBALL="5d3734549424.tar.gz"
 JDK_TARBALL="d9fca71ba183.tar.gz"
 LANGTOOLS_TARBALL="9b85f1265346.tar.gz"
 OPENJDK_TARBALL="0a76e5390e68.tar.gz"
-CACAO_TARBALL="d6264eb66506.tar.bz2"
+CACAO_TARBALL="4549072ab2de.tar.gz"
 JAMVM_TARBALL="310c491ddc14e92a6ffff27030a1a1821e6395a8.tar.gz"
 SRC_URI="http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
 		 http://icedtea.classpath.org/hg/icedtea7-forest/archive/${OPENJDK_TARBALL}
@@ -36,7 +36,7 @@ SRC_URI="http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
 		 http://icedtea.classpath.org/hg/icedtea7-forest/jdk/archive/${JDK_TARBALL}
 		 http://icedtea.classpath.org/hg/icedtea7-forest/hotspot/archive/${HOTSPOT_TARBALL}
 		 http://icedtea.classpath.org/hg/icedtea7-forest/langtools/archive/${LANGTOOLS_TARBALL}
-		 cacao? ( http://mips.complang.tuwien.ac.at/hg/cacao/archive/${CACAO_TARBALL} )
+		 cacao? ( http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL} )
 		 jamvm? ( http://icedtea.classpath.org/download/drops/jamvm/jamvm-${JAMVM_TARBALL} )"
 HOMEPAGE="http://icedtea.classpath.org"
 S=${WORKDIR}/${ICEDTEA_PKG}
@@ -181,6 +181,10 @@ unset_vars() {
 src_prepare() {
 	epatch "${FILESDIR}/${PV}-bytecode_check.patch"
 	epatch "${FILESDIR}/${PV}-no_werror.patch"
+	epatch "${FILESDIR}/${PV}-cacao-01.patch"
+	epatch "${FILESDIR}/${PV}-cacao-02.patch"
+	epatch "${FILESDIR}/${PV}-cacao-03.patch"
+	epatch "${FILESDIR}/${PV}-cacao-04.patch"
 	eautoreconf
 }
 

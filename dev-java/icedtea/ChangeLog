@@ -2,6 +2,12 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  04 Oct 2011; Andrew John Hughes <andrew@gentoo.org>
+  +files/7.2.0_pre-cacao-01.patch, +files/7.2.0_pre-cacao-02.patch,
+  +files/7.2.0_pre-cacao-03.patch, +files/7.2.0_pre-cacao-04.patch,
+  icedtea-7.2.0_pre.ebuild:
+  Apply recent CACAO fixes to fix build issues.
+
   30 Sep 2011; Andrew John Hughes <andrew@gentoo.org>
   +files/7.2.0_pre-bytecode_check.patch, -files/7.1.13-alsa-sane-headers.patch,
   -files/7.1.14-checksums.patch, icedtea-7.2.0_pre.ebuild,

@@ -1,0 +1,36 @@
+# HG changeset patch
+# User Andrew John Hughes <ahughes@redhat.com>
+# Date 1317353626 -3600
+# Node ID 875cada723d75edfc9b26973ac71a7317d39ee49
+# Parent  a71fd980ed7e6a36214ad051559336ff74b246a9
+Use tar.gz rather than tar.bz2 for bundle as with IcedTea6.
+
+2010-11-11  Stefan Ring  <stefan@complang.tuwien.ac.at>
+
+	* Makefile.am: Upgrade CACAO version,
+	use .tar.gz archive
+
+diff -r a71fd980ed7e -r 875cada723d7 ChangeLog
+--- a/ChangeLog	Fri Sep 30 04:30:26 2011 +0100
++++ b/ChangeLog	Fri Sep 30 04:33:46 2011 +0100
+@@ -1,3 +1,8 @@
++2010-11-11  Stefan Ring  <stefan@complang.tuwien.ac.at>
++
++	* Makefile.am: Upgrade CACAO version,
++	use .tar.gz archive
++
+ 2011-08-30  Xerxes Rånby  <xerxes@zafena.se>
+ 
+ 	CACAO
+diff -r a71fd980ed7e -r 875cada723d7 Makefile.am
+--- a/Makefile.am	Fri Sep 30 04:30:26 2011 +0100
++++ b/Makefile.am	Fri Sep 30 04:33:46 2011 +0100
+@@ -22,7 +22,7 @@
+ CACAO_SHA256SUM = ec097ce96f047abbaeab4faab752c121d29f08bdeae358038a0b7cde03361d07
+ CACAO_BASE_URL = http://icedtea.classpath.org/download/drops/cacao
+ CACAO_URL = $(CACAO_BASE_URL)/$(CACAO_VERSION).tar.gz
+-CACAO_SRC_ZIP = cacao-$(CACAO_VERSION).tar.bz2
++CACAO_SRC_ZIP = cacao-$(CACAO_VERSION).tar.gz
+ 
+ JAMVM_VERSION = 310c491ddc14e92a6ffff27030a1a1821e6395a8
+ JAMVM_SHA256SUM = b5174f59371017087139fd43d51074ad837ae29340220206ca06769c8329881a
