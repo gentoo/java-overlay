@@ -178,16 +178,6 @@ unset_vars() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 }
 
-src_prepare() {
-	epatch "${FILESDIR}/${PV}-bytecode_check.patch"
-	epatch "${FILESDIR}/${PV}-no_werror.patch"
-	epatch "${FILESDIR}/${PV}-cacao-01.patch"
-	epatch "${FILESDIR}/${PV}-cacao-02.patch"
-	epatch "${FILESDIR}/${PV}-cacao-03.patch"
-	epatch "${FILESDIR}/${PV}-cacao-04.patch"
-	eautoreconf
-}
-
 src_configure() {
 	local config procs rhino_jar
 	local vm=$(java-pkg_get-current-vm)
