@@ -2,6 +2,9 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  19 Oct 2011; Miroslav Šulc <fordfrog@gentoo.org> -sweethome3d-3.3.ebuild:
+  Removed ebuild depending on dev-java/netx
+
   09 Sep 2011; Vlastimil Babka <caster@gentoo.org>
   +sweethome3d-3.3-r1.ebuild:
   Switch JNLP dep once again, bug #382351.
