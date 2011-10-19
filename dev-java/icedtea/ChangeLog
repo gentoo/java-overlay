@@ -2,6 +2,16 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.10.4 (19 Oct 2011)
+*icedtea-6.1.9.10 (19 Oct 2011)
+*icedtea-6.1.8.10 (19 Oct 2011)
+
+  19 Oct 2011; Andrew John Hughes <andrew@gentoo.org> -icedtea-6.1.8.9.ebuild,
+  +icedtea-6.1.8.10.ebuild, -icedtea-6.1.9.9.ebuild, +icedtea-6.1.9.10.ebuild,
+  -icedtea-6.1.10.3.ebuild, +icedtea-6.1.10.4.ebuild:
+  Security update:
+  http://blog.fuseyism.com/index.php/2011/10/18/security-icedtea6-1-8-10-1-9-10-and-1-10-4-released/
+
   04 Oct 2011; Andrew John Hughes <andrew@gentoo.org>
   +files/7.2.0_pre-cacao-01.patch, +files/7.2.0_pre-cacao-02.patch,
   +files/7.2.0_pre-cacao-03.patch, +files/7.2.0_pre-cacao-04.patch,
