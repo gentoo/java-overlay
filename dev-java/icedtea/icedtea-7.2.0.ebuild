@@ -17,33 +17,31 @@ KEYWORDS="~amd64"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 ICEDTEA_VER="$(get_version_component_range 2-3)"
-ICEDTEA_PKG=icedtea-${ICEDTEA_VER}pre
-OPENJDK_TARBALL="3defd24c2671.tar.gz"
-CORBA_TARBALL="953de8c7bccb.tar.gz"
+ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
+OPENJDK_TARBALL="0a76e5390e68.tar.gz"
+CORBA_TARBALL="4d9e4fb8af09.tar.gz"
 HOTSPOT_TARBALL="b28ae681bae0.tar.gz"
 JAXP_TARBALL="948e734135ea.tar.gz"
-JAXWS_TARBALL="5d3734549424.tar.gz"
-JDK_TARBALL="d9fca71ba183.tar.gz"
+JAXWS_TARBALL="a2ebfdc9db7e.tar.gz"
+JDK_TARBALL="2054526dd141.tar.gz"
 LANGTOOLS_TARBALL="9b85f1265346.tar.gz"
-OPENJDK_TARBALL="0a76e5390e68.tar.gz"
 CACAO_TARBALL="4549072ab2de.tar.gz"
 JAMVM_TARBALL="310c491ddc14e92a6ffff27030a1a1821e6395a8.tar.gz"
 SRC_URI="http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
-		 http://icedtea.classpath.org/hg/icedtea7-forest/archive/${OPENJDK_TARBALL}
-		 http://icedtea.classpath.org/hg/icedtea7-forest/corba/archive/${CORBA_TARBALL}
-		 http://icedtea.classpath.org/hg/icedtea7-forest/jaxp/archive/${JAXP_TARBALL}
-		 http://icedtea.classpath.org/hg/icedtea7-forest/jaxws/archive/${JAXWS_TARBALL}
-		 http://icedtea.classpath.org/hg/icedtea7-forest/jdk/archive/${JDK_TARBALL}
-		 http://icedtea.classpath.org/hg/icedtea7-forest/hotspot/archive/${HOTSPOT_TARBALL}
-		 http://icedtea.classpath.org/hg/icedtea7-forest/langtools/archive/${LANGTOOLS_TARBALL}
-		 cacao? ( http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL} )
+		 http://icedtea.classpath.org/hg/release/icedtea7-forest-2.0/archive/${OPENJDK_TARBALL}
+		 http://icedtea.classpath.org/hg/release/icedtea7-forest-2.0/corba/archive/${CORBA_TARBALL}
+		 http://icedtea.classpath.org/hg/release/icedtea7-forest-2.0/jaxp/archive/${JAXP_TARBALL}
+		 http://icedtea.classpath.org/hg/release/icedtea7-forest-2.0/jaxws/archive/${JAXWS_TARBALL}
+		 http://icedtea.classpath.org/hg/release/icedtea7-forest-2.0/jdk/archive/${JDK_TARBALL}
+		 http://icedtea.classpath.org/hg/release/icedtea7-forest-2.0/hotspot/archive/${HOTSPOT_TARBALL}
+		 http://icedtea.classpath.org/hg/release/icedtea7-forest-2.0/langtools/archive/${LANGTOOLS_TARBALL}
 		 jamvm? ( http://icedtea.classpath.org/download/drops/jamvm/jamvm-${JAMVM_TARBALL} )"
 HOMEPAGE="http://icedtea.classpath.org"
 S=${WORKDIR}/${ICEDTEA_PKG}
 
 # Missing options:
 # shark - needs adding
-IUSE="cacao debug doc examples jamvm javascript +nsplugin pulseaudio systemtap +webstart +xrender zero"
+IUSE="debug doc examples jamvm javascript +nsplugin pulseaudio systemtap +webstart zero"
 
 RDEPEND=">=net-print/cups-1.2.12
 	 >=x11-libs/libX11-1.1.3
@@ -66,7 +64,7 @@ RDEPEND=">=net-print/cups-1.2.12
 	 pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
 	 javascript? ( dev-java/rhino:1.6 )
 	 zero? ( virtual/libffi )
-	 xrender? ( >=x11-libs/libXrender-0.9.4 )
+	 >=x11-libs/libXrender-0.9.4
 	 systemtap? ( >=dev-util/systemtap-1 )
 	 !dev-java/icedtea:0
 	 sys-apps/attr
@@ -207,9 +205,10 @@ src_configure() {
 		rhino_jar=$(java-pkg_getjar rhino:1.6 js.jar);
 	fi
 
-	if use cacao ; then
-		config="${config} --with-cacao-src-zip=${DISTDIR}/${CACAO_TARBALL}";
-	fi
+# CACAO disabled until it has OpenJDK7 support
+#	if use cacao ; then
+#		config="${config} --with-cacao-src-zip=${DISTDIR}/${CACAO_TARBALL}";
+#	fi
 
 	if use jamvm ; then
 		config="${config} --with-jamvm-src-zip=${DISTDIR}/${JAMVM_TARBALL}";
@@ -233,7 +232,6 @@ src_configure() {
 		$(use_with javascript rhino ${rhino_jar}) \
 		$(use_enable zero) \
 		$(use_enable pulseaudio pulse-java) \
-		$(use_enable xrender) \
 		$(use_enable systemtap) \
 		|| die "configure failed"
 }
