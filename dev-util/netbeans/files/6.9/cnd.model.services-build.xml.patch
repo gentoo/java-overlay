@@ -1,0 +1,18 @@
+--- cnd.model.services/nbproject/project.xml~	2010-07-28 23:10:26.000000000 +0100
++++ cnd.model.services/nbproject/project.xml	2011-01-21 17:54:19.000000000 +0000
+@@ -131,6 +131,15 @@
+                         <specification-version>6.26</specification-version>
+                     </run-dependency>
+                 </dependency>
++                <dependency>
++                    <code-name-base>org.netbeans.modules.lexer</code-name-base>
++                    <build-prerequisite/>
++                    <compile-dependency/>
++                    <run-dependency>
++                        <release-version>2</release-version>
++                        <specification-version>1.26</specification-version>
++                    </run-dependency>
++                </dependency>
+             </module-dependencies>
+             <friend-packages>
+                 <friend>com.microchip.mplab.debugger.mdb</friend>
