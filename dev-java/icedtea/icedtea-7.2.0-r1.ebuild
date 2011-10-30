@@ -85,7 +85,7 @@ DEPEND="${RDEPEND}
 		>=dev-java/gcj-jdk-4.3
 		>=dev-java/cacao-0.99.2
 		dev-java/icedtea:7
-		dev-java/icedtea6-bin
+		dev-java/icedtea-bin:6
 		dev-java/icedtea:6
 	)
 	app-arch/zip
@@ -140,7 +140,7 @@ pkg_setup() {
 		JAVA_PKG_FORCE_VM="icedtea6"
 	elif has_version ">dev-java/icedtea-6.1.10.4:6"; then
 		JAVA_PKG_FORCE_VM="icedtea-6"
-	elif has_version dev-java/icedtea6-bin; then
+	elif has_version dev-java/icedtea-bin:6; then
 		JAVA_PKG_FORCE_VM="icedtea6-bin"
 	elif has_version dev-java/gcj-jdk; then
 		JAVA_PKG_FORCE_VM="gcj-jdk"
