@@ -25,7 +25,7 @@ DEPEND="virtual/jdk:1.6"
 
 RDEPEND=">=dev-java/jinput-1_pre20100416
 	dev-java/lwjgl:2.7
-	|| ( dev-java/icedtea6-bin[X]
+	|| ( dev-java/icedtea-bin:6[X]
 		dev-java/icedtea:6
 		dev-java/sun-jre-bin:1.6[X]
 		dev-java/sun-jdk:1.6[X] )"
