@@ -34,7 +34,12 @@ pkg_setup() {
 	if [[ -n "${JAVA_PKG_FORCE_VM}" ]]; then
 		einfo "Honoring user-set JAVA_PKG_FORCE_VM"
 	elif has_version dev-java/icedtea:${SLOT}; then
-		JAVA_PKG_FORCE_VM="icedtea${SLOT}"
+		# migration logic
+		if [[ -L /usr/lib/jvm/icedtea${SLOT} ]]; then
+			JAVA_PKG_FORCE_VM="icedtea${SLOT}"
+		else
+			JAVA_PKG_FORCE_VM="icedtea-${SLOT}"
+		fi
 	else
 		JAVA_PKG_FORCE_VM=""
 		# don't die just yet if merging a binpkg - bug #258423
