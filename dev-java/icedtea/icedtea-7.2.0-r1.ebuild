@@ -234,8 +234,6 @@ src_compile() {
 	# otherwise we try to load the least that's needed to avoid possible classpath collisions
 	export ANT_TASKS="xerces-2 xalan ant-nodeps"
 
-	# Paludis does not respect unset from src_configure
-	unset_vars
 	emake -j 1
 }
 
