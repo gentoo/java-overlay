@@ -292,6 +292,10 @@ src_install() {
 		-e "s#@LIBDIR@#$(get_libdir)#g" \
 		< "${FILESDIR}/icedtea.env" > "${T}/icedtea.env"
 	set_java_env "${T}/icedtea.env"
+
+	# bug #388127
+	dodir /etc/sandbox.d
+	echo 'SANDBOX_PREDICT="/dev/random:/proc/self/coredump_filter"' > "${D}/etc/sandbox.d/20${VMHANDLE}"
 }
 
 use_zero() {
