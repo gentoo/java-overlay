@@ -1,6 +1,6 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea-web/icedtea-web-1.1.2-r1.ebuild,v 1.1 2011/09/18 21:53:18 caster Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea-web/icedtea-web-1.1.3-r7.ebuild,v 1.1 2011/11/04 11:19:09 caster Exp $
 # Build written by Andrew John Hughes (ahughes@redhat.com)
 
 EAPI="2"
@@ -9,7 +9,7 @@ inherit autotools eutils java-pkg-2 java-vm-2
 
 LICENSE="GPL-2 GPL-2-with-linking-exception LGPL-2"
 SLOT="7"
-KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
+KEYWORDS="~amd64"
 
 DESCRIPTION="FOSS Java browser plugin and Web Start implementation"
 SRC_URI="http://icedtea.classpath.org/download/source/${P}.tar.gz"
@@ -53,9 +53,6 @@ pkg_setup() {
 		java-vm-2_pkg_setup
 		java-pkg-2_pkg_setup
 	fi
-
-	# without this sandbox access violation occurs
-	addpredict /proc/self/coredump_filter
 }
 
 unset_vars() {
