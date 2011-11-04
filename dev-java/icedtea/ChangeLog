@@ -3,6 +3,9 @@
 # $Header: $
 
   04 Nov 2011; Vlastimil Babka <caster@gentoo.org> icedtea-7.2.0-r1.ebuild:
+  Add ~x86 keyword.
+
+  04 Nov 2011; Vlastimil Babka <caster@gentoo.org> icedtea-7.2.0-r1.ebuild:
   Remove unused autotools.
 
   02 Nov 2011; Vlastimil Babka <caster@gentoo.org> icedtea-7.2.0-r1.ebuild:
