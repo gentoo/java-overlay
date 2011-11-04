@@ -9,7 +9,7 @@ inherit autotools eutils java-pkg-2 java-vm-2
 
 LICENSE="GPL-2 GPL-2-with-linking-exception LGPL-2"
 SLOT="7"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 
 DESCRIPTION="FOSS Java browser plugin and Web Start implementation"
 SRC_URI="http://icedtea.classpath.org/download/source/${P}.tar.gz"

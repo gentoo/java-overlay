@@ -3,6 +3,9 @@
 # $Header: $
 
   04 Nov 2011; Vlastimil Babka <caster@gentoo.org> icedtea-web-1.1.3-r7.ebuild:
+  Add ~x86 keyword.
+
+  04 Nov 2011; Vlastimil Babka <caster@gentoo.org> icedtea-web-1.1.3-r7.ebuild:
   Remove the no longer needed addpredict, match KEYWORDS with icedtea:7.
 
   30 Oct 2011; Vlastimil Babka <caster@gentoo.org> icedtea-web-1.1.3.ebuild,
