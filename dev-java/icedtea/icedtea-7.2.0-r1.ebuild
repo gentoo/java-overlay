@@ -1,6 +1,6 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.0-r1.ebuild,v 1.1 2011/11/04 11:19:30 caster Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.0-r1.ebuild,v 1.3 2011/11/05 05:14:22 flameeyes Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
 # *********************************************************
@@ -95,7 +95,8 @@ DEPEND="${RDEPEND}
 	app-misc/ca-certificates
 	dev-lang/perl
 	dev-libs/openssl
-	sys-apps/lsb-release"
+	sys-apps/lsb-release
+	app-arch/cpio"
 #	 || ( >=sys-devel/autoconf-2.65:2.5 <sys-devel/autoconf-2.64:2.5 )"
 
 PDEPEND="webstart? ( dev-java/icedtea-web:7 )
