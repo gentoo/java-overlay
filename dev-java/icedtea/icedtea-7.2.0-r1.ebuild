@@ -57,7 +57,7 @@ RDEPEND=">=net-print/cups-1.2.12
 	 virtual/jpeg
 	 >=media-libs/libpng-1.2
 	 >=media-libs/giflib-4.1.6
-	 >=media-libs/lcms-2.2
+	 media-libs/lcms:2
 	 >=sys-libs/zlib-1.2.3
 	 x11-proto/inputproto
 	 x11-proto/xineramaproto
