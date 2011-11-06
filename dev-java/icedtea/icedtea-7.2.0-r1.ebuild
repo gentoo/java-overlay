@@ -1,6 +1,6 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.0-r1.ebuild,v 1.3 2011/11/05 05:14:22 flameeyes Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.0-r1.ebuild,v 1.5 2011/11/06 23:22:43 caster Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
 # *********************************************************
@@ -74,9 +74,7 @@ RDEPEND=">=net-print/cups-1.2.12
 # Additional dependencies for building:
 #   zip: extract OpenJDK tarball, and needed by configure
 #   ant, ecj, jdk: required to build Java code
-# Only ant-core-1.7.1-r2 and later contain a version of Ant that
-# properly respects environment variables, if the build
-# sets some environment variables.
+# Only ant-core-1.8.1 has fixed ant -diagnostics when xerces+xalan are not present.
 # ca-certificates, perl and openssl are used for the cacerts keystore generation
 # xext headers have two variants depending on version - bug #288855
 # autoconf - as long as we use eautoreconf, version restrictions for bug #294918
@@ -90,7 +88,7 @@ DEPEND="${RDEPEND}
 	)
 	app-arch/zip
 	>=dev-libs/libxslt-1.1.26
-	>=dev-java/ant-core-1.7.1-r2
+	>=dev-java/ant-core-1.8.1
 	dev-java/ant-nodeps
 	app-misc/ca-certificates
 	dev-lang/perl
@@ -231,9 +229,8 @@ src_compile() {
 	# an environment variable so it works properly...
 	export ANT_RESPECT_JAVA_HOME=TRUE
 
-	# ant -diagnostics in Ant 1.8.0 fails without xerces+xalan
-	# otherwise we try to load the least that's needed to avoid possible classpath collisions
-	export ANT_TASKS="xerces-2 xalan ant-nodeps"
+	# We try to load the least that's needed to avoid possible classpath collisions
+	export ANT_TASKS="ant-nodeps"
 
 	emake -j 1
 }
