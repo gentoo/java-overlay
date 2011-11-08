@@ -2,6 +2,13 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.9.11 (08 Nov 2011)
+*icedtea-6.1.8.11 (08 Nov 2011)
+
+  08 Nov 2011; Andrew John Hughes <andrew@gentoo.org> -icedtea-6.1.8.10.ebuild,
+  +icedtea-6.1.8.11.ebuild, -icedtea-6.1.9.10.ebuild, +icedtea-6.1.9.11.ebuild:
+  Security update for releases with plugin & Web Start: http://bit.ly/uhvhLW
+
   08 Nov 2011; Ralph Sennhauser <sera@gentoo.org>
   icedtea-6.1.10.4-r1.ebuild, icedtea-7.2.0-r1.ebuild:
   Allow building of icedtea with icedtea-bin-6, bug 389885
