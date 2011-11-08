@@ -2,6 +2,10 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  08 Nov 2011; Ralph Sennhauser <sera@gentoo.org>
+  icedtea-6.1.10.4-r1.ebuild, icedtea-7.2.0-r1.ebuild:
+  Allow building of icedtea with icedtea-bin-6, bug 389885
+
   07 Nov 2011; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.10.4-r1.ebuild,
   icedtea-7.2.0-r1.ebuild:
   Prepare for icedtea-bin version and VMHANDLE migration.
