@@ -31,8 +31,8 @@ DEPEND="${COMMON_DEP}
 S="${WORKDIR}/${MY_P}"
 JAVA_GENTOO_CLASSPATH="jsr305"
 
-src_prepare() {
-	unpack "./${PN}-src-r${PV}.zip"
+java_prepare() {
+	unpack ./${PN}-src-r${PV}.zip
 }
 
 src_install() {
