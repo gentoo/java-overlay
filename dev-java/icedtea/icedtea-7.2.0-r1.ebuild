@@ -127,6 +127,9 @@ pkg_setup() {
 		return
 	fi
 
+	# icedtea doesn't like some locales. #330433 #389717
+	export LANG="C" LC_ALL="C"
+
 	# quite a hack since java-config does not provide a way for a package
 	# to limit supported VM's for building and their preferred order
 	if [[ -n "${JAVA_PKG_FORCE_VM}" ]]; then

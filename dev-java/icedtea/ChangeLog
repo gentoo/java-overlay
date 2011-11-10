@@ -2,6 +2,10 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  10 Nov 2011; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.10.4-r1.ebuild,
+  icedtea-7.2.0-r1.ebuild:
+  Fix building with unusal locales, bug #330433 #389717
+
 *icedtea-6.1.9.11 (08 Nov 2011)
 *icedtea-6.1.8.11 (08 Nov 2011)
 
