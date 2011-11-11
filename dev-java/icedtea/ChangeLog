@@ -2,6 +2,9 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  11 Nov 2011; Vlastimil Babka <caster@gentoo.org> icedtea-7.2.0-r1.ebuild:
+  Support building using icedtea-bin-7.
+
   10 Nov 2011; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.10.4-r1.ebuild,
   icedtea-7.2.0-r1.ebuild:
   Fix building with unusal locales, bug #330433 #389717

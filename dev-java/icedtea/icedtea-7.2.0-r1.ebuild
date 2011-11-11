@@ -1,6 +1,6 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.0-r1.ebuild,v 1.6 2011/11/07 16:02:21 caster Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.0-r1.ebuild,v 1.9 2011/11/11 12:41:20 caster Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
 # *********************************************************
@@ -82,8 +82,9 @@ DEPEND="${RDEPEND}
 	|| (
 		>=dev-java/gcj-jdk-4.3
 		>=dev-java/cacao-0.99.2
-		dev-java/icedtea:7
+		dev-java/icedtea-bin:7
 		dev-java/icedtea-bin:6
+		dev-java/icedtea:7
 		dev-java/icedtea:6
 	)
 	app-arch/zip
@@ -138,6 +139,8 @@ pkg_setup() {
 		JAVA_PKG_FORCE_VM="icedtea7"
 	elif has_version ">dev-java/icedtea-7.2.0:7"; then
 		JAVA_PKG_FORCE_VM="icedtea-7"
+	elif has_version "dev-java/icedtea-bin:7"; then
+		JAVA_PKG_FORCE_VM="icedtea-bin-7"
 	elif has_version "<=dev-java/icedtea-6.1.10.4:6"; then
 		JAVA_PKG_FORCE_VM="icedtea6"
 	elif has_version ">dev-java/icedtea-6.1.10.4:6"; then
@@ -177,7 +180,7 @@ src_configure() {
 	if [[ "${vm}" == "icedtea6" || "${vm}" == "icedtea-6" || "${vm}" == "icedtea6-bin" || "${vm}" == "icedtea-bin-6" ]] ; then
 		# We can't currently bootstrap with a IcedTea6 JVM :(
 		config="${config} --disable-bootstrap"
-	elif [[ "${vm}" != "gcj-jdk" && "${vm}" != "cacao" && "${vm}" != "icedtea7" && "${vm}" != "icedtea-7" ]] ; then
+	elif [[ "${vm}" != "gcj-jdk" && "${vm}" != "cacao" && "${vm}" != "icedtea7" && "${vm}" != "icedtea-7" && "${vm}" != "icedtea-bin-7" ]] ; then
 		eerror "IcedTea must be built with either a JDK based on GNU Classpath or an existing build of IcedTea."
 		die "Install a GNU Classpath JDK (gcj-jdk, cacao)"
 	fi
