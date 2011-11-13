@@ -169,6 +169,16 @@ src_unpack() {
 	unpack ${ICEDTEA_PKG}.tar.gz
 }
 
+java_prepare() {
+	# Fix building with PaX enabled kernels. Bug #389751
+	# Move applying test_gamma.patch to before creating boot copy.
+	if grep '^PaX:' /proc/self/status > /dev/null; then
+		sed -i -e 's|patches/boot/test_gamma.patch||' Makefile.in || die
+		sed -i -e 's|openjdk-boot|openjdk|g' patches/boot/test_gamma.patch || die
+		export DISTRIBUTION_PATCHES=patches/boot/test_gamma.patch
+	fi
+}
+
 unset_vars() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 }
