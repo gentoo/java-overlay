@@ -2,6 +2,13 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  18 Nov 2011; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.10.4-r1.ebuild,
+  icedtea-7.2.0-r1.ebuild:
+  Remove 'cacao' and 'jamvm' USE flags. Also remove 'zero' flag and have it
+  used only for ppc/ppc64. This functionality was experimental and brought more
+  problems than benefits. Also remove the bootstrapping with cacao due to
+  failures. Fixes numerous bugs.
+
   18 Nov 2011; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.10.4-r1.ebuild,
   icedtea-7.2.0-r1.ebuild:
   Add additional PaX markings to executables for x86. Bug 389751
