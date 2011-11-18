@@ -1,6 +1,6 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-6.1.10.4-r1.ebuild,v 1.2 2011/11/07 16:02:21 caster Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-6.1.10.4-r1.ebuild,v 1.5 2011/11/18 11:01:47 sera Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
 # *********************************************************
@@ -177,10 +177,10 @@ src_configure() {
 	local vmhome="/usr/lib/jvm/${vm}"
 
 	# IcedTea6 can't be built using IcedTea7; its class files are too new
-	if [[ "${vm}" == "icedtea6" || "${vm}" == "icedtea-6" || "${vm}" == "icedtea6-bin" || "${vm}" == "icedtea-bin-6" ]] ; then
+	if has "${vm}" icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6; then
 		# If we are upgrading icedtea, then we don't need to bootstrap.
 		config="${config} --with-jdk-home=$(java-config -O) --disable-bootstrap"
-	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" ]] ; then
+	elif has "${vm}" gcj-jdk cacao; then
 		# For other 1.5 JDKs e.g. GCJ, CACAO.
 		config="${config} --with-ecj-jar=/usr/share/eclipse-ecj/ecj.jar" \
 		config="${config} --with-jdk-home=${vmhome}"

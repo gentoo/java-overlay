@@ -1,6 +1,6 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.0-r1.ebuild,v 1.9 2011/11/11 12:41:20 caster Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.0-r1.ebuild,v 1.12 2011/11/18 11:01:45 sera Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
 # *********************************************************
@@ -170,9 +170,9 @@ src_unpack() {
 }
 
 java_prepare() {
-	# Fix building with PaX enabled kernels. Bug #389751
+	# Fix non bootstrap builds with PaX enabled kernels. Bug #389751
 	# Move applying test_gamma.patch to before creating boot copy.
-	if grep '^PaX:' /proc/self/status > /dev/null; then
+	if host-is-pax; then
 		sed -i -e 's|patches/boot/test_gamma.patch||' Makefile.in || die
 		sed -i -e 's|openjdk-boot|openjdk|g' patches/boot/test_gamma.patch || die
 		export DISTRIBUTION_PATCHES=patches/boot/test_gamma.patch
@@ -187,10 +187,19 @@ src_configure() {
 	local config procs rhino_jar
 	local vm=$(java-pkg_get-current-vm)
 
-	if [[ "${vm}" == "icedtea6" || "${vm}" == "icedtea-6" || "${vm}" == "icedtea6-bin" || "${vm}" == "icedtea-bin-6" ]] ; then
+	if has "${vm}" icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6; then
 		# We can't currently bootstrap with a IcedTea6 JVM :(
 		config="${config} --disable-bootstrap"
-	elif [[ "${vm}" != "gcj-jdk" && "${vm}" != "cacao" && "${vm}" != "icedtea7" && "${vm}" != "icedtea-7" && "${vm}" != "icedtea-bin-7" ]] ; then
+	elif has "${vm}" icedtea7 icedtea-7 icedtea-bin-7; then
+		# We can't currently bootstrap with a PaX enabled kernel :(
+		host-is-pax && config="${config} --disable-bootstrap"
+	elif has "${vm}" gcj-jdk cacao; then
+		if host-is-pax; then
+			eerror "Can't currently bootstrap IcedTea using gcj-jdk or cacao on a PaX enabled host"
+			eerror "Sorry for the inconvenience"
+			die "Use an existing IcedTea build instead or disable PaX on the host"
+		fi
+	else
 		eerror "IcedTea must be built with either a JDK based on GNU Classpath or an existing build of IcedTea."
 		die "Install a GNU Classpath JDK (gcj-jdk, cacao)"
 	fi

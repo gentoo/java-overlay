@@ -2,6 +2,11 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  18 Nov 2011; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.10.4-r1.ebuild,
+  icedtea-7.2.0-r1.ebuild:
+  Add --disable-bootstrap on PaX enabled hosts when building using IcedTea7.
+  Bug #389751
+
   13 Nov 2011; Ralph Sennhauser <sera@gentoo.org> icedtea-7.2.0-r1.ebuild:
   Fix building with PaX enabled kernels. Bug #389751. Thanks to Daniel Kuehn
   <enhaisa@gmail.com> and Magnus Granberg <zorry@gentoo.org> for their help
