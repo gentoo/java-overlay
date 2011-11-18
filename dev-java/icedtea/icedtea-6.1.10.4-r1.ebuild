@@ -1,6 +1,6 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-6.1.10.4-r1.ebuild,v 1.5 2011/11/18 11:01:47 sera Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-6.1.10.4-r1.ebuild,v 1.6 2011/11/18 16:41:38 caster Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
 # *********************************************************
@@ -189,12 +189,12 @@ src_configure() {
 		die "Install a GNU Classpath JDK (gcj-jdk, cacao)"
 	fi
 
-	# OpenJDK-specific parallelism support.
-	procs=$(echo ${MAKEOPTS} | sed -r 's/.*-j\W*([0-9]+).*/\1/')
-	if [[ -n ${procs} ]] ; then
-		config="${config} --with-parallel-jobs=${procs}";
-		einfo "Configuring using --with-parallel-jobs=${procs}"
-	fi
+	# OpenJDK-specific parallelism support. Bug #389791, #337827
+	# Implementation modified from waf-utils.eclass
+	# Note that "-j" is converted to "-j1" as the system doesn't support --load-average
+	local procs=$(echo -j1 ${MAKEOPTS} | sed -r "s/.*(-j\s*|--jobs=)([0-9]+).*/\2/" )
+	config="${config} --with-parallel-jobs=${procs}";
+	einfo "Configuring using --with-parallel-jobs=${procs}"
 
 	if use_zero ; then
 		config="${config} --enable-zero"
