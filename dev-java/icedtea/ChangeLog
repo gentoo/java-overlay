@@ -4,6 +4,10 @@
 
   18 Nov 2011; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.10.4-r1.ebuild,
   icedtea-7.2.0-r1.ebuild:
+  Add missing cpio dep and remove the old libXext version variant, bug #389599.
+
+  18 Nov 2011; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.10.4-r1.ebuild,
+  icedtea-7.2.0-r1.ebuild:
   Remove 'cacao' and 'jamvm' USE flags. Also remove 'zero' flag and have it
   used only for ppc/ppc64. This functionality was experimental and brought more
   problems than benefits. Also remove the bootstrapping with cacao due to

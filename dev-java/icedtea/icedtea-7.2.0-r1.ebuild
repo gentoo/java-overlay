@@ -1,6 +1,6 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.0-r1.ebuild,v 1.15 2011/11/18 21:02:01 caster Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.0-r1.ebuild,v 1.16 2011/11/18 21:18:40 caster Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
 # *********************************************************
@@ -51,6 +51,7 @@ RDEPEND=">=net-print/cups-1.2.12
 	 >=x11-libs/libXau-1.0.3
 	 >=x11-libs/libXdmcp-1.0.2
 	 >=x11-libs/libXtst-1.0.3
+	 >=x11-libs/libXext-1.1.1
 	 virtual/jpeg
 	 >=media-libs/libpng-1.2
 	 >=media-libs/giflib-4.1.6
@@ -86,6 +87,8 @@ DEPEND="${RDEPEND}
 	)
 	app-arch/zip
 	>=dev-libs/libxslt-1.1.26
+	>=x11-proto/xextproto-7.1.1
+	x11-proto/xproto
 	>=dev-java/ant-core-1.8.1
 	dev-java/ant-nodeps
 	app-misc/ca-certificates

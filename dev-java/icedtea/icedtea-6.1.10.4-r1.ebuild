@@ -1,6 +1,6 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-6.1.10.4-r1.ebuild,v 1.8 2011/11/18 21:02:03 caster Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-6.1.10.4-r1.ebuild,v 1.9 2011/11/18 21:18:40 caster Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
 # *********************************************************
@@ -90,15 +90,11 @@ DEPEND="${RDEPEND}
 	app-misc/ca-certificates
 	dev-lang/perl
 	dev-libs/openssl
-	|| (
-		(
-			>=x11-libs/libXext-1.1.1
-			>=x11-proto/xextproto-7.1.1
-			x11-proto/xproto
-		)
-		<x11-libs/libXext-1.1.1
-	)
-	sys-apps/lsb-release"
+	>=x11-libs/libXext-1.1.1
+	>=x11-proto/xextproto-7.1.1
+	x11-proto/xproto
+	sys-apps/lsb-release
+	app-arch/cpio"
 
 PDEPEND="webstart? ( dev-java/icedtea-web:6 )
 	nsplugin? ( dev-java/icedtea-web:6[nsplugin] )"
