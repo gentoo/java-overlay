@@ -1,6 +1,6 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.0-r1.ebuild,v 1.13 2011/11/18 16:41:38 caster Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.0-r1.ebuild,v 1.14 2011/11/18 18:11:15 sera Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
 # *********************************************************
@@ -287,7 +287,9 @@ src_install() {
 
 	# Set PaX markings on all JDK/JRE executables to allow code-generation on
 	# the heap by the JIT compiler.
-	pax-mark m $(list-paxables "${ddest}"{,/jre}/bin/*)
+	local marks="m"
+	use x86 && marks="msp"
+	pax-mark ${marks} $(list-paxables "${ddest}"{,/jre}/bin/*)
 
 	dodoc ASSEMBLY_EXCEPTION THIRD_PARTY_README
 
