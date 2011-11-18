@@ -2,6 +2,10 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  18 Nov 2011; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.10.4-r1.ebuild,
+  icedtea-7.2.0-r1.ebuild:
+  Remove unneeded pkg_postinst
+
   18 Nov 2011; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.10.4-r1.ebuild,
   icedtea-7.2.0-r1.ebuild:
   Add missing cpio dep and remove the old libXext version variant, bug #389599.

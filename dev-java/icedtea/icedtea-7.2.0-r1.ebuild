@@ -315,8 +315,3 @@ pkg_preinst() {
 		elog "and the same holds for any user VM settings. Sorry for the inconvenience."
 	fi
 }
-
-pkg_postinst() {
-	# Set as default VM if none exists
-	java-vm-2_pkg_postinst
-}
