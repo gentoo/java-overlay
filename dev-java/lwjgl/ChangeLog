@@ -2,6 +2,16 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*lwjgl-2.8.2 (19 Nov 2011)
+
+  19 Nov 2011: James Le Cuirot <chewi@aura-online.co.uk>
+  +lwjgl-2.7.1-r1.ebuild, +lwjgl-2.8.2.ebuild, -lwjgl-1.0.ebuild,
+  -lwjgl-1.0_beta3.ebuild, -lwjgl-2.6-r1.ebuild, -lwjgl-2.7.1.ebuild,
+  -files/fix-linux-build.patch:
+  Version bump to 2.8.2. This version doesn't currently work with Minecraft
+  but adding it anyway. It supports OpenGL ES through the egl USE flag.
+  Backport Java 7 jawt loading fix to 2.7.1. Kill off the older versions.
+
 *lwjgl-2.7.1 (2 Jun 2011)
 
   2 Jun 2011: James Le Cuirot <chewi@aura-online.co.uk>

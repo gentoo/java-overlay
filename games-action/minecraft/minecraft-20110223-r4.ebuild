@@ -21,14 +21,16 @@ RESTRICT="mirror"
 #
 #  javap -classpath lwjgl.jar -c org.lwjgl.Sys
 
-DEPEND="virtual/jdk:1.6"
+DEPEND=">=virtual/jdk-1.5" # Only need this for jar.
 
 RDEPEND=">=dev-java/jinput-1_pre20100416
-	dev-java/lwjgl:2.7
-	|| ( dev-java/icedtea-bin:6[X]
-		dev-java/icedtea:6
-		dev-java/sun-jre-bin:1.6[X]
-		dev-java/sun-jdk:1.6[X] )"
+	>=dev-java/lwjgl-2.7.1-r1:2.7
+	|| ( >=dev-java/icedtea-bin-6[X]
+		>=dev-java/icedtea-6
+		>=dev-java/oracle-jre-bin-1.6[X]
+		>=dev-java/oracle-jdk-bin-1.6[X]
+		>=dev-java/sun-jre-bin-1.6[X]
+		>=dev-java/sun-jdk-1.6[X] )"
 
 S="${WORKDIR}"
 

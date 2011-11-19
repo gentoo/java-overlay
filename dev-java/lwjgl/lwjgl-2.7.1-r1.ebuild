@@ -18,10 +18,10 @@ SLOT="2.7"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-CDEPEND="dev-java/apple-java-extensions-bin
-	dev-java/apt-mirror
-	dev-java/jinput
-	dev-java/jutils
+CDEPEND="dev-java/apple-java-extensions-bin:0
+	dev-java/apt-mirror:0
+	dev-java/jinput:0
+	dev-java/jutils:0
 	x11-libs/libX11
 	x11-libs/libXcursor
 	x11-libs/libXrandr
@@ -45,7 +45,10 @@ JAVA_ANT_REWRITE_CLASSPATH="true"
 EANT_GENTOO_CLASSPATH="apple-java-extensions-bin apt-mirror jinput jutils"
 EANT_BUILD_TARGET="jars headers"
 
-src_prepare() {
+java_prepare() {
+	# Fix loading of jawt under Java 7.
+	epatch "${FILESDIR}/java7-jawt.patch"
+
 	# Avoid implicit declaration of memset.
 	sed -i '1 i#include "string.h"' "${S}/src/native/common/org_lwjgl_BufferUtils.c" || die
 }
