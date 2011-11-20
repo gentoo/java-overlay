@@ -1,0 +1,35 @@
+--- org/sqlite/SQLiteJDBCLoader.java.orig	2010-08-27 18:01:32.000000000 +0100
++++ org/sqlite/SQLiteJDBCLoader.java	2011-11-20 21:12:06.756000652 +0000
+@@ -188,6 +188,17 @@
+             return false;
+     }
+ 
++    private static synchronized boolean loadNativeLibraryPath(String name) {
++        try {
++            System.loadLibrary(name);
++            return true;
++        }
++        catch (UnsatisfiedLinkError e) {
++            System.err.println(e);
++            return false;
++        }
++    }
++
+     private static void loadSQLiteNativeLibrary() {
+         if (extracted)
+             return;
+@@ -201,6 +212,14 @@
+         // Try loading library from org.sqlite.lib.path library path */
+         String sqliteNativeLibraryPath = System.getProperty("org.sqlite.lib.path");
+         String sqliteNativeLibraryName = System.getProperty("org.sqlite.lib.name");
++
++        if (sqliteNativeLibraryPath == null) {
++            if (loadNativeLibraryPath(sqliteNativeLibraryName == null ? "sqlitejdbc" : sqliteNativeLibraryName)) {
++                extracted = true;
++                return;
++            }
++        }
++
+         if (sqliteNativeLibraryName == null)
+             sqliteNativeLibraryName = System.mapLibraryName("sqlitejdbc");
+ 

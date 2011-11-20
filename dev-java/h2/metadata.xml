@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>java</herd>
+<maintainer>
+<email>chewi at aura-online.co.uk</email>
+<name>James Le Cuirot</name>
+</maintainer>
+<longdescription lang="en">
+H2 is a relational database management system written in Java. It can
+be embedded in Java applications or run in the client-server mode. The
+disk footprint (size of the jar file) is about 1 MB.
+</longdescription>
+</pkgmetadata>
+
