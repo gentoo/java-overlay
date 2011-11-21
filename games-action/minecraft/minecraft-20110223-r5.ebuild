@@ -7,7 +7,8 @@ inherit eutils games java-pkg-2
 
 DESCRIPTION="A game about placing blocks while running from skeletons. Or something like that..."
 HOMEPAGE="http://www.minecraft.net"
-SRC_URI="http://www.minecraft.net/download/minecraft.jar -> $P.jar"
+SRC_URI="http://www.minecraft.net/download/minecraft.jar -> $P.jar
+	http://www.sk89q.com/content/2011/11/abp.class"
 LICENSE="as-is"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
@@ -30,7 +31,8 @@ RDEPEND=">=dev-java/jinput-1_pre20100416
 		>=dev-java/oracle-jre-bin-1.6[X]
 		>=dev-java/oracle-jdk-bin-1.6[X]
 		>=dev-java/sun-jre-bin-1.6[X]
-		>=dev-java/sun-jdk-1.6[X] )"
+		>=dev-java/sun-jdk-1.6[X] )
+	virtual/jdk" # For fixing "invalid server key" bug with jar.
 
 S="${WORKDIR}"
 
@@ -64,6 +66,9 @@ src_install() {
 	doicon "${FILESDIR}/${PN}.png" || die
 	make_desktop_entry "${PN}" "Minecraft"
 
+	insinto "/usr/share/${PN}"
+	doins "${DISTDIR}/abp.class" || die
+
 	prepgamesdirs
 }
 
@@ -73,6 +78,10 @@ pkg_postinst() {
 	ewarn "version before reporting them upstream. Make sure that you delete"
 	ewarn "~/.minecraft/bin/version and ~/.minecraft/bin/natives before using the"
 	ewarn "official version so that the libraries can be downloaded by the game."
+	echo
+	ewarn 'After updating to 1.0.0 or starting the game for the first time, you may'
+	ewarn 'receive an "invalid server key" error when connecting to a server. Simply'
+	ewarn 'quit the game and a fix will be applied the next time you start it.'
 	echo
 
 	games_pkg_postinst

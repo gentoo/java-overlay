@@ -21,3 +21,11 @@ chmod a-w "${NATIVES}"
 # Create a dummy lwjgl.jar to fool MCPatcher.
 touch "${HOME}/.minecraft/bin/lwjgl.jar"
 
+# Work around the common "invalid server key" bug.
+MC_JAR="${HOME}/.minecraft/bin/minecraft.jar"
+
+if [[ -f "${MC_JAR}" ]] && [[ $(md5sum "${MC_JAR}" | head -c32) == "3820d222b95d0b8c520d9596a756a6e6" ]]; then
+	echo 'Broken minecraft.jar detected. Working around "invalid server key" bug.' >&2
+	jar uMf "${MC_JAR}" -C /usr/share/minecraft abp.class
+fi
+
