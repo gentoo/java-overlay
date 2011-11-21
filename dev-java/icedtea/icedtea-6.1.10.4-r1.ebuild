@@ -1,6 +1,6 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-6.1.10.4-r1.ebuild,v 1.9 2011/11/18 21:18:40 caster Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-6.1.10.4-r1.ebuild,v 1.11 2011/11/21 11:40:06 sera Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
 # *********************************************************
@@ -236,12 +236,6 @@ src_install() {
 	# doins can't handle symlinks.
 	cp -vRP bin include jre lib man "${ddest}" || die "failed to copy"
 
-	# Set PaX markings on all JDK/JRE executables to allow code-generation on
-	# the heap by the JIT compiler.
-	local marks="m"
-	use x86 && marks="msp"
-	pax-mark ${marks} $(list-paxables "${ddest}"{,/jre}/bin/*)
-
 	dodoc ASSEMBLY_EXCEPTION THIRD_PARTY_README
 
 	if use examples; then
@@ -253,6 +247,9 @@ src_install() {
 
 	# Fix the permissions.
 	find "${ddest}" \! -type l \( -perm /111 -exec chmod 755 {} \; -o -exec chmod 644 {} \; \) || die
+
+	# Needs to be done before generating cacerts
+	java-vm_set-pax-markings "${ddest}"
 
 	# We need to generate keystore - bug #273306
 	einfo "Generating cacerts file from certificates in /usr/share/ca-certificates/"
