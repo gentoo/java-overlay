@@ -8,6 +8,7 @@
 </maintainer>
 <longdescription>FOSS Java browser plugin and Web Start implementation based on NetX.</longdescription>
 <use>
+  <flag name="javascript">Enable support for using proxy auto config (PAC) files.</flag>
   <flag name="nsplugin">Enable browser plugin (NPPlugin).</flag>
 </use>
 </pkgmetadata>

@@ -2,6 +2,15 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-web-1.1.4-r7 (24 Nov 2011)
+*icedtea-web-1.1.4 (24 Nov 2011)
+
+  24 Nov 2011; Ralph Sennhauser <sera@gentoo.org> +icedtea-web-1.1.4.ebuild,
+  +icedtea-web-1.1.4-r7.ebuild, metadata.xml:
+  Version and EAPI bump.
+  Finish VMHANDLE migration.
+  Add missing dependencies. Bug #389795
+
   04 Nov 2011; Vlastimil Babka <caster@gentoo.org> icedtea-web-1.1.3-r7.ebuild:
   Add ~x86 keyword.
 
