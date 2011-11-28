@@ -1,15 +1,15 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-6.1.10.4-r2.ebuild,v 1.1 2011/11/28 15:29:59 sera Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
 # *********************************************************
 # * IF YOU CHANGE THIS EBUILD, CHANGE ICEDTEA-7.* AS WELL *
 # *********************************************************
 
-EAPI="2"
+EAPI="4"
 
-inherit pax-utils java-pkg-2 java-vm-2 versionator
+inherit java-pkg-2 java-vm-2 pax-utils prefix versionator
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="6"
@@ -25,50 +25,57 @@ JAXP_TARBALL="jaxp144_01.zip"
 JAXWS_TARBALL="jdk6-jaxws-b20.zip"
 JAF_TARBALL="jdk6-jaf-b20.zip"
 HOTSPOT_TARBALL="f0f676c5a2c6.tar.gz"
-CACAO_TARBALL="c7bf150bfa46.tar.gz"
-JAMVM_TARBALL="jamvm-a95ca049d3bb257d730535a5d5ec3f73a943d0aa.tar.gz"
 SRC_URI="http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
 		 http://download.java.net/openjdk/jdk6/promoted/b${OPENJDK_BUILD}/${OPENJDK_TARBALL}
 		 http://icedtea.classpath.org/download/drops/${JAXWS_TARBALL}
 		 http://icedtea.classpath.org/download/drops/${JAF_TARBALL}
 		 http://icedtea.classpath.org/download/drops/${JAXP_TARBALL}
-		 hs20? ( http://hg.openjdk.java.net/hsx/hsx20/master/archive/${HOTSPOT_TARBALL} )
-		 cacao? ( http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL} )
-		 jamvm? ( http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL} )"
+		 hs20? ( http://hg.openjdk.java.net/hsx/hsx20/master/archive/${HOTSPOT_TARBALL} )"
 HOMEPAGE="http://icedtea.classpath.org"
 S=${WORKDIR}/${ICEDTEA_PKG}
 
 # Missing options:
 # shark - needs adding
-IUSE="cacao debug doc examples +hs20 jamvm javascript nio2 +nsplugin +nss pulseaudio systemtap +webstart +xrender zero"
+IUSE="X debug cjk doc examples +hs20 javascript +jbootstrap nio2 +nsplugin +nss pulseaudio +source systemtap +webstart"
 
 # JTReg doesn't pass at present
 RESTRICT="test"
 
-RDEPEND=">=net-print/cups-1.2.12
-	 >=x11-libs/libX11-1.1.3
-	 >=media-libs/freetype-2.3.5
-	 >=media-libs/alsa-lib-1.0
-	 >=x11-libs/gtk+-2.8:2
-	 >=x11-libs/libXinerama-1.0.2
-	 >=x11-libs/libXp-1.0.0
-	 >=x11-libs/libXi-1.1.3
-	 >=x11-libs/libXau-1.0.3
-	 >=x11-libs/libXdmcp-1.0.2
-	 >=x11-libs/libXtst-1.0.3
-	 virtual/jpeg
-	 >=media-libs/libpng-1.2
-	 >=media-libs/giflib-4.1.6
-	 >=sys-libs/zlib-1.2.3
-	 x11-proto/inputproto
-	 x11-proto/xineramaproto
-	 pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
-	 javascript? ( dev-java/rhino:1.6 )
-	 zero? ( virtual/libffi )
-	 xrender? ( >=x11-libs/libXrender-0.9.4 )
-	 systemtap? ( >=dev-util/systemtap-1 )
-	 !dev-java/icedtea6
-	 nss? ( >=dev-libs/nss-3.12.5-r1 )"
+# media-fonts/lklug needs ppc ppc64 keywords, needs adding to use cjk
+RDEPEND="!dev-java/icedtea6
+	>=media-libs/alsa-lib-1.0
+	>=media-libs/freetype-2.3.5
+	>=media-libs/giflib-4.1.6
+	>=media-libs/libpng-1.2
+	>=net-print/cups-1.2.12
+	>=sys-libs/zlib-1.2.3
+	virtual/jpeg
+	>=x11-libs/gtk+-2.8:2
+	>=x11-libs/libX11-1.1.3
+	>=x11-libs/libXau-1.0.3
+	>=x11-libs/libXdmcp-1.0.2
+	>=x11-libs/libXi-1.1.3
+	>=x11-libs/libXinerama-1.0.2
+	>=x11-libs/libXp-1.0.0
+	>=x11-libs/libXrender-0.9.4
+	>=x11-libs/libXtst-1.0.3
+	x11-proto/inputproto
+	x11-proto/xineramaproto
+	X? (
+	 	media-fonts/dejavu
+		cjk? (
+			media-fonts/arphicfonts
+			media-fonts/baekmuk-fonts
+			media-fonts/lohit-fonts
+			media-fonts/sazanami
+		)
+	)
+	javascript? ( dev-java/rhino:1.6 )
+	nss? ( >=dev-libs/nss-3.12.5-r1 )
+	ppc64? ( virtual/libffi )
+	ppc? ( virtual/libffi )
+	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
+	systemtap? ( >=dev-util/systemtap-1 )"
 
 # Additional dependencies for building:
 #   zip: extract OpenJDK tarball, and needed by configure
@@ -82,11 +89,11 @@ RDEPEND=">=net-print/cups-1.2.12
 DEPEND="${RDEPEND}
 	|| (
 		( >=dev-java/gcj-jdk-4.3 >=app-admin/eselect-ecj-0.5-r1 )
-		( >=dev-java/cacao-0.99.2 >=app-admin/eselect-ecj-0.5-r1 )
 		dev-java/icedtea-bin:6
 		dev-java/icedtea:${SLOT}
 	)
 	app-arch/zip
+	dev-util/pkgconfig
 	>=dev-java/xalan-2.7.0:0
 	>=dev-java/xerces-2.9.1:2
 	>=dev-java/ant-core-1.7.1-r2
@@ -94,15 +101,11 @@ DEPEND="${RDEPEND}
 	app-misc/ca-certificates
 	dev-lang/perl
 	dev-libs/openssl
-	|| (
-		(
-			>=x11-libs/libXext-1.1.1
-			>=x11-proto/xextproto-7.1.1
-			x11-proto/xproto
-		)
-		<x11-libs/libXext-1.1.1
-	)
-	sys-apps/lsb-release"
+	>=x11-libs/libXext-1.1.1
+	>=x11-proto/xextproto-7.1.1
+	x11-proto/xproto
+	sys-apps/lsb-release
+	app-arch/cpio"
 
 PDEPEND="webstart? ( dev-java/icedtea-web:6 )
 	nsplugin? ( dev-java/icedtea-web:6[nsplugin] )"
@@ -113,58 +116,39 @@ JAVA_PKG_WANT_SOURCE="1.5"
 JAVA_PKG_WANT_TARGET="1.5"
 
 pkg_setup() {
-# Shark support disabled for now - still experimental and needs sys-devel/llvm
-#	if use shark ; then
-#	  if ( ! use x86 && ! use sparc && ! use ppc ) ; then
-#		eerror "The Shark JIT has known issues on 64-bit platforms.  Please rebuild"
-#		errror "without the shark USE flag turned on."
-#		die "Rebuild without the shark USE flag on."
-#	  fi
-#	  if ( ! use zero ) ; then
-#		eerror "The use of the Shark JIT is only applicable when used with the zero assembler port.";
-#		die "Rebuild without the shark USE flag on or with the zero USE flag turned on."
-#	  fi
-#	fi
-
 	if use nsplugin && ! use webstart ; then
 		elog "Note that the nsplugin flag implies the webstart flag. Enable it to remove this message."
 	fi
+
+	[[ "${MERGE_TYPE}" == "binary" ]] && return #258423
+
+	# icedtea doesn't like some locales. #330433 #389717
+	export LANG="C" LC_ALL="C"
 
 	# quite a hack since java-config does not provide a way for a package
 	# to limit supported VM's for building and their preferred order
 	if [[ -n "${JAVA_PKG_FORCE_VM}" ]]; then
 		einfo "Honoring user-set JAVA_PKG_FORCE_VM"
-	elif has_version "dev-java/icedtea:${SLOT}"; then
+	elif has_version "<=dev-java/icedtea-6.1.10.4:${SLOT}"; then
 		JAVA_PKG_FORCE_VM="icedtea6"
-	elif has_version dev-java/icedtea6; then
-		JAVA_PKG_FORCE_VM="icedtea6"
-	elif has_version dev-java/icedtea-bin:6; then
+	elif has_version ">dev-java/icedtea-6.1.10.4:${SLOT}"; then
+		JAVA_PKG_FORCE_VM="icedtea-6"
+	elif has_version "<dev-java/icedtea-bin-6.1.10.4:6"; then
 		JAVA_PKG_FORCE_VM="icedtea6-bin"
+	elif has_version ">=dev-java/icedtea-bin-6.1.10.4:6"; then
+		JAVA_PKG_FORCE_VM="icedtea-bin-6"
 	elif has_version dev-java/gcj-jdk; then
 		JAVA_PKG_FORCE_VM="gcj-jdk"
-	elif has_version dev-java/cacao; then
-		JAVA_PKG_FORCE_VM="cacao"
 	else
-		JAVA_PKG_FORCE_VM=""
-		# don't die just yet if merging a binpkg - bug #258423
-		DIE_IF_NOT_BINPKG=true
+		die "Unable to find a supported VM for building"
 	fi
 
-	# if the previous failed, don't even run java eclasses pkg_setup
-	# as it might also die when no VM is present
-	if [[ -n "${JAVA_PKG_FORCE_VM}" ]]; then
-		einfo "Forced vm ${JAVA_PKG_FORCE_VM}"
-		java-vm-2_pkg_setup
-		java-pkg-2_pkg_setup
-	fi
-
-	VMHANDLE="icedtea${SLOT}"
+	einfo "Forced vm ${JAVA_PKG_FORCE_VM}"
+	java-vm-2_pkg_setup
+	java-pkg-2_pkg_setup
 }
 
 src_unpack() {
-	if [[ -n ${DIE_IF_NOT_BINPKG} ]]; then
-		die "Unable to find a supported VM for building"
-	fi
 	unpack ${ICEDTEA_PKG}.tar.gz
 }
 
@@ -175,30 +159,42 @@ unset_vars() {
 src_configure() {
 	local config procs rhino_jar
 	local vm=$(java-pkg_get-current-vm)
-	# the VM symlinks are installed specifically to /usr/lib (not get_libdir), bug 380853
-	local vmhome="/usr/lib/jvm/${vm}"
 
 	# IcedTea6 can't be built using IcedTea7; its class files are too new
-	if [[ "${vm}" == "icedtea6" ]] || [[ "${vm}" == "icedtea6-bin" ]] ; then
-		# If we are upgrading icedtea, then we don't need to bootstrap.
-		config="${config} --with-jdk-home=$(java-config -O) --disable-bootstrap"
-	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" ]] ; then
-		# For other 1.5 JDKs e.g. GCJ, CACAO.
-		config="${config} --with-ecj-jar=/usr/share/eclipse-ecj/ecj.jar" \
-		config="${config} --with-jdk-home=${vmhome}"
+	if has "${vm}" icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6; then
+		if host-is-pax; then
+			if use jbootstrap; then
+				einfo "We can't currently bootstrap with a PaX enabled kernel :("
+				einfo "bootstrap forced off, ignoring use jbootstrap"
+			fi
+			config="${config} --disable-bootstrap"
+		else
+			config="${config} $(use_enable jbootstrap bootstrap)"
+		fi
+	elif has "${vm}" gcj-jdk; then
+		if host-is-pax; then
+			eerror "Can't currently bootstrap IcedTea using gcj-jdk or cacao on a PaX enabled host"
+			eerror "Sorry for the inconvenience"
+			die "Use an existing IcedTea build instead or disable PaX on the host"
+		fi
+		if ! use jbootstrap; then
+			einfo "bootstrap forced on for ${vm}, ignoring use jbootstrap"
+		fi
+		# For other 1.5 JDKs e.g. GCJ
+		config="${config} --with-ecj-jar=${EPREFIX}/usr/share/eclipse-ecj/ecj.jar"
 	else
 		eerror "IcedTea${SLOT} must be built with either a JDK based on GNU Classpath or an existing build of IcedTea${SLOT}."
-		die "Install a GNU Classpath JDK (gcj-jdk, cacao)"
+		die "Install a GNU Classpath JDK (gcj-jdk)"
 	fi
 
-	# OpenJDK-specific parallelism support.
-	procs=$(echo ${MAKEOPTS} | sed -r 's/.*-j\W*([0-9]+).*/\1/')
-	if [[ -n ${procs} ]] ; then
-		config="${config} --with-parallel-jobs=${procs}";
-		einfo "Configuring using --with-parallel-jobs=${procs}"
-	fi
+	# OpenJDK-specific parallelism support. Bug #389791, #337827
+	# Implementation modified from waf-utils.eclass
+	# Note that "-j" is converted to "-j1" as the system doesn't support --load-average
+	local procs=$(echo -j1 ${MAKEOPTS} | sed -r "s/.*(-j\s*|--jobs=)([0-9]+).*/\2/" )
+	config="${config} --with-parallel-jobs=${procs}";
+	einfo "Configuring using --with-parallel-jobs=${procs}"
 
-	if use_zero ; then
+	if need_zero ; then
 		config="${config} --enable-zero"
 	else
 		config="${config} --disable-zero"
@@ -212,14 +208,6 @@ src_configure() {
 		config="${config} --with-hotspot-build=hs20 --with-hotspot-src-zip=${DISTDIR}/${HOTSPOT_TARBALL}"
 	fi
 
-	if use cacao ; then
-		config="${config} --with-cacao-src-zip=${DISTDIR}/${CACAO_TARBALL}"
-	fi
-
-	if use jamvm ; then
-		config="${config} --with-jamvm-src-zip=${DISTDIR}/${JAMVM_TARBALL}"
-	fi
-
 	unset_vars
 
 	econf ${config} \
@@ -227,90 +215,99 @@ src_configure() {
 		--with-jaxp-drop-zip="${DISTDIR}/${JAXP_TARBALL}" \
 		--with-jaxws-drop-zip="${DISTDIR}/${JAXWS_TARBALL}" \
 		--with-jaf-drop-zip="${DISTDIR}/${JAF_TARBALL}" \
+		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_with javascript rhino ${rhino_jar}) \
-		$(use_enable cacao) \
-		$(use_enable jamvm) \
+		--disable-cacao \
+		--disable-jamvm \
 		$(use_enable pulseaudio pulse-java) \
-		$(use_enable xrender) \
+		--enable-xrender \
 		$(use_enable systemtap) \
 		$(use_enable nio2) \
-		$(use_enable nss) \
-		|| die "configure failed"
+		$(use_enable nss)
 }
 
 src_compile() {
 	# Newer versions of Gentoo's ant add
 	# an environment variable so it works properly...
 	export ANT_RESPECT_JAVA_HOME=TRUE
+
 	# ant -diagnostics in Ant 1.8.0 fails without these
 	# otherwise we try to load the least that's needed to avoid possible classpath collisions
 	export ANT_TASKS="xerces-2 xalan ant-nodeps"
 
-	# Paludis does not respect unset from src_configure
-	unset_vars
-	emake || die "make failed"
+	emake
 }
 
 src_install() {
 	local dest="/usr/$(get_libdir)/icedtea${SLOT}"
-	local ddest="${D}/${dest}"
-	dodir "${dest}" || die
+	local ddest="${ED}/${dest}"
+	dodir "${dest}"
 
-	dodoc README NEWS AUTHORS THANKYOU || die
-	dosym "/usr/share/doc/${PF}" "/usr/share/doc/${PN}${SLOT}"
+	dodoc README NEWS AUTHORS THANKYOU
+	dosym /usr/share/doc/${PF} /usr/share/doc/${PN}${SLOT}
 
-	cd "${S}/openjdk.build/j2sdk-image" || die
-
-	if use doc ; then
-		# java-pkg_dohtml needed for package-list #302654
-		java-pkg_dohtml -r ../docs/* || die "Failed to install documentation"
-	fi
+	cd openjdk.build/j2sdk-image || die
 
 	# doins can't handle symlinks.
-	cp -vRP bin include jre lib man "${ddest}" || die "failed to copy"
+	cp -vRP bin include jre lib man "${ddest}" || die
 
-	# Set PaX markings on all JDK/JRE executables to allow code-generation on
-	# the heap by the JIT compiler.
-	pax-mark m $(list-paxables "${ddest}"{,/jre}/bin/*)
+	dodoc ASSEMBLY_EXCEPTION THIRD_PARTY_README
 
-	dodoc ASSEMBLY_EXCEPTION THIRD_PARTY_README || die
+	if use doc; then
+		# java-pkg_dohtml needed for package-list #302654
+		java-pkg_dohtml -r ../docs/* || die
+	fi
 
 	if use examples; then
 		dodir "${dest}/share";
 		cp -vRP demo sample "${ddest}/share/" || die
 	fi
 
-	cp src.zip "${ddest}" || die
+	if use source; then
+		cp src.zip "${ddest}" || die
+	fi
 
 	# Fix the permissions.
 	find "${ddest}" \! -type l \( -perm /111 -exec chmod 755 {} \; -o -exec chmod 644 {} \; \) || die
 
+	# Needs to be done before generating cacerts
+	java-vm_set-pax-markings "${ddest}"
+
 	# We need to generate keystore - bug #273306
-	einfo "Generating cacerts file from certificates in /usr/share/ca-certificates/"
+	einfo "Generating cacerts file from certificates in ${EPREFIX}/usr/share/ca-certificates/"
 	mkdir "${T}/certgen" && cd "${T}/certgen" || die
 	cp "${FILESDIR}/generate-cacerts.pl" . && chmod +x generate-cacerts.pl || die
-	for c in /usr/share/ca-certificates/*/*.crt; do
+	for c in "${EPREFIX}"/usr/share/ca-certificates/*/*.crt; do
 		openssl x509 -text -in "${c}" >> all.crt || die
 	done
 	./generate-cacerts.pl "${ddest}/bin/keytool" all.crt || die
 	cp -vRP cacerts "${ddest}/jre/lib/security/" || die
 	chmod 644 "${ddest}/jre/lib/security/cacerts" || die
 
-	sed -e "s#@SLOT@#${SLOT}#g" \
-		-e "s#@PV@#${ICEDTEA_VER}#g" \
-		-e "s#@LIBDIR@#$(get_libdir)#g" \
-		< "${FILESDIR}/icedtea.env" > "${T}/icedtea.env"
-	set_java_env "${T}/icedtea.env"
+	# Bug 390663
+	cp "${FILESDIR}"/fontconfig.Gentoo.properties.src "${T}"/fontconfig.Gentoo.properties || die
+	eprefixify "${T}"/fontconfig.Gentoo.properties
+	insinto "${dest}"/jre/lib
+	doins "${T}"/fontconfig.Gentoo.properties
+
+	set_java_env "${FILESDIR}/icedtea.env"
 }
 
-use_zero() {
-	use zero || ( ! use amd64 && ! use x86 && ! use sparc )
+need_zero() {
+	! use amd64 && ! use x86 && ! use sparc
 }
 
-pkg_postinst() {
-	# Set as default VM if none exists
-	java-vm-2_pkg_postinst
+pkg_preinst() {
+	if has_version "<=dev-java/icedtea-6.1.10.4:${SLOT}"; then
+		# portage would preserve the symlink otherwise, related to bug #384397
+		rm -f "${EROOT}/usr/lib/jvm/icedtea6"
+		elog "To unify the layout and simplify scripts, the identifier of Icedtea-6*"
+		elog "has changed from 'icedtea6' to 'icedtea-6' starting from version 6.1.10.4-r1"
+		elog "If you had icedtea6 as system VM, the change should be automatic, however"
+		elog "build VM settings in /etc/java-config-2/build/jdk.conf are not changed"
+		elog "and the same holds for any user VM settings. Sorry for the inconvenience."
+	fi
 }

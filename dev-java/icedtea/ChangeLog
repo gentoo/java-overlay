@@ -2,6 +2,23 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.0-r2 (28 Nov 2011)
+*icedtea-6.1.10.4-r2 (28 Nov 2011)
+
+  28 Nov 2011; Ralph Sennhauser <sera@gentoo.org> -icedtea-6.1.10.4.ebuild,
+  -icedtea-6.1.10.4-r1.ebuild, +icedtea-6.1.10.4-r2.ebuild,
+  -icedtea-7.2.0.ebuild, -icedtea-7.2.0-r1.ebuild, +icedtea-7.2.0-r2.ebuild,
+  metadata.xml:
+  Install Gentoo specific fontconfig properties file. #390663
+  Add missing dependency on pkgconfig. #391987
+  Add use flag X and cjk to install expected fonts. #349916
+  Add use flag source and install src.zip conditionally.
+  Add use flag jbootstrap and make bootstrap optional where possible.
+  Remove use flag xrender and require libXrender for icedtea:6, icedtea:7 does
+  this already. #382867
+  Use @SLOT@ substitution in set_java_env.
+  Prefixify.
+
   21 Nov 2011; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.10.4-r1.ebuild,
   icedtea-7.2.0-r1.ebuild:
   Use java-vm-2.eclass to set PaX markings

@@ -19,6 +19,7 @@
   <flag name="hs19">Use the new version of HotSpot (19).</flag>
   <flag name="hs20">Use the new version of HotSpot (20).</flag>
   <flag name="jamvm">Use the JamVM virtual machine instead of HotSpot.</flag>
+  <flag name="jbootstrap">If possible, recompile the final IcedTea executables with itself.</flag>
   <flag name="nio2">Enable backport of NIO2 to OpenJDK6.</flag>
   <flag name="nss">Enable NSS security provider support.</flag>
   <flag name="nsplugin">Enable browser plugin (NPPlugin), requires also the webstart flag to be enabled.</flag>

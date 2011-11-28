@@ -1,6 +1,6 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.0-r1.ebuild,v 1.18 2011/11/21 11:40:06 sera Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.0-r2.ebuild,v 1.1 2011/11/28 15:29:59 sera Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
 # *********************************************************
@@ -9,7 +9,7 @@
 
 EAPI="4"
 
-inherit flag-o-matic java-pkg-2 java-vm-2 versionator
+inherit java-pkg-2 java-vm-2 pax-utils prefix versionator
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="7"
@@ -38,37 +38,47 @@ S=${WORKDIR}/${ICEDTEA_PKG}
 
 # Missing options:
 # shark - needs adding
-IUSE="debug doc examples javascript +nsplugin pulseaudio systemtap +webstart"
+IUSE="X debug cjk doc examples javascript +jbootstrap +nsplugin pulseaudio +source systemtap +webstart"
 
-RDEPEND=">=net-print/cups-1.2.12
-	 >=x11-libs/libX11-1.1.3
-	 >=media-libs/freetype-2.3.5
-	 >=media-libs/alsa-lib-1.0
-	 >=x11-libs/gtk+-2.8:2
-	 >=x11-libs/libXinerama-1.0.2
-	 >=x11-libs/libXp-1.0.0
-	 >=x11-libs/libXi-1.1.3
-	 >=x11-libs/libXau-1.0.3
-	 >=x11-libs/libXdmcp-1.0.2
-	 >=x11-libs/libXtst-1.0.3
-	 >=x11-libs/libXext-1.1.1
-	 virtual/jpeg
-	 >=media-libs/libpng-1.2
-	 >=media-libs/giflib-4.1.6
-	 media-libs/lcms:2
-	 >=sys-libs/zlib-1.2.3
-	 x11-proto/inputproto
-	 x11-proto/xineramaproto
-	 pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
-	 javascript? ( dev-java/rhino:1.6 )
-	 ppc? ( virtual/libffi )
-	 ppc64? ( virtual/libffi )
-	 >=x11-libs/libXrender-0.9.4
-	 systemtap? ( >=dev-util/systemtap-1 )
-	 !dev-java/icedtea:0
-	 sys-apps/attr
-	 >=dev-libs/glib-2.26
-	 media-libs/fontconfig"
+RDEPEND="!dev-java/icedtea:0
+	>=dev-libs/glib-2.26
+	>=media-libs/alsa-lib-1.0
+	media-libs/fontconfig
+	>=media-libs/freetype-2.3.5
+	>=media-libs/giflib-4.1.6
+	media-libs/lcms:2
+	>=media-libs/libpng-1.2
+	>=net-print/cups-1.2.12
+	sys-apps/attr
+	>=sys-libs/zlib-1.2.3
+	virtual/jpeg
+	>=x11-libs/gtk+-2.8:2
+	>=x11-libs/libX11-1.1.3
+	>=x11-libs/libXau-1.0.3
+	>=x11-libs/libXdmcp-1.0.2
+	>=x11-libs/libXext-1.1.1
+	>=x11-libs/libXi-1.1.3
+	>=x11-libs/libXinerama-1.0.2
+	>=x11-libs/libXp-1.0.0
+	>=x11-libs/libXrender-0.9.4
+	>=x11-libs/libXtst-1.0.3
+	x11-proto/inputproto
+	x11-proto/xineramaproto
+	X? (
+	 	media-fonts/dejavu
+		cjk? (
+			media-fonts/arphicfonts
+			media-fonts/baekmuk-fonts
+			media-fonts/lklug
+			media-fonts/lohit-fonts
+			media-fonts/sazanami
+		)
+	)
+	javascript? ( dev-java/rhino:1.6 )
+	ppc64? ( virtual/libffi )
+	ppc? ( virtual/libffi )
+	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
+	systemtap? ( >=dev-util/systemtap-1 )"
 
 # Additional dependencies for building:
 #   zip: extract OpenJDK tarball, and needed by configure
@@ -86,6 +96,7 @@ DEPEND="${RDEPEND}
 		dev-java/icedtea:6
 	)
 	app-arch/zip
+	dev-util/pkgconfig
 	>=dev-libs/libxslt-1.1.26
 	>=x11-proto/xextproto-7.1.1
 	x11-proto/xproto
@@ -111,9 +122,7 @@ pkg_setup() {
 		elog "Note that the nsplugin flag implies the webstart flag. Enable it to remove this message."
 	fi
 
-	if [[ "${MERGE_TYPE}" == "binary" ]]; then
-		return
-	fi
+	[[ "${MERGE_TYPE}" == "binary" ]] && return #258423
 
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
@@ -173,16 +182,29 @@ src_configure() {
 	local vm=$(java-pkg_get-current-vm)
 
 	if has "${vm}" icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6; then
-		# We can't currently bootstrap with a IcedTea6 JVM :(
+		if use jbootstrap; then
+			einfo "We can't currently bootstrap with a IcedTea6 JVM :("
+			einfo "bootstrap forced off, ignoring use jbootstrap"
+		fi
 		config="${config} --disable-bootstrap"
 	elif has "${vm}" icedtea7 icedtea-7 icedtea-bin-7; then
-		# We can't currently bootstrap with a PaX enabled kernel :(
-		host-is-pax && config="${config} --disable-bootstrap"
-	elif has "${vm}" gcj-jdk ; then
+		if host-is-pax; then
+			if use jbootstrap; then
+				einfo "We can't currently bootstrap with a PaX enabled kernel :("
+				einfo "bootstrap forced off, ignoring use jbootstrap"
+			fi
+			config="${config} --disable-bootstrap"
+		else
+			config="${config} $(use_enable jbootstrap bootstrap)"
+		fi
+	elif has "${vm}" gcj-jdk; then
 		if host-is-pax; then
 			eerror "Can't currently bootstrap IcedTea using gcj-jdk or cacao on a PaX enabled host"
 			eerror "Sorry for the inconvenience"
 			die "Use an existing IcedTea build instead or disable PaX on the host"
+		fi
+		if ! use jbootstrap; then
+			einfo "bootstrap forced on for ${vm}, ignoring use jbootstrap"
 		fi
 	else
 		eerror "IcedTea must be built with either a JDK based on GNU Classpath or an existing build of IcedTea."
@@ -241,35 +263,35 @@ src_compile() {
 
 src_install() {
 	local dest="/usr/$(get_libdir)/icedtea${SLOT}"
-	local ddest="${D}/${dest}"
+	local ddest="${ED}/${dest}"
 	dodir "${dest}"
 
-	local arch=${ARCH}
-
 	dodoc README NEWS AUTHORS
-	dosym "/usr/share/doc/${PF}" "/usr/share/doc/${PN}${SLOT}"
+	dosym /usr/share/doc/${PF} /usr/share/doc/${PN}${SLOT}
 
-	cd "${S}/openjdk.build/j2sdk-image" || die
+	cd openjdk.build/j2sdk-image || die
 
 	# Don't hide classes
-	rm -f lib/ct.sym
-
-	if use doc ; then
-		# java-pkg_dohtml needed for package-list #302654
-		java-pkg_dohtml -r ../docs/* || die "Failed to install documentation"
-	fi
+	rm lib/ct.sym || die
 
 	# doins can't handle symlinks.
-	cp -vRP bin include jre lib man "${ddest}" || die "failed to copy"
+	cp -vRP bin include jre lib man "${ddest}" || die
 
 	dodoc ASSEMBLY_EXCEPTION THIRD_PARTY_README
+
+	if use doc; then
+		# java-pkg_dohtml needed for package-list #302654
+		java-pkg_dohtml -r ../docs/* || die
+	fi
 
 	if use examples; then
 		dodir "${dest}/share";
 		cp -vRP demo sample "${ddest}/share/" || die
 	fi
 
-	cp src.zip "${ddest}" || die
+	if use source; then
+		cp src.zip "${ddest}" || die
+	fi
 
 	# Fix the permissions.
 	find "${ddest}" \! -type l \( -perm /111 -exec chmod 755 {} \; -o -exec chmod 644 {} \; \) || die
@@ -278,22 +300,24 @@ src_install() {
 	java-vm_set-pax-markings "${ddest}"
 
 	# We need to generate keystore - bug #273306
-	einfo "Generating cacerts file from certificates in /usr/share/ca-certificates/"
+	einfo "Generating cacerts file from certificates in ${EPREFIX}/usr/share/ca-certificates/"
 	mkdir "${T}/certgen" && cd "${T}/certgen" || die
 	cp "${FILESDIR}/generate-cacerts.pl" . && chmod +x generate-cacerts.pl || die
-	for c in /usr/share/ca-certificates/*/*.crt; do
+	for c in "${EPREFIX}"/usr/share/ca-certificates/*/*.crt; do
 		openssl x509 -text -in "${c}" >> all.crt || die
 	done
 	./generate-cacerts.pl "${ddest}/bin/keytool" all.crt || die
 	cp -vRP cacerts "${ddest}/jre/lib/security/" || die
 	chmod 644 "${ddest}/jre/lib/security/cacerts" || die
 
-	sed -e "s#@SLOT@#${SLOT}#g" \
-		-e "s#@PV@#${ICEDTEA_VER}#g" \
-		-e "s#@LIBDIR@#$(get_libdir)#g" \
-		< "${FILESDIR}/icedtea.env" > "${T}/icedtea.env"
-	set_java_env "${T}/icedtea.env"
+	# OpenJDK7 should be able to use fontconfig instead, but wont hurt to
+	# install it anyway. Bug 390663
+	cp "${FILESDIR}"/fontconfig.Gentoo.properties.src "${T}"/fontconfig.Gentoo.properties || die
+	eprefixify "${T}"/fontconfig.Gentoo.properties
+	insinto "${dest}"/jre/lib
+	doins "${T}"/fontconfig.Gentoo.properties
 
+	set_java_env "${FILESDIR}/icedtea.env"
 	java-vm_sandbox-predict /dev/random /proc/self/coredump_filter
 }
 
@@ -304,7 +328,7 @@ need_zero() {
 pkg_preinst() {
 	if has_version "<=dev-java/icedtea-7.2.0:7"; then
 		# portage would preserve the symlink otherwise, related to bug #384397
-		rm -f "${ROOT}/usr/lib/jvm/icedtea7"
+		rm -f "${EROOT}/usr/lib/jvm/icedtea7"
 		elog "To unify the layout and simplify scripts, the identifier of Icedtea-7*"
 		elog "has changed from 'icedtea7' to 'icedtea-7' starting from version 7.2.0-r1"
 		elog "If you had icedtea7 as system VM, the change should be automatic, however"
