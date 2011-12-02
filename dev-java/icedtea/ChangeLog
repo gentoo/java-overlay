@@ -2,6 +2,25 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.0-r3 (02 Dec 2011)
+*icedtea-6.1.10.4-r3 (02 Dec 2011)
+
+  02 Dec 2011; Ralph Sennhauser <sera@gentoo.org> -icedtea-6.1.10.4-r2.ebuild,
+  +icedtea-6.1.10.4-r3.ebuild, -icedtea-7.2.0-r2.ebuild,
+  +icedtea-7.2.0-r3.ebuild, metadata.xml:
+  - Fix bootstrap build for PaX enabled kernels. #389751
+  - Add missing dependency on ecj for use jbootstrap #392337
+  - Don't use eclipse-ecj:3.7 for icedtea:6 #392587
+  - Add various missing dependencies according to scanelf results.
+  icedtea-7: dev-libs/atk sys-devel/gcc sys-libs/glibc x11-libs/cairo
+  x11-libs/gdk-pixbuf x11-libs/pango nss? ( dev-libs/nss )
+  icedtea-6: dev-libs/glib sys-devel/gcc sys-libs/glibc
+  - Fix libffi dependency for non ppc archs.
+  - Make dependencies optional at runtime as for icedtea-bin for installing via
+  binpkg. Use flags are X alsa cups.
+  - Allow building cacao and jamvm as additional VMs. To use run java -cacao
+  respectively java -jamvm. Use flags are cacao and jamvm.
+
   28 Nov 2011; Miroslav Šulc <fordfrog@gentoo.org>
   +files/fontconfig.Gentoo.properties.src:
   Adding ommitted fontconfig file
