@@ -1,0 +1,16 @@
+Author: Ralph Sennhauser <sera@gentoo.org>
+
+The llvm libdir isn't in the default search path on Gentoo. Adding path explicitely.
+
+diff --git a/configure.ac b/configure.ac
+index 580840e..852f5a8 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -444,6 +444,7 @@ if test "x${SHARK_BUILD_TRUE}" = x || test "x${ADD_SHARK_BUILD_TRUE}" = x; then
+       LLVM_LDFLAGS="$LLVM_LDFLAGS$flag"
+     fi
+   done
++  LLVM_LDFLAGS="$LLVM_LDFLAGS -Wl,-rpath,$($LLVM_CONFIG --libdir)"
+   dnl LLVM_LIBS
+   LIBS_SAVED=$LIBS
+   LDFLAGS_SAVED=$LDFLAGS

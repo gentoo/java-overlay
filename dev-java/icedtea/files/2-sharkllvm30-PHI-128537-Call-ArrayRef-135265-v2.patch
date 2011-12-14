@@ -1,0 +1,218 @@
+Taken from:
+http://mail.openjdk.java.net/pipermail/zero-dev/2011-August/000399.html
+
+Index: icedtea6-shark-llvm-3.0/openjdk/hotspot/src/share/vm/shark/sharkBlock.cpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkBlock.cpp	2011-08-31 11:33:05.404964248 +0200
++++ openjdk/hotspot/src/share/vm/shark/sharkBlock.cpp	2011-08-31 11:33:11.164992604 +0200
+@@ -1000,9 +1000,9 @@
+   builder()->SetInsertPoint(done);
+   PHINode *result;
+   if (is_long)
+-    result = builder()->CreatePHI(SharkType::jlong_type(), "result");
++    result = builder()->CreatePHI(SharkType::jlong_type(), 0, "result");
+   else
+-    result = builder()->CreatePHI(SharkType::jint_type(), "result");
++    result = builder()->CreatePHI(SharkType::jint_type(), 0, "result");
+   result->addIncoming(special_result, special_case);
+   result->addIncoming(general_result, general_case);
+ 
+@@ -1105,7 +1105,7 @@
+   builder()->CreateBr(done);
+ 
+   builder()->SetInsertPoint(done);
+-  PHINode *result = builder()->CreatePHI(SharkType::jint_type(), "result");
++  PHINode *result = builder()->CreatePHI(SharkType::jint_type(), 0, "result");
+   result->addIncoming(LLVMValue::jint_constant(-1), lt);
+   result->addIncoming(LLVMValue::jint_constant(0),  eq);
+   result->addIncoming(LLVMValue::jint_constant(1),  gt);
+@@ -1152,7 +1152,7 @@
+   builder()->CreateBr(done);
+ 
+   builder()->SetInsertPoint(done);
+-  PHINode *result = builder()->CreatePHI(SharkType::jint_type(), "result");
++  PHINode *result = builder()->CreatePHI(SharkType::jint_type(), 0, "result");
+   result->addIncoming(LLVMValue::jint_constant(-1), lt);
+   result->addIncoming(LLVMValue::jint_constant(0),  eq);
+   result->addIncoming(LLVMValue::jint_constant(1),  gt);
+Index: icedtea6-shark-llvm-3.0/openjdk/hotspot/src/share/vm/shark/sharkBuilder.cpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkBuilder.cpp	2011-08-31 11:33:05.404964248 +0200
++++ openjdk/hotspot/src/share/vm/shark/sharkBuilder.cpp	2011-08-31 13:59:28.604517829 +0200
+@@ -465,7 +465,7 @@
+     LLVMValue::bit_constant((flags & BARRIER_STORESTORE) ? 1 : 0),
+     LLVMValue::bit_constant(1)};
+ 
+-  return CreateCall(memory_barrier(), args, args + 5);
++  return CreateCall(memory_barrier(), llvm::makeArrayRef(args));
+ }
+ 
+ CallInst* SharkBuilder::CreateMemset(Value* dst,
+Index: icedtea6-shark-llvm-3.0/openjdk/hotspot/src/share/vm/shark/sharkIntrinsics.cpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkIntrinsics.cpp	2011-07-05 20:31:05.000000000 +0200
++++ openjdk/hotspot/src/share/vm/shark/sharkIntrinsics.cpp	2011-08-31 11:33:11.200992924 +0200
+@@ -171,7 +171,7 @@
+   builder()->CreateBr(done);
+ 
+   builder()->SetInsertPoint(done);
+-  PHINode *phi = builder()->CreatePHI(a->getType(), "result");
++  PHINode *phi = builder()->CreatePHI(a->getType(), 0, "result");
+   phi->addIncoming(a, return_a);
+   phi->addIncoming(b, return_b);
+ 
+Index: icedtea6-shark-llvm-3.0/openjdk/hotspot/src/share/vm/shark/sharkNativeWrapper.cpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkNativeWrapper.cpp	2011-08-31 11:33:05.408964281 +0200
++++ openjdk/hotspot/src/share/vm/shark/sharkNativeWrapper.cpp	2011-08-31 13:58:49.448323631 +0200
+@@ -149,7 +149,7 @@
+       builder()->CreateBr(merge);
+ 
+       builder()->SetInsertPoint(merge);
+-      phi = builder()->CreatePHI(box_type, "boxed_object");
++      phi = builder()->CreatePHI(box_type, 0, "boxed_object");
+       phi->addIncoming(ConstantPointerNull::get(box_type), null);
+       phi->addIncoming(box, not_null);
+       box = phi;
+@@ -213,7 +213,7 @@
+      PointerType::getUnqual(
+        FunctionType::get(return_type, param_types, false)));
+   Value *result = builder()->CreateCall(
+-    native_function, param_values.begin(), param_values.end());
++    native_function, llvm::makeArrayRef(param_values));
+ 
+   // Start the transition back to _thread_in_Java
+   CreateSetThreadState(_thread_in_native_trans);
+@@ -305,7 +305,7 @@
+     builder()->CreateBr(merge);
+ 
+     builder()->SetInsertPoint(merge);
+-    PHINode *phi = builder()->CreatePHI(SharkType::oop_type(), "result");
++    PHINode *phi = builder()->CreatePHI(SharkType::oop_type(), 0, "result");
+     phi->addIncoming(LLVMValue::null(), null);
+     phi->addIncoming(unboxed_result, not_null);
+     result = phi;
+Index: icedtea6-shark-llvm-3.0/openjdk/hotspot/src/share/vm/shark/sharkTopLevelBlock.hpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkTopLevelBlock.hpp	2011-07-05 20:31:05.000000000 +0200
++++ openjdk/hotspot/src/share/vm/shark/sharkTopLevelBlock.hpp	2011-08-31 11:33:11.204992936 +0200
+@@ -290,7 +290,7 @@
+                           int           exception_action) {
+     decache_for_VM_call();
+     stack()->CreateSetLastJavaFrame();
+-    llvm::CallInst *res = builder()->CreateCall(callee, args_start, args_end);
++    llvm::CallInst *res = builder()->CreateCall(callee, llvm::makeArrayRef(args_start, args_end));
+     stack()->CreateResetLastJavaFrame();
+     cache_after_VM_call();
+     if (exception_action & EAM_CHECK) {
+Index: icedtea6-shark-llvm-3.0/openjdk/hotspot/src/share/vm/shark/sharkState.cpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkState.cpp	2011-07-05 20:31:05.000000000 +0200
++++ openjdk/hotspot/src/share/vm/shark/sharkState.cpp	2011-08-31 11:33:11.204992936 +0200
+@@ -131,7 +131,7 @@
+   Value *this_method = this->method();
+   Value *other_method = other->method();
+   if (this_method != other_method) {
+-    PHINode *phi = builder()->CreatePHI(SharkType::methodOop_type(), "method");
++    PHINode *phi = builder()->CreatePHI(SharkType::methodOop_type(), 0, "method");
+     phi->addIncoming(this_method, this_block);
+     phi->addIncoming(other_method, other_block);
+     set_method(phi);
+@@ -142,7 +142,7 @@
+   Value *other_oop_tmp = other->oop_tmp();
+   if (this_oop_tmp != other_oop_tmp) {
+     assert(this_oop_tmp && other_oop_tmp, "can't merge NULL with non-NULL");
+-    PHINode *phi = builder()->CreatePHI(SharkType::oop_type(), "oop_tmp");
++    PHINode *phi = builder()->CreatePHI(SharkType::oop_type(), 0, "oop_tmp");
+     phi->addIncoming(this_oop_tmp, this_block);
+     phi->addIncoming(other_oop_tmp, other_block);
+     set_oop_tmp(phi);
+@@ -287,7 +287,7 @@
+   char name[18];
+ 
+   // Method
+-  set_method(builder()->CreatePHI(SharkType::methodOop_type(), "method"));
++  set_method(builder()->CreatePHI(SharkType::methodOop_type(), 0, "method"));
+ 
+   // Local variables
+   for (int i = 0; i < max_locals(); i++) {
+@@ -307,7 +307,7 @@
+     case T_ARRAY:
+       snprintf(name, sizeof(name), "local_%d_", i);
+       value = SharkValue::create_phi(
+-        type, builder()->CreatePHI(SharkType::to_stackType(type), name));
++        type, builder()->CreatePHI(SharkType::to_stackType(type), 0, name));
+       break;
+ 
+     case T_ADDRESS:
+@@ -345,7 +345,7 @@
+     case T_ARRAY:
+       snprintf(name, sizeof(name), "stack_%d_", i);
+       value = SharkValue::create_phi(
+-        type, builder()->CreatePHI(SharkType::to_stackType(type), name));
++        type, builder()->CreatePHI(SharkType::to_stackType(type), 0, name));
+       break;
+ 
+     case T_ADDRESS:
+Index: icedtea6-shark-llvm-3.0/openjdk/hotspot/src/share/vm/shark/sharkTopLevelBlock.cpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkTopLevelBlock.cpp	2011-08-31 11:33:05.412964300 +0200
++++ openjdk/hotspot/src/share/vm/shark/sharkTopLevelBlock.cpp	2011-08-31 11:33:11.204992936 +0200
+@@ -1180,7 +1180,7 @@
+   builder()->CreateBr(loop);
+   builder()->SetInsertPoint(loop);
+   PHINode *itable_entry_addr = builder()->CreatePHI(
+-    SharkType::intptr_type(), "itable_entry_addr");
++    SharkType::intptr_type(), 0, "itable_entry_addr");
+   itable_entry_addr->addIncoming(itable_start, loop_entry);
+ 
+   Value *itable_entry = builder()->CreateIntToPtr(
+@@ -1526,7 +1526,7 @@
+   // First merge
+   builder()->SetInsertPoint(merge1);
+   PHINode *nonnull_result = builder()->CreatePHI(
+-    SharkType::jint_type(), "nonnull_result");
++    SharkType::jint_type(), 0, "nonnull_result");
+   nonnull_result->addIncoming(
+     LLVMValue::jint_constant(IC_IS_INSTANCE), is_instance);
+   nonnull_result->addIncoming(
+@@ -1537,7 +1537,7 @@
+   // Second merge
+   builder()->SetInsertPoint(merge2);
+   PHINode *result = builder()->CreatePHI(
+-    SharkType::jint_type(), "result");
++    SharkType::jint_type(), 0, "result");
+   result->addIncoming(LLVMValue::jint_constant(IC_IS_NULL), null_block);
+   result->addIncoming(nonnull_result, nonnull_block);
+ 
+@@ -1713,7 +1713,7 @@
+     builder()->SetInsertPoint(initialize);
+     if (tlab_object) {
+       PHINode *phi = builder()->CreatePHI(
+-        SharkType::oop_type(), "fast_object");
++        SharkType::oop_type(), 0, "fast_object");
+       phi->addIncoming(tlab_object, got_tlab);
+       phi->addIncoming(heap_object, got_heap);
+       fast_object = phi;
+@@ -1773,7 +1773,7 @@
+     builder()->SetInsertPoint(push_object);
+   }
+   if (fast_object) {
+-    PHINode *phi = builder()->CreatePHI(SharkType::oop_type(), "object");
++    PHINode *phi = builder()->CreatePHI(SharkType::oop_type(), 0, "object");
+     phi->addIncoming(fast_object, got_fast);
+     phi->addIncoming(slow_object, got_slow);
+     object = phi;
+Index: icedtea6-shark-llvm-3.0/openjdk/hotspot/src/share/vm/shark/sharkValue.cpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkValue.cpp	2011-07-05 20:31:05.000000000 +0200
++++ openjdk/hotspot/src/share/vm/shark/sharkValue.cpp	2011-08-31 11:33:11.204992936 +0200
+@@ -233,7 +233,7 @@
+   assert(type() == other->type(), "should be");
+   assert(zero_checked() == other->zero_checked(), "should be");
+ 
+-  PHINode *phi = builder->CreatePHI(SharkType::to_stackType(type()), name);
++  PHINode *phi = builder->CreatePHI(SharkType::to_stackType(type()), 0, name);
+   phi->addIncoming(this->generic_value(), this_block);
+   phi->addIncoming(other->generic_value(), other_block);
+   return SharkValue::create_generic(type(), phi, zero_checked());

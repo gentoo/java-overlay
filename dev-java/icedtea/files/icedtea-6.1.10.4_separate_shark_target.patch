@@ -1,0 +1,207 @@
+Author: Ralph Sennhauser <sera@gentoo.org>
+
+Split out add-shark target.
+
+This way the shark build will end up in shark instead of zero and java -zero
+will work as expected. Ie. allows for easier setup of per app vm preferences
+if desired. Also removes a bunch of conditionals which will simplify writing
+jvm.cfg correctly without a full rebuild.
+
+diff --git a/Makefile.am b/Makefile.am
+index 82ef261..7e7d5fc 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -1416,24 +1416,24 @@ clean-icedtea-debug:
+ 	rm -f stamps/icedtea-debug.stamp
+ 
+ stamps/icedtea-against-icedtea.stamp: stamps/icedtea.stamp \
+- stamps/add-jamvm.stamp stamps/add-cacao.stamp stamps/add-zero.stamp \
++ stamps/add-jamvm.stamp stamps/add-cacao.stamp stamps/add-zero.stamp stamps/add-shark.stamp \
+  stamps/add-systemtap.stamp stamps/add-pulseaudio.stamp stamps/add-nss.stamp stamps/add-tzdata-support.stamp
+ 	mkdir -p stamps
+ 	touch stamps/icedtea-against-icedtea.stamp
+ 
+-clean-icedtea-against-icedtea: clean-add-jamvm clean-add-zero clean-add-cacao \
++clean-icedtea-against-icedtea: clean-add-jamvm clean-add-zero clean-add-cacao clean-add-shark \
+  clean-add-systemtap clean-add-pulseaudio \
+  clean-add-nss clean-add-tzdata-support
+ 	rm -f stamps/icedtea-against-icedtea.stamp
+ 
+ stamps/icedtea-debug-against-icedtea.stamp: stamps/icedtea-debug.stamp \
+- stamps/add-jamvm-debug.stamp stamps/add-cacao-debug.stamp \
++ stamps/add-jamvm-debug.stamp stamps/add-cacao-debug.stamp stamps/add-shark-debug.stamp \
+  stamps/add-zero-debug.stamp stamps/add-systemtap-debug.stamp stamps/add-pulseaudio-debug.stamp \
+  stamps/add-nss-debug.stamp stamps/add-tzdata-support-debug.stamp
+ 	mkdir -p stamps
+ 	touch stamps/icedtea-debug-against-icedtea.stamp
+ 
+-clean-icedtea-debug-against-icedtea: clean-add-zero-debug \
++clean-icedtea-debug-against-icedtea: clean-add-zero-debug clean-add-zero-debug \
+  clean-add-jamvm-debug clean-add-cacao-debug clean-add-systemtap-debug \
+  clean-add-pulseaudio-debug clean-add-nss-debug clean-add-tzdata-support-debug
+ 	rm -f stamps/icedtea-debug-against-icedtea.stamp
+@@ -1947,12 +1947,8 @@ clean-add-cacao-debug:
+ CONFIGURE_ARGS = @CONFIGURE_ARGS@
+ ADD_ZERO_CONFIGURE_ARGS = \
+ 	--with-jdk-home=$(BUILD_OUTPUT_DIR)/j2sdk-image \
+-	--enable-zero
+-if ADD_SHARK_BUILD
+-ADD_ZERO_CONFIGURE_ARGS += \
+-	--enable-shark
+-endif
+-ADD_ZERO_CONFIGURE_ARGS += \
++	--disable-bootstrap \
++	--enable-zero \
+ 	--disable-docs \
+ 	$(filter-out '--with-jdk-home=% '--with-ecj=% \
+ 			'--with-java=% '--with-javah=% \
+@@ -1966,7 +1962,6 @@ ADD_ZERO_CONFIGURE_ARGS += \
+ 	$(if $(findstring --with-hotspot-src-zip=, $(CONFIGURE_ARGS)),, \
+ 	  --with-hotspot-src-zip=$(abs_top_builddir)/$(HOTSPOT_SRC_ZIP))
+ endif
+-ADD_ZERO_CONFIGURE_ARGS += --disable-bootstrap
+ 
+ ADD_ZERO_EXTRA_BUILD_ENV = \
+ 	BUILD_LANGTOOLS=false ALT_LANGTOOLS_DIST=$(BUILD_OUTPUT_DIR)/langtools/dist \
+@@ -2003,34 +1998,19 @@ if ADD_ZERO_BUILD
+ 	$(ADD_ZERO_EXTRA_BUILD_ENV) \
+ 		$(ARCH_PREFIX) $(MAKE) -C zerovm $(ICEDTEA_BUILD_TARGET)
+ 
+-if ZERO_BUILD
+-	mkdir -p $(BUILD_JRE_ARCH_DIR)/shark
+-	cp -a zerovm/$(BUILD_DIR)/hotspot/import/jre/lib/$(INSTALL_ARCH_DIR)/server/* \
+-		$(BUILD_JRE_ARCH_DIR)/shark/
+-	printf -- '-shark KNOWN\n' >> $(BUILD_JRE_ARCH_DIR)/jvm.cfg
+-else
+ 	mkdir -p $(BUILD_JRE_ARCH_DIR)/zero
+ 	cp -a zerovm/$(BUILD_DIR)/hotspot/import/jre/lib/$(INSTALL_ARCH_DIR)/server/* \
+ 		$(BUILD_JRE_ARCH_DIR)/zero/
+ 	printf -- '-zero KNOWN\n' >> $(BUILD_JRE_ARCH_DIR)/jvm.cfg
+-if ADD_SHARK_BUILD
+-	printf -- '-shark ALIASED_TO -zero\n' >> $(BUILD_JRE_ARCH_DIR)/jvm.cfg
+-else
+-	printf -- '-shark ERROR\n' >> $(BUILD_JRE_ARCH_DIR)/jvm.cfg
+-endif
+-endif
+ else
+ 	printf -- '-zero ERROR\n' >> $(BUILD_JRE_ARCH_DIR)/jvm.cfg
+-	printf -- '-shark ERROR\n' >> $(BUILD_JRE_ARCH_DIR)/jvm.cfg
+ endif
+ 	touch $@
+ 
+ clean-add-zero:
+ 	rm -rf $(BUILD_JRE_ARCH_DIR)/zero
+-	rm -rf $(BUILD_JRE_ARCH_DIR)/shark
+ 	rm -rf zerovm
+ 	sed -i 's#-zero KNOWN#-zero ERROR#' jvm.cfg
+-	sed -i 's#-shark KNOWN#-shark ERROR#' jvm.cfg
+ 	rm -f stamps/add-zero.stamp
+ 
+ stamps/add-zero-debug.stamp: stamps/icedtea-debug.stamp
+@@ -2044,30 +2024,96 @@ if ADD_ZERO_BUILD
+ 	$(ADD_ZERO_EXTRA_BUILD_ENV) \
+ 		$(ARCH_PREFIX) $(MAKE) -C zerovm $(ICEDTEA_DEBUG_BUILD_TARGET)
+ 
+-if ZERO_BUILD
+-	mkdir -p $(BUILD_DEBUG_JRE_ARCH_DIR)/shark
+-	cp -a zerovm/$(BUILD_DIR)/hotspot/import/jre/lib/$(INSTALL_ARCH_DIR)/server/* \
+-		$(BUILD_DEBUG_JRE_ARCH_DIR)/shark/
+-	printf -- '-shark KNOWN\n' >> $(BUILD_DEBUG_JRE_ARCH_DIR)/jvm.cfg
+-else
+ 	mkdir -p $(BUILD_DEBUG_JRE_ARCH_DIR)/zero
+ 	cp -a zerovm/$(BUILD_DIR)/hotspot/import/jre/lib/$(INSTALL_ARCH_DIR)/server/* \
+ 		$(BUILD_DEBUG_JRE_ARCH_DIR)/zero/
+ 	printf -- '-zero KNOWN\n' >> $(BUILD_DEBUG_JRE_ARCH_DIR)/jvm.cfg
+-endif
+ else
+ 	printf -- '-zero ERROR\n' >> $(BUILD_DEBUG_JRE_ARCH_DIR)/jvm.cfg
+-	printf -- '-shark ERROR\n' >> $(BUILD_DEBUG_JRE_ARCH_DIR)/jvm.cfg
+ endif
+ 	touch $@
+ 
+ clean-add-zero-debug:
+ 	rm -rf $(BUILD_DEBUG_JRE_ARCH_DIR)/zero
+-	rm -rf $(BUILD_JRE_ARCH_DIR)/shark
+ 	rm -rf zerovm
+ 	sed -i 's#-zero KNOWN#-zero ERROR#' jvm.cfg
+-	sed -i 's#-shark KNOWN#-shark ERROR#' jvm.cfg
+ 	rm -f stamps/add-zero-debug.stamp
++ 
++ADD_SHARK_CONFIGURE_ARGS = \
++       $(ADD_ZERO_CONFIGURE_ARGS) \
++       --enable-shark
++
++ADD_SHARK_EXTRA_BUILD_ENV = \
++       $(ADD_ZERO_EXTRA_BUILD_ENV)
++
++
++stamps/add-shark.stamp: stamps/icedtea.stamp
++if ADD_SHARK_BUILD
++	mkdir -p sharkvm
++
++	cd sharkvm && \
++	    $(ADD_SHARK_EXTRA_BUILD_ENV) \
++		$(ARCH_PREFIX) $(abs_top_srcdir)/configure $(ADD_SHARK_CONFIGURE_ARGS)
++
++	: # create directories which are expected by icedtea components,
++	: # implicitly assumed to be created by the jdk build.
++	mkdir -p $(patsubst $(abs_top_builddir)/%,$(abs_top_builddir)/sharkvm/%, \
++	  $(ECJ_BUILD_OUTPUT_DIR)/j2sdk-image/jre/lib/$(INSTALL_ARCH_DIR) \
++	  $(ECJ_BUILD_OUTPUT_DIR)/j2sdk-image/man/man1 \
++	  $(ECJ_BUILD_OUTPUT_DIR)/j2re-image/lib/$(INSTALL_ARCH_DIR) \
++	  $(ECJ_BUILD_OUTPUT_DIR)/j2re-image/man/man1 \
++	  $(BUILD_OUTPUT_DIR)/j2sdk-image/jre/lib/$(INSTALL_ARCH_DIR) \
++	  $(BUILD_OUTPUT_DIR)/j2sdk-image/man/man1 \
++	  $(BUILD_OUTPUT_DIR)/j2re-image/lib/$(INSTALL_ARCH_DIR) \
++	  $(BUILD_OUTPUT_DIR)/j2re-image/man/man1 \
++	  $(DEBUG_BUILD_OUTPUT_DIR)/j2sdk-image/jre/lib/$(INSTALL_ARCH_DIR) \
++	  $(DEBUG_BUILD_OUTPUT_DIR)/j2sdk-image/man/man1 \
++	  $(DEBUG_BUILD_OUTPUT_DIR)/j2re-image/lib/$(INSTALL_ARCH_DIR) \
++	  $(DEBUG_BUILD_OUTPUT_DIR)/j2re-image/man/man1)
++
++	$(ADD_SHARK_EXTRA_BUILD_ENV) \
++		$(ARCH_PREFIX) $(MAKE) -C sharkvm $(ICEDTEA_BUILD_TARGET)
++
++	mkdir -p $(BUILD_JRE_ARCH_DIR)/shark
++	cp -a sharkvm/$(BUILD_DIR)/hotspot/import/jre/lib/$(INSTALL_ARCH_DIR)/server/* \
++		$(BUILD_JRE_ARCH_DIR)/shark/
++	printf -- '-shark KNOWN\n' >> $(BUILD_JRE_ARCH_DIR)/jvm.cfg
++else
++	printf -- '-shark ERROR\n' >> $(BUILD_JRE_ARCH_DIR)/jvm.cfg
++endif
++	touch $@
++
++clean-add-shark:
++	rm -rf $(BUILD_JRE_ARCH_DIR)/shark
++	rm -rf sharkvm
++	sed -i 's#-shark KNOWN#-shark ERROR#' jvm.cfg
++	rm -f stamps/add-shark.stamp
++
++stamps/add-shark-debug.stamp: stamps/icedtea-debug.stamp
++if ADD_SHARK_BUILD
++	mkdir -p sharkvm
++
++	cd sharkvm && \
++	    $(ADD_SHARK_EXTRA_BUILD_ENV) \
++		$(ARCH_PREFIX) $(abs_top_srcdir)/configure $(ADD_SHARK_CONFIGURE_ARGS)
++
++	$(ADD_SHARK_EXTRA_BUILD_ENV) \
++		$(ARCH_PREFIX) $(MAKE) -C sharkvm $(ICEDTEA_DEBUG_BUILD_TARGET)
++
++	mkdir -p $(BUILD_DEBUG_JRE_ARCH_DIR)/shark
++	cp -a shark/$(BUILD_DIR)/hotspot/import/jre/lib/$(INSTALL_ARCH_DIR)/server/* \
++		$(BUILD_DEBUG_JRE_ARCH_DIR)/shark/
++	printf -- '-shark KNOWN\n' >> $(BUILD_DEBUG_JRE_ARCH_DIR)/jvm.cfg
++else
++	printf -- '-shark ERROR\n' >> $(BUILD_DEBUG_JRE_ARCH_DIR)/jvm.cfg
++endif
++	touch $@
++
++clean-add-shark-debug:
++	rm -rf $(BUILD_DEBUG_JRE_ARCH_DIR)/shark
++	rm -rf sharkvm
++	sed -i 's#-shark KNOWN#-shark ERROR#' jvm.cfg
++	rm -f stamps/add-shark-debug.stamp
+ 
+ # end additional VMs
+ 

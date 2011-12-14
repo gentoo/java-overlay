@@ -2,6 +2,31 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.0-r4 (14 Dec 2011)
+*icedtea-6.1.10.4-r4 (14 Dec 2011)
+
+  14 Dec 2011; Ralph Sennhauser <sera@gentoo.org> +icedtea-6.1.10.4-r4.ebuild,
+  +files/icedtea-6.1.10.4_1-sharkllvm30-de-const-type-135375.patch,
+  +files/icedtea-6.1.10.4_pax_kernel_support.patch,
+  +files/icedtea-6.1.10.4_separate_shark_target.patch,
+  +files/icedtea-6.1.10.4_shark_jvm_rpath.patch, +icedtea-7.2.0-r4.ebuild,
+  +files/icedtea-7.2.0_1-sharkllvm30-de-const-type-135375.patch,
+  +files/icedtea-7.2.0_pax_kernel_support.patch,
+  +files/icedtea-7.2.0_separate_shark_target.patch,
+  +files/icedtea-7.2.0_shark_jvm_rpath.patch,
+  +files/icedtea-7.2.0_shark_llvm_flags.patch,
+  +files/2-sharkllvm30-PHI-128537-Call-ArrayRef-135265-v2.patch,
+  +files/0-sharkllvm30-targetselect-138450.patch,
+  +files/3-sharkllvm30-MCJIT-v3.patch, +files/disable_werror.patch:
+  Add use flags zero and shark for builing them as additional vms.
+  Add bs patch for PaX enabled kernels.
+  Add bs patch for spliting out shark target.
+  Explicitly add llvm lib dir to RPATH in sharks libjvm.so
+  Add a series of patches to get shark to build with llvm-3.0
+  Add missing llvm flags in openjdk7.
+  Allow running the jtreg tests.
+  Drop ppc64 KEYWORD for icedtea:6 due to missing sys-devel/llvm.
+
 *icedtea-7.2.0-r3 (02 Dec 2011)
 *icedtea-6.1.10.4-r3 (02 Dec 2011)
 

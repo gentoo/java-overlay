@@ -1,0 +1,577 @@
+Taken from:
+http://mail.openjdk.java.net/pipermail/zero-dev/2011-August/000399.html
+
+Index: icedtea6-shark/openjdk/hotspot/src/share/vm/shark/sharkBlock.cpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkBlock.cpp	2011-07-05 18:31:05.000000000 +0000
++++ openjdk/hotspot/src/share/vm/shark/sharkBlock.cpp	2011-08-30 21:15:49.115227000 +0000
+@@ -1040,8 +1040,8 @@
+       object = builder()->CreateInlineOop(field->holder());
+ 
+     BasicType   basic_type = field->type()->basic_type();
+-    const Type *stack_type = SharkType::to_stackType(basic_type);
+-    const Type *field_type = SharkType::to_arrayType(basic_type);
++    Type *stack_type = SharkType::to_stackType(basic_type);
++    Type *field_type = SharkType::to_arrayType(basic_type);
+ 
+     Value *addr = builder()->CreateAddressOfStructEntry(
+       object, in_ByteSize(field->offset_in_bytes()),
+Index: icedtea6-shark/openjdk/hotspot/src/share/vm/shark/sharkBuilder.cpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkBuilder.cpp	2011-07-05 18:31:05.000000000 +0000
++++ openjdk/hotspot/src/share/vm/shark/sharkBuilder.cpp	2011-08-30 21:15:49.315227000 +0000
+@@ -47,14 +47,14 @@
+ // Helpers for accessing structures
+ Value* SharkBuilder::CreateAddressOfStructEntry(Value*      base,
+                                                 ByteSize    offset,
+-                                                const Type* type,
++                                                Type* type,
+                                                 const char* name) {
+   return CreateBitCast(CreateStructGEP(base, in_bytes(offset)), type, name);
+ }
+ 
+ LoadInst* SharkBuilder::CreateValueOfStructEntry(Value*      base,
+                                                  ByteSize    offset,
+-                                                 const Type* type,
++                                                 Type* type,
+                                                  const char* name) {
+   return CreateLoad(
+     CreateAddressOfStructEntry(
+@@ -71,7 +71,7 @@
+ }
+ 
+ Value* SharkBuilder::CreateArrayAddress(Value*      arrayoop,
+-                                        const Type* element_type,
++                                        Type* element_type,
+                                         int         element_bytes,
+                                         ByteSize    base_offset,
+                                         Value*      index,
+@@ -114,7 +114,7 @@
+ 
+ // Helpers for creating intrinsics and external functions.
+ 
+-const Type* SharkBuilder::make_type(char type, bool void_ok) {
++Type* SharkBuilder::make_type(char type, bool void_ok) {
+   switch (type) {
+     // Primitive types
+   case 'c':
+@@ -159,14 +159,14 @@
+   }
+ }
+ 
+-const FunctionType* SharkBuilder::make_ftype(const char* params,
++FunctionType* SharkBuilder::make_ftype(const char* params,
+                                              const char* ret) {
+-  std::vector<const Type*> param_types;
++  std::vector<Type*> param_types;
+   for (const char* c = params; *c; c++)
+     param_types.push_back(make_type(*c, false));
+ 
+   assert(strlen(ret) == 1, "should be");
+-  const Type *return_type = make_type(*ret, true);
++  Type *return_type = make_type(*ret, true);
+ 
+   return FunctionType::get(return_type, param_types, false);
+ }
+@@ -565,7 +565,7 @@
+ 
+ Value* SharkBuilder::CreateInlineData(void*       data,
+                                       size_t      size,
+-                                      const Type* type,
++                                      Type* type,
+                                       const char* name) {
+   return CreateIntToPtr(
+     code_buffer_address(code_buffer()->inline_data(data, size)),
+Index: icedtea6-shark/openjdk/hotspot/src/share/vm/shark/sharkBuilder.hpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkBuilder.hpp	2011-07-05 18:31:05.000000000 +0000
++++ openjdk/hotspot/src/share/vm/shark/sharkBuilder.hpp	2011-08-30 19:52:46.735227001 +0000
+@@ -57,18 +57,18 @@
+  public:
+   llvm::Value* CreateAddressOfStructEntry(llvm::Value* base,
+                                           ByteSize offset,
+-                                          const llvm::Type* type,
++                                          llvm::Type* type,
+                                           const char *name = "");
+   llvm::LoadInst* CreateValueOfStructEntry(llvm::Value* base,
+                                            ByteSize offset,
+-                                           const llvm::Type* type,
++                                           llvm::Type* type,
+                                            const char *name = "");
+ 
+   // Helpers for accessing arrays.
+  public:
+   llvm::LoadInst* CreateArrayLength(llvm::Value* arrayoop);
+   llvm::Value* CreateArrayAddress(llvm::Value*      arrayoop,
+-                                  const llvm::Type* element_type,
++                                  llvm::Type* element_type,
+                                   int               element_bytes,
+                                   ByteSize          base_offset,
+                                   llvm::Value*      index,
+@@ -85,8 +85,8 @@
+ 
+   // Helpers for creating intrinsics and external functions.
+  private:
+-  static const llvm::Type* make_type(char type, bool void_ok);
+-  static const llvm::FunctionType* make_ftype(const char* params,
++  static llvm::Type* make_type(char type, bool void_ok);
++  static llvm::FunctionType* make_ftype(const char* params,
+                                               const char* ret);
+   llvm::Value* make_function(const char* name,
+                              const char* params,
+@@ -211,7 +211,7 @@
+   }
+   llvm::Value* CreateInlineData(void*             data,
+                                 size_t            size,
+-                                const llvm::Type* type,
++                                llvm::Type* type,
+                                 const char*       name = "");
+ 
+   // Helpers for creating basic blocks.
+Index: icedtea6-shark/openjdk/hotspot/src/share/vm/shark/sharkCacheDecache.cpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkCacheDecache.cpp	2011-07-05 18:31:05.000000000 +0000
++++ openjdk/hotspot/src/share/vm/shark/sharkCacheDecache.cpp	2011-08-30 19:52:46.735227001 +0000
+@@ -230,7 +230,7 @@
+ }
+ 
+ Value* SharkOSREntryCacher::CreateAddressOfOSRBufEntry(int         offset,
+-                                                       const Type* type) {
++                                                       Type* type) {
+   Value *result = builder()->CreateStructGEP(osr_buf(), offset);
+   if (type != SharkType::intptr_type())
+     result = builder()->CreateBitCast(result, PointerType::getUnqual(type));
+@@ -254,12 +254,12 @@
+   }
+ }
+ 
+-void SharkDecacher::write_value_to_frame(const Type* type,
++void SharkDecacher::write_value_to_frame(Type* type,
+                                          Value*      value,
+                                          int         offset) {
+   builder()->CreateStore(value, stack()->slot_addr(offset, type));
+ }
+ 
+-Value* SharkCacher::read_value_from_frame(const Type* type, int offset) {
++Value* SharkCacher::read_value_from_frame(Type* type, int offset) {
+   return builder()->CreateLoad(stack()->slot_addr(offset, type));
+ }
+Index: icedtea6-shark/openjdk/hotspot/src/share/vm/shark/sharkCacheDecache.hpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkCacheDecache.hpp	2011-07-05 18:31:05.000000000 +0000
++++ openjdk/hotspot/src/share/vm/shark/sharkCacheDecache.hpp	2011-08-30 19:52:46.745227001 +0000
+@@ -192,7 +192,7 @@
+ 
+   // Writer helper
+  protected:
+-  void write_value_to_frame(const llvm::Type* type,
++  void write_value_to_frame(llvm::Type* type,
+                             llvm::Value*      value,
+                             int               offset);
+ };
+@@ -321,7 +321,7 @@
+ 
+   // Writer helper
+  protected:
+-  llvm::Value* read_value_from_frame(const llvm::Type* type, int offset);
++  llvm::Value* read_value_from_frame(llvm::Type* type, int offset);
+ };
+ 
+ class SharkJavaCallCacher : public SharkCacher {
+@@ -422,7 +422,7 @@
+ 
+   // Helper
+  private:
+-  llvm::Value* CreateAddressOfOSRBufEntry(int offset, const llvm::Type* type);
++  llvm::Value* CreateAddressOfOSRBufEntry(int offset, llvm::Type* type);
+ };
+ 
+ #endif // SHARE_VM_SHARK_SHARKCACHEDECACHE_HPP
+Index: icedtea6-shark/openjdk/hotspot/src/share/vm/shark/sharkContext.cpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkContext.cpp	2011-07-05 18:31:05.000000000 +0000
++++ openjdk/hotspot/src/share/vm/shark/sharkContext.cpp	2011-08-30 19:52:46.745227001 +0000
+@@ -76,7 +76,7 @@
+   _zeroStack_type = PointerType::getUnqual(
+     ArrayType::get(jbyte_type(), sizeof(ZeroStack)));
+ 
+-  std::vector<const Type*> params;
++  std::vector<Type*> params;
+   params.push_back(methodOop_type());
+   params.push_back(intptr_type());
+   params.push_back(thread_type());
+Index: icedtea6-shark/openjdk/hotspot/src/share/vm/shark/sharkContext.hpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkContext.hpp	2011-07-05 18:31:05.000000000 +0000
++++ openjdk/hotspot/src/share/vm/shark/sharkContext.hpp	2011-08-30 19:55:03.425227001 +0000
+@@ -68,118 +68,118 @@
+     module()->getFunctionList().push_back(function);
+   }
+   llvm::Constant* get_external(const char*               name,
+-                               const llvm::FunctionType* sig) {
++                               llvm::FunctionType* sig) {
+     return module()->getOrInsertFunction(name, sig);
+   }
+ 
+   // Basic types
+  private:
+-  const llvm::Type*        _void_type;
+-  const llvm::IntegerType* _bit_type;
+-  const llvm::IntegerType* _jbyte_type;
+-  const llvm::IntegerType* _jshort_type;
+-  const llvm::IntegerType* _jint_type;
+-  const llvm::IntegerType* _jlong_type;
+-  const llvm::Type*        _jfloat_type;
+-  const llvm::Type*        _jdouble_type;
++  llvm::Type*        _void_type;
++  llvm::IntegerType* _bit_type;
++  llvm::IntegerType* _jbyte_type;
++  llvm::IntegerType* _jshort_type;
++  llvm::IntegerType* _jint_type;
++  llvm::IntegerType* _jlong_type;
++  llvm::Type*        _jfloat_type;
++  llvm::Type*        _jdouble_type;
+ 
+  public:
+-  const llvm::Type* void_type() const {
++  llvm::Type* void_type() const {
+     return _void_type;
+   }
+-  const llvm::IntegerType* bit_type() const {
++  llvm::IntegerType* bit_type() const {
+     return _bit_type;
+   }
+-  const llvm::IntegerType* jbyte_type() const {
++  llvm::IntegerType* jbyte_type() const {
+     return _jbyte_type;
+   }
+-  const llvm::IntegerType* jshort_type() const {
++  llvm::IntegerType* jshort_type() const {
+     return _jshort_type;
+   }
+-  const llvm::IntegerType* jint_type() const {
++  llvm::IntegerType* jint_type() const {
+     return _jint_type;
+   }
+-  const llvm::IntegerType* jlong_type() const {
++  llvm::IntegerType* jlong_type() const {
+     return _jlong_type;
+   }
+-  const llvm::Type* jfloat_type() const {
++  llvm::Type* jfloat_type() const {
+     return _jfloat_type;
+   }
+-  const llvm::Type* jdouble_type() const {
++  llvm::Type* jdouble_type() const {
+     return _jdouble_type;
+   }
+-  const llvm::IntegerType* intptr_type() const {
++  llvm::IntegerType* intptr_type() const {
+     return LP64_ONLY(jlong_type()) NOT_LP64(jint_type());
+   }
+ 
+   // Compound types
+  private:
+-  const llvm::PointerType*  _itableOffsetEntry_type;
+-  const llvm::PointerType*  _jniEnv_type;
+-  const llvm::PointerType*  _jniHandleBlock_type;
+-  const llvm::PointerType*  _klass_type;
+-  const llvm::PointerType*  _methodOop_type;
+-  const llvm::ArrayType*    _monitor_type;
+-  const llvm::PointerType*  _oop_type;
+-  const llvm::PointerType*  _thread_type;
+-  const llvm::PointerType*  _zeroStack_type;
+-  const llvm::FunctionType* _entry_point_type;
+-  const llvm::FunctionType* _osr_entry_point_type;
++  llvm::PointerType*  _itableOffsetEntry_type;
++  llvm::PointerType*  _jniEnv_type;
++  llvm::PointerType*  _jniHandleBlock_type;
++  llvm::PointerType*  _klass_type;
++  llvm::PointerType*  _methodOop_type;
++  llvm::ArrayType*    _monitor_type;
++  llvm::PointerType*  _oop_type;
++  llvm::PointerType*  _thread_type;
++  llvm::PointerType*  _zeroStack_type;
++  llvm::FunctionType* _entry_point_type;
++  llvm::FunctionType* _osr_entry_point_type;
+ 
+  public:
+-  const llvm::PointerType* itableOffsetEntry_type() const {
++  llvm::PointerType* itableOffsetEntry_type() const {
+     return _itableOffsetEntry_type;
+   }
+-  const llvm::PointerType* jniEnv_type() const {
++  llvm::PointerType* jniEnv_type() const {
+     return _jniEnv_type;
+   }
+-  const llvm::PointerType* jniHandleBlock_type() const {
++  llvm::PointerType* jniHandleBlock_type() const {
+     return _jniHandleBlock_type;
+   }
+-  const llvm::PointerType* klass_type() const {
++  llvm::PointerType* klass_type() const {
+     return _klass_type;
+   }
+-  const llvm::PointerType* methodOop_type() const {
++  llvm::PointerType* methodOop_type() const {
+     return _methodOop_type;
+   }
+-  const llvm::ArrayType* monitor_type() const {
++  llvm::ArrayType* monitor_type() const {
+     return _monitor_type;
+   }
+-  const llvm::PointerType* oop_type() const {
++  llvm::PointerType* oop_type() const {
+     return _oop_type;
+   }
+-  const llvm::PointerType* thread_type() const {
++  llvm::PointerType* thread_type() const {
+     return _thread_type;
+   }
+-  const llvm::PointerType* zeroStack_type() const {
++  llvm::PointerType* zeroStack_type() const {
+     return _zeroStack_type;
+   }
+-  const llvm::FunctionType* entry_point_type() const {
++  llvm::FunctionType* entry_point_type() const {
+     return _entry_point_type;
+   }
+-  const llvm::FunctionType* osr_entry_point_type() const {
++  llvm::FunctionType* osr_entry_point_type() const {
+     return _osr_entry_point_type;
+   }
+ 
+   // Mappings
+  private:
+-  const llvm::Type* _to_stackType[T_CONFLICT];
+-  const llvm::Type* _to_arrayType[T_CONFLICT];
++  llvm::Type* _to_stackType[T_CONFLICT];
++  llvm::Type* _to_arrayType[T_CONFLICT];
+ 
+  private:
+-  const llvm::Type* map_type(const llvm::Type* const* table,
++  llvm::Type* map_type(llvm::Type* const* table,
+                              BasicType                type) const {
+     assert(type >= 0 && type < T_CONFLICT, "unhandled type");
+-    const llvm::Type* result = table[type];
++    llvm::Type* result = table[type];
+     assert(type != NULL, "unhandled type");
+     return result;
+   }
+ 
+  public:
+-  const llvm::Type* to_stackType(BasicType type) const {
++  llvm::Type* to_stackType(BasicType type) const {
+     return map_type(_to_stackType, type);
+   }
+-  const llvm::Type* to_arrayType(BasicType type) const {
++  llvm::Type* to_arrayType(BasicType type) const {
+     return map_type(_to_arrayType, type);
+   }
+ 
+Index: icedtea6-shark/openjdk/hotspot/src/share/vm/shark/sharkNativeWrapper.cpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkNativeWrapper.cpp	2011-07-05 18:31:05.000000000 +0000
++++ openjdk/hotspot/src/share/vm/shark/sharkNativeWrapper.cpp	2011-08-30 21:16:20.725227002 +0000
+@@ -83,9 +83,9 @@
+   }
+ 
+   // Start building the argument list
+-  std::vector<const Type*> param_types;
++  std::vector<Type*> param_types;
+   std::vector<Value*> param_values;
+-  const PointerType *box_type = PointerType::getUnqual(SharkType::oop_type());
++  PointerType *box_type = PointerType::getUnqual(SharkType::oop_type());
+ 
+   // First argument is the JNIEnv
+   param_types.push_back(SharkType::jniEnv_type());
+@@ -170,7 +170,7 @@
+       // fall through
+ 
+     default:
+-      const Type *param_type = SharkType::to_stackType(arg_type(i));
++      Type *param_type = SharkType::to_stackType(arg_type(i));
+ 
+       param_types.push_back(param_type);
+       param_values.push_back(
+@@ -201,7 +201,7 @@
+ 
+   // Make the call
+   BasicType result_type = target()->result_type();
+-  const Type* return_type;
++  Type* return_type;
+   if (result_type == T_VOID)
+     return_type = SharkType::void_type();
+   else if (is_returning_oop())
+Index: icedtea6-shark/openjdk/hotspot/src/share/vm/shark/sharkStack.cpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkStack.cpp	2011-07-05 18:31:05.000000000 +0000
++++ openjdk/hotspot/src/share/vm/shark/sharkStack.cpp	2011-08-30 19:52:46.745227001 +0000
+@@ -163,7 +163,7 @@
+ }
+ 
+ Value* SharkStack::slot_addr(int         offset,
+-                             const Type* type,
++                             Type* type,
+                              const char* name) const {
+   bool needs_cast = type && type != SharkType::intptr_type();
+ 
+Index: icedtea6-shark/openjdk/hotspot/src/share/vm/shark/sharkStack.hpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkStack.hpp	2011-07-05 18:31:05.000000000 +0000
++++ openjdk/hotspot/src/share/vm/shark/sharkStack.hpp	2011-08-30 19:52:46.755227001 +0000
+@@ -204,7 +204,7 @@
+   // Addresses of things in the frame
+  public:
+   llvm::Value* slot_addr(int               offset,
+-                         const llvm::Type* type = NULL,
++                         llvm::Type* type = NULL,
+                          const char*       name = "") const;
+ 
+   llvm::Value* monitor_addr(int index) const {
+Index: icedtea6-shark/openjdk/hotspot/src/share/vm/shark/sharkTopLevelBlock.cpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkTopLevelBlock.cpp	2011-07-05 18:31:05.000000000 +0000
++++ openjdk/hotspot/src/share/vm/shark/sharkTopLevelBlock.cpp	2011-08-30 19:52:46.755227001 +0000
+@@ -829,7 +829,7 @@
+     builder()->CreateArrayAddress(
+       array->jarray_value(), basic_type, index->jint_value()));
+ 
+-  const Type *stack_type = SharkType::to_stackType(basic_type);
++  Type *stack_type = SharkType::to_stackType(basic_type);
+   if (value->getType() != stack_type)
+     value = builder()->CreateIntCast(value, stack_type, basic_type != T_CHAR);
+ 
+@@ -916,7 +916,7 @@
+     ShouldNotReachHere();
+   }
+ 
+-  const Type *array_type = SharkType::to_arrayType(basic_type);
++  Type *array_type = SharkType::to_arrayType(basic_type);
+   if (value->getType() != array_type)
+     value = builder()->CreateIntCast(value, array_type, basic_type != T_CHAR);
+ 
+Index: icedtea6-shark/openjdk/hotspot/src/share/vm/shark/sharkType.hpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkType.hpp	2011-07-05 18:31:05.000000000 +0000
++++ openjdk/hotspot/src/share/vm/shark/sharkType.hpp	2011-08-30 19:52:46.755227001 +0000
+@@ -40,82 +40,82 @@
+ 
+   // Basic types
+  public:
+-  static const llvm::Type* void_type() {
++  static llvm::Type* void_type() {
+     return context().void_type();
+   }
+-  static const llvm::IntegerType* bit_type() {
++  static llvm::IntegerType* bit_type() {
+     return context().bit_type();
+   }
+-  static const llvm::IntegerType* jbyte_type() {
++  static llvm::IntegerType* jbyte_type() {
+     return context().jbyte_type();
+   }
+-  static const llvm::IntegerType* jshort_type() {
++  static llvm::IntegerType* jshort_type() {
+     return context().jshort_type();
+   }
+-  static const llvm::IntegerType* jint_type() {
++  static llvm::IntegerType* jint_type() {
+     return context().jint_type();
+   }
+-  static const llvm::IntegerType* jlong_type() {
++  static llvm::IntegerType* jlong_type() {
+     return context().jlong_type();
+   }
+-  static const llvm::Type* jfloat_type() {
++  static llvm::Type* jfloat_type() {
+     return context().jfloat_type();
+   }
+-  static const llvm::Type* jdouble_type() {
++  static llvm::Type* jdouble_type() {
+     return context().jdouble_type();
+   }
+-  static const llvm::IntegerType* intptr_type() {
++  static llvm::IntegerType* intptr_type() {
+     return context().intptr_type();
+   }
+ 
+   // Compound types
+  public:
+-  static const llvm::PointerType* itableOffsetEntry_type() {
++  static llvm::PointerType* itableOffsetEntry_type() {
+     return context().itableOffsetEntry_type();
+   }
+-  static const llvm::PointerType* jniEnv_type() {
++  static llvm::PointerType* jniEnv_type() {
+     return context().jniEnv_type();
+   }
+-  static const llvm::PointerType* jniHandleBlock_type() {
++  static llvm::PointerType* jniHandleBlock_type() {
+     return context().jniHandleBlock_type();
+   }
+-  static const llvm::PointerType* klass_type() {
++  static llvm::PointerType* klass_type() {
+     return context().klass_type();
+   }
+-  static const llvm::PointerType* methodOop_type() {
++  static llvm::PointerType* methodOop_type() {
+     return context().methodOop_type();
+   }
+-  static const llvm::ArrayType* monitor_type() {
++  static llvm::ArrayType* monitor_type() {
+     return context().monitor_type();
+   }
+-  static const llvm::PointerType* oop_type() {
++  static llvm::PointerType* oop_type() {
+     return context().oop_type();
+   }
+-  static const llvm::PointerType* thread_type() {
++  static llvm::PointerType* thread_type() {
+     return context().thread_type();
+   }
+-  static const llvm::PointerType* zeroStack_type() {
++  static llvm::PointerType* zeroStack_type() {
+     return context().zeroStack_type();
+   }
+-  static const llvm::FunctionType* entry_point_type() {
++  static llvm::FunctionType* entry_point_type() {
+     return context().entry_point_type();
+   }
+-  static const llvm::FunctionType* osr_entry_point_type() {
++  static llvm::FunctionType* osr_entry_point_type() {
+     return context().osr_entry_point_type();
+   }
+ 
+   // Mappings
+  public:
+-  static const llvm::Type* to_stackType(BasicType type) {
++  static llvm::Type* to_stackType(BasicType type) {
+     return context().to_stackType(type);
+   }
+-  static const llvm::Type* to_stackType(ciType* type) {
++  static llvm::Type* to_stackType(ciType* type) {
+     return to_stackType(type->basic_type());
+   }
+-  static const llvm::Type* to_arrayType(BasicType type) {
++  static llvm::Type* to_arrayType(BasicType type) {
+     return context().to_arrayType(type);
+   }
+-  static const llvm::Type* to_arrayType(ciType* type) {
++  static llvm::Type* to_arrayType(ciType* type) {
+     return to_arrayType(type->basic_type());
+   }
+ };
+Index: icedtea6-shark/openjdk/hotspot/src/share/vm/shark/sharkFunction.hpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/sharkFunction.hpp	2011-08-30 20:23:51.805227002 +0000
++++ openjdk/hotspot/src/share/vm/shark/sharkFunction.hpp	2011-08-30 20:24:26.455227000 +0000
+@@ -91,7 +91,7 @@
+   bool is_osr() const {
+     return flow()->is_osr_flow();
+   }
+-  const llvm::FunctionType* entry_point_type() const {
++  llvm::FunctionType* entry_point_type() const {
+     if (is_osr())
+       return SharkType::osr_entry_point_type();
+     else

@@ -1,0 +1,38 @@
+Author: Ralph Sennhauser <sera@gentoo.org>
+
+This was fixed in openjdk6, this is a partial forward port of
+http://icedtea.classpath.org/bugzilla/show_bug.cgi?id=639
+
+diff --git a/Makefile.am b/Makefile.am
+index 129edf2..d77ac42 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -233,7 +233,8 @@ REWRITER_SRCS = $(top_srcdir)/rewriter/com/redhat/rewriter/ClassRewriter.java
+ 
+ # Patch list
+ 
+-ICEDTEA_PATCHES =
++ICEDTEA_PATCHES = \
++	patches/shark-llvm-flags.patch
+ 
+ # Conditional patches
+ 
+diff --git a/patches/shark-llvm-flags.patch b/patches/shark-llvm-flags.patch
+new file mode 100644
+index 0000000..3efcf7e
+--- /dev/null
++++ b/patches/shark-llvm-flags.patch
+@@ -0,0 +1,13 @@
++--- openjdk.orig/hotspot/make/linux/makefiles/launcher.make	2011-02-22 16:51:24.000000000 +0000
+++++ openjdk/hotspot/make/linux/makefiles/launcher.make	2011-02-24 03:01:36.000000000 +0000
++@@ -52,6 +52,10 @@
++   LAUNCHER.o                 = launcher.o
++   LFLAGS_LAUNCHER           += -L `pwd`
++   LIBS_LAUNCHER             += -l$(JVM) $(LIBS)
+++  ifeq ($(SHARK_BUILD), true)
+++    LFLAGS_LAUNCHER += $(LLVM_LDFLAGS)
+++    LIBS_LAUNCHER   += $(LLVM_LIBS)
+++  endif
++ endif
++ 
++ LINK_LAUNCHER = $(LINK.c)

@@ -23,10 +23,11 @@
   <flag name="nio2">Enable backport of NIO2 to OpenJDK6.</flag>
   <flag name="nss">Enable NSS security provider support.</flag>
   <flag name="nsplugin">Enable browser plugin (NPPlugin), requires also the webstart flag to be enabled.</flag>
-<!--  <flag name="shark">Enable Shark JIT support</flag> -->
+  <flag name="pax_kernel">Apply patch needed for pax enabled kernels.</flag>
+  <flag name="shark">Build additionally the Shark virtual machine.</flag>
   <flag name="systemtap">Enable SystemTap probes in HotSpot.</flag>
   <flag name="webstart">Enable Web Start support (via NetX).</flag>
   <flag name="xrender">Enable support for using XRender with the AWT libraries.</flag>
-  <flag name="zero">Enable the zero assembler port of HotSpot.</flag>
+  <flag name="zero">Build additionally the Zero virtual machine.</flag>
 </use>
 </pkgmetadata>

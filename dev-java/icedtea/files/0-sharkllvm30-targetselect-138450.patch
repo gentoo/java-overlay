@@ -1,0 +1,19 @@
+Taken from:
+http://mail.openjdk.java.net/pipermail/zero-dev/2011-August/000399.html
+
+Index: icedtea6-shark/openjdk/hotspot/src/share/vm/shark/llvmHeaders.hpp
+===================================================================
+--- openjdk/hotspot/src/share/vm/shark/llvmHeaders.hpp	2011-08-30 19:28:01.875227001 +0000
++++ openjdk/hotspot/src/share/vm/shark/llvmHeaders.hpp	2011-08-30 19:30:16.885227001 +0000
+@@ -51,7 +51,11 @@
+ #else
+ #include <llvm/System/Threading.h>
+ #endif
++#if SHARK_LLVM_VERSION >= 30
++#include <llvm/Support/TargetSelect.h>
++#else
+ #include <llvm/Target/TargetSelect.h>
++#endif
+ #include <llvm/Type.h>
+ #include <llvm/ExecutionEngine/JITMemoryManager.h>
+ #include <llvm/Support/CommandLine.h>
