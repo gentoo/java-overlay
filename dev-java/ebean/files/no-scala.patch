@@ -1,0 +1,106 @@
+diff -Naur com.orig/avaje/ebeaninternal/server/deploy/DetermineManyType.java com/avaje/ebeaninternal/server/deploy/DetermineManyType.java
+--- com.orig/avaje/ebeaninternal/server/deploy/DetermineManyType.java	2010-11-03 23:48:44.000000000 +0000
++++ com/avaje/ebeaninternal/server/deploy/DetermineManyType.java	2011-09-24 22:01:53.970131474 +0100
+@@ -20,21 +20,9 @@
+     
+     public DetermineManyType(boolean withScalaSupport) {
+         this.withScalaSupport = withScalaSupport;
+-        if (withScalaSupport){
+-            
+-            CollectionTypeConverter bufConverter = new ScalaBufferConverter();
+-            CollectionTypeConverter setConverter = new ScalaSetConverter();
+-            CollectionTypeConverter mapConverter = new ScalaMapConverter();
+-            
+-            this.scalaBufMany = new ManyType(ManyType.Underlying.LIST, bufConverter);
+-            this.scalaSetMany = new ManyType(ManyType.Underlying.SET, setConverter);
+-            this.scalaMapMany = new ManyType(ManyType.Underlying.MAP, mapConverter);
+-            
+-        } else {
+             this.scalaBufMany = null;
+             this.scalaSetMany = null;
+             this.scalaMapMany = null;
+-        }
+     }
+     
+ 	public ManyType getManyType(Class<?> type) {
+@@ -47,18 +35,6 @@
+         if (type.equals(Map.class)){
+         	return ManyType.JAVA_MAP;
+         }
+-        if (withScalaSupport){
+-            // only get in here when scala in classpath
+-            if (type.equals(scala.collection.mutable.Buffer.class)){
+-                return scalaBufMany;
+-            }
+-            if (type.equals(scala.collection.mutable.Set.class)){
+-                return scalaSetMany;
+-            }
+-            if (type.equals(scala.collection.mutable.Map.class)){
+-                return scalaMapMany;
+-            }
+-        }
+         return null;
+     }
+ }
+diff -Naur com.orig/avaje/ebeaninternal/server/deploy/parse/DeployCreateProperties.java com/avaje/ebeaninternal/server/deploy/parse/DeployCreateProperties.java
+--- com.orig/avaje/ebeaninternal/server/deploy/parse/DeployCreateProperties.java	2010-11-05 21:28:14.000000000 +0000
++++ com/avaje/ebeaninternal/server/deploy/parse/DeployCreateProperties.java	2011-09-24 22:00:06.195507927 +0100
+@@ -42,7 +42,6 @@
+ import com.avaje.ebeaninternal.server.deploy.meta.DeployBeanPropertyCompound;
+ import com.avaje.ebeaninternal.server.deploy.meta.DeployBeanPropertySimpleCollection;
+ import com.avaje.ebeaninternal.server.type.CtCompoundType;
+-import com.avaje.ebeaninternal.server.type.ScalaOptionTypeConverter;
+ import com.avaje.ebeaninternal.server.type.ScalarType;
+ import com.avaje.ebeaninternal.server.type.TypeManager;
+ import com.avaje.ebeaninternal.server.type.reflect.CheckImmutableResponse;
+@@ -72,18 +71,9 @@
+     @SuppressWarnings("rawtypes")
+     public DeployCreateProperties(TypeManager typeManager) {
+     	this.typeManager = typeManager;
+-    	
+-    	Class<?> tmpOptionClass = DetectScala.getScalaOptionClass();
+-
+-        if (tmpOptionClass == null){
+             scalaOptionClass = null;
+             scalaOptionTypeConverter = null;
+-        } else {
+-            scalaOptionClass = tmpOptionClass;
+-            scalaOptionTypeConverter = new ScalaOptionTypeConverter();
+-        }
+-        
+-        this.determineManyType = new DetermineManyType(tmpOptionClass != null);
++        this.determineManyType = new DetermineManyType(false);
+     }
+     
+     /**
+diff -Naur com.orig/avaje/ebeaninternal/server/persist/DmlUtil.java com/avaje/ebeaninternal/server/persist/DmlUtil.java
+--- com.orig/avaje/ebeaninternal/server/persist/DmlUtil.java	2010-11-03 23:48:40.000000000 +0000
++++ com/avaje/ebeaninternal/server/persist/DmlUtil.java	2011-09-24 22:03:14.242106000 +0100
+@@ -1,13 +1,11 @@
+ package com.avaje.ebeaninternal.server.persist;
+ 
+-import com.avaje.ebeaninternal.server.deploy.parse.DetectScala;
+ 
+ /**
+  * Utility object with helper methods for DML. 
+  */
+ public class DmlUtil {
+ 
+-    private static final boolean hasScalaSupport = DetectScala.hasScalaSupport();
+     
+ 	/**
+ 	 * Return true if the value is null or a Numeric 0 (for primitive int's and long's) or Option empty.
+@@ -21,13 +19,6 @@
+ 			return ((Number)value).longValue() == 0l;
+ 		}
+ 
+-		if (hasScalaSupport){
+-            if (value instanceof scala.Option<?>) {
+-                if (((scala.Option<?>) value).isEmpty()) {
+-                    return true;
+-                }
+-            }
+-		}
+ 		
+ 		return false;
+ 	}

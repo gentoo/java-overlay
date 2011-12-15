@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>java</herd>
+<longdescription lang="en">
+JOpt Simple is a Java library for parsing command line options, such
+as those you might pass to an invocation of javac.
+</longdescription>
+</pkgmetadata>

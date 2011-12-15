@@ -1,0 +1,10 @@
+# ChangeLog for games-server/craftbukkit
+# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*craftbukkit-1597 (15 Dec 2011)
+
+  15 Dec 2011; James Le Cuirot <chewi@aura-online.co.uk>
+  +craftbukkit-1597.ebuild, +files/directory.sh,
+  +files/fix-world_the_end-migration.patch:
+  Initial import.

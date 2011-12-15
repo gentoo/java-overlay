@@ -19,13 +19,18 @@ mkdir -p "${gjl_pwd}"
 if [[ -f "${gjl_pwd}/server.properties" ]]; then
 	level_name=$(sed -n "s/^level-name=//p" "${gjl_pwd}/server.properties")
 
-	if [[ -d "${gjl_pwd}/${level_name}" ]] && [[ -d "${gjl_pwd}/${level_name}_nether/DIM-1" ]]; then
-		if [[ -d "${gjl_pwd}/${level_name}/DIM-1" ]] && [[ ! -L "${gjl_pwd}/${level_name}/DIM-1" ]]; then
-			echo "CraftBukkit nether detected but a conflicting nether is already present! Ignoring." >&2
-		else
-			echo "CraftBukkit nether detected. Symlinking for the official server." >&2
-			ln -snf "../${level_name}_nether/DIM-1" "${gjl_pwd}/${level_name}/DIM-1"
+	for D in "nether -1" "the_end 1"; do
+		TYPE="${D% *}"
+		DIM="DIM${D#* }"
+
+		if [[ -d "${gjl_pwd}/${level_name}" ]] && [[ -d "${gjl_pwd}/${level_name}_${TYPE}/${DIM}" ]]; then
+			if [[ -d "${gjl_pwd}/${level_name}/${DIM}" ]] && [[ ! -L "${gjl_pwd}/${level_name}/${DIM}" ]]; then
+				echo "CraftBukkit ${TYPE} detected but a conflicting ${TYPE} is already present! Ignoring." >&2
+			else
+				echo "CraftBukkit ${TYPE} detected. Symlinking for the official server." >&2
+				ln -snf "../${level_name}_${TYPE}/${DIM}" "${gjl_pwd}/${level_name}/${DIM}"
+			fi
 		fi
-	fi
+	done
 fi
 
