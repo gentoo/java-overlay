@@ -188,7 +188,7 @@ java_prepare() {
 		# http://mail.openjdk.java.net/pipermail/zero-dev/2011-August/000399.html
 		local llvm_patches=(
 			0-sharkllvm30-targetselect-138450.patch
-			1-sharkllvm30-de-const-type-135375.patch
+			${P}_1-sharkllvm30-de-const-type-135375.patch
 			2-sharkllvm30-PHI-128537-Call-ArrayRef-135265-v2.patch
 			# Uncomment to enables experimental MCJIT support (only some archs)
 			#3-sharkllvm30-MCJIT-v3.patch

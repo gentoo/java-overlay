@@ -2,6 +2,9 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  16 Dec 2011; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.10.4-r4.ebuild:
+  Fix patch name
+
 *icedtea-7.2.0-r4 (14 Dec 2011)
 *icedtea-6.1.10.4-r4 (14 Dec 2011)
 
