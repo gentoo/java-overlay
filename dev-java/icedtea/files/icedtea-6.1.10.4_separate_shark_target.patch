@@ -8,7 +8,7 @@ if desired. Also removes a bunch of conditionals which will simplify writing
 jvm.cfg correctly without a full rebuild.
 
 diff --git a/Makefile.am b/Makefile.am
-index 82ef261..7e7d5fc 100644
+index 82ef261..cfd0d6b 100644
 --- a/Makefile.am
 +++ b/Makefile.am
 @@ -1416,24 +1416,24 @@ clean-icedtea-debug:
@@ -40,22 +40,32 @@ index 82ef261..7e7d5fc 100644
   clean-add-jamvm-debug clean-add-cacao-debug clean-add-systemtap-debug \
   clean-add-pulseaudio-debug clean-add-nss-debug clean-add-tzdata-support-debug
  	rm -f stamps/icedtea-debug-against-icedtea.stamp
-@@ -1947,12 +1947,8 @@ clean-add-cacao-debug:
+@@ -1946,27 +1946,22 @@ clean-add-cacao-debug:
+ # configure script arguments, quoted in single quotes
  CONFIGURE_ARGS = @CONFIGURE_ARGS@
  ADD_ZERO_CONFIGURE_ARGS = \
- 	--with-jdk-home=$(BUILD_OUTPUT_DIR)/j2sdk-image \
+-	--with-jdk-home=$(BUILD_OUTPUT_DIR)/j2sdk-image \
 -	--enable-zero
 -if ADD_SHARK_BUILD
 -ADD_ZERO_CONFIGURE_ARGS += \
 -	--enable-shark
 -endif
 -ADD_ZERO_CONFIGURE_ARGS += \
-+	--disable-bootstrap \
-+	--enable-zero \
- 	--disable-docs \
+-	--disable-docs \
  	$(filter-out '--with-jdk-home=% '--with-ecj=% \
  			'--with-java=% '--with-javah=% \
-@@ -1966,7 +1962,6 @@ ADD_ZERO_CONFIGURE_ARGS += \
+ 			'--with-rmic=% '--with-additional-vms=% \
+ 			'--with-openjdk '--with-openjdk=% , \
+ 		$(CONFIGURE_ARGS)) \
+ 	$(if $(findstring --with-openjdk-src-zip=, $(CONFIGURE_ARGS)),, \
+-	  --with-openjdk-src-zip=$(abs_top_builddir)/$(OPENJDK_SRC_ZIP))
++	  --with-openjdk-src-zip=$(abs_top_builddir)/$(OPENJDK_SRC_ZIP)) \
++	--with-jdk-home=$(BUILD_OUTPUT_DIR)/j2sdk-image \
++	--disable-bootstrap \
++	--enable-zero \
++	--disable-docs
+ if WITH_ALT_HSBUILD
+ ADD_ZERO_CONFIGURE_ARGS += \
  	$(if $(findstring --with-hotspot-src-zip=, $(CONFIGURE_ARGS)),, \
  	  --with-hotspot-src-zip=$(abs_top_builddir)/$(HOTSPOT_SRC_ZIP))
  endif

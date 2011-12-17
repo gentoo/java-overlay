@@ -2,6 +2,11 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  17 Dec 2011; Ralph Sennhauser <sera@gentoo.org>
+  files/icedtea-6.1.10.4_separate_shark_target.patch:
+  Reorder ADD_ZERO_CONFIGURE_ARGS to prevent leaking through of unfiltred
+  options
+
   16 Dec 2011; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.10.4-r4.ebuild:
   Fix patch name
 
