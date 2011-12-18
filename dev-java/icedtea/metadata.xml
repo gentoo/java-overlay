@@ -10,7 +10,7 @@
 <maintainer>
   <email>caster@gentoo.org</email>
   <name>Vlastimil Babka</name>
-  <description>Commiter (CC me)</description>
+  <description>Committer (CC me)</description>
 </maintainer>
 <longdescription>The IcedTea project provides a harness to build the source code from OpenJDK (http://openjdk.java.net) using Free Software build tools along with additional tools such as a browser plugin and Web Start support via NetX. </longdescription>
 <use>
