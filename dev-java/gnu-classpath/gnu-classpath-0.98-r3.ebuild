@@ -1,4 +1,4 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/gnu-classpath/gnu-classpath-0.98-r3.ebuild,v 1.1 2010/04/29 19:50:01 caster Exp $
 
@@ -47,7 +47,7 @@ RDEPEND="alsa? ( media-libs/alsa-lib )
 # java-config >2.1.11 needed for ecj version globbing
 # We should make the build not pickup the wrong antlr binary from pccts
 DEPEND="app-arch/zip
-		>=app-admin/eselect-ecj-0.5-r1
+		dev-java/eclipse-ecj
 		>=dev-java/java-config-2.1.11
 		gjdoc? ( !!dev-util/pccts )
 		gtk? (
