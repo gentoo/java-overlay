@@ -2,6 +2,14 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.10.4-r5 (20 Dec 2011)
+
+  20 Dec 2011; Andrew John Hughes <andrew@gentoo.org>
+  -icedtea-6.1.10.4-r4.ebuild, +icedtea-6.1.10.4-r5.ebuild:
+  Remove unsupported addvm support. x86/x86_64/SPARC now on HotSpot,
+  all others on CACAO.  Remove NIO2 support in preparation for it
+  being dropped in 1.11.  Re-enable ppc64 support.
+
   18 Dec 2011; Ralph Sennhauser <sera@gentoo.org> files/icedtea.env,
   metadata.xml:
   Copy prefixified icedtea.env from main tree and fix typo in metadata.xml

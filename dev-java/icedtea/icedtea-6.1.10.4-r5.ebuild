@@ -20,7 +20,6 @@ JAXWS_TARBALL="jdk6-jaxws-b20.zip"
 JAF_TARBALL="jdk6-jaf-b20.zip"
 HOTSPOT_TARBALL="f0f676c5a2c6.tar.gz"
 CACAO_TARBALL="c7bf150bfa46.tar.gz" # 17 Mar 2011
-JAMVM_TARBALL="jamvm-a95ca049d3bb257d730535a5d5ec3f73a943d0aa.tar.gz" # 25 Mar 2011
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
@@ -31,18 +30,14 @@ SRC_URI="
 	http://icedtea.classpath.org/download/drops/${JAF_TARBALL}
 	http://icedtea.classpath.org/download/drops/${JAXP_TARBALL}
 	hs20? ( http://hg.openjdk.java.net/hsx/hsx20/master/archive/${HOTSPOT_TARBALL} )
-	cacao? ( http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL} )
-	jamvm? ( http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL} )"
+	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL}"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="6"
-KEYWORDS="~amd64 ~ppc ~x86"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
-IUSE="+X +alsa -cacao cjk +cups debug doc examples +hs20 -jamvm javascript +jbootstrap
-	nio2 +nsplugin +nss pax_kernel pulseaudio -shark +source systemtap test +webstart -zero"
-REQUIRED_USE="
-	cacao? ( jbootstrap )
-	jamvm? ( jbootstrap )"
+IUSE="+X +alsa cjk +cups debug doc examples +hs20 javascript +jbootstrap +nsplugin
+ +nss pax_kernel pulseaudio +source systemtap test +webstart -zero"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
@@ -77,10 +72,6 @@ COMMON_DEP="
 	javascript? ( dev-java/rhino:1.6 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
 	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
-	shark? (
-		>=sys-devel/llvm-2.5
-		virtual/libffi
-	)
 	systemtap? ( >=dev-util/systemtap-1 )
 	zero? ( virtual/libffi )
 	!amd64? ( !sparc? ( !x86? ( virtual/libffi ) ) )"
@@ -164,10 +155,6 @@ pkg_setup() {
 	java-pkg-2_pkg_setup
 }
 
-# Building zero/shark as additional vm requires VPATH build
-# http://icedtea.classpath.org/hg/icedtea?cmd=changeset;node=a0a5d904139d
-S="${WORKDIR}/vpath_top_build_dir"
-
 src_unpack() {
 	unpack ${ICEDTEA_PKG}.tar.gz
 	mkdir "${S}" || die
@@ -176,32 +163,6 @@ src_unpack() {
 java_prepare() {
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
-
-	pushd ../${ICEDTEA_PKG} > /dev/null || die
-		epatch "${FILESDIR}"/${P}_pax_kernel_support.patch #389751
-		epatch "${FILESDIR}"/${P}_separate_shark_target.patch
-		epatch "${FILESDIR}"/${P}_shark_jvm_rpath.patch
-		eautoreconf
-	popd > /dev/null
-
-	if use shark && [[ "$(llvm-config --version)" == 3.0 ]]; then
-		# http://mail.openjdk.java.net/pipermail/zero-dev/2011-August/000399.html
-		local llvm_patches=(
-			0-sharkllvm30-targetselect-138450.patch
-			${P}_1-sharkllvm30-de-const-type-135375.patch
-			2-sharkllvm30-PHI-128537-Call-ArrayRef-135265-v2.patch
-			# Uncomment to enables experimental MCJIT support (only some archs)
-			#3-sharkllvm30-MCJIT-v3.patch
-			# Remove -Werror so we can still compile shark
-			disable_werror.patch
-		)
-		mkdir ../${ICEDTEA_PKG}/distribution-patches || die
-		for p in  "${llvm_patches[@]}";do
-			cp "${FILESDIR}"/${p} ../${ICEDTEA_PKG}/distribution-patches || die
-			DISTRIBUTION_PATCHES+=" distribution-patches/${p}"
-		done
-		export DISTRIBUTION_PATCHES
-	fi
 }
 
 src_configure() {
@@ -242,26 +203,9 @@ src_configure() {
 	fi
 
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
-	if has "${ARCH}" amd64 sparc x86; then
-		use shark && extra_vms="${extra_vms},shark"
-		use zero && extra_vms="${extra_vms},zero"
-	else
-		config="${config} --enable-zero"
-		use shark && extra_vms="${extra_vms},shark"
-	fi
-	if use cacao || use jamvm; then
-		if [[ ${bootstrap} ]]; then
-			use cacao && extra_vms="${extra_vms},cacao"
-			use jamvm && extra_vms="${extra_vms},jamvm"
-		else
-			ewarn "Can't build CACAO nor JamVM without bootstrap."
-			ewarn "Rebuild IcedTea with a JDK that allows bootstrapping."
-		fi
-	fi
-	if [[ ${extra_vms} ]]; then
-			config="${config} --with-additional-vms=${extra_vms#,}"
-			use cacao && config="${config} --with-cacao-src-zip=${DISTDIR}/${CACAO_TARBALL}"
-			use jamvm && config="${config} --with-jamvm-src-zip=${DISTDIR}/${JAMVM_TARBALL}"
+	# Otherwise use CACAO
+	if ! has "${ARCH}" amd64 sparc x86; then
+		config="${config} --enable-cacao --with-cacao-src-zip=${DISTDIR}/${CACAO_TARBALL}"
 	fi
 
 	# OpenJDK-specific parallelism support. Bug #389791, #337827
@@ -281,13 +225,6 @@ src_configure() {
 		config="${config} --with-hotspot-build=hs20 --with-hotspot-src-zip=${DISTDIR}/${HOTSPOT_TARBALL}"
 	fi
 
-	if use pax_kernel; then
-		config="${config} --with-pax=paxctl"
-	else
-		config="${config} --without-pax"
-	fi
-
-	# upstream workaround - still needed?
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 
 	ECONF_SOURCE="../${ICEDTEA_PKG}" econf ${config} \
@@ -299,7 +236,6 @@ src_configure() {
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
-		$(use_enable nio2) \
 		$(use_enable nss) \
 		$(use_enable pulseaudio pulse-java) \
 		$(use_enable systemtap)
