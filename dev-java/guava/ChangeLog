@@ -2,6 +2,14 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*guava-10.0.1 (21 Dec 2011)
+
+  21 Dec 2011; James Le Cuirot <chewi@aura-online.co.uk>
+  -guava-09.ebuild, +guava-10.0.1.ebuild:
+  Version bump. All versions after 07 need to be built with JDK7+ due to an
+  awkward bug. To avoid pulling this in unnecessarily, a new slot has been
+  assigned.
+
   09 Nov 2011; Ralph Sennhauser <gentoo.sera@bluewin.ch> guava-09.ebuild:
   Use java_prepare instead of src_prepare
 
@@ -12,6 +20,8 @@
 
   30 Oct 2011; Ralph Sennhauser <gentoo.sera@bluewin.ch> +guava-09.ebuild:
   Version bump, thanks to Paweł Szklarz for providing an ebuild, bug 377477
+
+*guava-07 (7 Jan 2011)
 
   7 Jan 2011; James Le Cuirot <chewi@aura-online.co.uk> +guava-07.ebuild:
   Initial import.

@@ -8,14 +8,12 @@ JAVA_PKG_IUSE="doc source"
 
 inherit java-pkg-2 java-pkg-simple
 
-MY_P="${PN}-r${PV}"
-
 DESCRIPTION="A collection of Google's core Java libraries"
 HOMEPAGE="http://code.google.com/p/guava-libraries/"
-SRC_URI="http://guava-libraries.googlecode.com/files/${MY_P}.zip"
+SRC_URI="http://search.maven.org/remotecontent?filepath=com/google/${PN}/${PN}/${PV}/${P}-sources.jar"
 
 LICENSE="Apache-2.0"
-SLOT="0"
+SLOT="10"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
@@ -25,17 +23,6 @@ COMMON_DEP="
 RDEPEND="${COMMON_DEP}
 	>=virtual/jre-1.5"
 DEPEND="${COMMON_DEP}
-	>=virtual/jdk-1.5
-	app-arch/unzip"
+	>=virtual/jdk-1.7" # http://code.google.com/p/guava-libraries/issues/detail?id=635
 
-S="${WORKDIR}/${MY_P}"
 JAVA_GENTOO_CLASSPATH="jsr305"
-
-java_prepare() {
-	unpack ./${PN}-src-r${PV}.zip
-}
-
-src_install() {
-	java-pkg-simple_src_install
-	dodoc README
-}
