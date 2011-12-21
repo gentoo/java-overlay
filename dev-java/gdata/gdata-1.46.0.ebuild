@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI="4"
 JAVA_PKG_IUSE="doc source"
 
 inherit java-pkg-2 java-ant-2
@@ -40,7 +40,7 @@ EANT_NEEDS_TOOLS="yes"
 EANT_GENTOO_CLASSPATH="guava jaf javamail jsr305"
 EANT_EXTRA_ARGS="-Dactivation.jar= -Dmail.jar="
 
-src_prepare() {
+java_prepare() {
 	# Make this work with Guava instead of Google Collections.
 	sed -i "s/ImmutableMultimap/ImmutableListMultimap/g" \
 		src/com/google/gdata/util/common/net/UriParameterMap.java || die
@@ -53,7 +53,7 @@ src_prepare() {
 }
 
 src_install() {
-	dodoc ../INSTALL-src.txt ../README-src.txt ../RELEASE_NOTES.txt || die
+	dodoc ../INSTALL-src.txt ../README-src.txt ../RELEASE_NOTES.txt
 
 	use doc && java-pkg_dojavadoc doc
 	use source && java-pkg_dosrc src/*
