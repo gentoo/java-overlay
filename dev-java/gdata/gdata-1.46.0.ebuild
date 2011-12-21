@@ -15,11 +15,11 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-CDEPEND="dev-java/guava
-	dev-java/jsr305
-	java-virtuals/jaf
-	java-virtuals/javamail
-	java-virtuals/jdk-with-com-sun"
+CDEPEND="dev-java/guava:0
+	dev-java/jsr305:0
+	java-virtuals/jaf:0
+	java-virtuals/javamail:0
+	java-virtuals/jdk-with-com-sun:0"
 
 RDEPEND="${CDEPEND}
 	>=virtual/jre-1.5"
