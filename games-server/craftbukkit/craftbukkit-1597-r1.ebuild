@@ -20,10 +20,10 @@ KEYWORDS="~amd64 ~x86"
 IUSE="ipv6"
 
 CDEPEND="dev-java/ebean:0
-	dev-java/guava:0
+	dev-java/guava:10
 	dev-java/jline:0
 	dev-java/jopt-simple:0
-	dev-java/snakeyaml:0
+	>=dev-java/snakeyaml-1.9:0
 	~games-server/bukkit-1073:0"
 
 DEPEND="${CDEPEND}
@@ -35,7 +35,7 @@ RDEPEND="${CDEPEND}
 
 S="${WORKDIR}/Bukkit-CraftBukkit-${COMMIT}"
 
-JAVA_GENTOO_CLASSPATH="bukkit ebean guava jline jopt-simple snakeyaml"
+JAVA_GENTOO_CLASSPATH="bukkit ebean guava-10 jline jopt-simple snakeyaml"
 JAVA_CLASSPATH_EXTRA="${DISTDIR}/${MC_JAR}"
 JAVA_SRC_DIR="src/main/java"
 

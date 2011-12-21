@@ -2,6 +2,14 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*craftbukkit-1597-r1 (21 Dec 2011)
+
+  21 Dec 2011; James Le Cuirot <chewi@aura-online.co.uk>
+  -craftbukkit-1597.ebuild, +craftbukkit-1597-r1.ebuild:
+  Some plugins require guava 10 and snakeyaml 1.9 avoids a java-config bug.
+  Make plugin and lib directories sticky and group writeable for easier
+  plugin management.
+
 *craftbukkit-1597 (15 Dec 2011)
 
   15 Dec 2011; James Le Cuirot <chewi@aura-online.co.uk>

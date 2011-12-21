@@ -17,8 +17,8 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 CDEPEND="dev-java/ebean:0
-	dev-java/guava:0
-	dev-java/snakeyaml:0"
+	dev-java/guava:10
+	>=dev-java/snakeyaml-1.9:0"
 
 DEPEND="${CDEPEND}
 	>=virtual/jdk-1.6"
@@ -28,7 +28,7 @@ RDEPEND="${CDEPEND}
 
 S="${WORKDIR}/Bukkit-Bukkit-${COMMIT}"
 
-JAVA_GENTOO_CLASSPATH="ebean guava snakeyaml"
+JAVA_GENTOO_CLASSPATH="ebean guava-10 snakeyaml"
 JAVA_SRC_DIR="src/main/java"
 
 java_prepare() {
