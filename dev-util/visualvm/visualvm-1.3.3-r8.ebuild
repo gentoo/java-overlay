@@ -10,7 +10,7 @@ VISUALVM_PKG="visualvm_harness-1.3"
 VISUALVM_TARBALL="visualvm_133-src.tar.gz"
 NETBEANS_PROFILER_TARBALL="netbeans-profiler-visualvm_release701.tar.gz"
 
-DESCRIPTION="A harness to build VisualVM using Free Software build tools"
+DESCRIPTION="Integrates commandline JDK tools and profiling capabilites."
 HOMEPAGE="http://icedtea.classpath.org"
 SRC_URI="
 	http://icedtea.classpath.org/download/visualvm/${VISUALVM_PKG}.tar.gz
@@ -18,7 +18,7 @@ SRC_URI="
 	http://icedtea.classpath.org/download/visualvm/${NETBEANS_PROFILER_TARBALL}"
 
 LICENSE="GPL-2-with-linking-exception"
-SLOT="6"
+SLOT="7"
 KEYWORDS="~amd64"
 IUSE=""
 
@@ -47,11 +47,7 @@ src_prepare() {
 }
 
 src_configure() {
-	local vmhandle=icedtea-${SLOT}
-	has_version "<=dev-java/icedtea-6.1.10.4:6" && vmhandle=icedtea6
-
-	local vmhome
-	vmhome="$(GENTOO_VM=${vmhandle} java-config -O)" || die
+	local vmhome=`get_vmhome`
 
 	econf NB_PLATFORM=platform \
 		--bindir="${vmhome}"/bin \
@@ -71,6 +67,18 @@ src_compile() {
 src_install() {
 	emake DESTDIR="${ED}" install
 
-	# Don't install .desktop, file collision.
+	# Don't install default .desktop, file collision.
+	local vmhome=`get_vmhome`
 	rm -rf "${ED}"/usr/share
+	make_desktop_entry "${vmhome}/bin/jvisualvm" "OpenJDK ${SLOT} VisualVM" "java" "Development;Java;"
+}
+
+get_vmhome() {
+	local vmhandle=icedtea-${SLOT}
+	has_version "<=dev-java/icedtea-6.1.10.4:6" && vmhandle=icedtea6
+
+	local vmhome
+	vmhome="$(GENTOO_VM=${vmhandle} java-config -O)" || die
+
+	echo "${vmhome}"
 }
