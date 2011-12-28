@@ -16,9 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND=">=virtual/jdk-1.2
-	dev-java/ant"
-
+DEPEND=">=virtual/jdk-1.2"
 RDEPEND=">=virtual/jre-1.4"
 
 EANT_BUILD_TARGET="build"
