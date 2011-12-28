@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>java</herd>
+<maintainer>
+<email>chewi at aura-online.co.uk</email>
+<name>James Le Cuirot</name>
+</maintainer>
+<longdescription lang="en">
+Jin is a Java client for various chess servers. It currently supports
+the Internet Chess Club (chessclub.com) and the Free Internet Chess
+Server (freechess.org) but is designed to be able to support any chess
+server.
+</longdescription>
+</pkgmetadata>
