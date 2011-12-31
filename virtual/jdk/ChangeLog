@@ -2,6 +2,10 @@
 # Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  31 Dec 2011; Ralph Sennhauser <sera@gentoo.org> jdk-1.4.2-r1.ebuild,
+  jdk-1.5.0-r2.ebuild:
+  Remove ia64 support #345433
+
   04 Nov 2011; Vlastimil Babka <caster@gentoo.org> -jdk-1.7.0.ebuild:
   Moved to main tree.
 
