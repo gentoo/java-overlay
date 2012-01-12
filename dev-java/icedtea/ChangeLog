@@ -1,6 +1,15 @@
 # ChangeLog for dev-java/icedtea
-# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+*icedtea-6.1.10.5 (12 Jan 2012)
+*icedtea-6.1.9.12 (12 Jan 2012)
+*icedtea-6.1.8.12 (12 Jan 2012)
+
+  12 Jan 2012; Andrew John Hughes <andrew@gentoo.org> -icedtea-6.1.8.11.ebuild,
+  +icedtea-6.1.8.12.ebuild, -icedtea-6.1.9.11.ebuild, +icedtea-6.1.9.12.ebuild,
+  -icedtea-6.1.10.4-r5.ebuild, +icedtea-6.1.10.5.ebuild:
+  Latest bugfix update: 1.8.12, 1.9.12 and 1.10.5 http://bit.ly/zGNr7r
 
 *icedtea-6.1.10.4-r5 (20 Dec 2011)
 

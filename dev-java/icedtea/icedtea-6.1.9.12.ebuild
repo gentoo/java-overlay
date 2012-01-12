@@ -1,4 +1,4 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
@@ -177,7 +177,7 @@ src_configure() {
 	local vmhome="/usr/lib/jvm/${vm}"
 
 	# IcedTea6 can't be built using IcedTea7; its class files are too new
-	if [[ "${vm}" == "icedtea6" ]] || [[ "${vm}" == "icedtea6-bin" ]] ; then
+	if [[ "${vm}" == "icedtea6" ]] || [[ "${vm}" == "icedtea6-bin" ]] || [[ "${vm}" == "icedtea-6" ]] ; then
 		# If we are upgrading icedtea, then we don't need to bootstrap.
 		config="${config} --with-openjdk=$(java-config -O)"
 	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" ]] ; then
