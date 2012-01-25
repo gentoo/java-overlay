@@ -1,9 +1,9 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI="2"
-COMMIT="7079ed3"
+COMMIT="0a0fee8"
 JAVA_PKG_IUSE="doc source"
 
 inherit games java-pkg-2 java-pkg-simple
@@ -16,7 +16,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-CDEPEND="dev-java/ebean:0
+CDEPEND="dev-java/commons-lang:2.1
+	dev-java/ebean:0
 	dev-java/guava:10
 	>=dev-java/snakeyaml-1.9:0"
 
@@ -28,7 +29,7 @@ RDEPEND="${CDEPEND}
 
 S="${WORKDIR}/Bukkit-Bukkit-${COMMIT}"
 
-JAVA_GENTOO_CLASSPATH="ebean guava-10 snakeyaml"
+JAVA_GENTOO_CLASSPATH="commons-lang-2.1 ebean guava-10 snakeyaml"
 JAVA_SRC_DIR="src/main/java"
 
 java_prepare() {

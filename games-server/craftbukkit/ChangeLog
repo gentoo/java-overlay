@@ -1,6 +1,13 @@
 # ChangeLog for games-server/craftbukkit
-# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+*craftbukkit-1818 (25 Jan 2012)
+
+  25 Jan 2012; James Le Cuirot <chewi@aura-online.co.uk>
+  -craftbukkit-1597.ebuild, +craftbukkit-1818.ebuild,
+  -files/fix-world_the_end-migration.patch:
+  Version bump.
 
 *craftbukkit-1597-r1 (21 Dec 2011)
 

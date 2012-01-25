@@ -1,6 +1,12 @@
 # ChangeLog for games-server/bukkit
-# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+*bukkit-1200 (25 Jan 2012)
+
+  25 Jan 2012; James Le Cuirot <chewi@aura-online.co.uk>
+  -bukkit-1073-r1.ebuild, +bukkit-1200.ebuild:
+  Version bump.
 
 *bukkit-1073-r1 (21 Dec 2011)
 
