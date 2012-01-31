@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-COMMIT="0a0fee8"
+COMMIT="775c47d"
 JAVA_PKG_IUSE="doc source"
 
 inherit games java-pkg-2 java-pkg-simple
