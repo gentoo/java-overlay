@@ -2,6 +2,19 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.0-r5 (03 Feb 2012)
+
+  03 Feb 2012; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.10.5.ebuild,
+  icedtea-6.1.11.ebuild, +files/icedtea-6_pax_kernel_support.patch,
+  +icedtea-7.2.0-r5.ebuild:
+  Add patch for building with PaX enabled kernels.
+  Remove xawt library with USE=-X so HeadlessGraphicsEnvironment is used by
+  default.
+  Install revdep mask for when dependedcies are deliberately removed with
+  USE=-X,-alsa,-cups.
+  Clean out no longer used code.
+  icedtea-7: drop building of additional vms.
+
 *icedtea-6.1.11 (31 Jan 2012)
 
   31 Jan 2012; Andrew John Hughes <andrew@gentoo.org> +icedtea-6.1.11.ebuild:

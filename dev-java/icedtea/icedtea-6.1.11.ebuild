@@ -28,14 +28,16 @@ SRC_URI="
 	http://icedtea.classpath.org/download/drops/${JAXWS_TARBALL}
 	http://icedtea.classpath.org/download/drops/${JAF_TARBALL}
 	http://icedtea.classpath.org/download/drops/${JAXP_TARBALL}
-	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL}"
+	!amd64? ( !sparc? ( !x86? (
+		http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL}
+	) ) )"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="6"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
 IUSE="+X +alsa cjk +cups debug doc examples javascript +jbootstrap +nsplugin
- +nss pax_kernel pulseaudio +source systemtap test +webstart -zero"
+	+nss pax_kernel pulseaudio +source systemtap test +webstart"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
@@ -61,7 +63,6 @@ X_DEPEND="
 	x11-proto/xineramaproto
 	x11-proto/xproto"
 
-# virtual/libffi is needed for Zero
 COMMON_DEP="
 	>=media-libs/giflib-4.1.6
 	>=media-libs/libpng-1.2
@@ -70,9 +71,7 @@ COMMON_DEP="
 	javascript? ( dev-java/rhino:1.6 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
 	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
-	systemtap? ( >=dev-util/systemtap-1 )
-	zero? ( virtual/libffi )
-	!amd64? ( !sparc? ( !x86? ( virtual/libffi ) ) )"
+	systemtap? ( >=dev-util/systemtap-1 )"
 
 # media-fonts/lklug needs ppc ppc64 keywords
 RDEPEND="${COMMON_DEP}
@@ -124,6 +123,8 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 PDEPEND="webstart? ( dev-java/icedtea-web:6 )
 	nsplugin? ( dev-java/icedtea-web:6[nsplugin] )"
 
+S="${WORKDIR}"/${ICEDTEA_PKG}
+
 # a bit of hack so the VM switching is triggered without causing dependency troubles
 JAVA_PKG_NV_DEPEND=">=virtual/jdk-1.5"
 JAVA_PKG_WANT_SOURCE="1.5"
@@ -155,16 +156,18 @@ pkg_setup() {
 
 src_unpack() {
 	unpack ${ICEDTEA_PKG}.tar.gz
-	mkdir "${S}" || die
 }
 
 java_prepare() {
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
+
+	epatch "${FILESDIR}"/${PN}-${SLOT}_pax_kernel_support.patch #389751
+	eautoreconf
 }
 
 src_configure() {
-	local config bootstrap extra_vms
+	local config bootstrap
 	local vm=$(java-pkg_get-current-vm)
 
 	# IcedTea6 can't be built using IcedTea7; its class files are too new
@@ -181,7 +184,6 @@ src_configure() {
 
 	if [[ ${bootstrap} ]]; then
 		config="${config} --enable-bootstrap"
-		build_bootstrap_jdk=yes
 
 		# icedtea-6 javac wrapper requires to always have ecj if bootstrapping #392337
 		local ecj_jar="$(readlink "${EPREFIX}"/usr/share/eclipse-ecj/ecj.jar)"
@@ -221,7 +223,7 @@ src_configure() {
 
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 
-	ECONF_SOURCE="../${ICEDTEA_PKG}" econf ${config} \
+	econf ${config} \
 		--with-openjdk-src-zip="${DISTDIR}/${OPENJDK_TARBALL}" \
 		--with-jaxp-drop-zip="${DISTDIR}/${JAXP_TARBALL}" \
 		--with-jaxws-drop-zip="${DISTDIR}/${JAXWS_TARBALL}" \
@@ -232,7 +234,8 @@ src_configure() {
 		$(use_enable doc docs) \
 		$(use_enable nss) \
 		$(use_enable pulseaudio pulse-java) \
-		$(use_enable systemtap)
+		$(use_enable systemtap) \
+		$(use_with pax_kernel pax paxctl)
 }
 
 src_compile() {
@@ -258,10 +261,15 @@ src_install() {
 	local ddest="${ED}/${dest}"
 	dodir "${dest}"
 
-	dodoc "${WORKDIR}"/${ICEDTEA_PKG}/{README,NEWS,AUTHORS,THANKYOU}
+	dodoc README NEWS AUTHORS THANKYOU
 	dosym /usr/share/doc/${PF} /usr/share/doc/${PN}${SLOT}
 
 	cd openjdk.build/j2sdk-image || die
+
+	# Ensures HeadlessGraphicsEnvironment is used.
+	if ! use X; then
+		rm -r jre/lib/$(get_system_arch)/xawt || die
+	fi
 
 	# doins can't handle symlinks.
 	cp -vRP bin include jre lib man "${ddest}" || die
@@ -306,6 +314,9 @@ src_install() {
 	doins "${T}"/fontconfig.Gentoo.properties
 
 	set_java_env "${FILESDIR}/icedtea.env"
+	if ! use X || ! use alsa || ! use cups; then
+		java-vm_revdep-mask "${dest}"
+	fi
 }
 
 pkg_preinst() {
