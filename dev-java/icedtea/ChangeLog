@@ -2,6 +2,10 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  04 Feb 2012; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.11.ebuild:
+  Uses xsltproc instead of xalan+xerces. Bug IcedTea #732.
+  Raise ant dep to >=1.8.1 so xalan and xerces can be dropped.
+
 *icedtea-7.2.0-r5 (03 Feb 2012)
 
   03 Feb 2012; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.10.5.ebuild,

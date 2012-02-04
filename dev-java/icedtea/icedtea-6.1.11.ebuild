@@ -90,8 +90,7 @@ RDEPEND="${COMMON_DEP}
 	alsa? ( ${ALSA_COMMON_DEP} )
 	cups? ( ${CUPS_COMMON_DEP} )"
 
-# Only ant-core-1.7.1-r2 and later properly respect environment variables.
-# xalan/xerces: automatic code generation (also needed for Ant 1.8.0 to work properly)
+# Only ant-core-1.8.1 has fixed ant -diagnostics when xerces+xalan are not present.
 # ca-certificates, perl and openssl are used for the cacerts keystore generation
 # xext headers have two variants depending on version - bug #288855
 # !eclipse-ecj-3.7 - bug #392587
@@ -105,11 +104,10 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	app-arch/cpio
 	app-arch/zip
 	app-misc/ca-certificates
-	>=dev-java/ant-core-1.7.1-r2
+	>=dev-java/ant-core-1.8.1
 	dev-java/ant-nodeps
-	>=dev-java/xalan-2.7.0:0
-	>=dev-java/xerces-2.9.1:2
 	dev-lang/perl
+	>=dev-libs/libxslt-1.1.26
 	dev-libs/openssl
 	dev-util/pkgconfig
 	sys-apps/lsb-release
@@ -242,9 +240,8 @@ src_compile() {
 	# Would use GENTOO_VM otherwise.
 	export ANT_RESPECT_JAVA_HOME=TRUE
 
-	# ant -diagnostics in Ant 1.8.0 fails without xerces-2 and xalan
 	# Load the least that's needed to avoid possible classpath collisions.
-	export ANT_TASKS="xerces-2 xalan ant-nodeps"
+	export ANT_TASKS="ant-nodeps"
 
 	emake
 }
