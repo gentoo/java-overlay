@@ -118,6 +118,7 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 		dev-java/icedtea:6
 	)
 	app-arch/cpio
+	app-arch/unzip
 	app-arch/zip
 	app-misc/ca-certificates
 	>=dev-java/ant-core-1.8.1

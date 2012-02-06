@@ -84,6 +84,7 @@ DEPEND="${RDEPEND}
 		dev-java/icedtea-bin:6
 		dev-java/icedtea:${SLOT}
 	)
+	app-arch/unzip
 	app-arch/zip
 	>=dev-java/xalan-2.7.0:0
 	>=dev-java/xerces-2.9.1:2
