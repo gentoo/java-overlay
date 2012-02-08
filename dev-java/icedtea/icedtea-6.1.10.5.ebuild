@@ -278,6 +278,11 @@ src_install() {
 		rm -r jre/lib/$(get_system_arch)/xawt || die
 	fi
 
+	#402507
+	mkdir jre/.systemPrefs || die
+	touch jre/.systemPrefs/.system.lock || die
+	touch jre/.systemPrefs/.systemRootModFile || die
+
 	# doins can't handle symlinks.
 	cp -vRP bin include jre lib man "${ddest}" || die
 

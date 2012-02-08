@@ -2,6 +2,12 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  08 Feb 2012; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.8.12.ebuild,
+  icedtea-6.1.9.12.ebuild, icedtea-6.1.10.5.ebuild, icedtea-6.1.11.ebuild,
+  icedtea-7.2.0-r5.ebuild:
+  Install sytem.lockfile and systemRootModFile for use of icedtea in sandboxed
+  environments. #402507
+
   06 Feb 2012; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.8.12.ebuild,
   icedtea-6.1.9.12.ebuild, icedtea-6.1.10.5.ebuild, icedtea-6.1.11.ebuild,
   icedtea-7.2.0-r5.ebuild:

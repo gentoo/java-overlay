@@ -291,6 +291,11 @@ src_install() {
 	# Don't hide classes
 	rm lib/ct.sym || die
 
+	#402507
+	mkdir jre/.systemPrefs || die
+	touch jre/.systemPrefs/.system.lock || die
+	touch jre/.systemPrefs/.systemRootModFile || die
+
 	# doins can't handle symlinks.
 	cp -vRP bin include jre lib man "${ddest}" || die
 

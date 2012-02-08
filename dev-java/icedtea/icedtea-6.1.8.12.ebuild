@@ -265,6 +265,11 @@ src_install() {
 
 	cd "${S}/openjdk/build/linux-${arch}/j2sdk-image" || die
 
+	#402507
+	mkdir jre/.systemPrefs || die
+	touch jre/.systemPrefs/.system.lock || die
+	touch jre/.systemPrefs/.systemRootModFile || die
+
 	if use doc ; then
 		# java-pkg_dohtml needed for package-list #302654
 		java-pkg_dohtml -r ../docs/* || die "Failed to install documentation"
