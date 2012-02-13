@@ -3,7 +3,8 @@
 # $Header: $
 
 EAPI="2"
-COMMIT="775c47d"
+COMMIT="7a0d4cb"
+BUKKIT_API="1.1-R4"
 JAVA_PKG_IUSE="doc source"
 
 inherit games java-pkg-2 java-pkg-simple
@@ -35,6 +36,9 @@ JAVA_SRC_DIR="src/main/java"
 java_prepare() {
 	# Easier to use java-pkg-simple.
 	rm -v pom.xml || die
+
+	mkdir -p target/classes/META-INF/maven/org.bukkit/bukkit || die
+	echo "version=${BUKKIT_API}" > target/classes/META-INF/maven/org.bukkit/bukkit/pom.properties || die
 }
 
 src_install() {

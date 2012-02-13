@@ -3,7 +3,7 @@
 # $Header: $
 
 EAPI="2"
-COMMIT="d31336c"
+COMMIT="52968dc"
 MC_PV="1.1_01"
 MC_PN="minecraft-server-unobfuscated"
 MC_JAR="${MC_PN}-${MC_PV}.jar"
@@ -25,7 +25,7 @@ CDEPEND="dev-java/commons-lang:2.1
 	dev-java/jline:0
 	dev-java/jopt-simple:0
 	>=dev-java/snakeyaml-1.9:0
-	~games-server/bukkit-1211:0"
+	~games-server/bukkit-1321:0"
 
 DEPEND="${CDEPEND}
 	>=virtual/jdk-1.6"
