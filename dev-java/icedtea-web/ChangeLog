@@ -1,6 +1,11 @@
 # ChangeLog for dev-java/icedtea-web
-# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  13 Feb 2012; Vlastimil Babka <caster@gentoo.org> icedtea-web-1.1.3.ebuild,
+  icedtea-web-1.1.3-r7.ebuild, icedtea-web-1.1.4.ebuild,
+  icedtea-web-1.1.4-r7.ebuild:
+  Update installdir with USE=build, die when users set the flag.
 
 *icedtea-web-1.1.4-r7 (24 Nov 2011)
 *icedtea-web-1.1.4 (24 Nov 2011)

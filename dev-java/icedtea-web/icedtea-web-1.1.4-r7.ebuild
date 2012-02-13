@@ -1,4 +1,4 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea-web/icedtea-web-1.1.4-r7.ebuild,v 1.1 2011/11/24 20:57:04 sera Exp $
 # Build written by Andrew John Hughes (ahughes@redhat.com)
@@ -67,7 +67,8 @@ src_configure() {
 
 	if use build; then
 		icedteadir="${ICEDTEA_BIN_DIR}"
-		installdir="/opt/icedtea${SLOT}-web-bin"
+		[[ -z ${icedteadir} ]] && die "USE=build is an internal flag and should not be enabled"
+		installdir="/opt/icedtea-web-bin-${SLOT}"
 	else
 		icedteadir="/usr/$(get_libdir)/icedtea${SLOT}"
 		installdir="/usr/$(get_libdir)/icedtea${SLOT}-web"
