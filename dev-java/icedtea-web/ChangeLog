@@ -2,6 +2,10 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  13 Feb 2012; Vlastimil Babka <caster@gentoo.org>
+  -files/0001-Support-using-NPAPI-SDK-headers-instead-of-whole-xul.patch:
+  Remove old.
+
   13 Feb 2012; Vlastimil Babka <caster@gentoo.org> icedtea-web-1.1.3.ebuild,
   icedtea-web-1.1.3-r7.ebuild, icedtea-web-1.1.4.ebuild,
   icedtea-web-1.1.4-r7.ebuild:
