@@ -2,6 +2,12 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.1 (15 Feb 2012)
+
+  15 Feb 2012; Andrew John Hughes <andrew@gentoo.org> icedtea-7.2.0.1.ebuild,
+  +icedtea-7.2.1.ebuild:
+  Fix changeset identifiers.
+
 *icedtea-7.2.0.1 (15 Feb 2012)
 *icedtea-6.1.10.6 (15 Feb 2012)
 *icedtea-6.1.9.13 (15 Feb 2012)
