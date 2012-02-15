@@ -176,8 +176,9 @@ java_prepare() {
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
 
-	epatch "${FILESDIR}"/${P}_pax_kernel_support.patch #389751
-	eautoreconf
+	# Disable patch to make security update build
+	#epatch "${FILESDIR}"/${P}_pax_kernel_support.patch #389751
+	#eautoreconf
 }
 
 src_configure() {
