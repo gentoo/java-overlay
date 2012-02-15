@@ -188,7 +188,10 @@ src_configure() {
 
 	# Whether to bootstrap
 	if has "${vm}" icedtea7 icedtea-7 icedtea-bin-7; then
-		use jbootstrap && bootstrap=yes
+		if use jbootstrap; then
+			einfo "We can't currently bootstrap with a IcedTea7 JVM :("
+			einfo "bootstrap forced off, ignoring use jbootstrap"
+		fi
 	elif has "${vm}" icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6; then
 		if use jbootstrap; then
 			einfo "We can't currently bootstrap with a IcedTea6 JVM :("
