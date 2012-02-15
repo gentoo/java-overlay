@@ -1,4 +1,4 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.0-r3.ebuild,v 1.1 2011/12/02 12:27:17 sera Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
@@ -9,7 +9,7 @@
 
 EAPI="4"
 
-inherit java-pkg-2 java-vm-2 pax-utils prefix versionator
+inherit autotools java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 
 ICEDTEA_PKG=icedtea-$(get_version_component_range 2-3)
 OPENJDK_TARBALL="0a76e5390e68.tar.gz"
@@ -19,11 +19,6 @@ JAXP_TARBALL="948e734135ea.tar.gz"
 JAXWS_TARBALL="a2ebfdc9db7e.tar.gz"
 JDK_TARBALL="2054526dd141.tar.gz"
 LANGTOOLS_TARBALL="9b85f1265346.tar.gz"
-CACAO_TARBALL="4549072ab2de.tar.gz" # 30 Aug 2011
-JAMVM_TARBALL="jamvm-310c491ddc14e92a6ffff27030a1a1821e6395a8.tar.gz" # 26 Sep 2011
-#CACAO_TARBALL="cacao-2204b08fcae9.tar.gz" # 03 Nov 2011
-#JAMVM_TARBALL="jamvm-4617da717ecb05654ea5bb9572338061106a414d.tar.gz" # 10 Oct 2011
-S=${WORKDIR}/${ICEDTEA_PKG}
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
@@ -35,20 +30,14 @@ SRC_URI="
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-2.0/jaxws/archive/${JAXWS_TARBALL}
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-2.0/jdk/archive/${JDK_TARBALL}
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-2.0/hotspot/archive/${HOTSPOT_TARBALL}
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-2.0/langtools/archive/${LANGTOOLS_TARBALL}
-	jamvm? ( http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL} )"
-	#cacao? ( http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL} )
+	http://icedtea.classpath.org/hg/release/icedtea7-forest-2.0/langtools/archive/${LANGTOOLS_TARBALL}"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="7"
 KEYWORDS="~amd64 ~x86"
 
-# Missing options: cacao zero shark - for building additional vms
-IUSE="+X +alsa cjk +cups debug doc examples -jamvm javascript +jbootstrap
-	+nsplugin +nss pulseaudio +source systemtap +webstart"
-REQUIRED_USE="
-	jamvm? ( jbootstrap )"
-	#cacao? ( jbootstrap )
+IUSE="+X +alsa cjk +cups debug doc examples javascript +jbootstrap +nsplugin
+	+nss pax_kernel pulseaudio +source systemtap test +webstart"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
@@ -79,20 +68,16 @@ X_DEPEND="
 	x11-proto/xineramaproto
 	x11-proto/xproto"
 
-# virtual/libffi is needed for Zero
 COMMON_DEP="
 	>=media-libs/giflib-4.1.6
 	media-libs/lcms:2
 	>=media-libs/libpng-1.2
-	>=sys-devel/gcc-4.3
-	>=sys-libs/glibc-2.11.2
 	>=sys-libs/zlib-1.2.3
 	virtual/jpeg
 	javascript? ( dev-java/rhino:1.6 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
 	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
-	systemtap? ( >=dev-util/systemtap-1 )
-	!amd64? ( !sparc? ( !x86? ( virtual/libffi ) ) )"
+	systemtap? ( >=dev-util/systemtap-1 )"
 
 # cups is needed for X. #390945 #390975
 RDEPEND="${COMMON_DEP}
@@ -112,10 +97,6 @@ RDEPEND="${COMMON_DEP}
 	alsa? ( ${ALSA_COMMON_DEP} )
 	cups? ( ${CUPS_COMMON_DEP} )"
 
-# Additional dependencies for building:
-#   zip: extract OpenJDK tarball, and needed by configure
-#   ant, jdk: required to build Java code
-#   ecj: required for bootstrap builds
 # Only ant-core-1.8.1 has fixed ant -diagnostics when xerces+xalan are not present.
 # ca-certificates, perl and openssl are used for the cacerts keystore generation
 # xext headers have two variants depending on version - bug #288855
@@ -129,6 +110,7 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 		dev-java/icedtea:6
 	)
 	app-arch/cpio
+	app-arch/unzip
 	app-arch/zip
 	app-misc/ca-certificates
 	>=dev-java/ant-core-1.8.1
@@ -139,14 +121,14 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	dev-util/pkgconfig
 	sys-apps/attr
 	sys-apps/lsb-release
+	|| ( >=sys-devel/autoconf-2.65:2.5 <sys-devel/autoconf-2.64:2.5 )
 	${X_DEPEND}
-	jbootstrap? (
-		|| ( dev-java/eclipse-ecj dev-java/ecj-gcj )
-	)"
-#	 || ( >=sys-devel/autoconf-2.65:2.5 <sys-devel/autoconf-2.64:2.5 )"
+	pax_kernel? ( sys-apps/paxctl )"
 
 PDEPEND="webstart? ( dev-java/icedtea-web:7 )
 	nsplugin? ( dev-java/icedtea-web:7[nsplugin] )"
+
+S="${WORKDIR}"/${ICEDTEA_PKG}
 
 # a bit of hack so the VM switching is triggered without causing dependency troubles
 JAVA_PKG_NV_DEPEND=">=virtual/jdk-1.5"
@@ -154,15 +136,6 @@ JAVA_PKG_WANT_SOURCE="1.5"
 JAVA_PKG_WANT_TARGET="1.5"
 
 pkg_setup() {
-	if use nsplugin && ! use webstart ; then
-		elog "Note that the nsplugin flag implies the webstart flag. Enable it to remove this message."
-	fi
-
-	[[ "${MERGE_TYPE}" == "binary" ]] && return #258423
-
-	# icedtea doesn't like some locales. #330433 #389717
-	export LANG="C" LC_ALL="C"
-
 	# quite a hack since java-config does not provide a way for a package
 	# to limit supported VM's for building and their preferred order
 	if [[ -n "${JAVA_PKG_FORCE_VM}" ]]; then
@@ -190,9 +163,6 @@ pkg_setup() {
 	einfo "Forced vm ${JAVA_PKG_FORCE_VM}"
 	java-vm-2_pkg_setup
 	java-pkg-2_pkg_setup
-
-	# For bootstrap builds as the sandbox control file might not yet exist.
-	addpredict /proc/self/coredump_filter
 }
 
 src_unpack() {
@@ -200,19 +170,21 @@ src_unpack() {
 }
 
 java_prepare() {
-	# Fix non bootstrap builds with PaX enabled kernels. Bug #389751
-	# Move applying test_gamma.patch to before creating boot copy.
-	if host-is-pax; then
-		sed -i -e 's|patches/boot/test_gamma.patch||' Makefile.in || die
-		sed -i -e 's|openjdk-boot|openjdk|g' patches/boot/test_gamma.patch || die
-		export DISTRIBUTION_PATCHES=patches/boot/test_gamma.patch
-	fi
+	# For bootstrap builds as the sandbox control file might not yet exist.
+	addpredict /proc/self/coredump_filter
+
+	# icedtea doesn't like some locales. #330433 #389717
+	export LANG="C" LC_ALL="C"
+
+	epatch "${FILESDIR}"/${P}_pax_kernel_support.patch #389751
+	eautoreconf
 }
 
 src_configure() {
 	local config bootstrap
 	local vm=$(java-pkg_get-current-vm)
 
+	# Whether to bootstrap
 	if has "${vm}" icedtea7 icedtea-7 icedtea-bin-7; then
 		use jbootstrap && bootstrap=yes
 	elif has "${vm}" icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6; then
@@ -224,50 +196,17 @@ src_configure() {
 		# gcj-jdk ensures ecj is present.
 		use jbootstrap || einfo "bootstrap forced on for ${vm}, ignoring use jbootstrap"
 		bootstrap=yes
+		local ecj_jar="$(readlink "${EPREFIX}"/usr/share/eclipse-ecj/ecj.jar)"
+		config="${config} --with-ecj-jar=${ecj_jar}"
 	else
 		eerror "IcedTea must be built with either a JDK based on GNU Classpath or an existing build of IcedTea."
 		die "Install a GNU Classpath JDK (gcj-jdk)"
 	fi
 
 	if [[ ${bootstrap} ]]; then
-		local ecj_jar="$(readlink "${EPREFIX}"/usr/share/eclipse-ecj/ecj.jar)"
-
 		config="${config} --enable-bootstrap"
-		config="${config} --with-ecj-jar=${ecj_jar}"
 	else
 		config="${config} --disable-bootstrap"
-	fi
-
-	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
-	if has "${ARCH}" amd64 sparc x86; then
-		config="${config} --disable-zero --disable-cacao --disable-jamvm --disable-shark"
-
-		if [[ ${bootstrap} ]]; then
-			local extra_vms
-			#if use shark; then
-			#	extra_vms="${extra_vms},shark"
-			#elif use zero; then
-			#	extra_vms="${extra_vms},zero"
-			#fi
-			# CACAO disabled until it has OpenJDK7 support
-			#if use cacao; then
-			#	extra_vms="${extra_vms},cacao"
-			#	config="${config} --with-cacao-src-zip=${DISTDIR}/${CACAO_TARBALL}"
-			#fi
-			if use jamvm; then
-				extra_vms="${extra_vms},jamvm"
-				config="${config} --with-jamvm-src-zip=${DISTDIR}/${JAMVM_TARBALL}"
-			fi
-			if [[ ${extra_vms} ]]; then
-				config="${config} --with-additional-vms=${extra_vms#,}"
-			fi
-		elif use jamvm; then
-			ewarn "Can't build additional VMs without bootstrap."
-			ewarn "Rebuild IcedTea with a JDK that allows bootstrapping."
-		fi
-	else
-		config="${config} --enable-zero --disable-cacao --disable-jamvm --disable-shark"
-		# local extra_vms
 	fi
 
 	# OpenJDK-specific parallelism support. Bug #389791, #337827
@@ -295,29 +234,29 @@ src_configure() {
 		--with-langtools-src-zip="${DISTDIR}/${LANGTOOLS_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
-		--disable-jdk-tests \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nss) \
 		$(use_enable pulseaudio pulse-java) \
-		$(use_enable systemtap)
+		$(use_enable systemtap) \
+		$(use_with pax_kernel pax paxctl)
 }
 
 src_compile() {
-	# Newer versions of Gentoo's ant add
-	# an environment variable so it works properly...
+	# Would use GENTOO_VM otherwise.
 	export ANT_RESPECT_JAVA_HOME=TRUE
 
-	# We try to load the least that's needed to avoid possible classpath collisions
+	# Load the least that's needed to avoid possible classpath collisions.
 	export ANT_TASKS="ant-nodeps"
 
-	# Build and pax mark the intermidiate jdk. #389751
-	if host-is-pax; then
-		emake -j1 icedtea-boot
-		java-vm_set-pax-markings openjdk.build-boot
-	fi
-
 	emake -j 1
+}
+
+src_test() {
+	# Use Xvfb for tests
+	unset DISPLAY
+
+	Xemake -j1 check
 }
 
 src_install() {
@@ -328,16 +267,20 @@ src_install() {
 	dodoc README NEWS AUTHORS
 	dosym /usr/share/doc/${PF} /usr/share/doc/${PN}${SLOT}
 
-	# http://www.mail-archive.com/openjdk@lists.launchpad.net/msg06599.html
-	if use jamvm; then
-		dosym ${dest}/jre/lib/$(get_system_arch)/jamvm/libjvm.so \
-			${dest}/jre/lib/$(get_system_arch)
-	fi
-
 	cd openjdk.build/j2sdk-image || die
+
+	# Ensures HeadlessGraphicsEnvironment is used.
+	if ! use X; then
+		rm -r jre/lib/$(get_system_arch)/xawt || die
+	fi
 
 	# Don't hide classes
 	rm lib/ct.sym || die
+
+	#402507
+	mkdir jre/.systemPrefs || die
+	touch jre/.systemPrefs/.system.lock || die
+	touch jre/.systemPrefs/.systemRootModFile || die
 
 	# doins can't handle symlinks.
 	cp -vRP bin include jre lib man "${ddest}" || die
@@ -383,6 +326,9 @@ src_install() {
 	doins "${T}"/fontconfig.Gentoo.properties
 
 	set_java_env "${FILESDIR}/icedtea.env"
+	if ! use X || ! use alsa || ! use cups; then
+		java-vm_revdep-mask "${dest}"
+	fi
 	java-vm_sandbox-predict /proc/self/coredump_filter
 }
 

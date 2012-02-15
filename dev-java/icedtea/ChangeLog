@@ -2,6 +2,18 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.0.1 (15 Feb 2012)
+*icedtea-6.1.10.6 (15 Feb 2012)
+*icedtea-6.1.9.13 (15 Feb 2012)
+*icedtea-6.1.8.13 (15 Feb 2012)
+
+  15 Feb 2012; Andrew John Hughes <andrew@gentoo.org> -icedtea-6.1.8.12.ebuild,
+  +icedtea-6.1.8.13.ebuild, -icedtea-6.1.9.12.ebuild, +icedtea-6.1.9.13.ebuild,
+  -icedtea-6.1.10.4-r3.ebuild, -icedtea-6.1.10.5.ebuild,
+  +icedtea-6.1.10.6.ebuild, -icedtea-7.2.0-r3.ebuild, -icedtea-7.2.0-r4.ebuild,
+  -icedtea-7.2.0-r5.ebuild, +icedtea-7.2.0.1.ebuild:
+  Security updates: http://bit.ly/AbtG5v
+
   08 Feb 2012; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.8.12.ebuild,
   icedtea-6.1.9.12.ebuild, icedtea-6.1.10.5.ebuild, icedtea-6.1.11.ebuild,
   icedtea-7.2.0-r5.ebuild:
