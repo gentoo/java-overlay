@@ -141,24 +141,30 @@ pkg_setup() {
 	# to limit supported VM's for building and their preferred order
 	if [[ -n "${JAVA_PKG_FORCE_VM}" ]]; then
 		einfo "Honoring user-set JAVA_PKG_FORCE_VM"
-	elif has_version "<=dev-java/icedtea-7.2.0:7"; then
-		JAVA_PKG_FORCE_VM="icedtea7"
-	elif has_version ">dev-java/icedtea-7.2.0:7"; then
-		JAVA_PKG_FORCE_VM="icedtea-7"
-	elif has_version "dev-java/icedtea-bin:7"; then
-		JAVA_PKG_FORCE_VM="icedtea-bin-7"
-	elif has_version "<=dev-java/icedtea-6.1.10.4:6"; then
-		JAVA_PKG_FORCE_VM="icedtea6"
-	elif has_version ">dev-java/icedtea-6.1.10.4:6"; then
-		JAVA_PKG_FORCE_VM="icedtea-6"
-	elif has_version "<dev-java/icedtea-bin-6.1.10.4:6"; then
-		JAVA_PKG_FORCE_VM="icedtea6-bin"
-	elif has_version ">=dev-java/icedtea-bin-6.1.10.4:6"; then
-		JAVA_PKG_FORCE_VM="icedtea-bin-6"
-	elif has_version dev-java/gcj-jdk; then
-		JAVA_PKG_FORCE_VM="gcj-jdk"
+	elif use jbootstrap; then
+		if has_version "<=dev-java/icedtea-7.2.0:7"; then
+			JAVA_PKG_FORCE_VM="icedtea7"
+		elif has_version ">dev-java/icedtea-7.2.0:7"; then
+			JAVA_PKG_FORCE_VM="icedtea-7"
+		elif has_version "dev-java/icedtea-bin:7"; then
+			JAVA_PKG_FORCE_VM="icedtea-bin-7"
+		elif has_version "<=dev-java/icedtea-6.1.10.4:6"; then
+			JAVA_PKG_FORCE_VM="icedtea6"
+		elif has_version ">dev-java/icedtea-6.1.10.4:6"; then
+			JAVA_PKG_FORCE_VM="icedtea-6"
+		elif has_version "<dev-java/icedtea-bin-6.1.10.4:6"; then
+			JAVA_PKG_FORCE_VM="icedtea6-bin"
+		elif has_version ">=dev-java/icedtea-bin-6.1.10.4:6"; then
+			JAVA_PKG_FORCE_VM="icedtea-bin-6"
+		else
+			die "Unable to find a supported VM for building"
+		fi
 	else
-		die "Unable to find a supported VM for building"
+		if has_version dev-java/gcj-jdk; then
+			JAVA_PKG_FORCE_VM="gcj-jdk"
+		else
+			die "Unable to find a supported VM for building"
+		fi
 	fi
 
 	einfo "Forced vm ${JAVA_PKG_FORCE_VM}"
