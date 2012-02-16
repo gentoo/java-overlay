@@ -2,6 +2,14 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.11.1 (16 Feb 2012)
+
+  16 Feb 2012; Andrew John Hughes <andrew@gentoo.org> -icedtea-6.1.11.ebuild,
+  +icedtea-6.1.11.1.ebuild:
+  Security release:
+  http://mail.openjdk.java.net/pipermail/distro-pkg-dev/2012-February/017233.ht
+  ml
+
   15 Feb 2012; Andrew John Hughes <andrew@gentoo.org> icedtea-7.2.1.ebuild:
   Make working VMs clearer.
 
