@@ -1,6 +1,13 @@
 # ChangeLog for dev-java/lwjgl
-# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+*lwjgl-2.7.3 (17 Feb 2012)
+
+  17 Feb 2012: James Le Cuirot <chewi@aura-online.co.uk>
+  -lwjgl-2.8.2.ebuild, +lwjgl-2.8.3.ebuild:
+  Version bump to 2.8.3. Unlike 2.8.2, this version works with Minecraft. Fix
+  EGL support by calling the correct target.
 
 *lwjgl-2.8.2 (19 Nov 2011)
 

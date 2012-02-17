@@ -43,14 +43,15 @@ S="${WORKDIR}"
 
 JAVA_PKG_BSFIX_NAME="build.xml build-generator.xml"
 JAVA_ANT_REWRITE_CLASSPATH="true"
-
 EANT_GENTOO_CLASSPATH="apple-java-extensions-bin apt-mirror asm-3.999 jinput jutils"
-EANT_BUILD_TARGET="jars headers"
 
 pkg_setup() {
 	if use egl; then
 		ewarn "Only enable the egl USE flag if your hardware does not support full"
 		ewarn "OpenGL. ${PN} can only be built for one or the other, not both."
+		EANT_BUILD_TARGET="jars_es headers"
+	else
+		EANT_BUILD_TARGET="jars headers"
 	fi
 
 	java-pkg-2_pkg_setup
@@ -59,6 +60,9 @@ pkg_setup() {
 java_prepare() {
 	# Avoid implicit declaration of memset.
 	sed -i '1 i#include "string.h"' "${S}/src/native/common/org_lwjgl_BufferUtils.c" || die
+
+	# This file is missing.
+	sed -i "/build-updatesite\.xml/d" build.xml || die
 }
 
 src_compile() {
