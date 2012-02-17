@@ -10,7 +10,7 @@ chmod +w "${NATIVES}"
 
 ln -snf /usr/lib/libopenal.so "${NATIVES}"/libopenal.so
 ln -snf /usr/lib/jinput/libjinput-linux*.so "${NATIVES}"/libjinput-linux.so
-ln -snf /usr/lib/lwjgl-2.7/liblwjgl*.so "${NATIVES}"/liblwjgl.so
+ln -snf /usr/lib/lwjgl-2.8/liblwjgl*.so "${NATIVES}"/liblwjgl.so
 
 ln -snf libopenal.so "${NATIVES}"/libopenal64.so
 ln -snf libjinput-linux.so "${NATIVES}"/libjinput-linux64.so

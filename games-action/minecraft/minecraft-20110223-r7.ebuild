@@ -24,7 +24,7 @@ RESTRICT="mirror"
 DEPEND=">=virtual/jdk-1.5" # Only need this for jar.
 
 RDEPEND=">=dev-java/jinput-1_pre20100416
-	>=dev-java/lwjgl-2.7.1-r1:2.7
+	>=dev-java/lwjgl-2.8.3:2.8
 	|| ( >=dev-java/icedtea-bin-6[X]
 		>=dev-java/icedtea-6
 		>=dev-java/oracle-jre-bin-1.6[X]
@@ -49,7 +49,7 @@ src_prepare() {
 }
 
 src_install() {
-	java-pkg_register-dependency jinput,lwjgl-2.7
+	java-pkg_register-dependency jinput,lwjgl-2.8
 	java-pkg_dojar "${PN}.jar"
 
 	local ARGS
