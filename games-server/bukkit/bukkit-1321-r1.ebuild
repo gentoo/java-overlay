@@ -26,6 +26,7 @@ DEPEND="${CDEPEND}
 	>=virtual/jdk-1.6"
 
 RDEPEND="${CDEPEND}
+	>=dev-java/json-simple-1.1:0
 	>=virtual/jre-1.6"
 
 S="${WORKDIR}/Bukkit-Bukkit-${COMMIT}"
@@ -42,6 +43,7 @@ java_prepare() {
 }
 
 src_install() {
+	java-pkg_register-dependency json-simple
 	java-pkg-simple_src_install
 	dodoc README.md || die
 }
