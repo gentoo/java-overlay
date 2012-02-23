@@ -11,7 +11,7 @@ EAPI="4"
 
 inherit autotools java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 
-ICEDTEA_VER=$(get_version_component_range 2-3)
+ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 OPENJDK_TARBALL="22cc03983e20.tar.gz"
 CORBA_TARBALL="5617f6c5cc94.tar.gz"
@@ -183,9 +183,8 @@ java_prepare() {
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
 
-	# Disable patch to make security update build
-	#epatch "${FILESDIR}"/${P}_pax_kernel_support.patch #389751
-	#eautoreconf
+	epatch "${FILESDIR}"/${PN}-7.2.0_pax_kernel_support.patch #389751
+	eautoreconf
 }
 
 src_configure() {
