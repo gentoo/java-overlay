@@ -1,4 +1,4 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -41,7 +41,7 @@ pkg_setup() {
 
 src_prepare() {
 	# Don't download or install JAR libraries. Hacky but works.
-	sed -i "s/lwjgl.jar, jinput.jar, lwjgl_util.jar,/                                      /g" \
+	sed -i "s/lwjgl\.jar, jinput\.jar, lwjgl_util\.jar,/                                      /g" \
 		net/minecraft/GameUpdater.class || die
 
 	# Recreate JAR.
