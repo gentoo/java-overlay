@@ -2,6 +2,12 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*craftbukkit-2034 (6 Mar 2012)
+
+  6 Mar 2012; James Le Cuirot <chewi@aura-online.co.uk>
+  -craftbukkit-1938.ebuild, +craftbukkit-2034.ebuild:
+  Version bump.
+
 *craftbukkit-1938 (13 Feb 2012)
 
   13 Feb 2012; James Le Cuirot <chewi@aura-online.co.uk>
