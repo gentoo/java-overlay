@@ -3,8 +3,8 @@
 # $Header: $
 
 EAPI="2"
-COMMIT="1317a37"
-BUKKIT_API="1.2.3-R0.1"
+COMMIT="1bbb139"
+BUKKIT_API="1.2.3-R0.2"
 JAVA_PKG_IUSE="doc source"
 
 inherit games java-pkg-2 java-pkg-simple
