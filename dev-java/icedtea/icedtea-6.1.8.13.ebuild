@@ -107,64 +107,20 @@ DEPEND="${RDEPEND}
 PDEPEND="webstart? ( dev-java/icedtea-web:6 )
 	nsplugin? ( dev-java/icedtea-web:6[nsplugin] )"
 
-# a bit of hack so the VM switching is triggered without causing dependency troubles
-JAVA_PKG_NV_DEPEND=">=virtual/jdk-1.5"
-JAVA_PKG_WANT_SOURCE="1.5"
-JAVA_PKG_WANT_TARGET="1.5"
-
 pkg_setup() {
-# Shark support disabled for now - still experimental and needs sys-devel/llvm
-#	if use shark ; then
-#	  if ( ! use x86 && ! use sparc && ! use ppc ) ; then
-#		eerror "The Shark JIT has known issues on 64-bit platforms.  Please rebuild"
-#		errror "without the shark USE flag turned on."
-#		die "Rebuild without the shark USE flag on."
-#	  fi
-#	  if ( ! use zero ) ; then
-#		eerror "The use of the Shark JIT is only applicable when used with the zero assembler port.";
-#		die "Rebuild without the shark USE flag on or with the zero USE flag turned on."
-#	  fi
-#	fi
+	JAVA_PKG_WANT_BUILD_VM="
+		icedtea-6 icedtea-bin-6 icedtea6 icedtea6-bin
+		gcj-jdk cacao"
+	JAVA_PKG_WANT_SOURCE="1.5"
+	JAVA_PKG_WANT_TARGET="1.5"
 
-	if use nsplugin && ! use webstart ; then
-		elog "Note that the nsplugin flag implies the webstart flag. Enable it to remove this message."
-	fi
-
-	# quite a hack since java-config does not provide a way for a package
-	# to limit supported VM's for building and their preferred order
-	if [[ -n "${JAVA_PKG_FORCE_VM}" ]]; then
-		einfo "Honoring user-set JAVA_PKG_FORCE_VM"
-	elif has_version "dev-java/icedtea:${SLOT}"; then
-		JAVA_PKG_FORCE_VM="icedtea6"
-	elif has_version dev-java/icedtea6; then
-		JAVA_PKG_FORCE_VM="icedtea6"
-	elif has_version dev-java/icedtea-bin:6; then
-		JAVA_PKG_FORCE_VM="icedtea6-bin"
-	elif has_version dev-java/gcj-jdk; then
-		JAVA_PKG_FORCE_VM="gcj-jdk"
-	elif has_version dev-java/cacao; then
-		JAVA_PKG_FORCE_VM="cacao"
-	else
-		JAVA_PKG_FORCE_VM=""
-		# don't die just yet if merging a binpkg - bug #258423
-		DIE_IF_NOT_BINPKG=true
-	fi
-
-	# if the previous failed, don't even run java eclasses pkg_setup
-	# as it might also die when no VM is present
-	if [[ -n "${JAVA_PKG_FORCE_VM}" ]]; then
-		einfo "Forced vm ${JAVA_PKG_FORCE_VM}"
-		java-vm-2_pkg_setup
-		java-pkg-2_pkg_setup
-	fi
+	java-vm-2_pkg_setup
+	java-pkg-2_pkg_setup
 
 	VMHANDLE="icedtea${SLOT}"
 }
 
 src_unpack() {
-	if [[ -n ${DIE_IF_NOT_BINPKG} ]]; then
-		die "Unable to find a supported VM for building"
-	fi
 	unpack ${ICEDTEA_PKG}.tar.gz
 }
 
@@ -179,7 +135,7 @@ src_configure() {
 	local vmhome="/usr/lib/jvm/${vm}"
 
 	# IcedTea6 can't be built using IcedTea7; its class files are too new
-	if [[ "${vm}" == "icedtea6" ]] || [[ "${vm}" == "icedtea6-bin" ]] || [[ "${vm}" == "icedtea-6" ]] ; then
+	if [[ "${vm}" == "icedtea6" ]] || [[ "${vm}" == "icedtea6-bin" ]] || [[ "${vm}" == "icedtea-6" ]] || [[ "${vm}" == "icedtea-bin-6" ]]; then
 		# If we are upgrading icedtea, then we don't need to bootstrap.
 		config="${config} --with-openjdk=$(java-config -O)"
 	elif [[ "${vm}" == "gcj-jdk" || "${vm}" == "cacao" ]] ; then
