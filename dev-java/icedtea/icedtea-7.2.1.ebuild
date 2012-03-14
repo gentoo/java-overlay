@@ -159,6 +159,7 @@ java_prepare() {
 	export LANG="C" LC_ALL="C"
 
 	epatch "${FILESDIR}"/${PN}-7.2.0_pax_kernel_support.patch #389751
+	epatch "${FILESDIR}"/${PN}-7.2.0-explicit-gthread.patch #402481
 	eautoreconf
 }
 
