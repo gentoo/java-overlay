@@ -2,6 +2,9 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  14 Mar 2012; Ralph Sennhauser <sera@gentoo.org> icedtea-web-1.2.ebuild:
+  Fix typo in handle name.
+
   14 Mar 2012; Ralph Sennhauser <sera@gentoo.org> icedtea-web-1.2.ebuild,
   icedtea-web-1.2-r7.ebuild:
   Use JAVA_PKG_WANT_BUILD_VM for selecting VM. Obsoletes handle migration code.

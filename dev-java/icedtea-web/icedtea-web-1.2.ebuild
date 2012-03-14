@@ -27,7 +27,7 @@ DEPEND="${RDEPEND}
 	test? (	>=dev-java/junit-4.8:4 )"
 
 pkg_setup() {
-	JAVA_PKG_WANT_BUILD_VM="icedtea-6 icedtea-6"
+	JAVA_PKG_WANT_BUILD_VM="icedtea-6 icedtea6"
 	JAVA_PKG_WANT_SOURCE="1.6"
 	JAVA_PKG_WANT_TARGET="1.6"
 
