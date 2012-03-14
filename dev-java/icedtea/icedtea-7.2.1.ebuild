@@ -20,6 +20,7 @@ JAXP_TARBALL="1cf75c0e2c96.tar.gz"
 JAXWS_TARBALL="7edfbfe974f2.tar.gz"
 JDK_TARBALL="50f6f276a06c.tar.gz"
 LANGTOOLS_TARBALL="b534c4c6cd9b.tar.gz"
+JAMVM_TARBALL="jamvm-4617da717ecb05654ea5bb9572338061106a414d.tar.gz"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
@@ -31,7 +32,10 @@ SRC_URI="
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_VER}/jaxws/archive/${JAXWS_TARBALL}
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_VER}/jdk/archive/${JDK_TARBALL}
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_VER}/hotspot/archive/${HOTSPOT_TARBALL}
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_VER}/langtools/archive/${LANGTOOLS_TARBALL}"
+	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_VER}/langtools/archive/${LANGTOOLS_TARBALL}
+	!amd64? ( !sparc? ( !x86? (
+		http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL}
+	) ) )"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="7"
@@ -188,6 +192,12 @@ src_configure() {
 		config="${config} --enable-bootstrap"
 	else
 		config="${config} --disable-bootstrap"
+	fi
+
+	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
+	# Otherwise use JamVM as it's the only possibility right now
+	if ! has "${ARCH}" amd64 sparc x86; then
+		config="${config} --enable-jamvm --with-jamvm-src-zip=${DISTDIR}/${JAMVM_TARBALL}"
 	fi
 
 	# OpenJDK-specific parallelism support. Bug #389791, #337827
