@@ -162,34 +162,33 @@ java_prepare() {
 	eautoreconf
 }
 
+bootstrap_impossible() {
+	# Fill this according to testing what works and what not
+	has "${1}" icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6
+}
+
 src_configure() {
 	local config bootstrap
 	local vm=$(java-pkg_get-current-vm)
 
 	# Whether to bootstrap
-	if has "${vm}" icedtea7 icedtea-7 icedtea-bin-7; then
-		use jbootstrap && bootstrap=yes
-	elif has "${vm}" icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6; then
-		if use jbootstrap; then
-			einfo "We can't currently bootstrap with a IcedTea6 JVM :("
-			einfo "bootstrap forced off, ignoring use jbootstrap"
+	bootstrap="disable"
+	if use jbootstrap; then
+		if bootstrap_impossible "${vm}"; then
+			einfo "Bootstrap with ${vm} is currently not possible and thus disabled, ignoring USE=jbootstrap"
+		else
+			bootstrap="enable"
 		fi
-	elif has "${vm}" gcj-jdk; then
+	fi
+	if has "${vm}" gcj-jdk; then
 		# gcj-jdk ensures ecj is present.
-		use jbootstrap || einfo "bootstrap forced on for ${vm}, ignoring use jbootstrap"
-		bootstrap=yes
+		use jbootstrap || einfo "bootstrap is necessary when building with ${vm}, ignoring USE=\"-jbootstrap\""
+		bootstrap="enable"
 		local ecj_jar="$(readlink "${EPREFIX}"/usr/share/eclipse-ecj/ecj.jar)"
 		config="${config} --with-ecj-jar=${ecj_jar}"
-	else
-		eerror "IcedTea must be built with either a JDK based on GNU Classpath or an existing build of IcedTea."
-		die "Install a GNU Classpath JDK (gcj-jdk)"
 	fi
 
-	if [[ ${bootstrap} ]]; then
-		config="${config} --enable-bootstrap"
-	else
-		config="${config} --disable-bootstrap"
-	fi
+	config="${config} --${bootstrap}-bootstrap"
 
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
 	# Otherwise use JamVM as it's the only possibility right now
