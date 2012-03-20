@@ -1,0 +1,132 @@
+diff --git a/Makefile.am b/Makefile.am
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -332,7 +332,6 @@
+ 	patches/jtreg-LastErrorString.patch \
+ 	patches/openjdk/6663040-com.sun.awt.patch \
+ 	patches/openjdk/6775317-non-AA-simple-shape-performance.patch \
+-	patches/pr600-arm-jvm.cfg.patch \
+ 	patches/openjdk/6887494-NPE-in-pisces.patch \
+ 	patches/openjdk/6967436-6967433-floating-pt-conversion.patch \
+ 	patches/openjdk/6976265-stroke-control.patch \
+@@ -982,6 +981,10 @@
+ 	fi
+ endif
+ endif
++if ENABLE_CACAO
++	mkdir -p openjdk/jdk/src/solaris/bin/$(JRE_ARCH_DIR)
++	cp jvm.cacao.cfg openjdk/jdk/src/solaris/bin/$(JRE_ARCH_DIR)/jvm.cfg
++endif
+ 	mkdir -p stamps
+ 	touch stamps/extract-openjdk.stamp
+ 
+diff --git a/acinclude.m4 b/acinclude.m4
+--- a/acinclude.m4
++++ b/acinclude.m4
+@@ -863,6 +863,7 @@
+   AC_MSG_RESULT(${ENABLE_CACAO})
+   AM_CONDITIONAL(ENABLE_CACAO, test x"${ENABLE_CACAO}" = "xyes")
+   AC_SUBST(ENABLE_CACAO)
++  AC_CONFIG_FILES([jvm.cacao.cfg])
+ ])
+ 
+ AC_DEFUN([IT_WITH_CACAO_HOME],
+diff --git a/jvm.cfg.in b/jvm.cacao.cfg.in
+copy from jvm.cfg.in
+copy to jvm.cacao.cfg.in
+diff --git a/patches/pr600-arm-jvm.cfg.patch b/patches/pr600-arm-jvm.cfg.patch
+deleted file mode 100644
+--- a/patches/pr600-arm-jvm.cfg.patch
++++ /dev/null
+@@ -1,44 +0,0 @@
+-Index: openjdk/jdk/src/solaris/bin/arm/jvm.cfg
+-===================================================================
+---- /dev/null	1970-01-01 00:00:00.000000000 +0000
+-+++ openjdk/jdk/src/solaris/bin/arm/jvm.cfg	2011-02-18 15:40:24.083043645 +0100
+-@@ -0,0 +1,39 @@
+-+# Copyright (c) 2003, 2010, Oracle and/or its affiliates. All rights reserved.
+-+# DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+-+#
+-+# This code is free software; you can redistribute it and/or modify it
+-+# under the terms of the GNU General Public License version 2 only, as
+-+# published by the Free Software Foundation.  Oracle designates this
+-+# particular file as subject to the "Classpath" exception as provided
+-+# by Oracle in the LICENSE file that accompanied this code.
+-+#
+-+# This code is distributed in the hope that it will be useful, but WITHOUT
+-+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+-+# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+-+# version 2 for more details (a copy is included in the LICENSE file that
+-+# accompanied this code).
+-+#
+-+# You should have received a copy of the GNU General Public License version
+-+# 2 along with this work; if not, write to the Free Software Foundation,
+-+# Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+-+#
+-+# Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+-+# or visit www.oracle.com if you need additional information or have any
+-+# questions.
+-+#
+-+# 
+-+# List of JVMs that can be used as an option to java, javac, etc.
+-+# Order is important -- first in this list is the default JVM.
+-+# NOTE that this both this file and its format are UNSUPPORTED and
+-+# WILL GO AWAY in a future release.
+-+#
+-+# You may also select a JVM in an arbitrary location with the
+-+# "-XXaltjvm=<jvm_dir>" option, but that too is unsupported
+-+# and may not be available in a future release.
+-+#
+-+-server KNOWN
+-+-client IGNORE
+-+-hotspot ERROR
+-+-classic WARN
+-+-native ERROR
+-+-green ERROR
+--- /dev/null	2012-03-07 15:45:21.947999929 +0000
++++ a/jvm.cacao.cfg.in	2012-03-16 12:58:18.683839114 +0000
+@@ -0,0 +1,44 @@
++#
++# @(#)jvm.cfg   1.7 07/05/05
++#
++#
++# Copyright 2002-2003 Sun Microsystems, Inc.  All Rights Reserved.
++# DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++#
++# This code is free software; you can redistribute it and/or modify it
++# under the terms of the GNU General Public License version 2 only, as
++# published by the Free Software Foundation.  Sun designates this
++# particular file as subject to the "Classpath" exception as provided
++# by Sun in the LICENSE file that accompanied this code.
++#
++# This code is distributed in the hope that it will be useful, but WITHOUT
++# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++# FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
++# version 2 for more details (a copy is included in the LICENSE file that
++# accompanied this code).
++#
++# You should have received a copy of the GNU General Public License version
++# 2 along with this work; if not, write to the Free Software Foundation,
++# Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
++#
++# Please contact Sun Microsystems, Inc., 4150 Network Circle, Santa Clara,
++# CA 95054 USA or visit www.sun.com if you need additional information or
++# have any questions.
++#
++#
++#
++# List of JVMs that can be used as an option to java, javac, etc.
++# Order is important -- first in this list is the default JVM.
++# NOTE that this both this file and its format are UNSUPPORTED and
++# WILL GO AWAY in a future release.
++#
++# You may also select a JVM in an arbitrary location with the
++# "-XXaltjvm=<jvm_dir>" option, but that too is unsupported
++# and may not be available in a future release.
++#
++-server KNOWN
++-hotspot ERROR
++-classic WARN
++-client IGNORE
++-native ERROR
++-green ERROR

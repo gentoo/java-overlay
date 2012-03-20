@@ -144,6 +144,7 @@ java_prepare() {
 	export LANG="C" LC_ALL="C"
 
 	epatch "${FILESDIR}"/${PN}-${SLOT}_pax_kernel_support.patch #389751
+	epatch "${FILESDIR}"/${P}-cacao_jvm.cfg.patch
 	eautoreconf
 }
 

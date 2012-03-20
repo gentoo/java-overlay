@@ -2,6 +2,10 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  20 Mar 2012; Andrew John Hughes <andrew@gentoo.org> icedtea-6.1.11.1.ebuild,
+  +files/icedtea-6.1.11.1-cacao_jvm.cfg.patch:
+  Allow CACAO to work on architectures other than x86, x86_64 and SPARC.
+
   15 Mar 2012; Vlastimil Babka <caster@gentoo.org> icedtea-7.2.0.1.ebuild,
   icedtea-7.2.1.ebuild:
   Simplify USE=jbootstrap logic for icedtea-7.
