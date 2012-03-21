@@ -2,6 +2,21 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.1-r1 (20 Mar 2012)
+*icedtea-7.2.0.1-r1 (20 Mar 2012)
+*icedtea-6.1.11.1-r1 (20 Mar 2012)
+*icedtea-6.1.10.6-r1 (20 Mar 2012)
+*icedtea-6.1.9.13-r1 (20 Mar 2012)
+*icedtea-6.1.8.13-r1 (20 Mar 2012)
+
+  20 Mar 2012; Andrew John Hughes <andrew@gentoo.org> -icedtea-6.1.8.13.ebuild,
+  +icedtea-6.1.8.13-r1.ebuild, -icedtea-6.1.9.13.ebuild,
+  +icedtea-6.1.9.13-r1.ebuild, -icedtea-6.1.10.6.ebuild,
+  +icedtea-6.1.10.6-r1.ebuild, -icedtea-6.1.11.1.ebuild,
+  +icedtea-6.1.11.1-r1.ebuild, -icedtea-7.2.0.1.ebuild,
+  +icedtea-7.2.0.1-r1.ebuild, -icedtea-7.2.1.ebuild, +icedtea-7.2.1-r1.ebuild:
+  Don't compress the documentation symlink.
+
   20 Mar 2012; Andrew John Hughes <andrew@gentoo.org> icedtea-6.1.11.1.ebuild,
   +files/icedtea-6.1.11.1-cacao_jvm.cfg.patch:
   Allow CACAO to work on architectures other than x86, x86_64 and SPARC.
