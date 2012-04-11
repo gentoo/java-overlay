@@ -2,6 +2,12 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*minecraft-server-1.2.5 (11 Apr 2012)
+
+  11 Apr 2012; James Le Cuirot <chewi@aura-online.co.uk>
+  -minecraft-server.1.2.4.ebuild, +minecraft-server.1.2.5.ebuild:
+  Version bump.
+
 *minecraft-server-1.2.4 (23 Mar 2012)
 
   23 Mar 2012; James Le Cuirot <chewi@aura-online.co.uk>
