@@ -123,7 +123,7 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	dev-lang/perl
 	>=dev-libs/libxslt-1.1.26
 	dev-libs/openssl
-	dev-util/pkgconfig
+	virtual/pkgconfig
 	sys-apps/attr
 	sys-apps/lsb-release
 	|| ( >=sys-devel/autoconf-2.65:2.5 <sys-devel/autoconf-2.64:2.5 )
