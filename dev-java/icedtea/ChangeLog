@@ -2,6 +2,20 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  08 May 2012; Ralph Sennhauser <sera@gentoo.org>
+  -files/icedtea-6.1.10.4_1-sharkllvm30-de-const-type-135375.patch,
+  -files/icedtea-6.1.10.4_separate_shark_target.patch,
+  -files/icedtea-6.1.10.4_shark_jvm_rpath.patch,
+  -files/icedtea-7.2.0_1-sharkllvm30-de-const-type-135375.patch,
+  -files/icedtea-7.2.0_shark_jvm_rpath.patch,
+  -files/3-sharkllvm30-MCJIT-v3.patch,
+  -files/icedtea-7.2.0_separate_shark_target.patch,
+  -files/icedtea-7.2.0_shark_llvm_flags.patch,
+  -files/2-sharkllvm30-PHI-128537-Call-ArrayRef-135265-v2.patch,
+  -files/0-sharkllvm30-targetselect-138450.patch, -files/disable_werror.patch,
+  metadata.xml:
+  Remove unused patches, remove unused use flags from metadata.xml
+
 *icedtea-7.2.1-r1 (20 Mar 2012)
 *icedtea-7.2.0.1-r1 (20 Mar 2012)
 *icedtea-6.1.11.1-r1 (20 Mar 2012)
