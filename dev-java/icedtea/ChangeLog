@@ -2,6 +2,11 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  11 May 2012; Andrew John Hughes <andrew@gentoo.org> -icedtea-6.1.10.6-r1.ebuild,
+  -icedtea-6.1.11.1-r1.ebuild, icedtea-6.1.11.2.ebuild, icedtea-6.1.10.7.ebuild,
+  -files/icedtea-6.1.11.1-cacao_jvm.cfg.patch:
+  New releases: 1.10.7 & 1.11.2.
+
   08 May 2012; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.10.6-r1.ebuild,
   icedtea-6.1.11.1-r1.ebuild, icedtea-7.2.0.1-r1.ebuild,
   icedtea-7.2.1-r1.ebuild:
