@@ -112,7 +112,6 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	dev-libs/openssl
 	virtual/pkgconfig
 	sys-apps/lsb-release
-	|| ( >=sys-devel/autoconf-2.65:2.5 <sys-devel/autoconf-2.64:2.5 )
 	${X_DEPEND}
 	jbootstrap? (
 		|| ( <dev-java/eclipse-ecj-3.7 dev-java/ecj-gcj )

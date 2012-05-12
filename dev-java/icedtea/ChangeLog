@@ -2,6 +2,11 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  12 May 2012; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.10.7.ebuild,
+  icedtea-6.1.11.2.ebuild, icedtea-7.2.0.1-r1.ebuild, icedtea-7.2.1-r1.ebuild:
+  Drop version restriction for autoconf-2.64, the eclass already adds
+  >=autoconf-2.68.
+
   12 May 2012; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.11.2.ebuild,
   icedtea-7.2.1-r1.ebuild:
   Copy ~ia64 KEYWORD from main tree.

@@ -125,7 +125,6 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	virtual/pkgconfig
 	sys-apps/attr
 	sys-apps/lsb-release
-	|| ( >=sys-devel/autoconf-2.65:2.5 <sys-devel/autoconf-2.64:2.5 )
 	${X_DEPEND}
 	pax_kernel? ( sys-apps/paxctl )"
 
