@@ -39,7 +39,7 @@ SRC_URI="
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="7"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~ia64 ~x86"
 
 IUSE="+X +alsa cjk +cups debug doc examples javascript +jbootstrap +nsplugin
 	+nss pax_kernel pulseaudio +source systemtap test +webstart"
