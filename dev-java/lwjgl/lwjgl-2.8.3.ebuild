@@ -1,4 +1,4 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -12,7 +12,7 @@ inherit eutils java-pkg-2 java-ant-2
 
 DESCRIPTION="The Lightweight Java Game Library (LWJGL)"
 HOMEPAGE="http://www.lwjgl.org"
-SRC_URI="mirror://sourceforge/java-game-lib/${PN}-source-${PV}.zip"
+SRC_URI="mirror://sourceforge/java-game-lib/Official%20Releases/LWJGL%20${PV}/${PN}-source-${PV}.zip"
 LICENSE="BSD"
 SLOT="2.8"
 KEYWORDS="~amd64 ~x86"
