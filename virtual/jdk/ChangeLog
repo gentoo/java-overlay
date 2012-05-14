@@ -1,6 +1,13 @@
 # ChangeLog for virtual/jdk
-# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+*jdk-1.5.0-r3 (14 May 2012)
+
+  14 May 2012; Ralph Sennhauser <sera@gentoo.org> jdk-1.4.2-r1.ebuild,
+  -jdk-1.5.0-r2.ebuild, +jdk-1.5.0-r3.ebuild:
+  Remove dev-java/jamvm from jdk:1.5 providers. #371461
+  Set HOMPAGE and LICENSE empty.
 
   31 Dec 2011; Ralph Sennhauser <sera@gentoo.org> jdk-1.4.2-r1.ebuild,
   jdk-1.5.0-r2.ebuild:
