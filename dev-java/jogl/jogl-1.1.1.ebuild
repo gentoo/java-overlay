@@ -1,10 +1,11 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
+
 WANT_ANT_TASKS="ant-antlr"
 JAVA_PKG_IUSE="cg source doc"
-EAPI="2"
 
 inherit java-pkg-2 java-ant-2
 
@@ -14,11 +15,11 @@ SRC_URI="http://download.java.net/media/${PN}/builds/archive/jsr-231-1.1.1/${P}-
 
 LICENSE="BSD"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS=""
 
 COMMON_DEPEND="dev-java/ant-core
 	>=dev-java/cpptasks-1.0_beta4-r2
-	=dev-java/gluegen-20080421
+	=dev-java/gluegen-1_p20080421
 	cg? ( media-gfx/nvidia-cg-toolkit )
 	virtual/opengl
 	x11-libs/libX11
