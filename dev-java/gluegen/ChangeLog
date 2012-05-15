@@ -2,6 +2,11 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*gluegen-2.0_rc8 (15 May 2012)
+
+  15 May 2012; Ralph Sennhauser <sera@gentoo.org> +gluegen-2.0_rc8.ebuild:
+  Version bump. #170305
+
 *gluegen-1_p20080421 (15 May 2012)
 
   15 May 2012; Ralph Sennhauser <sera@gentoo.org> +gluegen-1_p20080421.ebuild,
