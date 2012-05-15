@@ -1,6 +1,14 @@
 # ChangeLog for dev-java/gluegen
-# Copyright 1999-2010 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+*gluegen-1_p20080421 (15 May 2012)
+
+  15 May 2012; Ralph Sennhauser <sera@gentoo.org> +gluegen-1_p20080421.ebuild,
+  -gluegen-20080421.ebuild, -gluegen-20090509.ebuild:
+  EAPI declaration must be on first non blank non comment line.
+  Pseudo version downgrade to enable upstream versioning in future.
+  Drop unused version.
 
   28 Mar 2010; Alistair Bush <ali_bush@gentoo.org> gluegen-20080421.ebuild:
   Fix compile error on amd64
