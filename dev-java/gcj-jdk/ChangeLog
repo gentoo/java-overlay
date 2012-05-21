@@ -2,6 +2,14 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*gcj-jdk-4.6.2-r1 (21 May 2012)
+
+  21 May 2012; Ralph Sennhauser <sera@gentoo.org> +gcj-jdk-4.6.2-r1.ebuild:
+  Add Prefix support and missing use dep, thanks to XU Benda
+  <heroxbd@gentoo.org>. #416367
+  Import ~ia64 keyword from main tree.
+  Remove JAVA_PROVIDE, old style virtuals are gone.
+
 *gcj-jdk-4.6.2 (29 Mar 2012)
 
   29 Mar 2012; Andrew John Hughes <andrew@gentoo.org> +gcj-jdk-4.6.2.ebuild:
