@@ -1,6 +1,9 @@
 # ChangeLog for dev-java/msv
-# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  23 May 2012; Ralph Sennhauser <sera@gentoo.org> msv-20090415.ebuild:
+  EAPI assignment must come first. #417177
 
 *msv-20090415 (4 Jun 2011)
 
