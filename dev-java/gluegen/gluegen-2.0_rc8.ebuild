@@ -35,6 +35,7 @@ DEPEND="${COMMON_DEP}
 	app-arch/p7zip
 	dev-java/ant-antlr:0
 	dev-java/ant-contrib:0
+	dev-java/ant-nodeps:0
 	dev-java/cpptasks:0
 	dev-java/junit:4"
 
@@ -59,7 +60,7 @@ EANT_BUILD_TARGET="all"
 EANT_DOC_TARGET=""
 EANT_GENTOO_CLASSPATH="antlr,ant-core"
 EANT_NEEDS_TOOLS="yes"
-EANT_ANT_TASKS="ant-antlr ant-contrib cpptasks"
+EANT_ANT_TASKS="ant-antlr ant-contrib ant-nodeps cpptasks"
 src_compile() {
 	# FIXME don't copy around jars
 	EANT_EXTRA_ARGS+=" -Dantlr.jar=\"$(java-pkg_getjar --build-only antlr antlr.jar)\""
