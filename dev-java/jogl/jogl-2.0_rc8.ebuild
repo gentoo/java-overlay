@@ -43,6 +43,7 @@ DEPEND="${COMMON_DEP}
 	app-arch/p7zip
 	dev-java/ant-antlr:0
 	dev-java/ant-contrib:0
+	dev-java/ant-nodeps:0
 	dev-java/cpptasks:0"
 
 S=${WORKDIR}/${MY_P}
@@ -64,7 +65,7 @@ EANT_BUILD_TARGET="all"
 EANT_DOC_TARGET="" # FIXME there are a couple javadoc targets, pick one
 EANT_GENTOO_CLASSPATH="ant-core,antlr,swt-3.7,ant-junit"
 EANT_NEEDS_TOOLS="yes"
-EANT_ANT_TASKS="ant-antlr ant-contrib ant-junit cpptasks"
+EANT_ANT_TASKS="ant-antlr ant-contrib ant-junit ant-nodeps cpptasks"
 src_compile() {
 	EANT_EXTRA_ARGS+=" -Dcommon.gluegen.build.done=true"
 	EANT_EXTRA_ARGS+=" -Dgluegen.root=/usr/share/gluegen-${SLOT}/"
