@@ -237,14 +237,14 @@ src_compile() {
 	# Load the least that's needed to avoid possible classpath collisions.
 	export ANT_TASKS="ant-nodeps"
 
-	emake -j 1
+	emake
 }
 
 src_test() {
 	# Use Xvfb for tests
 	unset DISPLAY
 
-	Xemake -j1 check
+	Xemake check
 }
 
 src_install() {

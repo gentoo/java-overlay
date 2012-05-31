@@ -232,7 +232,7 @@ src_test() {
 	# Use Xvfb for tests
 	unset DISPLAY
 
-	Xemake -j1 check
+	Xemake check
 }
 
 src_install() {
