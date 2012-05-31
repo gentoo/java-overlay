@@ -163,7 +163,7 @@ java_prepare() {
 
 bootstrap_impossible() {
 	# Fill this according to testing what works and what not
-	has "${1}" icedtea7 icedtea-7 icedtea-bin-7 icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6
+	has "${1}" icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6
 }
 
 src_configure() {

@@ -2,6 +2,9 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  31 May 2012; Andrew John Hughes <andrew@gentoo.org> icedtea-7.2.2.ebuild:
+  Allow bootstrap of 2.2 with IcedTea7.
+
 *icedtea-7.2.2 (31 May 2012)
 
   31 May 2012; Andrew John Hughes <andrew@gentoo.org>
