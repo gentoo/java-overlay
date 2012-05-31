@@ -2,6 +2,15 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.2 (31 May 2012)
+
+  31 May 2012; Andrew John Hughes <andrew@gentoo.org>
+  -icedtea-6.1.8.13-r1.ebuild, -icedtea-6.1.9.13-r1.ebuild,
+  -icedtea-7.2.0.1-r1.ebuild, +icedtea-7.2.2.ebuild,
+  +files/icedtea-7.2.2-no_suffix.patch:
+  IcedTea 2.2 released: http://bit.ly/JAWxBR
+  Drop unsupported release series: 1.8, 1.9 & 2.0.
+
   12 May 2012; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.10.7.ebuild,
   icedtea-6.1.11.2.ebuild, icedtea-7.2.0.1-r1.ebuild, icedtea-7.2.1-r1.ebuild:
   Drop version restriction for autoconf-2.64, the eclass already adds

@@ -11,34 +11,35 @@ EAPI="4"
 
 inherit autotools java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 
-ICEDTEA_PKG=icedtea-$(get_version_component_range 2-)
-OPENJDK_TARBALL="4b063ca7483f.tar.gz"
-CORBA_TARBALL="d37539e7e838.tar.gz"
-HOTSPOT_TARBALL="9dfaed4a95e2.tar.gz"
-JAXP_TARBALL="ae891cd6ba73.tar.gz"
-JAXWS_TARBALL="1107cfa36f53.tar.gz"
-JDK_TARBALL="891fb0050add.tar.gz"
-LANGTOOLS_TARBALL="f0faea84413f.tar.gz"
-JAMVM_TARBALL="jamvm-310c491ddc14e92a6ffff27030a1a1821e6395a8.tar.gz"
+ICEDTEA_VER=$(get_version_component_range 2-)
+ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
+OPENJDK_TARBALL="49a6fc8f712f.tar.gz"
+CORBA_TARBALL="3231f3e9c517.tar.gz"
+HOTSPOT_TARBALL="bfe5efd70bce.tar.gz"
+JAXP_TARBALL="0036fe6fe7dc.tar.gz"
+JAXWS_TARBALL="abfb890c262a.tar.gz"
+JDK_TARBALL="839d0155f7cc.tar.gz"
+LANGTOOLS_TARBALL="f855bdb37537.tar.gz"
+JAMVM_TARBALL="jamvm-4617da717ecb05654ea5bb9572338061106a414d.tar.gz"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
 SRC_URI="
 	http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-2.0/archive/${OPENJDK_TARBALL}
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-2.0/corba/archive/${CORBA_TARBALL}
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-2.0/jaxp/archive/${JAXP_TARBALL}
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-2.0/jaxws/archive/${JAXWS_TARBALL}
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-2.0/jdk/archive/${JDK_TARBALL}
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-2.0/hotspot/archive/${HOTSPOT_TARBALL}
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-2.0/langtools/archive/${LANGTOOLS_TARBALL}
+	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_VER}/archive/${OPENJDK_TARBALL}
+	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_VER}/corba/archive/${CORBA_TARBALL}
+	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_VER}/jaxp/archive/${JAXP_TARBALL}
+	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_VER}/jaxws/archive/${JAXWS_TARBALL}
+	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_VER}/jdk/archive/${JDK_TARBALL}
+	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_VER}/hotspot/archive/${HOTSPOT_TARBALL}
+	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_VER}/langtools/archive/${LANGTOOLS_TARBALL}
 	!amd64? ( !sparc? ( !x86? (
 		http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL}
 	) ) )"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="7"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~ia64 ~x86"
 
 IUSE="+X +alsa cjk +cups debug doc examples javascript +jbootstrap +nsplugin
 	+nss pax_kernel pulseaudio +source systemtap test +webstart"
@@ -156,14 +157,13 @@ java_prepare() {
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
 
-	epatch "${FILESDIR}"/${PN}-7.2.0_pax_kernel_support.patch #389751
-	epatch "${FILESDIR}"/${PN}-7.2.0-explicit-gthread.patch #402481
+	epatch "${FILESDIR}"/${P}-no_suffix.patch
 	eautoreconf
 }
 
 bootstrap_impossible() {
 	# Fill this according to testing what works and what not
-	has "${1}" icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6
+	has "${1}" icedtea7 icedtea-7 icedtea-bin-7 icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6
 }
 
 src_configure() {
@@ -179,6 +179,7 @@ src_configure() {
 			bootstrap="enable"
 		fi
 	fi
+
 	if has "${vm}" gcj-jdk; then
 		# gcj-jdk ensures ecj is present.
 		use jbootstrap || einfo "bootstrap is necessary when building with ${vm}, ignoring USE=\"-jbootstrap\""
@@ -220,6 +221,7 @@ src_configure() {
 		--with-langtools-src-zip="${DISTDIR}/${LANGTOOLS_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
+		--disable-downloading \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nss) \
