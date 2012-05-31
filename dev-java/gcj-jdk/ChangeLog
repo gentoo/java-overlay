@@ -2,6 +2,13 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*gcj-jdk-4.7.0 (31 May 2012)
+
+  31 May 2012; Andrew John Hughes <andrew@gentoo.org> +gcj-jdk-4.7.0.ebuild:
+  Support gcc 4.7.
+  Link to gij in the arch-specific binary directory.
+  Catch rt/tools.jar when there is a version suffix.
+
 *gcj-jdk-4.6.2-r1 (21 May 2012)
 
   21 May 2012; Ralph Sennhauser <sera@gentoo.org> +gcj-jdk-4.6.2-r1.ebuild:
