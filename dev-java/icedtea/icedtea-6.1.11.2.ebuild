@@ -28,15 +28,13 @@ SRC_URI="
 	http://icedtea.classpath.org/download/drops/${JAXWS_TARBALL}
 	http://icedtea.classpath.org/download/drops/${JAF_TARBALL}
 	http://icedtea.classpath.org/download/drops/${JAXP_TARBALL}
-	!amd64? ( !sparc? ( !x86? (
-		http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL}
-	) ) )"
+	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL}"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="6"
 KEYWORDS="~amd64 ~ia64 ~ppc ~ppc64 ~x86"
 
-IUSE="+X +alsa cjk +cups debug doc examples javascript +jbootstrap +nsplugin
+IUSE="+X +alsa cacao cjk +cups debug doc examples javascript +jbootstrap +nsplugin
 	+nss pax_kernel pulseaudio +source systemtap test +webstart"
 
 # Ideally the following were optional at build time.
@@ -147,7 +145,7 @@ java_prepare() {
 }
 
 src_configure() {
-	local config bootstrap
+	local config bootstrap enable_cacao
 	local vm=$(java-pkg_get-current-vm)
 
 	# IcedTea6 can't be built using IcedTea7; its class files are too new
@@ -185,6 +183,14 @@ src_configure() {
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
 	# Otherwise use CACAO
 	if ! has "${ARCH}" amd64 sparc x86; then
+		enable_cacao=yes
+	elif use cacao; then
+		ewarn 'Enabling CACAO on an architecture with HotSpot support; issues may result.'
+		ewarn 'If so, please rebuild with USE="-cacao"'
+		enable_cacao=yes
+	fi
+
+	if [[ ${enable_cacao} ]]; then
 		config="${config} --enable-cacao --with-cacao-src-zip=${DISTDIR}/${CACAO_TARBALL}"
 	fi
 
