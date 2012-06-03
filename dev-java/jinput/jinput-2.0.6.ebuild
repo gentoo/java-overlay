@@ -1,6 +1,8 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+
+EAPI="4"
 
 # svn export https://svn.java.net/svn/jinput~svn/trunk jinput-r${REV}
 # rm -r jinput-r${REV}/lib/*
@@ -9,7 +11,6 @@
 REV="247"
 MY_P="${PN}-r${REV}"
 
-EAPI="4"
 WANT_ANT_TASKS="ant-nodeps"
 JAVA_PKG_IUSE="source"
 
