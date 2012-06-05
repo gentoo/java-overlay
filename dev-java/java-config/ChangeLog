@@ -1,0 +1,32 @@
+# ChangeLog for dev-java/java-config
+# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*java-config-2.1.9999 (05 Jun 2012)
+
+  05 Jun 2012; Alistair Bush <ali_bush@gentoo.org>
+  +java-config-2.1.9999.ebuild:
+  Move to java-overlay and update.
+
+  30 Dec 2011; Ralph Sennhauser <sera@gentoo.org> java-config-2.1.9999.ebuild:
+  Remove ia64 support #345433
+
+  17 May 2010; Vlastimil Babka <caster@gentoo.org>
+  java-config-2.1.9999.ebuild:
+  Sync changes from ebuild in main tree.
+
+  14 Aug 2008; Jesse Farinacci <jieryn@gmail.com> +metadata.xml:
+  creating metadata.xml to shut up repoman
+
+  11 Feb 2008; Petteri Räty <betelgeuse@gentoo.org>
+  java-config-2.1.9999.ebuild:
+  Add needed cache generation function calls for installing .desktop files and
+  icons for Java Web Start.
+
+  07 Dec 2007; Petteri Räty <betelgeuse@gentoo.org>
+  -java-config-2.0.9999.ebuild:
+  Delete old ebuild.
+
+  26 Nov 2007; <alistair@gentoo.org> +java-config-2.1.9999.ebuild:
+  Revbump java-config svn ebuild to support new install locations.
+
