@@ -55,6 +55,9 @@ src_unpack() {
 
 java_prepare() {
 	find -name '*.jar' -exec rm -v {} + || die
+
+	# Empty filesets are never out of date!
+	sed -i -e 's/<outofdate>/<outofdate force="true">/' make/build*xml || die
 }
 
 JAVA_PKG_BSFIX_NAME+=" build-jogl.xml build-nativewindow.xml build-newt.xml build-test.xml"
@@ -66,6 +69,7 @@ EANT_DOC_TARGET="" # FIXME there are a couple javadoc targets, pick one
 EANT_GENTOO_CLASSPATH="ant-core,antlr,swt-3.7,ant-junit"
 EANT_NEEDS_TOOLS="yes"
 EANT_ANT_TASKS="ant-antlr ant-contrib ant-junit ant-nodeps cpptasks"
+
 src_compile() {
 	EANT_EXTRA_ARGS+=" -Dcommon.gluegen.build.done=true"
 	EANT_EXTRA_ARGS+=" -Dgluegen.root=/usr/share/gluegen-${SLOT}/"
@@ -86,6 +90,7 @@ EANT_TEST_TARGET="junit.run"
 src_install() {
 	# There are many more
 	java-pkg_dojar build/jar/*.jar
+	java-pkg_doso build/lib/*.so
 
 	if use doc; then
 		#java-pkg_dojavadoc javadoc_public
