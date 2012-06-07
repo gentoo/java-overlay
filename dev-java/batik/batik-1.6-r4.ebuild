@@ -1,9 +1,10 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/batik/batik-1.6-r4.ebuild,v 1.4 2009/07/19 14:02:16 nixnut Exp $
 
-JAVA_PKG_IUSE="doc"
 EAPI=2
+
+JAVA_PKG_IUSE="doc"
 inherit java-pkg-2 java-ant-2 eutils
 
 DESCRIPTION="Java based SVG toolkit"
@@ -12,7 +13,7 @@ SRC_URI="mirror://apache/xml/batik/${PN}-src-${PV}.zip"
 
 LICENSE="Apache-2.0"
 SLOT="1.6"
-KEYWORDS="amd64 ppc ~ppc64 x86"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 IUSE="python tcl"
 
 CDEPEND="dev-java/rhino:1.5

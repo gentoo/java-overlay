@@ -1,6 +1,10 @@
 # ChangeLog for dev-java/batik
-# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/batik/ChangeLog,v 1.62 2009/07/23 13:14:44 ali_bush Exp $
+
+  07 Jun 2012; Ralph Sennhauser <sera@gentoo.org> batik-1.6-r4.ebuild:
+  EAPI declaration must be first. #402167
+  No stable keywords in java-overlay.
 
   31 Dec 2011; Ralph Sennhauser <sera@gentoo.org> batik-1.6-r4.ebuild:
   Remove ia64 support #345433
