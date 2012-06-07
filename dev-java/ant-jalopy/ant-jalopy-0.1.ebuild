@@ -1,11 +1,12 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
+
+EAPI="2"
 
 MY_PN="jalopy-ant"
 MY_P="${MY_PN}-${PV}-1.5rc3"
 
-EAPI="2"
 JAVA_PKG_IUSE="doc source"
 inherit java-pkg-2 java-ant-2
 
