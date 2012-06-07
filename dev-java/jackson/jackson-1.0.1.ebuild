@@ -1,10 +1,11 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/lucene/lucene-2.4.0.ebuild,v 1.3 2008/11/01 09:39:23 robbat2 Exp $
 
+EAPI=2
+
 JAVA_PKG_IUSE="doc source test"
 EANT_BUILD_TARGET=jars
-EAPI=2
 
 inherit java-pkg-2 java-ant-2
 
