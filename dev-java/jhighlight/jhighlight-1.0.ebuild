@@ -1,10 +1,11 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="1"
+
 WANT_ANT_TASKS="dev-java/jflex:0"
 JAVA_PKG_IUSE="doc source"
-EAPI="1"
 
 inherit eutils java-pkg-2 java-ant-2
 
