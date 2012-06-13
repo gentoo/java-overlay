@@ -2,6 +2,20 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.2.1 (13 Jun 2012)
+*icedtea-7.2.1.1 (13 Jun 2012)
+
+  13 Jun 2012; Andrew John Hughes <andrew@gentoo.org>
+  +files/icedtea-7-compile_for_7_cacao_mem.patch, -icedtea-7.2.1-r1.ebuild,
+  +icedtea-7.2.1.1.ebuild, +files/icedtea-7.2.1.1-pr986-cacao_memory_fix.patch,
+  -icedtea-7.2.2.ebuild, +icedtea-7.2.2.1.ebuild,
+  +files/icedtea-7.2.2.1-pr986-cacao_memory_fix.patch,
+  -files/icedtea-7.2.2-no_suffix.patch,
+  +files/icedtea-7-compiler_detection_cleanup.patch,
+  +files/icedtea-7-no_suffix.patch:
+  Security updates 2.1.1 & 2.2.1 for 7 (http://bitly.com/MBnPEb). Fix PR986 so
+  we can build using CACAO+IcedTea.
+
 *icedtea-6.1.11.3 (13 Jun 2012)
 *icedtea-6.1.10.8 (13 Jun 2012)
 

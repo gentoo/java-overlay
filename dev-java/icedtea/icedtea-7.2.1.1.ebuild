@@ -12,27 +12,28 @@ EAPI="4"
 inherit autotools java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 
 ICEDTEA_VER=$(get_version_component_range 2-)
+ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-OPENJDK_TARBALL="49a6fc8f712f.tar.gz"
-CORBA_TARBALL="3231f3e9c517.tar.gz"
-HOTSPOT_TARBALL="bfe5efd70bce.tar.gz"
-JAXP_TARBALL="0036fe6fe7dc.tar.gz"
-JAXWS_TARBALL="abfb890c262a.tar.gz"
-JDK_TARBALL="839d0155f7cc.tar.gz"
-LANGTOOLS_TARBALL="f855bdb37537.tar.gz"
+OPENJDK_TARBALL="22cc03983e20.tar.gz"
+CORBA_TARBALL="338c21646c76.tar.gz"
+HOTSPOT_TARBALL="8b7c4c5f6ba9.tar.gz"
+JAXP_TARBALL="7a8825b15df6.tar.gz"
+JAXWS_TARBALL="7edfbfe974f2.tar.gz"
+JDK_TARBALL="d5ddeffc4651.tar.gz"
+LANGTOOLS_TARBALL="b534c4c6cd9b.tar.gz"
 JAMVM_TARBALL="jamvm-4617da717ecb05654ea5bb9572338061106a414d.tar.gz"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
 SRC_URI="
 	http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_VER}/archive/${OPENJDK_TARBALL}
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_VER}/corba/archive/${CORBA_TARBALL}
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_VER}/jaxp/archive/${JAXP_TARBALL}
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_VER}/jaxws/archive/${JAXWS_TARBALL}
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_VER}/jdk/archive/${JDK_TARBALL}
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_VER}/hotspot/archive/${HOTSPOT_TARBALL}
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_VER}/langtools/archive/${LANGTOOLS_TARBALL}
+	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/archive/${OPENJDK_TARBALL}
+	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/corba/archive/${CORBA_TARBALL}
+	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/jaxp/archive/${JAXP_TARBALL}
+	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/jaxws/archive/${JAXWS_TARBALL}
+	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/jdk/archive/${JDK_TARBALL}
+	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/hotspot/archive/${HOTSPOT_TARBALL}
+	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/langtools/archive/${LANGTOOLS_TARBALL}
 	!amd64? ( !sparc? ( !x86? (
 		http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL}
 	) ) )"
@@ -157,13 +158,17 @@ java_prepare() {
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
 
-	epatch "${FILESDIR}"/${P}-no_suffix.patch
+	epatch "${FILESDIR}"/${PN}-7.2.0_pax_kernel_support.patch #389751
+	epatch "${FILESDIR}"/${PN}-${SLOT}-compiler_detection_cleanup.patch
+	epatch "${FILESDIR}"/${PN}-${PV}-pr986-cacao_memory_fix.patch
+	epatch "${FILESDIR}"/${PN}-${SLOT}-compile_for_7_cacao_mem.patch
+
 	eautoreconf
 }
 
 bootstrap_impossible() {
 	# Fill this according to testing what works and what not
-	has "${1}" icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6
+	has "${1}" icedtea7 icedtea-7 icedtea-bin-7 icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6
 }
 
 src_configure() {
@@ -221,7 +226,6 @@ src_configure() {
 		--with-langtools-src-zip="${DISTDIR}/${LANGTOOLS_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
-		--disable-downloading \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nss) \
@@ -237,14 +241,14 @@ src_compile() {
 	# Load the least that's needed to avoid possible classpath collisions.
 	export ANT_TASKS="ant-nodeps"
 
-	emake
+	emake -j 1
 }
 
 src_test() {
 	# Use Xvfb for tests
 	unset DISPLAY
 
-	Xemake check
+	Xemake -j1 check
 }
 
 src_install() {
