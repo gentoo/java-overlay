@@ -12,13 +12,14 @@ EAPI="4"
 inherit autotools java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 
 ICEDTEA_PKG=${PN}$(replace_version_separator 1 -)
-OPENJDK_BUILD="24"
-OPENJDK_DATE="14_nov_2011"
+OPENJDK_BUILD="22"
+OPENJDK_DATE="28_feb_2011"
 OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.gz"
-JAXP_TARBALL="jaxp144_03.zip"
-JAXWS_TARBALL="jdk6-jaxws2_1_6-2011_06_13.zip"
+JAXP_TARBALL="jaxp144_01.zip"
+JAXWS_TARBALL="jdk6-jaxws-b20.zip"
 JAF_TARBALL="jdk6-jaf-b20.zip"
-CACAO_TARBALL="cff92704c4e0.tar.gz"
+HOTSPOT_TARBALL="f0f676c5a2c6.tar.gz"
+CACAO_TARBALL="c7bf150bfa46.tar.gz" # 17 Mar 2011
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
@@ -28,13 +29,14 @@ SRC_URI="
 	http://icedtea.classpath.org/download/drops/${JAXWS_TARBALL}
 	http://icedtea.classpath.org/download/drops/${JAF_TARBALL}
 	http://icedtea.classpath.org/download/drops/${JAXP_TARBALL}
-	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL}"
+	hs20? ( http://hg.openjdk.java.net/hsx/hsx20/master/archive/${HOTSPOT_TARBALL} )
+	cacao? ( http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL} ) "
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="6"
-KEYWORDS="~amd64 ~ia64 ~ppc ~ppc64 ~x86"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
-IUSE="+X +alsa cacao cjk +cups debug doc examples javascript +jbootstrap +nsplugin
+IUSE="+X +alsa cacao cjk +cups debug doc examples +hs20 javascript +jbootstrap +nsplugin
 	+nss pax_kernel pulseaudio +source systemtap test +webstart"
 
 # Ideally the following were optional at build time.
@@ -88,7 +90,8 @@ RDEPEND="${COMMON_DEP}
 	alsa? ( ${ALSA_COMMON_DEP} )
 	cups? ( ${CUPS_COMMON_DEP} )"
 
-# Only ant-core-1.8.1 has fixed ant -diagnostics when xerces+xalan are not present.
+# Only ant-core-1.7.1-r2 and later properly respect environment variables.
+# xalan/xerces: automatic code generation (also needed for Ant 1.8.0 to work properly)
 # ca-certificates, perl and openssl are used for the cacerts keystore generation
 # xext headers have two variants depending on version - bug #288855
 # !eclipse-ecj-3.7 - bug #392587
@@ -103,7 +106,7 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	app-arch/unzip
 	app-arch/zip
 	app-misc/ca-certificates
-	>=dev-java/ant-core-1.8.1
+	>=dev-java/ant-core-1.7.1-r2
 	dev-java/ant-nodeps
 	dev-lang/perl
 	>=dev-libs/libxslt-1.1.26
@@ -141,6 +144,7 @@ java_prepare() {
 	export LANG="C" LC_ALL="C"
 
 	epatch "${FILESDIR}"/${PN}-${SLOT}_pax_kernel_support.patch #389751
+	epatch "${FILESDIR}"/${PN}-${SLOT}-pass_javac_memory_args_to_vm.patch
 	eautoreconf
 }
 
@@ -207,6 +211,10 @@ src_configure() {
 		config="${config} --without-rhino"
 	fi
 
+	if use hs20 ; then
+		config="${config} --with-hotspot-build=hs20 --with-hotspot-src-zip=${DISTDIR}/${HOTSPOT_TARBALL}"
+	fi
+
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 
 	econf ${config} \
@@ -228,8 +236,9 @@ src_compile() {
 	# Would use GENTOO_VM otherwise.
 	export ANT_RESPECT_JAVA_HOME=TRUE
 
+	# ant -diagnostics in Ant 1.8.0 fails without xerces-2 and xalan
 	# Load the least that's needed to avoid possible classpath collisions.
-	export ANT_TASKS="ant-nodeps"
+	export ANT_TASKS="xerces-2 xalan ant-nodeps"
 
 	emake
 }
@@ -238,7 +247,7 @@ src_test() {
 	# Use Xvfb for tests
 	unset DISPLAY
 
-	Xemake check
+	Xemake -j1 check
 }
 
 src_install() {

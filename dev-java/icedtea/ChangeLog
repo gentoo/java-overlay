@@ -2,6 +2,15 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.11.3 (13 Jun 2012)
+*icedtea-6.1.10.8 (13 Jun 2012)
+
+  13 Jun 2012; Andrew John Hughes <andrew@gentoo.org> -icedtea-6.1.10.7.ebuild,
+  +icedtea-6.1.10.8.ebuild, -icedtea-6.1.11.2.ebuild, +icedtea-6.1.11.3.ebuild,
+  +files/icedtea-6-pass_javac_memory_args_to_vm.patch:
+  IcedTea6 1.10.8 & 1.11.3 security releases: http://bitly.com/MACPlQ
+  Add patch so bootstrap works with CACAO as bootstrap VM.
+
   31 May 2012; Andrew John Hughes <andrew@gentoo.org> icedtea-7.2.2.ebuild:
   Allow bootstrap of 2.2 with IcedTea7.
 
