@@ -2,6 +2,14 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  19 Jun 2012; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.10.8.ebuild,
+  icedtea-6.1.11.3.ebuild, icedtea-7.2.1.1.ebuild, icedtea-7.2.2.1.ebuild,
+  files/icedtea-7.2.2.1-pr986-cacao_memory_fix.patch:
+  Make cacao and jamvm downloads unconditional, fixes SRC_URI in icedtea 6 for
+  alternative arches.
+  Backport simplifications in icedtea-7 jbootstrap to icedtea-6.
+  Fix cacao_memory_fix.patch so resulting patch applies for builds using cacao.
+
 *icedtea-7.2.2.1 (13 Jun 2012)
 *icedtea-7.2.1.1 (13 Jun 2012)
 

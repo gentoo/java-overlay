@@ -21,6 +21,7 @@ JAXP_TARBALL="7a8825b15df6.tar.gz"
 JAXWS_TARBALL="7edfbfe974f2.tar.gz"
 JDK_TARBALL="d5ddeffc4651.tar.gz"
 LANGTOOLS_TARBALL="b534c4c6cd9b.tar.gz"
+CACAO_TARBALL="a567bcb7f589.tar.gz"
 JAMVM_TARBALL="jamvm-4617da717ecb05654ea5bb9572338061106a414d.tar.gz"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
@@ -34,9 +35,8 @@ SRC_URI="
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/jdk/archive/${JDK_TARBALL}
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/hotspot/archive/${HOTSPOT_TARBALL}
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/langtools/archive/${LANGTOOLS_TARBALL}
-	!amd64? ( !sparc? ( !x86? (
-		http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL}
-	) ) )"
+	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL}
+	http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL}"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="7"
@@ -160,7 +160,7 @@ java_prepare() {
 
 	epatch "${FILESDIR}"/${PN}-7.2.0_pax_kernel_support.patch #389751
 	epatch "${FILESDIR}"/${PN}-${SLOT}-compiler_detection_cleanup.patch
-	epatch "${FILESDIR}"/${PN}-${PV}-pr986-cacao_memory_fix.patch
+	epatch "${FILESDIR}"/${P}-pr986-cacao_memory_fix.patch
 	epatch "${FILESDIR}"/${PN}-${SLOT}-compile_for_7_cacao_mem.patch
 
 	eautoreconf
@@ -198,7 +198,7 @@ src_configure() {
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
 	# Otherwise use JamVM as it's the only possibility right now
 	if ! has "${ARCH}" amd64 sparc x86; then
-		config="${config} --enable-jamvm --with-jamvm-src-zip=${DISTDIR}/${JAMVM_TARBALL}"
+		config="${config} --enable-jamvm"
 	fi
 
 	# OpenJDK-specific parallelism support. Bug #389791, #337827
@@ -224,6 +224,8 @@ src_configure() {
 		--with-jdk-src-zip="${DISTDIR}/${JDK_TARBALL}" \
 		--with-hotspot-src-zip="${DISTDIR}/${HOTSPOT_TARBALL}" \
 		--with-langtools-src-zip="${DISTDIR}/${LANGTOOLS_TARBALL}" \
+		--with-cacao-src-zip="${DISTDIR}/${CACAO_TARBALL}" \
+		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
 		$(use_enable !debug optimizations) \

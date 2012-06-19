@@ -20,6 +20,7 @@ JAXWS_TARBALL="jdk6-jaxws-b20.zip"
 JAF_TARBALL="jdk6-jaf-b20.zip"
 HOTSPOT_TARBALL="f0f676c5a2c6.tar.gz"
 CACAO_TARBALL="c7bf150bfa46.tar.gz" # 17 Mar 2011
+JAMVM_TARBALL="jamvm-a95ca049d3bb257d730535a5d5ec3f73a943d0aa.tar.gz"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
@@ -29,8 +30,9 @@ SRC_URI="
 	http://icedtea.classpath.org/download/drops/${JAXWS_TARBALL}
 	http://icedtea.classpath.org/download/drops/${JAF_TARBALL}
 	http://icedtea.classpath.org/download/drops/${JAXP_TARBALL}
-	hs20? ( http://hg.openjdk.java.net/hsx/hsx20/master/archive/${HOTSPOT_TARBALL} )
-	cacao? ( http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL} ) "
+	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL}
+	http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL}
+	hs20? ( http://hg.openjdk.java.net/hsx/hsx20/master/archive/${HOTSPOT_TARBALL} )"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="6"
@@ -148,25 +150,35 @@ java_prepare() {
 	eautoreconf
 }
 
+bootstrap_impossible() {
+	# Fill this according to testing what works and what not
+	has "${1}" # icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6
+}
+
 src_configure() {
 	local config bootstrap enable_cacao
 	local vm=$(java-pkg_get-current-vm)
 
 	# IcedTea6 can't be built using IcedTea7; its class files are too new
-	if has "${vm}" icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6; then
-		use jbootstrap && bootstrap=yes
-	elif has "${vm}" gcj-jdk; then
-		# gcj-jdk ensures ecj is present.
-		use jbootstrap || einfo "bootstrap forced on for ${vm}, ignoring use jbootstrap"
-		bootstrap=yes
-	else
-		eerror "IcedTea${SLOT} must be built with either a JDK based on GNU Classpath or an existing build of IcedTea${SLOT}."
-		die "Install a GNU Classpath JDK (gcj-jdk)"
+	# Whether to bootstrap
+	bootstrap="disable"
+	if use jbootstrap; then
+		if bootstrap_impossible "${vm}"; then
+			einfo "Bootstrap with ${vm} is currently not possible and thus disabled, ignoring USE=jbootstrap"
+		else
+			bootstrap="enable"
+		fi
 	fi
 
-	if [[ ${bootstrap} ]]; then
-		config="${config} --enable-bootstrap"
+	if has "${vm}" gcj-jdk; then
+		# gcj-jdk ensures ecj is present.
+		use jbootstrap || einfo "bootstrap is necessary when building with ${vm}, ignoring USE=\"-jbootstrap\""
+		bootstrap="enable"
+	fi
 
+	config="${config} --${bootstrap}-bootstrap"
+
+	if [[ ${bootstrap} == enable ]]; then
 		# icedtea-6 javac wrapper requires to always have ecj if bootstrapping #392337
 		local ecj_jar="$(readlink "${EPREFIX}"/usr/share/eclipse-ecj/ecj.jar)"
 		# Don't use eclipse-ecj-3.7 #392587
@@ -180,8 +192,6 @@ src_configure() {
 			ecj_jar="${ecj_all}"/lib/ecj.jar
 		fi
 		config="${config} --with-ecj-jar=${ecj_jar}"
-	else
-		config="${config} --disable-bootstrap"
 	fi
 
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
@@ -195,7 +205,7 @@ src_configure() {
 	fi
 
 	if [[ ${enable_cacao} ]]; then
-		config="${config} --enable-cacao --with-cacao-src-zip=${DISTDIR}/${CACAO_TARBALL}"
+		config="${config} --enable-cacao"
 	fi
 
 	# OpenJDK-specific parallelism support. Bug #389791, #337827
@@ -222,6 +232,8 @@ src_configure() {
 		--with-jaxp-drop-zip="${DISTDIR}/${JAXP_TARBALL}" \
 		--with-jaxws-drop-zip="${DISTDIR}/${JAXWS_TARBALL}" \
 		--with-jaf-drop-zip="${DISTDIR}/${JAF_TARBALL}" \
+		--with-cacao-src-zip="${DISTDIR}/${CACAO_TARBALL}" \
+		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
 		$(use_enable !debug optimizations) \
