@@ -12,15 +12,19 @@ diff --git a/Makefile.am b/Makefile.am
 index 82ef261..e17fa5f 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -421,7 +421,7 @@ else
+@@ -421,8 +421,10 @@ else
  ICEDTEA_PATCHES += patches/nss-not-enabled-config.patch
  endif
  
 -if HAS_PAX
+-ICEDTEA_PATCHES += patches/no-test_gamma.patch
 +if WITH_PAX
- ICEDTEA_PATCHES += patches/no-test_gamma.patch
++ICEDTEA_PATCHES += \
++	patches/no-test_gamma.patch \
++	patches/pax-mark-rmic-java.patch
  endif
  
+ ICEDTEA_PATCHES += $(DISTRIBUTION_PATCHES)
 @@ -450,7 +450,7 @@ ICEDTEA_ECJ_PATCHES += patches/ecj/cp40188-opengl.patch
  endif
  endif
@@ -141,3 +145,19 @@ index 0000000..bdff735
 +               @PAX_COMMAND@ @PAX_COMMAND_ARGS@ "${paxable}"
 +       done
 +fi
+diff --git a/patches/pax-mark-rmic-java.patch b/patches/pax-mark-rmic-java.patch
+new file mode 100644
+index 0000000..ad80f3a
+--- /dev/null
++++ b/patches/pax-mark-rmic-java.patch
+@@ -0,0 +1,10 @@
++--- openjdk/jdk/make/com/sun/jmx/Makefile
+++++ openjdk/jdk/make/com/sun/jmx/Makefile
++@@ -119,6 +119,7 @@
++ 
++ $(CLASSDESTDIR)/%_Stub.class: $(CLASSDESTDIR)/%.class
++ 	$(prep-target)
+++	"$(TOPDIR)"/../../pax-mark-vm "$(OUTPUTDIR)"
++ 	$(RMIC) -classpath "$(CLASSDESTDIR)"    \
++                 -d $(CLASSDESTDIR)              \
++                 -v1.2                           \

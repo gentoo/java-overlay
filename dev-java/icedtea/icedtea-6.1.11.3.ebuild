@@ -142,7 +142,7 @@ java_prepare() {
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
 
-	epatch "${FILESDIR}"/${PN}-${SLOT}_pax_kernel_support.patch #389751
+	epatch "${FILESDIR}"/${PN}-${SLOT}_pax_kernel_support.patch #389751 #422525
 	epatch "${FILESDIR}"/${PN}-${SLOT}-pass_javac_memory_args_to_vm.patch
 	eautoreconf
 }
