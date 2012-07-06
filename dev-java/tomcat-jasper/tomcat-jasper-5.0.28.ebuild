@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -23,7 +23,6 @@ DEPEND="=virtual/jdk-1.4*
 	dev-java/commons-el
 	dev-java/commons-logging
 	dev-java/commons-launcher
-	jikes? ( dev-java/jikes )
 	source? ( app-arch/zip )
 "
 
@@ -35,7 +34,7 @@ S=${WORKDIR}/jakarta-tomcat-${PV}-src/jakarta-tomcat-jasper/jasper2
 
 src_unpack() {
 	unpack ${A}
-	cd ${S}
+	cd "${S}"
 
 	# Setup build.properties
 	echo "servlet-api.jar=$(java-pkg_getjar servletapi-2.4 servlet-api.jar)" >> build.properties
@@ -56,8 +55,8 @@ src_compile() {
 }
 
 src_install() {
-	java-pkg_dojar ${S}/build/shared/lib/jasper-*.jar
+	java-pkg_dojar "${S}"/build/shared/lib/jasper-*.jar
 
-	use doc && java-pkg_dohtml -r ${S}/build/javadoc
+	use doc && java-pkg_dohtml -r "${S}"/build/javadoc
 	use source && java-pkg_dosrc src/share/*
 }
