@@ -1,0 +1,13 @@
+# ChangeLog for dev-util/eclipse-sdk-bin
+# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*eclipse-sdk-bin-4.2.0 (18 Jul 2012)
+
+  18 Jul 2012; Ralph Sennhauser <sera@gentoo.org> +files/eclipserc-bin-4.2,
+  +files/eclipse-bin-4.2, +eclipse-sdk-bin-4.2.0.ebuild, +metadata.xml:
+  Binary package of eclipse-sdk as alternative till the source build can be
+  maintained again.
+  Thanks to Carlos Silva <r3pek@r3pek.org> for the ebuild, added with some
+  modifications. #424457
+
