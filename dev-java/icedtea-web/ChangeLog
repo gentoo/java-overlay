@@ -2,6 +2,12 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  21 Jul 2012; Ralph Sennhauser <sera@gentoo.org> -icedtea-web-1.1.4.ebuild,
+  -icedtea-web-1.1.4-r7.ebuild, -icedtea-web-1.1.4-r8.ebuild,
+  icedtea-web-1.2.ebuild, icedtea-web-1.2-r7.ebuild:
+  Drop elog message about old browsers not working. #427458
+  Remove old.
+
   14 Mar 2012; Ralph Sennhauser <sera@gentoo.org> icedtea-web-1.2.ebuild:
   Fix typo in handle name.
 

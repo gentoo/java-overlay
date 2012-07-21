@@ -109,8 +109,6 @@ pkg_postinst() {
 
 	if use nsplugin; then
 		elog "The icedtea browser plugin (NPPlugin) can be enabled using eselect java-nsplugin"
-		elog "Note that the plugin works only in browsers based on xulrunner-1.9.1 or later"
-		elog "such as Firefox 3.5+, Chromium and perhaps some others too."
 	fi
 }
 
