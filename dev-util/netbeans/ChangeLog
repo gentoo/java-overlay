@@ -1,6 +1,13 @@
 # ChangeLog for dev-util/netbeans
-# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+*netbeans-6.8-r1 (25 Jul 2012)
+
+  25 Jul 2012; Ralph Sennhauser <sera@gentoo.org>
+  +files/6.8/nbbuild_build.xml.patch,
+  +files/6.8/nbbuild_templates_projectized.xml.patch, +netbeans-6.8-r1.ebuild:
+  Move old version from maintree on fordfrog's request.
 
 *netbeans-6.9.1 (24 Oct 2011)
 *netbeans-6.7.1 (24 Oct 2011)
