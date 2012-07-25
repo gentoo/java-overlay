@@ -160,7 +160,7 @@ java_prepare() {
 
 	epatch "${FILESDIR}"/${PN}-${SLOT}-no_suffix.patch
 	epatch "${FILESDIR}"/${PN}-${SLOT}-compiler_detection_cleanup.patch
-	epatch "${FILESDIR}"/${P}-pr986-cacao_memory_fix.patch
+	epatch "${FILESDIR}"/${P}-pr986-cacao_memory_fix_v2.patch
 	epatch "${FILESDIR}"/${PN}-${SLOT}-compile_for_7_cacao_mem.patch
 	epatch "${FILESDIR}"/${P}-pax_mark_rmic_java.patch #422525
 	eautoreconf

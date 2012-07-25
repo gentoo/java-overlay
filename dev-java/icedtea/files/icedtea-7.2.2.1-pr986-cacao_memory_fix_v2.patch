@@ -93,7 +93,7 @@ diff --git a/patches/cacao/launcher.patch b/patches/cacao/launcher.patch
 diff --git a/patches/cacao/memory.patch b/patches/cacao/memory.patch
 --- a/patches/cacao/memory.patch
 +++ b/patches/cacao/memory.patch
-@@ -1,6 +1,82 @@
+@@ -1,6 +1,85 @@
 ---- openjdk.orig/langtools/make/build.xml	2010-06-01 11:25:40.145287816 +0100
 -+++ openjdk/langtools/make/build.xml	2010-06-21 21:48:41.000000000 +0100
 -@@ -554,6 +554,7 @@
@@ -160,18 +160,21 @@ diff --git a/patches/cacao/memory.patch b/patches/cacao/memory.patch
 +diff -Nru openjdk.orig/jdk/make/docs/Makefile openjdk/jdk/make/docs/Makefile
 +--- openjdk.orig/jdk/make/docs/Makefile	2012-06-08 17:12:17.000000000 +0100
 ++++ openjdk/jdk/make/docs/Makefile	2012-06-12 11:09:31.616702981 +0100
-+@@ -69,9 +69,9 @@
++@@ -69,11 +69,11 @@
 + #    NOTE: javadoc will not complete without these larger settings.
 + #    WARNING: This could cause thrashing on low memory machines.
 + ifeq ($(ARCH_DATA_MODEL),64)
-+-  MAX_VM_MEMORY = 1536
++-  MAX_VM_MEMORY = 1024
 ++  MAX_VM_MEMORY = 1792
 + else ifeq ($(ARCH),universal)
-+-  MAX_VM_MEMORY = 1536
++-  MAX_VM_MEMORY = 1024
 ++  MAX_VM_MEMORY = 1792
 + else
-+   MAX_VM_MEMORY = 768
++-  MAX_VM_MEMORY = 512
+++  MAX_VM_MEMORY = 768
 + endif
++ 
++ # List of all possible directories for javadoc to look for sources
 +diff -Nru openjdk.orig/langtools/make/build.xml openjdk/langtools/make/build.xml
 +--- openjdk.orig/langtools/make/build.xml	2012-06-08 17:12:36.000000000 +0100
 ++++ openjdk/langtools/make/build.xml	2012-06-12 10:50:20.974290246 +0100

@@ -2,6 +2,11 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  25 Jul 2012; Ralph Sennhauser <sera@gentoo.org> icedtea-7.2.2.1.ebuild,
+  files/icedtea-7.2.2.1-pr986-cacao_memory_fix.patch,
+  +files/icedtea-7.2.2.1-pr986-cacao_memory_fix_v2.patch:
+  Create separate cacao memory patch for fixes, revert original.
+
   24 Jun 2012; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.10.8.ebuild,
   icedtea-6.1.11.3.ebuild, files/icedtea-6_pax_kernel_support.patch,
   icedtea-7.2.1.1.ebuild, +files/icedtea-7.2.1.1-pax_mark_rmic_java.patch,
