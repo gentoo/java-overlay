@@ -1,9 +1,9 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
-COMMIT="9d4f1b6"
+EAPI=2
+COMMIT="6be54be"
 JAVA_PKG_IUSE="doc source"
 
 inherit java-pkg-2 java-pkg-simple
@@ -24,6 +24,11 @@ DEPEND=">=virtual/jdk-1.5
 
 S="${WORKDIR}/pholser-${PN}-${COMMIT}"
 JAVA_SRC_DIR="src/main/java"
+
+java_prepare() {
+	# Easier to use java-pkg-simple.
+	rm -v pom.xml || die
+}
 
 src_install() {
 	java-pkg-simple_src_install
