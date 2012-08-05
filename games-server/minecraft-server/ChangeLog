@@ -2,6 +2,14 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*minecraft-server-1.3.1 (5 Aug 2012)
+
+  5 Aug 2012; James Le Cuirot <chewi@aura-online.co.uk>
+  -minecraft-server.1.2.5.ebuild, +minecraft-server.1.3.1.ebuild:
+  Version bump. Wrapper has been removed because it no longer builds and
+  doesn't appear to be needed any more, though it is hard to tell for
+  certain.
+
 *minecraft-server-1.2.5 (11 Apr 2012)
 
   11 Apr 2012; James Le Cuirot <chewi@aura-online.co.uk>

@@ -28,7 +28,7 @@ pkg_setup() {
 }
 
 src_unpack() {
-	cp -v "${DISTDIR}/${P}.jar" "${PN}.jar" || die
+	true # NOOP!
 }
 
 java_prepare() {
@@ -36,18 +36,14 @@ java_prepare() {
 	sed -i "s/@GAMES_USER_DED@/${GAMES_USER_DED}/g" directory.sh || die
 }
 
-src_compile() {
-	ejavac -d . -classpath "${PN}.jar" "${FILESDIR}/MinecraftWrapper.java"
-	jar uf "${PN}.jar" org/gentoo || die
-}
-
 src_install() {
 	local ARGS
 	use ipv6 || ARGS="-Djava.net.preferIPv4Stack=true"
 
-	java-pkg_dojar "${PN}.jar"
+	java-pkg_newjar "${DISTDIR}/${P}.jar" "${PN}.jar"
 	java-pkg_dolauncher "${PN}" -into "${GAMES_PREFIX}" -pre directory.sh \
-		--java_args "-Xmx1024M -Xms512M ${ARGS}" --main org.gentoo.java.minecraft.MinecraftWrapper
+		--java_args "-Xmx1024M -Xms512M ${ARGS}" --pkg_args "nogui" \
+		--main net.minecraft.server.MinecraftServer
 
 	prepgamesdirs
 }
