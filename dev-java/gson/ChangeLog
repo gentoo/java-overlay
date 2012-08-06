@@ -1,6 +1,13 @@
 # ChangeLog for dev-java/gson
-# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+*gson-2.2.2 (5 Aug 2012)
+
+  5 Aug 2012; James Le Cuirot <chewi@aura-online.co.uk>
+  -gson-2.0.ebuild, +gson-2.2.2.ebuild:
+  Version bump. Using new 2.2.2 slot as this is apparently incompatible
+  with 2.2.1. apicheck looked bad.
 
 *gson-2.0 (21 Nov 2011)
 

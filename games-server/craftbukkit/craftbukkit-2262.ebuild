@@ -2,8 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
-COMMIT="3b0920b"
+EAPI=2
+COMMIT="d95aee5"
 MC_PV="1.2.5"
 MC_PN="minecraft-server-unobfuscated"
 MC_JAR="${MC_PN}-${MC_PV}.jar"
@@ -21,12 +21,13 @@ IUSE="ipv6"
 
 CDEPEND="dev-java/commons-lang:2.1
 	dev-java/ebean:0
-	dev-java/gson:2
+	dev-java/gson:2.2.2
 	dev-java/guava:10
-	dev-java/jline:0
+	>=dev-java/jansi-1.8:0
+	dev-java/jline:2
 	dev-java/jopt-simple:0
 	>=dev-java/snakeyaml-1.9:0
-	~games-server/bukkit-1438:0"
+	~games-server/bukkit-1500:0"
 
 DEPEND="${CDEPEND}
 	>=virtual/jdk-1.6"
@@ -37,7 +38,7 @@ RDEPEND="${CDEPEND}
 
 S="${WORKDIR}/Bukkit-CraftBukkit-${COMMIT}"
 
-JAVA_GENTOO_CLASSPATH="bukkit commons-lang-2.1 ebean gson-2 guava-10 jline jopt-simple snakeyaml"
+JAVA_GENTOO_CLASSPATH="bukkit commons-lang-2.1 ebean gson-2.2.2 guava-10 jansi jline-2 jopt-simple snakeyaml"
 JAVA_CLASSPATH_EXTRA="${DISTDIR}/${MC_JAR}"
 JAVA_SRC_DIR="src/main/java"
 
