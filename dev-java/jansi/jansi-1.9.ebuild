@@ -19,11 +19,11 @@ IUSE="test"
 
 RDEPEND=">=virtual/jre-1.5
 	dev-java/hawtjni-runtime:0
-	dev-java/jansi-native"
+	dev-java/jansi-native:0"
 
 DEPEND=">=virtual/jdk-1.5
 	dev-java/hawtjni-runtime:0
-	dev-java/jansi-native
+	dev-java/jansi-native:0
 	test? ( dev-java/junit:4 )"
 
 S="${WORKDIR}/fusesource-${PN}-${COMMIT}/${PN}"
