@@ -15,7 +15,7 @@ SRC_URI="https://github.com/fusesource/${PN}/tarball/${MY_P} -> ${MY_P}.tar.gz"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="test"
 
 RDEPEND=">=virtual/jre-1.5
 	dev-java/hawtjni-runtime:0
@@ -23,11 +23,12 @@ RDEPEND=">=virtual/jre-1.5
 
 DEPEND=">=virtual/jdk-1.5
 	dev-java/hawtjni-runtime:0
-	dev-java/jansi-native"
+	dev-java/jansi-native
+	test? ( dev-java/junit:4 )"
 
 S="${WORKDIR}/fusesource-${PN}-${COMMIT}/${PN}"
 JAVA_SRC_DIR="src/main/java"
-JAVA_GENTOO_CLASSPATH="hawtjni-runtime jansi-native"
+JAVA_GENTOO_CLASSPATH="hawtjni-runtime,jansi-native"
 
 java_prepare() {
 	# Easier to use java-pkg-simple.
@@ -37,4 +38,16 @@ java_prepare() {
 src_install() {
 	java-pkg-simple_src_install
 	dodoc ../{changelog,readme}.md
+}
+
+src_test() {
+	cd src/test/java || die
+
+	local CP=".:${S}/${PN}.jar:$(java-pkg_getjars junit-4,${JAVA_GENTOO_CLASSPATH})"
+	local TESTS=$(find * -name "*Test.java")
+	TESTS="${TESTS//.java}"
+	TESTS="${TESTS//\//.}"
+
+	ejavac -cp "${CP}" -d . $(find * -name "*.java")
+	ejunit4 -classpath "${CP}" ${TESTS}
 }
