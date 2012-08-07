@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
-COMMIT="d95aee5"
-MC_PV="1.2.5"
+EAPI=4
+COMMIT="2a4eb41"
+MC_PV="1.3.1"
 MC_PN="minecraft-server-unobfuscated"
 MC_JAR="${MC_PN}-${MC_PV}.jar"
 
@@ -18,6 +18,7 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="ipv6"
+RESTRICT="test" # Needs hamcrest-1.2?
 
 CDEPEND="dev-java/commons-lang:2.1
 	dev-java/ebean:0
@@ -27,10 +28,12 @@ CDEPEND="dev-java/commons-lang:2.1
 	dev-java/jline:2
 	dev-java/jopt-simple:0
 	>=dev-java/snakeyaml-1.9:0
-	~games-server/bukkit-1500:0"
+	~games-server/bukkit-1521:0"
 
 DEPEND="${CDEPEND}
 	>=virtual/jdk-1.6"
+#	test? ( dev-java/hamcrest
+#		dev-java/junit:4 )"
 
 RDEPEND="${CDEPEND}
 	>=virtual/jre-1.6
@@ -38,7 +41,7 @@ RDEPEND="${CDEPEND}
 
 S="${WORKDIR}/Bukkit-CraftBukkit-${COMMIT}"
 
-JAVA_GENTOO_CLASSPATH="bukkit commons-lang-2.1 ebean gson-2.2.2 guava-10 jansi jline-2 jopt-simple snakeyaml"
+JAVA_GENTOO_CLASSPATH="bukkit,commons-lang-2.1,ebean,gson-2.2.2,guava-10,jansi,jline-2,jopt-simple,snakeyaml"
 JAVA_CLASSPATH_EXTRA="${DISTDIR}/${MC_JAR}"
 JAVA_SRC_DIR="src/main/java"
 
@@ -68,8 +71,8 @@ src_install() {
 	java-pkg_dolauncher "${PN}" -into "${GAMES_PREFIX}" -pre directory.sh \
 		--java_args "-Xmx1024M -Xms512M ${ARGS}" --main org.bukkit.craftbukkit.Main
 
-	dosym minecraft-server "/etc/init.d/${PN}" || die
-	dodoc README.md || die
+	dosym minecraft-server "/etc/init.d/${PN}"
+	dodoc README.md
 
 	prepgamesdirs
 }
@@ -111,4 +114,16 @@ pkg_postinst() {
 	fi
 
 	games_pkg_postinst
+}
+
+src_test() {
+	cd src/test/java || die
+
+	local CP=".:${S}/${PN}.jar:$(java-pkg_getjars hamcrest,junit-4,${JAVA_GENTOO_CLASSPATH})"
+	local TESTS=$(find * -name "*Test.java")
+	TESTS="${TESTS//.java}"
+	TESTS="${TESTS//\//.}"
+
+	ejavac -cp "${CP}" -d . $(find * -name "*.java")
+	ejunit4 -classpath "${CP}" ${TESTS}
 }

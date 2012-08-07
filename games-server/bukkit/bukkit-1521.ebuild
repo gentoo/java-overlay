@@ -3,8 +3,8 @@
 # $Header: $
 
 EAPI=2
-COMMIT="87b38c0"
-BUKKIT_API="1.2.5-R5.0"
+COMMIT="233222b"
+BUKKIT_API="1.3.1-R1.0"
 JAVA_PKG_IUSE="doc source"
 
 inherit games java-pkg-2 java-pkg-simple
@@ -16,6 +16,7 @@ LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
+RESTRICT="test" # Needs hamcrest-1.2?
 
 CDEPEND="dev-java/commons-lang:2.1
 	dev-java/ebean:0
@@ -24,6 +25,8 @@ CDEPEND="dev-java/commons-lang:2.1
 
 DEPEND="${CDEPEND}
 	>=virtual/jdk-1.6"
+#	test? ( dev-java/hamcrest
+#		dev-java/junit:4 )"
 
 RDEPEND="${CDEPEND}
 	>=dev-java/json-simple-1.1:0
@@ -31,7 +34,7 @@ RDEPEND="${CDEPEND}
 
 S="${WORKDIR}/Bukkit-Bukkit-${COMMIT}"
 
-JAVA_GENTOO_CLASSPATH="commons-lang-2.1 ebean guava-10 snakeyaml"
+JAVA_GENTOO_CLASSPATH="commons-lang-2.1,ebean,guava-10,snakeyaml"
 JAVA_SRC_DIR="src/main/java"
 
 java_prepare() {
@@ -46,4 +49,16 @@ src_install() {
 	java-pkg_register-dependency json-simple
 	java-pkg-simple_src_install
 	dodoc README.md || die
+}
+
+src_test() {
+	cd src/test/java || die
+
+	local CP=".:${S}/${PN}.jar:$(java-pkg_getjars hamcrest,junit-4,${JAVA_GENTOO_CLASSPATH})"
+	local TESTS=$(find * -name "*Test.java")
+	TESTS="${TESTS//.java}"
+	TESTS="${TESTS//\//.}"
+
+	ejavac -cp "${CP}" -d . $(find * -name "*.java")
+	ejunit4 -classpath "${CP}" ${TESTS}
 }
