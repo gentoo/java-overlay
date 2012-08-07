@@ -1,0 +1,72 @@
+diff -Naur ebean-2.7.7/com/avaje/ebeaninternal/jdbc/ConnectionDelegator.java ebean-2.7.7.orig/com/avaje/ebeaninternal/jdbc/ConnectionDelegator.java
+--- ebean-2.7.7/com/avaje/ebeaninternal/jdbc/ConnectionDelegator.java	2011-11-11 20:33:20.000000000 +0000
++++ ebean-2.7.7.orig/com/avaje/ebeaninternal/jdbc/ConnectionDelegator.java	2012-08-07 12:31:41.055072414 +0100
+@@ -337,4 +337,34 @@
+ 	{
+ 		return delegate.isWrapperFor(iface);
+ 	}
++
++	public void abort(java.util.concurrent.Executor executor)
++		throws SQLException
++	{
++		delegate.abort(executor);
++	}
++
++	public int getNetworkTimeout()
++		throws SQLException
++	{
++		return delegate.getNetworkTimeout();
++	}
++
++	public void setNetworkTimeout(java.util.concurrent.Executor executor, int milliseconds)
++		throws SQLException
++	{
++		delegate.setNetworkTimeout(executor, milliseconds);
++	}
++
++	public String getSchema()
++		throws SQLException
++	{
++		return delegate.getSchema();
++	}
++
++	public void setSchema(String schema)
++		throws SQLException
++	{
++		delegate.setSchema(schema);
++	}
+ }
+diff -Naur ebean-2.7.7/com/avaje/ebeaninternal/jdbc/PreparedStatementDelegator.java ebean-2.7.7.orig/com/avaje/ebeaninternal/jdbc/PreparedStatementDelegator.java
+--- ebean-2.7.7/com/avaje/ebeaninternal/jdbc/PreparedStatementDelegator.java	2011-11-11 20:33:20.000000000 +0000
++++ ebean-2.7.7.orig/com/avaje/ebeaninternal/jdbc/PreparedStatementDelegator.java	2012-08-07 12:33:32.294536973 +0100
+@@ -631,4 +631,16 @@
+ 	{
+ 		return delegate.isWrapperFor(iface);
+ 	}
++
++	public void closeOnCompletion()
++		throws SQLException
++	{
++		delegate.closeOnCompletion();
++	}
++
++	public boolean isCloseOnCompletion()
++		throws SQLException
++	{
++		return delegate.isCloseOnCompletion();
++	}
+ }
+diff -Naur ebean-2.7.7/com/avaje/ebeaninternal/server/lib/sql/DataSourcePool.java ebean-2.7.7.orig/com/avaje/ebeaninternal/server/lib/sql/DataSourcePool.java
+--- ebean-2.7.7/com/avaje/ebeaninternal/server/lib/sql/DataSourcePool.java	2012-05-27 22:41:56.000000000 +0100
++++ ebean-2.7.7.orig/com/avaje/ebeaninternal/server/lib/sql/DataSourcePool.java	2012-08-07 12:41:45.086734290 +0100
+@@ -824,6 +824,10 @@
+ 	    }
+     }    
+ 
++    public Logger getParentLogger() {
++        return logger;
++    }
++
+     public static class Status {
+ 
+         private final String name;

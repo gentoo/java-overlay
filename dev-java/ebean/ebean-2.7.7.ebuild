@@ -2,10 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
+EAPI=4
 JAVA_PKG_IUSE="doc source"
 
-inherit java-pkg-2 java-pkg-simple
+inherit eutils java-pkg-2 java-pkg-simple
 
 DESCRIPTION="An ORM for Java from Avaje"
 HOMEPAGE="http://www.avaje.org/"
@@ -40,6 +40,9 @@ pkg_setup() {
 java_prepare() {
 	unpack "./${P}-sources.jar"
 
+	# Upstream JDBC code is targeted at 1.6.
+	java-pkg_is-vm-version-ge 1.7 && epatch "${FILESDIR}/jdk7.patch"
+
 	if ! use scala; then
 		einfo "Removing Scala support ..."
 		find -regex ".*/[^/]*Scala[^r][^/]*\.java" -exec rm -vf {} \; || die
@@ -50,6 +53,6 @@ java_prepare() {
 src_install() {
 	java-pkg-simple_src_install
 	java-pkg_register-optional-dependency jdbc-mysql,jdbc-postgresql,sqlite-jdbc,h2
-	dodoc readme.txt || die
-	newdoc "${PN}"-userguide{-*,}.pdf || die
+	dodoc readme.txt
+	newdoc "${PN}"-userguide{-*,}.pdf
 }
