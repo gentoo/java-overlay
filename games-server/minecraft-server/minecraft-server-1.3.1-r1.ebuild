@@ -14,8 +14,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="ipv6"
 RESTRICT="mirror"
 
-DEPEND=">=virtual/jdk-1.6"
-
+DEPEND=""
 RDEPEND=">=virtual/jre-1.6
 	games-server/minecraft-common"
 
