@@ -2,9 +2,11 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
-  13 May 2012: James Le Cuirot <chewi@aura-online.co.uk>
-  lwjgl-2.7.1-r1.ebuild, lwjgl-2.8.3.ebuild:
-  SRC_URI change.
+*lwjgl-2.8.4 (29 Aug 2012)
+
+  29 Aug 2012: James Le Cuirot <chewi@aura-online.co.uk>
+  -lwjgl-2.7.1-r1.ebuild, -lwjgl-2.8.3.ebuild, +lwjgl-2.8.4.ebuild:
+  Version bump.
 
 *lwjgl-2.8.3 (17 Feb 2012)
 
