@@ -2,6 +2,12 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.3.1 (30 Aug 2012)
+
+  30 Aug 2012; Andrew John Hughes <andrew@gentoo.org> +icedtea-7.2.3.1.ebuild,
+  +files/icedtea-7.2.3.1-pax_mark_rmic_java.patch:
+  IcedTea 2.3.1 Released: http://bitly.com/OKB0Xy
+
   25 Jul 2012; Ralph Sennhauser <sera@gentoo.org> icedtea-7.2.2.1.ebuild,
   files/icedtea-7.2.2.1-pr986-cacao_memory_fix.patch,
   +files/icedtea-7.2.2.1-pr986-cacao_memory_fix_v2.patch:
