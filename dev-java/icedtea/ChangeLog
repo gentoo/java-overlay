@@ -2,6 +2,18 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.2.2 (31 Aug 2012)
+
+  31 Aug 2012; Andrew John Hughes <andrew@gentoo.org> -icedtea-7.2.2.1.ebuild,
+  -files/icedtea-7.2.2.1-pax_mark_rmic_java.patch,
+  -files/icedtea-7.2.2.1-pr986-cacao_memory_fix.patch,
+  -files/icedtea-7.2.2.1-pr986-cacao_memory_fix_v2.patch,
+  +icedtea-7.2.2.2.ebuild, +files/icedtea-7.2.2.2-pax_mark_rmic_java.patch,
+  +files/icedtea-7.2.2.2-pr986-cacao_memory_fix.patch,
+  +files/icedtea-7.2.2.2-pr986-cacao_memory_fix_v2.patch:
+  IcedTea 2.2.2 security update:
+  http://mail.openjdk.java.net/pipermail/distro-pkg-dev/2012-August/020144.html
+
 *icedtea-7.2.3.2 (31 Aug 2012)
 *icedtea-6.1.11.4 (31 Aug 2012)
 *icedtea-6.1.10.9 (31 Aug 2012)
