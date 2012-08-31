@@ -270,6 +270,9 @@ src_install() {
 		rm -r jre/lib/$(get_system_arch)/xawt || die
 	fi
 
+	# Don't hide classes
+	rm lib/ct.sym || die
+
 	#402507
 	mkdir jre/.systemPrefs || die
 	touch jre/.systemPrefs/.system.lock || die
