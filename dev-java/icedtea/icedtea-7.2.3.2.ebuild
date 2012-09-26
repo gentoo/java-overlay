@@ -205,7 +205,7 @@ src_configure() {
 	einfo "Configuring using --with-parallel-jobs=${procs}"
 
 	if use javascript ; then
-		config="${config} --with-rhino=$(java-pkg_getjar rhino:1.6 js.jar)"
+		config="${config} --with-rhino=$(java-pkg_getjar rhino-1.6 js.jar)"
 	else
 		config="${config} --without-rhino"
 	fi
