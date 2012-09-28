@@ -2,6 +2,11 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  28 Sep 2012; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.10.9.ebuild,
+  icedtea-6.1.11.4.ebuild, icedtea-7.2.1.1.ebuild, icedtea-7.2.2.2.ebuild,
+  icedtea-7.2.3.2.ebuild:
+  Remove obsolete docompress workaround. #433685
+
   26 Sep 2012; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.10.9.ebuild,
   icedtea-6.1.11.4.ebuild, icedtea-7.2.1.1.ebuild, icedtea-7.2.2.2.ebuild,
   icedtea-7.2.3.2.ebuild:
