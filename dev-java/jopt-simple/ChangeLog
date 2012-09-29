@@ -2,6 +2,10 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  29 Sep 2012; James Le Cuirot <chewi@aura-online.co.uk>
+  jopt-simple-4.3.ebuild:
+  Use vcs-snapshot.eclass.
+
 *jopt-simple-4.3 (5 Aug 2012)
 
   5 Aug 2012; James Le Cuirot <chewi@aura-online.co.uk>

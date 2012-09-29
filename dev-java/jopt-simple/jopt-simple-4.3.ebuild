@@ -2,11 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
-COMMIT="6be54be"
+EAPI=4
 JAVA_PKG_IUSE="doc source"
 
-inherit java-pkg-2 java-pkg-simple
+inherit vcs-snapshot java-pkg-2 java-pkg-simple
 
 DESCRIPTION="A Java library for parsing command line options"
 HOMEPAGE="http://pholser.github.com/jopt-simple/"
@@ -22,7 +21,7 @@ RDEPEND=">=virtual/jre-1.5"
 DEPEND=">=virtual/jdk-1.5
 	test? ( dev-java/junit:4 )"
 
-S="${WORKDIR}/pholser-${PN}-${COMMIT}"
+S="${WORKDIR}/${P}"
 JAVA_SRC_DIR="src/main/java"
 
 java_prepare() {
@@ -32,7 +31,7 @@ java_prepare() {
 
 src_install() {
 	java-pkg-simple_src_install
-	dodoc README.md || die
+	dodoc README.md
 }
 
 src_test() {
