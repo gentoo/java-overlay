@@ -2,6 +2,18 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*craftbukkit-2377 (29 Sep 2012)
+
+  29 Sep 2012; James Le Cuirot <chewi@aura-online.co.uk>
+  -craftbukkit-2317.ebuild, +craftbukkit-2377.ebuild:
+  Version bump. Use vcs-snapshot.eclass.
+
+*craftbukkit-2317 (7 Aug 2012)
+
+  7 Aug 2012; James Le Cuirot <chewi@aura-online.co.uk>
+  -craftbukkit-2262.ebuild, +craftbukkit-2317.ebuild:
+  Version bump.
+
 *craftbukkit-2317 (7 Aug 2012)
 
   7 Aug 2012; James Le Cuirot <chewi@aura-online.co.uk>

@@ -3,16 +3,16 @@
 # $Header: $
 
 EAPI=4
-COMMIT="2a4eb41"
-MC_PV="1.3.1"
+MY_PV="1.3.2-R1.0"
+MC_PV="${MY_PV%-*}"
 MC_PN="minecraft-server-unobfuscated"
 MC_JAR="${MC_PN}-${MC_PV}.jar"
 
-inherit games java-pkg-2 java-pkg-simple
+inherit games vcs-snapshot java-pkg-2 java-pkg-simple
 
 DESCRIPTION="Bukkit implementation for the official Minecraft server"
 HOMEPAGE="http://bukkit.org"
-SRC_URI="https://github.com/Bukkit/CraftBukkit/tarball/${COMMIT} -> ${P}.tar.gz
+SRC_URI="https://github.com/Bukkit/CraftBukkit/tarball/${MY_PV} -> ${P}.tar.gz
 	http://repo.bukkit.org/content/repositories/releases/org/bukkit/minecraft-server/${MC_PV}/minecraft-server-${MC_PV}.jar -> ${MC_JAR}"
 LICENSE="GPL-3"
 SLOT="0"
@@ -28,7 +28,7 @@ CDEPEND="dev-java/commons-lang:2.1
 	dev-java/jline:2
 	dev-java/jopt-simple:0
 	>=dev-java/snakeyaml-1.9:0
-	~games-server/bukkit-1521:0"
+	~games-server/bukkit-1546:0"
 
 DEPEND="${CDEPEND}
 	>=virtual/jdk-1.6"
@@ -39,14 +39,14 @@ RDEPEND="${CDEPEND}
 	>=virtual/jre-1.6
 	games-server/minecraft-common"
 
-S="${WORKDIR}/Bukkit-CraftBukkit-${COMMIT}"
+S="${WORKDIR}/${P}"
 
 JAVA_GENTOO_CLASSPATH="bukkit,commons-lang-2.1,ebean,gson-2.2.2,guava-10,jansi,jline-2,jopt-simple,snakeyaml"
 JAVA_CLASSPATH_EXTRA="${DISTDIR}/${MC_JAR}"
 JAVA_SRC_DIR="src/main/java"
 
 src_unpack() {
-	unpack "${P}.tar.gz"
+	A="${P}.tar.gz" vcs-snapshot_src_unpack
 	mkdir -p "${S}/target/classes/META-INF" || die
 	cd "${S}/target/classes" || die
 	unpack "${MC_JAR}"

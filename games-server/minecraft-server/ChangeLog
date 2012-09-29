@@ -2,17 +2,23 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*minecraft-server-1.3.2 (29 Sep 2012)
+
+  29 Sep 2012; James Le Cuirot <chewi@aura-online.co.uk>
+  -minecraft-server-1.3.1-r1.ebuild, +minecraft-server-1.3.2.ebuild:
+  Version bump.
+
 *minecraft-server-1.3.1-r1 (10 Aug 2012)
 
   10 Aug 2012; James Le Cuirot <chewi@aura-online.co.uk>
-  -minecraft-server.1.3.1.ebuild, +minecraft-server.1.3.1-r1.ebuild:
+  -minecraft-server-1.3.1.ebuild, +minecraft-server-1.3.1-r1.ebuild:
   A JDK isn't needed any more. Thanks to Alexander Stein for pointing
   this out.
 
 *minecraft-server-1.3.1 (5 Aug 2012)
 
   5 Aug 2012; James Le Cuirot <chewi@aura-online.co.uk>
-  -minecraft-server.1.2.5.ebuild, +minecraft-server.1.3.1.ebuild:
+  -minecraft-server-1.2.5.ebuild, +minecraft-server-1.3.1.ebuild:
   Version bump. Wrapper has been removed because it no longer builds and
   doesn't appear to be needed any more, though it is hard to tell for
   certain.
@@ -20,44 +26,44 @@
 *minecraft-server-1.2.5 (11 Apr 2012)
 
   11 Apr 2012; James Le Cuirot <chewi@aura-online.co.uk>
-  -minecraft-server.1.2.4.ebuild, +minecraft-server.1.2.5.ebuild:
+  -minecraft-server-1.2.4.ebuild, +minecraft-server-1.2.5.ebuild:
   Version bump.
 
 *minecraft-server-1.2.4 (23 Mar 2012)
 
   23 Mar 2012; James Le Cuirot <chewi@aura-online.co.uk>
-  -minecraft-server.1.2.3.ebuild, +minecraft-server.1.2.4.ebuild:
+  -minecraft-server-1.2.3.ebuild, +minecraft-server-1.2.4.ebuild:
   Version bump.
 
 *minecraft-server-1.2.3 (2 Mar 2012)
 
   2 Mar 2012; James Le Cuirot <chewi@aura-online.co.uk>
-  -minecraft-server.1.1.ebuild, +minecraft-server.1.2.3.ebuild:
+  -minecraft-server-1.1.ebuild, +minecraft-server-1.2.3.ebuild:
   Version bump.
 
 *minecraft-server-1.1 (12 Jan 2012)
 
   12 Jan 2012; James Le Cuirot <chewi@aura-online.co.uk>
-  -minecraft-server.1.0.1-r1.ebuild, +minecraft-server.1.1.ebuild:
+  -minecraft-server-1.0.1-r1.ebuild, +minecraft-server-1.1.ebuild:
   Version bump to upstream 1.1.
 
 *minecraft-server-1.0.1-r1 (15 Dec 2011)
 
   15 Dec 2011; James Le Cuirot <chewi@aura-online.co.uk>
-  -minecraft-server.1.0.1.ebuild, +minecraft-server.1.0.1-r1.ebuild:
+  -minecraft-server-1.0.1.ebuild, +minecraft-server-1.0.1-r1.ebuild:
   Create symlink to CraftBukkit's world_the_end.
 
 *minecraft-server-1.0.1 (24 Nov 2011)
 
   24 Nov 2011; James Le Cuirot <chewi@aura-online.co.uk>
-  -minecraft-server.1.0.0.ebuild, +minecraft-server.1.0.1.ebuild:
+  -minecraft-server-1.0.0.ebuild, +minecraft-server-1.0.1.ebuild:
   Version bump to upstream 1.0.1. Fixes "invalid server key" bug.
 
 *minecraft-server-1.0.0 (21 Nov 2011)
 
   21 Nov 2011; James Le Cuirot <chewi@aura-online.co.uk>
   -minecraft-server-20110915.ebuild, -files/console.sh, -files/init.sh,
-  +minecraft-server.1.0.0.ebuild, +files/MinecraftWrapper.java,
+  +minecraft-server-1.0.0.ebuild, +files/MinecraftWrapper.java,
   files/directory.sh:
   Version bump to upstream non-beta version 1.0.0. Hurray! Move some parts of
   the package to games-server/minecraft-common so that they can be shared

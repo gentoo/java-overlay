@@ -2,16 +2,15 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=2
-COMMIT="233222b"
-BUKKIT_API="1.3.1-R1.0"
+EAPI=4
+MY_PV="1.3.2-R1.0"
 JAVA_PKG_IUSE="doc source"
 
-inherit games java-pkg-2 java-pkg-simple
+inherit games vcs-snapshot java-pkg-2 java-pkg-simple
 
 DESCRIPTION="Generic API component of the plugin-based server mod for Minecraft"
 HOMEPAGE="http://bukkit.org"
-SRC_URI="https://github.com/Bukkit/Bukkit/tarball/${COMMIT} -> ${P}.tar.gz"
+SRC_URI="https://github.com/Bukkit/Bukkit/tarball/${MY_PV} -> ${P}.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
@@ -32,7 +31,7 @@ RDEPEND="${CDEPEND}
 	>=dev-java/json-simple-1.1:0
 	>=virtual/jre-1.6"
 
-S="${WORKDIR}/Bukkit-Bukkit-${COMMIT}"
+S="${WORKDIR}/${P}"
 
 JAVA_GENTOO_CLASSPATH="commons-lang-2.1,ebean,guava-10,snakeyaml"
 JAVA_SRC_DIR="src/main/java"
@@ -42,13 +41,13 @@ java_prepare() {
 	rm -v pom.xml || die
 
 	mkdir -p target/classes/META-INF/maven/org.bukkit/bukkit || die
-	echo "version=${BUKKIT_API}" > target/classes/META-INF/maven/org.bukkit/bukkit/pom.properties || die
+	echo "version=${MY_PV}" > target/classes/META-INF/maven/org.bukkit/bukkit/pom.properties || die
 }
 
 src_install() {
 	java-pkg_register-dependency json-simple
 	java-pkg-simple_src_install
-	dodoc README.md || die
+	dodoc README.md
 }
 
 src_test() {

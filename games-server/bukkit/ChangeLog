@@ -2,6 +2,12 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*bukkit-1546 (29 Sep 2012)
+
+  29 Sep 2012; James Le Cuirot <chewi@aura-online.co.uk>
+  -bukkit-1521.ebuild, +bukkit-1546.ebuild:
+  Version bump. Use vcs-snapshot.eclass.
+
 *bukkit-1521 (7 Aug 2012)
 
   7 Aug 2012; James Le Cuirot <chewi@aura-online.co.uk>
