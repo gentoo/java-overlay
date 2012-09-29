@@ -3,10 +3,9 @@
 # $Header: $
 
 EAPI=4
-COMMIT="28d037f"
-JAVA_PKG_IUSE="source test"
+JAVA_PKG_IUSE="doc source"
 
-inherit java-pkg-2 java-pkg-simple
+inherit vcs-snapshot java-pkg-2 java-pkg-simple
 
 DESCRIPTION="A Java library for handling console input"
 HOMEPAGE="https://github.com/jline/jline2"
@@ -26,7 +25,7 @@ DEPEND="${CDEPEND}
 RDEPEND="${CDEPEND}
 	>=virtual/jre-1.5"
 
-S="${WORKDIR}/${PN}-jline2-${COMMIT}"
+S="${WORKDIR}/${P}"
 JAVA_SRC_DIR="src/main/java"
 JAVA_GENTOO_CLASSPATH="jansi,jansi-native"
 

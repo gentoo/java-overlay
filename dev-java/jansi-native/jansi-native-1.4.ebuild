@@ -3,10 +3,9 @@
 # $Header: $
 
 EAPI=4
-COMMIT="8fda57a"
 JAVA_PKG_IUSE="doc source"
 
-inherit java-pkg-2 java-pkg-simple
+inherit vcs-snapshot java-pkg-2 java-pkg-simple
 
 DESCRIPTION="Native JNI component for dev-java/jansi"
 HOMEPAGE="http://jansi.fusesource.org/"
@@ -22,7 +21,7 @@ RDEPEND=">=virtual/jre-1.5
 DEPEND=">=virtual/jdk-1.5
 	dev-java/hawtjni-runtime:0"
 
-S="${WORKDIR}/fusesource-${PN}-${COMMIT}"
+S="${WORKDIR}/${P}"
 JAVA_SRC_DIR="src/main/java"
 JAVA_GENTOO_CLASSPATH="hawtjni-runtime"
 

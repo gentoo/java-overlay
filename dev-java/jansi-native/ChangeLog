@@ -2,6 +2,10 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  29 Sep 2012; James Le Cuirot <chewi@aura-online.co.uk>
+  jansi-native-1.4.ebuild:
+  Use vcs-snapshot.eclass.
+
 *jansi-native-1.4 (6 Aug 2012)
 
   6 Aug 2012; James Le Cuirot <chewi@aura-online.co.uk>

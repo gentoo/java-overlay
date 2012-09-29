@@ -3,11 +3,10 @@
 # $Header: $
 
 EAPI=4
-COMMIT="5487ba3"
 MY_P="jansi-project-${PV}"
 JAVA_PKG_IUSE="doc source"
 
-inherit java-pkg-2 java-pkg-simple
+inherit vcs-snapshot java-pkg-2 java-pkg-simple
 
 DESCRIPTION="Jansi is a small Java library that allows you to use ANSI escape sequences in your console output"
 HOMEPAGE="http://jansi.fusesource.org/"
@@ -26,7 +25,7 @@ DEPEND=">=virtual/jdk-1.5
 	dev-java/jansi-native:0
 	test? ( dev-java/junit:4 )"
 
-S="${WORKDIR}/fusesource-${PN}-${COMMIT}/${PN}"
+S="${WORKDIR}/${MY_P}/${PN}"
 JAVA_SRC_DIR="src/main/java"
 JAVA_GENTOO_CLASSPATH="hawtjni-runtime,jansi-native"
 

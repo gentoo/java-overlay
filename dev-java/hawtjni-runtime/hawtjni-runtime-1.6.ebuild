@@ -3,11 +3,10 @@
 # $Header: $
 
 EAPI=4
-COMMIT="7e534c3"
 MY_P="hawtjni-project-${PV}"
 JAVA_PKG_IUSE="doc source"
 
-inherit java-pkg-2 java-pkg-simple
+inherit vcs-snapshot java-pkg-2 java-pkg-simple
 
 DESCRIPTION="A JNI code generator based on the generator used by the Eclipse SWT project"
 HOMEPAGE="http://jansi.fusesource.org/"
@@ -20,7 +19,7 @@ IUSE=""
 RDEPEND=">=virtual/jre-1.5"
 DEPEND=">=virtual/jdk-1.5"
 
-S="${WORKDIR}/fusesource-hawtjni-${COMMIT}/${PN}"
+S="${WORKDIR}/${MY_P}/${PN}"
 JAVA_SRC_DIR="src/main/java"
 
 java_prepare() {
