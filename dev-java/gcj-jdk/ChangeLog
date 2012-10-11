@@ -2,6 +2,11 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*gcj-jdk-4.7.2 (11 Oct 2012)
+
+  11 Oct 2012; Andrew John Hughes <andrew@gentoo.org> +gcj-jdk-4.7.2.ebuild:
+  Support gcc 4.7.2.
+
 *gcj-jdk-4.7.1-r1 (28 Sep 2012)
 
   28 Sep 2012; Ralph Sennhauser <sera@gentoo.org> +gcj-jdk-4.7.1-r1.ebuild:
