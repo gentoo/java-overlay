@@ -14,13 +14,13 @@ inherit autotools java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-OPENJDK_TARBALL="22cc03983e20.tar.gz"
-CORBA_TARBALL="338c21646c76.tar.gz"
-HOTSPOT_TARBALL="8b7c4c5f6ba9.tar.gz"
-JAXP_TARBALL="7a8825b15df6.tar.gz"
-JAXWS_TARBALL="7edfbfe974f2.tar.gz"
-JDK_TARBALL="d5ddeffc4651.tar.gz"
-LANGTOOLS_TARBALL="b534c4c6cd9b.tar.gz"
+CORBA_TARBALL="5fb07c08e9e8.tar.gz"
+HOTSPOT_TARBALL="c159737dd826.tar.gz"
+JAXP_TARBALL="68cc6550c43e.tar.gz"
+JAXWS_TARBALL="27864fc81873.tar.gz"
+JDK_TARBALL="362f79895241.tar.gz"
+LANGTOOLS_TARBALL="59d1da099001.tar.gz"
+OPENJDK_TARBALL="1e3893e92a16.tar.gz"
 CACAO_TARBALL="a567bcb7f589.tar.gz"
 JAMVM_TARBALL="jamvm-4617da717ecb05654ea5bb9572338061106a414d.tar.gz"
 
@@ -209,7 +209,7 @@ src_configure() {
 	einfo "Configuring using --with-parallel-jobs=${procs}"
 
 	if use javascript ; then
-		config="${config} --with-rhino=$(java-pkg_getjar rhino-1.6 js.jar)"
+		config="${config} --with-rhino=$(java-pkg_getjar rhino:1.6 js.jar)"
 	else
 		config="${config} --without-rhino"
 	fi
@@ -260,6 +260,7 @@ src_install() {
 
 	dodoc README NEWS AUTHORS
 	dosym /usr/share/doc/${PF} /usr/share/doc/${PN}${SLOT}
+	docompress -x /usr/share/doc/${PN}${SLOT}
 
 	cd openjdk.build/j2sdk-image || die
 
