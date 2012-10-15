@@ -11,7 +11,7 @@ HOMEPAGE="http://www.gentoo.org/"
 SRC_URI=""
 
 LICENSE="GPL-2"
-#KEYWORDS="~amd64 ~ia64 ~ppc ~ppc64 ~x86 ~x86-linux"
+#KEYWORDS="~amd64"
 SLOT="0"
 IUSE=""
 
@@ -47,6 +47,10 @@ src_install() {
 	local gccchost="${CHOST}"
 	local gcjlibdir=$(echo "${EPREFIX}"/usr/$(get_libdir)/gcj-${gcc_version}-*)
 	gcjlibdir=${gcjlibdir#"${EPREFIX}"}
+
+	# correctly install gcj
+	dosym ${gccbin}/gij /usr/bin/gij
+	dosym ${gccbin}/gcj-dbtool /usr/bin/gcj-dbtool
 
 	# links
 	dodir ${gcjhome}/bin
