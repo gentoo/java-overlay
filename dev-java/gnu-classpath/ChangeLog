@@ -1,6 +1,12 @@
 # ChangeLog for dev-java/gnu-classpath
-# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/gnu-classpath/ChangeLog,v 1.109 2010/04/29 19:50:01 caster Exp $
+
+*gnu-classpath-0.99 (15 Oct 2012)
+
+  15 Oct 2012; Andrew John Hughes <andrew@gentoo.org>
+  +gnu-classpath-0.99.ebuild, +files/gjdoc_support.patch:
+  Add support for GNU Classpath 0.99.
 
   18 Dec 2011; Ralph Sennhauser <sera@gentoo.org> gnu-classpath-0.98-r3.ebuild:
   Fix dependency on eclipse-ecj, eselect-ecj's PDEPEND doesn't guarantee it's
