@@ -14,15 +14,15 @@ inherit autotools java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-OPENJDK_TARBALL="0fd1b10097bd.tar.gz"
-CORBA_TARBALL="64c5506f4a4b.tar.gz"
-HOTSPOT_TARBALL="f36619598d31.tar.gz"
-JAXP_TARBALL="d7e1594436a6.tar.gz"
-JAXWS_TARBALL="e029fce63568.tar.gz"
-JDK_TARBALL="85680f91b6f9.tar.gz"
-LANGTOOLS_TARBALL="f5e3d40e7849.tar.gz"
+CORBA_TARBALL="9a95d714d136.tar.gz"
+JAXP_TARBALL="f45296ac69be.tar.gz"
+JAXWS_TARBALL="03f54ef33914.tar.gz"
+JDK_TARBALL="5ec94d162f05.tar.gz"
+LANGTOOLS_TARBALL="ec73c6927fb7.tar.gz"
+OPENJDK_TARBALL="301e79a966b4.tar.gz"
+HOTSPOT_TARBALL="d2d0a106917c.tar.gz"
 CACAO_TARBALL="a567bcb7f589.tar.gz"
-JAMVM_TARBALL="jamvm-4617da717ecb05654ea5bb9572338061106a414d.tar.gz"
+JAMVM_TARBALL="jamvm-e70f2450890b82c37422616cc85e1a23385f03cd.tar.gz"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
@@ -158,10 +158,6 @@ java_prepare() {
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
 
-	epatch "${FILESDIR}"/${PN}-${SLOT}-no_suffix.patch
-	epatch "${FILESDIR}"/${PN}-${SLOT}-compiler_detection_cleanup.patch
-	epatch "${FILESDIR}"/${P}-pr986-cacao_memory_fix_v2.patch
-	epatch "${FILESDIR}"/${PN}-${SLOT}-compile_for_7_cacao_mem.patch
 	epatch "${FILESDIR}"/${P}-pax_mark_rmic_java.patch #422525
 	eautoreconf
 }
@@ -228,7 +224,7 @@ src_configure() {
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
-		--disable-downloading \
+		--disable-downloading --disable-Werror \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nss) \
