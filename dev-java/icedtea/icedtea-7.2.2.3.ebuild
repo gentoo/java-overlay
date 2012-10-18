@@ -68,7 +68,6 @@ X_DEPEND="
 	>=x11-libs/libXau-1.0.3
 	>=x11-libs/libXdmcp-1.0.2
 	>=x11-libs/libXinerama-1.0.2
-	>=x11-libs/libXp-1.0.0
 	x11-proto/inputproto
 	>=x11-proto/xextproto-7.1.1
 	x11-proto/xineramaproto

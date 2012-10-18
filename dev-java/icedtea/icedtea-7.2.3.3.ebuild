@@ -22,7 +22,7 @@ LANGTOOLS_TARBALL="ec73c6927fb7.tar.gz"
 OPENJDK_TARBALL="301e79a966b4.tar.gz"
 HOTSPOT_TARBALL="d2d0a106917c.tar.gz"
 CACAO_TARBALL="a567bcb7f589.tar.gz"
-JAMVM_TARBALL="jamvm-e70f2450890b82c37422616cc85e1a23385f03cd.tar.gz"
+JAMVM_TARBALL="jamvm-0972452d441544f7dd29c55d64f1ce3a5db90d82.tar.gz"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
@@ -68,7 +68,6 @@ X_DEPEND="
 	>=x11-libs/libXau-1.0.3
 	>=x11-libs/libXdmcp-1.0.2
 	>=x11-libs/libXinerama-1.0.2
-	>=x11-libs/libXp-1.0.0
 	x11-proto/inputproto
 	>=x11-proto/xextproto-7.1.1
 	x11-proto/xineramaproto
