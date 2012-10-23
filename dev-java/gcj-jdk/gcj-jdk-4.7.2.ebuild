@@ -4,7 +4,7 @@
 
 EAPI="4"
 
-inherit java-vm-2 toolchain-funcs multilib versionator
+inherit java-vm-2 multilib
 
 DESCRIPTION="Java wrappers around GCJ"
 HOMEPAGE="http://www.gentoo.org/"
@@ -24,26 +24,15 @@ DEPEND="${RDEPEND}"
 
 S="${WORKDIR}"
 
-pkg_setup() {
-	if [[ $(gcc-fullversion) != ${PV} ]]; then
-		eerror "Your current GCC version is not set to ${PV} via gcc-config"
-		eerror "Please read http://www.gentoo.org/doc/en/gcc-upgrading.xml before you set it"
-		echo "$(gcc-fullversion) != ${PV}"
-		die "gcc ${PV} must be selected via gcc-config"
-	fi
-
-	java-vm-2_pkg_setup
-}
-
 src_install() {
 	# jre lib paths ...
 	local libarch="$(get_system_arch)"
-	local gccbin=$(gcc-config -B)
+	local gcc_version=${PV}
+	local gccbin=$(gcc-config -B ${gcc_version})
 	gccbin=${gccbin#"${EPREFIX}"}
-	local gcclib=$(gcc-config -L|cut -d':' -f1)
+	local gcclib=$(gcc-config -L ${gcc_version} | cut -d':' -f1)
 	gcclib=${gcclib#"${EPREFIX}"}
 	local gcjhome="/usr/$(get_libdir)/${P}"
-	local gcc_version=$(gcc-fullversion)
 	local gccchost="${CHOST}"
 	local gcjlibdir=$(echo "${EPREFIX}"/usr/$(get_libdir)/gcj-${gcc_version}-*)
 	gcjlibdir=${gcjlibdir#"${EPREFIX}"}
@@ -96,7 +85,6 @@ src_install() {
 }
 
 pkg_postinst() {
-
 	# Do not set as system VM (see below)
 	# java-vm-2_pkg_postinst
 
@@ -110,5 +98,4 @@ pkg_postinst() {
 	ewarn "IcedTea without prior binary VM installation. To do that, execute:"
 	ewarn
 	ewarn "emerge -o icedtea && emerge icedtea"
-
 }
