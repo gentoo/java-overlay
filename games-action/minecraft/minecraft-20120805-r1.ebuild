@@ -49,7 +49,9 @@ src_prepare() {
 }
 
 src_install() {
-	java-pkg_register-dependency jinput,lwjgl-2.8
+	java-pkg_register-dependency jinput
+	java-pkg_register-dependency lwjgl-2.8 lwjgl.jar
+	java-pkg_register-dependency lwjgl-2.8 lwjgl_util.jar
 	java-pkg_dojar "${PN}.jar"
 
 	local ARGS

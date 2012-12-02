@@ -2,6 +2,13 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*minecraft-20120805-r1 (2 Dec 2012)
+
+  2 Dec 2012; James Le Cuirot <chewi@aura-online.co.uk>
+  -minecraft-20120805.ebuild, +minecraft-20120805-r1.ebuild:
+  The game specifically requires the GLX version of LWJGL so ensure this
+  version is used now that LWJGL can be built for EGL too.
+
 *minecraft-20120805 (5 Aug 2012)
 
   5 Aug 2012; James Le Cuirot <chewi@aura-online.co.uk>

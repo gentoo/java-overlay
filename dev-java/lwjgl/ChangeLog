@@ -2,6 +2,15 @@
 # Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*lwjgl-2.8.5 (2 Dec 2012)
+
+  2 Dec 2012: James Le Cuirot <chewi@aura-online.co.uk>
+  -lwjgl-2.8.4.ebuild, +lwjgl-2.8.5.ebuild, -files/java7-jawt.patch:
+  Version bump. Remove old patch. Allow building for EGL as well as GLX
+  by outputting to different JAR and shared library names. We could make
+  GLX optional but most people will want it and all the dependencies are
+  currently still required regardless.
+
 *lwjgl-2.8.4 (29 Aug 2012)
 
   29 Aug 2012: James Le Cuirot <chewi@aura-online.co.uk>
