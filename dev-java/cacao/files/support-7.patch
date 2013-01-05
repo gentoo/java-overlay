@@ -1,0 +1,20 @@
+--- src/vm/global.h~	2012-09-03 17:10:00.000000000 +0100
++++ src/vm/global.h	2013-01-04 19:20:08.749292760 +0000
+@@ -143,14 +143,14 @@
+ 
+ /* some Java related defines **************************************************/
+ 
+-#define JAVA_VERSION    "1.5.0"         /* this version is supported by CACAO */
+-#define CLASS_VERSION   "50.0"
++#define JAVA_VERSION    "1.6.0"         /* this version is supported by CACAO */
++#define CLASS_VERSION   "51.0"
+ 
+ 
+ /* Java class file constants **************************************************/
+ 
+ #define MAGIC             0xCAFEBABE
+-#define MAJOR_VERSION     50
++#define MAJOR_VERSION     51
+ #define MINOR_VERSION     0
+ 
+ 
