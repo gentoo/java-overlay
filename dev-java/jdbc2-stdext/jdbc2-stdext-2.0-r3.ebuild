@@ -1,6 +1,8 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/jdbc2-stdext/jdbc2-stdext-2.0-r2.ebuild,v 1.5 2007/07/11 19:58:38 mr_bones_ Exp $
+
+EAPI=5
 
 JAVA_PKG_IUSE="doc source"
 
@@ -10,26 +12,33 @@ stdext_src="jdbc2_0-stdext-src.zip"
 stdext_jar="jdbc2-stdext.jar"
 
 DESCRIPTION="A standard set of libs for Server-Side JDBC support"
-HOMEPAGE="http://java.sun.com/products/jdbc"
+HOMEPAGE="http://www.oracle.com/technetwork/java/index.html"
 SRC_URI="${stdext_src}"
-LICENSE="sun-bcla-jdbc2"
+
+LICENSE="Oracle-BCLA-JavaSE"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 IUSE=""
+
 RESTRICT="fetch"
-DEPEND="app-arch/unzip
-		>=virtual/jdk-1.3"
-RDEPEND=">=virtual/jre-1.3"
+
+RDEPEND="
+	>=virtual/jre-1.3"
+DEPEND="
+	>=virtual/jdk-1.3
+	app-arch/unzip"
 
 S="${WORKDIR}"
 
 pkg_nofetch() {
+	local download_url="http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-database-419422.html#7099-jdbc-2.0-src-oth-JPR"
+
 	einfo
 	einfo " Due to license restrictions, we cannot fetch the"
 	einfo " distributables automagically."
 	einfo
-	einfo " 1. Visit http://java.sun.com/products/jdbc/download.html#spec'"
-	einfo " 2. Select 'JDBC 2.0 Optional Package Source'"
+	einfo " 1. Visit ${download_url}"
+	einfo " 2. Select 'JDBC Standard Extension Source 2.0'"
 	einfo " 3. Download ${stdext_src}"
 	einfo " 4. Move to ${DISTDIR}"
 	einfo
@@ -38,13 +47,13 @@ pkg_nofetch() {
 }
 
 src_unpack() {
-	mkdir src
-	cd src
+	mkdir src || die
+	cd src || die
 	unpack ${A}
 }
 
 src_compile() {
-	mkdir classes
+	mkdir classes || die
 	ejavac -d classes src/javax/sql/*.java
 	jar cf "${stdext_jar}" -C classes/ . || die "jar failed"
 
