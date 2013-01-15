@@ -1,4 +1,4 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.0-r3.ebuild,v 1.1 2011/12/02 12:27:17 sera Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
@@ -14,15 +14,15 @@ inherit autotools java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-CORBA_TARBALL="12fee4f9ac22.tar.gz"
-HOTSPOT_TARBALL="1a3dc05d59c2.tar.gz"
-JAXP_TARBALL="dc64245ac19d.tar.gz"
-JAXWS_TARBALL="b41293d57940.tar.gz"
-JDK_TARBALL="4cf358fd012a.tar.gz"
-LANGTOOLS_TARBALL="e96efe42e3d5.tar.gz"
-OPENJDK_TARBALL="32574ae3c2be.tar.gz"
+CORBA_TARBALL="dc9234e25ab0.tar.gz"
+JAXP_TARBALL="aa3654afea12.tar.gz"
+JAXWS_TARBALL="7182233cc27e.tar.gz"
+JDK_TARBALL="96d4f04f2b7c.tar.gz"
+LANGTOOLS_TARBALL="946195011b30.tar.gz"
+OPENJDK_TARBALL="8bd8e70d4a03.tar.gz"
+HOTSPOT_TARBALL="beecf0b9e760.tar.gz"
 CACAO_TARBALL="a567bcb7f589.tar.gz"
-JAMVM_TARBALL="jamvm-4617da717ecb05654ea5bb9572338061106a414d.tar.gz"
+JAMVM_TARBALL="jamvm-0972452d441544f7dd29c55d64f1ce3a5db90d82.tar.gz"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
@@ -156,13 +156,6 @@ java_prepare() {
 
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
-
-	epatch "${FILESDIR}"/${PN}-${SLOT}-no_suffix.patch
-	epatch "${FILESDIR}"/${PN}-${SLOT}-compiler_detection_cleanup.patch
-	epatch "${FILESDIR}"/${P}-pr986-cacao_memory_fix_v2.patch
-	epatch "${FILESDIR}"/${PN}-${SLOT}-compile_for_7_cacao_mem.patch
-	epatch "${FILESDIR}"/${P}-pax_mark_rmic_java.patch #422525
-	eautoreconf
 }
 
 bootstrap_impossible() {
@@ -227,7 +220,7 @@ src_configure() {
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
-		--disable-downloading \
+		--disable-downloading --disable-Werror \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nss) \

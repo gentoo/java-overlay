@@ -1,4 +1,4 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.0-r3.ebuild,v 1.1 2011/12/02 12:27:17 sera Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
@@ -14,13 +14,13 @@ inherit autotools java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-CORBA_TARBALL="79ee8535bc51.tar.gz"
-HOTSPOT_TARBALL="a456d0771ba0.tar.gz"
-JAXP_TARBALL="77e7219c7424.tar.gz"
-JAXWS_TARBALL="d92eda447bca.tar.gz"
-JDK_TARBALL="d7ecb57d3c61.tar.gz"
-LANGTOOLS_TARBALL="fd2fdb20d858.tar.gz"
-OPENJDK_TARBALL="f89009ada191.tar.gz"
+CORBA_TARBALL="fccd14ecf86c.tar.gz"
+HOTSPOT_TARBALL="3f345e5f65eb.tar.gz"
+JAXP_TARBALL="fb08c190f504.tar.gz"
+JAXWS_TARBALL="77e7849c5e50.tar.gz"
+JDK_TARBALL="e7d1cb36e005.tar.gz"
+LANGTOOLS_TARBALL="de674a569978.tar.gz"
+OPENJDK_TARBALL="bc612c7c99ec.tar.gz"
 CACAO_TARBALL="a567bcb7f589.tar.gz"
 JAMVM_TARBALL="jamvm-4617da717ecb05654ea5bb9572338061106a414d.tar.gz"
 
@@ -136,7 +136,6 @@ S="${WORKDIR}"/${ICEDTEA_PKG}
 
 pkg_setup() {
 	JAVA_PKG_WANT_BUILD_VM="
-		icedtea-7 icedtea-bin-7 icedtea7
 		icedtea-6 icedtea-bin-6 icedtea6 icedtea6-bin
 		gcj-jdk"
 	JAVA_PKG_WANT_SOURCE="1.5"
@@ -157,11 +156,11 @@ java_prepare() {
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
 
-	epatch "${FILESDIR}"/${PN}-7.2.0_pax_kernel_support.patch #389751
+	epatch "${FILESDIR}"/${PN}-${SLOT}.${ICEDTEA_BRANCH}-pax_kernel_support.patch #389751
 	epatch "${FILESDIR}"/${PN}-${SLOT}-compiler_detection_cleanup.patch
-	epatch "${FILESDIR}"/${P}-pr986-cacao_memory_fix.patch
+	epatch "${FILESDIR}"/${PN}-${SLOT}.${ICEDTEA_BRANCH}-pr986-cacao_memory_fix.patch
 	epatch "${FILESDIR}"/${PN}-${SLOT}-compile_for_7_cacao_mem.patch
-	epatch "${FILESDIR}"/${P}-pax_mark_rmic_java.patch #422525
+	epatch "${FILESDIR}"/${PN}-${SLOT}.${ICEDTEA_BRANCH}-pax_mark_rmic_java.patch #422525
 	eautoreconf
 }
 
