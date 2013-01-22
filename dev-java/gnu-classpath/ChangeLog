@@ -2,6 +2,12 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/gnu-classpath/ChangeLog,v 1.109 2010/04/29 19:50:01 caster Exp $
 
+*gnu-classpath-9999 (22 Jan 2013)
+
+  22 Jan 2013; Andrew John Hughes <andrew@gentoo.org>
+  gnu-classpath-0.99.ebuild, +gnu-classpath-9999.ebuild:
+  Add live ebuild to pick up latest GNU Classpath fixes. Fix path to glibj.zip.
+
   22 Jan 2013; Andrew John Hughes <andrew@gentoo.org>
   -gnu-classpath-0.98-r3.ebuild, gnu-classpath-0.99.ebuild:
   Sync 0.99 ebuild with changes to 0.98 ebuild in main tree. Remove outdated

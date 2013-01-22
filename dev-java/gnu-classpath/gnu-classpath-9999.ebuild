@@ -4,16 +4,16 @@
 
 EAPI=5
 
-inherit eutils java-pkg-2 base multilib
+inherit eutils git-2 java-pkg-2 base multilib
 
 MY_P=${P/gnu-/}
 DESCRIPTION="Free core class libraries for use with virtual machines and compilers for the Java language"
-SRC_URI="mirror://gnu/classpath/${MY_P}.tar.gz"
+EGIT_REPO_URI="git://git.savannah.gnu.org/classpath.git"
 HOMEPAGE="http://www.gnu.org/software/classpath"
 
 LICENSE="GPL-2-with-linking-exception"
 SLOT="0.99"
-KEYWORDS="~amd64"
+KEYWORDS=""
 
 IUSE="alsa debug doc dssi examples gconf gjdoc gmp gtk gstreamer qt4 xml"
 
@@ -63,9 +63,13 @@ RDEPEND=">=virtual/jre-1.5
 
 S=${WORKDIR}/${MY_P}
 
+src_unpack() {
+	git-2_src_unpack
+}
+
 src_prepare() {
-	epatch "${FILESDIR}/gjdoc_support.patch"
-	autoreconf
+	cd ${S}
+	./autogen.sh
 }
 
 src_configure() {
