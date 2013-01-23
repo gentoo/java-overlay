@@ -2,6 +2,9 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  23 Jan 2013; Andrew John Hughes <andrew@gentoo.org> icedtea-7.2.3.4.ebuild:
+  Remove autotools inheritance from 2.3.4, as reommended by repoman.
+
   23 Jan 2013; Andrew John Hughes <andrew@gentoo.org> icedtea-6.1.10.10.ebuild,
   icedtea-6.1.11.5.ebuild:
   Remove unused JAMVM references in IcedTea6 ebuilds.
