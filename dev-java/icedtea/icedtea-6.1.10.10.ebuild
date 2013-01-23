@@ -1,4 +1,4 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-6.1.10.4-r3.ebuild,v 1.1 2011/12/02 12:27:17 sera Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
@@ -20,7 +20,6 @@ JAXWS_TARBALL="jdk6-jaxws-b20.zip"
 JAF_TARBALL="jdk6-jaf-b20.zip"
 HOTSPOT_TARBALL="f0f676c5a2c6.tar.gz"
 CACAO_TARBALL="c7bf150bfa46.tar.gz" # 17 Mar 2011
-JAMVM_TARBALL="jamvm-a95ca049d3bb257d730535a5d5ec3f73a943d0aa.tar.gz"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
@@ -31,7 +30,6 @@ SRC_URI="
 	http://icedtea.classpath.org/download/drops/${JAF_TARBALL}
 	http://icedtea.classpath.org/download/drops/${JAXP_TARBALL}
 	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL}
-	http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL}
 	hs20? ( http://hg.openjdk.java.net/hsx/hsx20/master/archive/${HOTSPOT_TARBALL} )"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
@@ -233,7 +231,6 @@ src_configure() {
 		--with-jaxws-drop-zip="${DISTDIR}/${JAXWS_TARBALL}" \
 		--with-jaf-drop-zip="${DISTDIR}/${JAF_TARBALL}" \
 		--with-cacao-src-zip="${DISTDIR}/${CACAO_TARBALL}" \
-		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
 		$(use_enable !debug optimizations) \
