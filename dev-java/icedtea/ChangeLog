@@ -2,6 +2,10 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  24 Jan 2013; Ralph Sennhauser <sera@gentoo.org> icedtea-6.9999.ebuild:
+  icedtea no longer uses eclipse-ecj on Gentoo, so drop workarounds for #392337
+  and #392587
+
 *icedtea-6.9999 (23 Jan 2013)
 
   23 Jan 2013; Andrew John Hughes <andrew@gentoo.org> +icedtea-6.9999.ebuild:
