@@ -1,4 +1,4 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/java-config/java-config-2.1.12-r1.ebuild,v 1.1 2012/12/05 19:05:48 sera Exp $
 
@@ -17,7 +17,7 @@ HOMEPAGE="http://www.gentoo.org/proj/en/java/"
 
 LICENSE="GPL-2"
 SLOT="2"
-KEYWORDS="~amd64 ~arm ~ia64 ~ppc ~ppc64 ~x86 ~amd64-fbsd ~x86-fbsd"
+KEYWORDS=""
 IUSE=""
 
 RDEPEND=">=dev-java/java-config-wrapper-0.15"
