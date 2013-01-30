@@ -111,9 +111,6 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	virtual/pkgconfig
 	sys-apps/lsb-release
 	${X_DEPEND}
-	jbootstrap? (
-		|| ( <dev-java/eclipse-ecj-3.7 dev-java/ecj-gcj )
-	)
 	pax_kernel? ( sys-apps/paxctl )"
 
 PDEPEND="webstart? ( dev-java/icedtea-web:6 )
@@ -168,22 +165,6 @@ src_configure() {
 	fi
 
 	config="${config} --${bootstrap}-bootstrap"
-
-	if [[ ${bootstrap} == enable ]]; then
-		# icedtea-6 javac wrapper requires to always have ecj if bootstrapping #392337
-		local ecj_jar="$(readlink "${EPREFIX}"/usr/share/eclipse-ecj/ecj.jar)"
-		# Don't use eclipse-ecj-3.7 #392587
-		local ecj_all=( "${EPREFIX}"/usr/share/{eclipse-ecj,ecj-gcj}-* )
-		ecj_all=( "${ecj_all[@]/*eclipse-ecj-3.7*/}" )
-		if ! has "${ecj_jar%/lib/ecj.jar}" "${ecj_all[@]}"; then
-			ecj_jar="${ecj_jar%/lib/ecj.jar}"
-			ewarn "${ecj_jar##*/} set as system ecj, can't use for bootstrap"
-			ewarn "Found usable: ${ecj_all[@]##*/}"
-			ewarn "using ${ecj_all##*/} instead"
-			ecj_jar="${ecj_all}"/lib/ecj.jar
-		fi
-		config="${config} --with-ecj-jar=${ecj_jar}"
-	fi
 
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
 	# Otherwise use CACAO
