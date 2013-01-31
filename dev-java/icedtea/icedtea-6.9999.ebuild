@@ -9,7 +9,7 @@
 
 EAPI="4"
 
-inherit java-pkg-2 java-vm-2 mercurial pax-utils prefix versionator virtualx
+inherit autotools java-pkg-2 java-vm-2 mercurial pax-utils prefix versionator virtualx
 
 ICEDTEA_PKG=${PN}$(replace_version_separator 1 -)
 OPENJDK_BUILD="27"
@@ -136,6 +136,8 @@ src_unpack() {
 java_prepare() {
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
+
+	eautoreconf
 }
 
 bootstrap_impossible() {

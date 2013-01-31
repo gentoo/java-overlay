@@ -2,6 +2,9 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  31 Jan 2013; Ralph Sennhauser <sera@gentoo.org> icedtea-6.9999.ebuild:
+  Need to generate build files for live ebuild.
+
   30 Jan 2013; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.12.0.ebuild:
   icedtea no longer uses eclipse-ecj on Gentoo, so drop workarounds for #392337
   and #392587
