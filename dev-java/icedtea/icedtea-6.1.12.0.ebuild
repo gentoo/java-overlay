@@ -18,7 +18,9 @@ OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.gz"
 JAXP_TARBALL="jaxp144_04.zip"
 JAXWS_TARBALL="jdk6-jaxws2_1_6-2011_06_13.zip"
 JAF_TARBALL="jdk6-jaf-b20.zip"
+# Download cacao and jamvm regardless for use with EXTRA_ECONF
 CACAO_TARBALL="68fe50ac34ec.tar.gz"
+JAMVM_TARBALL="jamvm-0972452d441544f7dd29c55d64f1ce3a5db90d82.tar.gz"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
@@ -28,7 +30,8 @@ SRC_URI="
 	http://icedtea.classpath.org/download/drops/${JAXWS_TARBALL}
 	http://icedtea.classpath.org/download/drops/${JAF_TARBALL}
 	http://icedtea.classpath.org/download/drops/${JAXP_TARBALL}
-	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL}"
+	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL}
+	http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL}"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="6"
@@ -201,6 +204,7 @@ src_configure() {
 		--with-jaxws-drop-zip="${DISTDIR}/${JAXWS_TARBALL}" \
 		--with-jaf-drop-zip="${DISTDIR}/${JAF_TARBALL}" \
 		--with-cacao-src-zip="${DISTDIR}/${CACAO_TARBALL}" \
+		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
 		--disable-downloading \
