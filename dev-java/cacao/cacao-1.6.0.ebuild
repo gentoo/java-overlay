@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/cacao/cacao-0.99.4.ebuild,v 1.7 2012/06/14 21:25:44 radhermit Exp $
 
-EAPI=2
+EAPI=5
 AUTOTOOLS_AUTO_DEPEND="no"
 
 inherit autotools eutils flag-o-matic java-pkg-2 java-vm-2
@@ -76,7 +76,13 @@ src_install() {
 	dodir /usr/${PN}/lib
 	dosym ${CLASSPATH_DIR}/share/classpath/tools.zip /usr/${PN}/lib/tools.jar
 
-	dosym /usr/bin/ecj /usr/${PN}/bin/javac || die
+	local ecj_jar="$(readlink "${EPREFIX}"/usr/share/eclipse-ecj/ecj.jar)"
+	exeinto /usr/${PN}/bin
+	cat "${FILESDIR}"/javac.in | sed -e "s#@JAVA@#/usr/${PN}/bin/cacao#" \
+		-e "s#@ECJ_JAR@#${ecj_jar}#" \
+		-e "s#@RT_JAR@#${CLASSPATH_DIR}/share/classpath/glibj.zip#" \
+		-e "s#@TOOLS_JAR@#${CLASSPATH_DIR}/share/classpath/tools.zip#" \
+	| newexe - javac
 
 	local libarch="${ARCH}"
 	[ ${ARCH} == x86 ] && libarch="i386"
