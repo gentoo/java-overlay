@@ -1,6 +1,12 @@
 # ChangeLog for games-server/craftbukkit
-# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+*craftbukkit-2624 (03 Feb 2013)
+
+  03 Feb 2013; James Le Cuirot <chewi@aura-online.co.uk>
+  -craftbukkit-2377.ebuild, +craftbukkit-2624.ebuild:
+  Version bump. Thanks to Robert Förster.
 
 *craftbukkit-2377 (29 Sep 2012)
 

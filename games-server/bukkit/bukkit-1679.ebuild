@@ -1,9 +1,9 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI=4
-MY_PV="1.3.2-R1.0"
+MY_PV="1.4.7-R1.0"
 JAVA_PKG_IUSE="doc source"
 
 inherit games vcs-snapshot java-pkg-2 java-pkg-simple

@@ -1,16 +1,16 @@
-# Copyright 1999-2011 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
-inherit games
+EAPI="5"
+inherit systemd games
 
 DESCRIPTION="Common scripts for Minecraft servers"
 HOMEPAGE="http://www.minecraft.net"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="systemd"
 
 DEPEND=""
 RDEPEND="app-misc/tmux
@@ -30,11 +30,12 @@ src_prepare() {
 
 src_install() {
 	diropts -o "${GAMES_USER_DED}" -g "${GAMES_GROUP}"
-	keepdir "${DIR}" "${PID}" || die
-	gamesperms "${D}${DIR}" "${D}${PID}" || die
+	keepdir "${DIR}" "${PID}"
+	gamesperms "${D}${DIR}" "${D}${PID}"
 
-	newinitd init.sh minecraft-server || die
-	newgamesbin console.sh minecraft-server-console || die
+	newinitd init.sh minecraft-server
+	newgamesbin console.sh minecraft-server-console
+	use systemd && systemd_dotmpfilesd "${FILESDIR}/systemd/minecraft.conf"
 
 	prepgamesdirs
 }

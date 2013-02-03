@@ -1,9 +1,9 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 EAPI=4
-MY_PV="1.3.2-R1.0"
+MY_PV="1.4.7-R1.0"
 MC_PV="${MY_PV%-*}"
 MC_PN="minecraft-server-unobfuscated"
 MC_JAR="${MC_PN}-${MC_PV}.jar"
@@ -28,7 +28,7 @@ CDEPEND="dev-java/commons-lang:2.1
 	dev-java/jline:2
 	dev-java/jopt-simple:0
 	>=dev-java/snakeyaml-1.9:0
-	~games-server/bukkit-1546:0"
+	~games-server/bukkit-1679:0"
 
 DEPEND="${CDEPEND}
 	>=virtual/jdk-1.6"
