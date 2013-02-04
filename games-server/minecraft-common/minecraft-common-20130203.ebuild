@@ -10,7 +10,7 @@ HOMEPAGE="http://www.minecraft.net"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="systemd"
+IUSE=""
 
 DEPEND=""
 RDEPEND="app-misc/tmux
@@ -35,7 +35,7 @@ src_install() {
 
 	newinitd init.sh minecraft-server
 	newgamesbin console.sh minecraft-server-console
-	use systemd && systemd_dotmpfilesd "${FILESDIR}/systemd/minecraft.conf"
+	systemd_dotmpfilesd "${FILESDIR}/systemd/minecraft.conf"
 
 	prepgamesdirs
 }
