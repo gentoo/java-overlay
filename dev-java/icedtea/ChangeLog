@@ -2,6 +2,15 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.12.1 (05 Feb 2013)
+*icedtea-6.1.11.6 (05 Feb 2013)
+
+  05 Feb 2013; Andrew John Hughes <andrew@gentoo.org> -icedtea-6.1.11.5.ebuild,
+  +icedtea-6.1.11.6.ebuild, -icedtea-6.1.12.0.ebuild, +icedtea-6.1.12.1.ebuild,
+  icedtea-6.9999.ebuild:
+  Latest security fixes for 6: http://bit.ly/TvxpkZ (1.11.6) &
+  http://bit.ly/YyDX1e (1.12.1)
+
   31 Jan 2013; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.12.0.ebuild,
   icedtea-6.9999.ebuild:
   Add JamVM for use with EXTRA_ECONF
