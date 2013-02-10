@@ -1,6 +1,9 @@
 # ChangeLog for sys-apps/baselayout-java
-# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  10 Feb 2013; Ralph Sennhauser <sera@gentoo.org> baselayout-java-9999.ebuild:
+  Update mime desktop database and gnome icon cache
 
 *baselayout-java-9999 (30 Dec 2012)
 
