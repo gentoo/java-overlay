@@ -1,4 +1,4 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -21,8 +21,9 @@ RDEPEND="
 	!!app-admin/eselect-ecj
 	!!app-admin/eselect-maven
 	!!<dev-java/java-config-2.2
-	app-admin/eselect
-	sys-apps/baselayout-java"
+	app-admin/eselect"
+# https://bugs.gentoo.org/show_bug.cgi?id=315229
+PDEPEND=">=virtual/jre-1.5"
 
 src_prepare() {
 	eautoreconf
