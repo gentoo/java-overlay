@@ -4,10 +4,10 @@
 
 EAPI="5"
 
-# jython depends on java-config, so don't add it or things will breake.
+# jython depends on java-config, so don't add it or things will break
 PYTHON_COMPAT=( python{2_6,2_7,3_1,3_2,3_3} pypy{1_8,1_9} )
 
-inherit distutils-r1 eutils fdo-mime gnome2-utils subversion
+inherit subversion distutils-r1 eutils
 
 ESVN_REPO_URI="http://overlays.gentoo.org/svn/proj/java/projects/java-config-2/trunk/"
 
@@ -20,15 +20,12 @@ SLOT="2"
 KEYWORDS=""
 IUSE=""
 
-RDEPEND=">=dev-java/java-config-wrapper-0.15"
-# https://bugs.gentoo.org/show_bug.cgi?id=315229
-PDEPEND=">=virtual/jre-1.5"
-# Tests fail when java-config isn't already installed.
-RESTRICT="test"
+RDEPEND="
+	>=dev-java/java-config-wrapper-0.15
+	sys-apps/portage"
 
 python_test() {
 	"${PYTHON}" tests/run-test-suite.py || die
-	"${PYTHON}" tests/run-test-suite2.py || die
 }
 
 python_install_all() {
@@ -36,14 +33,4 @@ python_install_all() {
 
 	insinto /usr/share/java-config-2/config/
 	newins config/jdk-defaults-${ARCH}.conf jdk-defaults.conf
-}
-
-pkg_postrm() {
-	fdo-mime_desktop_database_update
-	gnome2_icon_cache_update
-}
-
-pkg_postinst() {
-	fdo-mime_desktop_database_update
-	gnome2_icon_cache_update
 }
