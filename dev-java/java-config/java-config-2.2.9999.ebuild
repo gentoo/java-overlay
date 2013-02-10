@@ -32,6 +32,7 @@ python_test() {
 python_install_all() {
 	distutils-r1_python_install_all
 
+	doman man/*
 	insinto /usr/share/java-config-2/config/
 	newins config/jdk-defaults-${ARCH}.conf jdk-defaults.conf
 }
