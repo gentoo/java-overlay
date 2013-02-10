@@ -22,6 +22,7 @@ IUSE=""
 
 RDEPEND="
 	>=dev-java/java-config-wrapper-0.15
+	sys-apps/baselayout-java
 	sys-apps/portage"
 
 python_test() {

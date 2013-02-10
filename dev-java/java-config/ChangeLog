@@ -2,6 +2,9 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  10 Feb 2013; Ralph Sennhauser <sera@gentoo.org> java-config-2.2.9999.ebuild:
+  Add baselayout-java to the dependiencies until it's moved to the eclass
+
   10 Feb 2013; Ralph Sennhauser <sera@gentoo.org> -java-config-2.1.9999.ebuild,
   java-config-2.2.9999.ebuild:
   Drop RESTRICT=test, add missing portage dependency and cleanup.
