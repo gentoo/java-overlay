@@ -3,6 +3,9 @@
 # $Header: $
 
   12 Feb 2013; Ralph Sennhauser <sera@gentoo.org> java-config-2.2.9999.ebuild:
+  setup.py now has a test command
+
+  12 Feb 2013; Ralph Sennhauser <sera@gentoo.org> java-config-2.2.9999.ebuild:
   No longer needs custom src_install
 
   10 Feb 2013; Ralph Sennhauser <sera@gentoo.org> java-config-2.2.9999.ebuild:

@@ -26,5 +26,5 @@ RDEPEND="
 	sys-apps/portage"
 
 python_test() {
-	"${PYTHON}" tests/run-test-suite.py || die
+	esetup.py test || die
 }
