@@ -28,11 +28,3 @@ RDEPEND="
 python_test() {
 	"${PYTHON}" tests/run-test-suite.py || die
 }
-
-python_install_all() {
-	distutils-r1_python_install_all
-
-	doman man/*
-	insinto /usr/share/java-config-2/config/
-	newins config/jdk-defaults-${ARCH}.conf jdk-defaults.conf
-}
