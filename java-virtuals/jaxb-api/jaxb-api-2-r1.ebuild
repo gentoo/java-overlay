@@ -1,4 +1,4 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/java-virtuals/stax-api/stax-api-1-r1.ebuild,v 1.1 2009/05/23 11:52:55 ali_bush Exp $
 
@@ -17,7 +17,7 @@ IUSE=""
 
 DEPEND=""
 RDEPEND="|| (
-			virtual/jre:1.6
+			>=virtual/jre-1.6
 			dev-java/jaxme
 			dev-java/jaxb
 		)
@@ -25,4 +25,4 @@ RDEPEND="|| (
 		"
 
 JAVA_VIRTUAL_PROVIDES="jaxb-2"
-JAVA_VIRTUAL_VM="virtual/jre:1.6"
+JAVA_VIRTUAL_VM=">=virtual/jre-1.6"
