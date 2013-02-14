@@ -14,13 +14,13 @@ inherit autotools java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-CORBA_TARBALL="fccd14ecf86c.tar.gz"
-HOTSPOT_TARBALL="3f345e5f65eb.tar.gz"
-JAXP_TARBALL="fb08c190f504.tar.gz"
-JAXWS_TARBALL="77e7849c5e50.tar.gz"
-JDK_TARBALL="e7d1cb36e005.tar.gz"
-LANGTOOLS_TARBALL="de674a569978.tar.gz"
-OPENJDK_TARBALL="bc612c7c99ec.tar.gz"
+HOTSPOT_TARBALL="d2e4bf94d38d.tar.gz"
+CORBA_TARBALL="5a9a1b4aecd3.tar.gz"
+JAXP_TARBALL="7d285e628870.tar.gz"
+JAXWS_TARBALL="acf0bd2643a5.tar.gz"
+JDK_TARBALL="59849a48553a.tar.gz"
+LANGTOOLS_TARBALL="de74a816c73a.tar.gz"
+OPENJDK_TARBALL="ac5792f240c0.tar.gz"
 CACAO_TARBALL="a567bcb7f589.tar.gz"
 JAMVM_TARBALL="jamvm-4617da717ecb05654ea5bb9572338061106a414d.tar.gz"
 
@@ -136,6 +136,7 @@ S="${WORKDIR}"/${ICEDTEA_PKG}
 
 pkg_setup() {
 	JAVA_PKG_WANT_BUILD_VM="
+		icedtea-7 icedtea-bin-7 icedtea7
 		icedtea-6 icedtea-bin-6 icedtea6 icedtea6-bin
 		gcj-jdk"
 	JAVA_PKG_WANT_SOURCE="1.5"
@@ -156,17 +157,16 @@ java_prepare() {
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
 
-	epatch "${FILESDIR}"/${PN}-${SLOT}.${ICEDTEA_BRANCH}-pax_kernel_support.patch #389751
+	epatch "${FILESDIR}"/${PN}-${SLOT}-no_suffix.patch
 	epatch "${FILESDIR}"/${PN}-${SLOT}-compiler_detection_cleanup.patch
-	epatch "${FILESDIR}"/${PN}-${SLOT}.${ICEDTEA_BRANCH}-pr986-cacao_memory_fix.patch
+	epatch "${FILESDIR}"/${PN}-${SLOT}.${ICEDTEA_BRANCH}-pr986-cacao_memory_fix_v2.patch
 	epatch "${FILESDIR}"/${PN}-${SLOT}-compile_for_7_cacao_mem.patch
-	epatch "${FILESDIR}"/${PN}-${SLOT}.${ICEDTEA_BRANCH}-pax_mark_rmic_java.patch #422525
 	eautoreconf
 }
 
 bootstrap_impossible() {
 	# Fill this according to testing what works and what not
-	has "${1}" icedtea7 icedtea-7 icedtea-bin-7 icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6
+	has "${1}" icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6
 }
 
 src_configure() {
@@ -207,7 +207,7 @@ src_configure() {
 	einfo "Configuring using --with-parallel-jobs=${procs}"
 
 	if use javascript ; then
-		config="${config} --with-rhino=$(java-pkg_getjar rhino:1.6 js.jar)"
+		config="${config} --with-rhino=$(java-pkg_getjar rhino-1.6 js.jar)"
 	else
 		config="${config} --without-rhino"
 	fi
@@ -226,6 +226,7 @@ src_configure() {
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
+		--disable-downloading \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nss) \
@@ -241,14 +242,14 @@ src_compile() {
 	# Load the least that's needed to avoid possible classpath collisions.
 	export ANT_TASKS="ant-nodeps"
 
-	emake -j 1
+	emake
 }
 
 src_test() {
 	# Use Xvfb for tests
 	unset DISPLAY
 
-	Xemake -j1 check
+	Xemake check
 }
 
 src_install() {
@@ -258,7 +259,6 @@ src_install() {
 
 	dodoc README NEWS AUTHORS
 	dosym /usr/share/doc/${PF} /usr/share/doc/${PN}${SLOT}
-	docompress -x /usr/share/doc/${PN}${SLOT}
 
 	cd openjdk.build/j2sdk-image || die
 
