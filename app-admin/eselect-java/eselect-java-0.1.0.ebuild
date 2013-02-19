@@ -6,7 +6,7 @@ EAPI=5
 
 DESCRIPTION="A set of eselect modules for Java"
 HOMEPAGE="http://www.gentoo.org/proj/en/java/"
-SRC_URI="https://dev.gentoo.org/~sera/distfiles/${P}.tar.gz"
+SRC_URI="http://dev.gentoo.org/~sera/distfiles/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
