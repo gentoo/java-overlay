@@ -2,6 +2,16 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.12.3 (20 Feb 2013)
+*icedtea-6.1.11.8 (20 Feb 2013)
+
+  20 Feb 2013; Andrew John Hughes <andrew@gentoo.org>
+  -icedtea-6.1.10.10.ebuild, -icedtea-6.1.11.7.ebuild,
+  +icedtea-6.1.11.8.ebuild, -icedtea-6.1.12.2.ebuild, +icedtea-6.1.12.3.ebuild,
+  icedtea-6.9999.ebuild, metadata.xml:
+  Add latest 6 security releases (http://bitly.com/VH5Pn7) and fix live 6 build
+  to support hs23. Remove unsupported 1.10 release.
+
 *icedtea-7.2.2.5 (14 Feb 2013)
 *icedtea-7.2.1.5 (14 Feb 2013)
 

@@ -15,7 +15,7 @@
 <longdescription>The IcedTea project provides a harness to build the source code from OpenJDK (http://openjdk.java.net) using Free Software build tools along with additional tools such as a browser plugin and Web Start support via NetX. </longdescription>
 <use>
   <flag name="cacao">Build additionally the CACAO virtual machine.</flag>
-  <flag name="hs20">Use the new version of HotSpot (20).</flag>
+  <flag name="hs23">Use the new version of HotSpot (23).</flag>
   <flag name="jbootstrap">If possible, recompile the final IcedTea executables with itself.</flag>
   <flag name="nss">Enable NSS security provider support.</flag>
   <flag name="nsplugin">Enable browser plugin (NPPlugin), requires also the webstart flag to be enabled.</flag>

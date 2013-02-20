@@ -21,6 +21,7 @@ JAF_TARBALL="jdk6-jaf-b20.zip"
 # Download cacao and jamvm regardless for use with EXTRA_ECONF
 CACAO_TARBALL="68fe50ac34ec.tar.gz"
 JAMVM_TARBALL="jamvm-0972452d441544f7dd29c55d64f1ce3a5db90d82.tar.gz"
+HOTSPOT_TARBALL="bc0de5a0ece2.tar.gz"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
@@ -30,14 +31,15 @@ SRC_URI="
 	http://icedtea.classpath.org/download/drops/${JAF_TARBALL}
 	http://icedtea.classpath.org/download/drops/${JAXP_TARBALL}
 	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL}
-	http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL}"
+	http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL}
+	hs23? ( http://icedtea.classpath.org/hg/release/icedtea7-forest-2.3/hotspot/archive/${HOTSPOT_TARBALL} ) "
 EHG_REPO_URI="http://icedtea.classpath.org/hg/icedtea6"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="6"
 #KEYWORDS="~amd64 ~ia64 ~ppc ~ppc64 ~x86"
 
-IUSE="+X +alsa cacao cjk +cups debug doc examples javascript +jbootstrap +nsplugin
+IUSE="+X +alsa cacao cjk +cups debug doc examples +hs23 javascript +jbootstrap +nsplugin
 	+nss pax_kernel pulseaudio +source systemtap test +webstart"
 
 # Ideally the following were optional at build time.
@@ -196,6 +198,13 @@ src_configure() {
 		config="${config} --with-rhino=$(java-pkg_getjar rhino-1.6 js.jar)"
 	else
 		config="${config} --without-rhino"
+	fi
+
+	if use hs23 ; then
+		config="${config} --with-hotspot-build=hs23
+						  --with-hotspot-src-zip=${DISTDIR}/${HOTSPOT_TARBALL}"
+	else
+		config="${config} --with-hotspot-build=original"
 	fi
 
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
