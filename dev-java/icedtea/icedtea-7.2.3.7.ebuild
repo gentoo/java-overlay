@@ -9,20 +9,20 @@
 
 EAPI="4"
 
-inherit autotools java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
+inherit java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-HOTSPOT_TARBALL="d2e4bf94d38d.tar.gz"
-CORBA_TARBALL="5a9a1b4aecd3.tar.gz"
-JAXP_TARBALL="7d285e628870.tar.gz"
-JAXWS_TARBALL="acf0bd2643a5.tar.gz"
-JDK_TARBALL="59849a48553a.tar.gz"
-LANGTOOLS_TARBALL="de74a816c73a.tar.gz"
-OPENJDK_TARBALL="ac5792f240c0.tar.gz"
+CORBA_TARBALL="82e58144c3fb.tar.gz"
+JAXP_TARBALL="1d46a56eb51c.tar.gz"
+JAXWS_TARBALL="b9590aa972b9.tar.gz"
+JDK_TARBALL="6a3417030605.tar.gz"
+LANGTOOLS_TARBALL="b5006c3285c6.tar.gz"
+OPENJDK_TARBALL="506161df1c48.tar.gz"
+HOTSPOT_TARBALL="104e2c65892d.tar.gz"
 CACAO_TARBALL="a567bcb7f589.tar.gz"
-JAMVM_TARBALL="jamvm-4617da717ecb05654ea5bb9572338061106a414d.tar.gz"
+JAMVM_TARBALL="jamvm-0972452d441544f7dd29c55d64f1ce3a5db90d82.tar.gz"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
@@ -156,12 +156,6 @@ java_prepare() {
 
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
-
-	epatch "${FILESDIR}"/${PN}-${SLOT}-no_suffix.patch
-	epatch "${FILESDIR}"/${PN}-${SLOT}-compiler_detection_cleanup.patch
-	epatch "${FILESDIR}"/${PN}-${SLOT}.${ICEDTEA_BRANCH}-pr986-cacao_memory_fix_v2.patch
-	epatch "${FILESDIR}"/${PN}-${SLOT}-compile_for_7_cacao_mem.patch
-	eautoreconf
 }
 
 bootstrap_impossible() {
@@ -226,7 +220,7 @@ src_configure() {
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
-		--disable-downloading \
+		--disable-downloading --disable-Werror \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nss) \

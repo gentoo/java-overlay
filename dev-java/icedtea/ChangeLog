@@ -2,6 +2,15 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.3.7 (20 Feb 2013)
+*icedtea-7.2.2.6 (20 Feb 2013)
+*icedtea-7.2.1.6 (20 Feb 2013)
+
+  20 Feb 2013; Andrew John Hughes <andrew@gentoo.org> -icedtea-7.2.1.5.ebuild,
+  +icedtea-7.2.1.6.ebuild, -icedtea-7.2.2.5.ebuild, +icedtea-7.2.2.6.ebuild,
+  -icedtea-7.2.3.6.ebuild, +icedtea-7.2.3.7.ebuild:
+  Add latest security releases for 7: http://bitly.com/Yazvpb
+
 *icedtea-6.1.12.3 (20 Feb 2013)
 *icedtea-6.1.11.8 (20 Feb 2013)
 
