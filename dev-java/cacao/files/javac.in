@@ -5,14 +5,16 @@ use constant STRIP_ARGS => qw(-Werror -implicit:none -J-Xbootclasspath/p:);
 
 my $ECJ_WARNINGS="-nowarn";
 
-my ( @bcoption, @source15, @target15 );
+my ( @bcoption, @source15, @target15, @cp );
 push @bcoption, '-bootclasspath', '@RT_JAR@:@TOOLS_JAR@'
     unless grep {$_ eq '-bootclasspath'} @ARGV;
 push @source15, '-source', '1.5'
     unless grep {$_ eq '-source'} @ARGV;
 push @target15, '-target', '1.5'
     unless grep {$_ eq '-target'} @ARGV;  
-my @ecj_parms = ($ECJ_WARNINGS, @bcoption, @source15, @target15);
+push @cp, '-cp', '.'
+    unless grep {$_ =~ '\-c(p|lasspath)'} @ARGV;
+my @ecj_parms = ($ECJ_WARNINGS, @bcoption, @source15, @target15, @cp);
 
 # Work around ecj's inability to handle duplicate command-line
 # options and unknown javac options.

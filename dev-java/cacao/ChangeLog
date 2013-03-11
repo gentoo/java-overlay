@@ -2,6 +2,9 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/cacao/ChangeLog,v 1.22 2012/06/14 21:25:44 radhermit Exp $
 
+  11 Mar 2013; Andrew John Hughes <andrew@gentoo.org> files/javac.in:
+  Set classpath to current directory if not set in javac wrapper.
+
   31 Jan 2013; Andrew John Hughes <andrew@gentoo.org> cacao-1.6.0.ebuild,
   +files/javac.in:
   Use a script to help ecj emulate javac (based on the one in IcedTea)
