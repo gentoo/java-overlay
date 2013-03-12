@@ -2,6 +2,13 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.12.4 (12 Mar 2013)
+*icedtea-6.1.11.9 (12 Mar 2013)
+
+  12 Mar 2013; Andrew John Hughes <andrew@gentoo.org> -icedtea-6.1.11.8.ebuild,
+  +icedtea-6.1.11.9.ebuild, -icedtea-6.1.12.3.ebuild, +icedtea-6.1.12.4.ebuild:
+  Add latest security releases for 6: http://bitly.com/X3Shxa
+
 *icedtea-7.2.3.8 (12 Mar 2013)
 *icedtea-7.2.2.7 (12 Mar 2013)
 *icedtea-7.2.1.7 (12 Mar 2013)
