@@ -21,7 +21,7 @@ JAF_TARBALL="jdk6-jaf-b20.zip"
 # Download cacao and jamvm regardless for use with EXTRA_ECONF
 CACAO_TARBALL="68fe50ac34ec.tar.gz"
 JAMVM_TARBALL="jamvm-0972452d441544f7dd29c55d64f1ce3a5db90d82.tar.gz"
-HOTSPOT_TARBALL="bc0de5a0ece2.tar.gz"
+HOTSPOT_TARBALL="a152dced63a1.tar.gz"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
