@@ -41,7 +41,7 @@ RDEPEND="alsa? ( media-libs/alsa-lib )
 				x11-libs/libXtst
 				x11-libs/pango
 		)
-		qt4? ( x11-libs/qt-gui:4 )
+		qt4? ( dev-qt/qtgui:4 )
 		xml? ( >=dev-libs/libxml2-2.6.8 >=dev-libs/libxslt-1.1.11 )"
 
 # java-config >2.1.11 needed for ecj version globbing
@@ -68,7 +68,6 @@ src_unpack() {
 }
 
 src_prepare() {
-	cd ${S}
 	./autogen.sh
 }
 
