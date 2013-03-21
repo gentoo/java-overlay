@@ -2,6 +2,13 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-3.9999 (21 Mar 2013)
+
+  21 Mar 2013; Andrew John Hughes <andrew@gentoo.org> +icedtea-3.9999.ebuild,
+  icedtea-7.2.3.8.ebuild:
+  First attempt at a build for the 3.x series, supporting OpenJDK 8. Fix paths
+  in 2.3.8 ebuild broken by last commit.
+
   20 Mar 2013; Andrew John Hughes <andrew@gentoo.org> icedtea-7.2.3.8.ebuild:
   Add better tarball naming as suggested in #439140.
 

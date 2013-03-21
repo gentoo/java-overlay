@@ -7,22 +7,22 @@
 # * IF YOU CHANGE THIS EBUILD, CHANGE ICEDTEA-6.* AS WELL *
 # *********************************************************
 
-EAPI="4"
+EAPI="5"
 
-inherit java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
+inherit autotools java-pkg-2 java-vm-2 mercurial pax-utils prefix versionator virtualx
 
-ICEDTEA_VER=$(get_version_component_range 2-)
-ICEDTEA_BRANCH=$(get_version_component_range 2-3)
+ICEDTEA_VER=$(get_version_component_range 1-)
+ICEDTEA_BRANCH=3.0
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-CORBA_TARBALL="516aae5f27cf.tar.gz"
-JAXP_TARBALL="1fbe99283d97.tar.gz"
-JAXWS_TARBALL="3c7be82314bf.tar.gz"
-JDK_TARBALL="deac45dc94f0.tar.gz"
-LANGTOOLS_TARBALL="41426c72b802.tar.gz"
-OPENJDK_TARBALL="ed02a059ea15.tar.gz"
-HOTSPOT_TARBALL="a152dced63a1.tar.gz"
-CACAO_TARBALL="a567bcb7f589.tar.gz"
-JAMVM_TARBALL="jamvm-0972452d441544f7dd29c55d64f1ce3a5db90d82.tar.gz"
+CORBA_TARBALL="2a00aeeb466b.tar.gz"
+JAXP_TARBALL="ef3495555a4c.tar.gz"
+JAXWS_TARBALL="c88bb21560cc.tar.gz"
+JDK_TARBALL="758db1c4c65c.tar.gz"
+LANGTOOLS_TARBALL="ed69d087fdfd.tar.gz"
+OPENJDK_TARBALL="cd7f2c7e2a0e.tar.gz"
+HOTSPOT_TARBALL="65b797426a3b.tar.gz"
+CACAO_TARBALL="d6264eb66506.tar.gz"
+JAMVM_TARBALL="jamvm-4617da717ecb05654ea5bb9572338061106a414d.tar.gz"
 
 CORBA_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-corba-${CORBA_TARBALL}"
 JAXP_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-jaxp-${JAXP_TARBALL}"
@@ -37,26 +37,26 @@ JAMVM_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-${JAMVM_TARBALL}"
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
 SRC_URI="
-	http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/archive/${OPENJDK_TARBALL}
+	http://hg.openjdk.java.net/jdk8/jdk8/archive/${OPENJDK_TARBALL}
 	 -> ${OPENJDK_GENTOO_TARBALL}
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/corba/archive/${CORBA_TARBALL}
+	http://hg.openjdk.java.net/jdk8/jdk8/corba/archive/${CORBA_TARBALL}
 	 -> ${CORBA_GENTOO_TARBALL}
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/jaxp/archive/${JAXP_TARBALL}
+	http://hg.openjdk.java.net/jdk8/jdk8/jaxp/archive/${JAXP_TARBALL}
 	 -> ${JAXP_GENTOO_TARBALL}
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/jaxws/archive/${JAXWS_TARBALL}
+	http://hg.openjdk.java.net/jdk8/jdk8/jaxws/archive/${JAXWS_TARBALL}
 	 -> ${JAXWS_GENTOO_TARBALL}
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/jdk/archive/${JDK_TARBALL}
+	http://hg.openjdk.java.net/jdk8/jdk8/jdk/archive/${JDK_TARBALL}
 	 -> ${JDK_GENTOO_TARBALL}
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/hotspot/archive/${HOTSPOT_TARBALL}
+	http://hg.openjdk.java.net/jdk8/jdk8/hotspot/archive/${HOTSPOT_TARBALL}
 	 -> ${HOTSPOT_GENTOO_TARBALL}
-	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/langtools/archive/${LANGTOOLS_TARBALL}
+	http://hg.openjdk.java.net/jdk8/jdk8/langtools/archive/${LANGTOOLS_TARBALL}
 	 -> ${LANGTOOLS_GENTOO_TARBALL}
 	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL} -> ${CACAO_GENTOO_TARBALL}
 	http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL} -> ${JAMVM_GENTOO_TARBALL}"
+EHG_REPO_URI="http://icedtea.classpath.org/hg/icedtea"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
-SLOT="7"
+SLOT="8"
 KEYWORDS="~amd64 ~ia64 ~x86"
 
 IUSE="+X +alsa cjk +cups debug doc examples javascript +jbootstrap +nsplugin
@@ -153,9 +153,7 @@ S="${WORKDIR}"/${ICEDTEA_PKG}
 
 pkg_setup() {
 	JAVA_PKG_WANT_BUILD_VM="
-		icedtea-7 icedtea-bin-7 icedtea7
-		icedtea-6 icedtea-bin-6 icedtea6 icedtea6-bin
-		gcj-jdk"
+		icedtea-7 icedtea-bin-7 icedtea7"
 	JAVA_PKG_WANT_SOURCE="1.5"
 	JAVA_PKG_WANT_TARGET="1.5"
 
@@ -164,7 +162,7 @@ pkg_setup() {
 }
 
 src_unpack() {
-	unpack ${ICEDTEA_PKG}.tar.gz
+	mercurial_src_unpack
 }
 
 java_prepare() {
@@ -173,11 +171,13 @@ java_prepare() {
 
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
+
+	eautoreconf
 }
 
 bootstrap_impossible() {
 	# Fill this according to testing what works and what not
-	has "${1}" icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6
+	has "${1}" icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6 gcj-jdk
 }
 
 src_configure() {
@@ -271,7 +271,7 @@ src_install() {
 	dodoc README NEWS AUTHORS
 	dosym /usr/share/doc/${PF} /usr/share/doc/${PN}${SLOT}
 
-	cd openjdk.build/j2sdk-image || die
+	cd openjdk.build/images/j2sdk-image || die
 
 	# Ensures HeadlessGraphicsEnvironment is used.
 	if ! use X; then
@@ -293,7 +293,7 @@ src_install() {
 
 	if use doc; then
 		# java-pkg_dohtml needed for package-list #302654
-		java-pkg_dohtml -r ../docs/* || die
+		java-pkg_dohtml -r ../../docs/* || die
 	fi
 
 	if use examples; then
@@ -334,16 +334,4 @@ src_install() {
 		java-vm_revdep-mask "${dest}"
 	fi
 	java-vm_sandbox-predict /proc/self/coredump_filter
-}
-
-pkg_preinst() {
-	if has_version "<=dev-java/icedtea-7.2.0:7"; then
-		# portage would preserve the symlink otherwise, related to bug #384397
-		rm -f "${EROOT}/usr/lib/jvm/icedtea7"
-		elog "To unify the layout and simplify scripts, the identifier of Icedtea-7*"
-		elog "has changed from 'icedtea7' to 'icedtea-7' starting from version 7.2.0-r1"
-		elog "If you had icedtea7 as system VM, the change should be automatic, however"
-		elog "build VM settings in /etc/java-config-2/build/jdk.conf are not changed"
-		elog "and the same holds for any user VM settings. Sorry for the inconvenience."
-	fi
 }
