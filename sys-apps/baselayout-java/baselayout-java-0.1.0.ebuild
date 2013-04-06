@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
-RDEPEND="!!<dev-java/java-config-2.2"
+RDEPEND="!<dev-java/java-config-2.2"
 
 pkg_postrm() {
 	fdo-mime_desktop_database_update
