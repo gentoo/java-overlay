@@ -14,9 +14,9 @@ KEYWORDS="~amd64"
 IUSE=""
 
 RDEPEND="
-	!!app-admin/eselect-ecj
-	!!app-admin/eselect-maven
-	!!<dev-java/java-config-2.2
+	!app-admin/eselect-ecj
+	!app-admin/eselect-maven
+	!<dev-java/java-config-2.2
 	app-admin/eselect"
 # https://bugs.gentoo.org/show_bug.cgi?id=315229
 PDEPEND=">=virtual/jre-1.5"
