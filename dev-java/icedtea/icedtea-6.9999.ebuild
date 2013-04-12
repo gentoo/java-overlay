@@ -12,6 +12,7 @@ EAPI="4"
 inherit autotools java-pkg-2 java-vm-2 mercurial pax-utils prefix versionator virtualx
 
 ICEDTEA_PKG=${PN}$(replace_version_separator 1 -)
+ICEDTEA_BRANCH=$(get_version_component_range 1-3)
 OPENJDK_BUILD="27"
 OPENJDK_DATE="26_oct_2012"
 OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.gz"
@@ -21,7 +22,11 @@ JAF_TARBALL="jdk6-jaf-b20.zip"
 # Download cacao and jamvm regardless for use with EXTRA_ECONF
 CACAO_TARBALL="68fe50ac34ec.tar.gz"
 JAMVM_TARBALL="jamvm-0972452d441544f7dd29c55d64f1ce3a5db90d82.tar.gz"
-HOTSPOT_TARBALL="a152dced63a1.tar.gz"
+HOTSPOT_TARBALL="23888f3dec52.tar.gz"
+
+HOTSPOT_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-hotspot-${HOTSPOT_TARBALL}"
+CACAO_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-cacao-${CACAO_TARBALL}"
+JAMVM_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-${JAMVM_TARBALL}"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
@@ -30,9 +35,10 @@ SRC_URI="
 	http://icedtea.classpath.org/download/drops/${JAXWS_TARBALL}
 	http://icedtea.classpath.org/download/drops/${JAF_TARBALL}
 	http://icedtea.classpath.org/download/drops/${JAXP_TARBALL}
-	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL}
-	http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL}
-	hs23? ( http://icedtea.classpath.org/hg/release/icedtea7-forest-2.3/hotspot/archive/${HOTSPOT_TARBALL} ) "
+	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL} -> ${CACAO_GENTOO_TARBALL}
+	http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL} -> ${JAMVM_GENTOO_TARBALL}
+	hs23? ( http://icedtea.classpath.org/hg/release/icedtea7-forest-2.3/hotspot/archive/${HOTSPOT_TARBALL} ->
+			${HOTSPOT_GENTOO_TARBALL} ) "
 EHG_REPO_URI="http://icedtea.classpath.org/hg/icedtea6"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
@@ -202,7 +208,7 @@ src_configure() {
 
 	if use hs23 ; then
 		config="${config} --with-hotspot-build=hs23
-						  --with-hotspot-src-zip=${DISTDIR}/${HOTSPOT_TARBALL}"
+						  --with-hotspot-src-zip=${DISTDIR}/${HOTSPOT_GENTOO_TARBALL}"
 	else
 		config="${config} --with-hotspot-build=original"
 	fi
@@ -214,8 +220,8 @@ src_configure() {
 		--with-jaxp-drop-zip="${DISTDIR}/${JAXP_TARBALL}" \
 		--with-jaxws-drop-zip="${DISTDIR}/${JAXWS_TARBALL}" \
 		--with-jaf-drop-zip="${DISTDIR}/${JAF_TARBALL}" \
-		--with-cacao-src-zip="${DISTDIR}/${CACAO_TARBALL}" \
-		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_TARBALL}" \
+		--with-cacao-src-zip="${DISTDIR}/${CACAO_GENTOO_TARBALL}" \
+		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_GENTOO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
 		--disable-downloading \
