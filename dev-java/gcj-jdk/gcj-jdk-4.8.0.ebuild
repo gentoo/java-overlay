@@ -18,8 +18,8 @@ IUSE="X"
 ECJ_GCJ_SLOT="3.6"
 
 RDEPEND="
-	~sys-devel/gcc-${PV}_pre9999[gcj]
-	X? ( ~sys-devel/gcc-${PV}_pre9999[gtk] )
+	~sys-devel/gcc-${PV}[gcj]
+	X? ( ~sys-devel/gcc-${PV}[gtk] )
 	dev-java/ecj-gcj:${ECJ_GCJ_SLOT}"
 DEPEND="${RDEPEND}"
 
@@ -28,7 +28,7 @@ S="${WORKDIR}"
 src_install() {
 	# jre lib paths ...
 	local libarch="$(get_system_arch)"
-	local gcc_version=${PV}-pre9999
+	local gcc_version=${PV}
 	local gccbin=$(gcc-config -B ${gcc_version})
 	gccbin=${gccbin#"${EPREFIX}"}
 	local gcclib=$(gcc-config -L ${gcc_version} | cut -d':' -f1)
