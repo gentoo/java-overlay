@@ -2,6 +2,12 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.11.10 (17 Apr 2013)
+
+  17 Apr 2013; Andrew John Hughes <andrew@gentoo.org> -icedtea-6.1.11.9.ebuild,
+  +icedtea-6.1.11.10.ebuild:
+  Add latest security fixes: http://bitly.com/YVSJ5Y
+
   12 Apr 2013; Andrew John Hughes <andrew@gentoo.org> icedtea-6.9999.ebuild:
   Update HotSpot tarball, use better naming suggested in #439140.
 

@@ -15,9 +15,6 @@ ICEDTEA_PKG=${PN}$(replace_version_separator 1 -)
 OPENJDK_BUILD="24"
 OPENJDK_DATE="14_nov_2011"
 OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.gz"
-JAXP_TARBALL="jaxp144_03.zip"
-JAXWS_TARBALL="jdk6-jaxws2_1_6-2011_06_13.zip"
-JAF_TARBALL="jdk6-jaf-b20.zip"
 CACAO_TARBALL="cff92704c4e0.tar.gz"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
@@ -25,9 +22,6 @@ HOMEPAGE="http://icedtea.classpath.org"
 SRC_URI="
 	http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
 	http://download.java.net/openjdk/jdk6/promoted/b${OPENJDK_BUILD}/${OPENJDK_TARBALL}
-	http://icedtea.classpath.org/download/drops/${JAXWS_TARBALL}
-	http://icedtea.classpath.org/download/drops/${JAF_TARBALL}
-	http://icedtea.classpath.org/download/drops/${JAXP_TARBALL}
 	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL}"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
@@ -220,9 +214,6 @@ src_configure() {
 
 	econf ${config} \
 		--with-openjdk-src-zip="${DISTDIR}/${OPENJDK_TARBALL}" \
-		--with-jaxp-drop-zip="${DISTDIR}/${JAXP_TARBALL}" \
-		--with-jaxws-drop-zip="${DISTDIR}/${JAXWS_TARBALL}" \
-		--with-jaf-drop-zip="${DISTDIR}/${JAF_TARBALL}" \
 		--with-cacao-src-zip="${DISTDIR}/${CACAO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
@@ -256,7 +247,7 @@ src_install() {
 	local ddest="${ED}/${dest}"
 	dodir "${dest}"
 
-	dodoc README NEWS AUTHORS THANKYOU
+	dodoc README NEWS AUTHORS
 	dosym /usr/share/doc/${PF} /usr/share/doc/${PN}${SLOT}
 
 	cd openjdk.build/j2sdk-image || die
