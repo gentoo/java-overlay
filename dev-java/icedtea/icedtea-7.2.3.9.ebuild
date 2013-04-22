@@ -14,15 +14,16 @@ inherit java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-CORBA_TARBALL="516aae5f27cf.tar.gz"
-JAXP_TARBALL="1fbe99283d97.tar.gz"
-JAXWS_TARBALL="3c7be82314bf.tar.gz"
-JDK_TARBALL="deac45dc94f0.tar.gz"
-LANGTOOLS_TARBALL="41426c72b802.tar.gz"
-OPENJDK_TARBALL="ed02a059ea15.tar.gz"
-HOTSPOT_TARBALL="a152dced63a1.tar.gz"
+CORBA_TARBALL="47a6bf94ce11.tar.gz"
+JAXP_TARBALL="d2142901bcb7.tar.gz"
+JAXWS_TARBALL="b1877762d45c.tar.gz"
+JDK_TARBALL="8e91101e36f0.tar.gz"
+LANGTOOLS_TARBALL="fd956199cb82.tar.gz"
+OPENJDK_TARBALL="12b96a57263c.tar.gz"
+HOTSPOT_TARBALL="ad5a321edea2.tar.gz"
 CACAO_TARBALL="a567bcb7f589.tar.gz"
 JAMVM_TARBALL="jamvm-0972452d441544f7dd29c55d64f1ce3a5db90d82.tar.gz"
+ZERO_HOTSPOT_TARBALL="2c4981784101.tar.gz"
 
 CORBA_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-corba-${CORBA_TARBALL}"
 JAXP_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-jaxp-${JAXP_TARBALL}"
@@ -33,6 +34,7 @@ OPENJDK_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-openjdk-${OPENJDK_TARBALL}"
 HOTSPOT_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-hotspot-${HOTSPOT_TARBALL}"
 CACAO_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-cacao-${CACAO_TARBALL}"
 JAMVM_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-${JAMVM_TARBALL}"
+ZERO_GENTOO_TARBALL="icedtea-2.1-hotspot-${ZERO_HOTSPOT_TARBALL}"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
@@ -53,14 +55,16 @@ SRC_URI="
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/langtools/archive/${LANGTOOLS_TARBALL}
 	 -> ${LANGTOOLS_GENTOO_TARBALL}
 	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL} -> ${CACAO_GENTOO_TARBALL}
-	http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL} -> ${JAMVM_GENTOO_TARBALL}"
+	http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL} -> ${JAMVM_GENTOO_TARBALL}
+	http://icedtea.classpath.org/hg/release/icedtea7-forest-2.1/hotspot/archive/${ZERO_HOTSPOT_TARBALL}
+	 -> ${ZERO_GENTOO_TARBALL}"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="7"
 KEYWORDS="~amd64 ~ia64 ~x86"
 
 IUSE="+X +alsa cjk +cups debug doc examples javascript +jbootstrap +nsplugin
-	+nss pax_kernel pulseaudio +source systemtap test +webstart"
+	+nss pax_kernel pulseaudio +source systemtap test zero +webstart"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
@@ -181,7 +185,7 @@ bootstrap_impossible() {
 }
 
 src_configure() {
-	local config bootstrap
+	local config bootstrap use_zero zero_config
 	local vm=$(java-pkg_get-current-vm)
 
 	# Whether to bootstrap
@@ -204,10 +208,24 @@ src_configure() {
 
 	config="${config} --${bootstrap}-bootstrap"
 
+	# Use Zero if requested
+	if use zero; then
+		use_zero="yes";
+	fi
+
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
 	# Otherwise use JamVM as it's the only possibility right now
-	if ! has "${ARCH}" amd64 sparc x86; then
-		config="${config} --enable-jamvm"
+	if ! has "${ARCH}" amd64 sparc x86 ; then
+		if has "${ARCH}" ppc ppc64 arm ; then
+			config="${config} --enable-jamvm"
+		else
+			use_zero="yes";
+		fi
+	fi
+
+	# Turn on Zero if needed (non-HS/JamVM archs) or requested
+	if test "x${use_zero}" = "xyes"; then
+		zero_config="--enable-zero --with-hotspot-src-zip=${DISTDIR}/${ZERO_GENTOO_TARBALL}";
 	fi
 
 	# OpenJDK-specific parallelism support. Bug #389791, #337827
@@ -243,7 +261,8 @@ src_configure() {
 		$(use_enable nss) \
 		$(use_enable pulseaudio pulse-java) \
 		$(use_enable systemtap) \
-		$(use_with pax_kernel pax paxctl)
+		$(use_with pax_kernel pax paxctl) \
+		${zero_config}
 }
 
 src_compile() {

@@ -21,6 +21,7 @@
   <flag name="nsplugin">Enable browser plugin (NPPlugin), requires also the webstart flag to be enabled.</flag>
   <flag name="pax_kernel">Apply patch needed for pax enabled kernels.</flag>
   <flag name="systemtap">Enable SystemTap probes in HotSpot.</flag>
+  <flag name="zero">Enable Zero assembler port (usually for non-HotSpot architectures)</flag>
   <flag name="webstart">Enable Web Start support (via NetX).</flag>
 </use>
 </pkgmetadata>
