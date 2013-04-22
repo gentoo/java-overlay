@@ -15,7 +15,7 @@ KEYWORDS=""
 SLOT="0"
 IUSE="X"
 
-ECJ_GCJ_SLOT="3.6"
+ECJ_GCJ_SLOT="4.2"
 
 RDEPEND="
 	~sys-devel/gcc-${PV}[gcj]
