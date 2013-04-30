@@ -9,29 +9,23 @@
 
 EAPI="4"
 
-inherit java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
+inherit autotools java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 
 ICEDTEA_PKG=${PN}$(replace_version_separator 1 -)
-OPENJDK_BUILD="27"
-OPENJDK_DATE="26_oct_2012"
+ICEDTEA_BRANCH=$(get_version_component_range 2-3)
+OPENJDK_BUILD="24"
+OPENJDK_DATE="14_nov_2011"
 OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.gz"
-JAXP_TARBALL="jaxp144_04.zip"
-JAXWS_TARBALL="jdk6-jaxws2_1_6-2011_06_13.zip"
-JAF_TARBALL="jdk6-jaf-b20.zip"
-# Download cacao and jamvm regardless for use with EXTRA_ECONF
-CACAO_TARBALL="68fe50ac34ec.tar.gz"
-JAMVM_TARBALL="jamvm-0972452d441544f7dd29c55d64f1ce3a5db90d82.tar.gz"
+CACAO_TARBALL="cff92704c4e0.tar.gz"
+
+CACAO_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-cacao-${CACAO_TARBALL}"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
 SRC_URI="
 	http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
 	http://download.java.net/openjdk/jdk6/promoted/b${OPENJDK_BUILD}/${OPENJDK_TARBALL}
-	http://icedtea.classpath.org/download/drops/${JAXWS_TARBALL}
-	http://icedtea.classpath.org/download/drops/${JAF_TARBALL}
-	http://icedtea.classpath.org/download/drops/${JAXP_TARBALL}
-	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL}
-	http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL}"
+	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL} -> ${CACAO_GENTOO_TARBALL}"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="6"
@@ -58,7 +52,6 @@ X_DEPEND="
 	>=x11-libs/libXau-1.0.3
 	>=x11-libs/libXdmcp-1.0.2
 	>=x11-libs/libXinerama-1.0.2
-	>=x11-libs/libXp-1.0.0
 	x11-proto/inputproto
 	>=x11-proto/xextproto-7.1.1
 	x11-proto/xineramaproto
@@ -114,6 +107,9 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	virtual/pkgconfig
 	sys-apps/lsb-release
 	${X_DEPEND}
+	jbootstrap? (
+		|| ( <dev-java/eclipse-ecj-3.7 dev-java/ecj-gcj )
+	)
 	pax_kernel? ( sys-apps/paxctl )"
 
 PDEPEND="webstart? ( dev-java/icedtea-web:6 )
@@ -139,6 +135,10 @@ src_unpack() {
 java_prepare() {
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
+
+	epatch "${FILESDIR}"/${PN}-${SLOT}_pax_kernel_support.patch #389751 #422525
+	epatch "${FILESDIR}"/${PN}-${SLOT}-pass_javac_memory_args_to_vm.patch
+	eautoreconf
 }
 
 bootstrap_impossible() {
@@ -168,6 +168,22 @@ src_configure() {
 	fi
 
 	config="${config} --${bootstrap}-bootstrap"
+
+	if [[ ${bootstrap} == enable ]]; then
+		# icedtea-6 javac wrapper requires to always have ecj if bootstrapping #392337
+		local ecj_jar="$(readlink "${EPREFIX}"/usr/share/eclipse-ecj/ecj.jar)"
+		# Don't use eclipse-ecj-3.7 #392587
+		local ecj_all=( "${EPREFIX}"/usr/share/{eclipse-ecj,ecj-gcj}-* )
+		ecj_all=( "${ecj_all[@]/*eclipse-ecj-3.7*/}" )
+		if ! has "${ecj_jar%/lib/ecj.jar}" "${ecj_all[@]}"; then
+			ecj_jar="${ecj_jar%/lib/ecj.jar}"
+			ewarn "${ecj_jar##*/} set as system ecj, can't use for bootstrap"
+			ewarn "Found usable: ${ecj_all[@]##*/}"
+			ewarn "using ${ecj_all##*/} instead"
+			ecj_jar="${ecj_all}"/lib/ecj.jar
+		fi
+		config="${config} --with-ecj-jar=${ecj_jar}"
+	fi
 
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
 	# Otherwise use CACAO
@@ -200,14 +216,9 @@ src_configure() {
 
 	econf ${config} \
 		--with-openjdk-src-zip="${DISTDIR}/${OPENJDK_TARBALL}" \
-		--with-jaxp-drop-zip="${DISTDIR}/${JAXP_TARBALL}" \
-		--with-jaxws-drop-zip="${DISTDIR}/${JAXWS_TARBALL}" \
-		--with-jaf-drop-zip="${DISTDIR}/${JAF_TARBALL}" \
-		--with-cacao-src-zip="${DISTDIR}/${CACAO_TARBALL}" \
-		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_TARBALL}" \
+		--with-cacao-src-zip="${DISTDIR}/${CACAO_GENTOO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
-		--disable-downloading \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nss) \
@@ -238,7 +249,7 @@ src_install() {
 	local ddest="${ED}/${dest}"
 	dodir "${dest}"
 
-	dodoc README NEWS AUTHORS THANKYOU
+	dodoc README NEWS AUTHORS
 	dosym /usr/share/doc/${PF} /usr/share/doc/${PN}${SLOT}
 
 	cd openjdk.build/j2sdk-image || die
