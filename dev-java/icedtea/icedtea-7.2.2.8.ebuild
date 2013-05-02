@@ -14,29 +14,46 @@ inherit autotools java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-HOTSPOT_TARBALL="de365dd26484.tar.gz"
-CORBA_TARBALL="5fcf70e41383.tar.gz"
-JAXP_TARBALL="988fa5bfeeec.tar.gz"
-JAXWS_TARBALL="1b6e40dd0756.tar.gz"
-JDK_TARBALL="40640be5d6a0.tar.gz"
-LANGTOOLS_TARBALL="e89d5b6f21a6.tar.gz"
-OPENJDK_TARBALL="cf1afd9bb936.tar.gz"
+HOTSPOT_TARBALL="168d05b42b89.tar.gz"
+CORBA_TARBALL="529355376925.tar.gz"
+JAXP_TARBALL="839055d03a54.tar.gz"
+JAXWS_TARBALL="c7ac0744f92f.tar.gz"
+JDK_TARBALL="1a455d17b871.tar.gz"
+LANGTOOLS_TARBALL="ae5ba074188d.tar.gz"
+OPENJDK_TARBALL="1a406488fe33.tar.gz"
 CACAO_TARBALL="a567bcb7f589.tar.gz"
 JAMVM_TARBALL="jamvm-4617da717ecb05654ea5bb9572338061106a414d.tar.gz"
+
+CORBA_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-corba-${CORBA_TARBALL}"
+JAXP_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-jaxp-${JAXP_TARBALL}"
+JAXWS_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-jaxws-${JAXWS_TARBALL}"
+JDK_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-jdk-${JDK_TARBALL}"
+LANGTOOLS_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-langtools-${LANGTOOLS_TARBALL}"
+OPENJDK_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-openjdk-${OPENJDK_TARBALL}"
+HOTSPOT_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-hotspot-${HOTSPOT_TARBALL}"
+CACAO_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-cacao-${CACAO_TARBALL}"
+JAMVM_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-${JAMVM_TARBALL}"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
 SRC_URI="
 	http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/archive/${OPENJDK_TARBALL}
+	 -> ${OPENJDK_GENTOO_TARBALL}
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/corba/archive/${CORBA_TARBALL}
+	 -> ${CORBA_GENTOO_TARBALL}
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/jaxp/archive/${JAXP_TARBALL}
+	 -> ${JAXP_GENTOO_TARBALL}
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/jaxws/archive/${JAXWS_TARBALL}
+	 -> ${JAXWS_GENTOO_TARBALL}
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/jdk/archive/${JDK_TARBALL}
+	 -> ${JDK_GENTOO_TARBALL}
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/hotspot/archive/${HOTSPOT_TARBALL}
+	 -> ${HOTSPOT_GENTOO_TARBALL}
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/langtools/archive/${LANGTOOLS_TARBALL}
-	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL}
-	http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL}"
+	 -> ${LANGTOOLS_GENTOO_TARBALL}
+	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL} -> ${CACAO_GENTOO_TARBALL}
+	http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL} -> ${JAMVM_GENTOO_TARBALL}"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="7"
@@ -215,15 +232,15 @@ src_configure() {
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 
 	econf ${config} \
-		--with-openjdk-src-zip="${DISTDIR}/${OPENJDK_TARBALL}" \
-		--with-corba-src-zip="${DISTDIR}/${CORBA_TARBALL}" \
-		--with-jaxp-src-zip="${DISTDIR}/${JAXP_TARBALL}" \
-		--with-jaxws-src-zip="${DISTDIR}/${JAXWS_TARBALL}" \
-		--with-jdk-src-zip="${DISTDIR}/${JDK_TARBALL}" \
-		--with-hotspot-src-zip="${DISTDIR}/${HOTSPOT_TARBALL}" \
-		--with-langtools-src-zip="${DISTDIR}/${LANGTOOLS_TARBALL}" \
-		--with-cacao-src-zip="${DISTDIR}/${CACAO_TARBALL}" \
-		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_TARBALL}" \
+		--with-openjdk-src-zip="${DISTDIR}/${OPENJDK_GENTOO_TARBALL}" \
+		--with-corba-src-zip="${DISTDIR}/${CORBA_GENTOO_TARBALL}" \
+		--with-jaxp-src-zip="${DISTDIR}/${JAXP_GENTOO_TARBALL}" \
+		--with-jaxws-src-zip="${DISTDIR}/${JAXWS_GENTOO_TARBALL}" \
+		--with-jdk-src-zip="${DISTDIR}/${JDK_GENTOO_TARBALL}" \
+		--with-hotspot-src-zip="${DISTDIR}/${HOTSPOT_GENTOO_TARBALL}" \
+		--with-langtools-src-zip="${DISTDIR}/${LANGTOOLS_GENTOO_TARBALL}" \
+		--with-cacao-src-zip="${DISTDIR}/${CACAO_GENTOO_TARBALL}" \
+		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_GENTOO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
 		--disable-downloading \
