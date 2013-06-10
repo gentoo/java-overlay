@@ -71,8 +71,8 @@ X_COMMON_DEP="
 	>=dev-libs/atk-1.30.0
 	>=dev-libs/glib-2.26
 	media-libs/fontconfig
-	>=media-libs/freetype-2.3.5
-	>=x11-libs/cairo-1.8.8
+	>=media-libs/freetype-2.3.5:2=
+	>=x11-libs/cairo-1.8.8:=
 	x11-libs/gdk-pixbuf:2
 	>=x11-libs/gtk+-2.8:2=
 	>=x11-libs/libX11-1.1.3
