@@ -7,7 +7,7 @@
 # * IF YOU CHANGE THIS EBUILD, CHANGE ICEDTEA-6.* AS WELL *
 # *********************************************************
 
-EAPI="4"
+EAPI="5"
 
 inherit java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 
@@ -74,7 +74,7 @@ X_COMMON_DEP="
 	>=media-libs/freetype-2.3.5
 	>=x11-libs/cairo-1.8.8
 	x11-libs/gdk-pixbuf:2
-	>=x11-libs/gtk+-2.8:2
+	>=x11-libs/gtk+-2.8:2=
 	>=x11-libs/libX11-1.1.3
 	>=x11-libs/libXext-1.1.1
 	>=x11-libs/libXi-1.1.3
@@ -91,14 +91,14 @@ X_DEPEND="
 	x11-proto/xproto"
 
 COMMON_DEP="
-	>=media-libs/giflib-4.1.6
-	media-libs/lcms:2
-	>=media-libs/libpng-1.2
-	>=sys-libs/zlib-1.2.3
-	virtual/jpeg
+	>=media-libs/giflib-4.1.6:=
+	media-libs/lcms:2=
+	>=media-libs/libpng-1.2:=
+	>=sys-libs/zlib-1.2.3:=
+	virtual/jpeg:=
 	javascript? ( dev-java/rhino:1.6 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
-	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
+	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11:= )
 	>=dev-util/systemtap-1"
 
 # cups is needed for X. #390945 #390975
