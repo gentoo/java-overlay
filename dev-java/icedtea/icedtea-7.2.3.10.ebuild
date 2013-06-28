@@ -14,16 +14,16 @@ inherit java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-CORBA_TARBALL="47a6bf94ce11.tar.gz"
-JAXP_TARBALL="d2142901bcb7.tar.gz"
-JAXWS_TARBALL="b1877762d45c.tar.gz"
-JDK_TARBALL="8e91101e36f0.tar.gz"
-LANGTOOLS_TARBALL="fd956199cb82.tar.gz"
-OPENJDK_TARBALL="12b96a57263c.tar.gz"
-HOTSPOT_TARBALL="ad5a321edea2.tar.gz"
+CORBA_TARBALL="8e581b671511.tar.gz"
+JAXP_TARBALL="1a02956fcfaf.tar.gz"
+JAXWS_TARBALL="c0e829bfbf62.tar.gz"
+JDK_TARBALL="bd392c168d5c.tar.gz"
+LANGTOOLS_TARBALL="8cf15d334ad3.tar.gz"
+OPENJDK_TARBALL="fb1ac57ada6c.tar.gz"
+HOTSPOT_TARBALL="4e374ade4066.tar.gz"
 CACAO_TARBALL="a567bcb7f589.tar.gz"
 JAMVM_TARBALL="jamvm-0972452d441544f7dd29c55d64f1ce3a5db90d82.tar.gz"
-ZERO_HOTSPOT_TARBALL="2c4981784101.tar.gz"
+ZERO_HOTSPOT_TARBALL="0d81d5904952.tar.gz"
 
 CORBA_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-corba-${CORBA_TARBALL}"
 JAXP_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-jaxp-${JAXP_TARBALL}"
@@ -96,7 +96,6 @@ X_DEPEND="
 
 COMMON_DEP="
 	>=media-libs/giflib-4.1.6
-	media-libs/lcms:2
 	>=media-libs/libpng-1.2
 	>=sys-libs/zlib-1.2.3
 	virtual/jpeg
