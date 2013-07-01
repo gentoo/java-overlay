@@ -14,13 +14,13 @@ inherit autotools java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-HOTSPOT_TARBALL="168d05b42b89.tar.gz"
-CORBA_TARBALL="529355376925.tar.gz"
-JAXP_TARBALL="839055d03a54.tar.gz"
-JAXWS_TARBALL="c7ac0744f92f.tar.gz"
-JDK_TARBALL="1a455d17b871.tar.gz"
-LANGTOOLS_TARBALL="ae5ba074188d.tar.gz"
-OPENJDK_TARBALL="1a406488fe33.tar.gz"
+HOTSPOT_TARBALL="0d81d5904952.tar.gz"
+CORBA_TARBALL="ce773a499f3a.tar.gz"
+JAXP_TARBALL="2c3bc21169f9.tar.gz"
+JAXWS_TARBALL="3532f4415fd5.tar.gz"
+JDK_TARBALL="1e74b61253eb.tar.gz"
+LANGTOOLS_TARBALL="26a29796b374.tar.gz"
+OPENJDK_TARBALL="34d809e0dba3.tar.gz"
 CACAO_TARBALL="a567bcb7f589.tar.gz"
 JAMVM_TARBALL="jamvm-4617da717ecb05654ea5bb9572338061106a414d.tar.gz"
 
@@ -92,7 +92,6 @@ X_DEPEND="
 
 COMMON_DEP="
 	>=media-libs/giflib-4.1.6
-	media-libs/lcms:2
 	>=media-libs/libpng-1.2
 	>=sys-libs/zlib-1.2.3
 	virtual/jpeg
@@ -152,10 +151,7 @@ PDEPEND="webstart? ( dev-java/icedtea-web:7 )
 S="${WORKDIR}"/${ICEDTEA_PKG}
 
 pkg_setup() {
-	JAVA_PKG_WANT_BUILD_VM="
-		icedtea-7 icedtea-bin-7 icedtea7
-		icedtea-6 icedtea-bin-6 icedtea6 icedtea6-bin
-		gcj-jdk"
+	JAVA_PKG_WANT_BUILD_VM="gcj-jdk"
 	JAVA_PKG_WANT_SOURCE="1.5"
 	JAVA_PKG_WANT_TARGET="1.5"
 
@@ -174,16 +170,17 @@ java_prepare() {
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
 
-	epatch "${FILESDIR}"/${PN}-${SLOT}-no_suffix.patch
+	epatch "${FILESDIR}"/${PN}-${SLOT}.${ICEDTEA_BRANCH}-pax_kernel_support.patch #389751
 	epatch "${FILESDIR}"/${PN}-${SLOT}-compiler_detection_cleanup.patch
-	epatch "${FILESDIR}"/${PN}-${SLOT}.${ICEDTEA_BRANCH}-pr986-cacao_memory_fix_v2.patch
+	epatch "${FILESDIR}"/${PN}-${SLOT}.${ICEDTEA_BRANCH}-pr986-cacao_memory_fix.patch
 	epatch "${FILESDIR}"/${PN}-${SLOT}-compile_for_7_cacao_mem.patch
+	epatch "${FILESDIR}"/${PN}-${SLOT}.${ICEDTEA_BRANCH}-pax_mark_rmic_java.patch #422525
 	eautoreconf
 }
 
 bootstrap_impossible() {
 	# Fill this according to testing what works and what not
-	has "${1}" icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6
+	has "${1}" icedtea7 icedtea-7 icedtea-bin-7 icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6
 }
 
 src_configure() {
@@ -243,7 +240,6 @@ src_configure() {
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_GENTOO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
-		--disable-downloading \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nss) \
@@ -259,14 +255,14 @@ src_compile() {
 	# Load the least that's needed to avoid possible classpath collisions.
 	export ANT_TASKS="ant-nodeps"
 
-	emake
+	emake -j 1
 }
 
 src_test() {
 	# Use Xvfb for tests
 	unset DISPLAY
 
-	Xemake check
+	Xemake -j1 check
 }
 
 src_install() {
