@@ -14,13 +14,13 @@ inherit java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-CORBA_TARBALL="71d5ec2f3dfb.tar.gz"
-JAXP_TARBALL="5eaf3bca7f68.tar.gz"
-JAXWS_TARBALL="9d2007a13c02.tar.gz"
-JDK_TARBALL="29ce11184945.tar.gz"
-LANGTOOLS_TARBALL="ffb1b6bc4750.tar.gz"
-OPENJDK_TARBALL="9c74cb4a3ae8.tar.gz"
-HOTSPOT_TARBALL="c67fd7874b1a.tar.gz"
+CORBA_TARBALL="23ae4e0e0cce.tar.gz"
+JAXP_TARBALL="5be6b670d08b.tar.gz"
+JAXWS_TARBALL="c0e48fdfb695.tar.gz"
+JDK_TARBALL="65d95818d79e.tar.gz"
+LANGTOOLS_TARBALL="91c95fd8eea8.tar.gz"
+OPENJDK_TARBALL="ae86c6974e8e.tar.gz"
+HOTSPOT_TARBALL="5f53e7717116.tar.gz"
 CACAO_TARBALL="e215e36be9fc.tar.gz"
 JAMVM_TARBALL="jamvm-7c8dceb90880616b7dd670f257961a1f5f371ec3.tar.gz"
 
@@ -92,7 +92,6 @@ X_DEPEND="
 
 COMMON_DEP="
 	>=media-libs/giflib-4.1.6:=
-	media-libs/lcms:2=
 	>=media-libs/libpng-1.2:=
 	>=sys-libs/zlib-1.2.3:=
 	virtual/jpeg:=
