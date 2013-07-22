@@ -1,7 +1,9 @@
 #!/bin/bash
-# gcj-jdk installs /usr/bin/gcj-jdk symlink, depending on it would be circular
-# so we fallback to gcc-config discovery
-GIJ_BIN="/usr/bin/gij"
+
+# /usr/bin/gij was installed by gcj-jdk in the past and is now handled by
+# gcc-config, fall back to gcc-config to locate the binary should the
+# symlink/wrapper-binary not yet exists.
+GIJ_BIN="@GENTOO_PORTAGE_EPREFIX@/usr/bin/gij"
 if [[ ! -f ${GIJ_BIN} ]]; then
 	GIJ_BIN="$(gcc-config -B)/gij"
 fi
@@ -13,7 +15,7 @@ fi
 
 # we need to append user CLASSPATH otherwise it will be overriden by the -classpath parameter
 # this breaks e.g. bootstrap of ant-core
-ecj_cp="/usr/share/ecj-gcj-4.2/lib/ecj.jar"
+ecj_cp="@GENTOO_PORTAGE_EPREFIX@/usr/share/ecj-gcj-@SLOT@/lib/ecj.jar"
 if [[ -n "${CLASSPATH}" ]]; then
 	ecj_cp="${ecj_cp}:${CLASSPATH}"
 fi

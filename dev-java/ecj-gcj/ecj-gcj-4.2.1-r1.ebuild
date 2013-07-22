@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/ecj-gcj/ecj-gcj-3.5.2-r2.ebuild,v 1.1 2010/10/31 17:29:23 caster Exp $
 
-EAPI="4"
+EAPI=5
 
-inherit java-pkg-2 toolchain-funcs
+inherit java-pkg-2 prefix toolchain-funcs
 
 MY_PN="ecj"
 DMF="R-${PV}-201209141800"
@@ -14,30 +14,28 @@ DESCRIPTION="A subset of Eclipse Compiler for Java compiled by gcj, serving as j
 HOMEPAGE="http://www.eclipse.org/"
 SRC_URI="http://download.eclipse.org/eclipse/downloads/drops4/${DMF}/${MY_PN}src-${PV}.jar"
 
+LICENSE="EPL-1.0"
+SLOT="4.2"
+KEYWORDS="~amd64"
 IUSE="+native userland_GNU"
 
-LICENSE="EPL-1.0"
-KEYWORDS="~amd64 ~ia64 ~ppc ~ppc64 ~x86"
-SLOT="4.2"
+COMMON_DEPEND="
+	sys-devel/gcc[gcj]
+	|| ( app-admin/eselect-java >=app-admin/eselect-ecj-0.6 )"
+RDEPEND="${COMMON_DEPEND}"
+DEPEND="${COMMON_DEPEND}
+	app-arch/unzip
+	!dev-java/eclipse-ecj:3.5[gcj]"
 
-MY_PS="${MY_PN}-${SLOT}"
+S="${WORKDIR}"
 
 # for compatibility with java eclass functions
 JAVA_PKG_WANT_SOURCE=1.4
 JAVA_PKG_WANT_TARGET=1.4
 
-CDEPEND="sys-devel/gcc[gcj]
-	>=app-admin/eselect-ecj-0.6"
-DEPEND="${CDEPEND}
-	app-arch/unzip
-	userland_GNU? ( sys-apps/findutils )
-	!dev-java/eclipse-ecj:3.5[gcj]"
-RDEPEND="${CDEPEND}"
+MY_PS="${MY_PN}-${SLOT}"
 
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
-
+java_prepare() {
 	# We don't need the ant adapter here
 	rm -f org/eclipse/jdt/core/JDTCompilerAdapter.java || die
 	rm -fr org/eclipse/jdt/internal/antadapter || die
@@ -80,22 +78,28 @@ src_compile() {
 
 	if use native; then
 		einfo "Building native ${MY_PS} library, patience needed ..."
-		${gcj} ${CFLAGS} -findirect-dispatch -shared -fPIC -Wl,-Bsymbolic \
+		${gcj} ${CFLAGS} ${LDFLAGS} -findirect-dispatch -shared -fPIC -Wl,-Bsymbolic \
 			-o ${MY_PS}.so ${MY_PN}.jar || die
 	fi
 }
 
 src_install() {
 	java-pkg_dojar ${MY_PN}.jar
-	dobin "${FILESDIR}/${PN}-${SLOT}"
+
+	sed -e "s|@SLOT@|${SLOT}|" \
+		"${FILESDIR}/${PN}.in" \
+		> "${T}"/${PN}-${SLOT} || die
+	eprefixify "${T}/${PN}-${SLOT}"
+	dobin  "${T}/${PN}-${SLOT}"
+
 	use native && dolib.so ${MY_PS}.so
 }
 
 pkg_postinst() {
 	if use native; then
 		$(gcc-config -B)/gcj-dbtool -a $(gcj-dbtool -p) \
-			/usr/share/${PN}-${SLOT}/lib/ecj.jar \
-			/usr/$(get_libdir)/${MY_PN}-${SLOT}.so
+			"${EPREFIX}"/usr/share/${PN}-${SLOT}/lib/ecj.jar \
+			"${EPREFIX}"/usr/$(get_libdir)/${MY_PN}-${SLOT}.so
 	fi
 
 	einfo "To select between slots of ECJ..."
