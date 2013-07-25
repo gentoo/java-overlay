@@ -92,6 +92,7 @@ X_DEPEND="
 
 COMMON_DEP="
 	>=media-libs/giflib-4.1.6
+	>=media-libs/lcms-2.5
 	>=media-libs/libpng-1.2
 	>=sys-libs/zlib-1.2.3
 	virtual/jpeg
@@ -240,6 +241,7 @@ src_configure() {
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_GENTOO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
+		--enable-system-lcms \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nss) \

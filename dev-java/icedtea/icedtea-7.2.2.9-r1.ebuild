@@ -7,22 +7,22 @@
 # * IF YOU CHANGE THIS EBUILD, CHANGE ICEDTEA-6.* AS WELL *
 # *********************************************************
 
-EAPI="5"
+EAPI="4"
 
-inherit java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
+inherit autotools java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-CORBA_TARBALL="23ae4e0e0cce.tar.gz"
-JAXP_TARBALL="5be6b670d08b.tar.gz"
-JAXWS_TARBALL="c0e48fdfb695.tar.gz"
-JDK_TARBALL="65d95818d79e.tar.gz"
-LANGTOOLS_TARBALL="91c95fd8eea8.tar.gz"
-OPENJDK_TARBALL="ae86c6974e8e.tar.gz"
-HOTSPOT_TARBALL="5f53e7717116.tar.gz"
-CACAO_TARBALL="e215e36be9fc.tar.gz"
-JAMVM_TARBALL="jamvm-7c8dceb90880616b7dd670f257961a1f5f371ec3.tar.gz"
+HOTSPOT_TARBALL="4f1ec3403248.tar.gz"
+CORBA_TARBALL="4fdf74f61b48.tar.gz"
+JAXP_TARBALL="5ce90e84aa21.tar.gz"
+JAXWS_TARBALL="5942fdde2af6.tar.gz"
+JDK_TARBALL="25f39684638a.tar.gz"
+LANGTOOLS_TARBALL="1c14c3a8ea14.tar.gz"
+OPENJDK_TARBALL="0cc24300e6de.tar.gz"
+CACAO_TARBALL="a567bcb7f589.tar.gz"
+JAMVM_TARBALL="jamvm-4617da717ecb05654ea5bb9572338061106a414d.tar.gz"
 
 CORBA_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-corba-${CORBA_TARBALL}"
 JAXP_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-jaxp-${JAXP_TARBALL}"
@@ -59,8 +59,8 @@ LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 M
 SLOT="7"
 KEYWORDS="~amd64 ~ia64 ~x86"
 
-IUSE="+X +alsa cacao cjk +cups debug doc examples jamvm javascript +jbootstrap +nsplugin
-	+nss pax_kernel pulseaudio +source test zero +webstart"
+IUSE="+X +alsa cjk +cups debug doc examples javascript +jbootstrap +nsplugin
+	+nss pax_kernel pulseaudio +source systemtap test +webstart"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
@@ -71,10 +71,10 @@ X_COMMON_DEP="
 	>=dev-libs/atk-1.30.0
 	>=dev-libs/glib-2.26
 	media-libs/fontconfig
-	>=media-libs/freetype-2.3.5:2=
-	>=x11-libs/cairo-1.8.8:=
+	>=media-libs/freetype-2.3.5
+	>=x11-libs/cairo-1.8.8
 	x11-libs/gdk-pixbuf:2
-	>=x11-libs/gtk+-2.8:2=
+	>=x11-libs/gtk+-2.8:2
 	>=x11-libs/libX11-1.1.3
 	>=x11-libs/libXext-1.1.1
 	>=x11-libs/libXi-1.1.3
@@ -91,14 +91,15 @@ X_DEPEND="
 	x11-proto/xproto"
 
 COMMON_DEP="
-	>=media-libs/giflib-4.1.6:=
-	>=media-libs/libpng-1.2:=
-	>=sys-libs/zlib-1.2.3:=
-	virtual/jpeg:=
+	>=media-libs/giflib-4.1.6
+	>=media-libs/lcms-2.5
+	>=media-libs/libpng-1.2
+	>=sys-libs/zlib-1.2.3
+	virtual/jpeg
 	javascript? ( dev-java/rhino:1.6 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
-	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11:= )
-	>=dev-util/systemtap-1"
+	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
+	systemtap? ( >=dev-util/systemtap-1 )"
 
 # cups is needed for X. #390945 #390975
 RDEPEND="${COMMON_DEP}
@@ -172,16 +173,31 @@ java_prepare() {
 
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
+
+	epatch "${FILESDIR}"/${PN}-${SLOT}-no_suffix.patch
+	epatch "${FILESDIR}"/${PN}-${SLOT}-compiler_detection_cleanup.patch
+	epatch "${FILESDIR}"/${PN}-${SLOT}.${ICEDTEA_BRANCH}-pr986-cacao_memory_fix_v2.patch
+	epatch "${FILESDIR}"/${PN}-${SLOT}-compile_for_7_cacao_mem.patch
+	eautoreconf
+}
+
+bootstrap_impossible() {
+	# Fill this according to testing what works and what not
+	has "${1}" icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6
 }
 
 src_configure() {
-	local config bootstrap use_zero zero_config
+	local config bootstrap
 	local vm=$(java-pkg_get-current-vm)
 
 	# Whether to bootstrap
 	bootstrap="disable"
 	if use jbootstrap; then
-		bootstrap="enable"
+		if bootstrap_impossible "${vm}"; then
+			einfo "Bootstrap with ${vm} is currently not possible and thus disabled, ignoring USE=jbootstrap"
+		else
+			bootstrap="enable"
+		fi
 	fi
 
 	if has "${vm}" gcj-jdk; then
@@ -194,34 +210,10 @@ src_configure() {
 
 	config="${config} --${bootstrap}-bootstrap"
 
-	# Use Zero if requested
-	if use zero; then
-		use_zero="yes";
-	fi
-
-	# Use CACAO if requested
-	if use cacao; then
-		use_cacao="yes";
-	fi
-
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
-	# Otherwise use CACAO
-	if ! has "${ARCH}" amd64 sparc x86 ; then
-		if has "${ARCH}" ppc ppc64 arm ; then
-			use_cacao="yes";
-		else
-			use_zero="yes";
-		fi
-	fi
-
-	# Turn on CACAO if needed (non-HS archs) or requested
-	if test "x${use_cacao}" = "xyes"; then
-		cacao_config="--enable-cacao";
-	fi
-
-	# Turn on Zero if needed (non-HS/CACAO archs) or requested
-	if test "x${use_zero}" = "xyes"; then
-		zero_config="--enable-zero";
+	# Otherwise use JamVM as it's the only possibility right now
+	if ! has "${ARCH}" amd64 sparc x86; then
+		config="${config} --enable-jamvm"
 	fi
 
 	# OpenJDK-specific parallelism support. Bug #389791, #337827
@@ -251,14 +243,14 @@ src_configure() {
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_GENTOO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
-		--disable-downloading --disable-Werror \
+		--disable-downloading \
+		--enable-system-lcms \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nss) \
 		$(use_enable pulseaudio pulse-java) \
-		$(use_enable jamvm) \
-		$(use_with pax_kernel pax paxctl) \
-		${zero_config} ${cacao_config}
+		$(use_enable systemtap) \
+		$(use_with pax_kernel pax paxctl)
 }
 
 src_compile() {
