@@ -2,6 +2,12 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.3.11 (25 Jul 2013)
+
+  25 Jul 2013; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  -icedtea-7.2.3.10.ebuild, +icedtea-7.2.3.11.ebuild:
+  2.3.x update for ARM32 users: http://bitly.com/171EtHE
+
 *icedtea-6.1.12.6 (12 Jul 2013)
 *icedtea-6.1.11.12 (12 Jul 2013)
 
