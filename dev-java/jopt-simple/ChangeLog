@@ -1,6 +1,12 @@
 # ChangeLog for dev-java/jopt-simple
-# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+*jopt-simple-4.5 (01 Sep 2013)
+
+  01 Sep 2013; James Le Cuirot <chewi@aura-online.co.uk>
+  +jopt-simple-4.5.ebuild, -jopt-simple-4.3.ebuild:
+  Version bump.
 
   29 Sep 2012; James Le Cuirot <chewi@aura-online.co.uk>
   jopt-simple-4.3.ebuild:
