@@ -1,6 +1,12 @@
 # ChangeLog for dev-java/lwjgl
-# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+*lwjgl-2.9.0 (01 Sep 2013)
+
+  01 Sep 2013; James Le Cuirot <chewi@aura-online.co.uk> +lwjgl-2.9.0.ebuild,
+  -lwjgl-2.8.5.ebuild, metadata.xml:
+  Version bump.
 
 *lwjgl-2.8.5 (2 Dec 2012)
 
