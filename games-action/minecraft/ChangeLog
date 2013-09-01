@@ -1,6 +1,17 @@
 # ChangeLog for games-action/minecraft
-# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+*minecraft-1.2.1 (01 Sep 2013)
+
+  01 Sep 2013; James Le Cuirot <chewi@aura-online.co.uk>
+  +files/minecraft-gentoo, +minecraft-1.2.1.ebuild, -files/native-symlinks.sh,
+  -minecraft-20120805-r1.ebuild:
+  Version bump. Major changes! New versioning scheme now that upstream has
+  started properly versioning the launcher. Many new dependencies. Old method
+  for forcing use of Gentoo's packages no longer works. New Python script
+  written, which can be executed by the launcher to modify the game's classpath
+  and library path on launch.
 
 *minecraft-20120805-r1 (2 Dec 2012)
 
