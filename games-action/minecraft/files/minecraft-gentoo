@@ -14,14 +14,18 @@ try:
 except ImportError:
   ifilter = filter # Python 3
 
-klass = "net.minecraft.client.main.Main"
 description = "Launch Minecraft using Gentoo's packaged libraries."
-usage = sys.argv[0] + " [java options] " + klass + " [minecraft options]"
+usage = sys.argv[0] + " [java options] net.minecraft.client.main.Main [minecraft options]"
 
 try:
+  klass = "net.minecraft.client.main.Main"
   split = sys.argv.index(klass)
 except ValueError:
-  split = None
+  try:
+    klass = "net.minecraft.launchwrapper.Launch"
+    split = sys.argv.index(klass)
+  except ValueError:
+    split = None
 
 parser = argparse.ArgumentParser(description=description, usage=usage)
 group = parser.add_argument_group("Java options")
@@ -32,7 +36,7 @@ java_args = parser.parse_known_args(sys.argv[1:split])
 parser = argparse.ArgumentParser(description=description, usage=usage)
 group = parser.add_argument_group("Minecraft options")
 group.add_argument("--gameDir", dest="--gameDir", required=True)
-group.add_argument("--version", dest="--version", required=True)
+group.add_argument("--version", dest="--version")
 minecraft_args = parser.parse_known_args(sys.argv[split+1:] if split else [])
 
 def get_jar(pkg_name, jar):
@@ -55,6 +59,9 @@ def get_jar(pkg_name, jar):
 def transform(path):
   if path.startswith(libDir):
     tail = path[len(libDir):]
+
+    match = re.match("org/ow2/asm/asm-all/([^/]+)/", tail)
+    if match: return (get_jar("asm-4.1", "asm.jar") or path) + ":" + (get_jar("asm-4.1", "asm-tree.jar") or path)
 
     match = re.match("org/bouncycastle/bcprov-jdk15on/([^/]+)/", tail)
     if match: return get_jar("bcprov", "bcprov.jar") or path
@@ -92,21 +99,28 @@ def transform(path):
   return path
 
 nativeDirs = set()
-libDir = getattr(minecraft_args[0], "--gameDir") + "/libraries/"
+parsed_java_args = vars(java_args[0])
+parsed_minecraft_args = vars(minecraft_args[0])
+
+libDir = parsed_minecraft_args["--gameDir"] + "/libraries/"
 manager = EnvironmentManager(os.getenv("ROOT", ""), os.getenv("EPREFIX", "@GENTOO_PORTAGE_EPREFIX@"))
 
-origNativeDir = getattr(java_args[0], "origNativeDir")
-delattr(java_args[0], "origNativeDir")
+origNativeDir = parsed_java_args["origNativeDir"]
+del parsed_java_args["origNativeDir"]
 
-classpath = getattr(java_args[0], "-classpath").split(":")
-setattr(java_args[0], "-classpath", ":".join(map(transform, classpath)))
+classpath = parsed_java_args["-classpath"].split(":")
+parsed_java_args["-classpath"] = ":".join(map(transform, classpath))
+
+for k in list(parsed_minecraft_args.keys()):
+  if parsed_minecraft_args[k] == None:
+    del parsed_minecraft_args[k]
 
 args = [ "java" ]
 args.append("-Djava.library.path=" + ":".join(nativeDirs) + ":" + origNativeDir)
-args.extend(list(chain.from_iterable(vars(java_args[0]).items())))
+args.extend(list(chain.from_iterable(parsed_java_args.items())))
 args.extend(java_args[1])
 args.append(klass)
-args.extend(list(chain.from_iterable(vars(minecraft_args[0]).items())))
+args.extend(list(chain.from_iterable(parsed_minecraft_args.items())))
 args.extend(minecraft_args[1])
 
 sys.stderr.write(" ".join(args) + "\n")
