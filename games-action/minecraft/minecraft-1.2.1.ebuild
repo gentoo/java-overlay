@@ -20,7 +20,7 @@ DEPEND="app-arch/zip
 	>=virtual/jdk-1.6"
 
 RDEPEND="|| (
-	>=dev-java/icetea-6[X]
+	>=dev-java/icedtea-6[X]
 	>=dev-java/icedtea-bin-6[X]
 	>=dev-java/oracle-jre-bin-1.6[X]
 	>=dev-java/oracle-jdk-bin-1.6[X]

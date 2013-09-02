@@ -2,6 +2,9 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  02 Sep 2013; James Le Cuirot <chewi@aura-online.co.uk> minecraft-1.2.1.ebuild:
+  Fix dependency typo.
+
 *minecraft-1.2.1 (01 Sep 2013)
 
   01 Sep 2013; James Le Cuirot <chewi@aura-online.co.uk>
