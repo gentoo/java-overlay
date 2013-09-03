@@ -52,7 +52,7 @@ pkg_setup() {
 }
 
 src_unpack() {
-	zip -d "${DISTDIR}/${A}" -O "${PN}.jar" com/\* joptsimple/\* || die
+	zip -d "${DISTDIR}/${A}" -O "${PN}.jar" --temp-path "${T}" com/\* joptsimple/\* || die
 }
 
 src_prepare() {
