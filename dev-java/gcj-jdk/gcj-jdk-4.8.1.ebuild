@@ -74,7 +74,7 @@ src_install() {
 	dodir ${gcjhome}/lib
 	dosym /usr/share/gcc-data/${gccchost}/${gcc_version}/java/libgcj-tools-${gcc_version/_/-}.jar \
 		${gcjhome}/lib/tools.jar
-	dosym ${gcclib}/include ${gcjhome}
+	dosym ${gcclib}/include ${gcjhome}/include
 
 	dosym /usr/bin/ecj-gcj-${ECJ_GCJ_SLOT} ${gcjhome}/bin/javac
 
@@ -86,7 +86,7 @@ pkg_postinst() {
 	# java-vm-2_pkg_postinst
 
 	ewarn "gcj does not currently provide all the 1.5 or 1.6 APIs."
-	ewarn "See http://builder.classpath.org/japi/jdk15-libgcj.html"
+	ewarn "See http://fuseyism.com/japi/ibmjdk15-libgcj-${PV}.html"
 	ewarn "and http://fuseyism.com/japi/icedtea6-libgcj-${PV}.html"
 	ewarn "Check for existing bugs relating to missing APIs and file"
 	ewarn "new ones at http://gcc.gnu.org/bugzilla/"

@@ -2,6 +2,11 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  04 Sep 2013; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  gcj-jdk-4.8.1.ebuild:
+  Update JAPI URLs now an up-to-date 1.5 comparison is available.  Use full path
+  for include target.
+
 *gcj-jdk-4.8.1 (02 Sep 2013)
 
   02 Sep 2013; Andrew John Hughes <gnu_andrew@member.fsf.org>
