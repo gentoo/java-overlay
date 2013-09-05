@@ -31,8 +31,8 @@ RDEPEND="|| (
 	dev-java/java-config:2
 	>=dev-java/jopt-simple-4.5:0
 
-	dev-java/bcprov:0
-	dev-java/commons-io:1
+	>=dev-java/bcprov-1.47:0
+	>=dev-java/commons-io-2.4:1
 	dev-java/commons-lang:3.1
 	dev-java/guava:14
 	>=dev-java/jinput-1_pre20100416:0
