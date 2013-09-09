@@ -102,7 +102,7 @@ nativeDirs = set()
 parsed_java_args = vars(java_args[0])
 parsed_minecraft_args = vars(minecraft_args[0])
 
-if inspect.getargspec(EnvironmentManager.__init__).args == 1:
+if len(inspect.getargspec(EnvironmentManager.__init__).args) == 1:
   # java-config < 2.2
   manager = EnvironmentManager()
 else:
