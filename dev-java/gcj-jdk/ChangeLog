@@ -2,6 +2,13 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*gcj-jdk-4.7.3-r1 (19 Sep 2013)
+*gcj-jdk-4.8.1-r1 (19 Sep 2013)
+
+  19 Sep 2013; Andrew John Hughes <gnu_andrew@member.fsf.org> +files/javac.in,
+  +gcj-jdk-4.7.3-r1.ebuild, +gcj-jdk-4.8.1-r1.ebuild, -gcj-jdk-4.8.1.ebuild:
+  Wrap ecj so that it defaults to 1.5 and handles some javac options.
+
   04 Sep 2013; Andrew John Hughes <gnu_andrew@member.fsf.org>
   gcj-jdk-4.8.1.ebuild:
   Update JAPI URLs now an up-to-date 1.5 comparison is available.  Use full path

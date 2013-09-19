@@ -76,7 +76,13 @@ src_install() {
 		${gcjhome}/lib/tools.jar
 	dosym ${gcclib}/include ${gcjhome}/include
 
-	dosym /usr/bin/ecj-gcj-${ECJ_GCJ_SLOT} ${gcjhome}/bin/javac
+	local ecj_jar="$(readlink "${EPREFIX}"/usr/share/eclipse-ecj/ecj.jar)"
+	exeinto ${gcjhome}/bin
+	cat "${FILESDIR}"/javac.in | sed -e "s#@JAVA@#${gcjhome}/bin/java#" \
+		-e "s#@ECJ_JAR@#${ecj_jar}#" \
+		-e "s#@RT_JAR@#${gcjhome}/jre/lib/rt.jar#" \
+		-e "s#@TOOLS_JAR@#${gcjhome}/lib/tools.jar#" \
+	| newexe - javac
 
 	set_java_env
 }
