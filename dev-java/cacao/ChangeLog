@@ -2,6 +2,12 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/cacao/ChangeLog,v 1.22 2012/06/14 21:25:44 radhermit Exp $
 
+*cacao-1.6.0-r1 (20 Sep 2013)
+
+  20 Sep 2013; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +cacao-1.6.0-r1.ebuild, -cacao-1.6.0.ebuild, files/javac.in:
+  Don't set classpath if $CLASSPATH is set.
+
   11 Mar 2013; Andrew John Hughes <andrew@gentoo.org> files/javac.in:
   Set classpath to current directory if not set in javac wrapper.
 
@@ -90,4 +96,3 @@
   20 Feb 2005; Karl Trygve Kalleberg <karltk@gentoo.org> +metadata.xml,
   +cacao-0.91.ebuild:
   Initial import. Ebuild submitted by myself.
-

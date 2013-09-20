@@ -13,7 +13,7 @@ push @source15, '-source', '1.5'
 push @target15, '-target', '1.5'
     unless grep {$_ eq '-target'} @ARGV;  
 push @cp, '-cp', '.'
-    unless grep {$_ =~ '\-c(p|lasspath)'} @ARGV;
+    unless grep {$_ =~ '\-c(p|lasspath)'} @ARGV or $ENV{CLASSPATH};
 my @ecj_parms = ($ECJ_WARNINGS, @bcoption, @source15, @target15, @cp);
 
 # Work around ecj's inability to handle duplicate command-line
