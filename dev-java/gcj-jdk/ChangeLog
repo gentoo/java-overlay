@@ -2,6 +2,14 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*gcj-jdk-4.7.3-r2 (20 Sep 2013)
+*gcj-jdk-4.8.1-r2 (20 Sep 2013)
+
+  20 Sep 2013; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +gcj-jdk-4.7.3-r2.ebuild, +gcj-jdk-4.8.1-r2.ebuild, -gcj-jdk-4.7.3-r1.ebuild,
+  -gcj-jdk-4.8.1-r1.ebuild, files/javac.in:
+  Don't set classpath if $CLASSPATH is set.
+
 *gcj-jdk-4.7.3-r1 (19 Sep 2013)
 *gcj-jdk-4.8.1-r1 (19 Sep 2013)
 
