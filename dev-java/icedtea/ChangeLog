@@ -2,6 +2,24 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.4.2 (24 Sep 2013)
+
+  24 Sep 2013; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +icedtea-7.2.4.2.ebuild, -icedtea-7.2.4.1-r1.ebuild:
+  2.4.2 release: http://bitly.com/1b82gNW
+
+*icedtea-7.9999 (19 Sep 2013)
+
+  19 Sep 2013; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +icedtea-7.9999.ebuild:
+  Add live ebuild for 7 (finally).
+
+*icedtea-7.2.3.12 (09 Sep 2013)
+
+  09 Sep 2013; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +icedtea-7.2.3.12.ebuild:
+  Don't remove current versions from overlay!
+
 *icedtea-6.1.11.13 (07 Sep 2013)
 
   07 Sep 2013; Andrew John Hughes <gnu_andrew@member.fsf.org>

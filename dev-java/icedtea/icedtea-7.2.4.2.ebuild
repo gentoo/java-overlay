@@ -14,15 +14,15 @@ inherit java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-CORBA_TARBALL="23ae4e0e0cce.tar.gz"
-JAXP_TARBALL="5be6b670d08b.tar.gz"
-JAXWS_TARBALL="c0e48fdfb695.tar.gz"
-JDK_TARBALL="65d95818d79e.tar.gz"
-LANGTOOLS_TARBALL="91c95fd8eea8.tar.gz"
-OPENJDK_TARBALL="ae86c6974e8e.tar.gz"
-HOTSPOT_TARBALL="5f53e7717116.tar.gz"
+CORBA_TARBALL="5ea58899ae9f.tar.gz"
+JAXP_TARBALL="135f46e0e653.tar.gz"
+JAXWS_TARBALL="a2ff16e5361f.tar.gz"
+JDK_TARBALL="4bf5ac86e0e4.tar.gz"
+LANGTOOLS_TARBALL="06ea051f7ffe.tar.gz"
+OPENJDK_TARBALL="6125b83238df.tar.gz"
+HOTSPOT_TARBALL="b732355257e3.tar.gz"
 CACAO_TARBALL="e215e36be9fc.tar.gz"
-JAMVM_TARBALL="jamvm-7c8dceb90880616b7dd670f257961a1f5f371ec3.tar.gz"
+JAMVM_TARBALL="jamvm-ac22c9948434e528ece451642b4ebde40953ee7e.tar.gz"
 
 CORBA_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-corba-${CORBA_TARBALL}"
 JAXP_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-jaxp-${JAXP_TARBALL}"
@@ -36,8 +36,9 @@ JAMVM_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-${JAMVM_TARBALL}"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
+SRC_PKG="${ICEDTEA_PKG}.tar.xz"
 SRC_URI="
-	http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
+	http://icedtea.classpath.org/download/source/${SRC_PKG}
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/archive/${OPENJDK_TARBALL}
 	 -> ${OPENJDK_GENTOO_TARBALL}
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/corba/archive/${CORBA_TARBALL}
@@ -59,7 +60,7 @@ LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 M
 SLOT="7"
 KEYWORDS="~amd64 ~ia64 ~x86"
 
-IUSE="+X +alsa cacao cjk +cups debug doc examples jamvm javascript +jbootstrap +nsplugin
+IUSE="+X +alsa cacao cjk +cups debug doc examples jamvm javascript +jbootstrap kerberos +nsplugin
 	+nss pax_kernel pulseaudio +source test zero +webstart"
 
 # Ideally the following were optional at build time.
@@ -99,6 +100,7 @@ COMMON_DEP="
 	javascript? ( dev-java/rhino:1.6 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
 	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11:= )
+	kerberos? ( virtual/krb5 )
 	>=dev-util/systemtap-1"
 
 # cups is needed for X. #390945 #390975
@@ -164,7 +166,7 @@ pkg_setup() {
 }
 
 src_unpack() {
-	unpack ${ICEDTEA_PKG}.tar.gz
+	unpack ${SRC_PKG}
 }
 
 java_prepare() {
@@ -259,6 +261,7 @@ src_configure() {
 		$(use_enable nss) \
 		$(use_enable pulseaudio pulse-java) \
 		$(use_enable jamvm) \
+		$(use_enable kerberos system-kerberos) \
 		$(use_with pax_kernel pax paxctl) \
 		${zero_config} ${cacao_config}
 }
