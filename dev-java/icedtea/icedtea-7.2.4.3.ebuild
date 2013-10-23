@@ -14,13 +14,13 @@ inherit java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-CORBA_TARBALL="5ea58899ae9f.tar.gz"
-JAXP_TARBALL="135f46e0e653.tar.gz"
-JAXWS_TARBALL="a2ff16e5361f.tar.gz"
-JDK_TARBALL="4bf5ac86e0e4.tar.gz"
-LANGTOOLS_TARBALL="06ea051f7ffe.tar.gz"
-OPENJDK_TARBALL="6125b83238df.tar.gz"
-HOTSPOT_TARBALL="b732355257e3.tar.gz"
+CORBA_TARBALL="8ed5df839fbc.tar.gz"
+JAXP_TARBALL="8f220f7b51c7.tar.gz"
+JAXWS_TARBALL="652eb396f959.tar.gz"
+JDK_TARBALL="7958751eb9ef.tar.gz"
+LANGTOOLS_TARBALL="3c8eb52a32ea.tar.gz"
+OPENJDK_TARBALL="e2f5917da3c1.tar.gz"
+HOTSPOT_TARBALL="b59e02d9e72b.tar.gz"
 CACAO_TARBALL="e215e36be9fc.tar.gz"
 JAMVM_TARBALL="jamvm-ac22c9948434e528ece451642b4ebde40953ee7e.tar.gz"
 
@@ -137,8 +137,7 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	app-arch/unzip
 	app-arch/zip
 	app-misc/ca-certificates
-	>=dev-java/ant-core-1.8.1
-	dev-java/ant-nodeps
+	>=dev-java/ant-core-1.8.2
 	dev-lang/perl
 	>=dev-libs/libxslt-1.1.26
 	dev-libs/openssl
