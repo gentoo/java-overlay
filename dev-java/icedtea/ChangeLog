@@ -2,6 +2,12 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.11.14 (13 Nov 2013)
+
+  13 Nov 2013; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +icedtea-6.1.11.14.ebuild, -icedtea-6.1.11.13.ebuild:
+  IcedTea 1.11.14 security release: http://bitly.com/1eK3iAA
+
   23 Oct 2013; Andrew John Hughes <gnu_andrew@member.fsf.org>
   -icedtea-7.2.1.9-r1.ebuild, -icedtea-7.2.2.9-r1.ebuild:
   Remove unsupported 2.1.x and 2.2.x series, obsoleted by latest security
