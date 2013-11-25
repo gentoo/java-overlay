@@ -25,8 +25,9 @@ JAMVM_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-${JAMVM_TARBALL}"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
+SRC_PKG="${ICEDTEA_PKG}.tar.xz"
 SRC_URI="
-	http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
+	http://icedtea.classpath.org/download/source/${SRC_PKG}
 	http://download.java.net/openjdk/jdk6/promoted/b${OPENJDK_BUILD}/${OPENJDK_TARBALL}
 	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL} -> ${CACAO_GENTOO_TARBALL}
 	http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL} -> ${JAMVM_GENTOO_TARBALL}"
@@ -130,7 +131,7 @@ pkg_setup() {
 }
 
 src_unpack() {
-	unpack ${ICEDTEA_PKG}.tar.gz
+	unpack ${SRC_PKG}
 }
 
 java_prepare() {
