@@ -2,6 +2,10 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  01 Dec 2013; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.11.14.ebuild,
+  icedtea-6.1.12.7.ebuild, icedtea-7.2.3.12.ebuild, icedtea-7.2.4.3.ebuild:
+  Pin virtual/jpeg dependency to slot 0, bug #491250
+
 *icedtea-6.1.12.7 (25 Nov 2013)
 
   25 Nov 2013; Andrew John Hughes <gnu_andrew@member.fsf.org>

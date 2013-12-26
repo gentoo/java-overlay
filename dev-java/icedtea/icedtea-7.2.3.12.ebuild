@@ -95,7 +95,7 @@ COMMON_DEP="
 	>=media-libs/lcms-2.5
 	>=media-libs/libpng-1.2
 	>=sys-libs/zlib-1.2.3
-	virtual/jpeg
+	virtual/jpeg:0
 	javascript? ( dev-java/rhino:1.6 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
 	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
