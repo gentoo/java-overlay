@@ -7,13 +7,14 @@ EAPI="5"
 # jython depends on java-config, so don't add it or things will break
 PYTHON_COMPAT=( python{2_6,2_7,3_1,3_2,3_3} pypy{1_8,1_9} )
 
-inherit subversion distutils-r1 eutils
+inherit git-2 distutils-r1 eutils
 
-ESVN_REPO_URI="http://overlays.gentoo.org/svn/proj/java/projects/java-config-2/trunk/"
+EGIT_REPO_URI="https://git.overlays.gentoo.org/gitroot/proj/java-config.git"
+EGIT_BRANCH="java-config-2.2"
 
 DESCRIPTION="Java environment configuration tool"
 HOMEPAGE="http://www.gentoo.org/proj/en/java/"
-#SRC_URI="mirror://gentoo/${P}.tar.bz2"
+SRC_URI=""
 
 LICENSE="GPL-2"
 SLOT="2"

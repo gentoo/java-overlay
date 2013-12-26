@@ -7,18 +7,19 @@ EAPI="5"
 # jython depends on java-config, so don't add it or things will break
 PYTHON_COMPAT=( python{2_6,2_7,3_1,3_2,3_3} pypy{1_8,1_9} )
 
-inherit distutils-r1
+inherit git-2 distutils-r1 eutils
 
-DESCRIPTION="Java environment configuration query tool"
+EGIT_REPO_URI="https://git.overlays.gentoo.org/gitroot/proj/java-config.git"
+
+DESCRIPTION="Java environment configuration tool"
 HOMEPAGE="http://www.gentoo.org/proj/en/java/"
-SRC_URI="http://dev.gentoo.org/~sera/distfiles/${P}.tar.bz2"
+SRC_URI=""
 
 LICENSE="GPL-2"
 SLOT="2"
-KEYWORDS="~amd64"
+KEYWORDS=""
 IUSE=""
 
-# baselayout-java is only a dep till it can be added to eclass.
 RDEPEND="
 	>=dev-java/java-config-wrapper-0.15
 	sys-apps/baselayout-java
