@@ -1,4 +1,4 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -18,7 +18,7 @@ IUSE=""
 ECJ_GCJ_SLOT="3.6"
 
 RDEPEND="
-	~sys-devel/gcc-${PV}[gcj,gtk]
+	~sys-devel/gcc-${PV}[gcj,awt]
 	dev-java/ecj-gcj:${ECJ_GCJ_SLOT}"
 DEPEND="${RDEPEND}"
 

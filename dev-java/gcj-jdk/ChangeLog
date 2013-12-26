@@ -2,6 +2,15 @@
 # Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*gcj-jdk-4.8.2 (26 Dec 2013)
+
+  26 Dec 2013; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +gcj-jdk-4.8.2.ebuild, -gcj-jdk-4.8.1-r2.ebuild, gcj-jdk-4.6.2-r1.ebuild,
+  gcj-jdk-4.7.0-r1.ebuild, gcj-jdk-4.7.1-r1.ebuild, gcj-jdk-4.7.1.ebuild,
+  gcj-jdk-4.7.2-r1.ebuild, gcj-jdk-4.7.2.ebuild, gcj-jdk-4.7.3-r2.ebuild,
+  gcj-jdk-4.8.0-r1.ebuild:
+  Add support for gcc 4.8.2.  Change USE flag dependency from gtk to awt.
+
 *gcj-jdk-4.7.3-r2 (20 Sep 2013)
 *gcj-jdk-4.8.1-r2 (20 Sep 2013)
 

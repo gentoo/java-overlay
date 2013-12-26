@@ -19,7 +19,7 @@ ECJ_GCJ_SLOT="3.6"
 
 RDEPEND="
 	~sys-devel/gcc-${PV}[gcj]
-	X? ( ~sys-devel/gcc-${PV}[gtk] )
+	X? ( ~sys-devel/gcc-${PV}[awt] )
 	dev-java/ecj-gcj:${ECJ_GCJ_SLOT}"
 DEPEND="${RDEPEND}"
 
