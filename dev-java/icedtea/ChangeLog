@@ -1,6 +1,15 @@
 # ChangeLog for dev-java/icedtea
-# Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2014 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+*icedtea-6.1.12.8 (23 Jan 2014)
+*icedtea-6.1.13.1 (23 Jan 2014)
+
+  23 Jan 2014; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +icedtea-6.1.12.8.ebuild, +icedtea-6.1.13.1.ebuild, -icedtea-6.1.12.7.ebuild,
+  -icedtea-6.1.13.0.ebuild, icedtea-6.9999.ebuild:
+  IcedTea 1.12.8 & 1.13.1 for OpenJDK 6 security updates:
+  http://bitly.com/1eTE0MN
 
   27 Dec 2013; Andrew John Hughes <gnu_andrew@member.fsf.org>
   icedtea-6.1.13.0.ebuild:
