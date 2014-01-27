@@ -36,7 +36,7 @@ LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 M
 SLOT="6"
 KEYWORDS="~amd64"
 
-IUSE="+X +alsa cacao cjk +cups debug doc examples javascript +jbootstrap +nsplugin
+IUSE="+X +alsa cacao cjk +cups debug doc examples javascript +jbootstrap kerberos +nsplugin
 	+nss pax_kernel pulseaudio +source systemtap test +webstart"
 
 # Ideally the following were optional at build time.
@@ -69,6 +69,7 @@ COMMON_DEP="
 	virtual/jpeg:0
 	>=media-libs/lcms-2.5
 	javascript? ( dev-java/rhino:1.6 )
+	kerberos? ( virtual/krb5 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
 	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
 	systemtap? ( >=dev-util/systemtap-1 )"
@@ -206,6 +207,7 @@ src_configure() {
 		--disable-downloading \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
+		$(use_enable kerberos system-kerberos) \
 		$(use_enable nss) \
 		$(use_enable pulseaudio pulse-java) \
 		$(use_enable systemtap) \
