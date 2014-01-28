@@ -104,8 +104,6 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	app-arch/unzip
 	app-arch/zip
 	app-misc/ca-certificates
-	>=dev-java/ant-core-1.8.1
-	dev-java/ant-nodeps
 	dev-lang/perl
 	>=dev-libs/libxslt-1.1.26
 	dev-libs/openssl
@@ -215,8 +213,8 @@ src_compile() {
 	# Would use GENTOO_VM otherwise.
 	export ANT_RESPECT_JAVA_HOME=TRUE
 
-	# Load the least that's needed to avoid possible classpath collisions.
-	export ANT_TASKS="ant-nodeps"
+	# With ant >=1.8.2 all required tasks are part of ant-core
+	export ANT_TASKS="none"
 
 	emake
 }
