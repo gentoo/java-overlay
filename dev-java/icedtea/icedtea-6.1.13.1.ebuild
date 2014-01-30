@@ -34,7 +34,7 @@ SRC_URI="
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="6"
-KEYWORDS="~amd64 ~ia64 ~ppc ~ppc64 ~x86"
+KEYWORDS="~amd64 ~arm ~ia64 ~ppc ~ppc64 ~x86"
 
 IUSE="+X +alsa cacao cjk +cups debug doc examples javascript +jbootstrap kerberos +nsplugin
 	+nss pax_kernel pulseaudio +source systemtap test +webstart"
@@ -135,6 +135,9 @@ src_unpack() {
 }
 
 java_prepare() {
+	# For bootstrap builds as the sandbox control file might not yet exist.
+	addpredict /proc/self/coredump_filter
+
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
 }
@@ -298,6 +301,7 @@ src_install() {
 	if ! use X || ! use alsa || ! use cups; then
 		java-vm_revdep-mask "${dest}"
 	fi
+	java-vm_sandbox-predict /proc/self/coredump_filter
 }
 
 pkg_preinst() {
