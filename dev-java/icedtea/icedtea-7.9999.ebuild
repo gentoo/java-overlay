@@ -8,24 +8,21 @@
 # *********************************************************
 
 EAPI="5"
+SLOT="7"
 
 inherit autotools java-pkg-2 java-vm-2 mercurial pax-utils prefix versionator virtualx
 
-LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
-SLOT="7"
-KEYWORDS=""
-
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-CORBA_TARBALL="2abbbec3c03c.tar.gz"
-JAXP_TARBALL="9ce0c87f3e87.tar.gz"
-JAXWS_TARBALL="7278e9a73874.tar.gz"
-JDK_TARBALL="afaedb56b499.tar.gz"
-LANGTOOLS_TARBALL="c523dcea4ff3.tar.gz"
-OPENJDK_TARBALL="424e7e279ef6.tar.gz"
-HOTSPOT_TARBALL="2efa7b70e843.tar.gz"
+CORBA_TARBALL="16906c5a09da.tar.gz"
+JAXP_TARBALL="d7085aad637f.tar.gz"
+JAXWS_TARBALL="4aeccc3040fa.tar.gz"
+JDK_TARBALL="3162252ff26b.tar.gz"
+LANGTOOLS_TARBALL="f75a642c2913.tar.gz"
+OPENJDK_TARBALL="fc5d15cc35b4.tar.gz"
+HOTSPOT_TARBALL="f30e87f16d90.tar.gz"
 CACAO_TARBALL="e215e36be9fc.tar.gz"
-JAMVM_TARBALL="jamvm-ac22c9948434e528ece451642b4ebde40953ee7e.tar.gz"
+JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
 
 CORBA_GENTOO_TARBALL="icedtea${SLOT}-corba-${CORBA_TARBALL}"
 JAXP_GENTOO_TARBALL="icedtea${SLOT}-jaxp-${JAXP_TARBALL}"
@@ -58,8 +55,11 @@ SRC_URI="
 	http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL} -> ${JAMVM_GENTOO_TARBALL}"
 EHG_REPO_URI="http://icedtea.classpath.org/hg/icedtea7"
 
-IUSE="+X +alsa cacao cjk +cups debug doc examples jamvm javascript +jbootstrap +nsplugin
-	+nss pax_kernel pulseaudio +source test zero +webstart"
+LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
+KEYWORDS=""
+
+IUSE="+X +alsa cacao cjk +cups debug doc examples jamvm javascript +jbootstrap kerberos +nsplugin
+	+nss pax_kernel pulseaudio smartcard +source test zero +webstart"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
@@ -94,10 +94,11 @@ COMMON_DEP="
 	>=media-libs/lcms-2.5
 	>=media-libs/libpng-1.2:=
 	>=sys-libs/zlib-1.2.3:=
-	virtual/jpeg:=
+	virtual/jpeg:0=
 	javascript? ( dev-java/rhino:1.6 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
 	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11:= )
+	kerberos? ( virtual/krb5 )
 	>=dev-util/systemtap-1"
 
 # cups is needed for X. #390945 #390975
@@ -141,7 +142,8 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	sys-apps/attr
 	sys-apps/lsb-release
 	${X_DEPEND}
-	pax_kernel? ( sys-apps/paxctl )"
+	pax_kernel? ( sys-apps/elfix )
+	smartcard? ( sys-apps/pcsc-lite )"
 
 PDEPEND="webstart? ( dev-java/icedtea-web:7 )
 	nsplugin? ( dev-java/icedtea-web:7[nsplugin] )"
@@ -205,9 +207,10 @@ src_configure() {
 	fi
 
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
+	# In-tree JIT ports are available for amd64, ppc64, SPARC and x86.
 	# Otherwise use CACAO
-	if ! has "${ARCH}" amd64 sparc x86 ; then
-		if has "${ARCH}" ppc ppc64 arm ; then
+	if ! has "${ARCH}" amd64 ppc64 sparc x86 ; then
+		if has "${ARCH}" ppc arm ; then
 			use_cacao="yes";
 		else
 			use_zero="yes";
@@ -250,7 +253,7 @@ src_configure() {
 		--with-cacao-src-zip="${DISTDIR}/${CACAO_GENTOO_TARBALL}" \
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_GENTOO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
-		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
+		--with-abs-install-dir="${EPREFIX}/usr/$(get_libdir)/icedtea${SLOT}" \
 		--disable-downloading --disable-Werror \
 		--enable-system-lcms \
 		$(use_enable !debug optimizations) \
@@ -258,7 +261,9 @@ src_configure() {
 		$(use_enable nss) \
 		$(use_enable pulseaudio pulse-java) \
 		$(use_enable jamvm) \
-		$(use_with pax_kernel pax paxctl) \
+		$(use_enable kerberos system-kerberos) \
+		$(use_with pax_kernel pax "${EPREFIX}/usr/sbin/paxmark.sh") \
+		$(use_enable smartcard system-pcsc) \
 		${zero_config} ${cacao_config}
 }
 

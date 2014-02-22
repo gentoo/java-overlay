@@ -2,6 +2,11 @@
 # Copyright 1999-2014 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  22 Feb 2014; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  icedtea-7.9999.ebuild, metadata.xml:
+  Update live 2.x ebuild to work with latest additions (updated PaX support,
+  ppc64 port, kerberos & smartcard compile-time link option)
+
   30 Jan 2014; Ralph Sennhauser <sera@gentoo.org> icedtea-6.1.13.1.ebuild:
   Fix sandbox violation #499746
   Copy arm keyword from main tree
