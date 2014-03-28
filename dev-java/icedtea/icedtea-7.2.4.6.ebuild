@@ -9,7 +9,7 @@
 
 EAPI="5"
 
-inherit java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
+inherit autotools java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
@@ -173,6 +173,9 @@ java_prepare() {
 
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
+
+	epatch "${FILESDIR}/${PN}-${SLOT}-ecj_jar.patch"
+	eautoreconf
 }
 
 src_configure() {

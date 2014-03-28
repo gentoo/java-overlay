@@ -7,7 +7,7 @@
 # * IF YOU CHANGE THIS EBUILD, CHANGE ICEDTEA-7.* AS WELL *
 # *********************************************************
 
-EAPI="4"
+EAPI="5"
 
 inherit java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 
@@ -46,8 +46,8 @@ CUPS_COMMON_DEP="
 	>=net-print/cups-1.2.12"
 X_COMMON_DEP="
 	dev-libs/glib
-	>=media-libs/freetype-2.3.5
-	>=x11-libs/gtk+-2.8:2
+	>=media-libs/freetype-2.3.5:2=
+	>=x11-libs/gtk+-2.8:2=
 	>=x11-libs/libX11-1.1.3
 	>=x11-libs/libXext-1.1.1
 	>=x11-libs/libXi-1.1.3
@@ -63,15 +63,15 @@ X_DEPEND="
 	x11-proto/xproto"
 
 COMMON_DEP="
-	>=media-libs/giflib-4.1.6
-	>=media-libs/libpng-1.2
-	>=sys-libs/zlib-1.2.3
-	virtual/jpeg:0
+	>=media-libs/giflib-4.1.6:=
+	>=media-libs/libpng-1.2:=
+	>=sys-libs/zlib-1.2.3:=
+	virtual/jpeg:0=
 	>=media-libs/lcms-2.5
 	javascript? ( dev-java/rhino:1.6 )
 	kerberos? ( virtual/krb5 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
-	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
+	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11:= )
 	systemtap? ( >=dev-util/systemtap-1 )"
 
 # media-fonts/lklug needs ppc ppc64 keywords
@@ -112,7 +112,7 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	virtual/pkgconfig
 	sys-apps/lsb-release
 	${X_DEPEND}
-	pax_kernel? ( sys-apps/paxctl )"
+	pax_kernel? ( sys-apps/elfix )"
 
 PDEPEND="webstart? ( dev-java/icedtea-web:6 )
 	nsplugin? ( dev-java/icedtea-web:6[nsplugin] )"
@@ -204,15 +204,15 @@ src_configure() {
 		--with-cacao-src-zip="${DISTDIR}/${CACAO_GENTOO_TARBALL}" \
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_GENTOO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
-		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
-		--disable-downloading \
+		--with-abs-install-dir="${EPREFIX}/usr/$(get_libdir)/icedtea${SLOT}" \
+		--disable-downloading --disable-Werror \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable kerberos system-kerberos) \
 		$(use_enable nss) \
 		$(use_enable pulseaudio pulse-java) \
 		$(use_enable systemtap) \
-		$(use_with pax_kernel pax paxctl)
+		$(use_with pax_kernel pax "${EPREFIX}/usr/sbin/paxmark.sh")
 }
 
 src_compile() {
