@@ -7,20 +7,20 @@
 # * IF YOU CHANGE THIS EBUILD, CHANGE ICEDTEA-6.* AS WELL *
 # *********************************************************
 
-EAPI="4"
+EAPI="5"
 
 inherit java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-CORBA_TARBALL="ea108ff3be9a.tar.gz"
-JAXP_TARBALL="332f0234a53e.tar.gz"
-JAXWS_TARBALL="fdc4ad9f30c6.tar.gz"
-JDK_TARBALL="4a0cf2c05cc6.tar.gz"
-LANGTOOLS_TARBALL="6c9b532f4281.tar.gz"
-OPENJDK_TARBALL="e62743867f54.tar.gz"
-HOTSPOT_TARBALL="37b254871acb".tar.gz
+CORBA_TARBALL="c7d0b72f704f.tar.gz"
+JAXP_TARBALL="0eb202593710.tar.gz"
+JAXWS_TARBALL="482a3f64a8ea.tar.gz"
+JDK_TARBALL="3428bff8a33a.tar.gz"
+LANGTOOLS_TARBALL="d50a9c5cd291.tar.gz"
+OPENJDK_TARBALL="14181eb6c00d.tar.gz"
+HOTSPOT_TARBALL="72a544aeb892.tar.gz"
 CACAO_TARBALL="a567bcb7f589.tar.gz"
 JAMVM_TARBALL="jamvm-0972452d441544f7dd29c55d64f1ce3a5db90d82.tar.gz"
 
@@ -36,8 +36,9 @@ JAMVM_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-${JAMVM_TARBALL}"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
+SRC_PKG="${ICEDTEA_PKG}.tar.xz"
 SRC_URI="
-	http://icedtea.classpath.org/download/source/${ICEDTEA_PKG}.tar.gz
+	http://icedtea.classpath.org/download/source/${SRC_PKG}
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/archive/${OPENJDK_TARBALL}
 	 -> ${OPENJDK_GENTOO_TARBALL}
 	http://icedtea.classpath.org/hg/release/icedtea7-forest-${ICEDTEA_BRANCH}/corba/archive/${CORBA_TARBALL}
@@ -71,10 +72,10 @@ X_COMMON_DEP="
 	>=dev-libs/atk-1.30.0
 	>=dev-libs/glib-2.26
 	media-libs/fontconfig
-	>=media-libs/freetype-2.3.5
-	>=x11-libs/cairo-1.8.8
+	>=media-libs/freetype-2.3.5:2=
+	>=x11-libs/cairo-1.8.8:=
 	x11-libs/gdk-pixbuf:2
-	>=x11-libs/gtk+-2.8:2
+	>=x11-libs/gtk+-2.8:2=
 	>=x11-libs/libX11-1.1.3
 	>=x11-libs/libXext-1.1.1
 	>=x11-libs/libXi-1.1.3
@@ -91,14 +92,14 @@ X_DEPEND="
 	x11-proto/xproto"
 
 COMMON_DEP="
-	>=media-libs/giflib-4.1.6
+	>=media-libs/giflib-4.1.6:=
 	>=media-libs/lcms-2.5
-	>=media-libs/libpng-1.2
-	>=sys-libs/zlib-1.2.3
-	virtual/jpeg:0
+	>=media-libs/libpng-1.2:=
+	>=sys-libs/zlib-1.2.3:=
+	virtual/jpeg:0=
 	javascript? ( dev-java/rhino:1.6 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
-	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
+	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11:= )
 	systemtap? ( >=dev-util/systemtap-1 )"
 
 # cups is needed for X. #390945 #390975
@@ -142,7 +143,7 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	sys-apps/attr
 	sys-apps/lsb-release
 	${X_DEPEND}
-	pax_kernel? ( sys-apps/paxctl )"
+	pax_kernel? ( sys-apps/elfix )"
 
 PDEPEND="webstart? ( dev-java/icedtea-web:7 )
 	nsplugin? ( dev-java/icedtea-web:7[nsplugin] )"
@@ -151,7 +152,6 @@ S="${WORKDIR}"/${ICEDTEA_PKG}
 
 pkg_setup() {
 	JAVA_PKG_WANT_BUILD_VM="
-		icedtea-7 icedtea-bin-7 icedtea7
 		icedtea-6 icedtea-bin-6 icedtea6 icedtea6-bin
 		gcj-jdk"
 	JAVA_PKG_WANT_SOURCE="1.5"
@@ -162,7 +162,7 @@ pkg_setup() {
 }
 
 src_unpack() {
-	unpack ${ICEDTEA_PKG}.tar.gz
+	unpack ${SRC_PKG}
 }
 
 java_prepare() {
@@ -248,14 +248,14 @@ src_configure() {
 		--with-cacao-src-zip="${DISTDIR}/${CACAO_GENTOO_TARBALL}" \
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_GENTOO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
-		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
+		--with-abs-install-dir="${EPREFIX}/usr/$(get_libdir)/icedtea${SLOT}" \
 		--disable-downloading --disable-Werror \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nss) \
 		$(use_enable pulseaudio pulse-java) \
 		$(use_enable systemtap) \
-		$(use_with pax_kernel pax paxctl) \
+		$(use_with pax_kernel pax "${EPREFIX}/usr/sbin/paxmark.sh") \
 		${zero_config}
 }
 

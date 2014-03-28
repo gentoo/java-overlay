@@ -14,13 +14,13 @@ inherit java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-CORBA_TARBALL="3594dbde270d.tar.gz"
-JAXP_TARBALL="8fe156ad49e2.tar.gz"
-JAXWS_TARBALL="32ea8b1ed91a.tar.gz"
-JDK_TARBALL="9db88c18e114.tar.gz"
-LANGTOOLS_TARBALL="dabd37b7e295.tar.gz"
-OPENJDK_TARBALL="410eb7fef869.tar.gz"
-HOTSPOT_TARBALL="2cb58882dac3.tar.gz"
+CORBA_TARBALL="48ef1bb6d120.tar.gz"
+JAXP_TARBALL="e0ba4b9a8b91.tar.gz"
+JAXWS_TARBALL="4bd947cd146b.tar.gz"
+JDK_TARBALL="b5282042aae0.tar.gz"
+LANGTOOLS_TARBALL="06eeb77dac24.tar.gz"
+OPENJDK_TARBALL="b028e58c1b77.tar.gz"
+HOTSPOT_TARBALL="172674e0ab65.tar.gz"
 CACAO_TARBALL="e215e36be9fc.tar.gz"
 JAMVM_TARBALL="jamvm-ac22c9948434e528ece451642b4ebde40953ee7e.tar.gz"
 
@@ -144,7 +144,7 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	sys-apps/attr
 	sys-apps/lsb-release
 	${X_DEPEND}
-	pax_kernel? ( sys-apps/paxctl )"
+	pax_kernel? ( sys-apps/elfix )"
 
 PDEPEND="webstart? ( dev-java/icedtea-web:7 )
 	nsplugin? ( dev-java/icedtea-web:7[nsplugin] )"
@@ -251,7 +251,7 @@ src_configure() {
 		--with-cacao-src-zip="${DISTDIR}/${CACAO_GENTOO_TARBALL}" \
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_GENTOO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
-		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
+		--with-abs-install-dir="${EPREFIX}/usr/$(get_libdir)/icedtea${SLOT}" \
 		--disable-downloading --disable-Werror \
 		--enable-system-lcms \
 		$(use_enable !debug optimizations) \
@@ -260,7 +260,7 @@ src_configure() {
 		$(use_enable pulseaudio pulse-java) \
 		$(use_enable jamvm) \
 		$(use_enable kerberos system-kerberos) \
-		$(use_with pax_kernel pax paxctl) \
+		$(use_with pax_kernel pax "${EPREFIX}/usr/sbin/paxmark.sh") \
 		${zero_config} ${cacao_config}
 }
 
