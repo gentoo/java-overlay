@@ -9,18 +9,18 @@
 
 EAPI="5"
 
-inherit autotools java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
+inherit java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-CORBA_TARBALL="48ef1bb6d120.tar.gz"
-JAXP_TARBALL="e0ba4b9a8b91.tar.gz"
-JAXWS_TARBALL="4bd947cd146b.tar.gz"
-JDK_TARBALL="b5282042aae0.tar.gz"
-LANGTOOLS_TARBALL="06eeb77dac24.tar.gz"
-OPENJDK_TARBALL="b028e58c1b77.tar.gz"
-HOTSPOT_TARBALL="172674e0ab65.tar.gz"
+CORBA_TARBALL="e6ad5b912691.tar.gz"
+JAXP_TARBALL="94b7e8e0d96f.tar.gz"
+JAXWS_TARBALL="bd9a50a78d04.tar.gz"
+JDK_TARBALL="9448fff93286.tar.gz"
+LANGTOOLS_TARBALL="8c26a3c39128.tar.gz"
+OPENJDK_TARBALL="13970e76b784.tar.gz"
+HOTSPOT_TARBALL="69b542696e5b.tar.gz"
 CACAO_TARBALL="e215e36be9fc.tar.gz"
 JAMVM_TARBALL="jamvm-ac22c9948434e528ece451642b4ebde40953ee7e.tar.gz"
 
@@ -137,6 +137,7 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	app-arch/unzip
 	app-arch/zip
 	app-misc/ca-certificates
+	dev-java/ant-core
 	dev-lang/perl
 	>=dev-libs/libxslt-1.1.26
 	dev-libs/openssl
@@ -173,9 +174,6 @@ java_prepare() {
 
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
-
-	epatch "${FILESDIR}/${PN}-${SLOT}-ecj_jar.patch"
-	eautoreconf
 }
 
 src_configure() {

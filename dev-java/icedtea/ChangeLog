@@ -2,6 +2,21 @@
 # Copyright 1999-2014 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.4.7 (16 Apr 2014)
+
+  16 Apr 2014; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +icedtea-7.2.4.7.ebuild, -files/icedtea-6-pass_javac_memory_args_to_vm.patch,
+  -files/icedtea-6.1.10.4_pax_kernel_support.patch,
+  -files/icedtea-6_pax_kernel_support.patch,
+  -files/icedtea-7-compile_for_7_cacao_mem.patch,
+  -files/icedtea-7-compiler_detection_cleanup.patch,
+  -files/icedtea-7-ecj_jar.patch, -files/icedtea-7-no_suffix.patch,
+  -files/icedtea-7.2.1-pax_kernel_support.patch,
+  -files/icedtea-7.2.1-pax_mark_rmic_java.patch,
+  -files/icedtea-7.2.1-pr986-cacao_memory_fix.patch,
+  -files/icedtea-7.2.2-pr986-cacao_memory_fix_v2.patch, -icedtea-7.2.4.6.ebuild:
+  IcedTea 2.4.7 security update: http://bitly.com/1maXJMQ
+
 *icedtea-6.1.13.3 (15 Apr 2014)
 
   15 Apr 2014; Andrew John Hughes <gnu_andrew@member.fsf.org>
