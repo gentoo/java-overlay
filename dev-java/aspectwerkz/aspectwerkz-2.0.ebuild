@@ -1,4 +1,4 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/aspectwerkz/aspectwerkz-2.0.ebuild,v 1.8 2013/09/01 09:33:06 grobian Exp $
 
@@ -20,7 +20,6 @@ RESTRICT="test"
 
 COMMON_DEP="
 	dev-java/asm:1.5
-	dev-java/concurrent-util:0
 	dev-java/dom4j:1
 	dev-java/jrexx:0
 	dev-java/trove:0
@@ -39,12 +38,12 @@ java_prepare() {
 	# unit tests need this
 	chmod +x "bin/${PN}" || die
 	epatch "${FILESDIR}/${P}-gentoo.patch"
+	epatch "${FILESDIR}/${P}-modernise_api.patch"
 
 	find . -name '*.jar' -delete || die
 
 	cd "${S}/lib"
 	java-pkg_jar-from asm-1.5
-	java-pkg_jar-from concurrent-util
 	java-pkg_jar-from dom4j-1
 	java-pkg_jar-from jrexx
 	java-pkg_jar-from junit
