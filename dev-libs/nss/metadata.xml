@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>mozilla</herd>
+<use>
+  <flag name='cacert'>Include CAcert root certificates (http://http://www.cacert.org/)</flag>
+  <flag name='nss-pem'>Add support for libnsspem</flag>
+  <flag name='utils'>Install utilities included with the library</flag>
+</use>
+<upstream>
+  <remote-id type="cpe">cpe:/a:mozilla:nss</remote-id>
+</upstream>
+</pkgmetadata>
