@@ -2,6 +2,12 @@
 # Copyright 1999-2014 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.13.4 (15 Jul 2014)
+
+  15 Jul 2014; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +icedtea-6.1.13.4.ebuild, -icedtea-6.1.13.3.ebuild:
+  IcedTea 1.13.4 security update for OpenJDK 6: http://bitly.com/it1134
+
 *icedtea-7.2.5.0 (15 Jul 2014)
 
   15 Jul 2014; Andrew John Hughes <gnu_andrew@member.fsf.org>
