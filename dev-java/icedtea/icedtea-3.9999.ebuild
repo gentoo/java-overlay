@@ -60,7 +60,7 @@ SLOT="8"
 KEYWORDS="~amd64 ~ia64 ~x86"
 
 IUSE="+X +alsa cjk +cups debug doc examples javascript +jbootstrap +nsplugin
-	+nss pax_kernel pulseaudio +source systemtap test +webstart"
+	+nss pax_kernel pulseaudio selinux +source systemtap test +webstart"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
@@ -99,6 +99,7 @@ COMMON_DEP="
 	javascript? ( dev-java/rhino:1.6 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
 	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
+	selinux? ( sec-policy/selinux-java )
 	systemtap? ( >=dev-util/systemtap-1 )"
 
 # cups is needed for X. #390945 #390975

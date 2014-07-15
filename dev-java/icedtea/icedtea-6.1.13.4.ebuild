@@ -37,7 +37,7 @@ SLOT="6"
 KEYWORDS="~amd64 ~arm ~ia64 ~ppc ~ppc64 ~x86"
 
 IUSE="+X +alsa cacao cjk +cups debug doc examples javascript +jbootstrap kerberos +nsplugin
-	+nss pax_kernel pulseaudio +source systemtap test +webstart"
+	+nss pax_kernel pulseaudio selinux +source systemtap test +webstart"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
@@ -72,6 +72,7 @@ COMMON_DEP="
 	kerberos? ( virtual/krb5 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
 	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11:= )
+	selinux? ( sec-policy/selinux-java )
 	systemtap? ( >=dev-util/systemtap-1 )"
 
 # media-fonts/lklug needs ppc ppc64 keywords

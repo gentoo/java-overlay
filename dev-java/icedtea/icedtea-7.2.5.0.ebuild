@@ -57,7 +57,7 @@ LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 M
 KEYWORDS="~amd64 ~x86"
 
 IUSE="+X +alsa cacao cjk +cups debug doc examples +infinality jamvm javascript +jbootstrap kerberos +nsplugin
-	+nss pax_kernel pulseaudio smartcard +source sunec test zero +webstart"
+	+nss pax_kernel pulseaudio selinux smartcard +source sunec test zero +webstart"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
@@ -96,6 +96,7 @@ COMMON_DEP="
 	javascript? ( dev-java/rhino:1.6 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
 	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11:= )
+	selinux? ( sec-policy/selinux-java )
 	kerberos? ( virtual/krb5 )
 	>=dev-util/systemtap-1"
 
