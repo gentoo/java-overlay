@@ -15,13 +15,13 @@ inherit java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-CORBA_TARBALL="32c25f3ecdf6.tar.bz2"
-JAXP_TARBALL="6b28d9218dac.tar.bz2"
-JAXWS_TARBALL="f1f1ade53c01.tar.bz2"
-JDK_TARBALL="9705894e1370.tar.bz2"
-LANGTOOLS_TARBALL="f70c7b796422.tar.bz2"
-OPENJDK_TARBALL="6a4e58702235.tar.bz2"
-HOTSPOT_TARBALL="5dc3dd2819c8.tar.bz2"
+CORBA_TARBALL="895c6b104996.tar.bz2"
+JAXP_TARBALL="59a1a3e44108.tar.bz2"
+JAXWS_TARBALL="b5384b2fb987.tar.bz2"
+JDK_TARBALL="d6d4b6c9f5b4.tar.bz2"
+LANGTOOLS_TARBALL="4c827dc3de05.tar.bz2"
+OPENJDK_TARBALL="483622a291d7.tar.bz2"
+HOTSPOT_TARBALL="02066294d005.tar.bz2"
 CACAO_TARBALL="e215e36be9fc.tar.gz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
 
@@ -36,7 +36,7 @@ CACAO_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-cacao-${CACAO_TARBALL}"
 JAMVM_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-${JAMVM_TARBALL}"
 
 DROP_URL="http://icedtea.classpath.org/download/drops"
-ICEDTEA_URL="${DROP_URL}/${SLOT}/${ICEDTEA_BRANCH}"
+ICEDTEA_URL="${DROP_URL}/icedtea${SLOT}/${ICEDTEA_VER}"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
@@ -252,13 +252,12 @@ src_configure() {
 		--with-cacao-src-zip="${DISTDIR}/${CACAO_GENTOO_TARBALL}" \
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_GENTOO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
-		--with-abs-install-dir="${EPREFIX}/usr/$(get_libdir)/icedtea${SLOT}" \
+		--prefix="${EPREFIX}/usr/$(get_libdir)/icedtea${SLOT}" \
 		--disable-downloading --disable-Werror \
 		--enable-system-lcms \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nss) \
-		$(use_enable pulseaudio pulse-java) \
 		$(use_enable jamvm) \
 		$(use_enable kerberos system-kerberos) \
 		$(use_with pax_kernel pax "${EPREFIX}/usr/sbin/paxmark.sh") \
