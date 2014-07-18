@@ -95,7 +95,6 @@ COMMON_DEP="
 	virtual/jpeg:0=
 	javascript? ( dev-java/rhino:1.6 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
-	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11:= )
 	selinux? ( sec-policy/selinux-java )
 	kerberos? ( virtual/krb5 )
 	>=dev-util/systemtap-1"
@@ -147,7 +146,8 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	sunec? ( dev-libs/nss[java] ) "
 
 PDEPEND="webstart? ( dev-java/icedtea-web:7 )
-	nsplugin? ( dev-java/icedtea-web:7[nsplugin] )"
+	nsplugin? ( dev-java/icedtea-web:7[nsplugin] )
+	pulseaudio? ( dev-java/icedtea-sound )"
 
 S="${WORKDIR}"/${ICEDTEA_PKG}
 
