@@ -1,6 +1,12 @@
-# ChangeLog for dev-java/icedtea-web
+# ChangeLog for dev-java/icedtea-sound
 # Copyright 1999-2014 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea-web/ChangeLog,v 1.42 2014/07/01 05:36:48 ago Exp $
+
+*icedtea-sound-1.0.1 (18 Jul 2014)
+
+  18 Jul 2014; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +icedtea-sound-1.0.1.ebuild, -icedtea-sound-1.0.0.ebuild:
+  Immediate release to fix major bug... :( http://bitly.com/its10001
 
   01 Jul 2014; Agostino Sarubbo <ago@gentoo.org> icedtea-web-1.4.2.ebuild:
   Stable for x86, wrt bug #501472
