@@ -14,13 +14,13 @@ inherit java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-CORBA_TARBALL="e6ad5b912691.tar.gz"
-JAXP_TARBALL="94b7e8e0d96f.tar.gz"
-JAXWS_TARBALL="bd9a50a78d04.tar.gz"
-JDK_TARBALL="9448fff93286.tar.gz"
-LANGTOOLS_TARBALL="8c26a3c39128.tar.gz"
-OPENJDK_TARBALL="13970e76b784.tar.gz"
-HOTSPOT_TARBALL="69b542696e5b.tar.gz"
+CORBA_TARBALL="58b31c5bf14e.tar.gz"
+JAXP_TARBALL="95d394340fda.tar.gz"
+JAXWS_TARBALL="bce4362b2996.tar.gz"
+JDK_TARBALL="22d79652f370.tar.gz"
+LANGTOOLS_TARBALL="43cdaf529543.tar.gz"
+OPENJDK_TARBALL="2b38d8f0e43f.tar.gz"
+HOTSPOT_TARBALL="6f93cec20d27.tar.gz"
 CACAO_TARBALL="e215e36be9fc.tar.gz"
 JAMVM_TARBALL="jamvm-ac22c9948434e528ece451642b4ebde40953ee7e.tar.gz"
 
