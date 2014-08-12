@@ -51,7 +51,8 @@ X_COMMON_DEP="
 	>=x11-libs/libXext-1.1.1
 	>=x11-libs/libXi-1.1.3
 	>=x11-libs/libXrender-0.9.4
-	>=x11-libs/libXtst-1.0.3"
+	>=x11-libs/libXtst-1.0.3
+	x11-libs/libXt"
 X_DEPEND="
 	>=x11-libs/libXau-1.0.3
 	>=x11-libs/libXdmcp-1.0.2

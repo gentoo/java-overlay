@@ -77,6 +77,7 @@ X_COMMON_DEP="
 	>=x11-libs/libXi-1.1.3
 	>=x11-libs/libXrender-0.9.4
 	>=x11-libs/libXtst-1.0.3
+	x11-libs/libXt
 	>=x11-libs/pango-1.24.5"
 X_DEPEND="
 	>=x11-libs/libXau-1.0.3
