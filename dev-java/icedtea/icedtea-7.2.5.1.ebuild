@@ -98,7 +98,9 @@ COMMON_DEP="
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
 	selinux? ( sec-policy/selinux-java )
 	kerberos? ( virtual/krb5 )
-	>=dev-util/systemtap-1"
+	>=dev-util/systemtap-1
+	smartcard? ( sys-apps/pcsc-lite )
+	sunec? ( >=dev-libs/nss-3.16.1-r1 )"
 
 # cups is needed for X. #390945 #390975
 RDEPEND="${COMMON_DEP}
@@ -142,9 +144,7 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	sys-apps/attr
 	sys-apps/lsb-release
 	${X_DEPEND}
-	pax_kernel? ( sys-apps/elfix )
-	smartcard? ( sys-apps/pcsc-lite )
-	sunec? ( dev-libs/nss[java] ) "
+	pax_kernel? ( sys-apps/elfix )"
 
 PDEPEND="webstart? ( dev-java/icedtea-web:7 )
 	nsplugin? ( dev-java/icedtea-web:7[nsplugin] )
@@ -207,9 +207,9 @@ src_configure() {
 	fi
 
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
-	# In-tree JIT ports are available for aarch64, amd64, ppc64, SPARC and x86.
+	# In-tree JIT ports are available for aarch64, amd64, ppc64, ppc64le, SPARC and x86.
 	# Otherwise use CACAO
-	if ! has "${ARCH}" aarch64 amd64 ppc64 sparc x86 ; then
+	if ! has "${ARCH}" aarch64 amd64 ppc64 ppc64le sparc x86 ; then
 		if has "${ARCH}" ppc arm ; then
 			use_cacao="yes";
 		else
@@ -254,6 +254,7 @@ src_configure() {
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_GENTOO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--prefix="${EPREFIX}/usr/$(get_libdir)/icedtea${SLOT}" \
+		--with-pkgversion="${PF}" \
 		--disable-downloading --disable-Werror \
 		--enable-system-lcms \
 		$(use_enable !debug optimizations) \
