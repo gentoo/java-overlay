@@ -15,13 +15,13 @@ inherit java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-CORBA_TARBALL="895c6b104996.tar.bz2"
-JAXP_TARBALL="59a1a3e44108.tar.bz2"
-JAXWS_TARBALL="b5384b2fb987.tar.bz2"
-JDK_TARBALL="d6d4b6c9f5b4.tar.bz2"
-LANGTOOLS_TARBALL="4c827dc3de05.tar.bz2"
-OPENJDK_TARBALL="483622a291d7.tar.bz2"
-HOTSPOT_TARBALL="02066294d005.tar.bz2"
+CORBA_TARBALL="06663e4cfbbe.tar.bz2"
+JAXP_TARBALL="d77720c6a36f.tar.bz2"
+JAXWS_TARBALL="aac78bd724c4.tar.bz2"
+JDK_TARBALL="1e6a8564aa34.tar.bz2"
+LANGTOOLS_TARBALL="f444e2a77643.tar.bz2"
+OPENJDK_TARBALL="de1fbcb08558.tar.bz2"
+HOTSPOT_TARBALL="4ad43b271fd4.tar.bz2"
 CACAO_TARBALL="e215e36be9fc.tar.gz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
 
@@ -56,7 +56,7 @@ SRC_URI="
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 KEYWORDS="~amd64 ~x86"
 
-IUSE="+X +alsa cacao cjk +cups debug doc examples +infinality jamvm javascript +jbootstrap kerberos +nsplugin
+IUSE="+X +alsa cacao cjk +cups debug doc examples infinality jamvm javascript +jbootstrap kerberos +nsplugin
 	+nss pax_kernel pulseaudio selinux smartcard +source sunec test zero +webstart"
 
 # Ideally the following were optional at build time.
@@ -68,7 +68,7 @@ X_COMMON_DEP="
 	>=dev-libs/atk-1.30.0
 	>=dev-libs/glib-2.26
 	media-libs/fontconfig
-	>=media-libs/freetype-2.3.5:2=
+	>=media-libs/freetype-2.3.5:2=[infinality?]
 	>=x11-libs/cairo-1.8.8:=
 	x11-libs/gdk-pixbuf:2
 	>=x11-libs/gtk+-2.8:2=
@@ -254,7 +254,7 @@ src_configure() {
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_GENTOO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--prefix="${EPREFIX}/usr/$(get_libdir)/icedtea${SLOT}" \
-		--with-pkgversion="${PF}" \
+		--with-pkgversion="Gentoo package ${PF}" \
 		--disable-downloading --disable-Werror \
 		--enable-system-lcms \
 		$(use_enable !debug optimizations) \
