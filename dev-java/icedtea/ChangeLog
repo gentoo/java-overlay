@@ -2,6 +2,10 @@
 # Copyright 1999-2014 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  05 Oct 2014; Vlastimil Babka <caster@gentoo.org> icedtea-7.2.4.8.ebuild,
+  icedtea-7.2.5.2.ebuild, icedtea-7.9999.ebuild:
+  USE depend on icedtea7 flag for icedtea-web:0, thanks arfrever.
+
   05 Oct 2014; Vlastimil Babka <caster@gentoo.org> icedtea-3.9999.ebuild:
   Make 3.9999 depend on icedtea-web:0
 

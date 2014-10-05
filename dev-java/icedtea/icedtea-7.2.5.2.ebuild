@@ -147,7 +147,7 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	pax_kernel? ( sys-apps/elfix )"
 
 PDEPEND="webstart? ( || (
-			dev-java/icedtea-web:0
+			dev-java/icedtea-web:0[icedtea7]
 			>=dev-java/icedtea-web-1.3.2:7
 		) )
 		nsplugin? ( || (
