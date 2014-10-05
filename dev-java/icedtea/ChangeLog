@@ -2,6 +2,11 @@
 # Copyright 1999-2014 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  05 Oct 2014; Vlastimil Babka <caster@gentoo.org> icedtea-3.9999.ebuild,
+  icedtea-6.1.13.4.ebuild, icedtea-6.9999.ebuild, icedtea-7.2.4.8.ebuild,
+  icedtea-7.2.5.2.ebuild, icedtea-7.9999.ebuild:
+  Add missing ant-core dep to icedtea:6 and change it to >=1.8.2 everywhere.
+
   05 Oct 2014; Vlastimil Babka <caster@gentoo.org> icedtea-3.9999.ebuild:
   Drop ~ia64 temporarily until icedtea-web:0 has it
 
