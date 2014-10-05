@@ -145,8 +145,8 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	${X_DEPEND}
 	pax_kernel? ( sys-apps/paxctl )"
 
-PDEPEND="webstart? ( dev-java/icedtea-web:7 )
-	nsplugin? ( dev-java/icedtea-web:7[nsplugin] )"
+PDEPEND="webstart? ( dev-java/icedtea-web:0 )
+	nsplugin? ( dev-java/icedtea-web:0[nsplugin] )"
 
 S="${WORKDIR}"/${ICEDTEA_PKG}
 
