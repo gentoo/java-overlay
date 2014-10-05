@@ -2,6 +2,11 @@
 # Copyright 1999-2014 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  05 Oct 2014; Vlastimil Babka <caster@gentoo.org> icedtea-6.1.13.4.ebuild,
+  icedtea-6.9999.ebuild, icedtea-7.2.4.8.ebuild, icedtea-7.2.5.2.ebuild,
+  icedtea-7.9999.ebuild:
+  Support icedtea-web:0 like the in-tree versions, bug #500264.
+
 *icedtea-7.2.5.2 (02 Sep 2014)
 
   02 Sep 2014; Andrew John Hughes <gnu_andrew@member.fsf.org>
