@@ -68,7 +68,7 @@ X_COMMON_DEP="
 	>=dev-libs/atk-1.30.0
 	>=dev-libs/glib-2.26
 	media-libs/fontconfig
-	>=media-libs/freetype-2.3.5:2=[infinality?]
+	>=media-libs/freetype-2.5.3:2=[infinality?]
 	>=x11-libs/cairo-1.8.8:=
 	x11-libs/gdk-pixbuf:2
 	>=x11-libs/gtk+-2.8:2=
@@ -213,10 +213,10 @@ src_configure() {
 	fi
 
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
-	# In-tree JIT ports are available for aarch64, amd64, ppc64, ppc64le, SPARC and x86.
+	# In-tree JIT ports are available for arm, aarch64, amd64, ppc64, ppc64le, SPARC and x86.
 	# Otherwise use CACAO
-	if ! has "${ARCH}" aarch64 amd64 ppc64 ppc64le sparc x86 ; then
-		if has "${ARCH}" ppc arm ; then
+	if ! has "${ARCH}" arm aarch64 amd64 ppc64 ppc64le sparc x86 ; then
+		if has "${ARCH}" ppc ; then
 			use_cacao="yes";
 		else
 			use_zero="yes";

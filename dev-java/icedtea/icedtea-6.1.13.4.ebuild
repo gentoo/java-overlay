@@ -181,7 +181,7 @@ src_configure() {
 
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
 	# Otherwise use CACAO
-	if ! has "${ARCH}" amd64 sparc x86; then
+	if ! has "${ARCH}" amd64 arm sparc x86; then
 		enable_cacao=yes
 	elif use cacao; then
 		ewarn 'Enabling CACAO on an architecture with HotSpot support; issues may result.'

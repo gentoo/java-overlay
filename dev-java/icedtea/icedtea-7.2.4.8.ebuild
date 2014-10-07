@@ -58,7 +58,7 @@ SRC_URI="
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="7"
-KEYWORDS="~amd64 ~ia64 ~x86"
+KEYWORDS="~amd64 ~x86"
 
 IUSE="+X +alsa cacao cjk +cups debug doc examples jamvm javascript +jbootstrap kerberos +nsplugin
 	+nss pax_kernel pulseaudio selinux +source test zero +webstart"
@@ -216,8 +216,8 @@ src_configure() {
 
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
 	# Otherwise use CACAO
-	if ! has "${ARCH}" amd64 sparc x86 ; then
-		if has "${ARCH}" ppc ppc64 arm ; then
+	if ! has "${ARCH}" arm amd64 sparc x86 ; then
+		if has "${ARCH}" ppc ppc64 ; then
 			use_cacao="yes";
 		else
 			use_zero="yes";
