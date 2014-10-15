@@ -211,6 +211,7 @@ src_configure() {
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_GENTOO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
+		--with-pkgversion="Gentoo package ${PF}" \
 		--disable-downloading \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
