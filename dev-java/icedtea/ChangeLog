@@ -2,6 +2,10 @@
 # Copyright 1999-2014 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  30 Oct 2014; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  icedtea-7.2.6.0_pre09.ebuild:
+  Lock 2.6 ebuild to Mercurial tag for that pre-release.
+
 *icedtea-7.2.6.0_pre09 (30 Oct 2014)
 
   30 Oct 2014; Andrew John Hughes <gnu_andrew@member.fsf.org>

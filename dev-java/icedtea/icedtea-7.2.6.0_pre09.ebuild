@@ -14,6 +14,7 @@ inherit autotools java-pkg-2 java-vm-2 mercurial pax-utils prefix versionator vi
 
 ICEDTEA_VER=$(get_version_component_range 2-4)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
+ICEDTEA_PRE=$(get_version_component_range _)
 CORBA_TARBALL="4e8ca30ec092.tar.bz2"
 JAXP_TARBALL="f59ee5163710.tar.bz2"
 JAXWS_TARBALL="39dd7bed2325.tar.bz2"
@@ -50,6 +51,7 @@ SRC_URI="
 	${DROP_URL}/cacao/${CACAO_TARBALL} -> ${CACAO_GENTOO_TARBALL}
 	${DROP_URL}/jamvm/${JAMVM_TARBALL} -> ${JAMVM_GENTOO_TARBALL}"
 EHG_REPO_URI="http://icedtea.classpath.org/hg/icedtea7"
+EHG_REVISION="${ICEDTEA_PKG}${ICEDTEA_PRE}"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 KEYWORDS=""
