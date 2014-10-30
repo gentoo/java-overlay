@@ -2,6 +2,13 @@
 # Copyright 1999-2014 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.6.0_pre09 (30 Oct 2014)
+
+  30 Oct 2014; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +icedtea-7.2.6.0_pre09.ebuild, -icedtea-7.9999.ebuild:
+  Update IcedTea 2.x HEAD ebuild and rename as a pre-release of the next minor
+  release series.
+
 *icedtea-6.1.13.5-r1 (27 Oct 2014)
 
   27 Oct 2014; Andrew John Hughes <gnu_andrew@member.fsf.org>

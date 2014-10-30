@@ -12,15 +12,15 @@ SLOT="7"
 
 inherit autotools java-pkg-2 java-vm-2 mercurial pax-utils prefix versionator virtualx
 
-ICEDTEA_VER=$(get_version_component_range 2-)
+ICEDTEA_VER=$(get_version_component_range 2-4)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-CORBA_TARBALL="250d1a2def5b.tar.bz2"
-JAXP_TARBALL="75513ef5e265.tar.bz2"
-JAXWS_TARBALL="37d1831108b5.tar.bz2"
-JDK_TARBALL="21eee0ed9be9.tar.bz2"
-LANGTOOLS_TARBALL="f43a81252f82.tar.bz2"
-OPENJDK_TARBALL="b07e2aed0a26.tar.bz2"
-HOTSPOT_TARBALL="b517477362d1.tar.bz2"
+CORBA_TARBALL="4e8ca30ec092.tar.bz2"
+JAXP_TARBALL="f59ee5163710.tar.bz2"
+JAXWS_TARBALL="39dd7bed2325.tar.bz2"
+JDK_TARBALL="1ceeb31e72ca.tar.bz2"
+LANGTOOLS_TARBALL="55486a406d9f.tar.bz2"
+OPENJDK_TARBALL="7faf56bdd783.tar.bz2"
+HOTSPOT_TARBALL="4722cfd15c83.tar.bz2"
 CACAO_TARBALL="e215e36be9fc.tar.gz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
 
@@ -35,7 +35,7 @@ CACAO_GENTOO_TARBALL="icedtea${SLOT}-cacao-${CACAO_TARBALL}"
 JAMVM_GENTOO_TARBALL="icedtea${SLOT}-${JAMVM_TARBALL}"
 
 DROP_URL="http://icedtea.classpath.org/download/drops"
-ICEDTEA_URL="${DROP_URL}/icedtea${SLOT}"
+ICEDTEA_URL="${DROP_URL}/icedtea${SLOT}/${ICEDTEA_VER}"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
@@ -54,7 +54,7 @@ EHG_REPO_URI="http://icedtea.classpath.org/hg/icedtea7"
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 KEYWORDS=""
 
-IUSE="+X +alsa cacao cjk +cups debug doc examples +infinality jamvm javascript +jbootstrap kerberos +nsplugin
+IUSE="+X +alsa cacao cjk +cups debug doc examples infinality jamvm javascript +jbootstrap kerberos +nsplugin
 	+nss pax_kernel pulseaudio selinux smartcard +source sunec test zero +webstart"
 
 # Ideally the following were optional at build time.
@@ -66,7 +66,7 @@ X_COMMON_DEP="
 	>=dev-libs/atk-1.30.0
 	>=dev-libs/glib-2.26
 	media-libs/fontconfig
-	>=media-libs/freetype-2.3.5:2=
+	>=media-libs/freetype-2.5.3:2=[infinality?]
 	>=x11-libs/cairo-1.8.8:=
 	x11-libs/gdk-pixbuf:2
 	>=x11-libs/gtk+-2.8:2=
@@ -213,10 +213,10 @@ src_configure() {
 	fi
 
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
-	# In-tree JIT ports are available for aarch64, amd64, ppc64, ppc64le, SPARC and x86.
+	# In-tree JIT ports are available for arm, aarch64, amd64, ppc64, ppc64le, SPARC and x86.
 	# Otherwise use CACAO
-	if ! has "${ARCH}" aarch64 amd64 ppc64 ppc64le sparc x86 ; then
-		if has "${ARCH}" ppc arm ; then
+	if ! has "${ARCH}" arm aarch64 amd64 ppc64 ppc64le sparc x86 ; then
+		if has "${ARCH}" ppc ; then
 			use_cacao="yes";
 		else
 			use_zero="yes";
@@ -260,7 +260,7 @@ src_configure() {
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_GENTOO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--prefix="${EPREFIX}/usr/$(get_libdir)/icedtea${SLOT}" \
-		--with-pkgversion="${PF}" \
+		--with-pkgversion="Gentoo package ${PF}" \
 		--disable-downloading --disable-Werror \
 		--enable-system-lcms \
 		$(use_enable !debug optimizations) \
