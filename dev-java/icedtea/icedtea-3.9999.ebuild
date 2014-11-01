@@ -9,7 +9,7 @@
 
 EAPI="5"
 
-inherit autotools java-pkg-2 java-vm-2 mercurial pax-utils prefix versionator virtualx
+inherit autotools check-reqs java-pkg-2 java-vm-2 mercurial pax-utils prefix versionator virtualx
 
 ICEDTEA_VER=$(get_version_component_range 1-)
 ICEDTEA_BRANCH=3.0
@@ -151,7 +151,25 @@ PDEPEND="webstart? ( dev-java/icedtea-web:0 )
 
 S="${WORKDIR}"/${ICEDTEA_PKG}
 
+icedtea_check_requirements() {
+	local CHECKREQS_DISK_BUILD
+
+	if use doc; then
+		CHECKREQS_DISK_BUILD="9000M"
+	else
+		CHECKREQS_DISK_BUILD="8500M"
+	fi
+
+	check-reqs_pkg_${EBUILD_PHASE}
+}
+
+pkg_pretend() {
+	icedtea_check_requirements
+}
+
 pkg_setup() {
+	icedtea_check_requirements
+
 	JAVA_PKG_WANT_BUILD_VM="
 		icedtea-7 icedtea-bin-7 icedtea7"
 	JAVA_PKG_WANT_SOURCE="1.5"

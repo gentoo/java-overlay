@@ -2,6 +2,12 @@
 # Copyright 1999-2014 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  01 Nov 2014; Vlastimil Babka <caster@gentoo.org> icedtea-3.9999.ebuild,
+  icedtea-6.1.13.5-r1.ebuild, icedtea-6.9999.ebuild, icedtea-7.2.5.3.ebuild,
+  icedtea-7.2.6.0_pre09.ebuild:
+  Backporting changes from portage: add pre-build disk space checking, bug
+  #508728.
+
   30 Oct 2014; Andrew John Hughes <gnu_andrew@member.fsf.org>
   icedtea-7.2.6.0_pre09.ebuild:
   Lock 2.6 ebuild to Mercurial tag for that pre-release.

@@ -9,7 +9,7 @@
 
 EAPI="5"
 
-inherit java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
+inherit check-reqs java-pkg-2 java-vm-2 pax-utils prefix versionator virtualx
 
 ICEDTEA_PKG=${PN}$(replace_version_separator 1 -)
 ICEDTEA_BRANCH=$(get_version_component_range 1-3)
@@ -128,7 +128,25 @@ PDEPEND="webstart? ( || (
 
 S="${WORKDIR}"/${ICEDTEA_PKG}
 
+icedtea_check_requirements() {
+	local CHECKREQS_DISK_BUILD
+
+	if use doc; then
+		CHECKREQS_DISK_BUILD="8500M"
+	else
+		CHECKREQS_DISK_BUILD="8000M"
+	fi
+
+	check-reqs_pkg_${EBUILD_PHASE}
+}
+
+pkg_pretend() {
+	icedtea_check_requirements
+}
+
 pkg_setup() {
+	icedtea_check_requirements
+
 	JAVA_PKG_WANT_BUILD_VM="
 		icedtea-6 icedtea-bin-6 icedtea6 icedtea6-bin
 		gcj-jdk"
