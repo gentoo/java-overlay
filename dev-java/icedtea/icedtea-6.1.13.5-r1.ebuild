@@ -1,6 +1,6 @@
 # Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-6.1.10.4-r3.ebuild,v 1.1 2011/12/02 12:27:17 sera Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-6.1.13.5.ebuild,v 1.1 2014/10/19 06:46:41 caster Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
 # *********************************************************
@@ -175,7 +175,7 @@ bootstrap_impossible() {
 }
 
 src_configure() {
-	local config bootstrap enable_cacao
+	local bootstrap config enable_cacao
 	local vm=$(java-pkg_get-current-vm)
 
 	# IcedTea6 can't be built using IcedTea7; its class files are too new
@@ -195,7 +195,7 @@ src_configure() {
 		bootstrap="enable"
 	fi
 
-	config="${config} --${bootstrap}-bootstrap"
+	config+=" --${bootstrap}-bootstrap"
 
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
 	# Otherwise use CACAO
@@ -208,15 +208,15 @@ src_configure() {
 	fi
 
 	if [[ ${enable_cacao} ]]; then
-		config="${config} --enable-cacao"
+		config+=" --enable-cacao"
 	fi
 
 	config+=" --with-parallel-jobs=$(makeopts_jobs)"
 
 	if use javascript ; then
-		config="${config} --with-rhino=$(java-pkg_getjar rhino-1.6 js.jar)"
+		config+=" --with-rhino=$(java-pkg_getjar rhino-1.6 js.jar)"
 	else
-		config="${config} --without-rhino"
+		config+=" --without-rhino"
 	fi
 
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
@@ -285,11 +285,11 @@ src_install() {
 
 	if use doc; then
 		# java-pkg_dohtml needed for package-list #302654
-		java-pkg_dohtml -r ../docs/* || die
+		java-pkg_dohtml -A dtd -r ../docs/* || die
 	fi
 
 	if use examples; then
-		dodir "${dest}/share";
+		dodir "${dest}/share"
 		cp -vRP demo sample "${ddest}/share/" || die
 	fi
 

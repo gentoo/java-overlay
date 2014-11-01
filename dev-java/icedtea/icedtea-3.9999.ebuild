@@ -199,7 +199,7 @@ bootstrap_impossible() {
 }
 
 src_configure() {
-	local config bootstrap
+	local bootstrap config
 	local vm=$(java-pkg_get-current-vm)
 
 	# Whether to bootstrap
@@ -217,23 +217,23 @@ src_configure() {
 		use jbootstrap || einfo "bootstrap is necessary when building with ${vm}, ignoring USE=\"-jbootstrap\""
 		bootstrap="enable"
 		local ecj_jar="$(readlink "${EPREFIX}"/usr/share/eclipse-ecj/ecj.jar)"
-		config="${config} --with-ecj-jar=${ecj_jar}"
+		config+=" --with-ecj-jar=${ecj_jar}"
 	fi
 
-	config="${config} --${bootstrap}-bootstrap"
+	config+=" --${bootstrap}-bootstrap"
 
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
 	# Otherwise use JamVM as it's the only possibility right now
 	if ! has "${ARCH}" amd64 sparc x86; then
-		config="${config} --enable-jamvm"
+		config+=" --enable-jamvm"
 	fi
 
 	config+=" --with-parallel-jobs=$(makeopts_jobs)"
 
 	if use javascript ; then
-		config="${config} --with-rhino=$(java-pkg_getjar rhino-1.6 js.jar)"
+		config+=" --with-rhino=$(java-pkg_getjar rhino-1.6 js.jar)"
 	else
-		config="${config} --without-rhino"
+		config+=" --without-rhino"
 	fi
 
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
@@ -306,11 +306,11 @@ src_install() {
 
 	if use doc; then
 		# java-pkg_dohtml needed for package-list #302654
-		java-pkg_dohtml -r ../../docs/* || die
+		java-pkg_dohtml -A dtd -r ../../docs/* || die
 	fi
 
 	if use examples; then
-		dodir "${dest}/share";
+		dodir "${dest}/share"
 		cp -vRP demo sample "${ddest}/share/" || die
 	fi
 

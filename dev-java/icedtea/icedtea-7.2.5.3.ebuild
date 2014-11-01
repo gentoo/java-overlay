@@ -201,7 +201,7 @@ java_prepare() {
 }
 
 src_configure() {
-	local config bootstrap use_zero zero_config
+	local bootstrap cacao_config config use_cacao use_zero zero_config
 	local vm=$(java-pkg_get-current-vm)
 
 	# Whether to bootstrap
@@ -215,19 +215,19 @@ src_configure() {
 		use jbootstrap || einfo "bootstrap is necessary when building with ${vm}, ignoring USE=\"-jbootstrap\""
 		bootstrap="enable"
 		local ecj_jar="$(readlink "${EPREFIX}"/usr/share/eclipse-ecj/ecj.jar)"
-		config="${config} --with-ecj-jar=${ecj_jar}"
+		config+=" --with-ecj-jar=${ecj_jar}"
 	fi
 
-	config="${config} --${bootstrap}-bootstrap"
+	config+=" --${bootstrap}-bootstrap"
 
 	# Use Zero if requested
 	if use zero; then
-		use_zero="yes";
+		use_zero="yes"
 	fi
 
 	# Use CACAO if requested
 	if use cacao; then
-		use_cacao="yes";
+		use_cacao="yes"
 	fi
 
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
@@ -235,28 +235,28 @@ src_configure() {
 	# Otherwise use CACAO
 	if ! has "${ARCH}" arm aarch64 amd64 ppc64 ppc64le sparc x86 ; then
 		if has "${ARCH}" ppc ; then
-			use_cacao="yes";
+			use_cacao="yes"
 		else
-			use_zero="yes";
+			use_zero="yes"
 		fi
 	fi
 
 	# Turn on CACAO if needed (non-HS archs) or requested
 	if test "x${use_cacao}" = "xyes"; then
-		cacao_config="--enable-cacao";
+		cacao_config="--enable-cacao"
 	fi
 
 	# Turn on Zero if needed (non-HS/CACAO archs) or requested
 	if test "x${use_zero}" = "xyes"; then
-		zero_config="--enable-zero";
+		zero_config="--enable-zero"
 	fi
 
 	config+=" --with-parallel-jobs=$(makeopts_jobs)"
 
 	if use javascript ; then
-		config="${config} --with-rhino=$(java-pkg_getjar rhino-1.6 js.jar)"
+		config+=" --with-rhino=$(java-pkg_getjar rhino-1.6 js.jar)"
 	else
-		config="${config} --without-rhino"
+		config+=" --without-rhino"
 	fi
 
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
@@ -335,11 +335,11 @@ src_install() {
 
 	if use doc; then
 		# java-pkg_dohtml needed for package-list #302654
-		java-pkg_dohtml -r ../docs/* || die
+		java-pkg_dohtml -A dtd -r ../docs/* || die
 	fi
 
 	if use examples; then
-		dodir "${dest}/share";
+		dodir "${dest}/share"
 		cp -vRP demo sample "${ddest}/share/" || die
 	fi
 
