@@ -5,6 +5,12 @@
   01 Nov 2014; Vlastimil Babka <caster@gentoo.org> icedtea-3.9999.ebuild,
   icedtea-6.1.13.5-r1.ebuild, icedtea-6.9999.ebuild, icedtea-7.2.5.3.ebuild,
   icedtea-7.2.6.0_pre09.ebuild:
+  Backporting changes from portage: use multiprocessing eclass instead of
+  manual MAKEOPTS parsing
+
+  01 Nov 2014; Vlastimil Babka <caster@gentoo.org> icedtea-3.9999.ebuild,
+  icedtea-6.1.13.5-r1.ebuild, icedtea-6.9999.ebuild, icedtea-7.2.5.3.ebuild,
+  icedtea-7.2.6.0_pre09.ebuild:
   Backporting changes from portage: add pre-build disk space checking, bug
   #508728.
 

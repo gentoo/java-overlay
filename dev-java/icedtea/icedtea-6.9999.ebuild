@@ -9,7 +9,7 @@
 
 EAPI="4"
 
-inherit autotools check-reqs java-pkg-2 java-vm-2 mercurial pax-utils prefix versionator virtualx
+inherit autotools check-reqs java-pkg-2 java-vm-2 mercurial multiprocessing pax-utils prefix versionator virtualx
 
 ICEDTEA_PKG=${PN}$(replace_version_separator 1 -)
 ICEDTEA_BRANCH=$(get_version_component_range 1-3)
@@ -208,12 +208,7 @@ src_configure() {
 		config="${config} --enable-cacao"
 	fi
 
-	# OpenJDK-specific parallelism support. Bug #389791, #337827
-	# Implementation modified from waf-utils.eclass
-	# Note that "-j" is converted to "-j1" as the system doesn't support --load-average
-	local procs=$(echo -j1 ${MAKEOPTS} | sed -r "s/.*(-j\s*|--jobs=)([0-9]+).*/\2/" )
-	config="${config} --with-parallel-jobs=${procs}";
-	einfo "Configuring using --with-parallel-jobs=${procs}"
+	config+=" --with-parallel-jobs=$(makeopts_jobs)"
 
 	if use javascript ; then
 		config="${config} --with-rhino=$(java-pkg_getjar rhino-1.6 js.jar)"
