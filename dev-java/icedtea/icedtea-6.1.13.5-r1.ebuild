@@ -1,6 +1,6 @@
 # Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-6.1.13.5.ebuild,v 1.1 2014/10/19 06:46:41 caster Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-6.1.13.5-r1.ebuild,v 1.1 2014/11/01 17:59:37 caster Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
 # *********************************************************
@@ -34,7 +34,7 @@ SRC_URI="
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="6"
-KEYWORDS="~amd64 ~arm ~ia64 ~ppc ~ppc64 ~x86"
+KEYWORDS="~amd64 ~x86"
 
 IUSE="+X +alsa cacao cjk +cups debug doc examples javascript +jbootstrap kerberos +nsplugin
 	+nss pax_kernel pulseaudio selinux +source systemtap test +webstart"
@@ -74,7 +74,8 @@ COMMON_DEP="
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
 	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11:= )
 	selinux? ( sec-policy/selinux-java )
-	systemtap? ( >=dev-util/systemtap-1 )"
+	systemtap? ( >=dev-util/systemtap-1 )
+	!dev-java/icedtea-web:6"
 
 # media-fonts/lklug needs ppc ppc64 keywords
 RDEPEND="${COMMON_DEP}
@@ -117,14 +118,12 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	${X_DEPEND}
 	pax_kernel? ( sys-apps/elfix )"
 
-PDEPEND="webstart? ( || (
+PDEPEND="webstart? (
 			dev-java/icedtea-web:0
-			>=dev-java/icedtea-web-1.3.2:6
-		) )
-		nsplugin? ( || (
+		)
+		nsplugin? (
 			dev-java/icedtea-web:0[nsplugin]
-			>=dev-java/icedtea-web-1.3.2:6[nsplugin]
-		) )"
+		)"
 
 S="${WORKDIR}"/${ICEDTEA_PKG}
 
@@ -295,6 +294,16 @@ src_install() {
 
 	if use source; then
 		cp src.zip "${ddest}" || die
+	fi
+
+	# provided by icedtea-web but we need it in JAVA_HOME to work with run-java-tool
+	if use webstart || use nsplugin; then
+		dosym /usr/libexec/icedtea-web/itweb-settings ${dest}/bin/itweb-settings
+		dosym /usr/libexec/icedtea-web/itweb-settings ${dest}/jre/bin/itweb-settings
+	fi
+	if use webstart; then
+		dosym /usr/libexec/icedtea-web/javaws ${dest}/bin/javaws
+		dosym /usr/libexec/icedtea-web/javaws ${dest}/jre/bin/javaws
 	fi
 
 	# Fix the permissions.

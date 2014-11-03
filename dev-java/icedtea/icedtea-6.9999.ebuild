@@ -7,7 +7,7 @@
 # * IF YOU CHANGE THIS EBUILD, CHANGE ICEDTEA-7.* AS WELL *
 # *********************************************************
 
-EAPI="4"
+EAPI="5"
 
 inherit autotools check-reqs java-pkg-2 java-vm-2 mercurial multiprocessing pax-utils prefix versionator virtualx
 
@@ -33,7 +33,7 @@ EHG_REPO_URI="http://icedtea.classpath.org/hg/icedtea6"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="6"
-#KEYWORDS="~amd64 ~ia64 ~ppc ~ppc64 ~x86"
+KEYWORDS=""
 
 IUSE="+X +alsa cacao cjk +cups debug doc examples javascript +jbootstrap +nsplugin
 	+nss pax_kernel pulseaudio selinux +source systemtap test +webstart"
@@ -72,7 +72,8 @@ COMMON_DEP="
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
 	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
 	selinux? ( sec-policy/selinux-java )
-	systemtap? ( >=dev-util/systemtap-1 )"
+	systemtap? ( >=dev-util/systemtap-1 )
+	!dev-java/icedtea-web:6"
 
 # media-fonts/lklug needs ppc ppc64 keywords
 RDEPEND="${COMMON_DEP}
@@ -115,14 +116,12 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	${X_DEPEND}
 	pax_kernel? ( sys-apps/paxctl )"
 
-PDEPEND="webstart? ( || (
+PDEPEND="webstart? (
 			dev-java/icedtea-web:0
-			>=dev-java/icedtea-web-1.3.2:6
-		) )
-		nsplugin? ( || (
+		)
+		nsplugin? (
 			dev-java/icedtea-web:0[nsplugin]
-			>=dev-java/icedtea-web-1.3.2:6[nsplugin]
-		) )"
+		)"
 
 S="${WORKDIR}"/${ICEDTEA_PKG}
 
@@ -291,6 +290,16 @@ src_install() {
 
 	if use source; then
 		cp src.zip "${ddest}" || die
+	fi
+
+	# provided by icedtea-web but we need it in JAVA_HOME to work with run-java-tool
+	if use webstart || use nsplugin; then
+		dosym /usr/libexec/icedtea-web/itweb-settings ${dest}/bin/itweb-settings
+		dosym /usr/libexec/icedtea-web/itweb-settings ${dest}/jre/bin/itweb-settings
+	fi
+	if use webstart; then
+		dosym /usr/libexec/icedtea-web/javaws ${dest}/bin/javaws
+		dosym /usr/libexec/icedtea-web/javaws ${dest}/jre/bin/javaws
 	fi
 
 	# Fix the permissions.

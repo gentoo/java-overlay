@@ -1,6 +1,6 @@
 # Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.0-r3.ebuild,v 1.1 2011/12/02 12:27:17 sera Exp $
+# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.5.3.ebuild,v 1.1 2014/11/01 21:43:06 caster Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
 # *********************************************************
@@ -100,7 +100,8 @@ COMMON_DEP="
 	kerberos? ( virtual/krb5 )
 	>=dev-util/systemtap-1
 	smartcard? ( sys-apps/pcsc-lite )
-	sunec? ( >=dev-libs/nss-3.16.1-r1 )"
+	sunec? ( >=dev-libs/nss-3.16.1-r1 )
+	!dev-java/icedtea-web:7"
 
 # cups is needed for X. #390945 #390975
 RDEPEND="${COMMON_DEP}
@@ -146,14 +147,12 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	${X_DEPEND}
 	pax_kernel? ( sys-apps/elfix )"
 
-PDEPEND="webstart? ( || (
+PDEPEND="webstart? (
 			dev-java/icedtea-web:0[icedtea7]
-			>=dev-java/icedtea-web-1.3.2:7
-		) )
-		nsplugin? ( || (
+		)
+		nsplugin? (
 			dev-java/icedtea-web:0[icedtea7,nsplugin]
-			>=dev-java/icedtea-web-1.3.2:7[nsplugin]
-		) )
+		)
 		pulseaudio? ( dev-java/icedtea-sound )"
 
 S="${WORKDIR}"/${ICEDTEA_PKG}
@@ -345,6 +344,16 @@ src_install() {
 
 	if use source; then
 		cp src.zip "${ddest}" || die
+	fi
+
+	# provided by icedtea-web but we need it in JAVA_HOME to work with run-java-tool
+	if use webstart || use nsplugin; then
+		dosym /usr/libexec/icedtea-web/itweb-settings ${dest}/bin/itweb-settings
+		dosym /usr/libexec/icedtea-web/itweb-settings ${dest}/jre/bin/itweb-settings
+	fi
+	if use webstart; then
+		dosym /usr/libexec/icedtea-web/javaws ${dest}/bin/javaws
+		dosym /usr/libexec/icedtea-web/javaws ${dest}/jre/bin/javaws
 	fi
 
 	# Fix the permissions.
