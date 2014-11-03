@@ -99,7 +99,6 @@ COMMON_DEP="
 	javascript? ( dev-java/rhino:1.6 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
 	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
-	selinux? ( sec-policy/selinux-java )
 	systemtap? ( >=dev-util/systemtap-1 )"
 
 # cups is needed for X. #390945 #390975
@@ -118,7 +117,8 @@ RDEPEND="${COMMON_DEP}
 		)
 	)
 	alsa? ( ${ALSA_COMMON_DEP} )
-	cups? ( ${CUPS_COMMON_DEP} )"
+	cups? ( ${CUPS_COMMON_DEP} )
+	selinux? ( sec-policy/selinux-java )"
 
 # Only ant-core-1.8.1 has fixed ant -diagnostics when xerces+xalan are not present.
 # ca-certificates, perl and openssl are used for the cacerts keystore generation

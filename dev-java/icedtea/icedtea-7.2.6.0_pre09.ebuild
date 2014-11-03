@@ -96,7 +96,6 @@ COMMON_DEP="
 	virtual/jpeg:0=
 	javascript? ( dev-java/rhino:1.6 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
-	selinux? ( sec-policy/selinux-java )
 	kerberos? ( virtual/krb5 )
 	>=dev-util/systemtap-1
 	smartcard? ( sys-apps/pcsc-lite )
@@ -119,7 +118,8 @@ RDEPEND="${COMMON_DEP}
 		)
 	)
 	alsa? ( ${ALSA_COMMON_DEP} )
-	cups? ( ${CUPS_COMMON_DEP} )"
+	cups? ( ${CUPS_COMMON_DEP} )
+	selinux? ( sec-policy/selinux-java )"
 
 # Only ant-core-1.8.1 has fixed ant -diagnostics when xerces+xalan are not present.
 # ca-certificates, perl and openssl are used for the cacerts keystore generation
