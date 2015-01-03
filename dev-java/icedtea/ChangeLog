@@ -1,6 +1,11 @@
 # ChangeLog for dev-java/icedtea
-# Copyright 1999-2014 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  03 Jan 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +files/7085757-currency_fix.patch, icedtea-7.2.5.3.ebuild:
+  Fix currency generation failure caused by 2014-12-31 being > 10 years ago;
+  #534118
 
 *icedtea-7.2.6.0_pre11 (13 Nov 2014)
 

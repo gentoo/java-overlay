@@ -1,0 +1,412 @@
+diff -r 13b10ea1447c Makefile.am
+--- a/Makefile.am	Fri Dec 12 20:13:40 2014 +0000
++++ b/Makefile.am	Sat Jan 03 16:53:45 2015 +0000
+@@ -242,7 +242,7 @@
+ 
+ # Patch list
+ 
+-ICEDTEA_PATCHES = 
++ICEDTEA_PATCHES = patches/7085757-currency_data.patch
+ 
+ # Conditional patches
+ 
+diff -r 13b10ea1447c patches/7085757-currency_data.patch
+--- /dev/null	Thu Jan 01 00:00:00 1970 +0000
++++ b/patches/7085757-currency_data.patch	Sat Jan 03 16:53:45 2015 +0000
+@@ -0,0 +1,396 @@
++# HG changeset patch
++# User coffeys
++# Date 1412008618 -3600
++#      Mon Sep 29 17:36:58 2014 +0100
++# Node ID 2f94c1a494f0aaad61626a7f901ddfbf57bd0199
++# Parent  993c08c0fcc7c6f404f708728679e6e707a95f8c
++7085757: Currency Data: ISO 4217 Amendment 152
++7195759: ISO 4217 Amendment 154
++8021121: ISO 4217 Amendment Number 156
++8055222: Currency update needed for ISO 4217 Amendment #159
++8006748: getISO3Country() returns wrong value
++7077119: remove past transition dates from CurrencyData.properties file
++7028073: The currency symbol for Peru is wrong
++Reviewed-by: naoto
++
++diff -r 993c08c0fcc7 -r 2f94c1a494f0 src/share/classes/java/util/CurrencyData.properties
++--- openjdk/jdk/src/share/classes/java/util/CurrencyData.properties	Fri Sep 27 13:06:47 2013 -0700
+++++ openjdk/jdk/src/share/classes/java/util/CurrencyData.properties	Mon Sep 29 17:36:58 2014 +0100
++@@ -1,5 +1,5 @@
++ #
++-# Copyright (c) 2000, 2008, Oracle and/or its affiliates. All rights reserved.
+++# Copyright (c) 2000, 2014, Oracle and/or its affiliates. All rights reserved.
++ # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++ #
++ # This code is free software; you can redistribute it and/or modify it
++@@ -26,10 +26,9 @@
++ formatVersion=1
++ 
++ # Version of the currency code information in this class.
++-# It is a serial number that accompanies with each amendment, such as 
++-# 'MAxxx.doc'
+++# It is a serial number that accompanies with each amendment.
++ 
++-dataVersion=151
+++dataVersion=159
++ 
++ # List of all valid ISO 4217 currency codes.
++ # To ensure compatibility, do not remove codes.
++@@ -49,11 +48,12 @@
++     NIO558-NLG528-NOK578-NPR524-NZD554-OMR512-PAB590-PEN604-PGK598-PHP608-\
++     PKR586-PLN985-PTE620-PYG600-QAR634-ROL946-RON946-RSD941-RUB643-RUR810-RWF646-SAR682-\
++     SBD090-SCR690-SDD736-SDG938-SEK752-SGD702-SHP654-SIT705-SKK703-SLL694-SOS706-\
++-    SRD968-SRG740-STD678-SVC222-SYP760-SZL748-THB764-TJS972-TMM795-TMT934-TND788-TOP776-\
+++    SRD968-SRG740-SSP728-STD678-SVC222-SYP760-SZL748-THB764-TJS972-TMM795-TMT934-TND788-TOP776-\
++     TPE626-TRL792-TRY949-TTD780-TWD901-TZS834-UAH980-UGX800-USD840-USN997-USS998-\
++     UYU858-UZS860-VEB862-VEF937-VND704-VUV548-WST882-XAF950-XAG961-XAU959-XBA955-\
++     XBB956-XBC957-XBD958-XCD951-XDR960-XFO000-XFU000-XOF952-XPD964-XPF953-\
++-    XPT962-XSU994-XTS963-XUA965-XXX999-YER886-YUM891-ZAR710-ZMK894-ZWD716-ZWL932-ZWN942-ZWR935
+++    XPT962-XSU994-XTS963-XUA965-XXX999-YER886-YUM891-ZAR710-ZMK894-ZMW967-ZWD716-ZWL932-\
+++    ZWN942-ZWR935
++ 
++ 
++ # Mappings from ISO 3166 country codes to ISO 4217 currency codes.
++@@ -71,7 +71,7 @@
++ #
++ # The table is based on the following web sites:
++ # http://www.din.de/gremien/nas/nabd/iso3166ma/codlstp1/db_en.html
++-# http://www.bsi-global.com/iso4217currency
+++# http://www.currency-iso.org/iso_index/iso_tables.htm
++ # http://www.cia.gov/cia/publications/factbook/indexgeo.html
++ 
++ # AFGHANISTAN
++@@ -105,7 +105,7 @@
++ # AUSTRIA
++ AT=EUR
++ # AZERBAIJAN
++-AZ=AZM;2005-12-31-20-00-00;AZN
+++AZ=AZN
++ # BAHAMAS
++ BS=BSD
++ # BAHRAIN
++@@ -320,7 +320,7 @@
++ # LAO PEOPLE'S DEMOCRATIC REPUBLIC
++ LA=LAK
++ # LATVIA
++-LV=LVL
+++LV=LVL;2013-12-31-22-00-00;EUR
++ # LEBANON
++ LB=LBP
++ # LESOTHO
++@@ -332,7 +332,7 @@
++ # LIECHTENSTEIN
++ LI=CHF
++ # LITHUANIA
++-LT=LTL
+++LT=LTL;2014-12-31-22-00-00;EUR
++ # LUXEMBOURG
++ LU=EUR
++ # MACAU
++@@ -378,7 +378,7 @@
++ # MOROCCO
++ MA=MAD
++ # MOZAMBIQUE
++-MZ=MZM;2006-06-30-22-00-00;MZN
+++MZ=MZN
++ # MYANMAR
++ MM=MMK
++ # NAMIBIA
++@@ -440,7 +440,7 @@
++ # REUNION
++ RE=EUR
++ # ROMANIA
++-RO=ROL;2005-06-30-21-00-00;RON
+++RO=RON
++ # RUSSIAN FEDERATION
++ RU=RUB
++ # RWANDA
++@@ -463,6 +463,8 @@
++ WS=WST
++ # SAN MARINO
++ SM=EUR
+++# SOUTH SUDAN
+++SS=SSP
++ # SAO TOME AND PRINCIPE
++ ST=STD
++ # SAUDI ARABIA
++@@ -532,7 +534,7 @@
++ # TUNISIA
++ TN=TND
++ # TURKEY
++-TR=TRL;2004-12-31-22-00-00;TRY
+++TR=TRY
++ # TURKMENISTAN
++ TM=TMT
++ # TURKS AND CAICOS ISLANDS
++@@ -558,7 +560,7 @@
++ # VANUATU
++ VU=VUV
++ # VENEZUELA
++-VE=VEB;2008-01-01-04-00-00;VEF
+++VE=VEF
++ # VIET NAM
++ VN=VND
++ # VIRGIN ISLANDS, BRITISH
++@@ -572,7 +574,7 @@
++ # YEMEN
++ YE=YER
++ # ZAMBIA
++-ZM=ZMK
+++ZM=ZMW
++ # ZIMBABWE
++ ZW=ZWL
++ 
++@@ -583,7 +585,7 @@
++ minor0=\
++     ADP-BEF-BIF-BYB-BYR-CLF-CLP-DJF-ESP-GNF-\
++     GRD-ISK-ITL-JPY-KMF-KRW-LUF-MGF-PYG-PTE-RWF-\
++-    TPE-TRL-VUV-XAF-XOF-XPF
+++    TPE-TRL-UGX-VND-VUV-XAF-XOF-XPF
++ minor1=
++ minor3=\
++     BHD-IQD-JOD-KWD-LYD-OMR-TND
++diff -r 993c08c0fcc7 -r 2f94c1a494f0 src/share/classes/java/util/LocaleISOData.java
++--- openjdk/jdk/src/share/classes/java/util/LocaleISOData.java	Fri Sep 27 13:06:47 2013 -0700
+++++ openjdk/jdk/src/share/classes/java/util/LocaleISOData.java	Mon Sep 29 17:36:58 2014 +0100
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright (c) 2005, 2011, Oracle and/or its affiliates. All rights reserved.
+++ * Copyright (c) 2005, 2013, Oracle and/or its affiliates. All rights reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -433,6 +433,7 @@
++         + "SN" + "SEN"  // Senegal, Republic of
++         + "SO" + "SOM"  // Somalia, Somali Republic
++         + "SR" + "SUR"  // Suriname, Republic of
+++        + "SS" + "SSD"  // South Sudan
++         + "ST" + "STP"  // Sao Tome and Principe, Democratic Republic of
++         + "SV" + "SLV"  // El Salvador, Republic of
++         + "SX" + "SXM"  // Sint Maarten (Dutch part)
++diff -r 993c08c0fcc7 -r 2f94c1a494f0 src/share/classes/sun/util/resources/CurrencyNames.properties
++--- openjdk/jdk/src/share/classes/sun/util/resources/CurrencyNames.properties	Fri Sep 27 13:06:47 2013 -0700
+++++ openjdk/jdk/src/share/classes/sun/util/resources/CurrencyNames.properties	Mon Sep 29 17:36:58 2014 +0100
++@@ -1,5 +1,5 @@
++ #
++-# Copyright (c) 2005, 2011, Oracle and/or its affiliates. All rights reserved.
+++# Copyright (c) 2005, 2012, Oracle and/or its affiliates. All rights reserved.
++ # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++ #
++ # This code is free software; you can redistribute it and/or modify it
++@@ -26,7 +26,7 @@
++ #
++ # COPYRIGHT AND PERMISSION NOTICE
++ #
++-# Copyright (C) 1991-2011 Unicode, Inc. All rights reserved.
+++# Copyright (C) 1991-2012 Unicode, Inc. All rights reserved.
++ # Distributed under the Terms of Use in http://www.unicode.org/copyright.html.
++ #
++ # Permission is hereby granted, free of charge, to any person obtaining
++@@ -226,6 +226,7 @@
++ SOS=SOS
++ SRD=SRD
++ SRG=SRG
+++SSP=SSP
++ STD=STD
++ SVC=SVC
++ SYP=SYP
++@@ -277,6 +278,7 @@
++ YUM=YUM
++ ZAR=ZAR
++ ZMK=ZMK
+++ZMW=ZMW
++ ZWD=ZWD
++ ZWL=ZWL
++ ZWN=ZWN
++@@ -443,6 +445,7 @@
++ sos=Somali Shilling
++ srd=Surinamese Dollar
++ srg=Surinamese Guilder
+++ssp=South Sudanese Pound
++ std=S\u00e3o Tom\u00e9 and Pr\u00edncipe Dobra
++ svc=Salvadoran Col\u00f3n
++ syp=Syrian Pound
++@@ -486,7 +489,9 @@
++ xpd=Palladium
++ xpf=CFP Franc
++ xpt=Platinum
+++xsu=Sucre
++ xts=Testing Currency Code
+++xua=ADB Unit of Account
++ xxx=Unknown Currency
++ yer=Yemeni Rial
++ yum=Yugoslavian New Dinar (1994-2002)
++diff -r 993c08c0fcc7 -r 2f94c1a494f0 src/share/classes/sun/util/resources/CurrencyNames_es_PE.properties
++--- openjdk/jdk/src/share/classes/sun/util/resources/CurrencyNames_es_PE.properties	Fri Sep 27 13:06:47 2013 -0700
+++++ openjdk/jdk/src/share/classes/sun/util/resources/CurrencyNames_es_PE.properties	Mon Sep 29 17:36:58 2014 +0100
++@@ -35,4 +35,4 @@
++ # This notice and attribution to Taligent may not be removed.
++ # Taligent is a registered trademark of Taligent, Inc.
++ 
++-PEN=S/
+++PEN=S/.
++diff -r 993c08c0fcc7 -r 2f94c1a494f0 src/share/classes/sun/util/resources/CurrencyNames_lt_LT.properties
++--- openjdk/jdk/src/share/classes/sun/util/resources/CurrencyNames_lt_LT.properties	Fri Sep 27 13:06:47 2013 -0700
+++++ openjdk/jdk/src/share/classes/sun/util/resources/CurrencyNames_lt_LT.properties	Mon Sep 29 17:36:58 2014 +0100
++@@ -35,4 +35,5 @@
++ # This notice and attribution to Taligent may not be removed.
++ # Taligent is a registered trademark of Taligent, Inc.
++ 
+++EUR=\u20AC
++ LTL=Lt
++diff -r 993c08c0fcc7 -r 2f94c1a494f0 src/share/classes/sun/util/resources/CurrencyNames_lv_LV.properties
++--- openjdk/jdk/src/share/classes/sun/util/resources/CurrencyNames_lv_LV.properties	Fri Sep 27 13:06:47 2013 -0700
+++++ openjdk/jdk/src/share/classes/sun/util/resources/CurrencyNames_lv_LV.properties	Mon Sep 29 17:36:58 2014 +0100
++@@ -35,4 +35,5 @@
++ # This notice and attribution to Taligent may not be removed.
++ # Taligent is a registered trademark of Taligent, Inc.
++ 
+++EUR=\u20AC
++ LVL=Ls
++diff -r 993c08c0fcc7 -r 2f94c1a494f0 src/share/classes/sun/util/resources/LocaleNames.properties
++--- openjdk/jdk/src/share/classes/sun/util/resources/LocaleNames.properties	Fri Sep 27 13:06:47 2013 -0700
+++++ openjdk/jdk/src/share/classes/sun/util/resources/LocaleNames.properties	Mon Sep 29 17:36:58 2014 +0100
++@@ -1077,6 +1077,7 @@
++ SN=Senegal
++ SO=Somalia
++ SR=Suriname
+++SS=South Sudan
++ ST=Sao Tome And Principe
++ SV=El Salvador
++ SX=Sint Maarten (Dutch part)
++diff -r 993c08c0fcc7 -r 2f94c1a494f0 test/java/util/Currency/ValidateISO4217.java
++--- openjdk/jdk/test/java/util/Currency/ValidateISO4217.java	Fri Sep 27 13:06:47 2013 -0700
+++++ openjdk/jdk/test/java/util/Currency/ValidateISO4217.java	Mon Sep 29 17:36:58 2014 +0100
++@@ -1,5 +1,5 @@
++ /*
++- * Copyright (c) 2007, 2011, Oracle and/or its affiliates. All rights reserved.
+++ * Copyright (c) 2007, 2012, Oracle and/or its affiliates. All rights reserved.
++  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
++  *
++  * This code is free software; you can redistribute it and/or modify it
++@@ -22,7 +22,7 @@
++  */
++ /*
++  * @test
++- * @bug 4691089 4819436 4942982 5104960 6544471 6627549 7066203
+++ * @bug 4691089 4819436 4942982 5104960 6544471 6627549 7066203 7195759
++  * @summary Validate ISO 4217 data for Currency class.
++  */
++ 
++@@ -92,7 +92,7 @@
++ 
++     /* Codes that are obsolete, do not have related country */
++     static final String otherCodes =
++-        "ADP-AFA-ATS-AYM-BEF-BGL-BOV-BYB-CLF-CUC-CYP-DEM-EEK-ESP-FIM-FRF-GRD-GWP-IEP-ITL-LUF-MGF-MTL-MXV-NLG-PTE-RUR-SDD-SIT-SKK-SRG-TMM-TPE-TRL-VEF-USN-USS-XAG-XAU-XBA-XBB-XBC-XBD-XDR-XFO-XFU-XPD-XPT-XSU-XTS-XUA-XXX-YUM-ZWD-ZWN-ZWR";
+++        "ADP-AFA-ATS-AYM-AZM-BEF-BGL-BOV-BYB-CLF-CUC-CYP-DEM-EEK-ESP-FIM-FRF-GHC-GRD-GWP-IEP-ITL-LUF-MGF-MTL-MXV-MZM-NLG-PTE-ROL-RUR-SDD-SIT-SKK-SRG-TMM-TPE-TRL-VEF-USN-USS-VEB-XAG-XAU-XBA-XBB-XBC-XBD-XDR-XFO-XFU-XPD-XPT-XSU-XTS-XUA-XXX-YUM-ZMK-ZWD-ZWN-ZWR";
++ 
++     static boolean err = false;
++ 
++diff -r 993c08c0fcc7 -r 2f94c1a494f0 test/java/util/Currency/tablea1.txt
++--- openjdk/jdk/test/java/util/Currency/tablea1.txt	Fri Sep 27 13:06:47 2013 -0700
+++++ openjdk/jdk/test/java/util/Currency/tablea1.txt	Mon Sep 29 17:36:58 2014 +0100
++@@ -1,12 +1,12 @@
++ #
++ #
++-# Based on BSi's ISO4217 data - "TABLE A1.doc" + amendments up until MA151.doc
++-#   (As of 7 April 2011)
+++# Amendments up until ISO 4217 AMENDMENT NUMBER 159
+++#   (As of 15 August 2014)
++ #
++ 
++ # Version
++ FILEVERSION=1
++-DATAVERSION=151
+++DATAVERSION=159
++ 
++ # ISO 4217 currency data
++ AF	AFN	971	2
++@@ -23,7 +23,7 @@
++ AU	AUD	36	2
++ AT	EUR	978	2
++ # MA 129
++-AZ	AZM	31	2	2005-12-31-20-00-00	AZN	944	2
+++AZ	AZN	944	2
++ BS	BSD	44	2
++ BH	BHD	48	3
++ BD	BDT	50	2
++@@ -96,7 +96,7 @@
++ GM	GMD	270	2
++ GE	GEL	981	2
++ DE	EUR	978	2
++-GH	GHC	288	2	2007-07-01-00-00-00	GHS	936	2
+++GH	GHS	936	2
++ GI	GIP	292	2
++ GR	EUR	978	2
++ GL	DKK	208	2
++@@ -135,14 +135,14 @@
++ KW	KWD	414	3
++ KG	KGS	417	2
++ LA	LAK	418	2
++-LV	LVL	428	2
+++LV	LVL	428	2	2013-12-31-22-00-00	EUR	978	2
++ LB	LBP	422	2
++ #LS	ZAR	710	2
++ LS	LSL	426	2
++ LR	LRD	430	2
++ LY	LYD	434	3
++ LI	CHF	756	2
++-LT	LTL	440	2
+++LT	LTL	440	2	2014-12-31-22-00-00	EUR	978	2
++ LU	EUR	978	2
++ MO	MOP	446	2
++ MK	MKD	807	2
++@@ -166,7 +166,7 @@
++ MS	XCD	951	2
++ MA	MAD	504	2
++ # MA 130
++-MZ	MZM	508	2	2006-06-30-22-00-00	MZN	943	2
+++MZ	MZN	943	2
++ MM	MMK	104	2
++ # MA 134
++ ME	EUR	978	2
++@@ -200,7 +200,7 @@
++ PR	USD	840	2
++ QA	QAR	634	2
++ RE	EUR	978	2
++-RO	ROL	946	2	2005-06-30-21-00-00	RON	946	2
+++RO	RON	946	2
++ RU	RUB	643	2
++ RW	RWF	646	0
++ SH	SHP	654	2
++@@ -227,6 +227,7 @@
++ SB	SBD	90	2
++ SO	SOS	706	2
++ ZA	ZAR	710	2
+++SS	SSP	728	2
++ ES	EUR	978	2
++ LK	LKR	144	2
++ SD	SDG	938	2
++@@ -255,7 +256,7 @@
++ TM	TMT	934	2
++ TC	USD	840	2
++ TV	AUD	36	2
++-UG	UGX	800	2
+++UG	UGX	800	0
++ UA	UAH	980	2
++ AE	AED	784	2
++ GB	GBP	826	2
++@@ -266,14 +267,14 @@
++ UY	UYU	858	2
++ UZ	UZS	860	2
++ VU	VUV	548	0
++-VE	VEB	862	2	2008-01-01-04-00-00	VEF	937	2
++-VN	VND	704	2
+++VE	VEF	937	2
+++VN	VND	704	0
++ VG	USD	840	2
++ VI	USD	840	2
++ WF	XPF	953	0
++ EH	MAD	504	2
++ YE	YER	886	2
++-ZM	ZMK	894	2
+++ZM	ZMW	967	2
++ ZW	ZWL	932	2
++ #XAU	XAU	959
++ #XBA	XBA	955

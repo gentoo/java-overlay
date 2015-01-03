@@ -1,4 +1,4 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.5.3.ebuild,v 1.1 2014/11/01 21:43:06 caster Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
@@ -10,7 +10,7 @@
 EAPI="5"
 SLOT="7"
 
-inherit check-reqs java-pkg-2 java-vm-2 multiprocessing pax-utils prefix versionator virtualx
+inherit autotools check-reqs java-pkg-2 java-vm-2 multiprocessing pax-utils prefix versionator virtualx
 
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
@@ -197,6 +197,9 @@ java_prepare() {
 
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
+
+	epatch "${FILESDIR}/7085757-currency_fix.patch"
+	eautoreconf
 }
 
 src_configure() {
