@@ -1,4 +1,4 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-6.1.13.5.ebuild,v 1.1 2014/10/19 06:46:41 caster Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
@@ -36,7 +36,7 @@ SLOT="6"
 KEYWORDS=""
 
 IUSE="+X +alsa cacao cjk +cups debug doc examples javascript +jbootstrap +nsplugin
-	+nss pax_kernel pulseaudio selinux +source systemtap test +webstart"
+	+nss pax_kernel pulseaudio selinux +source systemtap test zero +webstart"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
@@ -116,12 +116,8 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	${X_DEPEND}
 	pax_kernel? ( sys-apps/paxctl )"
 
-PDEPEND="webstart? (
-			dev-java/icedtea-web:0
-		)
-		nsplugin? (
-			dev-java/icedtea-web:0[nsplugin]
-		)"
+PDEPEND="webstart? ( dev-java/icedtea-web:0 )
+	nsplugin? ( dev-java/icedtea-web:0[nsplugin] )"
 
 S="${WORKDIR}"/${ICEDTEA_PKG}
 
@@ -171,7 +167,7 @@ bootstrap_impossible() {
 }
 
 src_configure() {
-	local bootstrap config enable_cacao
+	local bootstrap cacao_config config hotspot_port use_cacao use_zero zero_config
 	local vm=$(java-pkg_get-current-vm)
 
 	# IcedTea6 can't be built using IcedTea7; its class files are too new
@@ -193,18 +189,44 @@ src_configure() {
 
 	config+=" --${bootstrap}-bootstrap"
 
-	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
-	# Otherwise use CACAO
-	if ! has "${ARCH}" amd64 sparc x86; then
-		enable_cacao=yes
-	elif use cacao; then
-		ewarn 'Enabling CACAO on an architecture with HotSpot support; issues may result.'
-		ewarn 'If so, please rebuild with USE="-cacao"'
-		enable_cacao=yes
+	# Use Zero if requested
+	if use zero; then
+		use_zero="yes"
 	fi
 
-	if [[ ${enable_cacao} ]]; then
-		config+=" --enable-cacao"
+	# Use CACAO if requested
+	if use cacao; then
+		use_cacao="yes"
+	fi
+
+	# Are we on a architecture with a HotSpot port?
+	# In-tree JIT ports are available for amd64, arm, sparc and x86.
+	if { use amd64 || use arm || use sparc || use x86; }; then
+		hotspot_port="yes"
+	fi
+
+	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
+	# Otherwise use CACAO on ppc and Zero on anything else
+	if test "x${hotspot_port}" != "xyes"; then
+		if use ppc; then
+			use_cacao="yes"
+		else
+			use_zero="yes"
+		fi
+	fi
+
+	# Turn on CACAO if needed (non-HS archs) or requested
+	if test "x${use_cacao}" = "xyes"; then
+		if test "x${hotspot_port}" = "xyes"; then
+			ewarn 'Enabling CACAO on an architecture with HotSpot support; issues may result.'
+			ewarn 'If so, please rebuild with USE="-cacao"'
+		fi
+		cacao_config="--enable-cacao"
+	fi
+
+	# Turn on Zero if needed (non-HS/CACAO archs) or requested
+	if test "x${use_zero}" = "xyes"; then
+		zero_config="--enable-zero"
 	fi
 
 	config+=" --with-parallel-jobs=$(makeopts_jobs)"
@@ -230,7 +252,8 @@ src_configure() {
 		$(use_enable nss) \
 		$(use_enable pulseaudio pulse-java) \
 		$(use_enable systemtap) \
-		$(use_with pax_kernel pax paxctl)
+		$(use_with pax_kernel pax paxctl) \
+		${zero_config} ${cacao_config}
 }
 
 src_compile() {

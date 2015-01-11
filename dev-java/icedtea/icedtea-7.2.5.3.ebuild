@@ -147,13 +147,9 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	${X_DEPEND}
 	pax_kernel? ( sys-apps/elfix )"
 
-PDEPEND="webstart? (
-			dev-java/icedtea-web:0[icedtea7]
-		)
-		nsplugin? (
-			dev-java/icedtea-web:0[icedtea7,nsplugin]
-		)
-		pulseaudio? ( dev-java/icedtea-sound )"
+PDEPEND="webstart? ( dev-java/icedtea-web:0[icedtea7] )
+	nsplugin? ( dev-java/icedtea-web:0[icedtea7,nsplugin] )
+	pulseaudio? ( dev-java/icedtea-sound )"
 
 S="${WORKDIR}"/${ICEDTEA_PKG}
 
@@ -203,7 +199,7 @@ java_prepare() {
 }
 
 src_configure() {
-	local bootstrap cacao_config config use_cacao use_zero zero_config
+	local bootstrap cacao_config config hotspot_port use_cacao use_zero zero_config
 	local vm=$(java-pkg_get-current-vm)
 
 	# Whether to bootstrap
@@ -232,11 +228,16 @@ src_configure() {
 		use_cacao="yes"
 	fi
 
+	# Are we on a architecture with a HotSpot port?
+	# In-tree JIT ports are available for amd64, arm, arm64, ppc64 (be&le), SPARC and x86.
+	if { use amd64 || use arm || use arm64 || use ppc64 || use sparc || use x86; }; then
+		hotspot_port="yes"
+	fi
+
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
-	# In-tree JIT ports are available for arm, aarch64, amd64, ppc64, ppc64le, SPARC and x86.
-	# Otherwise use CACAO
-	if ! has "${ARCH}" arm aarch64 amd64 ppc64 ppc64le sparc x86 ; then
-		if has "${ARCH}" ppc ; then
+	# Otherwise use CACAO on ppc and Zero on anything else
+	if test "x${hotspot_port}" != "xyes"; then
+		if use ppc; then
 			use_cacao="yes"
 		else
 			use_zero="yes"
@@ -245,6 +246,10 @@ src_configure() {
 
 	# Turn on CACAO if needed (non-HS archs) or requested
 	if test "x${use_cacao}" = "xyes"; then
+		if test "x${hotspot_port}" = "xyes"; then
+			ewarn 'Enabling CACAO on an architecture with HotSpot support; issues may result.'
+			ewarn 'If so, please rebuild with USE="-cacao"'
+		fi
 		cacao_config="--enable-cacao"
 	fi
 

@@ -1,4 +1,4 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-7.2.0-r3.ebuild,v 1.1 2011/12/02 12:27:17 sera Exp $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
@@ -199,7 +199,7 @@ bootstrap_impossible() {
 }
 
 src_configure() {
-	local bootstrap config
+	local bootstrap config hotspot_port jamvm_config use_jamvm use_zero zero_config
 	local vm=$(java-pkg_get-current-vm)
 
 	# Whether to bootstrap
@@ -222,10 +222,44 @@ src_configure() {
 
 	config+=" --${bootstrap}-bootstrap"
 
+	# Use Zero if requested
+	if use zero; then
+		use_zero="yes"
+	fi
+
+	# Use JamVM if requested
+	if use jamvm; then
+		use_jamvm="yes"
+	fi
+
+	# Are we on a architecture with a HotSpot port?
+	# In-tree JIT ports are available for amd64, ppc64 (le&be), sparc and x86.
+	if { use amd64 || use ppc64 || use sparc || use x86; }; then
+		hotspot_port="yes"
+	fi
+
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
-	# Otherwise use JamVM as it's the only possibility right now
-	if ! has "${ARCH}" amd64 sparc x86; then
-		config+=" --enable-jamvm"
+	# Otherwise use JamVM on arm & ppc and Zero on anything else
+	if test "x${hotspot_port}" != "xyes"; then
+		if { use arm || use ppc; }; then
+			use_jamvm="yes"
+		else
+			use_zero="yes"
+		fi
+	fi
+
+	# Turn on JamVM if needed (non-HS archs) or requested
+	if test "x${use_jamvm}" = "xyes"; then
+		if test "x${hotspot_port}" = "xyes"; then
+			ewarn 'Enabling JamVM on an architecture with HotSpot support; issues may result.'
+			ewarn 'If so, please rebuild with USE="-jamvm"'
+		fi
+		jamvm_config="--enable-jamvm"
+	fi
+
+	# Turn on Zero if needed (non-HS/CACAO archs) or requested
+	if test "x${use_zero}" = "xyes"; then
+		zero_config="--enable-zero"
 	fi
 
 	config+=" --with-parallel-jobs=$(makeopts_jobs)"
@@ -256,7 +290,8 @@ src_configure() {
 		$(use_enable nss) \
 		$(use_enable pulseaudio pulse-java) \
 		$(use_enable systemtap) \
-		$(use_with pax_kernel pax paxctl)
+		$(use_with pax_kernel pax paxctl) \
+		${zero_config} ${jamvm_config}
 }
 
 src_compile() {
