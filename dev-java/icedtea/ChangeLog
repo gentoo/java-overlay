@@ -3,6 +3,11 @@
 # $Header: $
 
   11 Jan 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  icedtea-6.1.13.5-r1.ebuild, icedtea-6.9999.ebuild:
+  Let CACAO handle ppc64 with OpenJDK 6 / IcedTea 1.x as there is no HotSpot
+  port there.
+
+  11 Jan 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
   icedtea-3.9999.ebuild, icedtea-6.1.13.5-r1.ebuild, icedtea-6.9999.ebuild,
   icedtea-7.2.5.3.ebuild, icedtea-7.2.6.0_pre11.ebuild:
   Synchronise arch selection across all ebuilds, update to match Gentoo values

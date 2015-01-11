@@ -208,7 +208,7 @@ src_configure() {
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
 	# Otherwise use CACAO on ppc and Zero on anything else
 	if test "x${hotspot_port}" != "xyes"; then
-		if use ppc; then
+		if { use ppc || use ppc64; }; then
 			use_cacao="yes"
 		else
 			use_zero="yes"
