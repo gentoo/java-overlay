@@ -10,18 +10,18 @@
 EAPI="5"
 SLOT="7"
 
-inherit autotools check-reqs java-pkg-2 java-vm-2 multiprocessing pax-utils prefix versionator virtualx
+inherit check-reqs java-pkg-2 java-vm-2 multiprocessing pax-utils prefix versionator virtualx
 
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-CORBA_TARBALL="4aed5efcd8df.tar.bz2"
-JAXP_TARBALL="c903902aadd7.tar.bz2"
-JAXWS_TARBALL="d3bef5fd93db.tar.bz2"
-JDK_TARBALL="6b81c7cc733e.tar.bz2"
-LANGTOOLS_TARBALL="a64b8bf851a9.tar.bz2"
-OPENJDK_TARBALL="49dc79ef05ab.tar.bz2"
-HOTSPOT_TARBALL="1d0d98e7c981.tar.bz2"
+CORBA_TARBALL="3c9f523bf96e.tar.bz2"
+JAXP_TARBALL="ca26767d3375.tar.bz2"
+JAXWS_TARBALL="9a6c90336922.tar.bz2"
+JDK_TARBALL="1e6db4f8b0f3.tar.bz2"
+LANGTOOLS_TARBALL="960cdffa8b3f.tar.bz2"
+OPENJDK_TARBALL="6cf2880aab5e.tar.bz2"
+HOTSPOT_TARBALL="6144ca9b6a72.tar.bz2"
 CACAO_TARBALL="e215e36be9fc.tar.gz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
 
@@ -193,9 +193,6 @@ java_prepare() {
 
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
-
-	epatch "${FILESDIR}/7085757-currency_fix.patch"
-	eautoreconf
 }
 
 src_configure() {
