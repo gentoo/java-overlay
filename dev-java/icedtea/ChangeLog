@@ -2,6 +2,12 @@
 # Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.13.6 (26 Jan 2015)
+
+  26 Jan 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +icedtea-6.1.13.6.ebuild, -icedtea-6.1.13.5-r1.ebuild:
+  IcedTea 1.13.6 released: http://bitly.com/it11306
+
 *icedtea-7.2.5.4 (23 Jan 2015)
 
   23 Jan 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
