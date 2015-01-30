@@ -15,13 +15,13 @@ inherit autotools check-reqs java-pkg-2 java-vm-2 mercurial multiprocessing pax-
 ICEDTEA_VER=$(get_version_component_range 2-4)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
-CORBA_TARBALL="c11c54a2675c.tar.bz2"
-JAXP_TARBALL="79d217da0a7a.tar.bz2"
-JAXWS_TARBALL="2823343ab244.tar.bz2"
-JDK_TARBALL="8a445d1b5af5.tar.bz2"
-LANGTOOLS_TARBALL="510234036e06.tar.bz2"
-OPENJDK_TARBALL="05e485acec14.tar.bz2"
-HOTSPOT_TARBALL="e13857ecc787.tar.bz2"
+CORBA_TARBALL="15250731630c.tar.bz2"
+JAXP_TARBALL="8cc37ea6edf6.tar.bz2"
+JAXWS_TARBALL="5ee59be2092b.tar.bz2"
+JDK_TARBALL="19a30444897f.tar.bz2"
+LANGTOOLS_TARBALL="bb9d09219d3e.tar.bz2"
+OPENJDK_TARBALL="e229119aa0a0.tar.bz2"
+HOTSPOT_TARBALL="1792bfb4a54d.tar.bz2"
 CACAO_TARBALL="e215e36be9fc.tar.gz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
 
