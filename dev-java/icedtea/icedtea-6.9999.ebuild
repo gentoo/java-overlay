@@ -13,8 +13,8 @@ inherit autotools check-reqs java-pkg-2 java-vm-2 mercurial multiprocessing pax-
 
 ICEDTEA_PKG=${PN}$(replace_version_separator 1 -)
 ICEDTEA_BRANCH=$(get_version_component_range 1-3)
-OPENJDK_BUILD="30"
-OPENJDK_DATE="21_jan_2014"
+OPENJDK_BUILD="34"
+OPENJDK_DATE="20_jan_2015"
 OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.xz"
 # Download cacao and jamvm regardless for use with EXTRA_ECONF
 CACAO_TARBALL="68fe50ac34ec.tar.gz"
@@ -26,7 +26,7 @@ JAMVM_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-${JAMVM_TARBALL}"
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
 SRC_URI="
-	http://download.java.net/openjdk/jdk6/promoted/b${OPENJDK_BUILD}/${OPENJDK_TARBALL}
+	https://java.net/downloads/openjdk6/${OPENJDK_TARBALL}
 	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL} -> ${CACAO_GENTOO_TARBALL}
 	http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL} -> ${JAMVM_GENTOO_TARBALL}"
 EHG_REPO_URI="http://icedtea.classpath.org/hg/icedtea6"
@@ -35,7 +35,7 @@ LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 M
 SLOT="6"
 KEYWORDS=""
 
-IUSE="+X +alsa cacao cjk +cups debug doc examples javascript +jbootstrap +nsplugin
+IUSE="+X +alsa cacao cjk +cups debug doc examples javascript +jbootstrap kerberos +nsplugin
 	+nss pax_kernel pulseaudio selinux +source systemtap test zero +webstart"
 
 # Ideally the following were optional at build time.
@@ -45,8 +45,8 @@ CUPS_COMMON_DEP="
 	>=net-print/cups-1.2.12"
 X_COMMON_DEP="
 	dev-libs/glib
-	>=media-libs/freetype-2.3.5
-	>=x11-libs/gtk+-2.8:2
+	>=media-libs/freetype-2.3.5:2=
+	>=x11-libs/gtk+-2.8:2=
 	>=x11-libs/libX11-1.1.3
 	>=x11-libs/libXext-1.1.1
 	>=x11-libs/libXi-1.1.3
@@ -63,14 +63,15 @@ X_DEPEND="
 	x11-proto/xproto"
 
 COMMON_DEP="
-	>=media-libs/giflib-4.1.6
-	>=media-libs/libpng-1.2
-	>=sys-libs/zlib-1.2.3
-	virtual/jpeg:0
+	>=media-libs/giflib-4.1.6:=
+	>=media-libs/libpng-1.2:=
+	>=sys-libs/zlib-1.2.3:=
+	virtual/jpeg:0=
 	>=media-libs/lcms-2.5
 	javascript? ( dev-java/rhino:1.6 )
+	kerberos? ( virtual/krb5 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
-	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
+	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11:= )
 	systemtap? ( >=dev-util/systemtap-1 )
 	!dev-java/icedtea-web:6"
 
@@ -114,7 +115,7 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	virtual/pkgconfig
 	sys-apps/lsb-release
 	${X_DEPEND}
-	pax_kernel? ( sys-apps/paxctl )"
+	pax_kernel? ( sys-apps/elfix )"
 
 PDEPEND="webstart? ( dev-java/icedtea-web:0 )
 	nsplugin? ( dev-java/icedtea-web:0[nsplugin] )"
@@ -155,6 +156,9 @@ src_unpack() {
 }
 
 java_prepare() {
+	# For bootstrap builds as the sandbox control file might not yet exist.
+	addpredict /proc/self/coredump_filter
+
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
 
@@ -244,15 +248,16 @@ src_configure() {
 		--with-cacao-src-zip="${DISTDIR}/${CACAO_GENTOO_TARBALL}" \
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_GENTOO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
-		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
+		--with-abs-install-dir="${EPREFIX}/usr/$(get_libdir)/icedtea${SLOT}" \
 		--with-pkgversion="Gentoo package ${PF}" \
-		--disable-downloading \
+		--disable-downloading --disable-Werror \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
+		$(use_enable kerberos system-kerberos) \
 		$(use_enable nss) \
 		$(use_enable pulseaudio pulse-java) \
 		$(use_enable systemtap) \
-		$(use_with pax_kernel pax paxctl) \
+		$(use_with pax_kernel pax "${EPREFIX}/usr/sbin/paxmark.sh") \
 		${zero_config} ${cacao_config}
 }
 
@@ -352,6 +357,7 @@ src_install() {
 	if ! use X || ! use alsa || ! use cups; then
 		java-vm_revdep-mask "${dest}"
 	fi
+	java-vm_sandbox-predict /proc/self/coredump_filter
 }
 
 pkg_preinst() {
