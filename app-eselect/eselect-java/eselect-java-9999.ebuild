@@ -1,4 +1,4 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -18,8 +18,8 @@ KEYWORDS=""
 IUSE=""
 
 RDEPEND="
-	!!app-admin/eselect-ecj
-	!!app-admin/eselect-maven
+	!!app-eselect/eselect-ecj
+	!!app-eselect/eselect-maven
 	!!<dev-java/java-config-2.2
 	app-admin/eselect"
 # https://bugs.gentoo.org/show_bug.cgi?id=315229
