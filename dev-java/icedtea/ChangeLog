@@ -2,6 +2,17 @@
 # Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.13.7 (15 Apr 2015)
+*icedtea-7.2.5.5 (15 Apr 2015)
+
+  15 Apr 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +icedtea-6.1.13.7.ebuild, +icedtea-7.2.5.5.ebuild, -icedtea-6.1.13.6.ebuild,
+  -icedtea-7.2.5.4.ebuild, icedtea-6.9999.ebuild:
+  April 2015 security updates; 1.13.7 (http://bitly.com/it11307) & 2.5.5
+  (http://bitly.com/it20505) Also resolves #431972 (gsettings-desktop-schemas) &
+  #531686 (giflib 5.1) Turn on SunEC provider by default. Use correct tarball
+  for arm & arm64.
+
   02 Feb 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
   icedtea-6.9999.ebuild:
   Synchronise Mercurial IcedTea 1.x ebuild with 1.13.x series.

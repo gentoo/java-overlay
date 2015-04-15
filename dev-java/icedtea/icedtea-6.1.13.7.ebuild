@@ -13,8 +13,8 @@ inherit check-reqs java-pkg-2 java-vm-2 multiprocessing pax-utils prefix version
 
 ICEDTEA_PKG=${PN}$(replace_version_separator 1 -)
 ICEDTEA_BRANCH=$(get_version_component_range 1-3)
-OPENJDK_BUILD="34"
-OPENJDK_DATE="20_jan_2015"
+OPENJDK_BUILD="35"
+OPENJDK_DATE="14_apr_2015"
 OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.xz"
 # Download cacao and jamvm regardless for use with EXTRA_ECONF
 CACAO_TARBALL="68fe50ac34ec.tar.gz"

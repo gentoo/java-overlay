@@ -15,13 +15,14 @@ inherit check-reqs java-pkg-2 java-vm-2 multiprocessing pax-utils prefix version
 ICEDTEA_VER=$(get_version_component_range 2-)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
-CORBA_TARBALL="3c9f523bf96e.tar.bz2"
-JAXP_TARBALL="ca26767d3375.tar.bz2"
-JAXWS_TARBALL="9a6c90336922.tar.bz2"
-JDK_TARBALL="1e6db4f8b0f3.tar.bz2"
-LANGTOOLS_TARBALL="960cdffa8b3f.tar.bz2"
-OPENJDK_TARBALL="6cf2880aab5e.tar.bz2"
-HOTSPOT_TARBALL="6144ca9b6a72.tar.bz2"
+CORBA_TARBALL="52db6f325d61.tar.bz2"
+JAXP_TARBALL="80b5a93b1406.tar.bz2"
+JAXWS_TARBALL="3706d41e1476.tar.bz2"
+JDK_TARBALL="fb9961d8dfda.tar.bz2"
+LANGTOOLS_TARBALL="3ffd17553e8c.tar.bz2"
+OPENJDK_TARBALL="f8c87dd516ff.tar.bz2"
+HOTSPOT_TARBALL="cac66550581b.tar.bz2"
+AARCH64_TARBALL="1939c010fd37.tar.bz2"
 CACAO_TARBALL="e215e36be9fc.tar.gz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
 
@@ -32,6 +33,8 @@ JDK_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-jdk-${JDK_TARBALL}"
 LANGTOOLS_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-langtools-${LANGTOOLS_TARBALL}"
 OPENJDK_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-openjdk-${OPENJDK_TARBALL}"
 HOTSPOT_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-hotspot-${HOTSPOT_TARBALL}"
+AARCH64_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-aarch64-${AARCH64_TARBALL}"
+
 CACAO_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-cacao-${CACAO_TARBALL}"
 JAMVM_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-${JAMVM_TARBALL}"
 
@@ -50,6 +53,7 @@ SRC_URI="
 	${ICEDTEA_URL}/jdk.tar.bz2 -> ${JDK_GENTOO_TARBALL}
 	${ICEDTEA_URL}/hotspot.tar.bz2 -> ${HOTSPOT_GENTOO_TARBALL}
 	${ICEDTEA_URL}/langtools.tar.bz2 -> ${LANGTOOLS_GENTOO_TARBALL}
+	${ICEDTEA_URL}/aarch64.tar.bz2 -> ${AARCH64_GENTOO_TARBALL}
 	${DROP_URL}/cacao/${CACAO_TARBALL} -> ${CACAO_GENTOO_TARBALL}
 	${DROP_URL}/jamvm/${JAMVM_TARBALL} -> ${JAMVM_GENTOO_TARBALL}"
 
@@ -57,7 +61,7 @@ LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 M
 KEYWORDS="~amd64 ~x86"
 
 IUSE="+X +alsa cacao cjk +cups debug doc examples infinality jamvm javascript +jbootstrap kerberos +nsplugin
-	+nss pax_kernel pulseaudio selinux smartcard +source sunec test zero +webstart"
+	nss pax_kernel pulseaudio selinux smartcard +source +sunec test zero +webstart"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
@@ -103,6 +107,7 @@ COMMON_DEP="
 	!dev-java/icedtea-web:7"
 
 # cups is needed for X. #390945 #390975
+# gsettings-desktop-schemas is needed for native proxy support. #431972
 RDEPEND="${COMMON_DEP}
 	!dev-java/icedtea:0
 	X? (
@@ -119,7 +124,8 @@ RDEPEND="${COMMON_DEP}
 	)
 	alsa? ( ${ALSA_COMMON_DEP} )
 	cups? ( ${CUPS_COMMON_DEP} )
-	selinux? ( sec-policy/selinux-java )"
+	selinux? ( sec-policy/selinux-java )
+	>=gnome-base/gsettings-desktop-schemas-3.12.2"
 
 # Only ant-core-1.8.1 has fixed ant -diagnostics when xerces+xalan are not present.
 # ca-certificates, perl and openssl are used for the cacerts keystore generation
@@ -196,7 +202,7 @@ java_prepare() {
 }
 
 src_configure() {
-	local bootstrap cacao_config config hotspot_port use_cacao use_zero zero_config
+	local bootstrap cacao_config config hotspot_port hs_tarball use_cacao use_zero zero_config
 	local vm=$(java-pkg_get-current-vm)
 
 	# Whether to bootstrap
@@ -255,6 +261,13 @@ src_configure() {
 		zero_config="--enable-zero"
 	fi
 
+	# Use appropriate HotSpot tarball for architecture
+	if { use arm || use arm64; }; then
+		hs_tarball="${DISTDIR}/${AARCH64_GENTOO_TARBALL}";
+	else
+		hs_tarball="${DISTDIR}/${HOTSPOT_GENTOO_TARBALL}";
+	fi
+
 	config+=" --with-parallel-jobs=$(makeopts_jobs)"
 
 	if use javascript ; then
@@ -271,7 +284,7 @@ src_configure() {
 		--with-jaxp-src-zip="${DISTDIR}/${JAXP_GENTOO_TARBALL}" \
 		--with-jaxws-src-zip="${DISTDIR}/${JAXWS_GENTOO_TARBALL}" \
 		--with-jdk-src-zip="${DISTDIR}/${JDK_GENTOO_TARBALL}" \
-		--with-hotspot-src-zip="${DISTDIR}/${HOTSPOT_GENTOO_TARBALL}" \
+		--with-hotspot-src-zip="${hs_tarball}" \
 		--with-langtools-src-zip="${DISTDIR}/${LANGTOOLS_GENTOO_TARBALL}" \
 		--with-cacao-src-zip="${DISTDIR}/${CACAO_GENTOO_TARBALL}" \
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_GENTOO_TARBALL}" \
