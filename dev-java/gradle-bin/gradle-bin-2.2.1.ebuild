@@ -17,7 +17,7 @@ SLOT="${PV}"
 KEYWORDS="~x86 ~amd64"
 
 DEPEND="app-arch/zip
-	app-admin/eselect-gradle"
+	app-eselect/eselect-gradle"
 RDEPEND=">=virtual/jdk-1.5"
 
 IUSE="source doc examples"
