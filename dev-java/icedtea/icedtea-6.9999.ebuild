@@ -1,6 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea/icedtea-6.1.13.5.ebuild,v 1.1 2014/10/19 06:46:41 caster Exp $
+# $Header: $
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
 # *********************************************************
@@ -34,6 +34,7 @@ EHG_REPO_URI="http://icedtea.classpath.org/hg/icedtea6"
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 SLOT="6"
 KEYWORDS=""
+RESTRICT="test"
 
 IUSE="+X +alsa cacao cjk +cups debug doc examples javascript +jbootstrap kerberos +nsplugin
 	+nss pax_kernel pulseaudio selinux +source systemtap test zero +webstart"
@@ -44,7 +45,6 @@ ALSA_COMMON_DEP="
 CUPS_COMMON_DEP="
 	>=net-print/cups-1.2.12"
 X_COMMON_DEP="
-	dev-libs/glib
 	>=media-libs/freetype-2.3.5:2=
 	>=x11-libs/gtk+-2.8:2=
 	>=x11-libs/libX11-1.1.3
@@ -280,7 +280,7 @@ src_test() {
 
 src_install() {
 	local dest="/usr/$(get_libdir)/icedtea${SLOT}"
-	local ddest="${ED}/${dest}"
+	local ddest="${ED}${dest#/}"
 	dodir "${dest}"
 
 	dodoc README NEWS AUTHORS
@@ -301,19 +301,18 @@ src_install() {
 	touch jre/.systemPrefs/.system.lock || die
 	touch jre/.systemPrefs/.systemRootModFile || die
 
-	# doins can't handle symlinks.
+	# doins doesn't preserve executable bits.
 	cp -vRP bin include jre lib man "${ddest}" || die
 
 	dodoc ASSEMBLY_EXCEPTION THIRD_PARTY_README
 
 	if use doc; then
-		# java-pkg_dohtml needed for package-list #302654
-		java-pkg_dohtml -A dtd -r ../docs/* || die
+		docinto html
+		dodoc -r ../docs/*
 	fi
 
 	if use examples; then
-		dodir "${dest}/share"
-		cp -vRP demo sample "${ddest}/share/" || die
+		cp -vRP demo sample "${ddest}" || die
 	fi
 
 	if use source; then
