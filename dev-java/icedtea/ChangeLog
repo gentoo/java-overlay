@@ -2,6 +2,15 @@
 # Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  07 May 2015; James Le Cuirot <chewi@gentoo.org> icedtea-3.9999.ebuild,
+  icedtea-6.9999.ebuild, icedtea-7.2.6.0_pre18.ebuild:
+  Fix various dependency SLOTs.
+
+  06 May 2015; James Le Cuirot <chewi@gentoo.org> icedtea-3.9999.ebuild,
+  -icedtea-6.1.13.7.ebuild, icedtea-6.9999.ebuild, -icedtea-7.2.5.5.ebuild,
+  icedtea-7.2.6.0_pre18.ebuild:
+  Latest releases now in the tree. Apply my changes to the remainder.
+
 *icedtea-6.1.13.7 (15 Apr 2015)
 *icedtea-7.2.5.5 (15 Apr 2015)
 

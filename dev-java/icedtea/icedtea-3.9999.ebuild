@@ -73,7 +73,7 @@ X_COMMON_DEP="
 	>=dev-libs/glib-2.26:2
 	media-libs/fontconfig
 	>=media-libs/freetype-2.3.5
-	>=x11-libs/cairo-1.8.8
+	>=x11-libs/cairo-1.8.8:=
 	x11-libs/gdk-pixbuf:2
 	>=x11-libs/gtk+-2.8:2
 	>=x11-libs/libX11-1.1.3
@@ -92,11 +92,11 @@ X_DEPEND="
 	x11-proto/xproto"
 
 COMMON_DEP="
-	>=media-libs/giflib-4.1.6
+	>=media-libs/giflib-4.1.6:=
 	media-libs/lcms:2
-	>=media-libs/libpng-1.2
-	>=sys-libs/zlib-1.2.3
-	virtual/jpeg
+	>=media-libs/libpng-1.2:0=
+	>=sys-libs/zlib-1.2.3:=
+	virtual/jpeg:0=
 	javascript? ( dev-java/rhino:1.6 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
 	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )

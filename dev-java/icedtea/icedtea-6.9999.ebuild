@@ -64,7 +64,7 @@ X_DEPEND="
 
 COMMON_DEP="
 	>=media-libs/giflib-4.1.6:=
-	>=media-libs/libpng-1.2:=
+	>=media-libs/libpng-1.2:0=
 	>=sys-libs/zlib-1.2.3:=
 	virtual/jpeg:0=
 	>=media-libs/lcms-2.5
