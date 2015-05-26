@@ -1,8 +1,8 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=5
 
 DESCRIPTION="Virtual for JDK"
 HOMEPAGE=""
@@ -16,9 +16,6 @@ IUSE=""
 RDEPEND="|| (
 		>=dev-java/gcj-jdk-4.3
 		>=dev-java/cacao-0.99.2
+		>=dev-java/jamvm-2.0.0
 		=dev-java/sun-jdk-1.5.0*
-		=dev-java/ibm-jdk-bin-1.5.0*
-		=dev-java/jrockit-jdk-bin-1.5.0*
-		=dev-java/diablo-jdk-1.5.0*
-		=dev-java/apple-jdk-bin-1.5.0*
 	)"
