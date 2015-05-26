@@ -1,0 +1,12 @@
+diff -r 10e7f91158ff Makefile.am
+--- a/Makefile.am	Fri May 22 06:02:08 2015 +0100
++++ b/Makefile.am	Tue May 26 03:31:31 2015 +0100
+@@ -2461,7 +2461,7 @@
+ 	touch $(DESTDIR)/${prefix}/jre/.systemPrefs/.systemRootModFile
+ if ENABLE_DOCS
+ 	${mkinstalldirs} $(DESTDIR)$(docdir)/html
+-	cp -RP $(BUILD_IMAGE_DIR)/docs $(DESTDIR)$(docdir)/html
++	cp -RP $(BUILD_OUTPUT_DIR)/docs $(DESTDIR)$(docdir)/html
+ endif
+ if !ENABLE_JAMVM
+ if !ENABLE_CACAO
