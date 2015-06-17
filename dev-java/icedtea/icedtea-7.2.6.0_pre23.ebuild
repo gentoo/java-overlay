@@ -13,27 +13,31 @@ SLOT="7"
 inherit autotools check-reqs java-pkg-2 java-vm-2 mercurial multiprocessing pax-utils prefix versionator virtualx
 
 ICEDTEA_VER=$(get_version_component_range 2-4)
+ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
-CORBA_TARBALL="15250731630c.tar.bz2"
-JAXP_TARBALL="8cc37ea6edf6.tar.bz2"
-JAXWS_TARBALL="5ee59be2092b.tar.bz2"
-JDK_TARBALL="19a30444897f.tar.bz2"
-LANGTOOLS_TARBALL="bb9d09219d3e.tar.bz2"
-OPENJDK_TARBALL="e229119aa0a0.tar.bz2"
-HOTSPOT_TARBALL="1792bfb4a54d.tar.bz2"
+CORBA_TARBALL="9d5c92264131.tar.bz2"
+JAXP_TARBALL="9150a16a7b80.tar.bz2"
+JAXWS_TARBALL="87290096a2fa.tar.bz2"
+JDK_TARBALL="ec336c81a545.tar.bz2"
+LANGTOOLS_TARBALL="403eeedf70f4.tar.bz2"
+OPENJDK_TARBALL="88ad67ad5b51.tar.bz2"
+HOTSPOT_TARBALL="1afefe2d5f90.tar.bz2"
+
 CACAO_TARBALL="e215e36be9fc.tar.gz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
 
-CORBA_GENTOO_TARBALL="icedtea${SLOT}-corba-${CORBA_TARBALL}"
-JAXP_GENTOO_TARBALL="icedtea${SLOT}-jaxp-${JAXP_TARBALL}"
-JAXWS_GENTOO_TARBALL="icedtea${SLOT}-jaxws-${JAXWS_TARBALL}"
-JDK_GENTOO_TARBALL="icedtea${SLOT}-jdk-${JDK_TARBALL}"
-LANGTOOLS_GENTOO_TARBALL="icedtea${SLOT}-langtools-${LANGTOOLS_TARBALL}"
-OPENJDK_GENTOO_TARBALL="icedtea${SLOT}-openjdk-${OPENJDK_TARBALL}"
-HOTSPOT_GENTOO_TARBALL="icedtea${SLOT}-hotspot-${HOTSPOT_TARBALL}"
-CACAO_GENTOO_TARBALL="icedtea${SLOT}-cacao-${CACAO_TARBALL}"
-JAMVM_GENTOO_TARBALL="icedtea${SLOT}-${JAMVM_TARBALL}"
+CORBA_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-corba-${CORBA_TARBALL}"
+JAXP_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-jaxp-${JAXP_TARBALL}"
+JAXWS_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-jaxws-${JAXWS_TARBALL}"
+JDK_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-jdk-${JDK_TARBALL}"
+LANGTOOLS_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-langtools-${LANGTOOLS_TARBALL}"
+OPENJDK_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-openjdk-${OPENJDK_TARBALL}"
+HOTSPOT_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-hotspot-${HOTSPOT_TARBALL}"
+AARCH64_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-aarch64-${AARCH64_TARBALL}"
+
+CACAO_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-cacao-${CACAO_TARBALL}"
+JAMVM_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-${JAMVM_TARBALL}"
 
 DROP_URL="http://icedtea.classpath.org/download/drops"
 ICEDTEA_URL="${DROP_URL}/icedtea${SLOT}/${ICEDTEA_VER}"
@@ -58,7 +62,7 @@ KEYWORDS=""
 RESTRICT="test"
 
 IUSE="+X +alsa cacao cjk +cups debug doc examples infinality jamvm javascript +jbootstrap kerberos +nsplugin
-	+nss pax_kernel pulseaudio selinux smartcard +source sunec test zero +webstart"
+	nss pax_kernel pulseaudio selinux smartcard +source sunec test zero +webstart"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
@@ -104,6 +108,7 @@ COMMON_DEP="
 	!dev-java/icedtea-web:7"
 
 # cups is needed for X. #390945 #390975
+# gsettings-desktop-schemas is needed for native proxy support. #431972
 RDEPEND="${COMMON_DEP}
 	!dev-java/icedtea:0
 	X? (
@@ -120,7 +125,8 @@ RDEPEND="${COMMON_DEP}
 	)
 	alsa? ( ${ALSA_COMMON_DEP} )
 	cups? ( ${CUPS_COMMON_DEP} )
-	selinux? ( sec-policy/selinux-java )"
+	selinux? ( sec-policy/selinux-java )
+	>=gnome-base/gsettings-desktop-schemas-3.12.2"
 
 # Only ant-core-1.8.1 has fixed ant -diagnostics when xerces+xalan are not present.
 # ca-certificates, perl and openssl are used for the cacerts keystore generation
@@ -280,7 +286,7 @@ src_configure() {
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_GENTOO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--prefix="${EPREFIX}/usr/$(get_libdir)/icedtea${SLOT}" \
-		--with-pkgversion="Gentoo package ${PF}" \
+		--with-pkgversion="Gentoo ${PF}" \
 		--disable-downloading --disable-Werror \
 		--enable-system-lcms \
 		$(use_enable !debug optimizations) \
