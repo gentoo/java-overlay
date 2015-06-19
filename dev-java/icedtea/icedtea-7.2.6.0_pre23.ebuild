@@ -36,8 +36,8 @@ OPENJDK_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-openjdk-${OPENJDK_TARBALL}"
 HOTSPOT_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-hotspot-${HOTSPOT_TARBALL}"
 AARCH64_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-aarch64-${AARCH64_TARBALL}"
 
-CACAO_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-cacao-${CACAO_TARBALL}"
-JAMVM_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-${JAMVM_TARBALL}"
+CACAO_GENTOO_TARBALL="icedtea-cacao-${CACAO_TARBALL}"
+JAMVM_GENTOO_TARBALL="icedtea-${JAMVM_TARBALL}"
 
 DROP_URL="http://icedtea.classpath.org/download/drops"
 ICEDTEA_URL="${DROP_URL}/icedtea${SLOT}/${ICEDTEA_VER}"
@@ -62,7 +62,7 @@ KEYWORDS=""
 RESTRICT="test"
 
 IUSE="+X +alsa cacao cjk +cups debug doc examples infinality jamvm javascript +jbootstrap kerberos +nsplugin
-	nss pax_kernel pulseaudio selinux smartcard +source sunec test zero +webstart"
+	nss pax_kernel pulseaudio selinux smartcard +source +sunec test zero +webstart"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
@@ -205,7 +205,7 @@ java_prepare() {
 }
 
 src_configure() {
-	local bootstrap cacao_config config hotspot_port use_cacao use_zero zero_config
+	local bootstrap cacao_config config hotspot_port jamvm_config use_jamvm use_zero zero_config
 	local vm=$(java-pkg_get-current-vm)
 
 	# Whether to bootstrap
@@ -229,6 +229,11 @@ src_configure() {
 		use_zero="yes"
 	fi
 
+	# Use JamVM if requested
+	if use jamvm; then
+		use_jamvm="yes"
+	fi
+
 	# Use CACAO if requested
 	if use cacao; then
 		use_cacao="yes"
@@ -250,6 +255,15 @@ src_configure() {
 		fi
 	fi
 
+	# Turn on JamVM if needed (non-HS archs) or requested
+	if test "x${use_jamvm}" = "xyes"; then
+		if test "x${hotspot_port}" = "xyes"; then
+			ewarn 'Enabling JamVM on an architecture with HotSpot support; issues may result.'
+			ewarn 'If so, please rebuild with USE="-jamvm"'
+		fi
+		jamvm_config="--enable-jamvm"
+	fi
+
 	# Turn on CACAO if needed (non-HS archs) or requested
 	if test "x${use_cacao}" = "xyes"; then
 		if test "x${hotspot_port}" = "xyes"; then
@@ -261,6 +275,9 @@ src_configure() {
 
 	# Turn on Zero if needed (non-HS/CACAO archs) or requested
 	if test "x${use_zero}" = "xyes"; then
+		if test "x${hotspot_port}" = "xyes"; then
+			ewarn 'Enabling Zero on an architecture with HotSpot support; performance will be significantly reduced.'
+		fi
 		zero_config="--enable-zero"
 	fi
 
@@ -288,17 +305,19 @@ src_configure() {
 		--prefix="${EPREFIX}/usr/$(get_libdir)/icedtea${SLOT}" \
 		--with-pkgversion="Gentoo ${PF}" \
 		--disable-downloading --disable-Werror \
-		--enable-system-lcms \
+		--disable-hotspot-tests --disable-jdk-tests \
+		--enable-system-lcms --enable-system-gif \
+		--enable-system-jpeg --enable-system-png \
+		--enable-system-zlib \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nss) \
-		$(use_enable jamvm) \
 		$(use_enable kerberos system-kerberos) \
 		$(use_with pax_kernel pax "${EPREFIX}/usr/sbin/paxmark.sh") \
 		$(use_enable smartcard system-pcsc) \
 		$(use_enable sunec) \
 		$(use_enable infinality) \
-		${zero_config} ${cacao_config}
+		${zero_config} ${cacao_config} ${jamvm_config}
 }
 
 src_compile() {

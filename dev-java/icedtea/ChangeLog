@@ -3,6 +3,12 @@
 # $Header: $
 
   19 Jun 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  icedtea-7.2.6.0_pre23.ebuild:
+  Sync 2.x ebuild with 3.x, adding improved alternate VM support and removing
+  branch name from CACAO + JamVM tarballs. Turn on SunEC by default as in the
+  2.5.5 ebuild.
+
+  19 Jun 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
   icedtea-3.0.0_pre04.ebuild:
   Allow icedtea:8 to be built with itself.
 
