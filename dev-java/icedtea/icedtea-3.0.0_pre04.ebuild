@@ -16,14 +16,15 @@ ICEDTEA_VER=$(get_version_component_range 1-3)
 ICEDTEA_BRANCH=3.0
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
-CORBA_TARBALL="6c974fba96cb.tar.xz"
-JAXP_TARBALL="e727012c23d9.tar.xz"
-JAXWS_TARBALL="7ba7b06f15cf.tar.xz"
-JDK_TARBALL="a5c3d9643077.tar.xz"
-LANGTOOLS_TARBALL="0d5d2b8411d9.tar.xz"
-OPENJDK_TARBALL="44a10ae251ca.tar.xz"
-NASHORN_TARBALL="d8fc6574c0b2.tar.xz"
-HOTSPOT_TARBALL="85e5201a55e4.tar.xz"
+CORBA_TARBALL="b493e7b682c9.tar.xz"
+JAXP_TARBALL="c62dd685e517.tar.xz"
+JAXWS_TARBALL="db7fdb068af9.tar.xz"
+JDK_TARBALL="8450ad6fa3f5.tar.xz"
+LANGTOOLS_TARBALL="66f265db6f47.tar.xz"
+OPENJDK_TARBALL="0503e9c58a13.tar.xz"
+NASHORN_TARBALL="bb36d4894aa4.tar.xz"
+HOTSPOT_TARBALL="7e5a87c79d69.tar.xz"
+
 CACAO_TARBALL="c182f119eaad.tar.xz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
 
@@ -35,11 +36,12 @@ LANGTOOLS_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-langtools-${LANGTOOLS_TARBAL
 OPENJDK_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-openjdk-${OPENJDK_TARBALL}"
 NASHORN_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-nashorn-${NASHORN_TARBALL}"
 HOTSPOT_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-hotspot-${HOTSPOT_TARBALL}"
-CACAO_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-cacao-${CACAO_TARBALL}"
-JAMVM_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-${JAMVM_TARBALL}"
+
+CACAO_GENTOO_TARBALL="icedtea-cacao-${CACAO_TARBALL}"
+JAMVM_GENTOO_TARBALL="icedtea-${JAMVM_TARBALL}"
 
 DROP_URL="http://icedtea.classpath.org/download/drops"
-ICEDTEA_URL="${DROP_URL}/icedtea${SLOT}"
+ICEDTEA_URL="${DROP_URL}/icedtea${SLOT}/${ICEDTEA_VER}"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
@@ -58,10 +60,10 @@ EHG_REPO_URI="http://icedtea.classpath.org/hg/icedtea"
 EHG_REVISION="${ICEDTEA_PKG}${ICEDTEA_PRE}"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
 IUSE="+X +alsa cacao cjk +cups debug doc examples jamvm +jbootstrap +nsplugin
-	+nss pax_kernel pulseaudio selinux +source systemtap test zero +webstart"
+	+nss pax_kernel pulseaudio selinux +source test zero +webstart"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
@@ -111,7 +113,7 @@ RDEPEND="${COMMON_DEP}
 		cjk? (
 			media-fonts/arphicfonts
 			media-fonts/baekmuk-fonts
-			media-fonts/lklug
+			!ppc64? ( media-fonts/lklug )
 			media-fonts/lohit-fonts
 			media-fonts/sazanami
 		)
@@ -189,7 +191,6 @@ java_prepare() {
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
 
-	epatch "${FILESDIR}/pr2383.patch"
 	eautoreconf
 }
 
@@ -239,18 +240,14 @@ src_configure() {
 
 	# Are we on a architecture with a HotSpot port?
 	# In-tree JIT ports are available for amd64, arm, arm64, ppc64 (be&le), SPARC and x86.
-	if { use amd64 || use arm || use arm64 || use ppc64 || use sparc || use x86; }; then
+	if { use amd64 || use arm64 || use ppc64 || use sparc || use x86; }; then
 		hotspot_port="yes"
 	fi
 
 	# Always use HotSpot as the primary VM if available. #389521 #368669 #357633 ...
-	# Otherwise use JamVM on arm & ppc and Zero on anything else
+	# Otherwise use Zero for now until alternate VMs are working
 	if test "x${hotspot_port}" != "xyes"; then
-		if { use arm || use ppc; }; then
-			use_jamvm="yes"
-		else
 			use_zero="yes"
-		fi
 	fi
 
 	# Turn on JamVM if needed (non-HS archs) or requested
@@ -273,6 +270,9 @@ src_configure() {
 
 	# Turn on Zero if needed (non-HS/CACAO archs) or requested
 	if test "x${use_zero}" = "xyes"; then
+		if test "x${hotspot_port}" = "xyes"; then
+			ewarn 'Enabling Zero on an architecture with HotSpot support; performance will be significantly reduced.'
+		fi
 		zero_config="--enable-zero"
 	fi
 
@@ -295,6 +295,7 @@ src_configure() {
 		--prefix="${EPREFIX}/usr/$(get_libdir)/icedtea${SLOT}" \
 		--mandir="${EPREFIX}/usr/$(get_libdir)/icedtea${SLOT}/man" \
 		--docdir="${EPREFIX}/usr/share/doc/${PF}" \
+		--htmldir="${EPREFIX}/usr/share/doc/${PF}/html" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
 		--with-pkgversion="Gentoo ${PF}" \
 		--disable-downloading --disable-Werror \
@@ -306,7 +307,6 @@ src_configure() {
 		$(use_enable doc docs) \
 		$(use_enable nss) \
 		$(use_enable pulseaudio pulse-java) \
-		$(use_enable systemtap) \
 		$(use_with pax_kernel pax "${EPREFIX}/usr/sbin/paxmark.sh") \
 		${zero_config} ${cacao_config} ${jamvm_config}
 }
@@ -318,7 +318,7 @@ src_compile() {
 	# With ant >=1.8.2 all required tasks are part of ant-core
 	export ANT_TASKS="none"
 
-	emake
+	emake LDFLAGS=
 }
 
 src_test() {
