@@ -172,7 +172,7 @@ pkg_setup() {
 	icedtea_check_requirements
 
 	JAVA_PKG_WANT_BUILD_VM="
-		icedtea-7 icedtea-bin-7 icedtea7"
+		icedtea-8 icedtea-7 icedtea-bin-7 icedtea7"
 	JAVA_PKG_WANT_SOURCE="1.5"
 	JAVA_PKG_WANT_TARGET="1.5"
 
