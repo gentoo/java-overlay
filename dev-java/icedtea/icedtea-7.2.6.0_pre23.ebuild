@@ -180,8 +180,8 @@ pkg_setup() {
 	icedtea_check_requirements
 
 	JAVA_PKG_WANT_BUILD_VM="
-		icedtea-7 icedtea-bin-7 icedtea7
-		icedtea-6 icedtea-bin-6 icedtea6 icedtea6-bin
+		icedtea-7 icedtea-bin-7
+		icedtea-6 icedtea-bin-6
 		gcj-jdk"
 	JAVA_PKG_WANT_SOURCE="1.5"
 	JAVA_PKG_WANT_TARGET="1.5"
@@ -205,24 +205,16 @@ java_prepare() {
 }
 
 src_configure() {
-	local bootstrap cacao_config config hotspot_port jamvm_config use_jamvm use_zero zero_config
+	local cacao_config config hotspot_port jamvm_config use_jamvm use_zero zero_config
 	local vm=$(java-pkg_get-current-vm)
 
-	# Whether to bootstrap
-	bootstrap="disable"
-	if use jbootstrap; then
-		bootstrap="enable"
-	fi
-
-	if has "${vm}" gcj-jdk; then
-		# gcj-jdk ensures ecj is present.
+	# gcj-jdk ensures ecj is present.
+	if use jbootstrap || has "${vm}" gcj-jdk; then
 		use jbootstrap || einfo "bootstrap is necessary when building with ${vm}, ignoring USE=\"-jbootstrap\""
-		bootstrap="enable"
-		local ecj_jar="$(readlink "${EPREFIX}"/usr/share/eclipse-ecj/ecj.jar)"
-		config+=" --with-ecj-jar=${ecj_jar}"
+		config+=" --enable-bootstrap"
+	else
+		config+=" --disable-bootstrap"
 	fi
-
-	config+=" --${bootstrap}-bootstrap"
 
 	# Use Zero if requested
 	if use zero; then

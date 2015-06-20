@@ -113,7 +113,7 @@ RDEPEND="${COMMON_DEP}
 		cjk? (
 			media-fonts/arphicfonts
 			media-fonts/baekmuk-fonts
-			!ppc64? ( media-fonts/lklug )
+			media-fonts/lklug
 			media-fonts/lohit-fonts
 			media-fonts/sazanami
 		)
@@ -128,11 +128,10 @@ RDEPEND="${COMMON_DEP}
 # autoconf - as long as we use eautoreconf, version restrictions for bug #294918
 DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	|| (
-		>=dev-java/gcj-jdk-4.3
+		dev-java/icedtea-bin:8
 		dev-java/icedtea-bin:7
-		dev-java/icedtea-bin:6
+		dev-java/icedtea:8
 		dev-java/icedtea:7
-		dev-java/icedtea:6
 	)
 	app-arch/cpio
 	app-arch/unzip
@@ -172,7 +171,8 @@ pkg_setup() {
 	icedtea_check_requirements
 
 	JAVA_PKG_WANT_BUILD_VM="
-		icedtea-8 icedtea-7 icedtea-bin-7 icedtea7"
+		icedtea-8 icedtea-bin-8
+		icedtea-7 icedtea-bin-7"
 	JAVA_PKG_WANT_SOURCE="1.5"
 	JAVA_PKG_WANT_TARGET="1.5"
 
@@ -194,34 +194,17 @@ java_prepare() {
 	eautoreconf
 }
 
-bootstrap_impossible() {
-	# Fill this according to testing what works and what not
-	has "${1}" icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6 gcj-jdk
-}
-
 src_configure() {
-	local bootstrap cacao_config config hotspot_port jamvm_config use_jamvm use_zero zero_config
+	local cacao_config config hotspot_port jamvm_config use_jamvm use_zero zero_config
 	local vm=$(java-pkg_get-current-vm)
 
-	# Whether to bootstrap
-	bootstrap="disable"
-	if use jbootstrap; then
-		if bootstrap_impossible "${vm}"; then
-			einfo "Bootstrap with ${vm} is currently not possible and thus disabled, ignoring USE=jbootstrap"
-		else
-			bootstrap="enable"
-		fi
-	fi
-
-	if has "${vm}" gcj-jdk; then
-		# gcj-jdk ensures ecj is present.
+	# gcj-jdk ensures ecj is present.
+	if use jbootstrap || has "${vm}" gcj-jdk; then
 		use jbootstrap || einfo "bootstrap is necessary when building with ${vm}, ignoring USE=\"-jbootstrap\""
-		bootstrap="enable"
-		local ecj_jar="$(readlink "${EPREFIX}"/usr/share/eclipse-ecj/ecj.jar)"
-		config+=" --with-ecj-jar=${ecj_jar}"
+		config+=" --enable-bootstrap"
+	else
+		config+=" --disable-bootstrap"
 	fi
-
-	config+=" --${bootstrap}-bootstrap"
 
 	# Use Zero if requested
 	if use zero; then

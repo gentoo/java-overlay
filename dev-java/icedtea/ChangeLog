@@ -2,6 +2,15 @@
 # Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  20 Jun 2015; James Le Cuirot <chewi@gentoo.org> icedtea-3.0.0_pre04.ebuild,
+  icedtea-6.9999.ebuild, icedtea-7.2.6.0_pre23.ebuild:
+  media-fonts/lklug is now keyworded ~ppc64. Remove redundant --with-ecj-jar
+  code as javac from gcj-jdk always takes precedence. Remove redundant
+  bootstrap_impossible code as this is no longer relevant. Remove gcj-jdk
+  dependency from icedtea-3 as this currently doesn't work. Clean up other VM
+  dependencies and remove references to the old VM handles as the dependencies
+  will ensure that the new ones are always present anyway.
+
   19 Jun 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
   icedtea-7.2.6.0_pre23.ebuild:
   Sync 2.x ebuild with 3.x, adding improved alternate VM support and removing

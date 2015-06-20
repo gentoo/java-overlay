@@ -142,7 +142,7 @@ pkg_setup() {
 	icedtea_check_requirements
 
 	JAVA_PKG_WANT_BUILD_VM="
-		icedtea-6 icedtea-bin-6 icedtea6 icedtea6-bin
+		icedtea-6 icedtea-bin-6
 		gcj-jdk"
 	JAVA_PKG_WANT_SOURCE="1.5"
 	JAVA_PKG_WANT_TARGET="1.5"
@@ -165,33 +165,17 @@ java_prepare() {
 	eautoreconf
 }
 
-bootstrap_impossible() {
-	# Fill this according to testing what works and what not
-	has "${1}" # icedtea6 icedtea-6 icedtea6-bin icedtea-bin-6
-}
-
 src_configure() {
-	local bootstrap cacao_config config hotspot_port use_cacao use_zero zero_config
+	local cacao_config config hotspot_port use_cacao use_zero zero_config
 	local vm=$(java-pkg_get-current-vm)
 
-	# IcedTea6 can't be built using IcedTea7; its class files are too new
-	# Whether to bootstrap
-	bootstrap="disable"
-	if use jbootstrap; then
-		if bootstrap_impossible "${vm}"; then
-			einfo "Bootstrap with ${vm} is currently not possible and thus disabled, ignoring USE=jbootstrap"
-		else
-			bootstrap="enable"
-		fi
-	fi
-
-	if has "${vm}" gcj-jdk; then
-		# gcj-jdk ensures ecj is present.
+	# gcj-jdk ensures ecj is present.
+	if use jbootstrap || has "${vm}" gcj-jdk; then
 		use jbootstrap || einfo "bootstrap is necessary when building with ${vm}, ignoring USE=\"-jbootstrap\""
-		bootstrap="enable"
+		config+=" --enable-bootstrap"
+	else
+		config+=" --disable-bootstrap"
 	fi
-
-	config+=" --${bootstrap}-bootstrap"
 
 	# Use Zero if requested
 	if use zero; then
