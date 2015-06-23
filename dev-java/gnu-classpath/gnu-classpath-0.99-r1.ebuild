@@ -1,4 +1,4 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/gnu-classpath/gnu-classpath-0.98-r3.ebuild,v 1.6 2011/03/29 09:13:40 caster Exp $
 
@@ -12,10 +12,10 @@ SRC_URI="mirror://gnu/classpath/${MY_P}.tar.gz"
 HOMEPAGE="http://www.gnu.org/software/classpath"
 
 LICENSE="GPL-2-with-linking-exception"
-SLOT="0.99"
+SLOT="0"
 KEYWORDS="~amd64"
 
-IUSE="alsa debug doc dssi examples gconf gjdoc gmp gtk gstreamer qt4 xml"
+IUSE="alsa debug doc dssi examples gconf +gjdoc +gmp +gtk gstreamer qt4 xml"
 
 RDEPEND="alsa? ( media-libs/alsa-lib )
 		doc? ( || ( >=dev-java/gjdoc-0.7.9-r2 >=dev-java/gnu-classpath-0.98 ) )
@@ -64,7 +64,12 @@ RDEPEND=">=virtual/jre-1.5
 S=${WORKDIR}/${MY_P}
 
 src_prepare() {
+	# Adds support for building with the version of gjdoc in GNU Classpath
 	epatch "${FILESDIR}/gjdoc_support.patch"
+	# Fix a number of build issues, including turning Werror off by default
+	epatch "${FILESDIR}/pr55182.patch"
+	# Fix Gtk+ peer code to work with modern Freetype
+	epatch "${FILESDIR}/freetype.patch"
 	autoreconf
 }
 
@@ -80,8 +85,6 @@ src_configure() {
 	# this will make the ecj launcher do it (seen case where default was not enough heap)
 	export gjl_java_args="-Xmx768M"
 
-	# don't use econf, because it ends up putting things under /usr, which may
-	# collide with other slots of classpath
 	local myconf
 	if use gjdoc; then
 		local antlr=$(java-pkg_getjar antlr antlr.jar)
@@ -95,7 +98,7 @@ src_configure() {
 		ecj_pkg="ecj-gcj"
 	fi
 
-	ANTLR= ./configure \
+	ANTLR= econf \
 		$(use_enable alsa) \
 		$(use_enable debug ) \
 		$(use_enable examples) \
@@ -111,15 +114,14 @@ src_configure() {
 		--enable-jni \
 		--disable-dependency-tracking \
 		--disable-plugin \
-		--host=${CHOST} \
-		--prefix="${EPREFIX}"/usr/${PN}-${SLOT} \
+		--includedir="${EPREFIX}"/usr/include/classpath \
 		--with-ecj-jar=$(java-pkg_getjar --build-only ${ecj_pkg}-* ecj.jar) \
-		--disable-Werror \
 		${myconf}
 }
 
 src_install() {
 	emake DESTDIR="${D}" install
 	dodoc AUTHORS BUGS ChangeLog* HACKING NEWS README THANKYOU TODO
-	java-pkg_regjar /usr/${PN}-${SLOT}/share/classpath/glibj.zip
+	java-pkg_regjar /usr/share/classpath/glibj.zip
+	java-pkg_regjar /usr/share/classpath/tools.zip
 }

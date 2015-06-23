@@ -1,6 +1,14 @@
 # ChangeLog for dev-java/gnu-classpath
-# Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/gnu-classpath/ChangeLog,v 1.109 2010/04/29 19:50:01 caster Exp $
+
+*gnu-classpath-0.99-r1 (23 Jun 2015)
+
+  23 Jun 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +files/freetype.patch, +files/pr55182.patch, +gnu-classpath-0.99-r1.ebuild,
+  -gnu-classpath-0.99.ebuild:
+  Fix build of GNU Classpath 0.99 and remove slotting as we no longer need to
+  support multiple versions.
 
   11 Mar 2013; Andrew John Hughes <andrew@gentoo.org>
   gnu-classpath-0.99.ebuild, gnu-classpath-9999.ebuild:
@@ -506,4 +514,3 @@
   09 Mar 2004; Chris Aniszczyk <zx@gentoo.org> gnu-classpath-0.06.ebuild,
   metadata.xml:
   Initial Import. Closes #43926
-
