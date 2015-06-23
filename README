@@ -1,3 +1,0 @@
-This overlay contains only packages migrated to generation 2 (java-*-2 eclass
-using ebuilds). Ebuilds in this overlay are expected to work so report bugs to
-gentoo-java@lists.gentoo.org or our #gentoo-java IRC channel in Freenode.
