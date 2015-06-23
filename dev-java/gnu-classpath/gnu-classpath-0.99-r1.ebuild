@@ -18,11 +18,11 @@ KEYWORDS="~amd64"
 IUSE="alsa debug doc dssi examples gconf +gjdoc +gmp +gtk gstreamer qt4 xml"
 
 RDEPEND="alsa? ( media-libs/alsa-lib )
-		doc? ( || ( >=dev-java/gjdoc-0.7.9-r2 >=dev-java/gnu-classpath-0.98 ) )
+		doc? ( || ( >=dev-java/gjdoc-0.7.9-r2 >=dev-java/gnu-classpath-0.98:* ) )
 		dssi? ( >=media-libs/dssi-0.9 )
 		gconf? ( gnome-base/gconf )
 		gjdoc? ( >=dev-java/antlr-2.7.1:0 )
-		gmp? ( >=dev-libs/gmp-4.2.4 )
+		gmp? ( >=dev-libs/gmp-4.2.4:3 )
 		gstreamer? (
 			>=media-libs/gstreamer-0.10.10:0.10
 			>=media-libs/gst-plugins-base-0.10.10:0.10
@@ -52,7 +52,7 @@ DEPEND="app-arch/zip
 		gjdoc? ( !!dev-util/pccts )
 		gtk? (
 			x11-libs/libXrender
-			|| ( >=x11-libs/libXtst-1.1.0 <x11-proto/xextproto-7.1 )
+			>=x11-libs/libXtst-1.1.0
 			x11-proto/xproto
 		)
 		>=virtual/jdk-1.5
