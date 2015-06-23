@@ -13,7 +13,7 @@ SRC_URI=""
 LICENSE="GPL-2"
 #KEYWORDS="~amd64"
 SLOT="0"
-IUSE="X"
+IUSE="javadoc X"
 
 ECJ_GCJ_SLOT="3.6"
 
@@ -21,7 +21,8 @@ ECJ_GCJ_SLOT="3.6"
 RDEPEND="
 	dev-java/ecj-gcj:${ECJ_GCJ_SLOT}
 	dev-lang/perl
-	~sys-devel/gcc-${PV}[gcj]"
+	~sys-devel/gcc-${PV}[gcj]
+	javadoc? ( dev-java/gnu-classpath:0[gjdoc] )"
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}"
@@ -45,7 +46,6 @@ src_install() {
 	dosym ${gccbin}/gij ${gcjhome}/bin/java
 	dosym ${gccbin}/gij ${gcjhome}/jre/bin/java
 	dosym ${gccbin}/gjar ${gcjhome}/bin/jar
-	dosym ${gccbin}/gjdoc ${gcjhome}/bin/javadoc
 	dosym ${gccbin}/grmic ${gcjhome}/bin/rmic
 	dosym ${gccbin}/gjavah ${gcjhome}/bin/javah
 	dosym ${gccbin}/jcf-dump ${gcjhome}/bin/javap
@@ -69,6 +69,7 @@ src_install() {
 	dosym ${gcjlibdir}/libjvm.so ${gcjhome}/jre/lib/${libarch}/client/libjvm.so
 	dosym ${gcjlibdir}/libjvm.so ${gcjhome}/jre/lib/${libarch}/server/libjvm.so
 	use X && dosym ${gcjlibdir}/libjawt.so ${gcjhome}/jre/lib/${libarch}/libjawt.so
+	use javadoc && dosym /usr/bin/gjdoc ${gcjhome}/bin/javadoc
 
 	dosym /usr/share/gcc-data/${gccchost}/${gcc_version}/java/libgcj-${gcc_version/_/-}.jar \
 		${gcjhome}/jre/lib/rt.jar

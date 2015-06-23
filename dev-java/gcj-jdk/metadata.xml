@@ -8,4 +8,7 @@
   <name>Andrew John Hughes</name>
 </maintainer>
 <longdescription>This provides a JDK wrapper for GCJ, in the style of gcj-java-compat in other distributions.</longdescription>
+<use>
+  <flag name="javadoc">Provide javadoc using gjdoc from GNU Classpath.</flag>
+</use>
 </pkgmetadata>
