@@ -12,10 +12,10 @@ EGIT_REPO_URI="git://git.savannah.gnu.org/classpath.git"
 HOMEPAGE="http://www.gnu.org/software/classpath"
 
 LICENSE="GPL-2-with-linking-exception"
-SLOT="0.99"
+SLOT="0"
 KEYWORDS=""
 
-IUSE="alsa debug doc dssi examples gconf gjdoc gmp gtk gstreamer qt4 xml"
+IUSE="alsa debug doc dssi examples gconf +gjdoc +gmp +gtk gstreamer qt4 xml"
 
 RDEPEND="alsa? ( media-libs/alsa-lib )
 		doc? ( || ( >=dev-java/gjdoc-0.7.9-r2 >=dev-java/gnu-classpath-0.98:* ) )
@@ -83,8 +83,6 @@ src_configure() {
 	# this will make the ecj launcher do it (seen case where default was not enough heap)
 	export gjl_java_args="-Xmx768M"
 
-	# don't use econf, because it ends up putting things under /usr, which may
-	# collide with other slots of classpath
 	local myconf
 	if use gjdoc; then
 		local antlr=$(java-pkg_getjar antlr antlr.jar)
@@ -98,7 +96,7 @@ src_configure() {
 		ecj_pkg="ecj-gcj"
 	fi
 
-	ANTLR= ./configure \
+	ANTLR= econf \
 		$(use_enable alsa) \
 		$(use_enable debug ) \
 		$(use_enable examples) \
@@ -114,15 +112,14 @@ src_configure() {
 		--enable-jni \
 		--disable-dependency-tracking \
 		--disable-plugin \
-		--host=${CHOST} \
-		--prefix="${EPREFIX}"/usr/${PN}-${SLOT} \
+		--includedir="${EPREFIX}"/usr/include/classpath \
 		--with-ecj-jar=$(java-pkg_getjar --build-only ${ecj_pkg}-* ecj.jar) \
-		--disable-Werror \
 		${myconf}
 }
 
 src_install() {
 	emake DESTDIR="${D}" install
 	dodoc AUTHORS BUGS ChangeLog* HACKING NEWS README THANKYOU TODO
-	java-pkg_regjar /usr/${PN}-${SLOT}/share/classpath/glibj.zip
+	java-pkg_regjar /usr/share/classpath/glibj.zip
+	java-pkg_regjar /usr/share/classpath/tools.zip
 }
