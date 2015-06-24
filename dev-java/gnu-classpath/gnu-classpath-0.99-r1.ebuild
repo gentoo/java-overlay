@@ -22,7 +22,7 @@ RDEPEND="alsa? ( media-libs/alsa-lib )
 		dssi? ( >=media-libs/dssi-0.9 )
 		gconf? ( gnome-base/gconf )
 		gjdoc? ( >=dev-java/antlr-2.7.1:0 )
-		gmp? ( >=dev-libs/gmp-4.2.4:3 )
+		gmp? ( >=dev-libs/gmp-4.2.4:* )
 		gstreamer? (
 			>=media-libs/gstreamer-0.10.10:0.10
 			>=media-libs/gst-plugins-base-0.10.10:0.10
@@ -114,6 +114,7 @@ src_configure() {
 		--enable-jni \
 		--disable-dependency-tracking \
 		--disable-plugin \
+		--bindir="${EPREFIX}"/usr/libexec/${PN} \
 		--includedir="${EPREFIX}"/usr/include/classpath \
 		--with-ecj-jar=$(java-pkg_getjar --build-only ${ecj_pkg}-* ecj.jar) \
 		${myconf}

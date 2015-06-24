@@ -2,6 +2,10 @@
 # Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/gnu-classpath/ChangeLog,v 1.109 2010/04/29 19:50:01 caster Exp $
 
+  24 Jun 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  gnu-classpath-0.99-r1.ebuild, gnu-classpath-9999.ebuild:
+  Install Classpath binaries to /usr/libexec subdirectory. Use any slot for GMP.
+
   23 Jun 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
   gnu-classpath-9999.ebuild:
   Sync GNU Classpath 0.99 ebuild changes to live ebuild.
