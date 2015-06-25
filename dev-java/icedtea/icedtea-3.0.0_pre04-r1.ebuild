@@ -63,7 +63,7 @@ LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 M
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
 IUSE="+X +alsa cacao cjk +cups debug doc examples jamvm +jbootstrap +nsplugin
-	+nss pax_kernel pulseaudio selinux +source test zero +webstart"
+	+nss pax_kernel pulseaudio sctp selinux smartcard +source test zero +webstart"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
@@ -100,8 +100,10 @@ COMMON_DEP="
 	>=sys-libs/zlib-1.2.3:=
 	virtual/jpeg:0=
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
-	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11 )
-	>=dev-util/systemtap-1"
+	>=dev-util/systemtap-1
+	smartcard? ( sys-apps/pcsc-lite )
+	sctp? ( net-misc/lksctp-tools )
+	!dev-java/icedtea-web:7"
 
 # cups is needed for X. #390945 #390975
 RDEPEND="${COMMON_DEP}
@@ -146,8 +148,11 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	${X_DEPEND}
 	pax_kernel? ( sys-apps/elfix )"
 
-PDEPEND="webstart? ( dev-java/icedtea-web:0 )
-	nsplugin? ( dev-java/icedtea-web:0[nsplugin] )"
+PDEPEND="!ppc? ( !ppc64? ( !x86? (
+	webstart? ( dev-java/icedtea-web:0[icedtea8] )
+	nsplugin? ( dev-java/icedtea-web:0[icedtea8,nsplugin] ) )
+	pulseaudio? ( dev-java/icedtea-sound )
+) )"
 
 S="${WORKDIR}"/${ICEDTEA_PKG}
 
@@ -248,7 +253,7 @@ src_configure() {
 			ewarn 'Enabling CACAO on an architecture with HotSpot support; issues may result.'
 			ewarn 'If so, please rebuild with USE="-cacao"'
 		fi
-		jamvm_config="--enable-cacao"
+		cacao_config="--enable-cacao"
 	fi
 
 	# Turn on Zero if needed (non-HS/CACAO archs) or requested
@@ -285,11 +290,10 @@ src_configure() {
 		--disable-hotspot-tests --disable-jdk-tests \
 		--enable-system-lcms --enable-system-gif \
 		--enable-system-jpeg --enable-system-png \
-		--enable-system-zlib \
+		--enable-system-zlib --disable-pulseaudio \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable nss) \
-		$(use_enable pulseaudio pulse-java) \
 		$(use_with pax_kernel pax "${EPREFIX}/usr/sbin/paxmark.sh") \
 		${zero_config} ${cacao_config} ${jamvm_config}
 }
@@ -318,8 +322,9 @@ src_install() {
 	local ddest="${ED}${dest#/}"
 
 	# Ensures HeadlessGraphicsEnvironment is used.
+	# Hack; we should get IcedTea to support passing --disable-headful
 	if ! use X; then
-		rm -r "${ddest}"/jre/lib/$(get_system_arch)/xawt || die
+		rm -vf "${ddest}"/jre/lib/$(get_system_arch)/libawt_xawt.so || die
 	fi
 
 	if ! use examples; then
@@ -330,6 +335,15 @@ src_install() {
 		rm -f "${ddest}"/src.zip || die
 	fi
 
+	# provided by icedtea-web but we need it in JAVA_HOME to work with run-java-tool
+	if use webstart || use nsplugin; then
+		dosym /usr/libexec/icedtea-web/itweb-settings ${dest}/bin/itweb-settings
+		dosym /usr/libexec/icedtea-web/itweb-settings ${dest}/jre/bin/itweb-settings
+	fi
+	if use webstart; then
+		dosym /usr/libexec/icedtea-web/javaws ${dest}/bin/javaws
+		dosym /usr/libexec/icedtea-web/javaws ${dest}/jre/bin/javaws
+	fi
 	dosym /usr/share/doc/${PF} /usr/share/doc/${PN}${SLOT}
 
 	# Fix the permissions.
