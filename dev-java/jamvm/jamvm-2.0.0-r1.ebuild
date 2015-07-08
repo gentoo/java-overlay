@@ -18,7 +18,8 @@ IUSE="debug libffi"
 DEPEND="dev-java/gnu-classpath:0
 	|| ( dev-java/eclipse-ecj:* dev-java/ecj-gcj:* )
 	libffi? ( virtual/libffi )
-	amd64? ( virtual/libffi )"
+	ppc64? ( virtual/libffi )
+	sparc? ( virtual/libffi )"
 RDEPEND="${DEPEND}"
 
 src_prepare() {
@@ -39,12 +40,14 @@ src_prepare() {
 src_configure() {
 	filter-flags "-fomit-frame-pointer"
 
-	if use amd64 || use libffi; then
+	if use ppc64 || use sparc || use libffi; then
 		append-cflags "$(pkg-config --cflags-only-I libffi)"
 	fi
 
 	local fficonf="--enable-ffi"
-	use !amd64 && fficonf="$(use_enable libffi ffi)"
+	if { ! use ppc64 && ! use sparc; }; then
+		fficonf="$(use_enable libffi ffi)"
+	fi
 
 	econf ${fficonf} \
 		--disable-dependency-tracking \
