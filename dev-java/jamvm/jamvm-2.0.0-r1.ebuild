@@ -24,6 +24,7 @@ RDEPEND="${DEPEND}"
 src_prepare() {
 	# without this patch, classes.zip is not found at runtime
 	epatch "${FILESDIR}/classes-location.patch"
+	epatch "${FILESDIR}/noexecstack.patch"
 	eautoreconf
 
 	# These come precompiled.
