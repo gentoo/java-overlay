@@ -43,12 +43,12 @@ src_configure() {
 	unset JAVAC
 	append-flags -fno-strict-aliasing
 	econf --bindir=/usr/libexec/${PN} \
-		--libdir=/usr/lib/${PN} \
-		--datarootdir=/usr/share/${PN} \
+		--libdir="${EPREFIX}"/usr/$(get_libdir)/${PN} \
+		--datarootdir="${EPREFIX}"/usr/share/${PN} \
 		--disable-dependency-tracking \
-		--with-java-runtime-library-prefix=/usr \
-		--with-jni_h=/usr/include/classpath \
-		--with-jni_md_h=/usr/include/classpath
+		--with-java-runtime-library-prefix="${EPREFIX}"/usr \
+		--with-jni_h="${EPREFIX}"/usr/include/classpath \
+		--with-jni_md_h="${EPREFIX}"/usr/include/classpath
 }
 
 src_compile() {
@@ -56,8 +56,9 @@ src_compile() {
 }
 
 src_install() {
+	local libdir=$(get_libdir)
 	local CLASSPATH_DIR=/usr/libexec/gnu-classpath
-	local JDK_DIR=/usr/$(get_libdir)/${PN}-jdk
+	local JDK_DIR=/usr/${libdir}/${PN}-jdk
 
 	emake DESTDIR="${D}" install || die "make install failed"
 	dodir /usr/bin
@@ -93,9 +94,9 @@ src_install() {
 	[ ${ARCH} == x86_64 ] && libarch="amd64"
 	dodir ${JDK_DIR}/jre/lib/${libarch}/client
 	dodir ${JDK_DIR}/jre/lib/${libarch}/server
-	dosym /usr/lib/${PN}/libjvm.so ${JDK_DIR}/jre/lib/${libarch}/client/libjvm.so
-	dosym /usr/lib/${PN}/libjvm.so ${JDK_DIR}/jre/lib/${libarch}/server/libjvm.so
-	dosym /usr/$(get_libdir)/classpath/libjawt.so ${JDK_DIR}/jre/lib/${libarch}/libjawt.so
+	dosym /usr/${libdir}/${PN}/libjvm.so ${JDK_DIR}/jre/lib/${libarch}/client/libjvm.so
+	dosym /usr/${libdir}/${PN}/libjvm.so ${JDK_DIR}/jre/lib/${libarch}/server/libjvm.so
+	dosym /usr/${libdir}/classpath/libjawt.so ${JDK_DIR}/jre/lib/${libarch}/libjawt.so
 	set_java_env
 
 	# Can't use java-vm_set-pax-markings as doesn't work with symbolic links
