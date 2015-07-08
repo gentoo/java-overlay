@@ -1,6 +1,13 @@
 # ChangeLog for dev-java/cacao
-# Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/cacao/ChangeLog,v 1.22 2012/06/14 21:25:44 radhermit Exp $
+
+*cacao-1.6.0-r2 (08 Jul 2015)
+
+  08 Jul 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +cacao-1.6.0-r2.ebuild, -cacao-1.6.0-r1.ebuild, files/cacao.env:
+  Update CACAO to match new GNU Classpath ebuild. Cleanup file placement and PaX
+  mark VM.
 
 *cacao-1.6.0-r1 (20 Sep 2013)
 

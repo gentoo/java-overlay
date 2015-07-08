@@ -1,0 +1,110 @@
+# Copyright 1999-2015 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: /var/cvsroot/gentoo-x86/dev-java/cacao/cacao-0.99.4.ebuild,v 1.7 2012/06/14 21:25:44 radhermit Exp $
+
+EAPI=5
+AUTOTOOLS_AUTO_DEPEND="no"
+
+inherit autotools eutils flag-o-matic java-pkg-2 java-vm-2
+
+DESCRIPTION="Cacao Java Virtual Machine"
+HOMEPAGE="http://www.cacaojvm.org/"
+SRC_URI="http://www.complang.tuwien.ac.at/cacaojvm/download/${P}/${P}.tar.gz"
+LICENSE="GPL-2"
+SLOT="0"
+KEYWORDS="~amd64"
+IUSE="test"
+COMMON_DEPEND="
+	dev-java/gnu-classpath:0
+	|| ( dev-java/eclipse-ecj:* dev-java/ecj-gcj:* )
+	>=dev-libs/boehm-gc-7.2d
+"
+RDEPEND="${COMMON_DEPEND}"
+DEPEND="${COMMON_DEPEND}
+	test? (
+		dev-java/junit:4
+		${AUTOTOOLS_DEPEND}
+	)
+"
+
+src_prepare() {
+	if use test; then
+		sed -ie "s:/usr/share/java/junit4.jar:$(java-config -p junit-4):" \
+			./tests/regression/bugzilla/Makefile.am \
+			./tests/regression/base/Makefile.am || die "sed failed"
+	fi
+	epatch "${FILESDIR}/system-boehm-gc.patch"
+	epatch "${FILESDIR}/support-7.patch"
+	eautoreconf
+}
+
+src_configure() {
+	# A compiler can be forced with the JAVAC variable if needed
+	unset JAVAC
+	append-flags -fno-strict-aliasing
+	econf --bindir=/usr/libexec/${PN} \
+		--libdir=/usr/lib/${PN} \
+		--datarootdir=/usr/share/${PN} \
+		--disable-dependency-tracking \
+		--with-java-runtime-library-prefix=/usr \
+		--with-jni_h=/usr/include/classpath \
+		--with-jni_md_h=/usr/include/classpath
+}
+
+src_compile() {
+	default
+}
+
+src_install() {
+	local CLASSPATH_DIR=/usr/libexec/gnu-classpath
+	local JDK_DIR=/usr/$(get_libdir)/${PN}-jdk
+
+	emake DESTDIR="${D}" install || die "make install failed"
+	dodir /usr/bin
+	dosym /usr/libexec/${PN}/cacao /usr/bin/cacao || die
+	dodoc AUTHORS ChangeLog* NEWS README || die "failed to install docs"
+
+	dodir ${JDK_DIR}/bin
+	dosym /usr/libexec/${PN}/cacao ${JDK_DIR}/bin/java
+	for files in ${CLASSPATH_DIR}/g*; do
+		if [ $files = "${CLASSPATH_DIR}/bin/gjdoc" ] ; then
+			dosym $files ${JDK_DIR}/bin/javadoc || die
+		else
+			dosym $files \
+				${JDK_DIR}/bin/$(echo $files|sed "s#$(dirname $files)/g##") || die
+		fi
+	done
+
+	dodir ${JDK_DIR}/jre/lib
+	dosym /usr/share/classpath/glibj.zip ${JDK_DIR}/jre/lib/rt.jar
+	dodir ${JDK_DIR}/lib
+	dosym /usr/share/classpath/tools.zip ${JDK_DIR}/lib/tools.jar
+
+	local ecj_jar="$(readlink "${EPREFIX}"/usr/share/eclipse-ecj/ecj.jar)"
+	exeinto ${JDK_DIR}/bin
+	cat "${FILESDIR}"/javac.in | sed -e "s#@JAVA@#/usr/libexec/${PN}/cacao#" \
+		-e "s#@ECJ_JAR@#${ecj_jar}#" \
+		-e "s#@RT_JAR@#/usr/share/classpath/glibj.zip#" \
+		-e "s#@TOOLS_JAR@#/usr/share/classpath/tools.zip#" \
+	| newexe - javac
+
+	local libarch="${ARCH}"
+	[ ${ARCH} == x86 ] && libarch="i386"
+	[ ${ARCH} == x86_64 ] && libarch="amd64"
+	dodir ${JDK_DIR}/jre/lib/${libarch}/client
+	dodir ${JDK_DIR}/jre/lib/${libarch}/server
+	dosym /usr/lib/${PN}/libjvm.so ${JDK_DIR}/jre/lib/${libarch}/client/libjvm.so
+	dosym /usr/lib/${PN}/libjvm.so ${JDK_DIR}/jre/lib/${libarch}/server/libjvm.so
+	dosym /usr/$(get_libdir)/classpath/libjawt.so ${JDK_DIR}/jre/lib/${libarch}/libjawt.so
+	set_java_env
+
+	# Can't use java-vm_set-pax-markings as doesn't work with symbolic links
+	# Ensure a PaX header is created.
+	local pax_markings="C"
+	# Usally disabeling MPROTECT is sufficent.
+	local pax_markings+="m"
+	# On x86 for heap sizes over 700MB disable SEGMEXEC and PAGEEXEC as well.
+	use x86 && pax_markings+="sp"
+
+	pax-mark ${pax_markings} "${ED}"/usr/libexec/${PN}/cacao
+}
