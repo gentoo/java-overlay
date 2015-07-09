@@ -2,6 +2,12 @@
 # Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.6.0_pre24 (09 Jul 2015)
+
+  09 Jul 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +icedtea-7.2.6.0_pre24.ebuild, -icedtea-7.2.6.0_pre23.ebuild:
+  Bump IcedTea 2.6.0 ebuild to pre24.
+
 *icedtea-3.0.0_pre04-r1 (25 Jun 2015)
 
   25 Jun 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>

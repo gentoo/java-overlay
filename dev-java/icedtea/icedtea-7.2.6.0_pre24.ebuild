@@ -16,13 +16,13 @@ ICEDTEA_VER=$(get_version_component_range 2-4)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
-CORBA_TARBALL="9d5c92264131.tar.bz2"
-JAXP_TARBALL="9150a16a7b80.tar.bz2"
-JAXWS_TARBALL="87290096a2fa.tar.bz2"
-JDK_TARBALL="ec336c81a545.tar.bz2"
-LANGTOOLS_TARBALL="403eeedf70f4.tar.bz2"
-OPENJDK_TARBALL="88ad67ad5b51.tar.bz2"
-HOTSPOT_TARBALL="1afefe2d5f90.tar.bz2"
+CORBA_TARBALL="e3445769412d.tar.bz2"
+JAXP_TARBALL="e3b08dc13807.tar.bz2"
+JAXWS_TARBALL="299588405837.tar.bz2"
+JDK_TARBALL="444d55ffed65.tar.bz2"
+LANGTOOLS_TARBALL="bc95d2472055.tar.bz2"
+OPENJDK_TARBALL="dbfa75121aca.tar.bz2"
+HOTSPOT_TARBALL="94f15794d5e7.tar.bz2"
 
 CACAO_TARBALL="e215e36be9fc.tar.gz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
@@ -34,7 +34,6 @@ JDK_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-jdk-${JDK_TARBALL}"
 LANGTOOLS_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-langtools-${LANGTOOLS_TARBALL}"
 OPENJDK_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-openjdk-${OPENJDK_TARBALL}"
 HOTSPOT_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-hotspot-${HOTSPOT_TARBALL}"
-AARCH64_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-aarch64-${AARCH64_TARBALL}"
 
 CACAO_GENTOO_TARBALL="icedtea-cacao-${CACAO_TARBALL}"
 JAMVM_GENTOO_TARBALL="icedtea-${JAMVM_TARBALL}"
@@ -62,7 +61,7 @@ KEYWORDS=""
 RESTRICT="test"
 
 IUSE="+X +alsa cacao cjk +cups debug doc examples infinality jamvm javascript +jbootstrap kerberos +nsplugin
-	nss pax_kernel pulseaudio selinux smartcard +source +sunec test zero +webstart"
+	nss pax_kernel pulseaudio sctp selinux smartcard +source +sunec test zero +webstart"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
@@ -105,6 +104,7 @@ COMMON_DEP="
 	>=dev-util/systemtap-1
 	smartcard? ( sys-apps/pcsc-lite )
 	sunec? ( >=dev-libs/nss-3.16.1-r1 )
+	sctp? ( net-misc/lksctp-tools )
 	!dev-java/icedtea-web:7"
 
 # cups is needed for X. #390945 #390975
@@ -307,6 +307,7 @@ src_configure() {
 		$(use_enable kerberos system-kerberos) \
 		$(use_with pax_kernel pax "${EPREFIX}/usr/sbin/paxmark.sh") \
 		$(use_enable smartcard system-pcsc) \
+		$(use_enable sctp system-sctp) \
 		$(use_enable sunec) \
 		$(use_enable infinality) \
 		${zero_config} ${cacao_config} ${jamvm_config}
