@@ -317,7 +317,7 @@ java-maven-2_src_unpack() {
 		fi
 	done
 
-	if hasq doc ${IUSE} && use doc; then
+	if has doc ${IUSE} && use doc; then
 		JAVA_ANT_JAVADOC_INPUT_DIRS="${JAVA_ANT_JAVADOC_INPUT_DIRS} ${JAVA_MAVEN_SRC_DIRS}"
 	fi
 	# now rewriting all the poms
@@ -548,10 +548,10 @@ java-maven-2_install_one() {
 # basic src_install which can install in most cases (multi and single project
 # mode)
 java-maven-2_src_install() {
-	hasq doc ${IUSE} && use doc \
+	has doc ${IUSE} && use doc \
 	&& [[ -n "${JAVA_ANT_JAVADOC_INPUT_DIRS}" ]] \
 	&& java-pkg_dojavadoc ${JAVA_ANT_JAVADOC_OUTPUT_DIR}
-	if hasq source ${IUSE} && use source; then
+	if has source ${IUSE} && use source; then
 		# JAVA_MAVEN_SRC_DIRS must be maven parent sources dirs like "src/main"
 		# install java/* into zip/* and the rest inside zip/subdir/*
 		local java_maven_src_dir="${WORKDIR}/mavenjavasrcpack"

@@ -68,7 +68,7 @@ _openoffice-utils_pkg_prerm() {
 }
 
 _openoffice-ext_check_use() {
-	return $(hasq ${OPENOFFICE_EXT_OPT_USE} "${IUSE}")
+	return $(has ${OPENOFFICE_EXT_OPT_USE} "${IUSE}")
 }
 
 if _openoffice-ext_check_use; then
