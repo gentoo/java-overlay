@@ -1,4 +1,4 @@
-# Copyright 1999-2012 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -20,7 +20,7 @@ CDEPEND="dev-java/ant-core:0
 	dev-java/glassfish-transaction-api:0
 	dev-java/joda-time:0
 	java-virtuals/servlet-api:2.5
-	scala? ( dev-lang/scala:0 )"
+	scala? ( dev-lang/scala )"
 
 RDEPEND="${CDEPEND}
 	>=virtual/jre-1.6"
