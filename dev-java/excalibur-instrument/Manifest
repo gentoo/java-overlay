@@ -1,5 +1,0 @@
-DIST excalibur-instrument-api-2.1-src.tar.gz 13572 SHA256 4640397118bd5d617250fd8ad64ad517ce197dbfadbecd58082d3d9d396971d2
-DIST excalibur-instrument-client-2.1-src.tar.gz 85615 SHA256 0b8cda0036e933ddc59455245e2a3f04048cb2bed85deec69a3acc8502413f38
-DIST excalibur-instrument-mgr-api-2.1-src.tar.gz 12087 SHA256 6384b1b8d105d3018fa06033bb0408429c9a34f5daa6731df06679c4e4656ca4
-DIST excalibur-instrument-mgr-http-2.1-src.tar.gz 75480 SHA256 8d176a70531b4aaf3d5ac1be36d13bb07b2d85cdc3ff2fedad64fd2ef9bf604a
-DIST excalibur-instrument-mgr-impl-2.1-src.tar.gz 44793 SHA256 7ff48fc5f0e6f0317f610277fafeda43ccd3401c6809989a8f8197f5d2ba4ff8

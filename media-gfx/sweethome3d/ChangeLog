@@ -1,6 +1,9 @@
 # ChangeLog for media-gfx/sweethome3d
-# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+  30 Jul 2015;  <andreas@gentoo.org> metadata.xml:
+  [media-gfx/sweethome3d] Fix metadata
 
   19 Oct 2011; Miroslav Šulc <fordfrog@gentoo.org> -sweethome3d-3.3.ebuild:
   Removed ebuild depending on dev-java/netx
@@ -59,4 +62,3 @@
   15 Nov 2008; Miroslav Šulc <fordfrog@gentoo.org> +metadata.xml,
   +sweethome3d-1.4.ebuild:
   Added new ebuild from bug #209696
-

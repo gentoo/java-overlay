@@ -2,11 +2,14 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 <herd>java</herd>
-<maintainer>
-<email>chewi at aura-online.co.uk</email>
-<name>James Le Cuirot</name>
-</maintainer>
-<longdescription lang="en">
-Ebean is an open source Java Object Relational Mapping tool. It uses JPA Annotations (@entity, @OneToMany...) for mapping. It provides a simple API for fetching and saving object graphs.
-</longdescription>
+	<maintainer>
+		<email>chewi at aura-online.co.uk</email>
+		<name>James Le Cuirot</name>
+	</maintainer>
+	<longdescription lang="en">
+		Ebean is an open source Java Object Relational Mapping tool. It uses JPA Annotations (@entity, @OneToMany...) for mapping. It provides a simple API for fetching and saving object graphs.
+	</longdescription>
+	<use>
+		<flag name="scala">Enable Scala support.</flag>
+	</use>
 </pkgmetadata>
