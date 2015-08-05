@@ -1,14 +1,14 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="2"
+EAPI=5
 inherit games java-pkg-2
 
 DESCRIPTION="Official dedicated server for Minecraft"
 HOMEPAGE="http://www.minecraft.net"
 SRC_URI="http://assets.minecraft.net/${PV//./_}/minecraft_server.jar -> ${P}.jar"
-LICENSE="as-is"
+LICENSE="Minecraft"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="ipv6"
