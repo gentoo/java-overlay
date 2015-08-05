@@ -3,4 +3,7 @@
 <pkgmetadata>
 	<herd>java</herd>
 	<herd>sound</herd>
+	<use>
+		<flag name="fluidsynth">Enable FluidSynth support.</flag>
+	</use>
 </pkgmetadata>
