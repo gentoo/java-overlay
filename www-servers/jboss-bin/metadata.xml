@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-<herd>java</herd>
-<longdescription lang="en">
-</longdescription>
+	<herd>java</herd>
+	<longdescription lang="en">
+	</longdescription>
+	<use>
+		<flag name="ejb3">Enable EJB3 support.</flag>
+		<flag name="srvdir">Store configuration in /srv</flag>
+	</use>
 </pkgmetadata>
 
