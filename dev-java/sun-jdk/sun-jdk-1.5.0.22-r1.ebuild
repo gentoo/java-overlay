@@ -1,6 +1,6 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/sun-jdk/sun-jdk-1.5.0.22-r1.ebuild,v 1.1 2010/03/31 16:11:10 caster Exp $
+# $Header: $
 
 JAVA_VM_BUILD_ONLY="TRUE"
 
@@ -21,7 +21,7 @@ SLOT="1.5"
 LICENSE="dlj-1.1"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="strip"
-IUSE="X alsa doc examples jce nsplugin odbc"
+IUSE="X alsa examples jce nsplugin odbc"
 
 QA_TEXTRELS_x86="opt/${P}/jre/lib/i386/motif21/libmawt.so opt/${P}/jre/lib/i386/libdeploy.so"
 QA_DT_HASH="opt/${P}/.*"
@@ -29,7 +29,6 @@ QA_DT_HASH="opt/${P}/.*"
 DEPEND="jce? ( =dev-java/sun-jce-bin-1.5.0* )"
 RDEPEND="sys-libs/glibc
 	alsa? ( media-libs/alsa-lib )
-	doc? ( =dev-java/java-sdk-docs-1.5.0* )
 	X? (
 			x11-libs/libXext
 			x11-libs/libXi

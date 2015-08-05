@@ -1,6 +1,6 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/sun-jdk/sun-jdk-1.4.2.19.ebuild,v 1.4 2009/05/29 20:30:58 caster Exp $
+# $Header: $
 
 JAVA_SUPPORTS_GENERATION_1="true"
 JAVA_VM_BUILD_ONLY="TRUE"
@@ -24,14 +24,13 @@ LICENSE="sun-bcla-java-vm"
 KEYWORDS="~x86"
 # files are prestripped
 RESTRICT="fetch strip"
-IUSE="X alsa doc examples jce nsplugin odbc"
+IUSE="X alsa examples jce nsplugin odbc"
 
 DEPEND="sys-apps/sed
 	app-arch/unzip"
 
 RDEPEND="
 	alsa? ( media-libs/alsa-lib )
-	doc? ( =dev-java/java-sdk-docs-1.4.2* )
 	X? (
 		x11-libs/libXext
 		x11-libs/libXi

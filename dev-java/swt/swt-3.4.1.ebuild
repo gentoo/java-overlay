@@ -1,6 +1,6 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/swt/swt-3.4-r2.ebuild,v 1.1 2008/09/14 00:02:03 caster Exp $
+# $Header: $
 
 EAPI="1"
 
@@ -32,7 +32,7 @@ SLOT="3.4"
 LICENSE="CPL-1.0 LGPL-2.1 MPL-1.1"
 KEYWORDS="~amd64"
 
-IUSE="cairo gnome opengl xulrunner"
+IUSE="cairo gnome opengl"
 COMMON=">=dev-libs/glib-2.6
 		>=x11-libs/gtk+-2.6.8
 		>=dev-libs/atk-1.10.2
@@ -42,7 +42,6 @@ COMMON=">=dev-libs/glib-2.6
 				=gnome-base/gnome-vfs-2*
 				=gnome-base/libgnomeui-2*
 				)
-		xulrunner? ( net-libs/xulrunner:1.9 )
 		opengl?	(
 			virtual/opengl
 			virtual/glu
@@ -142,26 +141,6 @@ src_compile() {
 		${make} make_gnome || die "Failed to build GNOME VFS support"
 	fi
 
-	if use xulrunner ; then
-		einfo "Building the Mozilla component against xulrunner-1.9"
-
-		export MOZILLA_INCLUDES="$(pkg-config libxul --cflags)"
-		# the -R is a workaround for bug #234934
-		export MOZILLA_LIBS="-Wl,-R$(pkg-config libxul --variable=sdkdir) $(pkg-config libxul --libs)"
-
-		${make} make_mozilla || die "Failed to build Mozilla support"
-
-		# upstream ships libswt-xulrunner*.so even though the build.sh does not
-		# build it anymore... missing this file leads to another instance
-		# of bug #234934 so we build it too
-		einfo "Building the xulrunner component against xulrunner-1.9"
-
-		export XULRUNNER_INCLUDES="${MOZILLA_INCLUDES}"
-		export XULRUNNER_LIBS="${MOZILLA_LIBS}"
-
-		${make} make_xulrunner || die "Failed to build xulrunner support"
-	fi
-
 	if use cairo ; then
 		einfo "Building CAIRO support"
 		${make} make_cairo || die "Unable to build CAIRO support"
@@ -194,11 +173,6 @@ src_install() {
 
 	java-pkg_sointo /usr/$(get_libdir)
 	java-pkg_doso *.so
-
-	if use xulrunner; then
-		local gecko_dir="$(pkg-config libxul --variable=sdkdir)"
-		java-pkg_register-environment-variable MOZILLA_FIVE_HOME "${gecko_dir}"
-	fi
 
 	dohtml about.html || die
 }

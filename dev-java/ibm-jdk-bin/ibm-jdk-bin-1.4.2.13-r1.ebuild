@@ -1,6 +1,6 @@
-# Copyright 1999-2010 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/ibm-jdk-bin/ibm-jdk-bin-1.4.2.13.ebuild,v 1.4 2009/05/29 20:37:25 caster Exp $
+# $Header: $
 
 JAVA_SUPPORTS_GENERATION_1="true"
 JAVA_VM_BUILD_ONLY="TRUE"
@@ -70,7 +70,7 @@ SRC_URI="x86? ( ${X86_JDK_DIST} )
 LICENSE="IBM-J1.4"
 SLOT="1.4"
 KEYWORDS="-* ~amd64 ~ppc ~ppc64 ~x86"
-IUSE="X alsa doc examples javacomm nsplugin"
+IUSE="X alsa examples javacomm nsplugin"
 
 RDEPEND="=virtual/libstdc++-3.3
 	alsa? ( media-libs/alsa-lib )
@@ -82,8 +82,7 @@ RDEPEND="=virtual/libstdc++-3.3
 		x11-libs/libXtst
 		x11-libs/libXt
 		x11-libs/libX11
-	)
-	doc? ( =dev-java/java-sdk-docs-1.4.2* )"
+	)"
 
 RESTRICT="fetch"
 

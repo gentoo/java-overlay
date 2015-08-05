@@ -1,6 +1,6 @@
-# Copyright 1999-2009 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/blackdown-jdk/blackdown-jdk-1.4.2.03-r16.ebuild,v 1.3 2008/12/21 16:12:48 serkan Exp $
+# $Header: $
 
 JAVA_SUPPORTS_GENERATION_1="true"
 JAVA_VM_BUILD_ONLY="TRUE"
@@ -19,7 +19,7 @@ HOMEPAGE="http://www.blackdown.org"
 SLOT="1.4.2"
 LICENSE="sun-bcla-java-vm"
 KEYWORDS="-* ~amd64 ~x86"
-IUSE="X alsa doc examples nsplugin odbc"
+IUSE="X alsa examples nsplugin odbc"
 
 DEPEND=""
 RDEPEND="odbc? ( dev-db/unixODBC )
@@ -35,8 +35,7 @@ RDEPEND="odbc? ( dev-db/unixODBC )
 		x11-libs/libXtst
 		x11-libs/libXt
 		x11-libs/libX11
-	)
-	doc? ( =dev-java/java-sdk-docs-1.4.2* )"
+	)"
 
 JAVA_PROVIDE="jdbc-stdext"
 

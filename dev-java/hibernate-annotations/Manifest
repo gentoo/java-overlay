@@ -1,6 +1,0 @@
-DIST hibernate-3.0.5.tar.gz 16097031 SHA256 6971edbbb7bda9e0d2b96a0a652c9040ccde9f17dfae0fe72cc017c3b29196fa
-DIST hibernate-3.1.2.tar.gz 18498739 SHA256 1ff054a9208037ef7f7cb85753fde8431ccdd59789723c4dca52861b093b185b
-DIST hibernate-3.2.0.ga.tar.gz 19744419 SHA256 e242eb6b243e7b0fac132f37f4e29bf06ec87c37be5a80a0849709a6cb89b03f
-DIST hibernate-annotations-3.0beta2.tar.gz 1136471 SHA256 c2629f0dfad3e0af51a00609170a07e644acbd1cf5bb8a594205a1ec98548326
-DIST hibernate-annotations-3.1beta8.tar.gz 1182514 SHA256 48434ea4f1f537fce7cff2fc70fd8ae18c7eaf86893a4a3f48b091ab1278bbd0
-DIST hibernate-annotations-3.2.0.GA.tar.gz 2075220 SHA256 7ac81b03c4d4623cb7c883a3f85a47078edb261cde3fee2bfbc4fcf70a4e9bc8

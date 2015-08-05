@@ -1,13 +1,24 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
 inherit base java-pkg-2 java-ant-2
 
+# @ECLASS-VARIABLE: JAVA_MAVEN_USE_SOURCE
+# @DESCRIPTION:
+# If set to "false", do nothing.
+# If set to "true", add a conditional dependency on app-arch/zip
+: ${JAVA_MAVEN_USE_SOURCE:=true}
+
+if [[ ${JAVA_MAVEN_USE_SOURCE} = true ]] ; then
+	DEPEND="source? ( app-arch/zip )"
+fi
+
 JAVA_MAVEN_COMMON_DEPS=">=dev-java/javatoolkit-0.3.0-r2"
 
-DEPEND="source? ( app-arch/zip )
-		${JAVA_MAVEN_COMMON_DEPS}"
+DEPEND="${DEPEND}
+	${JAVA_MAVEN_COMMON_DEPS}
+"
 
 RDEPEND="${JAVA_MAVEN_COMMON_DEPS}"
 
