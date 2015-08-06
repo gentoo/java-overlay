@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-<herd>java</herd>
-<maintainer>
-  <email>java@gentoo.org</email>
-</maintainer>
+	<herd>java</herd>
+	<maintainer>
+		<email>java@gentoo.org</email>
+	</maintainer>
+	<longdescription>
+	EasyMock provides Mock Objects for interfaces in JUnit tests by generating
+	them on the fly using Java's proxy mechanism.
+	</longdescription>
 </pkgmetadata>
