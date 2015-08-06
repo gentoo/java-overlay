@@ -1,4 +1,4 @@
-# Copyright 1999-2008 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -6,7 +6,7 @@ JAVA_PKG_IUSE="doc examples source test"
 inherit java-pkg-2 java-ant-2
 
 MY_P="${PN}${PV}"
-DESCRIPTION="EasyMock provides Mock Objects for interfaces in JUnit tests by generating them on the fly using Java's proxy mechanism"
+DESCRIPTION="EasyMock generates Mock Objects for interfaces in JUnit tests on the fly"
 HOMEPAGE="http://www.easymock.org/"
 SRC_URI="mirror://sourceforge/${PN}/${MY_P}.zip"
 
@@ -15,13 +15,13 @@ SLOT="2"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-COMMON_DEPEND="
-	test? ( >=dev-java/junit-4 )"
-DEPEND=">=virtual/jdk-1.5
-	${COMMON_DEPEND}
-	app-arch/unzip"
-RDEPEND=">=virtual/jre-1.5
-	${COMMON_DEPEND}"
+DEPEND="
+	app-arch/unzip
+	>=virtual/jdk-1.5
+	test? ( >=dev-java/junit-4 )
+"
+RDEPEND=">=virtual/jre-1.5"
+
 S="${WORKDIR}/${MY_P}"
 
 src_unpack() {
