@@ -1,9 +1,0 @@
-# ChangeLog for dev-java/sevenzipjbinding
-# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-  3 Jan 2011; James Le Cuirot <chewi@aura-online.co.uk>
-  +sevenzipjbinding-4.65.1.04_rc.ebuild, +files/p7zip-fixes.patch,
-  +files/native-lib-load.patch:
-  Initial import. Bloody awkward one with inconsistent naming, strange
-  version numbers, and incomplete tarballs.

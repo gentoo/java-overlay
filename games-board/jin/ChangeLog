@@ -1,9 +1,0 @@
-# ChangeLog for games-board/jin
-# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-*jin-2.14.1 (28 Dec 2011)
-
-  28 Dec 2011; James Le Cuirot <chewi@aura-online.co.uk> +jin-2.14.1.ebuild:
-  Initial import. Unfortunately needs bsh-1 and I don't know how to migrate
-  this to bsh-2 so I've had to bundle it.

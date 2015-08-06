@@ -1,9 +1,0 @@
-# ChangeLog for dev-java/paulscode-codecwav
-# Copyright 1999-2013 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-*paulscode-codecwav-20101023 (01 Sep 2013)
-
-  01 Sep 2013; James Le Cuirot <chewi@aura-online.co.uk> +metadata.xml,
-  +paulscode-codecwav-20101023.ebuild:
-  Initial import.

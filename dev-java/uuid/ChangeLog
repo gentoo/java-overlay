@@ -1,9 +1,0 @@
-# ChangeLog for dev-java/uuid
-# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-*uuid-3.1 (19 Apr 2009)
-
-  19 Apr 2009; James Le Cuirot <chewi@aura-online.co.uk> +uuid-3.1.ebuild:
-  Initial import. Thought I needed this as a dependency but maybe not now.
-  Here it is anyway.

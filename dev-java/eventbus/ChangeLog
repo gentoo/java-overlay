@@ -1,8 +1,0 @@
-# ChangeLog for dev-java/eventbus
-# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-*eventbus-1.3 (20 Dec 2009)
-
-  20 Dec 2009; James Le Cuirot <chewi@aura-online.co.uk> +eventbus-1.3.ebuild
-  New package. Needed by Audiveris, which I hope to add soon.
