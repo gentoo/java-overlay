@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -11,7 +11,7 @@ MY_EJB3="jboss-EJB-3.0_RC9_Patch_1"
 DESCRIPTION="An open source, standards-compliant, J2EE-based application server implemented in 100% Pure Java."
 SRC_URI="mirror://sourceforge/jboss/${MY_P}.zip
 		 ejb3? ( mirror://sourceforge/jboss/${MY_EJB3}.zip )"
-RESTRICT="nomirror"
+RESTRICT="mirror"
 HOMEPAGE="http://www.jboss.org"
 LICENSE="LGPL-2"
 IUSE="doc ejb3 srvdir"
@@ -42,7 +42,6 @@ else
 	FILESDIR_CONF_DIR="${FILESDIR}/${PV}/normal"
 fi
 
-
 # NOTE: When you are updating CONFIG_PROTECT env.d file, you can use this script on your current install
 # run from /var/lib/jboss-${SLOT} to get list of files that should be config protected. We protect *.xml,
 # *.properties and *.tld files.
@@ -59,7 +58,6 @@ pkg_setup() {
 	enewuser jboss -1 /bin/sh ${SERVICES_DIR}  jboss \
 		|| die	"Unable to create jboss user"
 }
-
 
 src_install() {
 	# jboss core stuff
@@ -220,7 +218,7 @@ src_install() {
 		java-pkg_regjar "${D}/${SERVICES_DIR}/all/lib/jgroups.jar"
 	fi
 	# register runners
-	java-pkg_regjar	${D}/${INSTALL_DIR}/bin/*.jar
+	java-pkg_regjar	"${D}/${INSTALL_DIR}/bin/*.jar"
 	#do launch helper scripts which set the good VM to use
 	java-pkg_dolauncher jboss-start.sh  --java_args  '${JAVA_OPTIONS}'\
 		--main org.jboss.Main      -into "${INSTALL_DIR}"
@@ -261,7 +259,6 @@ pkg_postinst() {
 	chmod -R 755 "/usr/share/${PN}-${SLOT}" || die chmod failed
 	chmod -R 765 ${DIR} || die "chmod  failed"
 	chown -R jboss:jboss ${DIR} || die "chown failed"
-
 
 	elog
 	elog "Multi Instance Usage"
