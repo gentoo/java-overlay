@@ -1,4 +1,4 @@
-# Copyright 1999-2006 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /cvsroot/xins/xins-ebuild/xins-1.3.0.ebuild,v 1.1 2005/12/16 13:03:19 znerd Exp $
 
