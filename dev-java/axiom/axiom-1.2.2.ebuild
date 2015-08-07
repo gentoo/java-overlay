@@ -13,7 +13,7 @@ SLOT="0"
 KEYWORDS="~x86 "
 IUSE="doc source"
 
-DEPEND="|| ( =virtual/jdk-1.6*  =virtual/jdk-1.5* =virtual/jdk-1.4* )
+DEPEND="=virtual/jdk-1.6*
 		source? ( app-arch/zip )
 		dev-java/commons-logging
 		dev-java/stax
