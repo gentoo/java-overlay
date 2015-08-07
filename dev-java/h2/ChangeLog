@@ -1,8 +1,0 @@
-# ChangeLog for dev-java/h2
-# Copyright 1999-2011 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-*h2-1.3.161 (20 Nov 2011)
-
-  20 Nov 2011; James Le Cuirot <chewi@aura-online.co.uk> +h2-1.3.161.ebuild:
-  Initial import. Tests are present but fail even outside of Portage.

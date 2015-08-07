@@ -1,9 +1,0 @@
-# ChangeLog for games-board/lemmini
-# Copyright 1999-2012 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-*lemmini-0.84 (25 Jan 2012)
-
-  25 Jan 2012; James Le Cuirot <chewi@aura-online.co.uk>
-  +lemmini-0.84.ebuild, +files/userdir.patch:
-  Initial import. Patch needed to store settings in user directory.

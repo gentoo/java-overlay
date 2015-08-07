@@ -1,4 +1,4 @@
-# Copyright 1999-2007 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/burlap/burlap-2.1.12-r1.ebuild,v 1.3 2007/01/16 17:31:45 betelgeuse Exp $
 

@@ -1,8 +1,0 @@
-# ChangeLog for dev-java/cewolf
-# Copyright 1999-2009 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-  19 Jan 2009; Alistair Bush <ali_bush@gentoo.org> +metadata.xml,
-  cewolf-1.0.ebuild:
-  QA Fixes. Dropped keywords as unsatisfied gnu-jaxp.
-

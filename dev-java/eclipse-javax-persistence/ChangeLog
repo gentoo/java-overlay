@@ -1,9 +1,0 @@
-# ChangeLog for dev-java/eclipse-javax-persistence
-# Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
-# $Header: $
-
-*eclipse-javax-persistence-2.1.0 (01 Feb 2015)
-
-  01 Feb 2015; James Le Cuirot <chewi@aura-online.co.uk>
-  +eclipse-javax-persistence-2.1.0.ebuild, +metadata.xml:
-  New package required by Log4j 2.
