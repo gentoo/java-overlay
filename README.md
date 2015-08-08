@@ -1,5 +1,7 @@
 # Gentoo java overlay
 
+[![Repoman Status](https://travis-ci.org/gentoo/java-overlay.png)](https://travis-ci.org/gentoo/java-overlay)
+
 This overlay contains only packages migrated to generation 2 (java-*-2 eclass
 using ebuilds). Ebuilds in this overlay are expected to work.
 
