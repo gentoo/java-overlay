@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=1
-JAVA_PKG_IUSE="doc examples source test"
-WANT_ANT_TASKS="ant-nodeps"
+EAPI=5
+
+JAVA_PKG_IUSE="doc examples source"
 
 inherit java-pkg-2 java-ant-2
 
@@ -18,41 +18,30 @@ KEYWORDS="~amd64 ~x86"
 
 IUSE=""
 
-COMMON_DEP="dev-java/servletapi:2.4"
+COMMON_DEP="java-virtuals/servlet-api:2.4"
 
 RDEPEND=">=virtual/jre-1.5
 	${COMMON_DEP}"
 # Preferences api is broken in 1.6 if a later xalan version is in cp
 # http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6519088
 DEPEND="
- 	!test? ( >=virtual/jdk-1.5 )
-	test? (
-		=virtual/jdk-1.5*
-		dev-java/ant-junit
-		dev-java/ant-nodeps
-	)
+	>=virtual/jdk-1.5
 	app-arch/unzip
 	${COMMON_DEP}"
 
 S=${WORKDIR}
 
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
+java_prepare() {
 	epatch "${FILESDIR}/disable-retroweaver.patch"
 	# Needs Jetty
-	rm -v src/test/org/ini4j/IniPreferencesFactoryListenerTest.java || die
+	rm -rf src/test/* || die
 }
 
 JAVA_ANT_REWRITE_CLASSPATH="yes"
 EANT_BUILD_TARGET="build"
-EANT_GENTOO_CLASSPATH="servletapi-2.4"
+EANT_GENTOO_CLASSPATH="servlet-api-2.4"
 # So that we don't need junit
-EANT_EXTRA_ARGS="-Dbuild.src.test=nbproject -Dbuild.src.sample=nbproject"
-
-src_test() {
-	ANT_TASKS="ant-junit,ant-nodeps" eant test
-}
+EANT_EXTRA_ARGS="-Dbuild.src.sample=nbproject"
 
 src_install() {
 	dodoc ReleaseNotes.txt ChangeLog.txt || die
