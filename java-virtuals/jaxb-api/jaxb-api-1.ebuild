@@ -1,6 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/java-virtuals/stax-api/stax-api-1-r1.ebuild,v 1.1 2009/05/23 11:52:55 ali_bush Exp $
+# $Id$
 
 EAPI=1
 
