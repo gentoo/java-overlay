@@ -1,6 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-sound/jsynthlib/jsynthlib-0.19_pre20041220.ebuild,v 1.3 2006/03/08 15:38:05 flameeyes Exp $
+# $Id$
 
 inherit java-pkg-2
 

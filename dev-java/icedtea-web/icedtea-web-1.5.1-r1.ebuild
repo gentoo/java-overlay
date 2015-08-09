@@ -1,6 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/icedtea-web/icedtea-web-1.5.1-r1.ebuild,v 1.6 2015/05/23 23:08:15 chewi Exp $
+# $Id$
 # Build written by Andrew John Hughes (ahughes@redhat.com)
 
 EAPI="5"

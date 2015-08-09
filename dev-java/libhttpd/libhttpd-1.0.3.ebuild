@@ -1,6 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Id$
 
 JAVA_PKG_IUSE="doc source test"
 inherit eutils java-pkg-2 versionator

@@ -1,6 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Id$
 
 # cvs -d :pserver:alistair64@cvs.dev.java.net:/cvs login
 # cvs -d :pserver:alistair64@cvs.dev.java.net:/cvs export -r rel-1_5_1-fcs j3d-core-utils

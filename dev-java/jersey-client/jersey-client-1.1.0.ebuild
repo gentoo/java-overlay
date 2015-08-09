@@ -1,6 +1,6 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-java/${PN}/${PN}-1.0.ebuild,v 1.3 2009/03/31 17:33:10 betelgeuse Exp $
+# $Id$
 
 EAPI="2"
 JAVA_PKG_IUSE="doc source test"

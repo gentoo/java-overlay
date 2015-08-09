@@ -2,7 +2,7 @@
 
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
+# $Id$
 
 import argparse, inspect, os, re, sys
 from java_config_2.EnvironmentManager import EnvironmentManager
