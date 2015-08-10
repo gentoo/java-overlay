@@ -8,9 +8,9 @@ my $ECJ_WARNINGS="-nowarn";
 my ( @bcoption, @source15, @target15, @cp );
 push @bcoption, '-bootclasspath', '@RT_JAR@:@TOOLS_JAR@'
     unless grep {$_ eq '-bootclasspath'} @ARGV;
-push @source15, '-source', '1.5'
+push @source15, '-source', '1.6'
     unless grep {$_ eq '-source'} @ARGV;
-push @target15, '-target', '1.5'
+push @target15, '-target', '1.6'
     unless grep {$_ eq '-target'} @ARGV;  
 push @cp, '-cp', '.'
     unless grep {$_ =~ '\-c(p|lasspath)'} @ARGV or $ENV{CLASSPATH};
