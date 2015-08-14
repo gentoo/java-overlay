@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-inherit eutils java-pkg-2
+inherit eutils user java-pkg-2
 
 MY_P="jboss-${PV}"
 MY_P="${MY_P}.GA"
@@ -218,7 +218,7 @@ src_install() {
 		java-pkg_regjar "${D}/${SERVICES_DIR}/all/lib/jgroups.jar"
 	fi
 	# register runners
-	java-pkg_regjar	"${D}/${INSTALL_DIR}/bin/*.jar"
+	java-pkg_regjar	${D}/${INSTALL_DIR}/bin/*.jar
 	#do launch helper scripts which set the good VM to use
 	java-pkg_dolauncher jboss-start.sh  --java_args  '${JAVA_OPTIONS}'\
 		--main org.jboss.Main      -into "${INSTALL_DIR}"
