@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=1
+EAPI=5
 JAVA_PKG_IUSE="doc source"
 
 inherit java-pkg-2 java-ant-2
@@ -20,27 +20,26 @@ KEYWORDS="~x86"
 
 IUSE=""
 
-COMMON_DEP="
+CDEPEND="
 	"
 
-RDEPEND=">=virtual/jre-1.4
-	${COMMON_DEP}"
-DEPEND=">=virtual/jdk-1.4
+RDEPEND=">=virtual/jre-1.6
+	${CDEPEND}"
+DEPEND=">=virtual/jdk-1.6
 		app-arch/unzip
-		${COMMON_DEP}"
+		${CDEPEND}"
 
 S=${WORKDIR}/${MY_P}
-
-src_unpack() {
-	unpack ${A}
-	cd "${S}"
-}
 
 EANT_BUILD_TARGET=""
 EANT_DOC_TARGET=""
 
+java_prepare() {
+
+}
+
 src_install() {
-	java-pkg_dojar
-	use doc && java-pkg_dojavadoc
-	use source && java-pkg_dosrc
+	java-pkg_dojar package.jar
+	use doc && java-pkg_dojavadoc path/to/docs
+	use source && java-pkg_dosrc path/to/src
 }
