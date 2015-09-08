@@ -19,17 +19,10 @@ RESTRICT="mirror"
 DEPEND="app-arch/zip
 	>=virtual/jdk-1.6"
 
-RDEPEND="|| (
-	>=dev-java/icedtea-6[X]
-	>=dev-java/icedtea-bin-6[X]
-	>=dev-java/oracle-jre-bin-1.6[X]
-	>=dev-java/oracle-jdk-bin-1.6[X]
-	>=dev-java/sun-jre-bin-1.6[X]
-	>=dev-java/sun-jdk-1.6[X] )
-
-	dev-java/gson:2.2.2
+RDEPEND="dev-java/gson:2.2.2
 	dev-java/java-config:2
 	>=dev-java/jopt-simple-4.5:0
+	>=virtual/jre-1.6
 
 	>=dev-java/bcprov-1.47:0
 	>=dev-java/commons-io-2.4:1
