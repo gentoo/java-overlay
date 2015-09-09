@@ -36,8 +36,9 @@ SLOT="6"
 KEYWORDS=""
 RESTRICT="test"
 
-IUSE="+X +alsa cacao cjk +cups debug doc examples javascript +jbootstrap kerberos +nsplugin
-	+nss pax_kernel pulseaudio selinux +source systemtap test zero +webstart"
+IUSE="+alsa +awt cacao cjk +cups debug doc examples +gtk javascript
+	+jbootstrap kerberos +nsplugin +nss pax_kernel pulseaudio selinux
+	source systemtap test zero +webstart"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
@@ -45,8 +46,8 @@ ALSA_COMMON_DEP="
 CUPS_COMMON_DEP="
 	>=net-print/cups-1.2.12"
 X_COMMON_DEP="
-	>=media-libs/freetype-2.3.5:2=
-	>=x11-libs/gtk+-2.8:2=
+	>=media-libs/giflib-4.1.6:=
+	>=media-libs/libpng-1.2:0=
 	>=x11-libs/libX11-1.1.3
 	>=x11-libs/libXext-1.1.1
 	>=x11-libs/libXi-1.1.3
@@ -63,42 +64,37 @@ X_DEPEND="
 	x11-proto/xproto"
 
 COMMON_DEP="
-	>=media-libs/giflib-4.1.6:=
-	>=media-libs/libpng-1.2:0=
+	>=media-libs/freetype-2.3.5:2=
+	>=media-libs/lcms-2.5
 	>=sys-libs/zlib-1.2.3:=
 	virtual/jpeg:0=
-	>=media-libs/lcms-2.5
 	javascript? ( dev-java/rhino:1.6 )
 	kerberos? ( virtual/krb5 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
 	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11:= )
-	systemtap? ( >=dev-util/systemtap-1 )
-	!dev-java/icedtea-web:6"
+	systemtap? ( >=dev-util/systemtap-1 )"
 
 # media-fonts/lklug needs ppc ppc64 keywords
 RDEPEND="${COMMON_DEP}
 	!dev-java/icedtea6
-	X? (
-		${X_COMMON_DEP}
-		media-fonts/dejavu
-		cjk? (
-			media-fonts/arphicfonts
-			media-fonts/baekmuk-fonts
-			!ppc? ( !ppc64? ( media-fonts/lklug ) )
-			media-fonts/lohit-fonts
-			media-fonts/sazanami
-		)
-	)
+	!dev-java/icedtea-web:6
+	media-fonts/dejavu
 	alsa? ( ${ALSA_COMMON_DEP} )
+	awt? ( ${X_COMMON_DEP} )
+	cjk? (
+		media-fonts/arphicfonts
+		media-fonts/baekmuk-fonts
+		media-fonts/lklug
+		media-fonts/lohit-fonts
+		media-fonts/sazanami
+	)
 	cups? ( ${CUPS_COMMON_DEP} )
+	gtk? ( >=x11-libs/gtk+-2.8:2 )
 	selinux? ( sec-policy/selinux-java )"
 
 # Only ant-core-1.8.1 has fixed ant -diagnostics when xerces+xalan are not present.
 # ca-certificates, perl and openssl are used for the cacerts keystore generation
-# xext headers have two variants depending on version - bug #288855
-# !eclipse-ecj-3.7 - bug #392587
-# autoconf - as long as we use eautoreconf, version restrictions for bug #294918
-DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
+DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP} ${X_DEPEND}
 	|| (
 		>=dev-java/gcj-jdk-4.3
 		dev-java/icedtea-bin:6
@@ -112,9 +108,8 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	dev-lang/perl
 	>=dev-libs/libxslt-1.1.26
 	dev-libs/openssl
-	virtual/pkgconfig
 	sys-apps/lsb-release
-	${X_DEPEND}
+	virtual/pkgconfig
 	pax_kernel? ( sys-apps/elfix )"
 
 PDEPEND="webstart? ( dev-java/icedtea-web:0 )
@@ -235,13 +230,15 @@ src_configure() {
 		--with-abs-install-dir="${EPREFIX}/usr/$(get_libdir)/icedtea${SLOT}" \
 		--with-pkgversion="Gentoo package ${PF}" \
 		--disable-downloading --disable-Werror \
+		$(use_enable awt system-gif) \
+		$(use_enable awt system-png) \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable kerberos system-kerberos) \
 		$(use_enable nss) \
+		$(use_with pax_kernel pax "${EPREFIX}/usr/sbin/paxmark.sh") \
 		$(use_enable pulseaudio pulse-java) \
 		$(use_enable systemtap) \
-		$(use_with pax_kernel pax "${EPREFIX}/usr/sbin/paxmark.sh") \
 		${zero_config} ${cacao_config}
 }
 
@@ -272,9 +269,13 @@ src_install() {
 
 	cd openjdk.build/j2sdk-image || die
 
-	# Ensures HeadlessGraphicsEnvironment is used.
-	if ! use X; then
-		rm -r jre/lib/$(get_system_arch)/xawt || die
+	if ! use alsa; then
+		rm -v jre/lib/$(get_system_arch)/libjsoundalsa.* || die
+	fi
+
+	if ! use awt ; then
+		rm -vr jre/lib/$(get_system_arch)/{xawt,libsplashscreen.*} \
+		   {,jre/}bin/policytool bin/appletviewer || die
 	fi
 
 	# Don't hide classes
@@ -330,16 +331,7 @@ src_install() {
 	cp -vRP cacerts "${ddest}/jre/lib/security/" || die
 	chmod 644 "${ddest}/jre/lib/security/cacerts" || die
 
-	# Bug 390663
-	cp "${FILESDIR}"/fontconfig.Gentoo.properties.src "${T}"/fontconfig.Gentoo.properties || die
-	eprefixify "${T}"/fontconfig.Gentoo.properties
-	insinto "${dest}"/jre/lib
-	doins "${T}"/fontconfig.Gentoo.properties
-
 	set_java_env "${FILESDIR}/icedtea.env"
-	if ! use X || ! use alsa || ! use cups; then
-		java-vm_revdep-mask "${dest}"
-	fi
 	java-vm_sandbox-predict /proc/self/coredump_filter
 }
 

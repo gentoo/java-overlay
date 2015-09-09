@@ -2,18 +2,20 @@
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 <herd>java</herd>
+<herd>proxy-maintainers</herd>
 <maintainer>
   <email>gnu_andrew@member.fsf.org</email>
   <name>Andrew John Hughes</name>
   <description>Proxy Maintainer</description>
 </maintainer>
 <maintainer>
-  <email>caster@gentoo.org</email>
-  <name>Vlastimil Babka</name>
-  <description>Committer (CC me)</description>
+  <email>chewi@gentoo.org</email>
+  <name>James Le Cuirot</name>
+  <description>Committer</description>
 </maintainer>
 <longdescription>The IcedTea project provides a harness to build the source code from OpenJDK (http://openjdk.java.net) using Free Software build tools along with additional tools such as a browser plugin and Web Start support via NetX. </longdescription>
 <use>
+  <flag name="awt">Install non-headless AWT libraries, needed by some GUIs (used to be X flag)</flag>
   <flag name="cacao">Use the CACAO virtual machine rather than HotSpot.</flag>
   <flag name="infinality">Enable better font rendering using fontconfig.</flag>
   <flag name="jamvm">Use the JamVM virtual machine rather than HotSpot.</flag>
