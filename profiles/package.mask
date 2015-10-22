@@ -6,6 +6,12 @@
 # NOTE: Please add your entry at the top!
 #
 
+# Florian Schmaus <flo@geekplace.eu>
+# Masked because dependency dev-java/jakarta-jstl is also masked
+dev-java/jsfapi
+# Masked because dependency java-java/cos is also masked
+dev-java/stripes
+
 # Vlastimil Babka <caster@gentoo.org) (2 Feb 2010)
 # Instruction for migration from icedtea6 to new slotted icedtea:6
 # It is a bit tricky due to a blocker needed to prevent file collisions.
