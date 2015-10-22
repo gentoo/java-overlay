@@ -2,6 +2,12 @@
 # Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  22 Oct 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  icedtea-3.0.0_pre06.ebuild, icedtea-6.1.13.8-r1.ebuild, icedtea-6.9999.ebuild,
+  icedtea-7.2.6.1-r1.ebuild, icedtea-7.2.7.0_pre00.ebuild, metadata.xml:
+  dev-java/icedtea: Rename X/awt USE flag to headless to match upstream
+  terminology.
+
 *icedtea-6.1.13.8-r1 (22 Oct 2015)
 *icedtea-7.2.6.1-r1 (22 Oct 2015)
 

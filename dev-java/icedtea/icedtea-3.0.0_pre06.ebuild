@@ -62,7 +62,7 @@ EHG_REVISION="${ICEDTEA_PKG}${ICEDTEA_PRE}"
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 
-IUSE="+X +alsa cacao cjk +cups debug doc examples jamvm +jbootstrap +nsplugin
+IUSE="+alsa cacao cjk +cups debug doc examples headless jamvm +jbootstrap +nsplugin
 	+nss pax_kernel pulseaudio sctp selinux smartcard +source test zero +webstart"
 
 # Ideally the following were optional at build time.
@@ -108,7 +108,7 @@ COMMON_DEP="
 # cups is needed for X. #390945 #390975
 RDEPEND="${COMMON_DEP}
 	!dev-java/icedtea:0
-	X? (
+	!headless? (
 		${CUPS_COMMON_DEP}
 		${X_COMMON_DEP}
 		media-fonts/dejavu
@@ -323,7 +323,7 @@ src_install() {
 
 	# Ensures HeadlessGraphicsEnvironment is used.
 	# Hack; we should get IcedTea to support passing --disable-headful
-	if ! use X; then
+	if use headless ; then
 		rm -vf "${ddest}"/jre/lib/$(get_system_arch)/libawt_xawt.so || die
 	fi
 
@@ -361,7 +361,7 @@ src_install() {
 	chmod 644 "${ddest}/jre/lib/security/cacerts" || die
 
 	set_java_env "${FILESDIR}/icedtea.env"
-	if ! use X || ! use alsa || ! use cups; then
+	if use headless || ! use alsa || ! use cups; then
 		java-vm_revdep-mask "${dest}"
 	fi
 	java-vm_sandbox-predict /proc/self/coredump_filter

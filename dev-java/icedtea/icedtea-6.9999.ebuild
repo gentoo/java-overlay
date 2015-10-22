@@ -36,7 +36,7 @@ SLOT="6"
 KEYWORDS=""
 RESTRICT="test"
 
-IUSE="+alsa +awt cacao cjk +cups debug doc examples +gtk javascript
+IUSE="+alsa cacao cjk +cups debug doc examples +gtk headless javascript
 	+jbootstrap kerberos +nsplugin +nss pax_kernel pulseaudio selinux
 	source systemtap test zero +webstart"
 
@@ -80,7 +80,6 @@ RDEPEND="${COMMON_DEP}
 	!dev-java/icedtea-web:6
 	media-fonts/dejavu
 	alsa? ( ${ALSA_COMMON_DEP} )
-	awt? ( ${X_COMMON_DEP} )
 	cjk? (
 		media-fonts/arphicfonts
 		media-fonts/baekmuk-fonts
@@ -90,6 +89,7 @@ RDEPEND="${COMMON_DEP}
 	)
 	cups? ( ${CUPS_COMMON_DEP} )
 	gtk? ( >=x11-libs/gtk+-2.8:2 )
+	!headless? ( ${X_COMMON_DEP} )
 	selinux? ( sec-policy/selinux-java )"
 
 # Only ant-core-1.8.1 has fixed ant -diagnostics when xerces+xalan are not present.
@@ -230,8 +230,8 @@ src_configure() {
 		--with-abs-install-dir="${EPREFIX}/usr/$(get_libdir)/icedtea${SLOT}" \
 		--with-pkgversion="Gentoo package ${PF}" \
 		--disable-downloading --disable-Werror \
-		$(use_enable awt system-gif) \
-		$(use_enable awt system-png) \
+		$(use_enable !headless system-gif) \
+		$(use_enable !headless system-png) \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable kerberos system-kerberos) \
@@ -273,7 +273,7 @@ src_install() {
 		rm -v jre/lib/$(get_system_arch)/libjsoundalsa.* || die
 	fi
 
-	if ! use awt ; then
+	if use headless ; then
 		rm -vr jre/lib/$(get_system_arch)/{xawt,libsplashscreen.*} \
 		   {,jre/}bin/policytool bin/appletviewer || die
 	fi
