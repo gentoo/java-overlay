@@ -16,13 +16,13 @@ ICEDTEA_VER=$(get_version_component_range 2-4)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
-CORBA_TARBALL="2545636482d6.tar.bz2"
-JAXP_TARBALL="ffbe529eeac7.tar.bz2"
-JAXWS_TARBALL="b9776fab65b8.tar.bz2"
-JDK_TARBALL="61d3e001dee6.tar.bz2"
-LANGTOOLS_TARBALL="9c6e1de67d7d.tar.bz2"
-OPENJDK_TARBALL="39b2c4354d0a.tar.bz2"
-HOTSPOT_TARBALL="b19bc5aeaa09.tar.bz2"
+CORBA_TARBALL="a4d55c5cec23.tar.bz2"
+JAXP_TARBALL="f1202fb27695.tar.bz2"
+JAXWS_TARBALL="14c411b1183c.tar.bz2"
+JDK_TARBALL="db69ae53157a.tar.bz2"
+LANGTOOLS_TARBALL="73356b81c5c7.tar.bz2"
+OPENJDK_TARBALL="601ca7147b8c.tar.bz2"
+HOTSPOT_TARBALL="f40363c11191.tar.bz2"
 
 CACAO_TARBALL="cacao-c182f119eaad.tar.gz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
@@ -283,10 +283,6 @@ src_configure() {
 	fi
 
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
-
-	# https://bugs.gentoo.org/show_bug.cgi?id=561500
-	ln -s "${FILESDIR}/TryXShmAttach.patch" || die
-	export DISTRIBUTION_PATCHES="TryXShmAttach.patch"
 
 	econf ${config} \
 		--with-openjdk-src-zip="${DISTDIR}/${OPENJDK_GENTOO_TARBALL}" \
