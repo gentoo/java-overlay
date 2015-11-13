@@ -2,6 +2,10 @@
 # Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  13 Nov 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  icedtea-6.9999.ebuild:
+  dev-java/icedtea: Update 1.x live e-build following b37 release.
+
 *icedtea-6.1.13.9 (13 Nov 2015)
 
   13 Nov 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>

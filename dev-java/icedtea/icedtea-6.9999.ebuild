@@ -13,15 +13,15 @@ inherit autotools check-reqs java-pkg-2 java-vm-2 mercurial multiprocessing pax-
 
 ICEDTEA_PKG=${PN}$(replace_version_separator 1 -)
 ICEDTEA_BRANCH=$(get_version_component_range 1-3)
-OPENJDK_BUILD="35"
-OPENJDK_DATE="14_apr_2015"
+OPENJDK_BUILD="37"
+OPENJDK_DATE="11_nov_2015"
 OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.xz"
 # Download cacao and jamvm regardless for use with EXTRA_ECONF
 CACAO_TARBALL="68fe50ac34ec.tar.gz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
 
-CACAO_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-cacao-${CACAO_TARBALL}"
-JAMVM_GENTOO_TARBALL="icedtea-${ICEDTEA_BRANCH}-${JAMVM_TARBALL}"
+CACAO_GENTOO_TARBALL="icedtea-cacao-${CACAO_TARBALL}"
+JAMVM_GENTOO_TARBALL="icedtea-${JAMVM_TARBALL}"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
