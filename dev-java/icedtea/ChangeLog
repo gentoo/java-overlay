@@ -2,6 +2,13 @@
 # Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-6.1.13.9 (13 Nov 2015)
+
+  13 Nov 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +icedtea-6.1.13.9.ebuild, -files/6-cacao-dynmaxheap-Makefile.patch,
+  -files/6-cacao-dynmaxheap.patch, -icedtea-6.1.13.8-r1.ebuild:
+  dev-java/icedtea: Update to 1.13.9 (http://bitly.com/it11309)
+
 *icedtea-7.2.6.2 (23 Oct 2015)
 
   23 Oct 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>

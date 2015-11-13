@@ -13,8 +13,8 @@ inherit check-reqs java-pkg-2 java-vm-2 multiprocessing pax-utils versionator vi
 
 ICEDTEA_PKG=${PN}$(replace_version_separator 1 -)
 ICEDTEA_BRANCH=$(get_version_component_range 1-3)
-OPENJDK_BUILD="36"
-OPENJDK_DATE="22_jul_2015"
+OPENJDK_BUILD="37"
+OPENJDK_DATE="11_nov_2015"
 OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.xz"
 # Download cacao and jamvm regardless for use with EXTRA_ECONF
 CACAO_TARBALL="68fe50ac34ec.tar.gz"
@@ -152,10 +152,6 @@ src_unpack() {
 }
 
 java_prepare() {
-	# CACAO has a fixed default max heap of 128MB. This sucks.
-	cp "${FILESDIR}"/${SLOT}-cacao-dynmaxheap.patch patches/cacao/dynmaxheap.patch || die
-	epatch "${FILESDIR}"/${SLOT}-cacao-dynmaxheap-Makefile.patch
-
 	# For bootstrap builds as the sandbox control file might not yet exist.
 	addpredict /proc/self/coredump_filter
 
