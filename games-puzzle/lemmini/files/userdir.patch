@@ -1,5 +1,7 @@
---- src/Game/Core.java.orig	2012-01-25 10:57:31.158576723 +0000
-+++ src/Game/Core.java	2012-01-25 12:11:01.020264407 +0000
+Index: Game/Core.java
+===================================================================
+--- Game/Core.java	(revision 53)
++++ Game/Core.java	(working copy)
 @@ -4,6 +4,7 @@
  import java.awt.MediaTracker;
  import java.awt.Toolkit;
@@ -8,7 +10,7 @@
  import java.net.URL;
  import java.net.URLDecoder;
  import java.util.ArrayList;
-@@ -74,32 +75,9 @@
+@@ -79,32 +80,9 @@
  	 * @throws LemmException
  	 */
  	public static void init(final JFrame frame, final boolean isWebstartApp) throws LemmException  {
@@ -44,9 +46,9 @@
  		programPropsFileStr += INI_NAME;
  		// read main ini file
  		programProps = new Props();
-@@ -111,7 +89,7 @@
- 				throw new LemmException("User abort");
- 		}
+@@ -118,7 +96,7 @@
+ 
+ 		scale = Core.programProps.get("scale",1.0);
  
 -		resourcePath = programProps.get("resourcePath", "");
 +		resourcePath = programProps.get("resourcePath", userDirStr);

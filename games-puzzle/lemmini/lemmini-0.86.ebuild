@@ -2,12 +2,13 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI="3"
+EAPI="5"
+
 inherit eutils games java-pkg-2 java-pkg-simple
 
 DESCRIPTION="Java port of Lemmings, requires Lemmings for Windows"
 HOMEPAGE="http://lemmini.de"
-SRC_URI="http://dev.gentooexperimental.org/~chewi/distfiles/${P}.tar.xz"
+SRC_URI="http://dev.gentoo.org/~chewi/distfiles/${P}.tar.xz"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
@@ -16,10 +17,10 @@ IUSE=""
 CDEPEND="dev-java/jnlp-api:0"
 
 DEPEND="${CDEPEND}
-	>=virtual/jdk-1.5"
+	>=virtual/jdk-1.6"
 
 RDEPEND="${CDEPEND}
-	>=virtual/jre-1.5"
+	>=virtual/jre-1.6"
 
 JAVA_GENTOO_CLASSPATH="jnlp-api"
 JAVA_ENCODING="ISO-8859-1"
@@ -37,14 +38,14 @@ java_prepare() {
 
 src_compile() {
 	java-pkg-simple_src_compile
-	jar ufe "${PN}.jar" Lemmini -C bin_copy . || die
+	java-pkg_addres "${PN}.jar" .
 }
 
 src_install() {
 	java-pkg_dojar "${PN}.jar"
 	java-pkg_dolauncher "${PN}" -into "${GAMES_PREFIX}" --main Lemmini
 
-	newicon bin_copy/icon_32.png "${PN}.png" || die
+	newicon icon_32.png "${PN}.png"
 	make_desktop_entry "${PN}" "Lemmini"
 
 	prepgamesdirs
