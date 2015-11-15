@@ -60,11 +60,11 @@ LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 M
 KEYWORDS=""
 RESTRICT="test"
 
-IUSE="+alsa cacao cjk +cups debug doc examples +gtk headless infinality
+IUSE="+alsa cacao cjk +cups debug doc examples +gtk headless-awt infinality
 	jamvm javascript +jbootstrap kerberos +nsplugin nss pax_kernel
 	pulseaudio sctp selinux smartcard source +sunec test zero +webstart"
 
-REQUIRED_USE="gtk? ( !headless )"
+REQUIRED_USE="gtk? ( !headless-awt )"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
@@ -126,7 +126,7 @@ RDEPEND="${COMMON_DEP}
 		media-fonts/sazanami
 	)
 	cups? ( ${CUPS_COMMON_DEP} )
-	!headless? ( ${X_COMMON_DEP} )
+	!headless-awt? ( ${X_COMMON_DEP} )
 	selinux? ( sec-policy/selinux-java )"
 
 # Only ant-core-1.8.1 has fixed ant -diagnostics when xerces+xalan are not present.
@@ -301,8 +301,8 @@ src_configure() {
 		--disable-hotspot-tests --disable-jdk-tests \
 		--enable-system-lcms --enable-system-jpeg \
 		--enable-system-zlib \
-		$(use_enable !headless system-gif) \
-		$(use_enable !headless system-png) \
+		$(use_enable !headless-awt system-gif) \
+		$(use_enable !headless-awt system-png) \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
 		$(use_enable gtk system-gtk) \
@@ -343,7 +343,7 @@ src_install() {
 		rm -v "${ddest}"/jre/lib/$(get_system_arch)/libjsoundalsa.* || die
 	fi
 
-	if use headless; then
+	if use headless-awt; then
 		rm -vr "${ddest}"/jre/lib/$(get_system_arch)/{xawt,libsplashscreen.*,libjavagtk.*} \
 		   "${ddest}"/{,jre/}bin/policytool "${ddest}"/bin/appletviewer || die
 	fi
