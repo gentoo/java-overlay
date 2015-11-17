@@ -2,6 +2,11 @@
 # Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  17 Nov 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  icedtea-3.0.0_pre06.ebuild, icedtea-6.1.13.9.ebuild, icedtea-6.9999.ebuild,
+  icedtea-7.2.6.3.ebuild, icedtea-7.2.7.0_pre00.ebuild, metadata.xml:
+  dev-java/icedtea: Bring in headless USE flag renaming from main tree.
+
 *icedtea-7.2.6.3 (17 Nov 2015)
 
   17 Nov 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
