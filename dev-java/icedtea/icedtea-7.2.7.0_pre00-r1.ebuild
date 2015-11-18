@@ -10,19 +10,19 @@
 EAPI="5"
 SLOT="7"
 
-inherit check-reqs gnome2-utils java-pkg-2 java-vm-2 multiprocessing pax-utils prefix versionator virtualx
+inherit autotools check-reqs java-pkg-2 java-vm-2 mercurial multiprocessing pax-utils prefix versionator virtualx
 
 ICEDTEA_VER=$(get_version_component_range 2-4)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
-CORBA_TARBALL="9a3ca529125a.tar.bz2"
-JAXP_TARBALL="f7bf82fcbd09.tar.bz2"
-JAXWS_TARBALL="39ef53b9c403.tar.bz2"
-JDK_TARBALL="5215185a1d57.tar.bz2"
-LANGTOOLS_TARBALL="91fdb0c83e50.tar.bz2"
-OPENJDK_TARBALL="f0e7f22f09ef.tar.bz2"
-HOTSPOT_TARBALL="c3cde6774003.tar.bz2"
+CORBA_TARBALL="e3445769412d.tar.bz2"
+JAXP_TARBALL="e3b08dc13807.tar.bz2"
+JAXWS_TARBALL="299588405837.tar.bz2"
+JDK_TARBALL="2db5e90a399b.tar.bz2"
+LANGTOOLS_TARBALL="bc95d2472055.tar.bz2"
+OPENJDK_TARBALL="dbfa75121aca.tar.bz2"
+HOTSPOT_TARBALL="94f15794d5e7.tar.bz2"
 
 CACAO_TARBALL="cacao-c182f119eaad.tar.gz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
@@ -43,9 +43,7 @@ ICEDTEA_URL="${DROP_URL}/icedtea${SLOT}/${ICEDTEA_VER}"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
-SRC_PKG="${ICEDTEA_PKG}.tar.xz"
 SRC_URI="
-	http://icedtea.classpath.org/download/source/${SRC_PKG}
 	${ICEDTEA_URL}/openjdk.tar.bz2 -> ${OPENJDK_GENTOO_TARBALL}
 	${ICEDTEA_URL}/corba.tar.bz2 -> ${CORBA_GENTOO_TARBALL}
 	${ICEDTEA_URL}/jaxp.tar.bz2 -> ${JAXP_GENTOO_TARBALL}
@@ -55,9 +53,11 @@ SRC_URI="
 	${ICEDTEA_URL}/langtools.tar.bz2 -> ${LANGTOOLS_GENTOO_TARBALL}
 	${DROP_URL}/cacao/${CACAO_TARBALL} -> ${CACAO_GENTOO_TARBALL}
 	${DROP_URL}/jamvm/${JAMVM_TARBALL} -> ${JAMVM_GENTOO_TARBALL}"
+EHG_REPO_URI="http://icedtea.classpath.org/hg/icedtea7"
+EHG_REVISION="${ICEDTEA_PKG}${ICEDTEA_PRE}"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
-KEYWORDS="~amd64"
+KEYWORDS=""
 RESTRICT="test"
 
 IUSE="+alsa cacao cjk +cups debug doc examples +gtk headless-awt infinality
@@ -189,20 +189,17 @@ pkg_setup() {
 }
 
 src_unpack() {
-	unpack ${SRC_PKG}
+	mercurial_src_unpack
 }
 
 java_prepare() {
-	if ! use cups; then
-		# CUPS is always needed at build time but you can at least make it dlopen.
-		sed -i 's/SYSTEM_CUPS="true"/SYSTEM_CUPS="false"/g' Makefile.in || die
-	fi
-
 	# For bootstrap builds as the sandbox control file might not yet exist.
 	addpredict /proc/self/coredump_filter
 
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
+
+	eautoreconf
 }
 
 src_configure() {
@@ -368,6 +365,7 @@ src_install() {
 		dosym /usr/libexec/icedtea-web/javaws ${dest}/bin/javaws
 		dosym /usr/libexec/icedtea-web/javaws ${dest}/jre/bin/javaws
 	fi
+	dosym /usr/share/doc/${PF} /usr/share/doc/${PN}${SLOT}
 
 	# Fix the permissions.
 	find "${ddest}" \! -type l \( -perm /111 -exec chmod 755 {} \; -o -exec chmod 644 {} \; \) || die
@@ -382,6 +380,13 @@ src_install() {
 	./generate-cacerts.pl "${ddest}/bin/keytool" all.crt || die
 	cp -vRP cacerts "${ddest}/jre/lib/security/" || die
 	chmod 644 "${ddest}/jre/lib/security/cacerts" || die
+
+	# OpenJDK7 should be able to use fontconfig instead, but wont hurt to
+	# install it anyway. Bug 390663
+	cp "${FILESDIR}"/fontconfig.Gentoo.properties.src "${T}"/fontconfig.Gentoo.properties || die
+	eprefixify "${T}"/fontconfig.Gentoo.properties
+	insinto "${dest}"/jre/lib
+	doins "${T}"/fontconfig.Gentoo.properties
 
 	set_java_env "${FILESDIR}/icedtea.env"
 	java-vm_sandbox-predict /proc/self/coredump_filter

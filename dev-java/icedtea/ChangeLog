@@ -2,6 +2,14 @@
 # Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.6.3-r1 (18 Nov 2015)
+*icedtea-7.2.7.0_pre00-r1 (18 Nov 2015)
+
+  18 Nov 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +icedtea-7.2.6.3-r1.ebuild, +icedtea-7.2.7.0_pre00-r1.ebuild,
+  -icedtea-7.2.6.3.ebuild, -icedtea-7.2.7.0_pre00.ebuild:
+  dev-java/icedtea: Restore documentation symlink in IcedTea 2.x ebuilds
+
   17 Nov 2015; Andrew John Hughes <gnu_andrew@member.fsf.org>
   icedtea-3.0.0_pre06.ebuild, icedtea-6.1.13.9.ebuild, icedtea-6.9999.ebuild,
   icedtea-7.2.6.3.ebuild, icedtea-7.2.7.0_pre00.ebuild, metadata.xml:
