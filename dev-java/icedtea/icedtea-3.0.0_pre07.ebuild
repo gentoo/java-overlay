@@ -1,4 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
@@ -148,11 +148,9 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP}
 	${X_DEPEND}
 	pax_kernel? ( sys-apps/elfix )"
 
-PDEPEND="!ppc? ( !ppc64? ( !x86? (
-	webstart? ( dev-java/icedtea-web:0[icedtea8] )
-	nsplugin? ( dev-java/icedtea-web:0[icedtea8,nsplugin] ) )
-	pulseaudio? ( dev-java/icedtea-sound )
-) )"
+PDEPEND="webstart? ( >=dev-java/icedtea-web-1.6.1:0 )
+	nsplugin? ( >=dev-java/icedtea-web-1.6.1:0[nsplugin] )
+	pulseaudio? ( dev-java/icedtea-sound )"
 
 S="${WORKDIR}"/${ICEDTEA_PKG}
 
