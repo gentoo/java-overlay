@@ -6,40 +6,6 @@
 # NOTE: Please add your entry at the top!
 #
 
-# Florian Schmaus <flo@geekplace.eu>
-# Masked because dependency dev-java/jakarta-jstl is also masked
-dev-java/jsfapi
-# Masked because dependency java-java/cos is also masked
-dev-java/stripes
-
-# Vlastimil Babka <caster@gentoo.org) (2 Feb 2010)
-# Instruction for migration from icedtea6 to new slotted icedtea:6
-# It is a bit tricky due to a blocker needed to prevent file collisions.
-# 1) emerge --deselect dev-java/icedtea6
-# If you have icedtea6-bin or gcj-jdk then the following will just switch icedtea6 to icedtea:6
-# 2a) emerge -av dev-java/icedtea:6
-# If you want to rebuild icedtea:6 using just icedtea6, first create a binpkg, ignoring missing deps
-# 2b) emerge -av --buildpkgonly --nodeps dev-java/icedtea:6
-# 3)  emerge -av --unmerge dev-java/icedtea6
-# 4)  emerge -av --usepkgonly dev-java/icedtea:6
-dev-java/icedtea6
-
 # Serkan Kaba <serkan@gentoo.org> (12 May 2009)
 # Mask date releases to provide a downgrade path
 >=dev-lang/clojure-20080916
-
-#William L. Thomson Jr. wltjr@gentoo.org (8 Mar 2007)
-# Masked due to package being incomplete and broken. Not
-# all deps are packaged, last on run into seems to be a
-# jar from Jetty which is out of date and lacks maintainer
-dev-java/htmlunit
-
-# kiorky kiorky@cryptelium.net
-# just backported stuff and began working on it, don't work yet
-=www-servers/jboss-4.0.5-r1
-
-# kiorky kiorky@cryptelium.net
-# This stuff is old and unusable, use jboss-bin in the mean-time
-# Only masking >=4.0 so it doesn't effect the official tree.
->=www-servers/jboss-4.0
-
