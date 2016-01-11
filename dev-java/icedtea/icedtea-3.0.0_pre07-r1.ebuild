@@ -1,4 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
@@ -305,7 +305,7 @@ src_compile() {
 	# With ant >=1.8.2 all required tasks are part of ant-core
 	export ANT_TASKS="none"
 
-	emake LDFLAGS=
+	emake
 }
 
 src_test() {
