@@ -193,6 +193,11 @@ src_unpack() {
 }
 
 java_prepare() {
+	if ! use cups; then
+		# CUPS is always needed at build time but you can at least make it dlopen.
+		sed -i 's/SYSTEM_CUPS="true"/SYSTEM_CUPS="false"/g' Makefile.in || die
+	fi
+
 	# For bootstrap builds as the sandbox control file might not yet exist.
 	addpredict /proc/self/coredump_filter
 
@@ -380,13 +385,6 @@ src_install() {
 	./generate-cacerts.pl "${ddest}/bin/keytool" all.crt || die
 	cp -vRP cacerts "${ddest}/jre/lib/security/" || die
 	chmod 644 "${ddest}/jre/lib/security/cacerts" || die
-
-	# OpenJDK7 should be able to use fontconfig instead, but wont hurt to
-	# install it anyway. Bug 390663
-	cp "${FILESDIR}"/fontconfig.Gentoo.properties.src "${T}"/fontconfig.Gentoo.properties || die
-	eprefixify "${T}"/fontconfig.Gentoo.properties
-	insinto "${dest}"/jre/lib
-	doins "${T}"/fontconfig.Gentoo.properties
 
 	set_java_env "${FILESDIR}/icedtea.env"
 	java-vm_sandbox-predict /proc/self/coredump_filter
