@@ -1,4 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
@@ -36,9 +36,9 @@ SLOT="6"
 KEYWORDS=""
 RESTRICT="test"
 
-IUSE="+alsa cacao cjk +cups debug doc examples +gtk headless-awt javascript
-	+jbootstrap kerberos +nsplugin +nss pax_kernel pulseaudio selinux
-	source systemtap test zero +webstart"
+IUSE="+alsa cacao cjk +cups debug doc examples +gtk headless-awt
+	javascript +jbootstrap kerberos nsplugin +nss pax_kernel pulseaudio
+	selinux source systemtap test webstart zero"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="

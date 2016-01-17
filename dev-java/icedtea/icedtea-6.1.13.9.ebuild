@@ -37,9 +37,9 @@ SLOT="6"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 RESTRICT="test"
 
-IUSE="+alsa cacao cjk +cups debug doc examples +gtk headless-awt javascript
-	+jbootstrap kerberos +nsplugin +nss pax_kernel pulseaudio selinux
-	source systemtap test zero +webstart"
+IUSE="+alsa cacao cjk +cups debug doc examples +gtk headless-awt
+	javascript +jbootstrap kerberos nsplugin +nss pax_kernel pulseaudio
+	selinux source systemtap test webstart zero"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
