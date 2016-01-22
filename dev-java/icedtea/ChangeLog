@@ -2,6 +2,15 @@
 # Copyright 1999-2016 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.6.4 (22 Jan 2016)
+
+  22 Jan 2016; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +icedtea-7.2.6.4.ebuild, -icedtea-7.2.6.3-r1.ebuild,
+  icedtea-7.2.7.0_pre00-r1.ebuild:
+  dev-java/icedtea: Bump to 2.6.4 (http://bitly.com/it20604). Remove CUPS
+  Makefile hack; will be replaced by
+  http://icedtea.classpath.org/bugzilla/show_bug.cgi?id=2803
+
 *icedtea-3.0.0_pre07-r1 (11 Jan 2016)
 
   11 Jan 2016; Andrew John Hughes <gnu_andrew@member.fsf.org>

@@ -193,11 +193,6 @@ src_unpack() {
 }
 
 java_prepare() {
-	if ! use cups; then
-		# CUPS is always needed at build time but you can at least make it dlopen.
-		sed -i 's/SYSTEM_CUPS="true"/SYSTEM_CUPS="false"/g' Makefile.in || die
-	fi
-
 	# For bootstrap builds as the sandbox control file might not yet exist.
 	addpredict /proc/self/coredump_filter
 
