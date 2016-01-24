@@ -10,7 +10,7 @@
 EAPI="5"
 SLOT="7"
 
-inherit autotools check-reqs java-pkg-2 java-vm-2 mercurial multiprocessing pax-utils prefix versionator virtualx
+inherit autotools check-reqs gnome2-utils java-pkg-2 java-vm-2 mercurial multiprocessing pax-utils prefix versionator virtualx
 
 ICEDTEA_VER=$(get_version_component_range 2-4)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
