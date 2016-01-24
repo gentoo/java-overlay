@@ -62,8 +62,11 @@ EHG_REVISION="${ICEDTEA_PKG}${ICEDTEA_PRE}"
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 KEYWORDS="~amd64 ~ppc64 ~x86"
 
-IUSE="+alsa cacao cjk +cups debug doc examples headless-awt jamvm +jbootstrap nsplugin
-	+nss pax_kernel pulseaudio sctp selinux smartcard +source test +webstart zero"
+IUSE="+alsa cacao cjk +cups debug doc examples +gtk headless-awt jamvm
+	+jbootstrap nsplugin +nss pax_kernel pulseaudio sctp selinux
+	smartcard +source test +webstart zero"
+
+REQUIRED_USE="gtk? ( !headless-awt )"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
@@ -71,19 +74,14 @@ ALSA_COMMON_DEP="
 CUPS_COMMON_DEP="
 	>=net-print/cups-1.2.12"
 X_COMMON_DEP="
-	>=dev-libs/atk-1.30.0
 	>=dev-libs/glib-2.26:2
 	media-libs/fontconfig
 	>=media-libs/freetype-2.3.5
-	>=x11-libs/cairo-1.8.8:=
-	x11-libs/gdk-pixbuf:2
-	>=x11-libs/gtk+-2.8:2=
 	>=x11-libs/libX11-1.1.3
 	>=x11-libs/libXext-1.1.1
 	>=x11-libs/libXi-1.1.3
 	>=x11-libs/libXrender-0.9.4
-	>=x11-libs/libXtst-1.0.3
-	>=x11-libs/pango-1.24.5"
+	>=x11-libs/libXtst-1.0.3"
 X_DEPEND="
 	>=x11-libs/libXau-1.0.3
 	>=x11-libs/libXdmcp-1.0.2
@@ -122,6 +120,13 @@ RDEPEND="${COMMON_DEP}
 	)
 	alsa? ( ${ALSA_COMMON_DEP} )
 	cups? ( ${CUPS_COMMON_DEP} )
+	gtk? (
+		>=dev-libs/atk-1.30.0
+		>=x11-libs/cairo-1.8.8:=
+		x11-libs/gdk-pixbuf:2
+		>=x11-libs/gtk+-2.8:2=
+		>=x11-libs/pango-1.24.5
+	)
 	selinux? ( sec-policy/selinux-java )"
 
 # Only ant-core-1.8.1 has fixed ant -diagnostics when xerces+xalan are not present.
