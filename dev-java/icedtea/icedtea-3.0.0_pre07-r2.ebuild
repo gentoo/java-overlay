@@ -284,7 +284,7 @@ src_configure() {
 		--disable-downloading --disable-Werror \
 		--disable-hotspot-tests --disable-jdk-tests \
 		--enable-system-lcms --enable-system-jpeg \
-		--enable-system-zlib --disable-pulseaudio \
+		--enable-system-zlib --disable-pulse-java \
 		$(use_enable !headless-awt system-gif) \
 		$(use_enable !headless-awt system-png) \
 		$(use_enable !debug optimizations) \
