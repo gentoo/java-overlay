@@ -129,7 +129,6 @@ RDEPEND="${COMMON_DEP}
 	)
 	selinux? ( sec-policy/selinux-java )"
 
-# Only ant-core-1.8.1 has fixed ant -diagnostics when xerces+xalan are not present.
 # ca-certificates, perl and openssl are used for the cacerts keystore generation
 # xext headers have two variants depending on version - bug #288855
 # autoconf - as long as we use eautoreconf, version restrictions for bug #294918
@@ -302,12 +301,6 @@ src_configure() {
 }
 
 src_compile() {
-	# Would use GENTOO_VM otherwise.
-	export ANT_RESPECT_JAVA_HOME=TRUE
-
-	# With ant >=1.8.2 all required tasks are part of ant-core
-	export ANT_TASKS="none"
-
 	emake
 }
 
