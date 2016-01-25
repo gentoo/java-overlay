@@ -8,6 +8,7 @@
 # *********************************************************
 
 EAPI="5"
+SLOT="6"
 
 inherit autotools check-reqs java-pkg-2 java-vm-2 mercurial multiprocessing pax-utils prefix versionator virtualx
 
@@ -17,28 +18,31 @@ OPENJDK_BUILD="38"
 OPENJDK_DATE="20_jan_2016"
 OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.xz"
 # Download cacao and jamvm regardless for use with EXTRA_ECONF
-CACAO_TARBALL="68fe50ac34ec.tar.gz"
+CACAO_TARBALL="cacao-68fe50ac34ec.tar.gz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
 
-CACAO_GENTOO_TARBALL="icedtea-cacao-${CACAO_TARBALL}"
+CACAO_GENTOO_TARBALL="icedtea-${CACAO_TARBALL}"
 JAMVM_GENTOO_TARBALL="icedtea-${JAMVM_TARBALL}"
+
+DROP_URL="http://icedtea.classpath.org/download/drops"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
 SRC_URI="
 	https://java.net/downloads/openjdk6/${OPENJDK_TARBALL}
-	http://icedtea.classpath.org/download/drops/cacao/${CACAO_TARBALL} -> ${CACAO_GENTOO_TARBALL}
-	http://icedtea.classpath.org/download/drops/jamvm/${JAMVM_TARBALL} -> ${JAMVM_GENTOO_TARBALL}"
+	${DROP_URL}/cacao/${CACAO_TARBALL} -> ${CACAO_GENTOO_TARBALL}
+	${DROP_URL}/jamvm/${JAMVM_TARBALL} -> ${JAMVM_GENTOO_TARBALL}"
 EHG_REPO_URI="http://icedtea.classpath.org/hg/icedtea6"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
-SLOT="6"
 KEYWORDS=""
 RESTRICT="test"
 
 IUSE="+alsa cacao cjk +cups debug doc examples +gtk headless-awt
-	javascript +jbootstrap kerberos nsplugin +nss pax_kernel pulseaudio
-	selinux source systemtap test +webstart zero"
+	jamvm javascript +jbootstrap kerberos nsplugin +nss pax_kernel
+	pulseaudio selinux smartcard source systemtap test +webstart zero"
+
+REQUIRED_USE="gtk? ( !headless-awt )"
 
 # Ideally the following were optional at build time.
 ALSA_COMMON_DEP="
@@ -71,10 +75,8 @@ COMMON_DEP="
 	javascript? ( dev-java/rhino:1.6 )
 	kerberos? ( virtual/krb5 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
-	pulseaudio?  ( >=media-sound/pulseaudio-0.9.11:= )
 	systemtap? ( >=dev-util/systemtap-1 )"
 
-# media-fonts/lklug needs ppc ppc64 keywords
 RDEPEND="${COMMON_DEP}
 	!dev-java/icedtea6
 	!dev-java/icedtea-web:6
@@ -90,7 +92,8 @@ RDEPEND="${COMMON_DEP}
 	cups? ( ${CUPS_COMMON_DEP} )
 	gtk? ( >=x11-libs/gtk+-2.8:2 )
 	!headless-awt? ( ${X_COMMON_DEP} )
-	selinux? ( sec-policy/selinux-java )"
+	selinux? ( sec-policy/selinux-java )
+	smartcard? ( sys-apps/pcsc-lite )"
 
 # Only ant-core-1.8.1 has fixed ant -diagnostics when xerces+xalan are not present.
 # ca-certificates, perl and openssl are used for the cacerts keystore generation
@@ -113,7 +116,8 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP} ${X_
 	pax_kernel? ( sys-apps/elfix )"
 
 PDEPEND="webstart? ( dev-java/icedtea-web:0 )
-	nsplugin? ( dev-java/icedtea-web:0[nsplugin] )"
+	nsplugin? ( dev-java/icedtea-web:0[nsplugin] )
+	pulseaudio? ( dev-java/icedtea-sound )"
 
 S="${WORKDIR}"/${ICEDTEA_PKG}
 
@@ -161,7 +165,7 @@ java_prepare() {
 }
 
 src_configure() {
-	local cacao_config config hotspot_port use_cacao use_zero zero_config
+	local cacao_config config hotspot_port jamvm_config use_cacao use_jamvm use_zero zero_config
 	local vm=$(java-pkg_get-current-vm)
 
 	# gcj-jdk ensures ecj is present.
@@ -175,6 +179,11 @@ src_configure() {
 	# Use Zero if requested
 	if use zero; then
 		use_zero="yes"
+	fi
+
+	# Use JamVM if requested
+	if use jamvm; then
+		use_jamvm="yes"
 	fi
 
 	# Use CACAO if requested
@@ -198,6 +207,15 @@ src_configure() {
 		fi
 	fi
 
+	# Turn on JamVM if needed (non-HS archs) or requested
+	if test "x${use_jamvm}" = "xyes"; then
+		if test "x${hotspot_port}" = "xyes"; then
+			ewarn 'Enabling JamVM on an architecture with HotSpot support; issues may result.'
+			ewarn 'If so, please rebuild with USE="-jamvm"'
+		fi
+		jamvm_config="--enable-jamvm"
+	fi
+
 	# Turn on CACAO if needed (non-HS archs) or requested
 	if test "x${use_cacao}" = "xyes"; then
 		if test "x${hotspot_port}" = "xyes"; then
@@ -209,6 +227,9 @@ src_configure() {
 
 	# Turn on Zero if needed (non-HS/CACAO archs) or requested
 	if test "x${use_zero}" = "xyes"; then
+		if test "x${hotspot_port}" = "xyes"; then
+			ewarn 'Enabling Zero on an architecture with HotSpot support; performance will be significantly reduced.'
+		fi
 		zero_config="--enable-zero"
 	fi
 
@@ -228,8 +249,10 @@ src_configure() {
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_GENTOO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir="${EPREFIX}/usr/$(get_libdir)/icedtea${SLOT}" \
-		--with-pkgversion="Gentoo package ${PF}" \
-		--disable-downloading --disable-Werror \
+		--with-pkgversion="Gentoo ${PF}" \
+		--disable-downloading --disable-Werror --disable-jdk-tests \
+		--enable-system-lcms --enable-system-jpeg \
+		--enable-system-zlib --disable-pulse-java \
 		$(use_enable !headless-awt system-gif) \
 		$(use_enable !headless-awt system-png) \
 		$(use_enable !debug optimizations) \
@@ -237,9 +260,8 @@ src_configure() {
 		$(use_enable kerberos system-kerberos) \
 		$(use_enable nss) \
 		$(use_with pax_kernel pax "${EPREFIX}/usr/sbin/paxmark.sh") \
-		$(use_enable pulseaudio pulse-java) \
 		$(use_enable systemtap) \
-		${zero_config} ${cacao_config}
+		${zero_config} ${cacao_config} ${jamvm_config}
 }
 
 src_compile() {
@@ -265,7 +287,6 @@ src_install() {
 	dodir "${dest}"
 
 	dodoc README NEWS AUTHORS
-	dosym /usr/share/doc/${PF} /usr/share/doc/${PN}${SLOT}
 
 	cd openjdk.build/j2sdk-image || die
 
@@ -313,6 +334,7 @@ src_install() {
 		dosym /usr/libexec/icedtea-web/javaws ${dest}/bin/javaws
 		dosym /usr/libexec/icedtea-web/javaws ${dest}/jre/bin/javaws
 	fi
+	dosym /usr/share/doc/${PF} /usr/share/doc/${PN}${SLOT}
 
 	# Fix the permissions.
 	find "${ddest}" \! -type l \( -perm /111 -exec chmod 755 {} \; -o -exec chmod 644 {} \; \) || die
