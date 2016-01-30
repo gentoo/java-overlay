@@ -13,17 +13,17 @@ SLOT="8"
 inherit autotools check-reqs gnome2-utils java-pkg-2 java-vm-2 mercurial multiprocessing pax-utils prefix versionator virtualx
 
 ICEDTEA_VER=$(get_version_component_range 1-3)
-ICEDTEA_BRANCH=3.0
+ICEDTEA_BRANCH=$(get_version_component_range 1-2)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
-CORBA_TARBALL="7418bb690047.tar.xz"
-JAXP_TARBALL="c08ba71fef66.tar.xz"
-JAXWS_TARBALL="2012603e0e90.tar.xz"
-JDK_TARBALL="c4b25140f059.tar.xz"
-LANGTOOLS_TARBALL="3c76eafe1b70.tar.xz"
-OPENJDK_TARBALL="4b05cb9c5a4c.tar.xz"
-NASHORN_TARBALL="fd478ce27023.tar.xz"
-HOTSPOT_TARBALL="ddebea156752.tar.xz"
+CORBA_TARBALL="ebc2780ebeb3.tar.xz"
+JAXP_TARBALL="ac52a8eed353.tar.xz"
+JAXWS_TARBALL="26a1fdce80b7.tar.xz"
+JDK_TARBALL="809d98eeda49.tar.xz"
+LANGTOOLS_TARBALL="0d3479e0bac6.tar.xz"
+OPENJDK_TARBALL="f0635543beb3.tar.xz"
+NASHORN_TARBALL="7babac6e7ecf.tar.xz"
+HOTSPOT_TARBALL="c313c4782bb3.tar.xz"
 
 CACAO_TARBALL="cacao-c182f119eaad.tar.xz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
@@ -60,12 +60,11 @@ EHG_REPO_URI="http://icedtea.classpath.org/hg/icedtea"
 EHG_REVISION="${ICEDTEA_PKG}${ICEDTEA_PRE}"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
-KEYWORDS="~amd64 ~ppc64 ~x86"
-RESTRICT="test"
+KEYWORDS="~amd64"
 
-IUSE="+alsa cacao cjk +cups debug doc examples +gtk headless-awt jamvm
-	+jbootstrap nsplugin +nss pax_kernel pulseaudio sctp selinux
-	smartcard +source test +webstart zero"
+IUSE="+alsa cacao cjk +cups debug doc examples +gtk headless-awt
+	jamvm +jbootstrap nsplugin pax_kernel
+	pulseaudio sctp selinux smartcard +source +sunec test +webstart zero"
 
 REQUIRED_USE="gtk? ( !headless-awt )"
 
@@ -91,6 +90,8 @@ X_DEPEND="
 	x11-proto/xineramaproto
 	x11-proto/xproto"
 
+# The Javascript requirement is obsolete; OpenJDK 8+ has Nashorn
+# Kerberos will be added following PR1537
 COMMON_DEP="
 	>=dev-libs/glib-2.26:2
 	>=dev-util/systemtap-1
@@ -99,10 +100,12 @@ COMMON_DEP="
 	>=media-libs/lcms-2.5
 	>=sys-libs/zlib-1.2.3:=
 	virtual/jpeg:0=
-	nss? ( >=dev-libs/nss-3.12.5-r1 )
 	sctp? ( net-misc/lksctp-tools )
-	smartcard? ( sys-apps/pcsc-lite )"
+	smartcard? ( sys-apps/pcsc-lite )
+	sunec? ( >=dev-libs/nss-3.16.1-r1 )"
 
+# Gtk+ will move to COMMON_DEP in time; PR1982
+# gsettings-desktop-schemas will be needed for native proxy support; PR1976
 RDEPEND="${COMMON_DEP}
 	!dev-java/icedtea:0
 	!dev-java/icedtea-web:7
@@ -127,6 +130,11 @@ RDEPEND="${COMMON_DEP}
 	selinux? ( sec-policy/selinux-java )"
 
 # ca-certificates, perl and openssl are used for the cacerts keystore generation
+# perl is needed for running the SystemTap tests
+# lsb-release is used to obtain distro information for the version & crash dump output
+# attr is needed for xattr.h which defines the extended attribute syscalls used by NIO2
+# x11-libs/libXt is needed for headers only (Intrinsic.h, IntrinsicP.h, Shell.h, StringDefs.h)
+# Ant is no longer needed under the new build system
 DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP} ${X_DEPEND}
 	|| (
 		dev-java/icedtea-bin:8
@@ -139,10 +147,10 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP} ${X_
 	app-arch/zip
 	app-misc/ca-certificates
 	dev-lang/perl
-	>=dev-libs/libxslt-1.1.26
 	dev-libs/openssl
 	sys-apps/attr
 	sys-apps/lsb-release
+	x11-libs/libXt
 	virtual/pkgconfig
 	pax_kernel? ( sys-apps/elfix )"
 
@@ -191,6 +199,13 @@ java_prepare() {
 
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
+
+	# Fix issue with ordering of NSS libraries and bfd linker
+	epatch "${FILESDIR}/pr2825.patch"
+	# Fix location of JDK image used by check-tapset-jstack
+	epatch "${FILESDIR}/pr2804.patch"
+	# Fix setting of ECC test, depending on whether SunEC is enabled or not
+	epatch "${FILESDIR}/pr1983.patch"
 
 	eautoreconf
 }
@@ -282,16 +297,15 @@ src_configure() {
 		--htmldir="${EPREFIX}/usr/share/doc/${PF}/html" \
 		--with-abs-install-dir=/usr/$(get_libdir)/icedtea${SLOT} \
 		--with-pkgversion="Gentoo ${PF}" \
-		--disable-downloading --disable-Werror \
-		--disable-hotspot-tests --disable-jdk-tests \
+		--disable-downloading --disable-Werror --disable-tests \
 		--enable-system-lcms --enable-system-jpeg \
 		--enable-system-zlib --disable-pulse-java \
 		$(use_enable !headless-awt system-gif) \
 		$(use_enable !headless-awt system-png) \
 		$(use_enable !debug optimizations) \
 		$(use_enable doc docs) \
-		$(use_enable nss) \
 		$(use_with pax_kernel pax "${EPREFIX}/usr/sbin/paxmark.sh") \
+		$(use_enable sunec) \
 		${zero_config} ${cacao_config} ${jamvm_config}
 }
 

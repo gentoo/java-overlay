@@ -2,6 +2,16 @@
 # Copyright 1999-2016 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-3.0.0_pre08 (30 Jan 2016)
+
+  30 Jan 2016; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +files/pr1983.patch, +files/pr2804.patch, +files/pr2825.patch,
+  +icedtea-3.0.0_pre08.ebuild, -icedtea-3.0.0_pre07-r2.ebuild:
+  dev-java/icedtea: Bump to pre08 and sync against 2.x. Add SunEC support &
+  remove PKCS11 (nss). Add back libXt dependency (needed for headers). Drop
+  unneeded libxslt dependency. Fix SystemTap testing and disable all JTreg
+  testing.
+
   25 Jan 2016; Andrew John Hughes <gnu_andrew@member.fsf.org>
   icedtea-6.1.13.10.ebuild, icedtea-6.9999.ebuild:
   dev-java/icedtea: Re-sync IcedTea 1.x ebuilds with IcedTea 2.x ebuilds.

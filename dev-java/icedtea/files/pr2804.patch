@@ -1,0 +1,41 @@
+# HG changeset patch
+# User Andrew John Hughes <gnu_andrew@member.fsf.org>
+# Date 1454116428 0
+#      Sat Jan 30 01:13:48 2016 +0000
+# Node ID 48e97835c60091a6cf69053ba2d6c38b51d368e3
+# Parent  b88b516766014824885b6559621ff89e5b714547
+PR2804: test/tapset/jstaptest.pl should be executable
+
+2016-01-29  Andrew John Hughes  <gnu.andrew@member.fsf.org>
+
+	PR2804: test/tapset/jstaptest.pl should be executable
+	* Makefile.am:
+	(check-tapset-jstack): Actually replace BUILD_OUTPUT_DIR
+	as mentioned in previous commit.
+	* test/tapset/jstaptest.pl: Fix capitalisation of
+	"IcedTea".
+
+diff -r b88b51676601 -r 48e97835c600 Makefile.am
+--- a/Makefile.am	Sat Jan 30 01:10:54 2016 +0000
++++ b/Makefile.am	Sat Jan 30 01:13:48 2016 +0000
+@@ -2327,7 +2327,7 @@
+ 	  echo "ERROR: Perl not found"; exit -1; \
+ 	fi
+ 	${PERL} $(abs_top_srcdir)/test/tapset/jstaptest.pl \
+-	  -B $(BUILD_OUTPUT_DIR) -A $(BUILD_ARCH_DIR) \
++	  -B $(BUILD_IMAGE_DIR) -A $(BUILD_ARCH_DIR) \
+ 	  -S $(abs_top_srcdir)/test/tapset \
+ 	  -a test/check-stap.log -j
+ endif
+diff -r b88b51676601 -r 48e97835c600 test/tapset/jstaptest.pl
+--- a/test/tapset/jstaptest.pl	Sat Jan 30 01:10:54 2016 +0000
++++ b/test/tapset/jstaptest.pl	Sat Jan 30 01:13:48 2016 +0000
+@@ -597,7 +597,7 @@
+                 || ($opt_p && $opt_j)); # -p and -j are mutually exclusive.
+     if ($opt_B && $opt_A) {
+         die "Directory $opt_B not found." unless (-d $opt_B);
+-        die "Directory $opt_B/j2sdk-image/tapset not found.\nTry rebuilding Icedtea with systemtap support.\n"
++        die "Directory $opt_B/j2sdk-image/tapset not found.\nTry rebuilding IcedTea with systemtap support.\n"
+                 unless (-d "$opt_B/j2sdk-image/tapset");
+         push(@tapset_dirs, "-I$opt_B/j2sdk-image/tapset");
+         set_java_vars("$opt_B/j2sdk-image", $opt_A);
