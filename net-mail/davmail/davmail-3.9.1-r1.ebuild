@@ -1,4 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -8,7 +8,7 @@ REV="1646"
 MY_P="${PN}-src-${PV}-${REV}"
 JAVA_PKG_IUSE="source"
 
-inherit eutils java-pkg-2 java-ant-2
+inherit user java-pkg-2 java-ant-2
 
 DESCRIPTION="POP/IMAP/SMTP/Caldav/Carddav/LDAP Exchange Gateway"
 HOMEPAGE="http://davmail.sourceforge.net/"
@@ -27,16 +27,16 @@ CDEPEND="dev-java/commons-codec:0
 	>=dev-java/htmlcleaner-2.2:0
 	dev-java/jcifs:1.1
 	dev-java/log4j:0
-	dev-java/swt:3.6
+	dev-java/swt:3.8
 	dev-java/stax2-api:0
 	java-virtuals/javamail:0
 	java-virtuals/servlet-api:2.5"
 
 DEPEND="${CDEPEND}
-	>=virtual/jdk-1.5"
+	>=virtual/jdk-1.6"
 
 RDEPEND="${CDEPEND}
-	>=virtual/jre-1.5
+	>=virtual/jre-1.6
 
 	dev-java/commons-collections:0
 	dev-java/slf4j-nop:0
@@ -49,9 +49,11 @@ S="${WORKDIR}/${MY_P}"
 
 JAVA_ANT_REWRITE_CLASSPATH="true"
 EANT_BUILD_TARGET="compile"
-EANT_GENTOO_CLASSPATH="commons-codec,commons-httpclient-3,htmlcleaner,jcifs-1.1,log4j,swt-3.6,stax2-api,javamail,servlet-api-2.5"
+EANT_GENTOO_CLASSPATH="commons-codec,commons-httpclient-3,htmlcleaner,jcifs-1.1,log4j,swt-3.8,stax2-api,javamail,servlet-api-2.5"
+EANT_EXTRA_ARGS="-Dis.java6=true"
 
 pkg_setup() {
+	java-pkg-2_pkg_setup
 	enewuser davmail
 }
 
