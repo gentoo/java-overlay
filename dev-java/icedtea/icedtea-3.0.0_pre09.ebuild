@@ -16,14 +16,14 @@ ICEDTEA_VER=$(get_version_component_range 1-3)
 ICEDTEA_BRANCH=$(get_version_component_range 1-2)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
-CORBA_TARBALL="ebc2780ebeb3.tar.xz"
-JAXP_TARBALL="ac52a8eed353.tar.xz"
-JAXWS_TARBALL="26a1fdce80b7.tar.xz"
-JDK_TARBALL="809d98eeda49.tar.xz"
-LANGTOOLS_TARBALL="0d3479e0bac6.tar.xz"
-OPENJDK_TARBALL="f0635543beb3.tar.xz"
-NASHORN_TARBALL="7babac6e7ecf.tar.xz"
-HOTSPOT_TARBALL="c313c4782bb3.tar.xz"
+CORBA_TARBALL="834cf5ee24b3.tar.xz"
+JAXP_TARBALL="6527813420de.tar.xz"
+JAXWS_TARBALL="2ceaeebc6760.tar.xz"
+JDK_TARBALL="dfad9b612327.tar.xz"
+LANGTOOLS_TARBALL="076ec0ef64f0.tar.xz"
+OPENJDK_TARBALL="a358b13af298.tar.xz"
+NASHORN_TARBALL="bbc1966c6af9.tar.xz"
+HOTSPOT_TARBALL="dbf85d44da89.tar.xz"
 
 CACAO_TARBALL="cacao-c182f119eaad.tar.xz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
@@ -199,13 +199,6 @@ java_prepare() {
 
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
-
-	# Fix issue with ordering of NSS libraries and bfd linker
-	epatch "${FILESDIR}/pr2825.patch"
-	# Fix location of JDK image used by check-tapset-jstack
-	epatch "${FILESDIR}/pr2804.patch"
-	# Fix setting of ECC test, depending on whether SunEC is enabled or not
-	epatch "${FILESDIR}/pr1983.patch"
 
 	eautoreconf
 }
