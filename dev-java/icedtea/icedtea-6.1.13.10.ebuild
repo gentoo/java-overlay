@@ -41,7 +41,7 @@ KEYWORDS="~amd64"
 RESTRICT="test"
 
 IUSE="+alsa cacao cjk +cups debug doc examples +gtk headless-awt
-	jamvm javascript +jbootstrap kerberos nsplugin +nss pax_kernel
+	jamvm javascript +jbootstrap kerberos libressl nsplugin +nss pax_kernel
 	pulseaudio selinux smartcard source systemtap test +webstart zero"
 
 REQUIRED_USE="gtk? ( !headless-awt )"
@@ -112,7 +112,8 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP} ${X_
 	>=dev-java/ant-core-1.8.2
 	dev-lang/perl
 	>=dev-libs/libxslt-1.1.26
-	dev-libs/openssl
+	!libressl? ( dev-libs/openssl )
+	libressl? ( dev-libs/libressl )
 	sys-apps/lsb-release
 	virtual/pkgconfig
 	pax_kernel? ( sys-apps/elfix )"

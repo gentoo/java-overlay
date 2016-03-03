@@ -2,6 +2,11 @@
 # Copyright 1999-2016 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  03 Mar 2016; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  icedtea-3.0.0_pre09.ebuild, icedtea-6.1.13.10.ebuild, icedtea-6.9999.ebuild,
+  icedtea-7.2.6.4.ebuild, icedtea-7.2.7.0_pre00-r1.ebuild:
+  dev-java/icedtea: Resolve #573276 by adding libressl USE flag.
+
 *icedtea-3.0.0_pre09 (22 Feb 2016)
 
   22 Feb 2016; Andrew John Hughes <gnu_andrew@member.fsf.org>
