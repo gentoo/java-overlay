@@ -1,6 +1,12 @@
 # ChangeLog for dev-java/gcj-jdk
-# Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2016 Gentoo Foundation; Distributed under the GPL v2
 # $Header: /var/cvsroot/gentoo-x86/dev-java/gcj-jdk/ChangeLog,v 1.19 2015/05/21 08:50:13 chewi Exp $
+
+*gcj-jdk-5.3.0 (25 Mar 2016)
+
+  25 Mar 2016; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +gcj-jdk-5.3.0.ebuild, metadata.xml:
+  dev-java/gcj-jdk: Add support for GCJ 5.3.0.
 
 *gcj-jdk-5.1.0-r1 (23 Jun 2015)
 
