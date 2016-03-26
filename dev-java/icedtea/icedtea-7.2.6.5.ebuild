@@ -304,6 +304,7 @@ src_configure() {
 		$(use_enable !headless-awt system-gif) \
 		$(use_enable !headless-awt system-png) \
 		$(use_enable !debug optimizations) \
+		$(use_enable cups system-cups) \
 		$(use_enable doc docs) \
 		$(use_enable gtk system-gtk) \
 		$(use_enable infinality) \
