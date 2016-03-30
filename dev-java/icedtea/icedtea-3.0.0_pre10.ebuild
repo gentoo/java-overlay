@@ -16,14 +16,14 @@ ICEDTEA_VER=$(get_version_component_range 1-3)
 ICEDTEA_BRANCH=$(get_version_component_range 1-2)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
-CORBA_TARBALL="834cf5ee24b3.tar.xz"
-JAXP_TARBALL="6527813420de.tar.xz"
-JAXWS_TARBALL="2ceaeebc6760.tar.xz"
-JDK_TARBALL="dfad9b612327.tar.xz"
-LANGTOOLS_TARBALL="076ec0ef64f0.tar.xz"
-OPENJDK_TARBALL="a358b13af298.tar.xz"
-NASHORN_TARBALL="bbc1966c6af9.tar.xz"
-HOTSPOT_TARBALL="dbf85d44da89.tar.xz"
+CORBA_TARBALL="9972d4fac942.tar.xz"
+JAXP_TARBALL="ce45ec06ff23.tar.xz"
+JAXWS_TARBALL="ee1046345cb0.tar.xz"
+JDK_TARBALL="e917bc6b356b.tar.xz"
+LANGTOOLS_TARBALL="d6b6666581f9.tar.xz"
+OPENJDK_TARBALL="19d738ae2def.tar.xz"
+NASHORN_TARBALL="82dc1533255a.tar.xz"
+HOTSPOT_TARBALL="e9585e814cc9.tar.xz"
 
 CACAO_TARBALL="cacao-c182f119eaad.tar.xz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
@@ -293,7 +293,7 @@ src_configure() {
 		--with-pkgversion="Gentoo ${PF}" \
 		--disable-downloading --disable-Werror --disable-tests \
 		--enable-system-lcms --enable-system-jpeg \
-		--enable-system-zlib --disable-pulse-java \
+		--enable-system-zlib --disable-systemtap-tests \
 		$(use_enable !headless-awt system-gif) \
 		$(use_enable !headless-awt system-png) \
 		$(use_enable !debug optimizations) \

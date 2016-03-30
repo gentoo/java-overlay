@@ -2,6 +2,12 @@
 # Copyright 1999-2016 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-3.0.0_pre10 (30 Mar 2016)
+
+  30 Mar 2016; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +icedtea-3.0.0_pre10.ebuild, -icedtea-3.0.0_pre09.ebuild:
+  dev-java/icedtea: Bump to 3.0.0 pre10.
+
   29 Mar 2016; Andrew John Hughes <gnu_andrew@member.fsf.org> metadata.xml:
   dev-java/icedtea: Document the CUPS flag, as it's not obvious what it does.
 
