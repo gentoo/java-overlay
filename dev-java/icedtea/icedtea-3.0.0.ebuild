@@ -270,6 +270,18 @@ src_configure() {
 		zero_config="--enable-zero"
 	fi
 
+	# https://bugs.openjdk.java.net/browse/JDK-8067132
+	export DISTRIBUTION_PATCHES="${SLOT}-ccache.patch"
+	ln -snf "${FILESDIR}"/${SLOT}-ccache.patch . || die
+
+	# IcedTea itself doesn't handle ccache yet.
+	if has ccache ${FEATURES}; then
+		ewarn 'ccache has been known to break IcedTea. Disable it before filing bugs.'
+		export enable_ccache=yes
+	else
+		export enable_ccache=no
+	fi
+
 	config+=" --with-parallel-jobs=$(makeopts_jobs)"
 
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
@@ -304,7 +316,9 @@ src_configure() {
 }
 
 src_compile() {
-	emake
+	# OpenJDK is quite picky about ccache and dies if you attempt to use
+	# it via wrapper symlinks like Gentoo normally does.
+	PATH=$(sed 's#[^:]*/ccache/bin:##g' <<< "${PATH}") emake
 }
 
 src_test() {
