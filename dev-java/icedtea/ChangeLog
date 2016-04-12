@@ -2,6 +2,11 @@
 # Copyright 1999-2016 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  12 Apr 2016; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  icedtea-3.0.0.ebuild:
+  dev-java/icedtea-3.0.0: Disable sunec USE flag by default until #579676 is
+  resolved.
+
 *icedtea-3.0.0 (08 Apr 2016)
 
   08 Apr 2016; Andrew John Hughes <gnu_andrew@member.fsf.org>
