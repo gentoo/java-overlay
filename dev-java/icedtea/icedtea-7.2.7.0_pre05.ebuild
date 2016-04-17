@@ -16,13 +16,13 @@ ICEDTEA_VER=$(get_version_component_range 2-4)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
-CORBA_TARBALL="e3445769412d.tar.bz2"
-JAXP_TARBALL="e3b08dc13807.tar.bz2"
-JAXWS_TARBALL="299588405837.tar.bz2"
-JDK_TARBALL="2db5e90a399b.tar.bz2"
-LANGTOOLS_TARBALL="bc95d2472055.tar.bz2"
-OPENJDK_TARBALL="dbfa75121aca.tar.bz2"
-HOTSPOT_TARBALL="94f15794d5e7.tar.bz2"
+CORBA_TARBALL="cbe0edb3d345.tar.bz2"
+JAXP_TARBALL="4b0a1c213416.tar.bz2"
+JAXWS_TARBALL="76aade5c18f8.tar.bz2"
+JDK_TARBALL="3fc5cbcd46dd.tar.bz2"
+LANGTOOLS_TARBALL="caa50dd46a14.tar.bz2"
+OPENJDK_TARBALL="7f245987a287.tar.bz2"
+HOTSPOT_TARBALL="88abb663cdf9.tar.bz2"
 
 CACAO_TARBALL="cacao-c182f119eaad.tar.gz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
@@ -79,7 +79,8 @@ X_COMMON_DEP="
 	>=x11-libs/libXi-1.1.3
 	>=x11-libs/libXrender-0.9.4
 	>=x11-libs/libXtst-1.0.3
-	x11-libs/libXt"
+	x11-libs/libXt
+	x11-libs/libXcomposite"
 X_DEPEND="
 	>=x11-libs/libXau-1.0.3
 	>=x11-libs/libXdmcp-1.0.2
@@ -305,6 +306,7 @@ src_configure() {
 		$(use_enable !headless-awt system-gif) \
 		$(use_enable !headless-awt system-png) \
 		$(use_enable !debug optimizations) \
+		$(use_enable cups system-cups) \
 		$(use_enable doc docs) \
 		$(use_enable gtk system-gtk) \
 		$(use_enable infinality) \
