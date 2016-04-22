@@ -2,6 +2,12 @@
 # Copyright 1999-2016 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.6.6 (22 Apr 2016)
+
+  22 Apr 2016; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +icedtea-7.2.6.6.ebuild, -icedtea-7.2.6.5.ebuild:
+  dev-java/icedtea: Update to 2.6.6; http://bitly.com/it20606
+
 *icedtea-7.2.7.0_pre05 (17 Apr 2016)
 
   17 Apr 2016; Andrew John Hughes <gnu_andrew@member.fsf.org>
