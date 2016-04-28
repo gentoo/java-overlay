@@ -1,0 +1,53 @@
+From 80eda482aaac0baee4ab565544b14fd15e4b9701 Mon Sep 17 00:00:00 2001
+From: James Le Cuirot <chewi@aura-online.co.uk>
+Date: Tue, 3 Mar 2015 19:52:05 +0000
+Subject: [PATCH] Compatibility with ASM 4 final instead of RC1
+
+---
+ src/java/org/lwjgl/util/mapped/MappedObjectTransformer.java | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/src/java/org/lwjgl/util/mapped/MappedObjectTransformer.java b/src/java/org/lwjgl/util/mapped/MappedObjectTransformer.java
+index cf2aac8..c2bc9f9 100644
+--- a/src/java/org/lwjgl/util/mapped/MappedObjectTransformer.java
++++ b/src/java/org/lwjgl/util/mapped/MappedObjectTransformer.java
+@@ -265,7 +265,7 @@ public class MappedObjectTransformer {
+ 	static byte[] transformMappedObject(byte[] bytecode) {
+ 		final ClassWriter cw = new ClassWriter(0);
+ 
+-		ClassVisitor cv = new ClassAdapter(cw) {
++		ClassVisitor cv = new ClassVisitor(Opcodes.ASM4, cw) {
+ 
+ 			private final String[] DEFINALIZE_LIST = {
+ 				VIEWADDRESS_METHOD_NAME,
+@@ -322,8 +322,8 @@ public class MappedObjectTransformer {
+ 		return bytecode;
+ 	}
+ 
+-	private static ClassAdapter getMethodGenAdapter(final String className, final ClassVisitor cv) {
+-		return new ClassAdapter(cv) {
++	private static ClassVisitor getMethodGenAdapter(final String className, final ClassVisitor cv) {
++		return new ClassVisitor(Opcodes.ASM4, cv) {
+ 
+ 			@Override
+ 			public void visitEnd() {
+@@ -493,14 +493,14 @@ public class MappedObjectTransformer {
+ 		};
+ 	}
+ 
+-	private static class TransformationAdapter extends ClassAdapter {
++	private static class TransformationAdapter extends ClassVisitor {
+ 
+ 		final String className;
+ 
+ 		boolean transformed;
+ 
+ 		TransformationAdapter(final ClassVisitor cv, final String className) {
+-			super(cv);
++			super(Opcodes.ASM4, cv);
+ 			this.className = className;
+ 		}
+ 
+-- 
+2.0.4
+
