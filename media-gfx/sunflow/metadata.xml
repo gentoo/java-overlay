@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-	<herd></herd>
+	<maintainer type="project">
+		<email>java@gentoo.org</email>
+		<name>Java</name>
+	</maintainer>
 	<longdescription lang="en">
 		Sunflow is an open source rendering system for photo-realistic image
 		synthesis. It is written in Java and built around a flexible ray tracing
 		core and an extensible object-oriented design.
 	</longdescription>
 </pkgmetadata>
-

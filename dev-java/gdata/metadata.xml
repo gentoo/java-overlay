@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-	<herd>java</herd>
+	<maintainer type="project">
+		<email>java@gentoo.org</email>
+		<name>Java</name>
+	</maintainer>
 	<longdescription lang="en">
 		The Google Data APIs (GData) provide a simple protocol for reading and writing data on the web.
 
@@ -20,4 +23,3 @@
     	* YouTube 
 	</longdescription>
 </pkgmetadata>
-

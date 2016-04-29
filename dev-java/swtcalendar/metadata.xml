@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-	<herd>java</herd>
+	<maintainer type="project">
+		<email>java@gentoo.org</email>
+		<name>Java</name>
+	</maintainer>
 	<longdescription lang="en">
 		SWTCalendar is a port of Kai Toedter's  JCalendar to Eclipse's SWT. It is a GUI date picker for Java using SWT as the GUI toolkit. SWTCalendar was designed to be a flexible component so developer can embed a date picker in their application or create their own standalone date picker dialog.
 	</longdescription>
 </pkgmetadata>
-

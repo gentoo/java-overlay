@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-<herd>java</herd>
-<maintainer>
-<email>chewi at aura-online.co.uk</email>
-<name>James Le Cuirot</name>
+<maintainer type="project">
+<email>java@gentoo.org</email>
+<name>Java</name>
 </maintainer>
 <longdescription lang="en">
 Contains several of Google's core Java libraries that are used in

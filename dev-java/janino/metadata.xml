@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-	<herd>java</herd>
-	<maintainer>
-		<email>ali_bush@gentoo.org</email>
-		<name>Alistair Bush</name>
+	<maintainer type="project">
+		<email>java@gentoo.org</email>
+		<name>Java</name>
 	</maintainer>
 	<longdescription lang="en">
 		Janino is a compiler that reads a JavaTM  expression, block, class body, source file or a set of source files, and generates JavaTM bytecode that is loaded and executed directly. Janino is not intended to be a development tool, but an embedded compiler for run-time compilation purposes, e.g. expression evaluators or "server pages" engines like JSP. 
 	</longdescription>
 </pkgmetadata>
-
