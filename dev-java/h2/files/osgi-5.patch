@@ -1,0 +1,21 @@
+--- src/main/org/h2/util/DbDriverActivator.java.orig	2016-05-01 22:56:54.730869535 +0100
++++ src/main/org/h2/util/DbDriverActivator.java	2016-05-01 23:03:37.354040220 +0100
+@@ -6,7 +6,8 @@
+  */
+ package org.h2.util;
+ 
+-import java.util.Properties;
++import java.util.Dictionary;
++import java.util.Hashtable;
+ import org.h2.engine.Constants;
+ import org.osgi.framework.BundleActivator;
+ import org.osgi.framework.BundleContext;
+@@ -27,7 +28,7 @@
+     @Override
+     public void start(BundleContext bundleContext) {
+         org.h2.Driver driver = org.h2.Driver.load();
+-        Properties properties = new Properties();
++        Dictionary<String, Object> properties = new Hashtable<String, Object>();
+         properties.put(
+                 DataSourceFactory.OSGI_JDBC_DRIVER_CLASS,
+                 org.h2.Driver.class.getName());
