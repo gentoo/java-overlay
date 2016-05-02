@@ -36,7 +36,7 @@ RDEPEND=">=virtual/jre-1.5
 		${COMMON_DEP}"
 DEPEND=">=virtual/jdk-1.5
 		app-arch/unzip
-		dev-java/eclipse-ecj:3.7[ant]
+		dev-java/eclipse-ecj:4.5[ant]
 		dev-java/vecmath
 		${COMMON_DEP}"
 
@@ -54,7 +54,7 @@ src_unpack() {
 EANT_BUILD_TARGET="jar-opt"
 EANT_DOC_TARGET="docs"
 ANT_OPTS="-Xmx1g"
-JAVA_PKG_FORCE_COMPILER="ecj-3.7"
+JAVA_PKG_FORCE_COMPILER="ecj-4.5"
 
 src_install() {
 
