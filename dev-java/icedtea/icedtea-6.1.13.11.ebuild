@@ -15,8 +15,8 @@ inherit check-reqs java-pkg-2 java-vm-2 multiprocessing pax-utils versionator vi
 ICEDTEA_VER=$(get_version_component_range 2-4)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea${SLOT}-${ICEDTEA_VER}
-OPENJDK_BUILD="38"
-OPENJDK_DATE="20_jan_2016"
+OPENJDK_BUILD="39"
+OPENJDK_DATE="03_may_2016"
 OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.xz"
 # Download cacao and jamvm regardless for use with EXTRA_ECONF
 CACAO_TARBALL="cacao-68fe50ac34ec.tar.gz"
@@ -59,7 +59,8 @@ X_COMMON_DEP="
 	>=x11-libs/libXi-1.1.3
 	>=x11-libs/libXrender-0.9.4
 	>=x11-libs/libXtst-1.0.3
-	x11-libs/libXt"
+	x11-libs/libXt
+	x11-libs/libXcomposite"
 X_DEPEND="
 	>=x11-libs/libXau-1.0.3
 	>=x11-libs/libXdmcp-1.0.2
