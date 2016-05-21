@@ -103,7 +103,6 @@ RDEPEND="${COMMON_DEP}
 DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP} ${X_DEPEND}
 	|| (
 		>=dev-java/gcj-jdk-4.3
-		dev-java/icedtea-bin:6
 		dev-java/icedtea:6
 	)
 	app-arch/cpio
@@ -145,8 +144,7 @@ pkg_setup() {
 	icedtea_check_requirements
 
 	JAVA_PKG_WANT_BUILD_VM="
-		icedtea-6 icedtea-bin-6
-		gcj-jdk"
+		icedtea-6 gcj-jdk"
 	JAVA_PKG_WANT_SOURCE="1.5"
 	JAVA_PKG_WANT_TARGET="1.5"
 
