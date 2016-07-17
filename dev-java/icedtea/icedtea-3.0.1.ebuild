@@ -319,10 +319,8 @@ src_compile() {
 }
 
 src_test() {
-	# Use Xvfb for tests
-	unset DISPLAY
-
-	Xemake check
+	# Currently doesn't need display as we disable JDK jtreg tests
+	emake check
 }
 
 src_install() {
