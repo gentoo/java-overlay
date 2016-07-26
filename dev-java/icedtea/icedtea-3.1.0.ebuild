@@ -10,22 +10,22 @@
 EAPI="5"
 SLOT="8"
 
-inherit autotools check-reqs gnome2-utils java-pkg-2 java-vm-2 mercurial multiprocessing pax-utils prefix versionator virtualx
+inherit check-reqs gnome2-utils java-pkg-2 java-vm-2 multiprocessing pax-utils prefix versionator virtualx
 
 ICEDTEA_VER=$(get_version_component_range 1-3)
 ICEDTEA_BRANCH=$(get_version_component_range 1-2)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
 
-CORBA_TARBALL="b74e7245e405.tar.xz"
-JAXP_TARBALL="0de4d7e1996f.tar.xz"
-JAXWS_TARBALL="9812eb7e305e.tar.xz"
-JDK_TARBALL="ee0b65b8fd10.tar.xz"
-LANGTOOLS_TARBALL="fc69984700e1.tar.xz"
-OPENJDK_TARBALL="6517c9e186c5.tar.xz"
-NASHORN_TARBALL="68145b690b18.tar.xz"
-HOTSPOT_TARBALL="0f47eef348e2.tar.xz"
-SHENANDOAH_TARBALL="ec2e71f375b1.tar.xz"
+CORBA_TARBALL="7ea39ff8c227.tar.xz"
+JAXP_TARBALL="9368913c75fa.tar.xz"
+JAXWS_TARBALL="534ca1b701d1.tar.xz"
+JDK_TARBALL="3d312c038b60.tar.xz"
+LANGTOOLS_TARBALL="05822f2e947b.tar.xz"
+OPENJDK_TARBALL="453780834f92.tar.xz"
+NASHORN_TARBALL="289b6e3c6e05.tar.xz"
+HOTSPOT_TARBALL="e480e0df8eea.tar.xz"
+SHENANDOAH_TARBALL="997386c525f7.tar.xz"
 
 CACAO_TARBALL="cacao-c182f119eaad.tar.xz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
@@ -48,7 +48,9 @@ ICEDTEA_URL="${DROP_URL}/icedtea${SLOT}/${ICEDTEA_VER}"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
+SRC_PKG="${ICEDTEA_PKG}.tar.xz"
 SRC_URI="
+	http://icedtea.classpath.org/download/source/${SRC_PKG}
 	${ICEDTEA_URL}/openjdk.tar.xz -> ${OPENJDK_GENTOO_TARBALL}
 	${ICEDTEA_URL}/corba.tar.xz -> ${CORBA_GENTOO_TARBALL}
 	${ICEDTEA_URL}/jaxp.tar.xz -> ${JAXP_GENTOO_TARBALL}
@@ -60,13 +62,11 @@ SRC_URI="
 	shenandoah? ( ${ICEDTEA_URL}/shenandoah.tar.xz -> ${SHENANDOAH_GENTOO_TARBALL} )
 	${DROP_URL}/cacao/${CACAO_TARBALL} -> ${CACAO_GENTOO_TARBALL}
 	${DROP_URL}/jamvm/${JAMVM_TARBALL} -> ${JAMVM_GENTOO_TARBALL}"
-EHG_REPO_URI="http://icedtea.classpath.org/hg/icedtea8"
-EHG_REVISION="${ICEDTEA_PKG}${ICEDTEA_PRE}"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
-KEYWORDS=""
+KEYWORDS="~amd64"
 
-IUSE="+alsa cacao cjk +cups debug doc examples +gtk headless-awt infinality
+IUSE="+alsa cacao cjk +cups doc examples +gtk headless-awt infinality
 	jamvm +jbootstrap libressl nsplugin pax_kernel
 	pulseaudio sctp selinux shenandoah smartcard +source +sunec test +webstart zero"
 
@@ -197,7 +197,7 @@ pkg_setup() {
 }
 
 src_unpack() {
-	mercurial_src_unpack
+	unpack ${SRC_PKG}
 }
 
 java_prepare() {
@@ -206,8 +206,6 @@ java_prepare() {
 
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
-
-	eautoreconf
 }
 
 src_configure() {
