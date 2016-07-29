@@ -16,13 +16,13 @@ ICEDTEA_VER=$(get_version_component_range 2-4)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
-CORBA_TARBALL="ca3e3c4c5a61.tar.bz2"
-JAXP_TARBALL="683427778edf.tar.bz2"
-JAXWS_TARBALL="63f7bf7ed2d4.tar.bz2"
-JDK_TARBALL="55c38c1ace75.tar.bz2"
-LANGTOOLS_TARBALL="e42dd50480d3.tar.bz2"
-OPENJDK_TARBALL="882cfee70fe8.tar.bz2"
-HOTSPOT_TARBALL="3022a3d80efd.tar.bz2"
+CORBA_TARBALL="e5578d3bc593.tar.bz2"
+JAXP_TARBALL="b643540c673d.tar.bz2"
+JAXWS_TARBALL="4a99f4eac257.tar.bz2"
+JDK_TARBALL="8b6b930489cb.tar.bz2"
+LANGTOOLS_TARBALL="ca9d8b242a10.tar.bz2"
+OPENJDK_TARBALL="6aafb6fe0a1e.tar.bz2"
+HOTSPOT_TARBALL="75297b84957e.tar.bz2"
 
 CACAO_TARBALL="cacao-c182f119eaad.tar.gz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
@@ -58,7 +58,6 @@ SRC_URI="
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 KEYWORDS="~amd64"
-RESTRICT="test"
 
 IUSE="+alsa cacao cjk +cups debug doc examples +gtk headless-awt infinality
 	jamvm javascript +jbootstrap kerberos libressl nsplugin nss pax_kernel
@@ -91,6 +90,7 @@ X_DEPEND="
 	x11-proto/xproto"
 
 COMMON_DEP="
+	app-misc/mime-types
 	>=dev-libs/glib-2.26:2
 	>=dev-util/systemtap-1
 	media-libs/fontconfig
@@ -295,10 +295,9 @@ src_configure() {
 		--docdir="${EPREFIX}/usr/share/doc/${PF}" \
 		--htmldir="${EPREFIX}/usr/share/doc/${PF}/html" \
 		--with-pkgversion="Gentoo ${PF}" \
-		--disable-downloading --disable-Werror \
-		--disable-hotspot-tests --disable-jdk-tests \
+		--disable-downloading --disable-Werror --disable-tests \
 		--enable-system-lcms --enable-system-jpeg \
-		--enable-system-zlib \
+		--enable-system-zlib --disable-systemtap-tests \
 		$(use_enable !headless-awt system-gif) \
 		$(use_enable !headless-awt system-png) \
 		$(use_enable !debug optimizations) \
