@@ -324,6 +324,10 @@ src_configure() {
 		${zero_config} ${cacao_config} ${jamvm_config} ${hs_config}
 }
 
+src_compile() {
+	default
+}
+
 src_test() {
 	default
 }
