@@ -357,15 +357,6 @@ src_install() {
 		rm -v "${ddest}"/src.zip || die
 	fi
 
-	# provided by icedtea-web but we need it in JAVA_HOME to work with run-java-tool
-	if use webstart || use nsplugin; then
-		dosym /usr/libexec/icedtea-web/itweb-settings ${dest}/bin/itweb-settings
-		dosym /usr/libexec/icedtea-web/itweb-settings ${dest}/jre/bin/itweb-settings
-	fi
-	if use webstart; then
-		dosym /usr/libexec/icedtea-web/javaws ${dest}/bin/javaws
-		dosym /usr/libexec/icedtea-web/javaws ${dest}/jre/bin/javaws
-	fi
 	dosym /usr/share/doc/${PF} /usr/share/doc/${PN}${SLOT}
 
 	# Fix the permissions.
