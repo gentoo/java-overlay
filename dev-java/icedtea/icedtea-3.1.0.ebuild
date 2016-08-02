@@ -10,7 +10,7 @@
 EAPI="5"
 SLOT="8"
 
-inherit check-reqs gnome2-utils java-pkg-2 java-vm-2 multiprocessing pax-utils prefix versionator virtualx
+inherit check-reqs gnome2-utils java-pkg-2 java-vm-2 multiprocessing pax-utils prefix versionator
 
 ICEDTEA_VER=$(get_version_component_range 1-3)
 ICEDTEA_BRANCH=$(get_version_component_range 1-2)
@@ -325,8 +325,7 @@ src_configure() {
 }
 
 src_test() {
-	# Currently doesn't need display as we disable JDK jtreg tests
-	emake check
+	default
 }
 
 src_install() {
