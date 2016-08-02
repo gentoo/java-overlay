@@ -66,7 +66,7 @@ SRC_URI="
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 KEYWORDS="~amd64"
 
-IUSE="+alsa cacao cjk +cups doc examples +gtk headless-awt infinality
+IUSE="+alsa cacao +cups doc examples +gtk headless-awt infinality
 	jamvm +jbootstrap libressl nsplugin pax_kernel
 	pulseaudio sctp selinux shenandoah smartcard +source +sunec test +webstart zero"
 
@@ -116,15 +116,8 @@ RDEPEND="${COMMON_DEP}
 	!dev-java/icedtea:0
 	!dev-java/icedtea-web:7
 	>=gnome-base/gsettings-desktop-schemas-3.12.2
-	media-fonts/dejavu
+	virtual/ttf-fonts
 	alsa? ( ${ALSA_COMMON_DEP} )
-	cjk? (
-		media-fonts/arphicfonts
-		media-fonts/baekmuk-fonts
-		media-fonts/lklug
-		media-fonts/lohit-fonts
-		media-fonts/sazanami
-	)
 	cups? ( ${CUPS_COMMON_DEP} )
 	gtk? (
 		>=dev-libs/atk-1.30.0
