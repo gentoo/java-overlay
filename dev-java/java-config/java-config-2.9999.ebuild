@@ -9,7 +9,7 @@ PYTHON_COMPAT=( python{2_6,2_7,3_1,3_2,3_3} pypy{1_8,1_9} )
 
 inherit git-2 distutils-r1 eutils
 
-EGIT_REPO_URI="https://git.overlays.gentoo.org/gitroot/proj/java-config.git"
+EGIT_REPO_URI="https://anongit.gentoo.org/git/proj/java-config.git"
 
 DESCRIPTION="Java environment configuration tool"
 HOMEPAGE="http://www.gentoo.org/proj/en/java/"
