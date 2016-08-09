@@ -17,15 +17,15 @@ ICEDTEA_BRANCH=$(get_version_component_range 1-2)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
 
-CORBA_TARBALL="48dbf4a68dc7.tar.xz"
-JAXP_TARBALL="2acc40d95975.tar.xz"
-JAXWS_TARBALL="cfba1219c991.tar.xz"
-JDK_TARBALL="39845e69dc6b.tar.xz"
-LANGTOOLS_TARBALL="88f7b4f1b721.tar.xz"
-OPENJDK_TARBALL="55ebb0016ba5.tar.xz"
-NASHORN_TARBALL="cd4ba667912c.tar.xz"
-HOTSPOT_TARBALL="90416ba05ba1.tar.xz"
-SHENANDOAH_TARBALL="a98d8f47604b.tar.xz"
+CORBA_TARBALL="f85c4b0c0469.tar.xz"
+JAXP_TARBALL="b536766d32b3.tar.xz"
+JAXWS_TARBALL="e681ae177494.tar.xz"
+JDK_TARBALL="30e3b600c829.tar.xz"
+LANGTOOLS_TARBALL="19ea84ae4992.tar.xz"
+OPENJDK_TARBALL="64e0fb010639.tar.xz"
+NASHORN_TARBALL="0b84d2cb4e3a.tar.xz"
+HOTSPOT_TARBALL="ac19c2e28a51.tar.xz"
+SHENANDOAH_TARBALL="d0f52d39d1cd.tar.xz"
 
 CACAO_TARBALL="cacao-c182f119eaad.tar.xz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
@@ -362,7 +362,7 @@ src_install() {
 	cp -vRP cacerts "${ddest}/jre/lib/security/" || die
 	chmod 644 "${ddest}/jre/lib/security/cacerts" || die
 
-	set_java_env "${FILESDIR}/icedtea.env"
+	java-vm_install-env "${FILESDIR}/icedtea.env.sh"
 	java-vm_sandbox-predict /proc/self/coredump_filter
 }
 
