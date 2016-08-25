@@ -15,8 +15,8 @@ inherit check-reqs java-pkg-2 java-vm-2 multiprocessing pax-utils versionator vi
 ICEDTEA_VER=$(get_version_component_range 2-4)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea${SLOT}-${ICEDTEA_VER}
-OPENJDK_BUILD="39"
-OPENJDK_DATE="03_may_2016"
+OPENJDK_BUILD="40"
+OPENJDK_DATE="22_aug_2016"
 OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.xz"
 # Download cacao and jamvm regardless for use with EXTRA_ECONF
 CACAO_TARBALL="cacao-68fe50ac34ec.tar.gz"
@@ -71,6 +71,7 @@ X_DEPEND="
 	x11-proto/xproto"
 
 COMMON_DEP="
+	app-misc/mime-types
 	>=media-libs/freetype-2.3.5:2=
 	>=media-libs/lcms-2.5
 	>=sys-libs/zlib-1.2.3:=
@@ -249,10 +250,14 @@ src_configure() {
 		--with-jamvm-src-zip="${DISTDIR}/${JAMVM_GENTOO_TARBALL}" \
 		--with-jdk-home="$(java-config -O)" \
 		--with-abs-install-dir="${EPREFIX}/usr/$(get_libdir)/icedtea${SLOT}" \
+		--prefix="${EPREFIX}/usr/$(get_libdir)/icedtea${SLOT}" \
+		--mandir="${EPREFIX}/usr/$(get_libdir)/icedtea${SLOT}/man" \
+		--docdir="${EPREFIX}/usr/share/doc/${PF}" \
+		--htmldir="${EPREFIX}/usr/share/doc/${PF}/html" \
 		--with-pkgversion="Gentoo ${PF}" \
-		--disable-downloading --disable-Werror --disable-jdk-tests \
+		--disable-downloading --disable-Werror --disable-tests \
 		--enable-system-lcms --enable-system-jpeg \
-		--enable-system-zlib --disable-pulse-java \
+		--enable-system-zlib --disable-pulse-java --disable-systemtap-tests\
 		$(use_enable !headless-awt system-gif) \
 		$(use_enable !headless-awt system-png) \
 		$(use_enable !debug optimizations) \
