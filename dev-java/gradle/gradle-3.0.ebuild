@@ -1,8 +1,7 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
-EAPI="5"
+EAPI="6"
 
 inherit java-pkg-2
 
@@ -13,19 +12,27 @@ LICENSE="Apache-2.0"
 SLOT="${PV}"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND="app-arch/zip
-	app-eselect/eselect-gradle"
+DEPEND="
+	app-arch/zip
+	app-eselect/eselect-gradle
+"
 RDEPEND=">=virtual/jdk-1.5"
+IUSE="doc"
+
+src_prepare() {
+	default
+	java-pkg-2_src_prepare
+}
 
 src_compile() {
-	gradle --gradle-user-home "$WORKDIR" install -Pgradle_installPath=dist || die
+	./gradlew --gradle-user-home "${WORKDIR}" "$(usex doc installAll install)" -Pgradle_installPath=dist || die 'Gradle build failed'
 }
 
 src_install() {
+	local gradle_dir="${EROOT}usr/share/${PN}-${SLOT}"
+
 	cd dist || die
 	dodoc changelog.txt getting-started.html
-
-	local gradle_dir="${EROOT}usr/share/${PN}-${SLOT}"
 
 	insinto "${gradle_dir}"
 
@@ -38,7 +45,7 @@ src_install() {
 	done
 
 	# plugins in lib/plugins
-	cd plugins
+	cd plugins || die
 	java-pkg_jarinto ${JAVA_PKG_JARDEST}/plugins
 	for jar in *.jar; do
 		java-pkg_newjar ${jar} ${jar}

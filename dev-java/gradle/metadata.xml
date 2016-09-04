@@ -5,4 +5,9 @@
     <email>flo@geekplace.eu</email>
     <description>Maintainer, CC him on bugs</description>
   </maintainer>
+  <maintainer type="person">
+    <email>gradle@mva.name</email>
+    <description>Maintainer, CC him on bugs</description>
+    <name>Vadim A. Misbakh-Soloviov</name>
+  </maintainer>
 </pkgmetadata>
