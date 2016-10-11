@@ -6,7 +6,10 @@ EAPI="6"
 inherit java-pkg-2
 
 DESCRIPTION="A project automation and build tool with a Groovy based DSL"
-SRC_URI="http://services.gradle.org/distributions/${P}-src.zip"
+SRC_URI="
+	http://services.gradle.org/distributions/${P}-src.zip
+	http://services.gradle.org/distributions/${P}-rc-1-bin.zip
+"
 HOMEPAGE="http://www.gradle.org/"
 LICENSE="Apache-2.0"
 SLOT="${PV}"
@@ -22,6 +25,10 @@ IUSE="doc"
 src_prepare() {
 	default
 	java-pkg-2_src_prepare
+
+	sed -i "s|https\\\\://services.gradle.org/distributions/|file://${DISTDIR}/|" \
+		gradle/wrapper/gradle-wrapper.properties \
+		|| die 'unable to edit source fetch'
 }
 
 src_compile() {
