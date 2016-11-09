@@ -17,15 +17,15 @@ ICEDTEA_BRANCH=$(get_version_component_range 1-2)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
 
-CORBA_TARBALL="f85c4b0c0469.tar.xz"
-JAXP_TARBALL="b536766d32b3.tar.xz"
-JAXWS_TARBALL="e681ae177494.tar.xz"
-JDK_TARBALL="30e3b600c829.tar.xz"
-LANGTOOLS_TARBALL="19ea84ae4992.tar.xz"
-OPENJDK_TARBALL="64e0fb010639.tar.xz"
-NASHORN_TARBALL="0b84d2cb4e3a.tar.xz"
-HOTSPOT_TARBALL="ac19c2e28a51.tar.xz"
-SHENANDOAH_TARBALL="d0f52d39d1cd.tar.xz"
+CORBA_TARBALL="9d3757e6da35.tar.xz"
+JAXP_TARBALL="81c2773fbb0d.tar.xz"
+JAXWS_TARBALL="f57f3ddddff6.tar.xz"
+JDK_TARBALL="0cc71de3df18.tar.xz"
+LANGTOOLS_TARBALL="a553c153d376.tar.xz"
+OPENJDK_TARBALL="200203ccf4bb.tar.xz"
+NASHORN_TARBALL="0fb33c8b64d1.tar.xz"
+HOTSPOT_TARBALL="be4aeaa327f7.tar.xz"
+SHENANDOAH_TARBALL="24002f5b584e.tar.xz"
 
 CACAO_TARBALL="cacao-c182f119eaad.tar.xz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"

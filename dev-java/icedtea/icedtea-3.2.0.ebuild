@@ -17,15 +17,15 @@ ICEDTEA_BRANCH=$(get_version_component_range 1-2)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
 
-CORBA_TARBALL="7ea39ff8c227.tar.xz"
-JAXP_TARBALL="9368913c75fa.tar.xz"
-JAXWS_TARBALL="534ca1b701d1.tar.xz"
-JDK_TARBALL="3d312c038b60.tar.xz"
-LANGTOOLS_TARBALL="05822f2e947b.tar.xz"
-OPENJDK_TARBALL="453780834f92.tar.xz"
-NASHORN_TARBALL="289b6e3c6e05.tar.xz"
-HOTSPOT_TARBALL="e480e0df8eea.tar.xz"
-SHENANDOAH_TARBALL="997386c525f7.tar.xz"
+CORBA_TARBALL="9d3757e6da35.tar.xz"
+JAXP_TARBALL="81c2773fbb0d.tar.xz"
+JAXWS_TARBALL="f57f3ddddff6.tar.xz"
+JDK_TARBALL="0cc71de3df18.tar.xz"
+LANGTOOLS_TARBALL="a553c153d376.tar.xz"
+OPENJDK_TARBALL="200203ccf4bb.tar.xz"
+NASHORN_TARBALL="0fb33c8b64d1.tar.xz"
+HOTSPOT_TARBALL="be4aeaa327f7.tar.xz"
+SHENANDOAH_TARBALL="24002f5b584e.tar.xz"
 
 CACAO_TARBALL="cacao-c182f119eaad.tar.xz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
@@ -68,6 +68,7 @@ KEYWORDS="~amd64"
 
 IUSE="+alsa cacao +cups doc examples +gtk headless-awt infinality
 	jamvm +jbootstrap libressl nsplugin pax_kernel
+	jamvm +jbootstrap kerberos libressl nsplugin pax_kernel +pch
 	pulseaudio sctp selinux shenandoah smartcard +source +sunec test +webstart zero"
 
 REQUIRED_USE="gtk? ( !headless-awt )"
@@ -96,16 +97,15 @@ X_DEPEND="
 	x11-proto/xproto"
 
 # The Javascript requirement is obsolete; OpenJDK 8+ has Nashorn
-# Kerberos will be added following PR1537
 COMMON_DEP="
 	>=dev-libs/glib-2.26:2
 	>=dev-util/systemtap-1
 	media-libs/fontconfig
+	>=media-libs/freetype-2.5.3:2=[infinality?]
 	>=media-libs/lcms-2.5
 	>=sys-libs/zlib-1.2.3:=
 	virtual/jpeg:0=
-	!infinality? ( >=media-libs/freetype-2.5.3:2= )
-	infinality? ( <media-libs/freetype-2.6.4:2=[infinality] )
+	kerberos? ( virtual/krb5 )
 	sctp? ( net-misc/lksctp-tools )
 	smartcard? ( sys-apps/pcsc-lite )
 	sunec? ( >=dev-libs/nss-3.16.1-r1 )"
@@ -313,7 +313,11 @@ src_configure() {
 		$(use_enable !headless-awt system-png) \
 		$(use_enable doc docs) \
 		$(use_enable infinality) \
-		--with-pax="${EPREFIX}"$(usex pax_kernel /usr/sbin/paxmark.sh /bin/true) \
+		$(use_enable kerberos system-kerberos) \
+		$(use_with pax_kernel pax "${EPREFIX}/usr/sbin/paxmark.sh") \
+		$(use_enable pch precompiled-headers) \
+		$(use_enable sctp system-sctp) \
+		$(use_enable smartcard system-pcsc) \
 		$(use_enable sunec) \
 		${zero_config} ${cacao_config} ${jamvm_config} ${hs_config}
 }
