@@ -16,13 +16,13 @@ ICEDTEA_VER=$(get_version_component_range 2-4)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
-CORBA_TARBALL="e5578d3bc593.tar.bz2"
-JAXP_TARBALL="b643540c673d.tar.bz2"
-JAXWS_TARBALL="4a99f4eac257.tar.bz2"
-JDK_TARBALL="8b6b930489cb.tar.bz2"
-LANGTOOLS_TARBALL="ca9d8b242a10.tar.bz2"
-OPENJDK_TARBALL="6aafb6fe0a1e.tar.bz2"
-HOTSPOT_TARBALL="75297b84957e.tar.bz2"
+CORBA_TARBALL="9e002eaf26ed.tar.bz2"
+JAXP_TARBALL="3369fa5a875b.tar.bz2"
+JAXWS_TARBALL="26bcf28b3a60.tar.bz2"
+JDK_TARBALL="52225839bbea.tar.bz2"
+LANGTOOLS_TARBALL="545e512eb4de.tar.bz2"
+OPENJDK_TARBALL="653c2662034d.tar.bz2"
+HOTSPOT_TARBALL="223f6c442d49.tar.bz2"
 
 CACAO_TARBALL="cacao-c182f119eaad.tar.gz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
@@ -94,6 +94,7 @@ COMMON_DEP="
 	>=dev-libs/glib-2.26:2
 	>=dev-util/systemtap-1
 	media-libs/fontconfig
+	>=media-libs/freetype-2.5.3:2=[infinality?]
 	>=media-libs/lcms-2.5
 	>=sys-libs/zlib-1.2.3:=
 	virtual/jpeg:0=
@@ -104,8 +105,6 @@ COMMON_DEP="
 		>=x11-libs/gtk+-2.8:2=
 		>=x11-libs/pango-1.24.5
 	)
-	!infinality? ( >=media-libs/freetype-2.5.3:2= )
-	infinality? ( <media-libs/freetype-2.6.4:2=[infinality] )
 	javascript? ( dev-java/rhino:1.6 )
 	kerberos? ( virtual/krb5 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
