@@ -45,7 +45,7 @@ describe_show() {
 do_show() {
 	write_list_start "Current gradle symlink:"
 	if [[ -L ${EROOT}/usr/bin/gradle ]]; then
-		local gradle=$(cannonicalise "${EROOT}/usr/bin/gradle")
+		local gradle=$(canonicalise "${EROOT}/usr/bin/gradle")
 		write_kv_list_entry "${gradle}" ""
 	else
 		write_kv_list_entry "(unset)" ""
