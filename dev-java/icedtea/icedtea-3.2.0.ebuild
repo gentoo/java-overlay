@@ -67,7 +67,6 @@ LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 M
 KEYWORDS="~amd64"
 
 IUSE="+alsa cacao +cups doc examples +gtk headless-awt infinality
-	jamvm +jbootstrap libressl nsplugin pax_kernel
 	jamvm +jbootstrap kerberos libressl nsplugin pax_kernel +pch
 	pulseaudio sctp selinux shenandoah smartcard +source +sunec test +webstart zero"
 
