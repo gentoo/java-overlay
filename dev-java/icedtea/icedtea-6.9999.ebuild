@@ -1,4 +1,4 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
@@ -14,8 +14,8 @@ inherit autotools check-reqs java-pkg-2 java-vm-2 mercurial multiprocessing pax-
 
 ICEDTEA_PKG=${PN}$(replace_version_separator 1 -)
 ICEDTEA_BRANCH=$(get_version_component_range 1-3)
-OPENJDK_BUILD="40"
-OPENJDK_DATE="22_aug_2016"
+OPENJDK_BUILD="41"
+OPENJDK_DATE="04_jan_2017"
 OPENJDK_TARBALL="openjdk-6-src-b${OPENJDK_BUILD}-${OPENJDK_DATE}.tar.xz"
 # Download cacao and jamvm regardless for use with EXTRA_ECONF
 CACAO_TARBALL="cacao-68fe50ac34ec.tar.gz"
