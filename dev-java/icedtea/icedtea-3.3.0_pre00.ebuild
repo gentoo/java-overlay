@@ -78,7 +78,7 @@ ALSA_COMMON_DEP="
 CUPS_COMMON_DEP="
 	>=net-print/cups-1.2.12"
 X_COMMON_DEP="
-	>=media-libs/giflib-4.1.6:=
+	>=media-libs/giflib-4.1.6:0=
 	>=media-libs/libpng-1.2:0=
 	>=x11-libs/libX11-1.1.3
 	>=x11-libs/libXext-1.1.1
@@ -98,11 +98,11 @@ X_DEPEND="
 # The Javascript requirement is obsolete; OpenJDK 8+ has Nashorn
 # Kerberos will be added following PR1537
 COMMON_DEP="
-	>=dev-libs/glib-2.26:2
+	>=dev-libs/glib-2.26:2=
 	>=dev-util/systemtap-1
-	media-libs/fontconfig
-	>=media-libs/lcms-2.5
-	>=sys-libs/zlib-1.2.3:=
+	media-libs/fontconfig:1.0=
+	>=media-libs/lcms-2.5:2=
+	>=sys-libs/zlib-1.2.3
 	virtual/jpeg:0=
 	!infinality? ( >=media-libs/freetype-2.5.3:2= )
 	infinality? ( <media-libs/freetype-2.6.4:2=[infinality] )
@@ -121,9 +121,9 @@ RDEPEND="${COMMON_DEP}
 	cups? ( ${CUPS_COMMON_DEP} )
 	gtk? (
 		>=dev-libs/atk-1.30.0
-		>=x11-libs/cairo-1.8.8:=
+		>=x11-libs/cairo-1.8.8
 		x11-libs/gdk-pixbuf:2
-		>=x11-libs/gtk+-2.8:2=
+		>=x11-libs/gtk+-2.8:2
 		>=x11-libs/pango-1.24.5
 	)
 	!headless-awt? ( ${X_COMMON_DEP} )
@@ -147,8 +147,8 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP} ${X_
 	app-arch/zip
 	app-misc/ca-certificates
 	dev-lang/perl
-	!libressl? ( dev-libs/openssl )
-	libressl? ( dev-libs/libressl )
+	!libressl? ( dev-libs/openssl:0 )
+	libressl? ( dev-libs/libressl:0 )
 	sys-apps/attr
 	sys-apps/lsb-release
 	x11-libs/libXt
