@@ -1,4 +1,4 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
@@ -7,7 +7,7 @@
 # * IF YOU CHANGE THIS EBUILD, CHANGE ICEDTEA-6.* AS WELL *
 # *********************************************************
 
-EAPI="5"
+EAPI="6"
 SLOT="7"
 
 inherit check-reqs gnome2-utils java-pkg-2 java-vm-2 multiprocessing pax-utils prefix versionator virtualx
@@ -192,15 +192,13 @@ src_unpack() {
 	unpack ${SRC_PKG}
 }
 
-java_prepare() {
+src_configure() {
 	# For bootstrap builds as the sandbox control file might not yet exist.
 	addpredict /proc/self/coredump_filter
 
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
-}
 
-src_configure() {
 	local cacao_config config hotspot_port jamvm_config use_cacao use_jamvm use_zero zero_config
 	local vm=$(java-pkg_get-current-vm)
 

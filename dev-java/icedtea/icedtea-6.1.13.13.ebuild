@@ -7,7 +7,7 @@
 # * IF YOU CHANGE THIS EBUILD, CHANGE ICEDTEA-7.* AS WELL *
 # *********************************************************
 
-EAPI="5"
+EAPI="6"
 SLOT="6"
 
 inherit check-reqs java-pkg-2 java-vm-2 multiprocessing pax-utils versionator virtualx
@@ -157,15 +157,13 @@ src_unpack() {
 	unpack ${SRC_PKG}
 }
 
-java_prepare() {
+src_configure() {
 	# For bootstrap builds as the sandbox control file might not yet exist.
 	addpredict /proc/self/coredump_filter
 
 	# icedtea doesn't like some locales. #330433 #389717
 	export LANG="C" LC_ALL="C"
-}
 
-src_configure() {
 	local cacao_config config hotspot_port jamvm_config use_cacao use_jamvm use_zero zero_config
 	local vm=$(java-pkg_get-current-vm)
 
