@@ -2,6 +2,10 @@
 # Copyright 1999-2017 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+  14 Feb 2017; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  -icedtea-6.1.13.13.ebuild, -icedtea-6.9999.ebuild:
+  dev-java/icedtea: Remove unsupported IcedTea 1.x ebuilds.
+
 *icedtea-7.2.6.9 (14 Feb 2017)
 
   14 Feb 2017; Andrew John Hughes <gnu_andrew@member.fsf.org>
