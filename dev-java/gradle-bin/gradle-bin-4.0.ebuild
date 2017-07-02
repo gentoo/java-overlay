@@ -1,8 +1,7 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
-EAPI="5"
+EAPI="6"
 
 inherit java-pkg-2
 
@@ -17,7 +16,7 @@ SLOT="${PV}"
 KEYWORDS="~x86 ~amd64"
 
 DEPEND="app-arch/zip
-	app-eselect/eselect-gradle"
+		app-eselect/eselect-gradle"
 RDEPEND=">=virtual/jdk-1.6"
 
 IUSE="source doc examples"
@@ -25,9 +24,9 @@ IUSE="source doc examples"
 S="${WORKDIR}/${MY_P}"
 
 src_install() {
-	local gradle_dir="${EROOT}usr/share/${PN}-${SLOT}"
+	local gradle_dir="${EPREFIX}/usr/share/${PN}-${SLOT}"
 
-	dodoc changelog.txt getting-started.html
+	dodoc docs/release-notes.html getting-started.html
 
 	insinto "${gradle_dir}"
 
@@ -38,7 +37,7 @@ src_install() {
 
 	# docs
 	if use doc ; then
-		java-pkg_dojavadoc docs
+		java-pkg_dojavadoc docs/javadoc
 	fi
 
 	# examples
@@ -49,7 +48,7 @@ src_install() {
 	insinto "${gradle_dir}"
 	doins -r bin/ lib/
 	fperms 755 "${gradle_dir}/bin/gradle"
-	dosym "${gradle_dir}/bin/gradle" "/usr/bin/${P}"
+	dosym "${gradle_dir}/bin/gradle" "/usr/bin/${PN}-${SLOT}"
 }
 
 pkg_postinst() {
