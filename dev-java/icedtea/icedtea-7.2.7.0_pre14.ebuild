@@ -1,6 +1,5 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
 # *********************************************************
@@ -16,13 +15,13 @@ ICEDTEA_VER=$(get_version_component_range 2-4)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
-CORBA_TARBALL="cbe0edb3d345.tar.bz2"
-JAXP_TARBALL="4b0a1c213416.tar.bz2"
-JAXWS_TARBALL="76aade5c18f8.tar.bz2"
-JDK_TARBALL="3fc5cbcd46dd.tar.bz2"
-LANGTOOLS_TARBALL="caa50dd46a14.tar.bz2"
-OPENJDK_TARBALL="7f245987a287.tar.bz2"
-HOTSPOT_TARBALL="88abb663cdf9.tar.bz2"
+CORBA_TARBALL="772062092675.tar.bz2"
+JAXP_TARBALL="112c9edb3630.tar.bz2"
+JAXWS_TARBALL="30295a209fc5.tar.bz2"
+JDK_TARBALL="c2314c8d2b47.tar.bz2"
+LANGTOOLS_TARBALL="c347e7b1109b.tar.bz2"
+OPENJDK_TARBALL="a14132e755f1.tar.bz2"
+HOTSPOT_TARBALL="46d12689c870.tar.bz2"
 
 CACAO_TARBALL="cacao-c182f119eaad.tar.gz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
@@ -58,11 +57,10 @@ EHG_REVISION="${ICEDTEA_PKG}${ICEDTEA_PRE}"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
 KEYWORDS=""
-RESTRICT="test"
 
-IUSE="+alsa cacao cjk +cups debug doc examples +gtk headless-awt infinality
-	jamvm javascript +jbootstrap kerberos libressl nsplugin nss pax_kernel
-	pulseaudio sctp selinux smartcard source +sunec test +webstart zero"
+IUSE="+alsa cacao cjk +cups debug doc examples +gtk headless-awt
+	jamvm javascript +jbootstrap kerberos libressl nsplugin nss pax_kernel +pch
+	pulseaudio sctp selinux smartcard +source +sunec test +webstart zero"
 
 REQUIRED_USE="gtk? ( !headless-awt )"
 
@@ -91,21 +89,21 @@ X_DEPEND="
 	x11-proto/xproto"
 
 COMMON_DEP="
-	>=dev-libs/glib-2.26:2
+	app-misc/mime-types
+	>=dev-libs/glib-2.26:2=
 	>=dev-util/systemtap-1
-	media-libs/fontconfig
-	>=media-libs/lcms-2.5
-	>=sys-libs/zlib-1.2.3:=
+	media-libs/fontconfig:1.0=
+	>=media-libs/freetype-2.5.3:2=
+	>=media-libs/lcms-2.5:2=
+	>=sys-libs/zlib-1.2.3
 	virtual/jpeg:0=
 	gtk? (
 		>=dev-libs/atk-1.30.0
-		>=x11-libs/cairo-1.8.8:=
+		>=x11-libs/cairo-1.8.8
 		x11-libs/gdk-pixbuf:2
-		>=x11-libs/gtk+-2.8:2=
+		>=x11-libs/gtk+-2.8:2
 		>=x11-libs/pango-1.24.5
 	)
-	!infinality? ( >=media-libs/freetype-2.5.3:2= )
-	infinality? ( <media-libs/freetype-2.6.4:2=[infinality] )
 	javascript? ( dev-java/rhino:1.6 )
 	kerberos? ( virtual/krb5 )
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
@@ -118,7 +116,7 @@ RDEPEND="${COMMON_DEP}
 	!dev-java/icedtea:0
 	!dev-java/icedtea-web:7
 	>=gnome-base/gsettings-desktop-schemas-3.12.2
-	media-fonts/dejavu
+	virtual/ttf-fonts
 	alsa? ( ${ALSA_COMMON_DEP} )
 	cjk? (
 		media-fonts/arphicfonts
@@ -147,8 +145,8 @@ DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP} ${X_
 	>=dev-java/ant-core-1.8.2
 	dev-lang/perl
 	>=dev-libs/libxslt-1.1.26
-	!libressl? ( dev-libs/openssl )
-	libressl? ( dev-libs/libressl )
+	!libressl? ( dev-libs/openssl:0 )
+	libressl? ( dev-libs/libressl:0 )
 	sys-apps/attr
 	sys-apps/lsb-release
 	virtual/pkgconfig
@@ -273,13 +271,20 @@ src_configure() {
 		zero_config="--enable-zero"
 	fi
 
-	config+=" --with-parallel-jobs=$(makeopts_jobs)"
-
 	if use javascript ; then
 		config+=" --with-rhino=$(java-pkg_getjar rhino-1.6 js.jar)"
 	else
 		config+=" --without-rhino"
 	fi
+
+	# PaX breaks pch, bug #601016
+	if use pch && ! host-is-pax; then
+		config+=" --enable-precompiled-headers"
+	else
+		config+=" --disable-precompiled-headers"
+	fi
+
+	config+=" --with-parallel-jobs=$(makeopts_jobs)"
 
 	unset JAVA_HOME JDK_HOME CLASSPATH JAVAC JAVACFLAGS
 
@@ -299,17 +304,16 @@ src_configure() {
 		--docdir="${EPREFIX}/usr/share/doc/${PF}" \
 		--htmldir="${EPREFIX}/usr/share/doc/${PF}/html" \
 		--with-pkgversion="Gentoo ${PF}" \
-		--disable-downloading --disable-Werror \
-		--disable-hotspot-tests --disable-jdk-tests \
+		--disable-downloading --disable-Werror --disable-tests \
 		--enable-system-lcms --enable-system-jpeg \
-		--enable-system-zlib \
+		--enable-system-zlib --disable-systemtap-tests \
+		--enable-improved-font-rendering \
 		$(use_enable !headless-awt system-gif) \
 		$(use_enable !headless-awt system-png) \
 		$(use_enable !debug optimizations) \
 		$(use_enable cups system-cups) \
 		$(use_enable doc docs) \
 		$(use_enable gtk system-gtk) \
-		$(use_enable infinality) \
 		$(use_enable kerberos system-kerberos) \
 		$(use_enable nss) \
 		$(use_with pax_kernel pax "${EPREFIX}/usr/sbin/paxmark.sh") \
