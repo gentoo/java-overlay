@@ -2,6 +2,14 @@
 # Copyright 1999-2017 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-3.6.0 (02 Nov 2017)
+*icedtea-3.7.0_pre00 (02 Nov 2017)
+
+  02 Nov 2017; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +icedtea-3.6.0.ebuild, +icedtea-3.7.0_pre00.ebuild, -icedtea-3.5.1.ebuild,
+  -icedtea-3.6.0_pre01.ebuild:
+  dev-java/icedtea: IcedTea 3.6.0 released: http://bitly.com/it30600
+
 *icedtea-7.2.7.0_pre14 (18 Sep 2017)
 
   18 Sep 2017; Andrew John Hughes <gnu_andrew@member.fsf.org>
