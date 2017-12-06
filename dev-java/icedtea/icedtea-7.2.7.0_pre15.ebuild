@@ -175,7 +175,7 @@ get_systemtap_arch() {
 		*) echo ${abi} ;;
 	esac
 }
-+
+
 icedtea_check_requirements() {
 	local CHECKREQS_DISK_BUILD
 
