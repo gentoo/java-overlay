@@ -15,13 +15,13 @@ ICEDTEA_VER=$(get_version_component_range 2-4)
 ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
-CORBA_TARBALL="772062092675.tar.bz2"
-JAXP_TARBALL="112c9edb3630.tar.bz2"
-JAXWS_TARBALL="30295a209fc5.tar.bz2"
-JDK_TARBALL="c2314c8d2b47.tar.bz2"
-LANGTOOLS_TARBALL="c347e7b1109b.tar.bz2"
-OPENJDK_TARBALL="a14132e755f1.tar.bz2"
-HOTSPOT_TARBALL="46d12689c870.tar.bz2"
+CORBA_TARBALL="6e740d4ae704.tar.bz2"
+JAXP_TARBALL="f0773ebe1ba3.tar.bz2"
+JAXWS_TARBALL="c62baa2e633c.tar.bz2"
+JDK_TARBALL="686a9079ddba.tar.bz2"
+LANGTOOLS_TARBALL="4dfd158c281f.tar.bz2"
+OPENJDK_TARBALL="3237bf9d7b30.tar.bz2"
+HOTSPOT_TARBALL="3413fb2061fb.tar.bz2"
 
 CACAO_TARBALL="cacao-c182f119eaad.tar.gz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
@@ -131,6 +131,7 @@ RDEPEND="${COMMON_DEP}
 
 # Only ant-core-1.8.1 has fixed ant -diagnostics when xerces+xalan are not present.
 # ca-certificates, perl and openssl are used for the cacerts keystore generation
+# perl is needed for running the SystemTap tests and the bootstrap javac
 DEPEND="${COMMON_DEP} ${ALSA_COMMON_DEP} ${CUPS_COMMON_DEP} ${X_COMMON_DEP} ${X_DEPEND}
 	|| (
 		>=dev-java/gcj-jdk-4.3
@@ -158,6 +159,23 @@ PDEPEND="webstart? ( dev-java/icedtea-web:0[icedtea7(+)] )
 
 S="${WORKDIR}"/${ICEDTEA_PKG}
 
+# @FUNCTION: get_systemtap_arch
+# @DESCRIPTION:
+# Get arch name used in /usr/share/systemtap/tapset so we can
+# install OpenJDK tapsets.
+
+get_systemtap_arch() {
+	local abi=${1-${ABI}}
+
+	case ${abi} in
+		*_fbsd) get_systemtap_arch ${abi%_fbsd} ;;
+		amd64*) echo x86_64 ;;
+		ppc*) echo powerpc ;;
+		x86*) echo i386 ;;
+		*) echo ${abi} ;;
+	esac
+}
++
 icedtea_check_requirements() {
 	local CHECKREQS_DISK_BUILD
 
@@ -345,6 +363,7 @@ src_install() {
 
 	local dest="/usr/$(get_libdir)/icedtea${SLOT}"
 	local ddest="${ED}${dest#/}"
+	local stapdest="/usr/share/systemtap/tapset/$(get_systemtap_arch)"
 
 	if ! use alsa; then
 		rm -v "${ddest}"/jre/lib/$(get_system_arch)/libjsoundalsa.* || die
@@ -364,6 +383,14 @@ src_install() {
 	fi
 
 	dosym /usr/share/doc/${PF} /usr/share/doc/${PN}${SLOT}
+
+	# Link SystemTap tapsets into SystemTap installation directory
+	mkdir -p "${ED}/${stapdest}"
+	for tapsets in "${ddest}"/tapset/*.stp; do
+		tapname=$(basename ${tapsets})
+		destname=${tapname/./-${SLOT}.}
+		dosym "${dest}"/tapset/${tapname} ${stapdest}/${destname}
+	done
 
 	# Fix the permissions.
 	find "${ddest}" \! -type l \( -perm /111 -exec chmod 755 {} \; -o -exec chmod 644 {} \; \) || die
