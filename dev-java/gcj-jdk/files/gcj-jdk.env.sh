@@ -1,10 +1,10 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-VERSION="GCJ @PV@"
-JAVA_HOME="@GENTOO_PORTAGE_EPREFIX@/usr/lib/@P@"
-JDK_HOME="@GENTOO_PORTAGE_EPREFIX@/usr/lib/@P@"
+VERSION="GCJ ${PV}"
+JAVA_HOME="${EPREFIX}/usr/$(get_libdir)/${P}"
+JDK_HOME="${EPREFIX}/usr/$(get_libdir)/${P}"
 JAVAC="${JAVA_HOME}/bin/javac"
 PATH="${JAVA_HOME}/bin"
 ROOTPATH="${JAVA_HOME}/bin"

@@ -1,17 +1,16 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
-EAPI="5"
+EAPI=6
 
 inherit java-vm-2 multilib
 
 DESCRIPTION="Java wrappers around GCJ"
-HOMEPAGE="http://www.gentoo.org/"
+HOMEPAGE="https://www.gentoo.org/"
 SRC_URI=""
 
 LICENSE="GPL-2"
-#KEYWORDS="~amd64"
+KEYWORDS="~amd64"
 SLOT="0"
 IUSE="awt javadoc"
 
@@ -88,7 +87,7 @@ src_install() {
 	| newexe - javac
 	assert
 
-	set_java_env
+	java-vm_install-env
 }
 
 pkg_postinst() {
@@ -100,6 +99,7 @@ pkg_postinst() {
 	ewarn "and http://fuseyism.com/japi/icedtea6-libgcj-${API_DIFF_PV}.html"
 	ewarn "Check for existing bugs relating to missing APIs and file"
 	ewarn "new ones at http://gcc.gnu.org/bugzilla/"
+	ewarn "Long-term, GCJ is deprecated in GCC 6 and will be removed from GCC 7"
 	ewarn
 	ewarn "Due to this and limited manpower, we currently cannot support"
 	ewarn "using gcj-jdk as a system VM. Its main purpose is to bootstrap"
