@@ -1,6 +1,16 @@
 # ChangeLog for dev-java/icedtea
-# Copyright 1999-2017 Gentoo Foundation; Distributed under the GPL v2
+# Copyright 1999-2018 Gentoo Foundation; Distributed under the GPL v2
 # $Header: $
+
+*icedtea-3.7.0 (02 Mar 2018)
+*icedtea-3.8.0_pre00 (02 Mar 2018)
+*icedtea-7.2.6.13 (02 Mar 2018)
+
+  02 Mar 2018; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +icedtea-3.7.0.ebuild, +icedtea-3.8.0_pre00.ebuild, +icedtea-7.2.6.13.ebuild,
+  -icedtea-3.6.0.ebuild, -icedtea-3.7.0_pre00.ebuild, -icedtea-7.2.6.12.ebuild:
+  dev-java/icedtea: Update to 2.7.13 (http://bitly.com/it20713) and 3.7.0
+  (http://bitly.com/it30700)
 
   06 Dec 2017; Andrew John Hughes <gnu_andrew@member.fsf.org>
   icedtea-7.2.7.0_pre15.ebuild:
