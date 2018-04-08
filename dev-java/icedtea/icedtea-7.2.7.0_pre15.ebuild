@@ -1,4 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
 
@@ -424,5 +424,12 @@ pkg_preinst() {
 	gnome2_icon_savelist;
 }
 
-pkg_postinst() { gnome2_icon_cache_update; }
-pkg_postrm() { gnome2_icon_cache_update; }
+pkg_postinst() {
+	gnome2_icon_cache_update
+	java-vm-2_pkg_postinst
+}
+
+pkg_postrm() {
+	gnome2_icon_cache_update
+	java-vm-2_pkg_postrm
+}
