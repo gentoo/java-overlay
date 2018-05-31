@@ -16,13 +16,13 @@ ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
 
-CORBA_TARBALL="4b866e7eb48c.tar.bz2"
-JAXP_TARBALL="df965e45dd1f.tar.bz2"
-JAXWS_TARBALL="efd5dbb3fe96.tar.bz2"
-JDK_TARBALL="68b6bb380175.tar.bz2"
-LANGTOOLS_TARBALL="e952982cfa00.tar.bz2"
-OPENJDK_TARBALL="61245205213a.tar.bz2"
-HOTSPOT_TARBALL="f96baf6b4607.tar.bz2"
+CORBA_TARBALL="8931f7345917.tar.bz2"
+JAXP_TARBALL="71fb2bb2ccdf.tar.bz2"
+JAXWS_TARBALL="46e5171dd4ab.tar.bz2"
+JDK_TARBALL="581773232054.tar.bz2"
+LANGTOOLS_TARBALL="3633e24edab7.tar.bz2"
+OPENJDK_TARBALL="474d8c372eca.tar.bz2"
+HOTSPOT_TARBALL="56142fb6814b.tar.bz2"
 
 CACAO_TARBALL="cacao-c182f119eaad.tar.gz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
@@ -61,7 +61,7 @@ KEYWORDS="~amd64"
 
 IUSE="+alsa cacao cjk +cups debug doc examples +gtk headless-awt
 	jamvm javascript +jbootstrap kerberos libressl nsplugin nss pax_kernel
-	pulseaudio sctp selinux smartcard source +sunec test +webstart zero"
+	pulseaudio sctp selinux smartcard source +sunec +system-lcms test +webstart zero"
 
 REQUIRED_USE="gtk? ( !headless-awt )"
 
@@ -95,7 +95,6 @@ COMMON_DEP="
 	>=dev-util/systemtap-1
 	media-libs/fontconfig
 	>=media-libs/freetype-2.5.3:2=
-	>=media-libs/lcms-2.5
 	>=sys-libs/zlib-1.2.3:=
 	virtual/jpeg:0=
 	gtk? (
@@ -110,7 +109,8 @@ COMMON_DEP="
 	nss? ( >=dev-libs/nss-3.12.5-r1 )
 	sctp? ( net-misc/lksctp-tools )
 	smartcard? ( sys-apps/pcsc-lite )
-	sunec? ( >=dev-libs/nss-3.16.1-r1 )"
+	sunec? ( >=dev-libs/nss-3.16.1-r1 )
+	system-lcms? ( >=media-libs/lcms-2.9 )"
 
 # gsettings-desktop-schemas is needed for native proxy support. #431972
 RDEPEND="${COMMON_DEP}
@@ -312,9 +312,8 @@ src_configure() {
 		--htmldir="${EPREFIX}/usr/share/doc/${PF}/html" \
 		--with-pkgversion="Gentoo ${PF}" \
 		--disable-downloading --disable-Werror --disable-tests \
-		--enable-system-lcms --enable-system-jpeg \
-		--enable-system-zlib --disable-systemtap-tests \
-		--enable-improved-font-rendering \
+		--disable-systemtap-tests --enable-improved-font-rendering \
+		--enable-system-jpeg --enable-system-zlib \
 		$(use_enable !headless-awt system-gif) \
 		$(use_enable !headless-awt system-png) \
 		$(use_enable !debug optimizations) \
@@ -322,6 +321,7 @@ src_configure() {
 		$(use_enable doc docs) \
 		$(use_enable gtk system-gtk) \
 		$(use_enable kerberos system-kerberos) \
+		$(use_enable system-lcms) \
 		$(use_enable nss) \
 		$(use_with pax_kernel pax "${EPREFIX}/usr/sbin/paxmark.sh") \
 		$(use_enable sctp system-sctp) \
