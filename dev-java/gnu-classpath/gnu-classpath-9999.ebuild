@@ -1,15 +1,14 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=5
 
-inherit eutils git-2 java-pkg-2 base multilib
+inherit eutils git-2 java-pkg-2 multilib
 
 MY_P=${P/gnu-/}
-DESCRIPTION="Free core class libraries for use with virtual machines and compilers for the Java language"
+DESCRIPTION="Free core class libraries for use with VMs and compilers for the Java language"
 EGIT_REPO_URI="git://git.savannah.gnu.org/classpath.git"
-HOMEPAGE="http://www.gnu.org/software/classpath"
+HOMEPAGE="https://www.gnu.org/software/classpath"
 
 LICENSE="GPL-2-with-linking-exception"
 SLOT="0"
@@ -18,21 +17,21 @@ KEYWORDS=""
 IUSE="alsa debug doc dssi examples gconf +gjdoc +gmp +gtk gstreamer qt4 xml"
 
 RDEPEND="alsa? ( media-libs/alsa-lib )
-		doc? ( || ( >=dev-java/gjdoc-0.7.9-r2 >=dev-java/gnu-classpath-0.98:* ) )
+		doc? ( >=dev-java/gnu-classpath-0.98:* )
 		dssi? ( >=media-libs/dssi-0.9 )
-		gconf? ( gnome-base/gconf )
-		gjdoc? ( >=dev-java/antlr-2.7.1:0 )
-		gmp? ( >=dev-libs/gmp-4.2.4:* )
+		gconf? ( gnome-base/gconf:2= )
+		gjdoc? ( >=dev-java/antlr-2.7.7-r7:0 )
+		gmp? ( >=dev-libs/gmp-4.2.4:0= )
 		gstreamer? (
 			>=media-libs/gstreamer-0.10.10:0.10
 			>=media-libs/gst-plugins-base-0.10.10:0.10
 			x11-libs/gtk+:2
 		)
 		gtk? (
-				>=x11-libs/gtk+-2.8:2
-				>=dev-libs/glib-2.0
-				media-libs/freetype
-				>=x11-libs/cairo-1.1.9
+				>=x11-libs/gtk+-2.8:2=
+				dev-libs/glib:2=
+				media-libs/freetype:2=
+				>=x11-libs/cairo-1.1.9:=
 				x11-libs/libICE
 				x11-libs/libSM
 				x11-libs/libX11
@@ -41,19 +40,16 @@ RDEPEND="alsa? ( media-libs/alsa-lib )
 				x11-libs/libXtst
 				x11-libs/pango
 		)
-		qt4? ( dev-qt/qtgui:4 )
-		xml? ( >=dev-libs/libxml2-2.6.8 >=dev-libs/libxslt-1.1.11 )"
+		xml? ( >=dev-libs/libxml2-2.6.8:2= >=dev-libs/libxslt-1.1.11 )"
 
 # java-config >2.1.11 needed for ecj version globbing
-# We should make the build not pickup the wrong antlr binary from pccts
 DEPEND="app-arch/zip
-		|| ( dev-java/eclipse-ecj dev-java/ecj-gcj )
+		dev-java/eclipse-ecj
 		>=dev-java/java-config-2.1.11
-		gjdoc? ( !!dev-util/pccts )
 		gtk? (
+			x11-base/xorg-proto
 			x11-libs/libXrender
 			>=x11-libs/libXtst-1.1.0
-			x11-proto/xproto
 		)
 		>=virtual/jdk-1.5
 		${RDEPEND}"
@@ -72,7 +68,7 @@ src_prepare() {
 }
 
 src_configure() {
-	local ecj_pkg=""
+	local ecj_pkg="eclipse-ecj"
 
 	# We require ecj anyway, so force it to avoid problems with bad versions of javac
 	export JAVAC="${EPREFIX}/usr/bin/ecj"
@@ -89,13 +85,6 @@ src_configure() {
 		myconf="--with-antlr-jar=${antlr}"
 	fi
 
-	# fallback on ecj-gcj if eclipse-ecj is not available
-	if java-config --classpath=eclipse-ecj &> /dev/null ; then
-		ecj_pkg="eclipse_ecj"
-	else
-		ecj_pkg="ecj-gcj"
-	fi
-
 	ANTLR= econf \
 		$(use_enable alsa) \
 		$(use_enable debug ) \
@@ -105,7 +94,6 @@ src_configure() {
 		$(use_enable gmp) \
 		$(use_enable gtk gtk-peer) \
 		$(use_enable gstreamer gstreamer-peer) \
-		$(use_enable qt4 qt-peer) \
 		$(use_enable xml xmlj) \
 		$(use_enable dssi ) \
 		$(use_with doc gjdoc) \
