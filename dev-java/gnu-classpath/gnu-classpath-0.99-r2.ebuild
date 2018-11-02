@@ -15,9 +15,9 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 IUSE="alsa debug doc dssi examples gconf +gjdoc +gmp +gtk gstreamer qt4 xml"
+REQUIRED_USE="doc? ( gjdoc )"
 
 RDEPEND="alsa? ( media-libs/alsa-lib )
-		doc? ( >=dev-java/gnu-classpath-0.98:* )
 		dssi? ( >=media-libs/dssi-0.9 )
 		gconf? ( gnome-base/gconf:2= )
 		gjdoc? ( >=dev-java/antlr-2.7.7-r7:0 )
@@ -87,6 +87,13 @@ src_configure() {
 		myconf="--with-antlr-jar=${antlr}"
 	fi
 
+	if use doc; then
+		# Avoid a cyclic dependency on gjdoc by building gjdoc before
+		# the docs. First we need to trick configure. Hack alert!
+		echo -e "#!/bin/sh\necho gjdoc 0.8" > tools/gjdoc.build || die
+		chmod 755 tools/gjdoc.build || die
+	fi
+
 	ANTLR= econf \
 		$(use_enable alsa) \
 		$(use_enable debug ) \
@@ -98,7 +105,7 @@ src_configure() {
 		$(use_enable gstreamer gstreamer-peer) \
 		$(use_enable xml xmlj) \
 		$(use_enable dssi ) \
-		$(use_with doc gjdoc) \
+		$(use_with doc gjdoc "${S}/tools/gjdoc.build") \
 		--enable-jni \
 		--disable-dependency-tracking \
 		--disable-plugin \
@@ -108,9 +115,27 @@ src_configure() {
 		${myconf}
 }
 
+src_compile() {
+	if use doc; then
+		# Build gjdoc before the docs. We need to hack the real gjdoc
+		# script to run from the build directory instead.
+		sed -r "s:^(tools_dir=).*:\1${S}/tools:" tools/gjdoc > tools/gjdoc.build || die
+		emake -C lib
+		emake -C tools
+	fi
+
+	default
+}
+
 src_install() {
 	emake DESTDIR="${D}" install
 	dodoc AUTHORS BUGS ChangeLog* HACKING NEWS README THANKYOU TODO
 	java-pkg_regjar /usr/share/classpath/glibj.zip
 	java-pkg_regjar /usr/share/classpath/tools.zip
+
+	if use doc; then
+		# Strangely the Makefile doesn't install these.
+		insinto "/usr/${PN}-${SLOT}/share/classpath/api"
+		doins -r doc/api/html/*
+	fi
 }
