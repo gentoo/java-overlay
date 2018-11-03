@@ -1,6 +1,5 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=5
 AUTOTOOLS_AUTO_DEPEND="no"
@@ -67,22 +66,26 @@ src_install() {
 
 	dodir ${JDK_DIR}/bin
 	dosym /usr/libexec/${PN}/cacao ${JDK_DIR}/bin/java
-	for files in ${CLASSPATH_DIR}/g*; do
-		if [ $files = "${CLASSPATH_DIR}/bin/gjdoc" ] ; then
-			dosym $files ${JDK_DIR}/bin/javadoc || die
-		else
-			dosym $files \
-				${JDK_DIR}/bin/$(echo $files|sed "s#$(dirname $files)/g##") || die
-		fi
-	done
 
 	dodir ${JDK_DIR}/jre/lib
 	dosym /usr/share/classpath/glibj.zip ${JDK_DIR}/jre/lib/rt.jar
 	dodir ${JDK_DIR}/lib
 	dosym /usr/share/classpath/tools.zip ${JDK_DIR}/lib/tools.jar
 
-	local ecj_jar="$(readlink "${EPREFIX}"/usr/share/eclipse-ecj/ecj.jar)"
 	exeinto ${JDK_DIR}/bin
+	for files in ${CLASSPATH_DIR}/g*; do
+		# Need to alter scripts to make sure our VM is invoked
+		if [ $files = "${CLASSPATH_DIR}/bin/gjdoc" ] ; then
+			dest=javadoc
+		else
+			dest=$(echo $files|sed "s#$(dirname $files)/g##")
+		fi
+		cat ${files} | \
+			sed -e "s#/usr/bin/java#/usr/libexec/${PN}/cacao#" | \
+			newexe - ${dest}
+	done
+
+	local ecj_jar="$(readlink "${EPREFIX}"/usr/share/eclipse-ecj/ecj.jar)"
 	cat "${FILESDIR}"/javac.in | sed -e "s#@JAVA@#/usr/libexec/${PN}/cacao#" \
 		-e "s#@ECJ_JAR@#${ecj_jar}#" \
 		-e "s#@RT_JAR@#/usr/share/classpath/glibj.zip#" \
