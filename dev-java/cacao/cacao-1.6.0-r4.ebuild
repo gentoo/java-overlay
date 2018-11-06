@@ -61,16 +61,16 @@ src_install() {
 
 	emake DESTDIR="${D}" install || die "make install failed"
 	dodir /usr/bin
-	dosym /usr/libexec/${PN}/cacao /usr/bin/cacao || die
+	dosym ../libexec/${PN}/cacao /usr/bin/cacao || die
 	dodoc AUTHORS ChangeLog* NEWS README || die "failed to install docs"
 
 	dodir ${JDK_DIR}/bin
-	dosym /usr/libexec/${PN}/cacao ${JDK_DIR}/bin/java
+	dosym ../../../libexec/${PN}/cacao ${JDK_DIR}/bin/java
 
 	dodir ${JDK_DIR}/jre/lib
-	dosym /usr/share/classpath/glibj.zip ${JDK_DIR}/jre/lib/rt.jar
+	dosym ../../../../share/classpath/glibj.zip ${JDK_DIR}/jre/lib/rt.jar
 	dodir ${JDK_DIR}/lib
-	dosym /usr/share/classpath/tools.zip ${JDK_DIR}/lib/tools.jar
+	dosym ../../../share/classpath/tools.zip ${JDK_DIR}/lib/tools.jar
 
 	exeinto ${JDK_DIR}/bin
 	for files in ${CLASSPATH_DIR}/g*; do
@@ -97,15 +97,15 @@ src_install() {
 	[ ${ARCH} == x86_64 ] && libarch="amd64"
 	dodir ${JDK_DIR}/jre/lib/${libarch}/client
 	dodir ${JDK_DIR}/jre/lib/${libarch}/server
-	dosym /usr/${libdir}/${PN}/libjvm.so ${JDK_DIR}/jre/lib/${libarch}/client/libjvm.so
-	dosym /usr/${libdir}/${PN}/libjvm.so ${JDK_DIR}/jre/lib/${libarch}/server/libjvm.so
-	dosym /usr/${libdir}/classpath/libjawt.so ${JDK_DIR}/jre/lib/${libarch}/libjawt.so
+	dosym ../../../../../../${libdir}/${PN}/libjvm.so ${JDK_DIR}/jre/lib/${libarch}/client/libjvm.so
+	dosym ../../../../../../${libdir}/${PN}/libjvm.so ${JDK_DIR}/jre/lib/${libarch}/server/libjvm.so
+	dosym ../../../../../${libdir}/classpath/libjawt.so ${JDK_DIR}/jre/lib/${libarch}/libjawt.so
 	set_java_env
 
 	# Can't use java-vm_set-pax-markings as doesn't work with symbolic links
 	# Ensure a PaX header is created.
 	local pax_markings="C"
-	# Usally disabeling MPROTECT is sufficent.
+	# Usually dislabeling MPROTECT is sufficent.
 	local pax_markings+="m"
 	# On x86 for heap sizes over 700MB disable SEGMEXEC and PAGEEXEC as well.
 	use x86 && pax_markings+="sp"
