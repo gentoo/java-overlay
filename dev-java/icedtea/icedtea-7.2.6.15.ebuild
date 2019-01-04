@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
@@ -17,13 +17,13 @@ ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
 
-CORBA_TARBALL="8931f7345917.tar.bz2"
-JAXP_TARBALL="71fb2bb2ccdf.tar.bz2"
-JAXWS_TARBALL="46e5171dd4ab.tar.bz2"
-JDK_TARBALL="581773232054.tar.bz2"
-LANGTOOLS_TARBALL="3633e24edab7.tar.bz2"
-OPENJDK_TARBALL="474d8c372eca.tar.bz2"
-HOTSPOT_TARBALL="56142fb6814b.tar.bz2"
+CORBA_TARBALL="9b8ff44cf2c6.tar.bz2"
+JAXP_TARBALL="5dc90bd920db.tar.bz2"
+JAXWS_TARBALL="a88988c07020.tar.bz2"
+JDK_TARBALL="25542ea9adea.tar.bz2"
+LANGTOOLS_TARBALL="5d348df3700d.tar.bz2"
+OPENJDK_TARBALL="02692bca5efc.tar.bz2"
+HOTSPOT_TARBALL="e200fdadc487.tar.bz2"
 
 CACAO_TARBALL="cacao-c182f119eaad.tar.gz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
@@ -157,23 +157,6 @@ PDEPEND="webstart? ( dev-java/icedtea-web:0[icedtea7(+)] )
 	pulseaudio? ( dev-java/icedtea-sound )"
 
 S="${WORKDIR}"/${ICEDTEA_PKG}
-
-# @FUNCTION: get_systemtap_arch
-# @DESCRIPTION:
-# Get arch name used in /usr/share/systemtap/tapset so we can
-# install OpenJDK tapsets.
-
-get_systemtap_arch() {
-	local abi=${1-${ABI}}
-
-	case ${abi} in
-		*_fbsd) get_systemtap_arch ${abi%_fbsd} ;;
-		amd64*) echo x86_64 ;;
-		ppc*) echo powerpc ;;
-		x86*) echo i386 ;;
-		*) echo ${abi} ;;
-	esac
-}
 
 icedtea_check_requirements() {
 	local CHECKREQS_DISK_BUILD
@@ -350,7 +333,6 @@ src_install() {
 
 	local dest="/usr/$(get_libdir)/icedtea${SLOT}"
 	local ddest="${ED}${dest#/}"
-	local stapdest="/usr/share/systemtap/tapset/$(get_systemtap_arch)"
 
 	if ! use alsa; then
 		rm -v "${ddest}"/jre/lib/$(get_system_arch)/libjsoundalsa.* || die
@@ -370,14 +352,6 @@ src_install() {
 	fi
 
 	dosym /usr/share/doc/${PF} /usr/share/doc/${PN}${SLOT}
-
-	# Link SystemTap tapsets into SystemTap installation directory
-	mkdir -p "${ED}/${stapdest}"
-	for tapsets in "${ddest}"/tapset/*.stp; do
-		tapname=$(basename ${tapsets})
-		destname=${tapname/./-${SLOT}.}
-		dosym "${dest}"/tapset/${tapname} ${stapdest}/${destname}
-	done
 
 	# Fix the permissions.
 	find "${ddest}" \! -type l \( -perm /111 -exec chmod 755 {} \; -o -exec chmod 644 {} \; \) || die
