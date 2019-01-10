@@ -17,14 +17,14 @@ ICEDTEA_BRANCH=$(get_version_component_range 1-2)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
 
-CORBA_TARBALL="8249f00d6619.tar.xz"
-JAXP_TARBALL="a1b060ef4f06.tar.xz"
-JAXWS_TARBALL="c0f01861a7fd.tar.xz"
-JDK_TARBALL="6e67500d0ed8.tar.xz"
-LANGTOOLS_TARBALL="7036a6fa432e.tar.xz"
-OPENJDK_TARBALL="90de74e82bfb.tar.xz"
-NASHORN_TARBALL="6cf21321f367.tar.xz"
-HOTSPOT_TARBALL="4e4ead43a282.tar.xz"
+CORBA_TARBALL="978ace4a2d1f.tar.xz"
+JAXP_TARBALL="3e7294812366.tar.xz"
+JAXWS_TARBALL="20b1d763b33e.tar.xz"
+JDK_TARBALL="1a1eac5703fc.tar.xz"
+LANGTOOLS_TARBALL="aeb6ac72f496.tar.xz"
+OPENJDK_TARBALL="5814556a8741.tar.xz"
+NASHORN_TARBALL="287a6c783833.tar.xz"
+HOTSPOT_TARBALL="1423aed335d6.tar.xz"
 SHENANDOAH_TARBALL="bc4deb768b1d.tar.xz"
 AARCH32_TARBALL="f38b47a322eb.tar.xz"
 
@@ -71,7 +71,7 @@ KEYWORDS=""
 
 IUSE="+alsa cacao +cups doc examples +gtk headless-awt
 	jamvm +jbootstrap kerberos libressl nsplugin pax_kernel +pch
-	pulseaudio sctp selinux shenandoah smartcard +source +sunec +system-lcms test +webstart zero"
+	pulseaudio sctp selinux shenandoah smartcard +source +system-lcms test +webstart zero"
 
 REQUIRED_USE="gtk? ( !headless-awt )"
 
@@ -106,7 +106,6 @@ COMMON_DEP="
 	kerberos? ( virtual/krb5 )
 	sctp? ( net-misc/lksctp-tools )
 	smartcard? ( sys-apps/pcsc-lite )
-	sunec? ( >=dev-libs/nss-3.16.1-r1 )
 	system-lcms? ( >=media-libs/lcms-2.9:2= )"
 
 # Gtk+ will move to COMMON_DEP in time; PR1982
@@ -326,7 +325,6 @@ src_configure() {
 		$(use_with pax_kernel pax "${EPREFIX}/usr/sbin/paxmark.sh") \
 		$(use_enable sctp system-sctp) \
 		$(use_enable smartcard system-pcsc) \
-		$(use_enable sunec) \
 		${zero_config} ${cacao_config} ${jamvm_config} ${hs_config}
 }
 
