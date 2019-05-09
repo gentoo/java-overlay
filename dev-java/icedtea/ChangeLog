@@ -2,6 +2,12 @@
 # Copyright 1999-2019 Gentoo Authors; Distributed under the GPL v2
 # $Header: $
 
+*icedtea-7.2.6.18 (09 May 2019)
+
+  09 May 2019; Andrew John Hughes <gnu_andrew@member.fsf.org>
+  +icedtea-7.2.6.18.ebuild, -icedtea-7.2.6.17.ebuild:
+  dev-java/icedtea: IcedTea 2.6.18 released: http://bitly.com/it20618
+
 *icedtea-3.12.0 (02 May 2019)
 
   02 May 2019; Andrew John Hughes <gnu_andrew@member.fsf.org>

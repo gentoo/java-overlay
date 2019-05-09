@@ -17,13 +17,13 @@ ICEDTEA_BRANCH=$(get_version_component_range 2-3)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
 
-CORBA_TARBALL="46169649285d.tar.bz2"
-JAXP_TARBALL="c05c97839122.tar.bz2"
-JAXWS_TARBALL="238368449487.tar.bz2"
-JDK_TARBALL="6093d128c588.tar.bz2"
-LANGTOOLS_TARBALL="6cdbf382f3e2.tar.bz2"
-OPENJDK_TARBALL="6a588725b8a2.tar.bz2"
-HOTSPOT_TARBALL="d47e668978c8.tar.bz2"
+CORBA_TARBALL="ffed1dd63843.tar.bz2"
+JAXP_TARBALL="bbd9f724d9af.tar.bz2"
+JAXWS_TARBALL="7d942bc39965.tar.bz2"
+JDK_TARBALL="f294f336b24d.tar.bz2"
+LANGTOOLS_TARBALL="9f0890e75bcb.tar.bz2"
+OPENJDK_TARBALL="ed550afe3dd7.tar.bz2"
+HOTSPOT_TARBALL="6e7512a54bc6.tar.bz2"
 
 CACAO_TARBALL="cacao-c182f119eaad.tar.gz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
@@ -44,7 +44,7 @@ ICEDTEA_URL="${DROP_URL}/icedtea${SLOT}/${ICEDTEA_VER}"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="http://icedtea.classpath.org"
-SRC_PKG="${ICEDTEA_PKG}-r1.tar.xz"
+SRC_PKG="${ICEDTEA_PKG}.tar.xz"
 SRC_URI="
 	http://icedtea.classpath.org/download/source/${SRC_PKG}
 	${ICEDTEA_URL}/openjdk.tar.bz2 -> ${OPENJDK_GENTOO_TARBALL}
