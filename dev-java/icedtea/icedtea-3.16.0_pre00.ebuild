@@ -1,4 +1,4 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 # Build written by Andrew John Hughes (gnu_andrew@member.fsf.org)
@@ -10,23 +10,23 @@
 EAPI="6"
 SLOT="8"
 
-inherit check-reqs gnome2-utils java-pkg-2 java-vm-2 multiprocessing pax-utils prefix versionator
+inherit autotools check-reqs gnome2-utils java-pkg-2 java-vm-2 mercurial multiprocessing pax-utils prefix versionator virtualx
 
 ICEDTEA_VER=$(get_version_component_range 1-3)
 ICEDTEA_BRANCH=$(get_version_component_range 1-2)
 ICEDTEA_PKG=icedtea-${ICEDTEA_VER}
 ICEDTEA_PRE=$(get_version_component_range _)
 
-CORBA_TARBALL="a37140ba122d.tar.xz"
-JAXP_TARBALL="9f2145980ba0.tar.xz"
-JAXWS_TARBALL="af5760dceec0.tar.xz"
-JDK_TARBALL="ce6c8c2cad27.tar.xz"
-LANGTOOLS_TARBALL="ccec65feaaac.tar.xz"
-OPENJDK_TARBALL="454c6cbb8073.tar.xz"
-NASHORN_TARBALL="13722b4babad.tar.xz"
-HOTSPOT_TARBALL="4ccc1ae03940.tar.xz"
-SHENANDOAH_TARBALL="9e52f8d3b511.tar.xz"
-AARCH32_TARBALL="0d7b61c79fee.tar.xz"
+CORBA_TARBALL="f59374a41938.tar.xz"
+JAXP_TARBALL="f42bdc74d2f5.tar.xz"
+JAXWS_TARBALL="4dee0def390a.tar.xz"
+JDK_TARBALL="c2f574d16c2f.tar.xz"
+LANGTOOLS_TARBALL="9cb3b18d9139.tar.xz"
+OPENJDK_TARBALL="c0ec72b715dd.tar.xz"
+NASHORN_TARBALL="04210bbb67cd.tar.xz"
+HOTSPOT_TARBALL="f76744714698.tar.xz"
+SHENANDOAH_TARBALL="9fcff2250bb4.tar.xz"
+AARCH32_TARBALL="4107aea57664.tar.xz"
 
 CACAO_TARBALL="cacao-c182f119eaad.tar.xz"
 JAMVM_TARBALL="jamvm-ec18fb9e49e62dce16c5094ef1527eed619463aa.tar.gz"
@@ -50,9 +50,7 @@ ICEDTEA_URL="${DROP_URL}/icedtea${SLOT}/${ICEDTEA_VER}"
 
 DESCRIPTION="A harness to build OpenJDK using Free Software build tools and dependencies"
 HOMEPAGE="https://icedtea.classpath.org"
-SRC_PKG="${ICEDTEA_PKG}.tar.xz"
 SRC_URI="
-	https://icedtea.classpath.org/download/source/${SRC_PKG}
 	${ICEDTEA_URL}/openjdk.tar.xz -> ${OPENJDK_GENTOO_TARBALL}
 	${ICEDTEA_URL}/corba.tar.xz -> ${CORBA_GENTOO_TARBALL}
 	${ICEDTEA_URL}/jaxp.tar.xz -> ${JAXP_GENTOO_TARBALL}
@@ -65,9 +63,11 @@ SRC_URI="
 	arm? ( ${ICEDTEA_URL}/aarch32.tar.xz -> ${AARCH32_GENTOO_TARBALL} )
 	${DROP_URL}/cacao/${CACAO_TARBALL} -> ${CACAO_GENTOO_TARBALL}
 	${DROP_URL}/jamvm/${JAMVM_TARBALL} -> ${JAMVM_GENTOO_TARBALL}"
+EHG_REPO_URI="http://icedtea.classpath.org/hg/icedtea8"
+EHG_REVISION="${ICEDTEA_PKG}${ICEDTEA_PRE}"
 
 LICENSE="Apache-1.1 Apache-2.0 GPL-1 GPL-2 GPL-2-with-linking-exception LGPL-2 MPL-1.0 MPL-1.1 public-domain W3C"
-KEYWORDS="~amd64"
+KEYWORDS=""
 
 IUSE="+alsa cacao +cups doc examples +gtk headless-awt
 	jamvm +jbootstrap kerberos libressl nsplugin pax_kernel +pch
@@ -189,7 +189,12 @@ pkg_setup() {
 }
 
 src_unpack() {
-	unpack ${SRC_PKG}
+	mercurial_src_unpack
+}
+
+src_prepare() {
+	default
+	eautoreconf
 }
 
 src_configure() {
