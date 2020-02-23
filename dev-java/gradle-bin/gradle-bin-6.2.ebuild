@@ -26,7 +26,7 @@ S="${WORKDIR}/${MY_P}"
 src_install() {
 	local gradle_dir="${EPREFIX}/usr/share/${PN}-${SLOT}"
 
-	dodoc docs/release-notes.html getting-started.html
+	dodoc docs/release-notes.html
 
 	insinto "${gradle_dir}"
 
