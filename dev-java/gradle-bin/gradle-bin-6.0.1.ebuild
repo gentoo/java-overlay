@@ -17,7 +17,7 @@ KEYWORDS="~amd64 ~x86"
 
 DEPEND="app-arch/zip
 		app-eselect/eselect-gradle"
-RDEPEND=">=virtual/jdk-1.6"
+RDEPEND="virtual/jre"
 
 IUSE="source doc examples"
 
