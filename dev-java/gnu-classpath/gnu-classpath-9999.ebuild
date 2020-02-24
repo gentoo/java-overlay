@@ -1,20 +1,19 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=5
 
-inherit eutils git-2 java-pkg-2 multilib
+inherit eutils git-r3 java-pkg-2 multilib
 
-MY_P=${P/gnu-/}
 DESCRIPTION="Free core class libraries for use with VMs and compilers for the Java language"
-EGIT_REPO_URI="git://git.savannah.gnu.org/classpath.git"
+EGIT_REPO_URI="https://git.savannah.gnu.org/git/classpath.git"
 HOMEPAGE="https://www.gnu.org/software/classpath"
 
 LICENSE="GPL-2-with-linking-exception"
 SLOT="0"
 KEYWORDS=""
 
-IUSE="alsa debug doc dssi examples gconf +gjdoc +gmp +gtk gstreamer qt4 xml"
+IUSE="alsa debug doc dssi examples gconf +gjdoc +gmp +gtk qt4 xml"
 REQUIRED_USE="doc? ( gjdoc )"
 
 RDEPEND="alsa? ( media-libs/alsa-lib )
@@ -22,11 +21,6 @@ RDEPEND="alsa? ( media-libs/alsa-lib )
 		gconf? ( gnome-base/gconf:2= )
 		gjdoc? ( >=dev-java/antlr-2.7.7-r7:0 )
 		gmp? ( >=dev-libs/gmp-4.2.4:0= )
-		gstreamer? (
-			>=media-libs/gstreamer-0.10.10:0.10
-			>=media-libs/gst-plugins-base-0.10.10:0.10
-			x11-libs/gtk+:2
-		)
 		gtk? (
 				>=x11-libs/gtk+-2.8:2=
 				dev-libs/glib:2=
@@ -57,12 +51,6 @@ DEPEND="app-arch/zip
 RDEPEND=">=virtual/jre-1.5
 	${RDEPEND}"
 
-S=${WORKDIR}/${MY_P}
-
-src_unpack() {
-	git-2_src_unpack
-}
-
 src_prepare() {
 	./autogen.sh
 }
@@ -92,6 +80,7 @@ src_configure() {
 		chmod 755 tools/gjdoc.build || die
 	fi
 
+	# gstreamer-peer disabled as still requires 0.10 API
 	ANTLR= econf \
 		$(use_enable alsa) \
 		$(use_enable debug ) \
@@ -100,13 +89,13 @@ src_configure() {
 		$(use_enable gjdoc) \
 		$(use_enable gmp) \
 		$(use_enable gtk gtk-peer) \
-		$(use_enable gstreamer gstreamer-peer) \
 		$(use_enable xml xmlj) \
 		$(use_enable dssi ) \
 		$(use_with doc gjdoc "${S}/tools/gjdoc.build") \
 		--enable-jni \
 		--disable-dependency-tracking \
 		--disable-plugin \
+		--disable-gstreamer-peer \
 		--bindir="${EPREFIX}"/usr/libexec/${PN} \
 		--includedir="${EPREFIX}"/usr/include/classpath \
 		--with-ecj-jar=$(java-pkg_getjar --build-only ${ecj_pkg}-* ecj.jar) \
