@@ -19,7 +19,7 @@ DEPEND="app-arch/zip
 		app-eselect/eselect-gradle"
 RDEPEND="virtual/jre"
 
-IUSE="source doc examples"
+IUSE="source doc"
 
 S="${WORKDIR}/${MY_P}"
 
@@ -38,11 +38,6 @@ src_install() {
 	# docs
 	if use doc ; then
 		java-pkg_dojavadoc docs/javadoc
-	fi
-
-	# examples
-	if use examples ; then
-		java-pkg_doexamples samples
 	fi
 
 	insinto "${gradle_dir}"
