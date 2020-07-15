@@ -10,7 +10,7 @@ HOMEPAGE="http://java.sun.com/j2se/1.5.0/"
 SRC_URI="${jcefile}"
 SLOT="1.5"
 LICENSE="sun-bcla-java-vm"
-KEYWORDS="~amd64 ~x86 ~x86-fbsd"
+KEYWORDS="~amd64 ~x86"
 RESTRICT="fetch"
 IUSE=""
 

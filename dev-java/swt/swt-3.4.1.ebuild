@@ -15,9 +15,6 @@ HOMEPAGE="http://www.eclipse.org/"
 SRC_URI="x86? (
 			http://${MY_DMF}/${MY_P}-gtk-linux-x86.zip
 		)
-		x86-fbsd? (
-			http://${MY_DMF}/${MY_P}-gtk-linux-x86.zip
-		)
 		amd64? (
 			http://${MY_DMF}/${MY_P}-gtk-linux-x86_64.zip
 		)
@@ -166,7 +163,6 @@ src_compile() {
 src_install() {
 	swtArch=${ARCH}
 	use amd64 && swtArch=x86_64
-	use x86-fbsd && swtArch=x86
 
 	sed "s/SWT_ARCH/${swtArch}/" "${FILESDIR}/${PN}-3.4.1-manifest" > "MANIFEST_TMP.MF"
 	java-osgi_newjar-fromfile "swt.jar" "MANIFEST_TMP.MF" "Standard Widget Toolkit for GTK 2.0"
