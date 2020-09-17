@@ -10,7 +10,7 @@ MY_P="${MY_PN}-${PV/_rc/-rc-}"
 
 DESCRIPTION="A project automation and build tool with a Groovy based DSL"
 SRC_URI="https://services.gradle.org/distributions/${MY_P}-all.zip"
-HOMEPAGE="http://www.gradle.org/"
+HOMEPAGE="https://www.gradle.org/"
 LICENSE="Apache-2.0"
 SLOT="${PV}"
 KEYWORDS="~amd64 ~x86"

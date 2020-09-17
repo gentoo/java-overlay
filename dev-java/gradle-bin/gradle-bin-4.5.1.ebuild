@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="6"
@@ -9,8 +9,8 @@ MY_PN=${PN%%-bin}
 MY_P="${MY_PN}-${PV/_rc/-rc-}"
 
 DESCRIPTION="A project automation and build tool with a Groovy based DSL"
-SRC_URI="http://services.gradle.org/distributions/${MY_P}-all.zip"
-HOMEPAGE="http://www.gradle.org/"
+SRC_URI="https://services.gradle.org/distributions/${MY_P}-all.zip"
+HOMEPAGE="https://www.gradle.org/"
 LICENSE="Apache-2.0"
 SLOT="${PV}"
 KEYWORDS="~amd64 ~x86"
