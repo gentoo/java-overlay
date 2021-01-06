@@ -1,15 +1,14 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
-EAPI=5
+EAPI=7
 
-inherit autotools subversion fdo-mime gnome2-utils
+inherit autotools git-r3 xdg-utils
 
-ESVN_REPO_URI="http://overlays.gentoo.org/svn/proj/java/projects/${PN}/trunk/"
+EGIT_REPO_URI="https://anongit.gentoo.org/git/proj/${PN}.git"
 
 DESCRIPTION="Baselayout for Java"
-HOMEPAGE="http://www.gentoo.org/proj/en/java/"
+HOMEPAGE="https://wiki.gentoo.org/wiki/Project:Java"
 SRC_URI=""
 
 LICENSE="GPL-2"
@@ -17,18 +16,41 @@ SLOT="0"
 KEYWORDS=""
 IUSE=""
 
-RDEPEND="!!<dev-java/java-config-2.2"
+BDEPEND="
+	app-crypt/p11-kit[trust]
+	app-misc/ca-certificates
+"
+
+RDEPEND="${BDEPEND}
+	!<dev-java/java-config-2.2"
 
 src_prepare() {
+	default
 	eautoreconf
 }
 
+src_install() {
+	default
+	keepdir /etc/ssl/certs/java/
+	exeinto /etc/ca-certificates/update.d
+	newexe - java-cacerts <<-_EOF_
+		#!/bin/sh
+		exec trust extract --overwrite --format=java-cacerts --filter=ca-anchors --purpose server-auth "${EPREFIX}/etc/ssl/certs/java/cacerts"
+	_EOF_
+}
+
 pkg_postrm() {
-	fdo-mime_desktop_database_update
-	gnome2_icon_cache_update
+	xdg_desktop_database_update
+	xdg_icon_cache_update
 }
 
 pkg_postinst() {
-	fdo-mime_desktop_database_update
-	gnome2_icon_cache_update
+	xdg_desktop_database_update
+	xdg_icon_cache_update
+	# on first installation generate java cacert file
+	# so jdk ebuilds can create symlink to in into security directory
+	if [[ ! -f "${EROOT}"/etc/ssl/certs/java/cacerts ]]; then
+		einfo "Generating java cacerts file from system ca-certificates"
+		trust extract --overwrite --format=java-cacerts --filter=ca-anchors --purpose server-auth "${EROOT}/etc/ssl/certs/java/cacerts" || die
+	fi
 }
