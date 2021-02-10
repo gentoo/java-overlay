@@ -4,7 +4,7 @@
 EAPI="5"
 
 # jython depends on java-config, so don't add it or things will break
-PYTHON_COMPAT=( python{2_6,2_7,3_1,3_2,3_3} pypy{1_8,1_9} )
+PYTHON_COMPAT=( python{2_7,3_6,3_7,3_8,3_9} pypy{1_8,1_9} )
 
 inherit git-r3 distutils-r1 eutils
 
