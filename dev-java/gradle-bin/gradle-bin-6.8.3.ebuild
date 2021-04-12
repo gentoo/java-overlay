@@ -15,9 +15,12 @@ LICENSE="Apache-2.0"
 SLOT="${PV}"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND="app-arch/zip
-		app-eselect/eselect-gradle"
-RDEPEND="virtual/jre"
+DEPEND="app-eselect/eselect-gradle"
+BDEPEND="app-arch/unzip"
+RDEPEND="
+	${DEPEND}
+	virtual/jre
+"
 
 IUSE="source doc"
 
