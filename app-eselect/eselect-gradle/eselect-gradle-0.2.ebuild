@@ -6,15 +6,21 @@ EAPI=7
 DESCRIPTION="Manage multiple Gradle versions on one system"
 HOMEPAGE="https://wiki.gentoo.org/wiki/Project:Java"
 
+if [[ ${PV} == "9999" ]]; then
+	inherit git-r3
+	EGIT_REPO_URI="https://gitlab.com/Flow/${PN}.git"
+else
+	SRC_URI="https://gitlab.com/Flow/${PN}/-/archive/${PV}/${P}.tar.bz2"
+	KEYWORDS="~amd64 ~x86"
+fi
+
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+IUSE=""
 
 RDEPEND="app-admin/eselect"
 
-S="${WORKDIR}"
-
 src_install() {
 	insinto /usr/share/eselect/modules
-	doins "${FILESDIR}/gradle.eselect"
+	doins gradle.eselect
 }
