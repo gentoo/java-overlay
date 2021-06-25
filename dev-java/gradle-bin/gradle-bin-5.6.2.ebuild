@@ -1,7 +1,7 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 inherit java-pkg-2
 
@@ -15,9 +15,12 @@ LICENSE="Apache-2.0"
 SLOT="${PV}"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND="app-arch/zip
-		app-eselect/eselect-gradle"
-RDEPEND=">=virtual/jdk-1.6"
+DEPEND="app-eselect/eselect-gradle"
+BDEPEND="app-arch/unzip"
+RDEPEND="
+	${DEPEND}
+	>=virtual/jre-1.6:*
+"
 
 IUSE="source doc examples"
 

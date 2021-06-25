@@ -19,7 +19,7 @@ DEPEND="app-eselect/eselect-gradle"
 BDEPEND="app-arch/unzip"
 RDEPEND="
 	${DEPEND}
-	virtual/jre
+	>=virtual/jre-1.8:*
 "
 
 IUSE="source doc"
