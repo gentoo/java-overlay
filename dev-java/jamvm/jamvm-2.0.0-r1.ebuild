@@ -1,8 +1,7 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
-EAPI=5
+EAPI=6
 
 inherit eutils flag-o-matic multilib java-vm-2 autotools
 
@@ -22,10 +21,14 @@ DEPEND="dev-java/gnu-classpath:0
 	sparc? ( virtual/libffi )"
 RDEPEND="${DEPEND}"
 
-src_prepare() {
+PATCHES=(
 	# without this patch, classes.zip is not found at runtime
-	epatch "${FILESDIR}/classes-location.patch"
-	epatch "${FILESDIR}/noexecstack.patch"
+	"${FILESDIR}/classes-location.patch"
+	"${FILESDIR}/noexecstack.patch"
+)
+
+src_prepare() {
+	eapply_user
 	eautoreconf
 
 	# These come precompiled.
