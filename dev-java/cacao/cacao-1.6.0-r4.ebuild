@@ -1,7 +1,8 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
+
 AUTOTOOLS_AUTO_DEPEND="no"
 
 inherit autotools eutils flag-o-matic java-pkg-2 java-vm-2
@@ -26,14 +27,18 @@ DEPEND="${COMMON_DEPEND}
 	)
 "
 
+PATCHES=(
+	"${FILESDIR}/system-boehm-gc.patch"
+	"${FILESDIR}/support-7.patch"
+)
+
 src_prepare() {
+	eapply_user
 	if use test; then
 		sed -ie "s:/usr/share/java/junit4.jar:$(java-config -p junit-4):" \
 			./tests/regression/bugzilla/Makefile.am \
 			./tests/regression/base/Makefile.am || die "sed failed"
 	fi
-	epatch "${FILESDIR}/system-boehm-gc.patch"
-	epatch "${FILESDIR}/support-7.patch"
 	eautoreconf
 }
 
@@ -48,10 +53,6 @@ src_configure() {
 		--with-java-runtime-library-prefix="${EPREFIX}"/usr \
 		--with-jni_h="${EPREFIX}"/usr/include/classpath \
 		--with-jni_md_h="${EPREFIX}"/usr/include/classpath
-}
-
-src_compile() {
-	default
 }
 
 src_install() {
