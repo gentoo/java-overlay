@@ -1,4 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -101,7 +101,7 @@ esac
 JAVA_MAVEN_SYSTEM_HOME="/usr/share/maven-${JAVA_MAVEN_VERSION}/maven_home"
 
 # our pom helper
-JAVA_MAVEN_POM_HELPER="/usr/lib/javatoolkit/bin/maven-helper.py"
+JAVA_MAVEN_POM_HELPER="${EROOT}/usr/libexec/javatoolkit/maven-helper.py"
 
 # maven 1 and 1.1 share the same repo
 JAVA_MAVEN_SYSTEM_REPOSITORY="/usr/share/maven-${JAVA_MAVEN_VERSION//1.1/1}/maven_home/gentoo-repo"
@@ -623,4 +623,3 @@ java-maven-2_src_install() {
 }
 
 EXPORT_FUNCTIONS src_unpack src_compile src_install
-
