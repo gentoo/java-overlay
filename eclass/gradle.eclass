@@ -9,8 +9,6 @@
 # @BLURB: Utility functions for the gradle build system.
 # @DESCRIPTION:
 # Utility functions for the gradle build system.
-# WARNING: This eclass is currently experimental and
-# subject to change.
 
 case ${EAPI} in
 	7|8) ;;
@@ -35,18 +33,19 @@ inherit edo
 # @ECLASS_VARIABLE: EGRADLE_EXACT_VER
 # @DEFAULT_UNSET
 # @DESCRIPTION:
-# The exactly required gradle version.
+# The exact required gradle version.
 
 # @ECLASS_VARIABLE: EGRADLE_PARALLEL
 # @DESCRIPTION:
 # Set to the 'true', the default, to invoke gradle with --parallel. Set
 # to 'false' to disable parallel gradle builds.
-: ${EGRADLE_PARALLEL=true}
+: "${EGRADLE_PARALLEL=true}"
 
 # @ECLASS_VARIABLE: EGRADLE_USER_HOME
 # @DESCRIPTION:
-# Directroy used the user's home directory by gradle.
-EGRADLE_USER_HOME="${T}/gradle_user_home"
+# Directroy used as the user's home directory by gradle. Defaults to
+# ${T}/gradle_user_home
+: "${EGRADLE_USER_HOME="${T}/gradle_user_home"}"
 
 # @ECLASS_VARIABLE: EGRADLE_OVERWRITE
 # @USER_VARIABLE
@@ -81,7 +80,7 @@ gradle-set_EGRADLE() {
 		fi
 
 		if [[ -n ${EGRADLE_EXACT_VER} ]]; then
-			ver_test "${ver}" -ne ${EGRADLE_EXACT_VER} && continue
+			ver_test "${ver}" -ne "${EGRADLE_EXACT_VER}" && continue
 
 			selected="${candidate}"
 			selected_ver="${ver}"
@@ -145,7 +144,7 @@ egradle() {
 	# TERM needed, otherwise gradle may fail on terms it does not know about
 	TERM=xterm \
 		edo \
-		"${EGRADLE}" "${gradle_args[@]}" ${@}
+		"${EGRADLE}" "${gradle_args[@]}" "${@}"
 }
 
 fi
