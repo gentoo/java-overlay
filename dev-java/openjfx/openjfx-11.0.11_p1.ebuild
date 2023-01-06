@@ -186,6 +186,9 @@ src_configure() {
 }
 
 src_compile() {
+	# FIXME: build.gradle believes $ANT_HOME/bin/ant shoud exist
+	unset ANT_HOME
+
 	egradle zips $(usex doc "" "--exclude-task javadoc")
 }
 
