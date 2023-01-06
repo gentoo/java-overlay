@@ -32,6 +32,17 @@ inherit edo
 # @DESCRIPTION:
 # First gradle version that is not supported.
 
+# @ECLASS_VARIABLE: EGRADLE_EXACT_VER
+# @DEFAULT_UNSET
+# @DESCRIPTION:
+# The exactly required gradle version.
+
+# @ECLASS_VARIABLE: EGRADLE_PARALLEL
+# @DESCRIPTION:
+# Set to the 'true', the default, to invoke gradle with --parallel. Set
+# to 'false' to disable parallel gradle builds.
+: ${EGRADLE_PARALLEL=true}
+
 # @ECLASS_VARIABLE: EGRADLE_USER_HOME
 # @DESCRIPTION:
 # Directroy used the user's home directory by gradle.
@@ -67,6 +78,14 @@ gradle-set_EGRADLE() {
 			ver="${BASH_REMATCH[2]}"
 		else
 			ver="${BASH_REMATCH[1]}"
+		fi
+
+		if [[ -n ${EGRADLE_EXACT_VER} ]]; then
+			ver_test "${ver}" -ne ${EGRADLE_EXACT_VER} && continue
+
+			selected="${candidate}"
+			selected_ver="${ver}"
+			break
 		fi
 
 		if [[ -n ${EGRADLE_MIN} ]] \
@@ -113,11 +132,14 @@ egradle() {
 		--stacktrace
 		--no-daemon
 		--offline
-		--parallel
 		--no-build-cache
 		--gradle-user-home "${EGRADLE_USER_HOME}"
 		--project-cache-dir "${T}/gradle_project_cache"
 	)
+
+	if $EGRADLE_PARALLEL; then
+		gradle_args+=( --parallel )
+	fi
 
 	local -x JAVA_TOOL_OPTIONS="-Duser.home=\"$T\""
 	# TERM needed, otherwise gradle may fail on terms it does not know about
