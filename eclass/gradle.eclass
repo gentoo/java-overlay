@@ -124,7 +124,6 @@ gradle-set_EGRADLE() {
 egradle() {
 	gradle-set_EGRADLE
 
-	# TODO --no-build-cache ?
 	local gradle_args=(
 		--console=plain
 		--info
