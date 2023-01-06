@@ -32,6 +32,11 @@ inherit edo
 # @DESCRIPTION:
 # First gradle version that is not supported.
 
+# @ECLASS_VARIABLE: EGRADLE_USER_HOME
+# @DESCRIPTION:
+# Directroy used the user's home directory by gradle.
+EGRADLE_USER_HOME="${T}/gradle_user_home"
+
 # @ECLASS_VARIABLE: EGRADLE_OVERWRITE
 # @USER_VARIABLE
 # @DEFAULT_UNSET
@@ -66,7 +71,7 @@ gradle-set_EGRADLE() {
 
 		if [[ -n ${EGRADLE_MIN} ]] \
 			   && ver_test "${ver}" -lt "${EGRADLE_MIN}"; then
-			# Candidate does not stisfy EGRADLE_MIN condition.
+			# Candidate does not satisfy EGRADLE_MIN condition.
 			continue
 		fi
 
@@ -96,8 +101,8 @@ gradle-set_EGRADLE() {
 
 # @FUNCTION: egradle
 # @USAGE: [gradle-args]
-# @DESCRIPTION
-# Invoke gradle
+# @DESCRIPTION:
+# Invoke gradle with the optionally provided arguments.
 egradle() {
 	gradle-set_EGRADLE
 
@@ -108,12 +113,17 @@ egradle() {
 		--stacktrace
 		--no-daemon
 		--offline
+		--parallel
 		--no-build-cache
-		--gradle-user-home "${T}/gradle_user_home"
+		--gradle-user-home "${EGRADLE_USER_HOME}"
 		--project-cache-dir "${T}/gradle_project_cache"
 	)
 
-	edo "${EGRADLE}" "${gradle_args[@]}" ${@}
+	local -x JAVA_TOOL_OPTIONS="-Duser.home=\"$T\""
+	# TERM needed, otherwise gradle may fail on terms it does not know about
+	TERM=xterm \
+		edo \
+		"${EGRADLE}" "${gradle_args[@]}" ${@}
 }
 
 fi
