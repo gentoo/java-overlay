@@ -114,7 +114,6 @@ gradle-set_EGRADLE() {
 	fi
 
 	export EGRADLE="${selected}"
-	export EGRADLE_VER="${ver}"
 }
 
 # @FUNCTION: egradle
