@@ -6,7 +6,7 @@
 # Gentoo Java Project <java@gentoo.org>
 # @AUTHOR:
 # Florian Schmaus <flow@gentoo.org>
-# @BLURB: Utility functions for the gradle build system.
+# @BLURB: utility functions for the gradle build system.
 # @DESCRIPTION:
 # Utility functions for the gradle build system.
 
@@ -135,11 +135,11 @@ egradle() {
 		--project-cache-dir "${T}/gradle_project_cache"
 	)
 
-	if $EGRADLE_PARALLEL; then
+	if ${EGRADLE_PARALLEL}; then
 		gradle_args+=( --parallel )
 	fi
 
-	local -x JAVA_TOOL_OPTIONS="-Duser.home=\"$T\""
+	local -x JAVA_TOOL_OPTIONS="-Duser.home=\"${T}\""
 	# TERM needed, otherwise gradle may fail on terms it does not know about
 	TERM=xterm \
 		edo \
