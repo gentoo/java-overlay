@@ -137,7 +137,7 @@ egradle() {
 		gradle_args+=( --parallel )
 	fi
 
-	local -x JAVA_TOOL_OPTIONS="-Duser.home=\"${T}\""
+	local -x JAVA_TOOL_OPTIONS="${JAVA_TOOL_OPTIONS} -Duser.home=\"${T}\""
 	# TERM needed, otherwise gradle may fail on terms it does not know about
 	TERM=xterm \
 		edo \
