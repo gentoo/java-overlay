@@ -83,7 +83,6 @@ gradle-set_EGRADLE() {
 			ver_test "${ver}" -ne "${EGRADLE_EXACT_VER}" && continue
 
 			selected="${candidate}"
-			selected_ver="${ver}"
 			break
 		fi
 
