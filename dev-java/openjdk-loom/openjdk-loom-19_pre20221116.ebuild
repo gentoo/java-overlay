@@ -1,4 +1,4 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -13,7 +13,7 @@ HOMEPAGE="https://openjdk.org"
 EGIT_REPO_URI="https://github.com/openjdk/loom.git"
 EGIT_COMMIT="4047afb36f33b9dfc537be2047869a3f7940654e"
 
-LICENSE="GPL-2"
+LICENSE="GPL-2-with-classpath-exception"
 KEYWORDS="~amd64 ~arm ~arm64 ~ppc64 ~x86"
 
 IUSE="alsa big-endian cups debug doc examples headless-awt javafx jbootstrap selinux source +system-bootstrap systemtap"
