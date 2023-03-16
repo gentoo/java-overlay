@@ -96,12 +96,12 @@ gradle-set_EGRADLE() {
 	[[ -n ${EGRADLE} ]] && return
 
 	if [[ -n ${EGRADLE_OVERWRITE} ]]; then
-		export EGRADLE="${EGRADLE_OVERWRITE}"
+		EGRADLE="${EGRADLE_OVERWRITE}"
 		return
 	fi
 
 	if [[ -n ${EGRADLE_BUNDLED_VER} ]]; then
-		export EGRADLE="${WORKDIR}/gradle-${EGRADLE_BUNDLED_VER}/bin/gradle"
+		EGRADLE="${WORKDIR}/gradle-${EGRADLE_BUNDLED_VER}/bin/gradle"
 		return
 	fi
 
@@ -153,7 +153,7 @@ gradle-set_EGRADLE() {
 		die "Could not find (suitable) gradle installation in PATH"
 	fi
 
-	export EGRADLE="${selected}"
+	EGRADLE="${selected}"
 }
 
 # @FUNCTION: gradle-src_uri
