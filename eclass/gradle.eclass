@@ -6,10 +6,10 @@
 # Gentoo Java Project <java@gentoo.org>
 # @AUTHOR:
 # Florian Schmaus <flow@gentoo.org>
-# @BLURB: utility functions for the gradle build system.
+# @BLURB: common ebuild functions for gradle-based packages.
 # @DESCRIPTION:
-# Utility functions for the gradle build system.
-# There are currently two approaches to using gradle in ebuilds. You can either
+# This eclass provides support for the gradle build system.  There
+# are currently two approaches to using gradle in ebuilds.  You can either
 # depend on a gradle system-wide installation from a gradle ebuild, typically
 # dev-java/gradle-bin, or, bundle gradle with the ebuild.
 #
@@ -32,6 +32,13 @@
 #     ...
 #     $(gradle_src_uri)
 # "
+# @CODE
+#
+# Afterwards, use egradle to invoke gradle.
+# @CODE
+# src_compile() {
+#     egradle build
+# }
 # @CODE
 
 case ${EAPI} in
