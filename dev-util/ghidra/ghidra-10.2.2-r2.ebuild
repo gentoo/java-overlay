@@ -5,18 +5,23 @@ EAPI=8
 
 inherit gradle java-pkg-2 desktop
 
+EGRADLE_BUNDLED_VER="7.3"
+
 GRADLE_DEP_VER="20221104"
 
 DESCRIPTION="A software reverse engineering framework"
 HOMEPAGE="https://ghidra-sre.org/"
-SRC_URI="https://github.com/NationalSecurityAgency/${PN}/archive/Ghidra_${PV}_build.tar.gz
+SRC_URI="
+	https://github.com/NationalSecurityAgency/${PN}/archive/Ghidra_${PV}_build.tar.gz
 	https://dev.pentoo.ch/~blshkv/distfiles/${PN}-dependencies-${GRADLE_DEP_VER}.tar.gz
 	https://github.com/pxb1988/dex2jar/releases/download/2.0/dex-tools-2.0.zip
 	https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/android4me/AXMLPrinter2.jar
 	https://sourceforge.net/projects/catacombae/files/HFSExplorer/0.21/hfsexplorer-0_21-bin.zip
 	mirror://sourceforge/yajsw/yajsw/yajsw-stable-13.05.zip
 	https://dev.pentoo.ch/~blshkv/distfiles/cdt-8.6.0.zip
-	mirror://sourceforge/project/pydev/pydev/PyDev%206.3.1/PyDev%206.3.1.zip -> PyDev-6.3.1.zip"
+	mirror://sourceforge/project/pydev/pydev/PyDev%206.3.1/PyDev%206.3.1.zip -> PyDev-6.3.1.zip
+	$(gradle-src_uri)
+"
 # run: "pentoo/scripts/gradle_dependencies.py buildGhidra" from "${S}" directory to generate dependencies
 #	https://www.eclipse.org/downloads/download.php?r=1&protocol=https&file=/tools/cdt/releases/8.6/cdt-8.6.0.zip
 
@@ -42,9 +47,6 @@ DEPEND="
 	dev-java/jflex
 	app-arch/unzip
 "
-BDEPEND=">=dev-java/gradle-bin-7.3:*"
-
-EGRADLE_MIN="7.3"
 
 S="${WORKDIR}/ghidra-Ghidra_${PV}_build"
 
