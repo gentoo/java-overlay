@@ -9,6 +9,30 @@
 # @BLURB: utility functions for the gradle build system.
 # @DESCRIPTION:
 # Utility functions for the gradle build system.
+# There are currently two approaches to using gradle in ebuilds. You can either
+# depend on a gradle system-wide installation from a gradle ebuild, typically
+# dev-java/gradle-bin, or, bundle gradle with the ebuild.
+#
+# To use a system-wide gradle installation, set EGRADLE_MIN and
+# EGRADLE_MAX_EXCLUSIVE and declare a BDEPEND on the gradle package.
+# @CODE
+# inherit gradle
+# EGRADLE_MIN=7.3
+# EGRADLE_MAX_EXCLUSIVE=8
+#
+# BDEPEND="|| (dev-java/gradle-bin:7.3 dev-java/gradle-bin:7.4)
+# @CODE
+#
+# To use a bundled gradle version, set EGRADLE_BUNDLED_VER and add
+# $(gradle_src_uri) to SRC_URI.
+# @CODE
+# inherit gradle
+# EGRADLE_BUNDLED_VER=7.6
+# SRC_URI="
+#     ...
+#     $(gradle_src_uri)
+# "
+# @CODE
 
 case ${EAPI} in
 	7|8) ;;
@@ -34,6 +58,11 @@ inherit edo
 # @DEFAULT_UNSET
 # @DESCRIPTION:
 # The exact required gradle version.
+
+# @ECLASS_VARIABLE: EGRADLE_BUNDLED_VER
+# @DEFAULT_UNSET
+# @DESCRIPTION:
+# The gradle version that will be bundled with this package.
 
 # @ECLASS_VARIABLE: EGRADLE_PARALLEL
 # @DESCRIPTION:
@@ -61,6 +90,11 @@ gradle-set_EGRADLE() {
 
 	if [[ -n ${EGRADLE_OVERWRITE} ]]; then
 		export EGRADLE="${EGRADLE_OVERWRITE}"
+		return
+	fi
+
+	if [[ -n ${EGRADLE_BUNDLED_VER} ]]; then
+		export EGRADLE="${WORKDIR}/gradle-${EGRADLE_BUNDLED_VER}/bin/gradle"
 		return
 	fi
 
@@ -113,6 +147,16 @@ gradle-set_EGRADLE() {
 	fi
 
 	export EGRADLE="${selected}"
+}
+
+# @FUNCTION: gradle-src_uri
+# @DESCRIPTION:
+# Generate SRC_URI data from EGRADLE_BUNDLED_VER.
+gradle-src_uri() {
+	if [[ -z ${EGRADLE_BUNDLED_VER} ]]; then
+		die "Must set EGRADLE_BUNDLED_VER when calling gradle-src_uri"
+	fi
+	echo "https://services.gradle.org/distributions/gradle-${EGRADLE_BUNDLED_VER}-bin.zip"
 }
 
 # @FUNCTION: egradle
