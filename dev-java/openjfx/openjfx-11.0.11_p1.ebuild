@@ -5,6 +5,7 @@ EAPI=8
 
 MY_PV="${PV/_p/+}"
 SLOT="${MY_PV%%[.+]*}"
+EGRADLE_BUNDLED_VER="4.10.3"
 
 inherit flag-o-matic gradle java-pkg-2 multiprocessing
 
@@ -21,15 +22,13 @@ SRC_URI="
 	https://repo.maven.apache.org/maven2/org/antlr/gunit/3.5.2/gunit-3.5.2.jar
 	https://repo1.maven.org/maven2/org/antlr/antlr4/4.7.2/antlr4-4.7.2-complete.jar
 	https://repo.maven.apache.org/maven2/org/antlr/ST4/4.0.8/ST4-4.0.8.jar
+	$(gradle-src_uri)
 "
 
 LICENSE="GPL-2-with-classpath-exception"
-KEYWORDS="-* ~amd64"
+KEYWORDS="-* ~amd64 ~ppc64"
 
 IUSE="cpu_flags_x86_sse2 debug doc source +media"
-
-EGRADLE_EXACT_VER="4.10.3"
-EGRADLE_PARALLEL=false
 
 RDEPEND="
 	dev-java/swt:4.10[cairo,opengl]
@@ -71,8 +70,6 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 "
 
-BDEPEND="~dev-java/gradle-bin-${EGRADLE_EXACT_VER}"
-
 REQUIRED_USE="amd64? ( cpu_flags_x86_sse2 )"
 
 PATCHES=(
@@ -87,6 +84,9 @@ PATCHES=(
 )
 
 S="${WORKDIR}/rt-${MY_PV}"
+
+# Fails to build if gradle is invoked with --parallel.
+EGRADLE_PARALLEL=false
 
 pkg_setup() {
 	JAVA_PKG_WANT_BUILD_VM="openjdk-${SLOT} openjdk-bin-${SLOT}"
@@ -129,6 +129,7 @@ pkg_setup() {
 
 src_unpack() {
 	unpack "${P}.tar.bz2"
+	gradle-src_unpack
 
 	mkdir "${T}/jars" || die
 
