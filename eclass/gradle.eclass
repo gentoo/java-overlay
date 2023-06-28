@@ -105,20 +105,14 @@ gradle-set_EGRADLE() {
 		return
 	fi
 
-	local candidates candidate selected selected_ver
+	local candidate selected selected_ver ver
 
-	candidates=$(compgen -c gradle-)
-	for candidate in ${candidates}; do
-		if [[ ! ${candidate} =~ gradle(-bin)?-([.0-9]+) ]]; then
+	for candidate in "${BROOT}"/usr/bin/gradle-; do
+		if [[ ${candidate} != */gradle?(-bin)-+([.0-9]) ]]; then
 			continue
 		fi
 
-		local ver
-		if (( ${#BASH_REMATCH[@]} == 3 )); then
-			ver="${BASH_REMATCH[2]}"
-		else
-			ver="${BASH_REMATCH[1]}"
-		fi
+		ver=${candidate##*-}
 
 		if [[ -n ${EGRADLE_EXACT_VER} ]]; then
 			ver_test "${ver}" -ne "${EGRADLE_EXACT_VER}" && continue
@@ -150,7 +144,7 @@ gradle-set_EGRADLE() {
 	done
 
 	if [[ -z ${selected} ]]; then
-		die "Could not find (suitable) gradle installation in PATH"
+		die "Could not find (suitable) gradle installation in ${BROOT}/usr/bin"
 	fi
 
 	EGRADLE="${selected}"
