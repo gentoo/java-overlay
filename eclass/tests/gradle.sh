@@ -27,8 +27,7 @@ test_set_EGRADLE() {
 		chmod 755 "${pseudo_gradle_path}"
 	done
 
-	local saved_PATH="${PATH}"
-	PATH="${tmpdir}"
+	EGRADLE_SEARCH_PATH="${tmpdir}"
 
 	local test_desc=(
 		test_set_EGRADLE
@@ -43,8 +42,12 @@ test_set_EGRADLE() {
 	local saved_EGRADLE="${EGRADLE}"
 	unset EGRADLE
 
-	PATH="${saved_PATH}"
 	rm -rf "${tmpdir}"
+
+	# The saved_EGRADLE variable will contain something like
+	# /tmp/tmp.vTN7A1l6C7/gradle-2.0, but we only want to compare the
+	# name of the binary.
+	saved_EGRADLE=$(basename ${saved_EGRADLE})
 
 	[[ "${saved_EGRADLE}" == "${expected_EGRADLE}" ]]
 	tend $?
@@ -57,6 +60,5 @@ test_set_EGRADLE() {
 test_set_EGRADLE gradle-2.0 gradle-1.0 gradle-2.0
 EGRADLE_MIN=2.0 test_set_EGRADLE gradle-2.2.3 gradle-1.0 gradle-2.0 gradle-2.2.3
 EGRADLE_MAX_EXCLUSIVE=2.2 test_set_EGRADLE gradle-2.0 gradle-1.0 gradle-2.0 gradle-2.2.3
-
 
 texit

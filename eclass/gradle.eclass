@@ -20,7 +20,7 @@
 # EGRADLE_MIN=7.3
 # EGRADLE_MAX_EXCLUSIVE=8
 #
-# BDEPEND="|| (dev-java/gradle-bin:7.3 dev-java/gradle-bin:7.4)
+# BDEPEND="|| (dev-java/gradle-bin:7.3 dev-java/gradle-bin:7.4)"
 # @CODE
 #
 # To use a bundled gradle version, set EGRADLE_BUNDLED_VER and add
@@ -34,9 +34,13 @@
 # "
 # src_unpack() {
 #    default
-#    gradle-src_unpack
+#    gradle_src_unpack
 # }
 # @CODE
+# This "bundles" gradle as part of the ebuild, that is, a gradle
+# distribution with the version specified by EGRADLE_BUNDLED_VER
+# will be added to SRC_URI, unpacked by gradle_src_unpack, and then
+# later used by egradle.
 #
 # Afterwards, use egradle to invoke gradle.
 # @CODE
@@ -68,30 +72,41 @@ inherit edo
 # @ECLASS_VARIABLE: EGRADLE_EXACT_VER
 # @DEFAULT_UNSET
 # @DESCRIPTION:
-# The exact required gradle version.
+# The exact required gradle version.  If set, neither of EGRADLE_MIN
+# EGRADLE_MAX_EXCLUSIVE, nor EGRADLE_BUNDLED_VER should be set.
 
 # @ECLASS_VARIABLE: EGRADLE_BUNDLED_VER
 # @DEFAULT_UNSET
 # @DESCRIPTION:
-# The gradle version that will be bundled with this package.
+# The gradle version that will be bundled with this package.  If set,
+# neither of EGRADLE_MIN, EGRADLE_MAX_EXCLUSIVE, nor
+# EGRADLE_EXACT_VER should be set.
 
 # @ECLASS_VARIABLE: EGRADLE_PARALLEL
 # @DESCRIPTION:
-# Set to the 'true', the default, to invoke gradle with --parallel. Set
+# Set to the 'true', the default, to invoke gradle with --parallel.  Set
 # to 'false' to disable parallel gradle builds.
 : "${EGRADLE_PARALLEL=true}"
 
 # @ECLASS_VARIABLE: EGRADLE_USER_HOME
 # @DESCRIPTION:
-# Directroy used as the user's home directory by gradle. Defaults to
+# Directory used as the user's home directory by gradle. Defaults to
 # ${T}/gradle_user_home
 : "${EGRADLE_USER_HOME="${T}/gradle_user_home"}"
 
-# @ECLASS_VARIABLE: EGRADLE_OVERWRITE
+# @ECLASS_VARIABLE: EGRADLE_OVERRIDE
 # @USER_VARIABLE
 # @DEFAULT_UNSET
 # @DESCRIPTION:
-# User-specified overwrite of the used gradle binary.
+# User-specified override of the used gradle binary.
+
+# @ECLASS_VARIABLE: EGRADLE_SEARCH_PATH
+# @USER_VARIABLE
+# @DESCRIPTION:
+# Path in which gradle installations are searched.  This path is
+# prefixed with BROOT. Defaults to /usr/bin.  Mostly used for
+# testing this eclass.
+: "${EGRADLE_SEARCH_PATH=/usr/bin}"
 
 # @FUNCTION: gradle-set_EGRADLE
 # @DESCRIPTION:
@@ -99,8 +114,8 @@ inherit edo
 gradle-set_EGRADLE() {
 	[[ -n ${EGRADLE} ]] && return
 
-	if [[ -n ${EGRADLE_OVERWRITE} ]]; then
-		EGRADLE="${EGRADLE_OVERWRITE}"
+	if [[ -n ${EGRADLE_OVERRIDE} ]]; then
+		EGRADLE="${EGRADLE_OVERRIDE}"
 		return
 	fi
 
@@ -111,7 +126,7 @@ gradle-set_EGRADLE() {
 
 	local candidate selected selected_ver ver
 
-	for candidate in "${BROOT}"/usr/bin/gradle-; do
+	for candidate in "${BROOT}${EGRADLE_SEARCH_PATH}"/gradle-*; do
 		if [[ ${candidate} != */gradle?(-bin)-+([.0-9]) ]]; then
 			continue
 		fi
@@ -164,13 +179,13 @@ gradle-src_uri() {
 	echo "https://services.gradle.org/distributions/gradle-${EGRADLE_BUNDLED_VER}-bin.zip"
 }
 
-# @FUNCTION: gradle-src_unpack
+# @FUNCTION: gradle_src_unpack
 # @DESCRIPTION:
 # Unpack the "bundled" gradle version.  You must have
 # EGRADLE_BUNDLED_VER set when calling this function.
-gradle-src_unpack() {
+gradle_src_unpack() {
 	if [[ -z ${EGRADLE_BUNDLED_VER} ]]; then
-		die "Must set EGRADLE_BUNDLED_VER when calling gradle-src_unpack"
+		die "Must set EGRADLE_BUNDLED_VER when calling gradle_src_unpack"
 	fi
 
 	unpack "gradle-${EGRADLE_BUNDLED_VER}-bin.zip"

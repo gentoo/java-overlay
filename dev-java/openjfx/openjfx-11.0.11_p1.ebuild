@@ -129,7 +129,7 @@ pkg_setup() {
 
 src_unpack() {
 	unpack "${P}.tar.bz2"
-	gradle-src_unpack
+	gradle_src_unpack
 
 	mkdir "${T}/jars" || die
 
@@ -187,7 +187,7 @@ src_configure() {
 }
 
 src_compile() {
-	# FIXME: build.gradle believes $ANT_HOME/bin/ant shoud exist
+	# FIXME: build.gradle believes $ANT_HOME/bin/ant should exist
 	unset ANT_HOME
 
 	egradle zips $(usex doc "" "--exclude-task javadoc")
